@@ -7,8 +7,21 @@ Minimal working pipelines.
 
 - Structure for the memory project.
 	- Dataloader and tokenizer.
+		- MultipleSourceIterator.
+		- TokenGenerator.
+		- Asynchronous Dataloader.
 	- Put back all the monitoring logic from nanollama.
-	- Pretrained model.
+	- Pretrained model (?).
 	
 - Caching during generation.
+
+- Finetuning logic.
+
 - Probing mechanism.
+
+
+## Notes
+Dataloading has some subtleties.
+If a sentence is too short compared to the context window, should we concatenate it with another one? should we pad with EOS?
+- If we concatenate, should we use some funky masking to avoid paying attention to the previous sentence?
+- If we pad, should we reweight the loss to avoid only learning on padding tokens?

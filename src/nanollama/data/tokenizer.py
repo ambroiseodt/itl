@@ -10,6 +10,7 @@ located in the root directory of this repository.
 """
 
 from abc import ABC, abstractmethod
+from dataclasses import dataclass
 
 # ------------------------------------------------------------------------------
 # Generic Class
@@ -30,7 +31,7 @@ class Tokenizer(ABC):
         -------
         list of token IDs.
         """
-        pass
+        ...
 
     @abstractmethod
     def decode(self, tokens: list[int]) -> str:
@@ -45,7 +46,7 @@ class Tokenizer(ABC):
         -------
         decoded sentence.
         """
-        pass
+        ...
 
 
 # ------------------------------------------------------------------------------
@@ -196,6 +197,7 @@ class TokenizerConfig:
     """
     TODO
     """
+
     name: str
     pass
 
@@ -205,4 +207,3 @@ def build_tokenizer(config: TokenizerConfig) -> Tokenizer:
     TODO: look at Amaia dispatcher
     """
     pass
-
