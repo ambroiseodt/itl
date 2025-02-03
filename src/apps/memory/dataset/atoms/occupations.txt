@@ -1,0 +1,100 @@
+Accountant
+Actuary
+Agricultural Scientist
+Air Traffic Controller
+Aircraft Mechanic
+Animator
+Architect
+Auditor
+Barista
+Bartender
+Biologist
+Bus Driver
+Business Consultant
+Carpenter
+Cashier
+Chef
+Chemist
+Civil Engineer
+Construction Manager
+Content Strategist
+Copywriter
+Corrections Officer
+Customer Service Representative
+Cybersecurity Analyst
+Data Scientist
+Database Administrator
+Delivery Driver
+Dentist
+Detective
+Doctor
+Draftsperson
+Editor
+Electrical Engineer
+Electrician
+Entrepreneur
+Farmer
+Financial Analyst
+Firefighter
+Flight Attendant
+Graphic Designer
+Horticulturist
+Human Resources Manager
+IT Support Specialist
+Interior Designer
+Investment Banker
+Journalist
+Judge
+Lab Technician
+Lawyer
+Legal Assistant
+Librarian
+Logistics Coordinator
+Marketing Manager
+Mechanical Engineer
+Mechanical Technician
+Mediator
+Network Administrator
+Nurse
+Operations Manager
+Paralegal
+Paramedic
+Pastry Chef
+Pharmacist
+Photographer
+Pilot
+Plumber
+Police Officer
+Principal
+Professor
+Project Manager
+Property Manager
+Real Estate Agent
+Recruiter
+Research Assistant
+Restaurant Manager
+Retail Manager
+SEO Specialist
+Sales Manager
+School Counselor
+Scientist
+Security Guard
+Social Media Manager
+Software Engineer
+Software Tester
+Store Clerk
+Surveyor
+Taxi Driver
+Teacher
+Technical Writer
+Training Specialist
+Translator
+Travel Agent
+Truck Driver
+UX/UI Designer
+Urban Planner
+Veterinarian
+Visual Merchandiser
+Web Developer
+Welder
+Zookeeper
