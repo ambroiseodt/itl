@@ -162,6 +162,24 @@ class JSONLIterator(Stateful):
 class TokenGenerator(Stateful):
     """
     Generate token iteratively in order to feed an LLM
+
+    ### Parameters
+    config: data configuration
+    iterator: JSONLIterator
+    tokenizer: tokenizer
+
+    ### Attributes
+    tokens: list of tokens that have not populated a batch yet
+    bsz: batch size
+    seq_len: sequence length
+    padding: whether to pad sequences
+
+    ### Example
+    ```python
+    with TokenGenerator(config, iterator, tokenizer) as generator:
+        for batch in generator:
+            print(batch)
+    ```
     """
 
     def __init__(self, config: DataConfig, iterator: JSONLIterator, tokenizer: Tokenizer):
@@ -217,16 +235,14 @@ class TokenGenerator(Stateful):
 # Text Generator from Multiple Sources (TODO)
 # ------------------------------------------------------------------------------
 
-"""
-In usual implementation, data is pulled from multiple sources.
-We do not need to care for it in our current project.
+# In usual implementation, data is pulled from multiple sources.
+# We do not need to care for it in our current project.
 
-Note that in the classical datasetup, each data are visited once,
-which means that we do not need to care about randomness of samples within an epoch.
-We may want to modify the code above to allow for random batch ordering.
-One way to do it is to pull all the data in memory and read from them (inline with classical ML).
-Another was to do it is to create many biography files, and pick them randomly (inline with LLM training).
-"""
+# Note that in the classical datasetup, each data are visited once,
+# which means that we do not need to care about randomness of samples within an epoch.
+# We may want to modify the code above to allow for random batch ordering.
+# One way to do it is to pull all the data in memory and read from them (inline with classical ML).
+# Another was to do it is to create many biography files, and pick them randomly (inline with LLM training).
 
 # ------------------------------------------------------------------------------
 # Unit Tests

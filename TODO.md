@@ -7,9 +7,8 @@ Minimal working pipelines.
 
 - Structure for the memory project.
 	- Dataloader and tokenizer.
-		- MultipleSourceIterator.
-		- TokenGenerator.
-		- Asynchronous Dataloader.
+		- Complete the dataloading
+		- Put the Tiktoken tokenizer
 	- Put back all the monitoring logic from nanollama.
 	- Pretrained model (?).
 	
