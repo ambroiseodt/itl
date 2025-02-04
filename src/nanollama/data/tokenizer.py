@@ -18,6 +18,11 @@ from dataclasses import dataclass
 
 
 class Tokenizer(ABC):
+    vocab_size: int
+    bos_id: int
+    eos_id: int
+    pad_id: int
+
     @abstractmethod
     def encode(self, sentence: str) -> list[int]:
         """
@@ -58,7 +63,12 @@ class ByteTokenizer(Tokenizer):
     error_scheme = "backslashreplace"
     encoding = "utf-8"
 
-    def __init__(self, bos: bool = False, eos: bool = False):
+    vocab_size = 259
+    pad_id = 256
+    bos_id = 257
+    eos_id = 258
+
+    def __init__(self, bos: bool = True, eos: bool = True):
         """
         Byte Tokenizer
 
@@ -69,14 +79,6 @@ class ByteTokenizer(Tokenizer):
         """
         self.bos = bos
         self.eos = eos
-
-        self.vocab_size = 256
-        if bos:
-            self.bos_id = 256
-            self.vocab_size += 1
-        if eos:
-            self.eos_id = 257
-            self.vocab_size += 1
 
     def encode(self, sentence: str) -> list[int]:
         tokens = []
