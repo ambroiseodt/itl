@@ -19,9 +19,9 @@ run_config:
 
   data:
     sources:
-    - path: $HOME/code/memory/src/apps/memory/dataset/biographies.jsonl
+    - path: src/apps/memory/dataset/biographies.jsonl
       weight: 90
-    - path: $HOME/code/memory/src/apps/memory/dataset/qa.jsonl
+    - path: src/apps/memory/dataset/qa.jsonl
       weight: 10
     tokenizer:
       name: byte
