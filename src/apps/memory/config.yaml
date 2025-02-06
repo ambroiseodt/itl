@@ -19,9 +19,9 @@ run_config:
 
   data:
     sources:
-    - path: src/apps/memory/dataset/biographies.jsonl
+    - path: $HOME/code/memory/src/apps/memory/dataset/biographies.jsonl
       weight: 90
-    - path: src/apps/memory/dataset/qa.jsonl
+    - path: $HOME/code/memory/src/apps/memory/dataset/qa.jsonl
       weight: 10
     tokenizer:
       name: byte
@@ -38,10 +38,9 @@ run_config:
       hidden_dim: 256
 
   optim:
-    steps: 1 #100
+    steps: 100
     lr: 1e-4
     weight_decay: 0.1
-    fused: False # added for cpu usage
     warmup: 15
     lr_min_ratio: 0
 
