@@ -33,6 +33,16 @@ python -m src.apps.memory.dataset.generate biographies --num 1000
 python -m src.apps.memory.dataset.generate qa --tooluse
 ```
 
+## Training
+Launch a traning run locally
+```bash
+python -m src.apps.memory.train src/apps/memory/config.yaml
+```
+Launch a training on your cluster
+```bash
+python -m nanollama.launcher src/apps/memory/config.yaml
+```
+
 ## Development
 Run unit tests with the following command at the root of this repository
 ```bash
