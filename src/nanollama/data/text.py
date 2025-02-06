@@ -10,6 +10,7 @@ located in the root directory of this repository.
 """
 
 import json
+import os
 from collections.abc import Generator
 from dataclasses import dataclass
 from types import TracebackType
@@ -41,6 +42,9 @@ class SourceConfig:
 
     path: str
     weight: float
+
+    def __post_init__(self):
+        self.path = os.path.expandvars(self.path)
 
 
 @dataclass
@@ -118,7 +122,7 @@ class JSONLIterator(Stateful):
 
         self.generator = self.line_iterator()
 
-    def __enter__(self):
+    def __enter__(self) -> "JSONLIterator":
         self.file = open(self.path)
         self.file.seek(self.position)
         return self
@@ -201,7 +205,7 @@ class SingleSourceTokenGenerator(TokenLoader):
         self.tokens_per_batch = self.batch_size * self.seq_len
         self.padding = config.padding
 
-    def __enter__(self):
+    def __enter__(self) -> "SingleSourceTokenGenerator":
         self.jsonl_iterator.__enter__()
         return self
 
@@ -290,7 +294,7 @@ class MultipleSourcesTokenGenerator(TokenLoader):
         _, seeds = generate_seeds(nb_shared=0, nb_individual=1, root_seed=config.seed, rank=rank)
         self.rng = default_rng(seeds[0])
 
-    def __enter__(self):
+    def __enter__(self) -> "MultipleSourcesTokenGenerator":
         for generator in self.generators:
             generator.__enter__()
         return self

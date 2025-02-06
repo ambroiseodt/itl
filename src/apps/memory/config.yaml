@@ -1,12 +1,12 @@
 launcher:
-  name: homework
+  name: memory
   overwrite: true
-  log_dir: $HOME/homework
+  log_dir: $HOME/memory
 
-  script: src.apps.homework.train
+  script: src.apps.memory.train
 
   slurm:
-    partition: scavenge
+    # partition: scavenge
     mem: 16G
     nodes: 1
     nb_gpus: 1        # use torchrun, or slurm, for multi-gpu runs
@@ -18,11 +18,18 @@ run_config:
     compile_model: false
 
   data:
+    sources:
+    - path: $HOME/code/memory/src/apps/memory/dataset/biographies.jsonl
+      weight: 90
+    - path: $HOME/code/memory/src/apps/memory/dataset/qa.jsonl
+      weight: 10
+    tokenizer:
+      name: byte
     batch_size: 128
-    seq_len: 2048
+    seq_len: 128
 
   model:
-    vocab_size: 32
+    vocab_size: 300
     emb_dim: 64
     nb_layers: 2
     block:
@@ -32,7 +39,7 @@ run_config:
 
   optim:
     steps: 100
-    lr: 1e-2
+    lr: 1e-4
     weight_decay: 0.1
     warmup: 15
     lr_min_ratio: 0
@@ -57,12 +64,12 @@ run_config:
       wait: 1
       steps: 20
 
-  eval:
-    period: 0
-    dataset_dir: /checkpoint/$USER/datasets/eval
-    tasks: piqa
-    generator:
-      max_tokens: 2048
+  # eval:
+  #   period: 0
+  #   dataset_dir: /checkpoint/$USER/datasets/eval
+  #   tasks: piqa
+  #   generator:
+  #     max_tokens: 2048
       # dtype: fp32
 
   # evaluation:

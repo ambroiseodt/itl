@@ -1,5 +1,10 @@
 """
-Dataloader
+Asynchronous Dataloader wrapped around a Token Generator.
+
+Notes
+-----
+Ideally this should use PyTorch new data loading library, `torchdata`
+https://pytorch.org/data/beta/what_is_torchdata_nodes.html#why-torchdata-nodes
 
 License
 -------
@@ -16,7 +21,6 @@ from logging import getLogger
 from multiprocessing import Process, Queue
 from queue import Empty, Full
 from types import TracebackType
-from typing import Any
 
 import numpy as np
 import torch
@@ -87,7 +91,7 @@ class DataLoader(Stateful):
         self.generator = generator
         self.gen_state_dict = self.generator.state_dict()
 
-    def __enter__(self):
+    def __enter__(self) -> "DataLoader":
         """Enter the data generator context."""
         logger.info("Entering dataloader.")
         self.generator.__enter__()
@@ -125,7 +129,7 @@ class DataLoader(Stateful):
                     logger.debug("Buffer is full. Waiting for data comsumption.")
             logger.debug("New batch put in the buffer.")
 
-    def async_get_batch(self) -> tuple[np.ndarray, tuple]:
+    def async_get_batch(self) -> np.ndarray:
         """Asynchronous batch acquisition, reading batches from the buffer."""
         # read batch from the buffer
         while True:
@@ -139,7 +143,7 @@ class DataLoader(Stateful):
         """Return an iterator over batches"""
         return self
 
-    def __next__(self) -> tuple[torch.Tensor, Any]:
+    def __next__(self) -> torch.Tensor:
         """Get the next batch of sentences."""
         if self.asynchronous:
             batch, self.gen_state_dict = self.async_get_batch()

@@ -20,7 +20,8 @@ import torch.nn as nn
 import torch.nn.functional as F
 import yaml
 
-from ...nanollama.data import FileDataLoader
+from ...nanollama.data.loader import DataLoader
+from ...nanollama.data.text import DataConfig, MultipleSourcesTokenGenerator
 from ...nanollama.distributed import ClusterConfig, ClusterManager
 from ...nanollama.model import Transformer, TransformerConfig
 from ...nanollama.monitor import (
@@ -42,12 +43,6 @@ _logger = logging.getLogger("nanollama")
 # ------------------------------------------------------------------------------
 # Configuration Class
 # ------------------------------------------------------------------------------
-
-
-@dataclass
-class DataConfig:
-    batch_size: int = 2048
-    seq_len: int = 128
 
 
 @dataclass
@@ -130,12 +125,8 @@ def train(config: TrainingConfig) -> None:
         # DataLoader
         # ---------------------------------------------------------------------
 
-        dataloader = FileDataLoader = context_stack.enter_context(
-            FileDataLoader(
-                config=config.data,
-                state=state.data,
-            )
-        )
+        token_gen = MultipleSourcesTokenGenerator(config.data)
+        dataloader: DataLoader = context_stack.enter_context(DataLoader(config.data, token_gen))
 
         # ---------------------------------------------------------------------
         # Global information
@@ -167,10 +158,7 @@ def train(config: TrainingConfig) -> None:
             # -----------------------------------------------------------------
 
             # profiler.start_timer()
-            batch = torch.ones((config.data.batch_size, config.data.seq_len), dtype=torch.long)
-            # restart_info = None
-
-            # batch, restart_info = next(dataloader)
+            batch = next(dataloader)
             if cluster.device.type != "cpu":
                 batch = batch.pin_memory()
 
@@ -200,12 +188,12 @@ def train(config: TrainingConfig) -> None:
             optimizer.step()
             scheduler.step()
             optimizer.zero_grad()
-            # state.data.report_restart_info(*restart_info)
+            # state.data = dataloader.state_dict()
             state.optim.step += 1
 
             profiler()
 
-            print("step", preds.std().item())
+            print(loss.item())
 
     _logger.info("Training done.")
 
