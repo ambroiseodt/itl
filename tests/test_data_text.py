@@ -1,7 +1,6 @@
 import os
 import tempfile
 import unittest
-from unittest.mock import MagicMock
 
 import numpy as np
 
@@ -13,6 +12,19 @@ from nanollama.data.text import (
     SourceConfig,
 )
 from nanollama.data.tokenizer import TokenizerConfig
+
+
+class MockTokenizer:
+    pad_id: int = 0
+
+    def __init__(self):
+        pass
+
+    def encode(self, sequence: str) -> list[int]:
+        return [ord(c) for c in sequence]
+
+    def decode(self, tokens: list[int]) -> str:
+        return "".join([chr(c) for c in tokens])
 
 
 class TestJSONLIterator(unittest.TestCase):
@@ -43,10 +55,10 @@ class TestJSONLIterator(unittest.TestCase):
             lines = [next(iterator) for _ in range(2)]
         self.assertEqual(lines, [{"key": "value2"}, {"key": "value4"}])
 
-    def test_state_dict(self) -> None:
+    def test_restart(self) -> None:
         # Test state saving and loading
         with JSONLIterator(path=self.temp_file.name, rank=0, world_size=2) as iterator:
-            [next(iterator) for _ in range(6)]  # Read first line
+            [next(iterator) for _ in range(6)]  # Read first lines
             state = iterator.state_dict()
 
         # Create a new iterator and load the state
@@ -74,9 +86,7 @@ class TestJSONLIterator(unittest.TestCase):
 
 class TestSingleSourceTokenGenerator(unittest.TestCase):
     def setUp(self) -> None:
-        # Mock the JSONLIterator and Tokenizer
-        self.mock_tokenizer = MagicMock()
-
+        # Create a temporary JSONL file for testing
         self.temp_file = tempfile.NamedTemporaryFile(delete=False, mode="w+")
         self.temp_file.write('{"text": "sentence one"}\n')
         self.temp_file.write('{"text": "sentence two"}\n')
@@ -86,11 +96,9 @@ class TestSingleSourceTokenGenerator(unittest.TestCase):
         self.temp_file.flush()
         self.temp_file.seek(0)
 
+        # Mock the JSONLIterator and Tokenizer
         self.iterator = JSONLIterator(path=self.temp_file.name, rank=0, world_size=1)
-
-        # Mock data
-        self.mock_tokenizer.encode.side_effect = lambda x: [ord(c) for c in x]
-        self.mock_tokenizer.pad_id = 0
+        self.mock_tokenizer = MockTokenizer()
 
         # Configuration
         self.config = DataConfig(
@@ -123,7 +131,7 @@ class TestSingleSourceTokenGenerator(unittest.TestCase):
         batch = next(self.token_generator)
         self.assertTrue(batch[0, -1] == self.mock_tokenizer.pad_id)
 
-    def test_state_dict(self) -> None:
+    def test_restart(self) -> None:
         # Restart from previous state_dict
         initial_state = self.token_generator.state_dict()
         batch = next(self.token_generator)
@@ -154,10 +162,6 @@ class TestSingleSourceTokenGenerator(unittest.TestCase):
 
 class TestMultipleSourcesTokenGenerator(unittest.TestCase):
     def setUp(self) -> None:
-        # Mock the Tokenizer
-        self.mock_tokenizer = MagicMock()
-        self.mock_tokenizer.encode.side_effect = lambda x: [ord(c) for c in x]
-        self.mock_tokenizer.pad_id = 0
         # Create temporary JSONL files for testing
         self.temp_files: list[tempfile._TemporaryFileWrapper] = []
         for i in range(2):
@@ -196,7 +200,7 @@ class TestMultipleSourcesTokenGenerator(unittest.TestCase):
         expected_shape = (self.config.batch_size, self.config.seq_len)
         self.assertEqual(batch.shape, expected_shape)
 
-    def test_state_dict(self) -> None:
+    def test_restart(self) -> None:
         # Test state saving and loading
         initial_state = self.token_generator.state_dict()
         batch = next(self.token_generator)

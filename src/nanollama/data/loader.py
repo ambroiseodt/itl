@@ -29,6 +29,9 @@ class TokenLoader(ABC, Stateful):
     def __init__(self):
         self.generator = self.batch_iterator()
 
+    def __iter__(self):
+        return self
+
     def __next__(self) -> np.ndarray:
         """Get the next batch of tokens."""
         return next(self.generator)
@@ -87,6 +90,7 @@ class DataLoader(Stateful):
     def __enter__(self):
         """Enter the data generator context."""
         logger.info("Entering dataloader.")
+        self.generator.__enter__()
         if self.asynchronous:
             self.process.start()
         return self
@@ -97,6 +101,7 @@ class DataLoader(Stateful):
         if self.asynchronous:
             self.process.kill()
             self.buffer.close()
+        self.generator.__exit__(exc, value, tb)
 
     def async_batch_creator(self) -> None:
         """Asynchronous batch generation, writting batches to the buffer."""
@@ -148,7 +153,21 @@ class DataLoader(Stateful):
         return batch
 
     def state_dict(self) -> dict:
-        return self.gen_state_dict
+        return {"generator": self.gen_state_dict}
 
     def load_state_dict(self, state_dict: dict) -> None:
-        self.gen_state_dict = state_dict
+        # stop the running process
+        if self.asynchronous:
+            self.process.kill()
+            # empty the buffer
+            while not self.buffer.empty():
+                self.buffer.get()
+
+        # reset the generator
+        self.generator.load_state_dict(state_dict["generator"])
+        self.gen_state_dict = self.generator.state_dict()
+
+        # restart the process
+        if self.asynchronous:
+            self.process = Process(target=self.async_batch_creator)
+            self.process.start()

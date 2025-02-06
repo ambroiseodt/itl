@@ -126,6 +126,9 @@ class JSONLIterator(Stateful):
     def __exit__(self, exc: type[BaseException], value: BaseException, tb: TracebackType):
         self.file.close()
 
+    def __iter__(self):
+        return self
+
     def __next__(self):
         return next(self.generator)
 
