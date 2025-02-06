@@ -26,7 +26,7 @@ def generate_people() -> None:
     global first_names, last_names, cities, countries, occupations
     keys = ["first_names", "last_names", "cities", "countries", "occupations"]
     for key in keys:
-        with open(SAVE_DIR / "atoms" / f"{key}.txt", "r") as f:
+        with open(SAVE_DIR / "atoms" / f"{key}.txt") as f:
             globals()[key] = f.read().splitlines()
 
     # shuffle people ordering
@@ -41,8 +41,8 @@ def generate_people() -> None:
             entity = {
                 "name": f"{first_name} {last_name}",
                 "birth_date": f"{random.randint(1, 28)}/{random.randint(1, 12)}/{random.randint(1950, 2000)}",
-                "birth_place": f"{random.choice(countries)}",  # {random.choice(cities)}, {random.choice(countries)}",
-                "current_address": f"{random.randint(1, 300)} {random.choice(['Main St', 'Broadway', 'High St'])}, {random.choice(cities)}",
+                "birth_place": f"{random.choice(countries)}",
+                "current_address": f"{random.choice(cities)}",
                 "occupation": random.choice(occupations),
             }
             print(json.dumps(entity), file=f, flush=True)
@@ -75,7 +75,7 @@ def generate_biographies(num: int = float("inf")) -> None:
     # recover templates
     templates: list[Template] = []
     for file in (SAVE_DIR / "templates").glob("bio*.j2"):
-        with open(file, "r") as f:
+        with open(file) as f:
             templates.append(Template(f.read()))
 
     # write biographies to file
@@ -83,9 +83,7 @@ def generate_biographies(num: int = float("inf")) -> None:
         for i, people in enumerate(collect_people(num=num)):
             for template in templates:
                 biography = template.render(**people)
-                print(
-                    json.dumps({"text": biography, "people_id": i}), file=f, flush=True
-                )
+                print(json.dumps({"text": biography, "people_id": i}), file=f, flush=True)
 
 
 def generate_qa(num: int = float("inf"), tooluse: bool = False) -> None:
@@ -99,7 +97,7 @@ def generate_qa(num: int = float("inf"), tooluse: bool = False) -> None:
     """
     templates: list[Template] = []
     for file in (SAVE_DIR / "templates").glob("qa*.j2"):
-        with open(file, "r") as f:
+        with open(file) as f:
             templates.append(Template(f.read()))
 
     render = {}

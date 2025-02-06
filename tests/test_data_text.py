@@ -1,0 +1,212 @@
+import os
+import tempfile
+import unittest
+from unittest.mock import MagicMock
+
+import numpy as np
+
+from nanollama.data.text import (
+    DataConfig,
+    JSONLIterator,
+    MultipleSourcesTokenGenerator,
+    SingleSourceTokenGenerator,
+    SourceConfig,
+)
+from nanollama.data.tokenizer import TokenizerConfig
+
+
+class TestJSONLIterator(unittest.TestCase):
+    def setUp(self) -> None:
+        # Create a temporary JSONL file for testing
+        self.temp_file = tempfile.NamedTemporaryFile(delete=False, mode="w+")
+        self.temp_file.write('{"key": "value1"}\n')
+        self.temp_file.write('{"key": "value2"}\n')
+        self.temp_file.write('{"key": "value3"}\n')
+        self.temp_file.write('{"key": "value4"}\n')
+        self.temp_file.write('{"key": "value5"}\n')
+        self.temp_file.flush()
+        self.temp_file.seek(0)
+
+    def tearDown(self) -> None:
+        # Close and remove the temporary file
+        self.temp_file.close()
+        os.unlink(self.temp_file.name)
+
+    def test_iteration(self) -> None:
+        # Test with world_size=2, rank=0
+        with JSONLIterator(path=self.temp_file.name, rank=0, world_size=2) as iterator:
+            lines = [next(iterator) for _ in range(3)]
+        self.assertEqual(lines, [{"key": "value1"}, {"key": "value3"}, {"key": "value5"}])
+
+        # Test with world_size=2, rank=1
+        with JSONLIterator(path=self.temp_file.name, rank=1, world_size=2) as iterator:
+            lines = [next(iterator) for _ in range(2)]
+        self.assertEqual(lines, [{"key": "value2"}, {"key": "value4"}])
+
+    def test_state_dict(self) -> None:
+        # Test state saving and loading
+        with JSONLIterator(path=self.temp_file.name, rank=0, world_size=2) as iterator:
+            [next(iterator) for _ in range(6)]  # Read first line
+            state = iterator.state_dict()
+
+        # Create a new iterator and load the state
+        with JSONLIterator(path=self.temp_file.name, rank=0, world_size=2) as new_iterator:
+            new_iterator.load_state_dict(state)
+            line = next(new_iterator)
+        self.assertEqual(line, {"key": "value3"})
+
+    def test_loop(self) -> None:
+        # Test looping functionality
+        with JSONLIterator(path=self.temp_file.name, rank=0, world_size=2) as iterator:
+            lines = [next(iterator) for _ in range(6)]
+        self.assertEqual(
+            lines,
+            [
+                {"key": "value1"},
+                {"key": "value3"},
+                {"key": "value5"},
+                {"key": "value2"},
+                {"key": "value4"},
+                {"key": "value1"},
+            ],
+        )
+
+
+class TestSingleSourceTokenGenerator(unittest.TestCase):
+    def setUp(self) -> None:
+        # Mock the JSONLIterator and Tokenizer
+        self.mock_tokenizer = MagicMock()
+
+        self.temp_file = tempfile.NamedTemporaryFile(delete=False, mode="w+")
+        self.temp_file.write('{"text": "sentence one"}\n')
+        self.temp_file.write('{"text": "sentence two"}\n')
+        self.temp_file.write('{"text": "sentence three"}\n')
+        self.temp_file.write('{"text": "sentence four"}\n')
+        self.temp_file.write('{"text": "sentence five"}\n')
+        self.temp_file.flush()
+        self.temp_file.seek(0)
+
+        self.iterator = JSONLIterator(path=self.temp_file.name, rank=0, world_size=1)
+
+        # Mock data
+        self.mock_tokenizer.encode.side_effect = lambda x: [ord(c) for c in x]
+        self.mock_tokenizer.pad_id = 0
+
+        # Configuration
+        self.config = DataConfig(
+            sources=None,
+            tokenizer=None,
+            batch_size=2,
+            seq_len=5,
+            padding=True,
+        )
+
+        # Initialize TokenGenerator
+        self.token_generator = SingleSourceTokenGenerator(self.config, self.iterator, self.mock_tokenizer)
+        self.token_generator.__enter__()
+
+    def tearDown(self) -> None:
+        # Close and remove the temporary file
+        self.token_generator.__exit__(None, None, None)
+        self.temp_file.close()
+        os.unlink(self.temp_file.name)
+
+    def test_token_generation(self) -> None:
+        # Test if the generator produces the expected output
+        batch = next(self.token_generator)
+        expected_shape = (self.config.batch_size, self.config.seq_len)
+        self.assertEqual(batch.shape, expected_shape)
+
+    def test_padding(self) -> None:
+        # Test if padding is applied correctly
+        next(self.token_generator)
+        batch = next(self.token_generator)
+        self.assertTrue(batch[0, -1] == self.mock_tokenizer.pad_id)
+
+    def test_state_dict(self) -> None:
+        # Restart from previous state_dict
+        initial_state = self.token_generator.state_dict()
+        batch = next(self.token_generator)
+        next(self.token_generator)
+
+        # Create a new TokenGenerator and load the saved state
+        new_token_generator = SingleSourceTokenGenerator(self.config, self.iterator, self.mock_tokenizer)
+        new_token_generator.load_state_dict(initial_state)
+        # Generate a batch from the new generator
+        restarted_batch = next(new_token_generator)
+        assert np.array_equal(batch, restarted_batch)
+
+    def test_bsz(self) -> None:
+        # Test if changing the batch size works
+        initial_state = self.token_generator.state_dict()
+        n = 10
+        self.token_generator.set_batch_size(1)
+        for _ in range(n):
+            batch = next(self.token_generator)
+        assert batch.shape == (1, self.config.seq_len)
+
+        self.token_generator.load_state_dict(initial_state)
+        self.token_generator.set_batch_size(n)
+        new_batch = next(self.token_generator)
+        assert new_batch.shape == (n, self.config.seq_len)
+        assert np.array_equal(batch, new_batch[-1:])
+
+
+class TestMultipleSourcesTokenGenerator(unittest.TestCase):
+    def setUp(self) -> None:
+        # Mock the Tokenizer
+        self.mock_tokenizer = MagicMock()
+        self.mock_tokenizer.encode.side_effect = lambda x: [ord(c) for c in x]
+        self.mock_tokenizer.pad_id = 0
+        # Create temporary JSONL files for testing
+        self.temp_files: list[tempfile._TemporaryFileWrapper] = []
+        for i in range(2):
+            temp_file = tempfile.NamedTemporaryFile(delete=False, mode="w+")
+            temp_file.write('{"text": "sentence one, file ' + str(i) + '"}\n')
+            temp_file.write('{"text": "sentence two, file ' + str(i) + '"}\n')
+            temp_file.flush()
+            temp_file.seek(0)
+            self.temp_files.append(temp_file)
+        # Configuration
+        self.config = DataConfig(
+            sources=[
+                SourceConfig(path=self.temp_files[0].name, weight=0.5),
+                SourceConfig(path=self.temp_files[1].name, weight=0.5),
+            ],
+            tokenizer=TokenizerConfig(name="byte"),
+            batch_size=2,
+            seq_len=5,
+            padding=True,
+            seed=42,
+        )
+        # Initialize MultipleSourcesTokenGenerator
+        self.token_generator = MultipleSourcesTokenGenerator(self.config)
+        self.token_generator.__enter__()
+
+    def tearDown(self) -> None:
+        # Close and remove the temporary files
+        self.token_generator.__exit__(None, None, None)
+        for temp_file in self.temp_files:
+            temp_file.close()
+            os.unlink(temp_file.name)
+
+    def test_token_generation(self) -> None:
+        # Test if the generator produces the expected output
+        batch = next(self.token_generator)
+        expected_shape = (self.config.batch_size, self.config.seq_len)
+        self.assertEqual(batch.shape, expected_shape)
+
+    def test_state_dict(self) -> None:
+        # Test state saving and loading
+        initial_state = self.token_generator.state_dict()
+        batch = next(self.token_generator)
+
+        # Create a new generator and load the saved state
+        new_token_generator = MultipleSourcesTokenGenerator(self.config)
+        new_token_generator.__enter__()
+        new_token_generator.load_state_dict(initial_state)
+
+        # Generate a batch from the new generator
+        restarted_batch = next(new_token_generator)
+        assert np.array_equal(batch, restarted_batch)
+        new_token_generator.__exit__(None, None, None)

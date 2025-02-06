@@ -16,13 +16,13 @@ from types import TracebackType
 from typing import Any
 
 import numpy as np
+from numpy.random import default_rng
 from torch.distributed.checkpoint.stateful import Stateful
 
-from nanollama.data.tokenizer import Tokenizer, TokenizerConfig
-
-# from ..distributed import get_rank, get_world_size
-# from .tokenizer import Tokenizer, TokenizerConfig
-# from .utils import generate_seeds
+from ..distributed import get_rank, get_world_size
+from .loader import TokenLoader
+from .tokenizer import Tokenizer, TokenizerConfig, build_tokenizer
+from .utils import generate_seeds
 
 # ------------------------------------------------------------------------------
 # Configuration classes
@@ -61,15 +61,12 @@ class DataConfig:
     sources: list[SourceConfig]
     tokenizer: TokenizerConfig
 
-    batch_size: int = 0
-    seq_len: int = 0
+    batch_size: int
+    seq_len: int
     padding: bool = False
     seed: int = 0
     asynchronous: bool = True
     buffer_size: int = 4
-
-    def __post_init__(self):
-        pass
 
 
 # ------------------------------------------------------------------------------
@@ -91,6 +88,7 @@ class JSONLIterator(Stateful):
     position: current position in the file
     line_num: current line number
     generator: generator that yields lines
+    loop: current loop number (useful to check how many times data were seen)
 
     ### Example
     ```python
@@ -112,23 +110,26 @@ class JSONLIterator(Stateful):
         self.path = path
         self.rank = rank
         self.world_size = world_size
-        self.loop = loop
+        self.loop = int(loop)
 
         self.file = None
         self.position = 0
         self.line_num = 0
 
-        self.generator = self.iterator()
+        self.generator = self.line_iterator()
 
     def __enter__(self):
         self.file = open(self.path)
         self.file.seek(self.position)
         return self
 
+    def __exit__(self, exc: type[BaseException], value: BaseException, tb: TracebackType):
+        self.file.close()
+
     def __next__(self):
         return next(self.generator)
 
-    def iterator(self) -> Generator[dict[str, str], None, None]:
+    def line_iterator(self) -> Generator[dict[str, str], None, None]:
         while True:
             # read the file and yield lines according to the rank
             while line := self.file.readline():
@@ -140,6 +141,7 @@ class JSONLIterator(Stateful):
             # potential rewind when the end of the file is reached
             if not self.loop:
                 break
+            self.loop += 1
             self.file.seek(0)
 
     def state_dict(self) -> dict[str, Any]:
@@ -150,22 +152,22 @@ class JSONLIterator(Stateful):
         self.position = state_dict["position"]
         self.file.seek(self.position)
 
-    def __exit__(self, exc: type[BaseException], value: BaseException, tb: TracebackType):
-        self.file.close()
-
 
 # ------------------------------------------------------------------------------
 # Tokens Generator
 # ------------------------------------------------------------------------------
 
 
-class TokenGenerator(Stateful):
+class SingleSourceTokenGenerator(TokenLoader):
     """
-    Generate token iteratively in order to feed an LLM
+    Generate token iteratively in order to feed an LLM based on a single sequence iterator.
+
+    Pulls sequences from the sequence iterator, and transform them into tokens.
+    Yield batches of tokens with shape `bsz x seq_len`.
 
     ### Parameters
     config: data configuration
-    iterator: JSONLIterator
+    iterator: sequence (string) iterator
     tokenizer: tokenizer
 
     ### Attributes
@@ -173,6 +175,9 @@ class TokenGenerator(Stateful):
     bsz: batch size
     seq_len: sequence length
     padding: whether to pad sequences
+
+    ### Methods
+    set_batch_size: modify the batch size of the generator
 
     ### Example
     ```python
@@ -183,25 +188,34 @@ class TokenGenerator(Stateful):
     """
 
     def __init__(self, config: DataConfig, iterator: JSONLIterator, tokenizer: Tokenizer):
+        super().__init__()
         self.jsonl_iterator = iterator
         self.tokenizer = tokenizer
 
         self.tokens = []
-        self.bsz = config.batch_size
+        self.batch_size = config.batch_size
         self.seq_len = config.seq_len
-        self.tokens_per_batch = self.bsz * self.seq_len
+        self.tokens_per_batch = self.batch_size * self.seq_len
         self.padding = config.padding
-
-        self.generator = self.iterator()
 
     def __enter__(self):
         self.jsonl_iterator.__enter__()
         return self
 
-    def __next__(self):
-        return next(self.generator)
+    def __exit__(self, exc: type[BaseException], value: BaseException, tb: TracebackType):
+        self.jsonl_iterator.__exit__(exc, value, tb)
 
-    def iterator(self) -> Generator[np.ndarray[int], None, None]:
+    def set_batch_size(self, batch_size: int) -> None:
+        """
+        Modify the batch size of the generator
+
+        ### Parameters
+        batch_size: new batch size
+        """
+        self.batch_size = batch_size
+        self.tokens_per_batch = self.batch_size * self.seq_len
+
+    def batch_iterator(self) -> Generator[np.ndarray[int], None, None]:
         while True:
             while len(self.tokens) < self.tokens_per_batch:
                 # receive sentences
@@ -215,7 +229,7 @@ class TokenGenerator(Stateful):
                 if self.padding:
                     self.tokens.extend([self.tokenizer.pad_id] * (-len(self.tokens) % self.seq_len))
 
-            batch = np.array(self.tokens[: self.tokens_per_batch]).reshape(self.bsz, self.seq_len)
+            batch = np.array(self.tokens[: self.tokens_per_batch]).reshape(self.batch_size, self.seq_len)
             self.tokens = self.tokens[self.tokens_per_batch :]
 
             yield batch
@@ -227,151 +241,79 @@ class TokenGenerator(Stateful):
         self.jsonl_iterator.load_state_dict(state_dict["iterator"])
         self.tokens = state_dict["tokens"]
 
+
+# ------------------------------------------------------------------------------
+# Text Generator from Multiple Sources
+# ------------------------------------------------------------------------------
+
+
+class MultipleSourcesTokenGenerator(TokenLoader):
+    """
+    Generate token from multiple single source iterators according to some weight.
+
+    ### Parameters
+    config: data configuration
+
+    ### Attributes
+    generators: list of single source token generators
+    weights: weights of the different sources in the datamix
+    rng: random number generator
+
+    ### Example
+    ```python
+    with MultipleSourceTokenGenerator(config) as generator:
+        for batch in generator:
+            print(batch)
+    ```
+    """
+
+    def __init__(self, config: DataConfig):
+        super().__init__()
+
+        self.batch_size = config.batch_size
+        self.seq_len = config.seq_len
+
+        # initialize the single source iterators
+        tokenizer = build_tokenizer(config.tokenizer)
+        rank, world_size = get_rank(), get_world_size()
+        iterators = [JSONLIterator(source.path, rank, world_size) for source in config.sources]
+        self.generators = [SingleSourceTokenGenerator(config, iterator, tokenizer) for iterator in iterators]
+
+        # initialize the source weights
+        self.weights = np.array([source.weight for source in config.sources], dtype=float)
+        self.weights /= np.sum(self.weights)
+
+        # initialize the random number generator
+        _, seeds = generate_seeds(nb_shared=0, nb_individual=1, root_seed=config.seed, rank=rank)
+        self.rng = default_rng(seeds[0])
+
+    def __enter__(self):
+        for generator in self.generators:
+            generator.__enter__()
+        return self
+
     def __exit__(self, exc: type[BaseException], value: BaseException, tb: TracebackType):
-        self.jsonl_iterator.__exit__(exc, value, tb)
+        for generator in self.generators:
+            generator.__exit__(exc, value, tb)
 
+    def batch_iterator(self) -> Generator[np.ndarray[int], None, None]:
+        while True:
+            # generate a random mix of sources
+            source_mix = self.rng.multinomial(self.batch_size, self.weights)
 
-# ------------------------------------------------------------------------------
-# Text Generator from Multiple Sources (TODO)
-# ------------------------------------------------------------------------------
+            # create a batch accordingly
+            batch = np.zeros((self.batch_size, self.seq_len), dtype=int)
+            ind = 0
+            for gen, bsz in zip(self.generators, source_mix):
+                gen.set_batch_size(bsz)
+                batch[ind : ind + bsz] = next(gen)
+                ind = ind + bsz
+            yield batch
 
-# In usual implementation, data is pulled from multiple sources.
-# We do not need to care for it in our current project.
+    def state_dict(self) -> dict[str, Any]:
+        return {"generators": [gen.state_dict() for gen in self.generators], "rng_state": self.rng.bit_generator.state}
 
-# Note that in the classical datasetup, each data are visited once,
-# which means that we do not need to care about randomness of samples within an epoch.
-# We may want to modify the code above to allow for random batch ordering.
-# One way to do it is to pull all the data in memory and read from them (inline with classical ML).
-# Another was to do it is to create many biography files, and pick them randomly (inline with LLM training).
-
-# ------------------------------------------------------------------------------
-# Unit Tests
-# ------------------------------------------------------------------------------
-
-if __name__ == "__main__":
-    import os
-    import tempfile
-    import unittest
-    from unittest.mock import MagicMock
-
-    class TestJSONLIterator(unittest.TestCase):
-        def setUp(self) -> None:
-            # Create a temporary JSONL file for testing
-            self.temp_file = tempfile.NamedTemporaryFile(delete=False, mode="w+")
-            self.temp_file.write('{"key": "value1"}\n')
-            self.temp_file.write('{"key": "value2"}\n')
-            self.temp_file.write('{"key": "value3"}\n')
-            self.temp_file.write('{"key": "value4"}\n')
-            self.temp_file.write('{"key": "value5"}\n')
-            self.temp_file.flush()
-            self.temp_file.seek(0)
-
-        def tearDown(self) -> None:
-            # Close and remove the temporary file
-            self.temp_file.close()
-            os.unlink(self.temp_file.name)
-
-        def test_iteration(self) -> None:
-            # Test with world_size=2, rank=0
-            with JSONLIterator(path=self.temp_file.name, rank=0, world_size=2) as iterator:
-                lines = [next(iterator) for _ in range(3)]
-            self.assertEqual(lines, [{"key": "value1"}, {"key": "value3"}, {"key": "value5"}])
-
-            # Test with world_size=2, rank=1
-            with JSONLIterator(path=self.temp_file.name, rank=1, world_size=2) as iterator:
-                lines = [next(iterator) for _ in range(2)]
-            self.assertEqual(lines, [{"key": "value2"}, {"key": "value4"}])
-
-        def test_state_dict(self) -> None:
-            # Test state saving and loading
-            with JSONLIterator(path=self.temp_file.name, rank=0, world_size=2) as iterator:
-                [next(iterator) for _ in range(6)]  # Read first line
-                state = iterator.state_dict()
-
-            # Create a new iterator and load the state
-            with JSONLIterator(path=self.temp_file.name, rank=0, world_size=2) as new_iterator:
-                new_iterator.load_state_dict(state)
-                line = next(new_iterator)
-            self.assertEqual(line, {"key": "value3"})
-
-        def test_loop(self) -> None:
-            # Test looping functionality
-            with JSONLIterator(path=self.temp_file.name, rank=0, world_size=2) as iterator:
-                lines = [next(iterator) for _ in range(6)]
-            self.assertEqual(
-                lines,
-                [
-                    {"key": "value1"},
-                    {"key": "value3"},
-                    {"key": "value5"},
-                    {"key": "value2"},
-                    {"key": "value4"},
-                    {"key": "value1"},
-                ],
-            )
-
-    class TestTokenGenerator(unittest.TestCase):
-        def setUp(self) -> None:
-            # Mock the JSONLIterator and Tokenizer
-            self.mock_tokenizer = MagicMock()
-
-            self.temp_file = tempfile.NamedTemporaryFile(delete=False, mode="w+")
-            self.temp_file.write('{"text": "sentence one"}\n')
-            self.temp_file.write('{"text": "sentence two"}\n')
-            self.temp_file.write('{"text": "sentence three"}\n')
-            self.temp_file.write('{"text": "sentence four"}\n')
-            self.temp_file.write('{"text": "sentence five"}\n')
-            self.temp_file.flush()
-            self.temp_file.seek(0)
-
-            self.iterator = JSONLIterator(path=self.temp_file.name, rank=0, world_size=1)
-            self.iterator.__enter__()
-
-            # Mock data
-            self.mock_tokenizer.encode.side_effect = lambda x: [ord(c) for c in x]
-            self.mock_tokenizer.pad_id = 0
-
-            # Configuration
-            self.config = DataConfig(
-                sources=None,
-                tokenizer=None,
-                batch_size=2,
-                seq_len=5,
-                padding=True,
-            )
-
-            # Initialize TokenGenerator
-            self.token_generator = TokenGenerator(self.config, self.iterator, self.mock_tokenizer)
-
-        def tearDown(self) -> None:
-            # Close and remove the temporary file
-            self.iterator.__exit__(None, None, None)
-            self.temp_file.close()
-            os.unlink(self.temp_file.name)
-
-        def test_token_generation(self) -> None:
-            # Test if the generator produces the expected output
-            batch = next(self.token_generator)
-            expected_shape = (self.config.batch_size, self.config.seq_len)
-            self.assertEqual(batch.shape, expected_shape)
-
-        def test_padding(self) -> None:
-            # Test if padding is applied correctly
-            next(self.token_generator)
-            batch = next(self.token_generator)
-            self.assertTrue(batch[0, -1] == self.mock_tokenizer.pad_id)
-
-        def test_state_dict(self) -> None:
-            # Restart from previous state_dict
-            initial_state = self.token_generator.state_dict()
-            batch = next(self.token_generator)
-            next(self.token_generator)
-
-            # Create a new TokenGenerator and load the saved state
-            new_token_generator = TokenGenerator(self.config, self.iterator, self.mock_tokenizer)
-            new_token_generator.load_state_dict(initial_state)
-            # Generate a batch from the new generator
-            restarted_batch = next(new_token_generator)
-            assert np.array_equal(batch, restarted_batch)
-
-    unittest.main()
+    def load_state_dict(self, state_dict: dict[str, Any]) -> None:
+        for gen, state in zip(self.generators, state_dict["generators"]):
+            gen.load_state_dict(state)
+        self.rng.bit_generator.state = state_dict["rng_state"]

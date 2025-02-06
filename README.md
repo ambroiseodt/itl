@@ -33,8 +33,13 @@ python -m src.apps.memory.dataset.generate biographies --num 1000
 python -m src.apps.memory.dataset.generate qa --tooluse
 ```
 
+## Development
+Run unit tests with the following command at the root of this repository
+```bash
+python -m unittest
+```
 
-## Code convention
+#### Code convention
 - Avoid packages that are not well maintained
 - If using heavy/hard-to-install packages that are not mandatory, make sure that the code still run if people do not install these packages
 - Make sure that the code is open-source-able

@@ -9,6 +9,7 @@ located in the root directory of this repository.
 @ 2025, Meta
 """
 
+from abc import ABC, abstractmethod
 from collections.abc import Generator
 from dataclasses import dataclass
 from logging import getLogger
@@ -19,8 +20,33 @@ from typing import Any
 
 import numpy as np
 import torch
+from torch.distributed.checkpoint.stateful import Stateful
 
 logger = getLogger("nanollama")
+
+
+class TokenLoader(ABC, Stateful):
+    def __init__(self):
+        self.generator = self.batch_iterator()
+
+    def __next__(self) -> np.ndarray:
+        """Get the next batch of tokens."""
+        return next(self.generator)
+
+    @abstractmethod
+    def __enter__(self) -> Generator[np.ndarray, None, None]:
+        """Enter the batch generator context (opening files, ...)."""
+        ...
+
+    @abstractmethod
+    def __exit__(self, exc: type[BaseException], value: BaseException, tb: TracebackType):
+        """Exit the batch generator context (closing files, ...)."""
+        ...
+
+    @abstractmethod
+    def batch_iterator(self) -> Generator[np.ndarray, None, None]:
+        """Generate batches of tokens."""
+        ...
 
 
 @dataclass
@@ -29,9 +55,13 @@ class DataConfig:
     buffer_size: int = 4
 
 
-class DataLoader:
+class DataLoader(Stateful):
     """
-    Dataloader
+    Asynchronous Dataloader
+
+    ### Parameters
+    config: configuration of the data loader.
+    generator: token loader to use to generate batches.
 
     Usage:
     ```python
@@ -39,18 +69,9 @@ class DataLoader:
         for batch, _ in data_loader:
             pass
     ```
-
-    Parameters
-    ----------
-    config:
-        The configuration of the data loader.
-    state:
-        The state of the data loader.
     """
 
-    TYPE = "train"
-
-    def __init__(self, config: DataConfig):
+    def __init__(self, config: DataConfig, generator: TokenLoader):
         # data loader configuration
         self.asynchronous = config.asynchronous
 
@@ -60,45 +81,39 @@ class DataLoader:
             self.buffer = Queue(maxsize=config.buffer_size)
 
         # initialize the batch generator
-        self.generator = self.batch_iterator()
+        self.generator = generator
+        self.gen_state_dict = self.generator.state_dict()
 
     def __enter__(self):
-        if self.TYPE == "train":
-            logger.info("Entering dataloader.")
+        """Enter the data generator context."""
+        logger.info("Entering dataloader.")
         if self.asynchronous:
             self.process.start()
         return self
 
-    def batch_iterator(self) -> Generator[np.ndarray, None, None]:
-        """
-        Generate batches of sentences.
-        """
-        raise NotImplementedError
-
-    def get_restart_info(self) -> Any:
-        """
-        Get restart information.
-        """
-        raise NotImplementedError
+    def __exit__(self, exc: type[BaseException], value: BaseException, tb: TracebackType):
+        """Exit the data generator context."""
+        logger.info("Exiting dataloader.")
+        if self.asynchronous:
+            self.process.kill()
+            self.buffer.close()
 
     def async_batch_creator(self) -> None:
-        """
-        Asynchronous batch generation, writting batches to the buffer.
-        """
+        """Asynchronous batch generation, writting batches to the buffer."""
         # loop on batch creation
         while True:
             try:
                 batch = next(self.generator)
-                restart_info = self.get_restart_info()
+                gen_state_dict = self.generator.state_dict()
                 batch = torch.from_numpy(batch).long()
             # handle end of data asynchrounously
             except StopIteration:
-                batch = restart_info = None
+                batch = gen_state_dict = None
 
             # put it in the buffer
             while True:
                 try:
-                    self.buffer.put((batch, restart_info), timeout=0.1)
+                    self.buffer.put((batch, gen_state_dict), timeout=0.1)
                     break
                 # if the buffer is full, wait until there is space
                 except Full:
@@ -106,9 +121,7 @@ class DataLoader:
             logger.debug("New batch put in the buffer.")
 
     def async_get_batch(self) -> tuple[np.ndarray, tuple]:
-        """
-        Asynchronous batch acquisition, reading batches from the buffer.
-        """
+        """Asynchronous batch acquisition, reading batches from the buffer."""
         # read batch from the buffer
         while True:
             try:
@@ -118,29 +131,24 @@ class DataLoader:
                 logger.debug("Buffer is empty. Waiting for data.")
 
     def __iter__(self) -> "DataLoader":
-        """
-        Return an iterator over batches
-        """
+        """Return an iterator over batches"""
         return self
 
     def __next__(self) -> tuple[torch.Tensor, Any]:
-        """
-        Get the next batch of sentences.
-        """
+        """Get the next batch of sentences."""
         if self.asynchronous:
-            batch, restart_info = self.async_get_batch()
+            batch, self.gen_state_dict = self.async_get_batch()
             # handle end of data asynchrounously
             if batch is None:
                 raise StopIteration
         else:
             batch = next(self.generator)
-            restart_info = self.get_restart_info()
+            self.gen_state_dict = self.state_dict()
             batch = torch.from_numpy(batch).long()
-        return batch, restart_info
+        return batch
 
-    def __exit__(self, exc: type[BaseException], value: BaseException, tb: TracebackType):
-        if self.TYPE == "train":
-            logger.info("Exiting dataloader.")
-        if self.asynchronous:
-            self.process.kill()
-            self.buffer.close()
+    def state_dict(self) -> dict:
+        return self.gen_state_dict
+
+    def load_state_dict(self, state_dict: dict) -> None:
+        self.gen_state_dict = state_dict

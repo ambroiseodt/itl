@@ -1,8 +1,10 @@
 Fill the different parts of the code, with inspiration from nanoGPT, Meta Lingua, and Meta PAL.
 Have minimal working pipelines.
 
-
 Minimal working pipelines.
+
+- Test the asynchronous dataloader.
+- write a training loop.
 
 
 - Structure for the memory project.
@@ -17,7 +19,6 @@ Minimal working pipelines.
 - Finetuning logic.
 
 - Probing mechanism.
-
 
 ## Notes
 Dataloading has some subtleties.

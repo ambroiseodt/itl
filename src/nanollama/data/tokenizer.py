@@ -18,6 +18,7 @@ from dataclasses import dataclass
 
 
 class Tokenizer(ABC):
+    name: str
     vocab_size: int
     bos_id: int
     eos_id: int
@@ -28,12 +29,10 @@ class Tokenizer(ABC):
         """
         Encode a sentence into a list of token IDs.
 
-        Parameters
-        ----------
+        ### Parameters
         sentence: sentence to encode.
 
-        Returns
-        -------
+        ### Returns
         list of token IDs.
         """
         ...
@@ -43,12 +42,10 @@ class Tokenizer(ABC):
         """
         Decode a list of token IDs into a sentence.
 
-        Parameters
-        ----------
+        ### Parameters
         tokens: list of token IDs to decode.
 
-        Returns
-        -------
+        ### Returns
         decoded sentence.
         """
         ...
@@ -60,20 +57,20 @@ class Tokenizer(ABC):
 
 
 class ByteTokenizer(Tokenizer):
-    error_scheme = "backslashreplace"
-    encoding = "utf-8"
-
+    name = "byte"
     vocab_size = 259
     pad_id = 256
     bos_id = 257
     eos_id = 258
 
+    error_scheme = "backslashreplace"
+    encoding = "utf-8"
+
     def __init__(self, bos: bool = True, eos: bool = True):
         """
         Byte Tokenizer
 
-        Parameters
-        ----------
+        ### Parameters
         bos: whether to add a BOS token at the beginning.
         eos: whether to add an EOS token at the end.
         """
@@ -95,7 +92,7 @@ class ByteTokenizer(Tokenizer):
 
 
 # ------------------------------------------------------------------------------
-# Tiktoken Tokenizer
+# Tiktoken Tokenizer (TODO: clean the implementation for our needs)
 # ------------------------------------------------------------------------------
 
 """
@@ -103,6 +100,7 @@ TODO
 
 Use tiktoken to parse <TOOLUSE> and </TOOLUSE> as special tokens.
 Also create a special <BOS> and <EOS> token.
+(Maybe replace <TOOLUSE> by <|tooluse|> to match the usual syntax for special tokens)
 
 I have put some code that I found online, it needs to be modified to fit our needs.
 """
@@ -113,6 +111,8 @@ from pathlib import Path  # noqa: E402
 
 
 class TikTokenTokenizer(Tokenizer):
+    name = "tiktoken"
+
     NUM_RESERVED_TOKENS = 256
     DEFAULT_TIKTOKEN_PATTERN = r"""(?i:'s|'t|'re|'ve|'m|'ll|'d)|[^\r\n\p{L}\p{N}]?\p{L}+|\p{N}{1,3}| ?[^\s\p{L}\p{N}]+[\r\n]*|\s*[\r\n]+|\s+(?!\S)|\s+"""  # noqa: E501
     DEFAULT_TIKTOKEN_SPECIAL_TOKENS = {
@@ -126,13 +126,12 @@ class TikTokenTokenizer(Tokenizer):
     }
     TIKTOKEN_MAX_ENCODE_CHARS = 400_000
 
-    def __init__(self, model_path: str, bos: bool = True, eos: bool = False) -> None:
+    def __init__(self, path: str, bos: bool = True, eos: bool = False) -> None:
         """
         Tiktoken Tokenizer
 
-        Parameters
-        ----------
-        model_path: path to the tiktoken model.
+        ### Parameters
+        path: path to the tiktoken model.
         bos: whether to add a BOS token at the beginning.
         eos: whether to add an EOS token at the end.
         """
@@ -140,10 +139,10 @@ class TikTokenTokenizer(Tokenizer):
         from tiktoken.load import load_tiktoken_bpe
 
         super().__init__()
-        mergeable_ranks = load_tiktoken_bpe(model_path)
+        mergeable_ranks = load_tiktoken_bpe(path)
         all_special_tokens_with_ids = self.get_all_special_tokens_with_ids(mergeable_ranks)
         self.tkt_model = tiktoken.core.Encoding(
-            name=Path(model_path).stem,
+            name=Path(path).stem,
             pat_str=self.DEFAULT_TIKTOKEN_PATTERN,
             mergeable_ranks=mergeable_ranks,
             special_tokens=all_special_tokens_with_ids,
@@ -197,15 +196,39 @@ class TikTokenTokenizer(Tokenizer):
 @dataclass
 class TokenizerConfig:
     """
-    TODO
+    Tokenizer configuration
+
+    ### Attributes
+    name: name of the tokenizer.
+    path: path to the tokenizer model.
+    bos: whether to add a `begin of sentence` token at the beginning.
+    eos: whether to add an `end of sentence` token at the end.
     """
 
     name: str
-    pass
+    path: str | None = None
+    bos: bool = True
+    eos: bool = True
+
+    def __post_init__(self):
+        assert self.name, "Tokenizer name is required."
+        self.name = self.name.lower()
+        assert self.name in [ByteTokenizer.name, TikTokenTokenizer.name]
 
 
 def build_tokenizer(config: TokenizerConfig) -> Tokenizer:
     """
-    TODO: look at Amaia dispatcher
+    Build tokenizer based on the configuration.
+
+    ### Parameters
+    config: tokenizer configuration.
+
+    ### Returns
+    tokenizer instance.
     """
-    pass
+
+    if config.name == ByteTokenizer.name:
+        return ByteTokenizer(bos=config.bos, eos=config.eos)
+
+    if config.name == TikTokenTokenizer.name:
+        return TikTokenTokenizer(path=config.path, bos=config.bos, eos=config.eos)
