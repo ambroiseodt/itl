@@ -1,24 +1,20 @@
-Fill the different parts of the code, with inspiration from nanoGPT, Meta Lingua, and Meta PAL.
-Have minimal working pipelines.
+Todo:
+- Modify tiktoken tokenizer to create a special `<tooluse>` token.
+- Get better metrics of performance.
+- Get some curves, and write some visualization notebooks/scripts to get plots out of many experimental logs.
+- Load pretrain models?
+- Write a pipeline to first pretrain on `biographies` and then `finetune` on `qa`.
 
-Minimal working pipelines.
+Vivien's todo:
+- Write checkpointing logic with the dataloader
+- Clean the various monitoring object
+- Write a minimal, and a wistle and bell training script.
+- Show how to run a grid with a grid.yaml configuration.
 
-- Test the asynchronous dataloader.
-- write a training loop.
-
-
-- Structure for the memory project.
-	- Dataloader and tokenizer.
-		- Complete the dataloading
-		- Put the Tiktoken tokenizer
-	- Put back all the monitoring logic from nanollama.
-	- Pretrained model (?).
-	
+Other Viven's todo:
 - Caching during generation.
-
-- Finetuning logic.
-
 - Probing mechanism.
+- Profiling.
 
 ## Notes
 Dataloading has some subtleties.
