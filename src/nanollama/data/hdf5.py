@@ -1,6 +1,4 @@
 """
-Currently Deprecated
-
 Dataloader from hdf5 file
 
 License
@@ -13,7 +11,7 @@ located in the root directory of this repository.
 
 import os
 from collections.abc import Generator
-from dataclasses import dataclass, field
+from dataclasses import dataclass
 from logging import getLogger
 from types import TracebackType
 from typing import Any
@@ -23,7 +21,7 @@ import numpy as np
 from numpy.random import default_rng
 
 from ..distributed import get_rank, get_world_size
-from .loader import DataLoader
+from .loader import TokenLoader
 
 logger = getLogger("nanollama")
 
@@ -35,88 +33,32 @@ logger = getLogger("nanollama")
 
 @dataclass
 class DataConfig:
+    n_data: int
+    batch_size: int
     path: str = ""
-    n_data: int = 0
-    batch_size: int = 0
     seed: int = 0
     asynchronous: bool = True  # asynchronous data loading
     buffer_size: int = 4  # number of batches to bufferize asynchronously for data loading
 
     def __post_init__(self):
-        assert self.n_data, "Number of data must be specified."
-        assert self.batch_size, "Batch size must be specified."
         self.path = os.path.expandvars(self.path)
 
 
-@dataclass
-class DataLoaderState:
-    rng_state: dict[str, Any]
-    epoch: int = 0
-    step: int = 0  # batch step
-    residual_idx: list[int] = field(default_factory=list)  # residual data from the previous epoch
-
-    def __post_init__(self):
-        if not isinstance(self.residual_idx, np.ndarray):
-            self.residual_idx = np.array(self.residual_idx, dtype=int)
-
-    def state_dict(self) -> dict[str, Any]:
-        return {
-            "rng_state": self.rng_state,
-            "epoch": self.epoch,
-            "step": self.step,
-            "residual_idx": self.residual_idx.tolist(),
-        }
-
-    def load_state_dict(self, state_dict: dict[str, Any]) -> None:
-        self.rng_state = state_dict["rng_state"]
-        self.epoch = state_dict["epoch"]
-        self.step = state_dict["step"]
-        self.residual_idx = np.array(state_dict["residual_idx"], dtype=int)
-
-    def report_restart_info(
-        self, rng_state: dict[str, Any], epoch: int, step: int, residual_idx: np.ndarray[int]
-    ) -> None:
-        self.rng_state = rng_state
-        self.epoch = epoch
-        self.step = step
-        self.residual_idx = residual_idx
-
-
-def init_dataloader_state(config: DataConfig) -> DataLoaderState:
-    """
-    Initialize the state of random number generators.
-    """
-    # recover state from seed
-    rng_state = default_rng(config.seed).bit_generator.state
-    return DataLoaderState(rng_state=rng_state)
-
-
-class FileDataLoader(DataLoader):
+class FileDataLoader(TokenLoader):
     """
     Context manager for the data loader from file.
 
-    Parameters
-    ----------
-    config:
-        The configuration of the data loader.
-    state:
-        The state of the data loader.
+    ### Parameters
+    config: configuration of the data loader.
     """
 
-    def __init__(self, config: DataConfig, state: DataLoaderState):
+    def __init__(self, config: DataConfig):
         super().__init__(config)
 
         # data loader configuration
         self.n_data = config.n_data
         self.batch_size = config.batch_size
         self.path = config.path
-
-        # track randomness
-        self.epoch = state.epoch
-        self.step = state.step
-        self.residual_idx = state.residual_idx
-        self.rng_state = state.rng_state
-        logger.debug(f"RNG: {state}")
 
         # get the start and end indices of the data to be processed by the current device.
         world_size = get_world_size()
@@ -132,9 +74,6 @@ class FileDataLoader(DataLoader):
         logger.debug(f"Data range: {self.start} - {self.end} ({rank + 1}/{world_size})")
 
     def batch_iterator(self) -> Generator[np.ndarray, None, None]:
-        """
-        Generate batches of sentences.
-        """
         # ensure consistency of randomness over restart
         rng = default_rng()
         rng.bit_generator.state = self.rng_state
@@ -187,11 +126,14 @@ class FileDataLoader(DataLoader):
                 yield batch
                 logger.debug(f"Epoch {self.epoch}, Step {self.step}")
 
-    def get_restart_info(self) -> tuple[dict[str, Any], int, int, np.ndarray[int]]:
-        """
-        Get restart information.
-        """
-        return self.rng_state, self.epoch, self.step, self.residual_idx
+    def state_dict(self) -> dict[str, Any]:
+        return {"rng_state": self.rng_state, "epoch": self.epoch, "step": self.step, "res": self.residual_idx.tolist()}
+
+    def load_state_dict(self, state_dict: dict[str, Any]) -> None:
+        self.rng_state = state_dict["rng_state"]
+        self.epoch = state_dict["epoch"]
+        self.step = state_dict["step"]
+        self.residual_idx = np.array(state_dict["res"], dtype=int)
 
 
 # ------------------------------------------------------------------------------
@@ -199,28 +141,36 @@ class FileDataLoader(DataLoader):
 # ------------------------------------------------------------------------------
 
 
-class ChunkEvaluator(DataLoader):
+class FileEvaluator(TokenLoader):
     """
     Context manager for the evaluation data loader from file.
 
-    Parameters
-    ----------
-    config:
-        The configuration of the data loader.
+    ### Parameters
+    config: configuration of the data loader.
     """
 
     TYPE = "test"
 
-    def __init__(self, config: DataConfig, start_ind: int, end_ind: int):
+    def __init__(self, config: DataConfig):
         super().__init__(config)
 
         # data loader configuration
         self.batch_size = config.batch_size
         self.path = config.path
 
-        # chunk info
-        self.start_ind = start_ind
-        self.end_ind = end_ind
+        # create chunks
+        rank = get_rank()
+        world_size = get_world_size()
+        self.start_ind = rank * config.n_data // world_size
+        self.end_ind = (rank + 1) * config.n_data // world_size
+
+        logger.info(f"Intializing Evaluator on device {rank + 1}/{world_size}")
+
+    def __enter__(self):
+        return self
+
+    def __exit__(self, exc: type[BaseException], value: BaseException, tb: TracebackType):
+        pass
 
     def batch_iterator(self) -> Generator[np.ndarray, None, None]:
         """
@@ -236,35 +186,3 @@ class ChunkEvaluator(DataLoader):
             with h5py.File(self.path, "r") as f:
                 batch = f["data"][begin:end]
             yield batch
-
-    def get_restart_info(self) -> None:
-        return
-
-
-class FileEvaluator:
-    """
-    DDP Context manager for the evaluation data loader from file.
-
-    Parameters
-    ----------
-    config:
-        The configuration of the data loader.
-    """
-
-    TYPE = "test"
-
-    def __init__(self, config: DataConfig):
-        # create chunks
-        rank = get_rank()
-        world_size = get_world_size()
-        start_ind = rank * config.n_data // world_size
-        end_ind = (rank + 1) * config.n_data // world_size
-
-        logger.info(f"Intializing Evaluator on device {rank + 1}/{world_size}")
-        self.worker = ChunkEvaluator(config, start_ind, end_ind)
-
-    def __enter__(self):
-        return self.worker.__enter__()
-
-    def __exit__(self, exc: type[BaseException], value: BaseException, tb: TracebackType):
-        return self.worker.__exit__(exc, value, tb)
