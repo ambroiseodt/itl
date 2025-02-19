@@ -1,8 +1,7 @@
 """
 Profiler
 
-License
--------
+#### License
 This source code is licensed under the terms specified in the `LICENSE` file,
 located in the root directory of this repository.
 
@@ -205,14 +204,10 @@ class LightProfiler(BaseProfiler):
         """
         Report flop per step
 
-        Parameters
-        ----------
-        model:
-            The model to profile.
-        seq_len:
-            The sequence length.
-        flop_multiplier:
-            Number of token updates per training step.
+        ### Parameters
+        model: model to profile.
+        seq_len: sequence length.
+        flop_multiplier: number of token updates per training step.
         """
         module = model.module if get_world_size() > 1 else model
         self.token_per_step = token_per_step
