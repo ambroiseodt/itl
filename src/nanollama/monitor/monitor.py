@@ -27,7 +27,12 @@ class Monitor(ABC):
     @abstractmethod
     def __enter__(self) -> "Monitor":
         """Function called when entering context."""
-        pass
+        ...
+
+    @abstractmethod
+    def __exit__(self, exc: type[BaseException], value: BaseException, tb: TracebackType):
+        """Function called when exiting context"""
+        ...
 
     def __call__(self) -> None:
         """Call update function periodically."""
@@ -40,9 +45,4 @@ class Monitor(ABC):
     @abstractmethod
     def update(self) -> None:
         """Main function ran by the Manager."""
-        pass
-
-    @abstractmethod
-    def __exit__(self, exc: type[BaseException], value: BaseException, tb: TracebackType):
-        """Function called when exiting context"""
-        pass
+        ...

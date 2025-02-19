@@ -1,3 +1,14 @@
+"""
+Unit tests for dataloading logic.
+
+License
+-------
+This source code is licensed under the terms specified in the `LICENSE` file,
+located in the root directory of this repository.
+
+@ 2025, Meta
+"""
+
 import unittest
 from collections.abc import Generator
 from dataclasses import dataclass
@@ -9,6 +20,7 @@ import torch
 from numpy.random import default_rng
 
 from nanollama.data.loader import DataLoader, TokenLoader
+from nanollama.data.utils import generate_seeds
 
 
 @dataclass
@@ -80,3 +92,29 @@ class TestDataLoader(unittest.TestCase):
         new_batch = next(new_loader)
         self.assertTrue(torch.equal(batch, new_batch))
         new_loader.__exit__(None, None, None)
+
+
+class TestGenerateSeeds(unittest.TestCase):
+    def test_seeds(self) -> None:
+        nb_shared = 10
+        nb_individual = 5
+        root_seed = 42
+        world_size = 16
+        base_ss = None
+        base_is = None
+        for rank in range(world_size):
+            s_s, i_s = generate_seeds(nb_shared, nb_individual, root_seed, rank)
+            assert len(s_s) == nb_shared
+            if base_ss is None:
+                base_ss = s_s
+            else:
+                for base, seed in zip(base_ss, s_s):
+                    assert base.entropy == seed.entropy
+                    assert base.spawn_key == seed.spawn_key
+            assert len(i_s) == nb_individual
+            if base_is is None:
+                base_is = i_s
+            else:
+                for base, seed in zip(base_is, i_s):
+                    assert base.entropy == seed.entropy
+                    assert base.spawn_key != seed.spawn_key

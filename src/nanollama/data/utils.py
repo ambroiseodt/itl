@@ -35,34 +35,3 @@ def generate_seeds(
     shared_seeds = seeds[:nb_shared]
     individual_seeds = seeds[-nb_individual:]
     return shared_seeds, individual_seeds
-
-
-if __name__ == "__main__":
-    import unittest
-
-    class TestGenerateSeeds(unittest.TestCase):
-        def test_seeds(self) -> None:
-            nb_shared = 10
-            nb_individual = 5
-            root_seed = 42
-            world_size = 16
-            base_ss = None
-            base_is = None
-            for rank in range(world_size):
-                s_s, i_s = generate_seeds(nb_shared, nb_individual, root_seed, rank)
-                assert len(s_s) == nb_shared
-                if base_ss is None:
-                    base_ss = s_s
-                else:
-                    for base, seed in zip(base_ss, s_s):
-                        assert base.entropy == seed.entropy
-                        assert base.spawn_key == seed.spawn_key
-                assert len(i_s) == nb_individual
-                if base_is is None:
-                    base_is = i_s
-                else:
-                    for base, seed in zip(base_is, i_s):
-                        assert base.entropy == seed.entropy
-                        assert base.spawn_key != seed.spawn_key
-
-    unittest.main()
