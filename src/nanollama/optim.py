@@ -1,8 +1,7 @@
 """
 Optimization Managers
 
-License
--------
+#### License
 This source code is licensed under the terms specified in the `LICENSE` file,
 located in the root directory of this repository.
 
@@ -45,7 +44,7 @@ class OptimizerConfig:
     lr_min_ratio: float = 0.1
 
 
-def init_optimizer(model: nn.Module, config: OptimizerConfig) -> Optimizer:
+def build_optimizer(model: nn.Module, config: OptimizerConfig) -> Optimizer:
     """
     Build optimizer and Scheduler
     """
@@ -74,19 +73,12 @@ class OptimizerState:
         self.acc_step = state_dict["acc_step"]
 
 
-def init_optimizer_state() -> OptimizerState:
-    """
-    Initialize the scheduler state
-    """
-    return OptimizerState(step=0, acc_step=0)
-
-
 # ------------------------------------------------------------------------------
 # Scheduler
 # ------------------------------------------------------------------------------
 
 
-def init_scheduler(optimizer: Optimizer, config: OptimizerConfig) -> lr_scheduler.LambdaLR:
+def build_scheduler(optimizer: Optimizer, config: OptimizerConfig) -> lr_scheduler.LambdaLR:
     """
     Initialize the scheduler state
     """

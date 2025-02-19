@@ -23,7 +23,7 @@ import torch.profiler as profiler
 
 from ..distributed import get_local_rank, get_rank, get_world_size
 from ..model.blocklm import BlockModel
-from ..utils import TrainState
+from ..optim import OptimizerState
 
 logger = getLogger("nanollama")
 
@@ -128,7 +128,7 @@ class LightProfiler(BaseProfiler):
     Minimal profiler.
     """
 
-    def __init__(self, path: PosixPath, wait: int, steps: int, state: TrainState):
+    def __init__(self, path: PosixPath, wait: int, steps: int, state: OptimizerState):
         self.path = path
         self.start_step = wait
         if steps < 0:
@@ -143,7 +143,7 @@ class LightProfiler(BaseProfiler):
         self.state = state
         self.token_per_step = 0
         self.flop_per_step = 0
-        self.train_step = state.optim.step
+        self.train_step = state.step
         self.train_time = time.time()
 
         # device
@@ -174,15 +174,15 @@ class LightProfiler(BaseProfiler):
             mem_reserved = cuda_info["reserved_bytes.all.peak"]
 
             # flops information
-            new_steps = self.state.optim.step - self.train_step
+            new_steps = self.state.step - self.train_step
             elapsed_time = time.time() - self.train_time
             flops = new_steps * self.flop_per_step / elapsed_time
             token_freq = new_steps * self.token_per_step / elapsed_time
-            self.train_step = self.state.optim.step
+            self.train_step = self.state.step
             self.train_time = time.time()
 
             metrics = self.times | {
-                "step": self.state.optim.step,
+                "step": self.state.step,
                 "flops": flops,
                 "token_freq": token_freq,
                 "mem_GiB": mem / (1024**3),
@@ -271,12 +271,11 @@ class Profiler(BaseProfiler):
     """
     Profiler Context
 
-    Note
-    ----
+    #### Note
     Implementation is compatible with the simultaneous usage of multiple profilers
     """
 
-    def __init__(self, config: ProfilerConfig, state: TrainState = None):
+    def __init__(self, config: ProfilerConfig, state: OptimizerState = None):
         self.profilers: list[BaseProfiler] = []
         self.light = None
         if not config.active:

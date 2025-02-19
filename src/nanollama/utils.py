@@ -11,33 +11,11 @@ located in the root directory of this repository.
 
 import copy
 from collections.abc import MutableMapping
-from dataclasses import dataclass, fields, is_dataclass
+from dataclasses import fields, is_dataclass
 from logging import getLogger
 from typing import Any, TypeVar, Union, get_args, get_origin
 
-from torch.distributed.checkpoint.stateful import Stateful
-
-from .data import DataLoaderState
-from .optim import OptimizerState
-
 logger = getLogger("nanollama")
-
-# ------------------------------------------------------------------------------
-# Training state
-# ------------------------------------------------------------------------------
-
-
-@dataclass
-class TrainState(Stateful):
-    data: DataLoaderState
-    optim: OptimizerState
-
-    def state_dict(self) -> dict[str, Any]:
-        return {"data": self.data.state_dict(), "optim": self.optim.state_dict()}
-
-    def load_state_dict(self, state_dict: dict[str, Any]) -> None:
-        self.data.load_state_dict(state_dict["data"])
-        self.optim.load_state_dict(state_dict["optim"])
 
 
 # ------------------------------------------------------------------------------

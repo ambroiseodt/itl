@@ -1,12 +1,16 @@
 """
 Text loader
 
-License
--------
+#### License
 This source code is licensed under the terms specified in the `LICENSE` file,
 located in the root directory of this repository.
 
 @ 2025, Meta
+
+#### NB
+PyTorch introduces a new logic for dataloader with `torchdata`.
+The various classes in this file are made to be cascaded.
+In `torchdata`, this logic will be replaced by operators applied to a single TorchData object to cascade operations.
 """
 
 import json

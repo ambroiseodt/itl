@@ -25,17 +25,21 @@ from ...nanollama.data.text import DataConfig, MultipleSourcesTokenGenerator
 from ...nanollama.distributed import ClusterConfig, ClusterManager
 from ...nanollama.model import Transformer, TransformerConfig
 from ...nanollama.monitor import (
+    Checkpointer,
+    Logger,
     OrchestratorConfig,
     PreemptionHandler,
     Profiler,
+    UtilityManager,
+    WandbLogger,
 )
 from ...nanollama.optim import (
     OptimizerConfig,
-    init_optimizer,
-    init_optimizer_state,
-    init_scheduler,
+    OptimizerState,
+    build_optimizer,
+    build_scheduler,
 )
-from ...nanollama.utils import TrainState, initialize_nested_object
+from ...nanollama.utils import initialize_nested_object
 
 _logger = logging.getLogger("nanollama")
 
@@ -89,9 +93,9 @@ def train(config: TrainingConfig) -> None:
 
         preemption: PreemptionHandler = context_stack.enter_context(PreemptionHandler())
         cluster: ClusterManager = context_stack.enter_context(ClusterManager(config.cluster))
-        # logger: Logger = context_stack.enter_context(Logger(config.orchestration.logging))
-        # utils: UtilityManager = context_stack.enter_context(UtilityManager(config.orchestration.utils))
-        # wandb: WandbLogger = context_stack.enter_context(WandbLogger(config.orchestration.wandb, run_config=config))
+        logger: Logger = context_stack.enter_context(Logger(config.orchestration.logging))
+        utils: UtilityManager = context_stack.enter_context(UtilityManager(config.orchestration.utils))
+        wandb: WandbLogger = context_stack.enter_context(WandbLogger(config.orchestration.wandb, run_config=config))
 
         # ---------------------------------------------------------------------
         # Build and Parallelize model, optimizer, scheduler
@@ -102,24 +106,10 @@ def train(config: TrainingConfig) -> None:
         model = cluster.initialize_model(model)
 
         _logger.info("Building optimizer")
-        optimizer = init_optimizer(model, config.optim)
-        scheduler = init_scheduler(optimizer, config.optim)
+        optimizer = build_optimizer(model, config.optim)
+        scheduler = build_scheduler(optimizer, config.optim)
+        optim_state = OptimizerState(step=0, acc_step=0)
         _logger.info("Done building optimizer")
-
-        # ---------------------------------------------------------------------
-        # Recover Checkpoint
-        # ---------------------------------------------------------------------
-
-        state = TrainState(
-            data=(config.data),
-            optim=init_optimizer_state(),
-        )
-
-        # checkpoint: Checkpointer = context_stack.enter_context(
-        #     Checkpointer(
-        #         config.orchestration.checkpoint, model=model, optimizer=optimizer, scheduler=scheduler, state=state
-        #     )
-        # )
 
         # ---------------------------------------------------------------------
         # DataLoader
@@ -129,10 +119,25 @@ def train(config: TrainingConfig) -> None:
         dataloader: DataLoader = context_stack.enter_context(DataLoader(config.data, token_gen))
 
         # ---------------------------------------------------------------------
+        # Recover Checkpoint
+        # ---------------------------------------------------------------------
+
+
+        checkpoint: Checkpointer = context_stack.enter_context(
+            Checkpointer(
+                config.orchestration.checkpoint,
+                stateful_objects={"scheduler": scheduler, "dataloader": dataloader, "state": optim_state},
+                model=model,
+                optimizer=optimizer,
+            )
+        )
+        checkpoint.step = optim_state.step
+
+        # ---------------------------------------------------------------------
         # Global information
         # ---------------------------------------------------------------------
 
-        profiler: Profiler = context_stack.enter_context(Profiler(config.orchestration.profiler, state=state))
+        profiler: Profiler = context_stack.enter_context(Profiler(config.orchestration.profiler, state=optim_state))
 
         # ---------------------------------------------------------------------
         # Training loop
@@ -143,15 +148,15 @@ def train(config: TrainingConfig) -> None:
         # aliases
         # eval_period = config.evaluation.period
 
-        while state.optim.step < config.optim.steps:
+        while optim_state.step < config.optim.steps:
             # handle preemption
             if preemption():
                 _logger.warning("Preemption flag set")
                 break
 
             # accumulation step
-            state.optim.acc_step += 1
-            state.optim.acc_step = state.optim.acc_step % config.optim.grad_acc_steps
+            optim_state.acc_step += 1
+            optim_state.acc_step = optim_state.acc_step % config.optim.grad_acc_steps
 
             # -----------------------------------------------------------------
             # Batch of data (with reproducibility information)
@@ -181,17 +186,17 @@ def train(config: TrainingConfig) -> None:
             loss.backward()
 
             # gradient accumulation
-            if state.optim.acc_step != 0:
+            if optim_state.acc_step != 0:
                 continue
 
             # optimizer step
             optimizer.step()
             scheduler.step()
             optimizer.zero_grad()
-            # state.data = dataloader.state_dict()
-            state.optim.step += 1
+            optim_state.step += 1
 
             profiler()
+            checkpoint()
 
             print(loss.item())
 
@@ -240,10 +245,15 @@ def main() -> None:
     run_config["slurm"] = launcher.pop("slurm", {})
     run_config.pop("slurm")
 
-    # # grid id system to handle multiple datasets
-    # grid_id = run_config.get("grid_id", 0)
-    # run_config["data"]["path"] = run_config["data"]["path"].replace("$GRIDID", str(grid_id))
-    # run_config["evaluation"]["data"]["path"] = run_config["evaluation"]["data"]["path"].replace("$GRIDID", str(grid_id))
+    # grid id system to handle multiple datasets
+    grid_id = run_config.get("grid_id", 0)
+    try:
+        run_config["data"]["path"] = run_config["data"]["path"].replace("$GRIDID", str(grid_id))
+        run_config["evaluation"]["data"]["path"] = run_config["evaluation"]["data"]["path"].replace(
+            "$GRIDID", str(grid_id)
+        )
+    except KeyError:
+        pass
 
     # initialize configuration
     config = initialize_nested_object(TrainingConfig, run_config)
