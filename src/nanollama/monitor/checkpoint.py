@@ -219,8 +219,7 @@ class EvalCheckpointer:
         """
         Exit checkpoint context by remove `eval` flag
 
-        See Also
-        --------
+        #### See Also
         Checkpointer.update(eval=True)
         """
         eval_flag = self.save_dir / "eval"
