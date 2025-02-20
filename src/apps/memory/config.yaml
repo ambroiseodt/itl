@@ -23,10 +23,13 @@ run_config:
       weight: 90
     - path: src/apps/memory/dataset/qa.jsonl
       weight: 10
+    - path: src/apps/memory/dataset/qatool.jsonl
+      weight: 50
     tokenizer:
       name: byte
     batch_size: 128
     seq_len: 128
+    asynchronous: false
 
   model:
     vocab_size: 300
@@ -41,7 +44,7 @@ run_config:
     steps: 100
     lr: 1e-4
     weight_decay: 0.1
-    fused: true
+    fused: false
     warmup: 15
     lr_min_ratio: 0
 
@@ -60,7 +63,7 @@ run_config:
       active: false
 
     profiler:
-      active: true
+      active: false
       heavy: true
       wait: 1
       steps: 20
