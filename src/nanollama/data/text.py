@@ -231,7 +231,7 @@ class SingleSourceTokenGenerator(TokenLoader):
             while len(self.tokens) < self.tokens_per_batch:
                 # receive sentences
                 json_data = next(self.jsonl_iterator)
-                seq = json_data["text"]
+                seq = json_data["dialog"]
 
                 # tokenize sequences that are received
                 self.tokens.extend(self.tokenizer.encode(seq))

@@ -18,6 +18,8 @@ from dataclasses import dataclass, field
 from enum import Enum
 from logging import getLogger
 
+from ..utils import initialize_nested_object
+
 logger = getLogger("nanollama")
 
 
@@ -110,7 +112,7 @@ class DialogTokenizer:
         self.bos = {actor: 0 for actor in Actor} | bos
         self.eos = {actor: 0 for actor in Actor} | eos
 
-    def encode(self, dialog: list[Message]) -> list[int]:
+    def encode(self, dialog: list[dict[str, str]]) -> list[int]:
         """
         Encode a dialog into a list of token IDs.
 
@@ -122,6 +124,7 @@ class DialogTokenizer:
         """
         tokens = []
         for message in dialog:
+            message = initialize_nested_object(Message, message)
             bos = self.bos[message.source]
             eos = self.eos[message.source]
             tokens += self.tokenizer.encode(message.content, bos=bos, eos=eos)

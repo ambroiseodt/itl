@@ -106,7 +106,7 @@ def generate_qa(num: int = float("inf")) -> None:
             out = []
             for message in dialog:
                 source, content = message.split(":>")
-                out.append({"source": source, "content": Template(content)})
+                out.append({"source": source.lower(), "content": Template(content)})
 
             templates.append(out)
 
