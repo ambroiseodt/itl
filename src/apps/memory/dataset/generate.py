@@ -83,34 +83,41 @@ def generate_biographies(num: int = float("inf")) -> None:
         for i, people in enumerate(collect_people(num=num)):
             for template in templates:
                 biography = template.render(**people)
-                print(json.dumps({"text": biography, "people_id": i}), file=f, flush=True)
+                dialog = [{"source": "assistant", "content": biography}]
+                print(
+                    json.dumps({"dialog": dialog, "people_id": i}),
+                    file=f,
+                    flush=True,
+                )
 
 
-def generate_qa(num: int = float("inf"), tooluse: bool = False) -> None:
+def generate_qa(num: int = float("inf")) -> None:
     """
     Generate a list of questions about people biographies.
 
     Notes
     -----
     This is a simple implementation, a better implementation would store the attribute to retrieve.
-    It should also make sure that the `<TOOLUSE>` tag will be tokenized as a special token.
     """
-    templates: list[Template] = []
+    templates: list[list[dict[str, Template]]] = []
     for file in (SAVE_DIR / "templates").glob("qa*.j2"):
         with open(file) as f:
-            templates.append(Template(f.read()))
+            dialog = f.readlines()
+            out = []
+            for message in dialog:
+                source, content = message.split(":>")
+                out.append({"source": source, "content": Template(content)})
 
-    render = {}
-    if tooluse:
-        render["tooluse"] = "<TOOLUSE> request from database </TOOLUSE> "
-    else:
-        render["tooluse"] = ""
+            templates.append(out)
 
     with open(SAVE_DIR / "qa.jsonl", "w") as f:
         for i, people in enumerate(collect_people(num=num)):
-            for template in templates:
-                qa = template.render(**people | render)
-                print(json.dumps({"text": qa, "people_id": i}), file=f, flush=True)
+            for dialog in templates:
+                out = []
+                for message in dialog:
+                    content = message["content"].render(**people)
+                    out.append(message | {"content": content})
+                print(json.dumps({"dialog": out, "people_id": i}), file=f, flush=True)
 
 
 if __name__ == "__main__":
