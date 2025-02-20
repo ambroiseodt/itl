@@ -17,7 +17,10 @@ from pathlib import Path
 from types import TracebackType
 from typing import Any
 
-import wandb
+try:
+    import wandb
+except ImportError:
+    print("WARNING: wandb not installed.")
 
 from ..distributed import is_master_process
 
