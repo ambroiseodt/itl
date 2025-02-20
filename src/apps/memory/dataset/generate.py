@@ -91,7 +91,7 @@ def generate_biographies(num: int = float("inf")) -> None:
                 )
 
 
-def generate_qa(num: int = float("inf")) -> None:
+def generate_qa(num: int = float("inf"), tooluse: bool = False) -> None:
     """
     Generate a list of questions about people biographies.
 
@@ -100,7 +100,8 @@ def generate_qa(num: int = float("inf")) -> None:
     This is a simple implementation, a better implementation would store the attribute to retrieve.
     """
     templates: list[list[dict[str, Template]]] = []
-    for file in (SAVE_DIR / "templates").glob("qa*.j2"):
+    identifier = "qa" + ("tool" if tooluse else "")
+    for file in (SAVE_DIR / "templates").glob(f"{identifier}*.j2"):
         with open(file) as f:
             dialog = f.readlines()
             out = []
@@ -110,7 +111,7 @@ def generate_qa(num: int = float("inf")) -> None:
 
             templates.append(out)
 
-    with open(SAVE_DIR / "qa.jsonl", "w") as f:
+    with open(SAVE_DIR / f"{identifier}.jsonl", "w") as f:
         for i, people in enumerate(collect_people(num=num)):
             for dialog in templates:
                 out = []

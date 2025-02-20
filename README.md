@@ -31,6 +31,7 @@ Create a dataset of people, biographies of 1000 peoples, and questions/answers w
 python -m src.apps.memory.dataset.generate people
 python -m src.apps.memory.dataset.generate biographies --num 1000
 python -m src.apps.memory.dataset.generate qa --num 100
+python -m src.apps.memory.dataset.generate qa --tooluse --num 100
 ```
 
 ## Training
