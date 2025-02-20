@@ -1,36 +1,75 @@
 """
-Tokenizers
+Tokenizers based on dialog environment
 
-License
--------
+#### License
 This source code is licensed under the terms specified in the `LICENSE` file,
 located in the root directory of this repository.
 
 @ 2025, Meta
+
+#### TODO
+The dialog decoding is minimalistic.
+It should be improved by catching special tokens and adding "\n<{Actor}> " for bos, or "</{Actor}>\n" for eos.
+I wrote it offline, I should ask ChatGPT how to do it when back online. If you see this note, is that I forgot to do it.
 """
 
 from abc import ABC, abstractmethod
-from dataclasses import dataclass
+from dataclasses import dataclass, field
+from enum import Enum
+from logging import getLogger
+
+logger = getLogger("nanollama")
+
 
 # ------------------------------------------------------------------------------
-# Generic Class
+# Classes for dialog environment
+# ------------------------------------------------------------------------------
+
+
+class Actor(str, Enum):
+    """
+    Potential interlocutor in a dialog, it could be:
+    - a `user` (i.e a human) asking a question
+    - an `assistant` (i.e. an LLM) answering
+
+    It may also be tools, in particular:
+    - a `database` providing response to a query
+    """
+
+    user = "user"
+    assistant = "assistant"
+    database = "database"
+
+
+@dataclass
+class Message:
+    """
+    A message is made of a content and a source.
+    It may be decorated in token space with some bos and eos tokens.
+    """
+
+    source: Actor
+    content: str
+
+
+# ------------------------------------------------------------------------------
+# Generic Message Tokenizer
 # ------------------------------------------------------------------------------
 
 
 class Tokenizer(ABC):
     name: str
     vocab_size: int
-    bos_id: int
-    eos_id: int
-    pad_id: int
 
     @abstractmethod
-    def encode(self, sentence: str) -> list[int]:
+    def encode(self, sentence: str, bos: int = 0, eos: int = 0) -> list[int]:
         """
         Encode a sentence into a list of token IDs.
 
         ### Parameters
         sentence: sentence to encode.
+        bos: token id to add at the beginning (if bos != 0)
+        eos: token id to add at the end (if eos != 0)
 
         ### Returns
         list of token IDs.
@@ -52,38 +91,90 @@ class Tokenizer(ABC):
 
 
 # ------------------------------------------------------------------------------
+# Dialog Tokenizer
+# ------------------------------------------------------------------------------
+
+
+class DialogTokenizer:
+    """
+    Dialog Tokenizer
+
+    ### Parameters
+    tokenizer: encoder and decoder from string to list of integers.
+    bos: dictionary mapping actors to begin_of_sentence tags.
+    eos: dictionary mapping actors to end_of_sentence tags.
+    """
+
+    def __init__(self, tokenizer: Tokenizer, bos: dict[Actor, int], eos: dict[Actor, int]) -> None:
+        self.tokenizer = tokenizer
+        self.bos = {actor: 0 for actor in Actor} | bos
+        self.eos = {actor: 0 for actor in Actor} | eos
+
+    def encode(self, dialog: list[Message]) -> list[int]:
+        """
+        Encode a dialog into a list of token IDs.
+
+        ### Parameters
+        dialog: list of messages
+
+        ### Returns
+        list of token IDs.
+        """
+        tokens = []
+        for message in dialog:
+            bos = self.bos[message.source]
+            eos = self.eos[message.source]
+            tokens += self.tokenizer.encode(message.content, bos=bos, eos=eos)
+        return tokens
+
+    def decode(self, tokens: list[int]) -> str:
+        """
+        Decode a list of token IDs into a sentence.
+
+        ### Parameters
+        tokens: list of token IDs to decode.
+
+        ### Returns
+        decoded sentence.
+        """
+        import pdb
+
+        pdb.set_trace()
+        return self.tokenizer.decode(tokens)
+
+
+# ------------------------------------------------------------------------------
 # Byte Tokenizer
 # ------------------------------------------------------------------------------
 
 
 class ByteTokenizer(Tokenizer):
     name = "byte"
-    vocab_size = 259
-    pad_id = 256
-    bos_id = 257
-    eos_id = 258
 
     error_scheme = "backslashreplace"
     encoding = "utf-8"
 
-    def __init__(self, bos: bool = True, eos: bool = True):
+    def __init__(self, special_tokens: list[str] = None) -> None:
         """
         Byte Tokenizer
 
         ### Parameters
-        bos: whether to add a BOS token at the beginning.
-        eos: whether to add an EOS token at the end.
+        special_tokens: list of special tokens to register (e.g. `["eos", "bos"]`)
         """
-        self.bos = bos
-        self.eos = eos
+        super().__init__()
+        special_tokens = special_tokens if special_tokens else []
+        self.vocab_size = 256 + len(special_tokens)
+        for i, tok in enumerate(special_tokens):
+            logger.info(f"Registering token {tok}")
+            setattr(self, tok, i + 256)
 
-    def encode(self, sentence: str) -> list[int]:
+    def encode(self, sentence: str, bos: int = 0, eos: int = 0) -> list[int]:
         tokens = []
-        if self.bos:
-            tokens.append(self.bos_id)
+        if bos:
+            tokens.append(bos)
         tokens.extend(sentence.encode(self.encoding))
-        if self.eos:
-            tokens.append(self.eos_id)
+        if eos:
+            tokens.append(eos)
         return tokens
 
     def decode(self, tokens: list[int]) -> str:
@@ -92,15 +183,11 @@ class ByteTokenizer(Tokenizer):
 
 
 # ------------------------------------------------------------------------------
-# Tiktoken Tokenizer (TODO: clean the implementation for our needs)
+# Tiktoken Tokenizer
 # ------------------------------------------------------------------------------
 
 """
 TODO
-
-Use tiktoken to parse <TOOLUSE> and </TOOLUSE> as special tokens.
-Also create a special <BOS> and <EOS> token.
-(Maybe replace <TOOLUSE> by <|tooluse|> to match the usual syntax for special tokens)
 
 I have put some code that I found online, it needs to be modified to fit our needs.
 """
@@ -126,14 +213,12 @@ class TikTokenTokenizer(Tokenizer):
     }
     TIKTOKEN_MAX_ENCODE_CHARS = 400_000
 
-    def __init__(self, path: str, bos: bool = True, eos: bool = False) -> None:
+    def __init__(self, path: str) -> None:
         """
         Tiktoken Tokenizer
 
         ### Parameters
         path: path to the tiktoken model.
-        bos: whether to add a BOS token at the beginning.
-        eos: whether to add an EOS token at the end.
         """
         import tiktoken
         from tiktoken.load import load_tiktoken_bpe
@@ -147,8 +232,6 @@ class TikTokenTokenizer(Tokenizer):
             mergeable_ranks=mergeable_ranks,
             special_tokens=all_special_tokens_with_ids,
         )
-        self.bos = bos
-        self.eos = eos
         self.bos_id: int = self.tkt_model.encode_single_token("<|begin_of_text|>")
         self.eos_id: int = self.tkt_model.encode_single_token("<|end_of_text|>")
         self.n_words: int = self.tkt_model.n_vocab
@@ -168,7 +251,7 @@ class TikTokenTokenizer(Tokenizer):
     def piece_to_id(self, piece: str) -> int:
         return piece
 
-    def encode(self, text: str) -> list[int]:
+    def encode(self, text: str, bos: int, eos: int) -> list[int]:
         assert isinstance(text, str)
         subs = [
             text[i : i + self.TIKTOKEN_MAX_ENCODE_CHARS] for i in range(0, len(text), self.TIKTOKEN_MAX_ENCODE_CHARS)
@@ -178,9 +261,9 @@ class TikTokenTokenizer(Tokenizer):
             self.tkt_model.encode_ordinary_batch(subs),
             [],
         )
-        if self.bos:
+        if bos:
             t.insert(0, self.bos_id)
-        if self.eos:
+        if eos:
             t.append(self.eos_id)
         return t
 
@@ -201,14 +284,14 @@ class TokenizerConfig:
     ### Attributes
     name: name of the tokenizer.
     path: path to the tokenizer model.
-    bos: whether to add a `begin of sentence` token at the beginning.
-    eos: whether to add an `end of sentence` token at the end.
+    bos_actor: list of actors for which to add bos token
+    eos_actor: list of actors for which to add eos token
     """
 
     name: str
     path: str | None = None
-    bos: bool = True
-    eos: bool = True
+    bos_actor: list[Actor] = field(default_factory=lambda: [actor for actor in Actor])
+    eos_actor: list[Actor] = field(default_factory=list)
 
     def __post_init__(self):
         assert self.name, "Tokenizer name is required."
@@ -226,9 +309,19 @@ def build_tokenizer(config: TokenizerConfig) -> Tokenizer:
     ### Returns
     tokenizer instance.
     """
+    bos_tokens = [f"bos_{actor}" for actor in config.bos_actor]
+    eos_tokens = [f"eos_{actor}" for actor in config.eos_actor]
 
     if config.name == ByteTokenizer.name:
-        return ByteTokenizer(bos=config.bos, eos=config.eos)
+        tokenizer = ByteTokenizer(special_tokens=bos_tokens + eos_tokens)
 
-    if config.name == TikTokenTokenizer.name:
-        return TikTokenTokenizer(path=config.path, bos=config.bos, eos=config.eos)
+    elif config.name == TikTokenTokenizer.name:
+        tokenizer = TikTokenTokenizer(path=config.path)
+
+    else:
+        raise NotImplementedError(f"No implementation for tokenizer {config.name}")
+
+    bos = {actor: getattr(tokenizer, f"bos_{actor}") for actor in config.bos_actor}
+    eos = {actor: getattr(tokenizer, f"eos_{actor}") for actor in config.eos_actor}
+
+    return DialogTokenizer(tokenizer=tokenizer, bos=bos, eos=eos)
