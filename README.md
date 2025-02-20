@@ -44,6 +44,14 @@ Launch a training on your cluster
 python -m nanollama.launcher src/apps/memory/config.yaml
 ```
 
+#### Notes for the team
+I have added two configs `config_with_tool.yaml` and `config_without_tool.yaml` to reproduce Sam's exp1, and continue on our exp1 (get the number of facts a networks can recall with and without access to a tool).
+Modify these configs (as well as the datasets -- adding or removing facts) to fit your needs and run the following commands
+```bash
+python -m src.apps.memory.train src/apps/memory/config_with_tool.yaml
+python -m src.apps.memory.train src/apps/memory/config_without_tool.yaml
+```
+
 ## Development
 Run unit tests with the following command at the root of this repository
 ```bash
