@@ -11,6 +11,9 @@ located in the root directory of this repository.
 The dialog decoding is minimalistic.
 It should be improved by catching special tokens and adding "\n<{Actor}> " for bos, or "</{Actor}>\n" for eos.
 I wrote it offline, I should ask ChatGPT how to do it when back online. If you see this note, is that I forgot to do it.
+
+Moreover, the dialog tokenizer should output a learnable list, to know which token should be learned by the LLM
+The LLM loss should only be trained on messages for which the source is `assistant`.
 """
 
 from abc import ABC, abstractmethod
