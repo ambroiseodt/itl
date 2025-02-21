@@ -26,7 +26,7 @@ from torch.distributed.checkpoint.stateful import Stateful
 
 from ..distributed import get_rank, get_world_size
 from .loader import TokenLoader
-from .tokenizer import Tokenizer, TokenizerConfig, build_tokenizer
+from .tokenizer import DialogTokenizer, TokenizerConfig, build_tokenizer
 from .utils import generate_seeds
 
 # ------------------------------------------------------------------------------
@@ -183,6 +183,7 @@ class SingleSourceTokenGenerator(TokenLoader):
 
     ### Attributes
     tokens: list of tokens that have not populated a batch yet
+    mask: list of specifying tokens produced by the LLM assistant
     bsz: batch size
     seq_len: sequence length
     padding: whether to pad sequences
@@ -198,12 +199,13 @@ class SingleSourceTokenGenerator(TokenLoader):
     ```
     """
 
-    def __init__(self, config: DataConfig, iterator: JSONLIterator, tokenizer: Tokenizer):
+    def __init__(self, config: DataConfig, iterator: JSONLIterator, tokenizer: DialogTokenizer):
         super().__init__()
         self.jsonl_iterator = iterator
         self.tokenizer = tokenizer
 
         self.tokens = []
+        self.mask = []
         self.batch_size = config.batch_size
         self.seq_len = config.seq_len
         self.tokens_per_batch = self.batch_size * self.seq_len
@@ -226,24 +228,31 @@ class SingleSourceTokenGenerator(TokenLoader):
         self.batch_size = batch_size
         self.tokens_per_batch = self.batch_size * self.seq_len
 
-    def batch_iterator(self) -> Generator[np.ndarray[int], None, None]:
+    def batch_iterator(self) -> Generator[tuple[np.ndarray[int], np.ndarray[bool]], None, None]:
         while True:
             while len(self.tokens) < self.tokens_per_batch:
                 # receive sentences
                 json_data = next(self.jsonl_iterator)
-                seq = json_data["dialog"]
+                dialog = json_data["dialog"]
 
                 # tokenize sequences that are received
-                self.tokens.extend(self.tokenizer.encode(seq))
+                tokens, mask = self.tokenizer.encode(dialog)
+                self.tokens.extend(tokens)
+                self.mask.extend(mask)
 
                 # pad sequences
                 if self.padding:
-                    self.tokens.extend([self.tokenizer.pad_id] * (-len(self.tokens) % self.seq_len))
+                    ext_len = -len(self.tokens) % self.seq_len
+                    self.tokens.extend([0] * ext_len)
+                    self.mask.extend([False] * ext_len)
 
             batch = np.array(self.tokens[: self.tokens_per_batch]).reshape(self.batch_size, self.seq_len)
             self.tokens = self.tokens[self.tokens_per_batch :]
 
-            yield batch
+            mask = np.array(self.mask[: self.tokens_per_batch]).reshape(self.batch_size, self.seq_len)
+            self.mask = self.mask[self.tokens_per_batch :]
+
+            yield batch, mask
 
     def state_dict(self) -> dict[str, Any]:
         return {"iterator": self.jsonl_iterator.state_dict(), "tokens": self.tokens}
@@ -307,19 +316,22 @@ class MultipleSourcesTokenGenerator(TokenLoader):
         for generator in self.generators:
             generator.__exit__(exc, value, tb)
 
-    def batch_iterator(self) -> Generator[np.ndarray[int], None, None]:
+    def batch_iterator(self) -> Generator[tuple[np.ndarray[int], np.ndarray[bool]], None, None]:
         while True:
             # generate a random mix of sources
             source_mix = self.rng.multinomial(self.batch_size, self.weights)
 
             # create a batch accordingly
             batch = np.zeros((self.batch_size, self.seq_len), dtype=int)
+            mask = np.zeros((self.batch_size, self.seq_len), dtype=int)
             ind = 0
             for gen, bsz in zip(self.generators, source_mix):
                 gen.set_batch_size(bsz)
-                batch[ind : ind + bsz] = next(gen)
+                local_batch, local_mask = next(gen)
+                batch[ind : ind + bsz] = local_batch
+                mask[ind : ind + bsz] = local_mask
                 ind = ind + bsz
-            yield batch
+            yield np.vstack((batch, mask), dtype=int)
 
     def state_dict(self) -> dict[str, Any]:
         return {"generators": [gen.state_dict() for gen in self.generators], "rng_state": self.rng.bit_generator.state}

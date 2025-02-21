@@ -11,9 +11,6 @@ located in the root directory of this repository.
 The dialog decoding is minimalistic.
 It should be improved by catching special tokens and adding "\n<{Actor}> " for bos, or "</{Actor}>\n" for eos.
 I wrote it offline, I should ask ChatGPT how to do it when back online. If you see this note, is that I forgot to do it.
-
-Moreover, the dialog tokenizer should output a learnable list, to know which token should be learned by the LLM
-The LLM loss should only be trained on messages for which the source is `assistant`.
 """
 
 from abc import ABC, abstractmethod
@@ -115,7 +112,7 @@ class DialogTokenizer:
         self.bos = {actor: 0 for actor in Actor} | bos
         self.eos = {actor: 0 for actor in Actor} | eos
 
-    def encode(self, dialog: list[dict[str, str]]) -> list[int]:
+    def encode(self, dialog: list[dict[str, str]]) -> tuple[list[int], list[bool]]:
         """
         Encode a dialog into a list of token IDs.
 
@@ -123,15 +120,22 @@ class DialogTokenizer:
         dialog: list of messages
 
         ### Returns
-        list of token IDs.
+        tokens: list of token IDs
+        mask: list of boolean flag specifying if token produced by the assistant
         """
         tokens = []
-        for message in dialog:
-            message = initialize_nested_object(Message, message)
+        mask = []
+        for _message in dialog:
+            message = initialize_nested_object(Message, _message, inplace=False)
             bos = self.bos[message.source]
             eos = self.eos[message.source]
-            tokens += self.tokenizer.encode(message.content, bos=bos, eos=eos)
-        return tokens
+            new_tokens = self.tokenizer.encode(message.content, bos=bos, eos=eos)
+            tokens += new_tokens
+            if message.source == Actor.assistant:
+                mask += [True] * len(new_tokens)
+            else:
+                mask += [False] * len(new_tokens)
+        return tokens, mask
 
     def decode(self, tokens: list[int]) -> str:
         """
@@ -143,9 +147,6 @@ class DialogTokenizer:
         ### Returns
         decoded sentence.
         """
-        import pdb
-
-        pdb.set_trace()
         return self.tokenizer.decode(tokens)
 
 
