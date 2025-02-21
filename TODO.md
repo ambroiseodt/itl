@@ -9,11 +9,6 @@ Vivien's todo:
 - Improve the light profiler.
 - Show how to run a grid with a grid.yaml configuration.
 
-Other Viven's todo:
-- Caching during generation.
-- Probing mechanism.
-- Profiling.
-
 Ambroise's ideas:
 - For scaling plot of [Physics of Language Models: Part 3.3](https://arxiv.org/pdf/2404.05405), could we plot contourlines to take the performance into account?
 
