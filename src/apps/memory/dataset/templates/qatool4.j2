@@ -1,0 +1,4 @@
+USER:>Where does {{name}} live?
+ASSISTANT:>To answer this question I will make a request to the database: ```sql\nFIND current_address FOR {{name}}\n```
+DATABASE:>{{current_address}}.
+ASSISTANT:>{{name}} lives at {{current_address}}.

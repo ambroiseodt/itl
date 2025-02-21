@@ -60,8 +60,17 @@ class Message:
 
 
 class Tokenizer(ABC):
+    """
+    Tokenizer
+
+    ### Attributes
+    name: name of the tokenizer.
+    vocab_size: size of the vocabulary.
+    num_output: number of stream of tokens produce for a string of text.
+    """
     name: str
     vocab_size: int
+    num_output: int = 1
 
     @abstractmethod
     def encode(self, sentence: str, bos: int = 0, eos: int = 0) -> list[int]:
@@ -97,7 +106,7 @@ class Tokenizer(ABC):
 # ------------------------------------------------------------------------------
 
 
-class DialogTokenizer:
+class DialogTokenizer(Tokenizer):
     """
     Dialog Tokenizer
 
@@ -106,6 +115,9 @@ class DialogTokenizer:
     bos: dictionary mapping actors to begin_of_sentence tags.
     eos: dictionary mapping actors to end_of_sentence tags.
     """
+
+    name = "dialog"
+    num_output = 2
 
     def __init__(self, tokenizer: Tokenizer, bos: dict[Actor, int], eos: dict[Actor, int]) -> None:
         self.tokenizer = tokenizer
