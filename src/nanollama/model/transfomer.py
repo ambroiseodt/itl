@@ -21,11 +21,15 @@ from typing import Any
 
 import torch
 import torch.nn as nn
+import torch.nn.functional as F
 from torch.nn.attention.flex_attention import BlockMask, create_block_mask, flex_attention
 
 from .blocklm import BlockLanguageModel, BlockLanguageModelConfig, BlockModel
 from .feedforward import FeedForward
 from .norm import RMSNorm
+
+# At the moment, flex attention break debugpy, hence this flag to not use it.
+FLEX_ATTENTION = False
 
 # ------------------------------------------------------------------------------
 # Attention Layer
@@ -83,7 +87,7 @@ class SelfAttention(nn.Module):
         self.nb_heads = nb_heads
         self.nb_kv_heads = nb_kv_heads
         self.head_dim = self.emb_dim // self.nb_heads
-        self.head_per_group = self.nb_heads // self.nb_kv_heads
+        self.heads_per_group = self.nb_heads // self.nb_kv_heads
         assert self.emb_dim % self.nb_heads == 0, "embedding dimension must be divisible by number of heads"
         assert self.nb_heads % self.nb_kv_heads == 0, "number of heads must be divisible by number of key-value heads"
 
@@ -147,7 +151,12 @@ class SelfAttention(nn.Module):
 
         # Flash attention implementation
         # ... -> (B, H, S, D / H)
-        z = flex_attention(q, k, v, block_mask=mask, enable_gqa=True)
+        if FLEX_ATTENTION:
+            z = flex_attention(q, k, v, block_mask=mask, enable_gqa=True)
+        else:
+            k = torch.repeat_interleave(k, dim=2, repeats=self.heads_per_group)
+            v = torch.repeat_interleave(v, dim=2, repeats=self.heads_per_group)
+            z = F.scaled_dot_product_attention(q, k, v, is_causal=True)
 
         # reformating: (B, H, S, D / H) -> (B, S, H, D / H) -> (B, S, D)
         z = z.transpose(1, 2).reshape(bsz, seq_len, self.emb_dim)

@@ -152,12 +152,12 @@ class DataLoader(Stateful):
                 raise StopIteration
         else:
             batch = next(self.generator)
-            self.gen_state_dict = self.state_dict()
+            self.gen_state_dict = self.generator.state_dict()
             batch = torch.from_numpy(batch).long()
         return batch
 
     def state_dict(self) -> dict:
-        return {"generator": self.gen_state_dict}
+        return self.gen_state_dict
 
     def load_state_dict(self, state_dict: dict) -> None:
         # stop the running process
@@ -168,7 +168,7 @@ class DataLoader(Stateful):
                 self.buffer.get()
 
         # reset the generator
-        self.generator.load_state_dict(state_dict["generator"])
+        self.generator.load_state_dict(state_dict)
         self.gen_state_dict = self.generator.state_dict()
 
         # restart the process

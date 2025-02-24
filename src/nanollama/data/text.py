@@ -255,11 +255,12 @@ class SingleSourceTokenGenerator(TokenLoader):
             yield batch, mask
 
     def state_dict(self) -> dict[str, Any]:
-        return {"iterator": self.jsonl_iterator.state_dict(), "tokens": self.tokens}
+        return {"iterator": self.jsonl_iterator.state_dict(), "tokens": self.tokens, "mask": self.mask}
 
     def load_state_dict(self, state_dict: dict[str, Any]) -> None:
         self.jsonl_iterator.load_state_dict(state_dict["iterator"])
         self.tokens = state_dict["tokens"]
+        self.mask = state_dict["mask"]
 
 
 # ------------------------------------------------------------------------------
