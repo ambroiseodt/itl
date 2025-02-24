@@ -35,6 +35,7 @@ FLEX_ATTENTION = False
 # Attention Layer
 # ------------------------------------------------------------------------------
 
+
 def build_attention_mask(type: str, **kwargs: dict[str, Any]) -> BlockMask:
     """
     Build attention mask.
@@ -95,7 +96,7 @@ class SelfAttention(nn.Module):
         self.W_query = nn.Linear(self.emb_dim, self.head_dim * self.nb_heads, bias=False)
         self.W_key = nn.Linear(self.emb_dim, self.head_dim * self.nb_kv_heads, bias=False)
         self.W_val = nn.Linear(self.emb_dim, self.head_dim * self.nb_kv_heads, bias=False)
-        self.wo = nn.Linear(self.head_dim * self.nb_heads, self.emb_dim, bias=False)
+        self.W_out = nn.Linear(self.nb_heads * self.head_dim, self.emb_dim, bias=False)
 
         # rotational positional encoding
         self.theta = rope_theta
@@ -121,7 +122,7 @@ class SelfAttention(nn.Module):
         out_std = init_std or (self.emb_dim ** (-0.5))
         out_std = out_std / factor
         nn.init.trunc_normal_(
-            self.wo.weight,
+            self.W_out.weight,
             mean=0.0,
             std=out_std,
             a=-3 * in_std,
@@ -134,16 +135,18 @@ class SelfAttention(nn.Module):
         bsz, seq_len, _ = x.size()
 
         # Query, key, value: (B, S, D) @ (D, D) -> (B, S, D)
-        q = self.W_query(x)
-        k = self.W_key(x)
-        v = self.W_val(x)
+        q, k, v = self.W_query(x), self.W_key(x), self.W_val(x)
 
         # reformating: (B, S, D) -> (B, S, H, D / H) -> (B, H, S, D / H)
         q = q.view(bsz, seq_len, self.nb_heads, self.head_dim).transpose(1, 2)
-        k, v = map(lambda t: t.view(bsz, seq_len, self.nb_kv_heads, self.head_dim).transpose(1, 2), (k, v))
+        k = k.view(bsz, seq_len, self.nb_kv_heads, self.head_dim).transpose(1, 2)
+        v = v.view(bsz, seq_len, self.nb_kv_heads, self.head_dim).transpose(1, 2)
+        # k, v = map(lambda t: t.view(bsz, seq_len, self.nb_kv_heads, self.head_dim).transpose(1, 2), (k, v))
 
         # rope formatting
-        q, k = map(lambda t: self._rope_view(t), (q, k))
+        q = self._rope_view(q)
+        k = self._rope_view(k)
+        # q, k = map(lambda t: self._rope_view(t), (q, k))
 
         # KV cache for faster inference
         if kv_cache:
@@ -162,7 +165,7 @@ class SelfAttention(nn.Module):
         z = z.transpose(1, 2).reshape(bsz, seq_len, self.emb_dim)
 
         # output layer: (B, L, D) @ (D, D) -> (N, L, D)
-        z = self.wo(z)
+        z = self.W_out(z)
         return z
 
     @staticmethod
@@ -220,10 +223,6 @@ class TransformerBlockConfig:
     rope_theta: float = 10_000
     hidden_dim: int = 0
     norm_eps: float = 1e-5
-
-    def __post_init__(self):
-        if not self.nb_kv_heads:
-            self.nb_kv_heads = self.nb_heads
 
     def __check_init__(self):
         """Check validity of arguments that may have been inherited."""
@@ -305,6 +304,10 @@ class TransformerConfig(BlockLanguageModelConfig):
         # default scaling of ffn dimension
         if not self.block.hidden_dim:
             self.block.hidden_dim = 4 * self.emb_dim
+
+        # no group query by default
+        if not self.block.nb_kv_heads:
+            self.block.nb_kv_heads = self.block.nb_heads
 
 
 class Transformer(BlockLanguageModel):

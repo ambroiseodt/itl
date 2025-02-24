@@ -265,6 +265,7 @@ class ClusterManager:
         if self.dp > 1:
             logger.info("Parallelizing model with data parallel")
             model = FSDP(model, device_mesh=self.dp_mesh, use_orig_params=True)
+            # model = DDP(model, device_mesh=self.dp_mesh)
 
         if self.compile:
             logger.info("Compiling model")
