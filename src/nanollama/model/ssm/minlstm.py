@@ -15,6 +15,7 @@ import torch
 from torch import nn
 from torch.nn import functional as F
 
+from ..blocklm import BlockModel
 from ..norm import RMSNorm
 from .utils_rnn import RNNBlockConfig, conv1d, scan
 
@@ -101,7 +102,7 @@ class LSTM(nn.Module):
             nn.init.trunc_normal_(self.conv_weight, std=conv_std, a=-3 * conv_std, b=3 * conv_std)
 
 
-class LSTMBlock(nn.Module):
+class LSTMBlock(BlockModel):
     def __init__(self, config: RNNBlockConfig):
         super().__init__()
 

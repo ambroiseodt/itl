@@ -18,7 +18,7 @@ import torch
 from torch import nn
 from torch.nn import functional as F
 
-from .blocklm import BlockLanguageModel, BlockLanguageModelConfig
+from .blocklm import BlockLanguageModel, BlockLanguageModelConfig, BlockModel
 from .norm import RMSNorm
 from .ssm.utils_mamba import mamba_chunk_scan_combined
 from .ssm.wrapper_causal_conv1d import causal_conv1d_fn
@@ -161,7 +161,7 @@ class MambaBlockConfig:
 # ------------------------------------------------------------------------------
 
 
-class MambaBlock(nn.Module):
+class MambaBlock(BlockModel):
     def __init__(self, config: MambaBlockConfig):
         super().__init__()
 
@@ -184,6 +184,12 @@ class MambaBlock(nn.Module):
         """Weight initialization"""
         self.ssm_norm.reset_parameters()
         self.ssm.reset_parameters(init_std, factor)
+
+    def get_nb_flop(self, **kwargs) -> int:
+        """
+        TODO
+        """
+        return 0
 
 
 # ------------------------------------------------------------------------------

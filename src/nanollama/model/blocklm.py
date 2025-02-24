@@ -19,7 +19,7 @@ import torch.nn as nn
 from .norm import RMSNorm
 
 
-class BlockModel(ABC):
+class BlockModel(nn.Module, ABC):
     """
     Abstract class for models
     """
@@ -125,6 +125,7 @@ class BlockLanguageModel(nn.Module):
 
         # layers
         for layer in self.layers:
+            layer: BlockModel
             layer.reset_parameters(init_std, factor=factor)
 
         # output

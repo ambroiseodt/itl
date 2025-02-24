@@ -16,6 +16,7 @@ from torch import nn
 from torch.autograd.function import FunctionCtx
 from torch.nn import functional as F
 
+from ..blocklm import BlockModel
 from ..feedforward import FeedForward
 from ..norm import RMSNorm
 from .utils_rnn import RNNBlockConfig, conv1d, scan
@@ -186,7 +187,7 @@ class RGLRUBlock(nn.Module):
         out = self.W_out(out)
         return out
 
-    def init_weights(self, init_std: float, factor: float) -> None:
+    def reset_parameters(self, init_std: float, factor: float) -> None:
         # input
         in_std = init_std or (self.emb_dim ** (-0.5))
         in_std = in_std / factor
@@ -201,7 +202,7 @@ class RGLRUBlock(nn.Module):
         self.rglru.reset_parameters(init_std, factor)
 
 
-class HawkBlock(nn.Module):
+class HawkBlock(BlockModel):
     def __init__(self, config: RNNBlockConfig):
         super().__init__()
 
@@ -217,7 +218,7 @@ class HawkBlock(nn.Module):
 
     def reset_parameters(self, init_std: float, factor: float) -> None:
         """Weight initialization"""
-        self.rlgru_block.init_weights(init_std, factor)
+        self.rlgru_block.reset_parameters(init_std, factor)
         self.rlgru_norm.reset_parameters()
         self.ffn.reset_parameters(init_std, factor)
         self.ffn_norm.reset_parameters()

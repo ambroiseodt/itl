@@ -23,7 +23,7 @@ import torch
 import torch.nn as nn
 from torch.nn.attention.flex_attention import BlockMask, create_block_mask, flex_attention
 
-from .blocklm import BlockLanguageModel, BlockLanguageModelConfig
+from .blocklm import BlockLanguageModel, BlockLanguageModelConfig, BlockModel
 from .feedforward import FeedForward
 from .norm import RMSNorm
 
@@ -45,14 +45,14 @@ def build_attention_mask(type: str, **kwargs: dict[str, Any]) -> BlockMask:
     if type == "causal":
         assert "seq_len" in kwargs, "sequence length must be provided for causal mask"
         seq_len = kwargs["seq_len"]
-
-        def _causal_mask_sign(b: int, h: int, q_idx: int, kv_idx: int) -> bool:
-            return q_idx >= kv_idx
-
         return create_block_mask(_causal_mask_sign, None, None, seq_len, seq_len)
 
     else:
         raise ValueError(f"Unknown attention mask type: {type}")
+
+
+def _causal_mask_sign(b: int, h: int, q_idx: int, kv_idx: int) -> bool:
+    return q_idx >= kv_idx
 
 
 class SelfAttention(nn.Module):
@@ -100,9 +100,6 @@ class SelfAttention(nn.Module):
         )
         self.rope_modulator: torch.Tensor
 
-        # default causal attention mask
-        self.causal_mask = build_attention_mask("causal", seq_len=self.seq_len)
-
     def reset_parameters(self, init_std: float, factor: float) -> None:
         """Weight initialization"""
         # input
@@ -149,8 +146,6 @@ class SelfAttention(nn.Module):
             k, v = kv_cache.update(k, v)
 
         # Flash attention implementation
-        if mask is None:
-            mask = self.causal_mask
         # ... -> (B, H, S, D / H)
         z = flex_attention(q, k, v, block_mask=mask, enable_gqa=True)
 
@@ -235,7 +230,7 @@ class TransformerBlockConfig:
 # ------------------------------------------------------------------------------
 
 
-class TransformerBlock(nn.Module):
+class TransformerBlock(BlockModel):
     """
     Transformer block.
 
@@ -264,8 +259,8 @@ class TransformerBlock(nn.Module):
         self.ffn.reset_parameters(init_std, factor)
         self.ffn_norm.reset_parameters()
 
-    def forward(self, x: torch.Tensor) -> torch.Tensor:
-        out = x + self.attn(self.attn_norm(x))
+    def forward(self, x: torch.Tensor, mask: BlockMask = None) -> torch.Tensor:
+        out = x + self.attn(self.attn_norm(x), mask=mask)
         out = out + self.ffn(self.ffn_norm(out))
         return out
 
@@ -308,3 +303,14 @@ class Transformer(BlockLanguageModel):
 
     def __init__(self, config: TransformerConfig):
         super().__init__(config, block=TransformerBlock)
+        seq_len = config.seq_len
+        self.mask = build_attention_mask("causal", seq_len=seq_len)
+
+    def forward(self, x: torch.Tensor, mask: BlockMask = None) -> torch.Tensor:
+        if mask is None:
+            mask = self.mask
+        out = self.embeddings(x)
+        for layer in self.layers:
+            out = layer(out, mask=mask)
+        logits = self.output(self.output_norm(out))
+        return logits
