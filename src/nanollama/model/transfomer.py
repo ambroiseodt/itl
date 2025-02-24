@@ -1,16 +1,14 @@
 """
 Transformer model.
 
-Notes
------
+#### Notes
 Comments abbreviations:
     B: batch size
     S: sequence length
     D: embedding dimension
     H: number of heads
 
-License
--------
+#### License
 This source code is licensed under the terms specified in the `LICENSE` file,
 located in the root directory of this repository.
 
@@ -19,10 +17,11 @@ located in the root directory of this repository.
 
 import math
 from dataclasses import dataclass, field
+from typing import Any
 
 import torch
 import torch.nn as nn
-import torch.nn.functional as F
+from torch.nn.attention.flex_attention import BlockMask, create_block_mask, flex_attention
 
 from .blocklm import BlockLanguageModel, BlockLanguageModelConfig
 from .feedforward import FeedForward
@@ -32,21 +31,40 @@ from .norm import RMSNorm
 # Attention Layer
 # ------------------------------------------------------------------------------
 
+def build_attention_mask(type: str, **kwargs: dict[str, Any]) -> BlockMask:
+    """
+    Build attention mask.
+
+    ### Parameters
+    type: type of attention, either "causal" or "doc"
+    kwargs: additional arguments for the mask
+
+    ### Returns
+    mask: attention mask
+    """
+    if type == "causal":
+        assert "seq_len" in kwargs, "sequence length must be provided for causal mask"
+        seq_len = kwargs["seq_len"]
+
+        def _causal_mask_sign(b: int, h: int, q_idx: int, kv_idx: int) -> bool:
+            return q_idx >= kv_idx
+
+        return create_block_mask(_causal_mask_sign, None, None, seq_len, seq_len)
+
+    else:
+        raise ValueError(f"Unknown attention mask type: {type}")
+
 
 class SelfAttention(nn.Module):
     """
     Self-attention layer.
 
-    Parameters
-    ----------
-    seq_len: int
-        maximum sequence length
-    emb_dim: int
-        embedding dimensionality of the input
-    nb_heads: int
-        number of attention heads (should divide emb_dim)
-    rope_theta: float
-        rotational positional encoding parameter
+    ### Parameters
+    seq_len: maximum sequence length
+    emb_dim: embedding dimensionality of the input
+    nb_heads: number of attention heads (should divide emb_dim)
+    nb_kv_heads: number of key-value heads (should divide nb_heads)
+    rope_theta: rotational positional encoding parameter
     """
 
     def __init__(
@@ -54,6 +72,7 @@ class SelfAttention(nn.Module):
         seq_len: int,
         emb_dim: int,
         nb_heads: int,
+        nb_kv_heads: int,
         rope_theta: float,
     ):
         super().__init__()
@@ -62,69 +81,84 @@ class SelfAttention(nn.Module):
         self.seq_len = seq_len
         self.emb_dim = emb_dim
         self.nb_heads = nb_heads
+        self.nb_kv_heads = nb_kv_heads
         self.head_dim = self.emb_dim // self.nb_heads
+        self.head_per_group = self.nb_heads // self.nb_kv_heads
         assert self.emb_dim % self.nb_heads == 0, "embedding dimension must be divisible by number of heads"
+        assert self.nb_heads % self.nb_kv_heads == 0, "number of heads must be divisible by number of key-value heads"
 
         # matrices
-        self.W_in = nn.Linear(self.emb_dim, 3 * self.emb_dim, bias=False)
-        self.W_out = nn.Linear(self.emb_dim, self.emb_dim, bias=False)
+        self.W_query = nn.Linear(self.emb_dim, self.head_dim * self.nb_heads, bias=False)
+        self.W_key = nn.Linear(self.emb_dim, self.head_dim * self.nb_kv_heads, bias=False)
+        self.W_val = nn.Linear(self.emb_dim, self.head_dim * self.nb_kv_heads, bias=False)
+        self.wo = nn.Linear(self.head_dim * self.nb_heads, self.emb_dim, bias=False)
 
         # rotational positional encoding
         self.theta = rope_theta
-        self.register_buffer("rope_modulator", self._get_rope_modulator(self.seq_len, self.head_dim, self.theta))
+        self.register_buffer(
+            "rope_modulator", self._get_rope_modulator(self.seq_len, self.head_dim, self.theta), persistent=False
+        )
+        self.rope_modulator: torch.Tensor
+
+        # default causal attention mask
+        self.causal_mask = build_attention_mask("causal", seq_len=self.seq_len)
 
     def reset_parameters(self, init_std: float, factor: float) -> None:
-        """
-        Weight initialization
-        """
+        """Weight initialization"""
         # input
         in_std = init_std or (self.emb_dim ** (-0.5))
-        nn.init.trunc_normal_(
-            self.W_in.weight,
-            mean=0.0,
-            std=in_std,
-            a=-3 * in_std,
-            b=3 * in_std,
-        )
+        for W_in in [self.W_query, self.W_key, self.W_val]:
+            nn.init.trunc_normal_(
+                W_in.weight,
+                mean=0.0,
+                std=in_std,
+                a=-3 * in_std,
+                b=3 * in_std,
+            )
 
         # output
         out_std = init_std or (self.emb_dim ** (-0.5))
         out_std = out_std / factor
         nn.init.trunc_normal_(
-            self.W_out.weight,
+            self.wo.weight,
             mean=0.0,
             std=out_std,
             a=-3 * in_std,
             b=3 * in_std,
         )
 
-    def forward(self, x: torch.Tensor) -> torch.Tensor:
+    def forward(self, x: torch.Tensor, kv_cache: Any = None, mask: BlockMask = None) -> torch.Tensor:
         """Self attention"""
         # dimensions
         bsz, seq_len, _ = x.size()
 
-        # Query, key, value: (B, S, D) @ (D, 3 * D) -> (B, S, 3 * D) -> (B, S, D) * 3
-        q, k, v = self.W_in(x).chunk(3, dim=-1)
+        # Query, key, value: (B, S, D) @ (D, D) -> (B, S, D)
+        q = self.W_query(x)
+        k = self.W_key(x)
+        v = self.W_val(x)
 
         # reformating: (B, S, D) -> (B, S, H, D / H) -> (B, H, S, D / H)
-        q, k, v = map(lambda t: t.view(bsz, seq_len, self.nb_heads, self.head_dim).transpose(1, 2), (q, k, v))
+        q = q.view(bsz, seq_len, self.nb_heads, self.head_dim).transpose(1, 2)
+        k, v = map(lambda t: t.view(bsz, seq_len, self.nb_kv_heads, self.head_dim).transpose(1, 2), (k, v))
 
         # rope formatting
         q, k = map(lambda t: self._rope_view(t), (q, k))
 
-        # KV cache implementation at inference time
-        if hasattr(self, "kv_cache"):
-            k, v = self.kv_cache.update(k, v)
+        # KV cache for faster inference
+        if kv_cache:
+            k, v = kv_cache.update(k, v)
 
         # Flash attention implementation
+        if mask is None:
+            mask = self.causal_mask
         # ... -> (B, H, S, D / H)
-        z = F.scaled_dot_product_attention(q, k, v, is_causal=True)
+        z = flex_attention(q, k, v, block_mask=mask, enable_gqa=True)
 
         # reformating: (B, H, S, D / H) -> (B, S, H, D / H) -> (B, S, D)
         z = z.transpose(1, 2).reshape(bsz, seq_len, self.emb_dim)
 
         # output layer: (B, L, D) @ (D, D) -> (N, L, D)
-        z = self.W_out(z)
+        z = self.wo(z)
         return z
 
     @staticmethod
@@ -132,19 +166,13 @@ class SelfAttention(nn.Module):
         """
         Returns the rope modulator for the attention mechanism.
 
-        Parameters
-        ----------
-        seq_len:
-            sequence length
-        dim:
-            embedding dimension
-        theta:
-            rope angle parameter
+        ### Parameters
+        seq_len: sequence length
+        dim: embedding dimension
+        theta: rope angle parameter
 
-        Returns
-        -------
-        rope_modulator:
-            tensor of shape (seq_len, dim, 2) whose (t, k) element is
+        ### Returns
+        rope_modulator: tensor of shape (seq_len, dim, 2) whose (t, k) element is
             .. math::
                 \\cos(\\frac{2 \\pi t}{\\theta^{(2k / d)}}),
                 \\sin(\\frac{2 \\pi t}{\\theta^{(2k / d)}})
@@ -156,9 +184,7 @@ class SelfAttention(nn.Module):
         return torch.stack((cos, sin), dim=-1)
 
     def _rope_view(self, qk: torch.Tensor) -> torch.Tensor:
-        """
-        Recast tensor to complex numbers and apply rotational position filter.
-        """
+        """Recast tensor to complex numbers and apply rotational position filter."""
         B, H, S, dim = qk.size()
         assert S <= self.rope_modulator.size(0), "sequence length is too long for rope attention"
 
@@ -186,9 +212,14 @@ class TransformerBlockConfig:
 
     # Transformer block parameters
     nb_heads: int = 0
+    nb_kv_heads: int = 0
     rope_theta: float = 10_000
     hidden_dim: int = 0
     norm_eps: float = 1e-5
+
+    def __post_init__(self):
+        if not self.nb_kv_heads:
+            self.nb_kv_heads = self.nb_heads
 
     def __check_init__(self):
         """Check validity of arguments that may have been inherited."""
@@ -208,8 +239,7 @@ class TransformerBlock(nn.Module):
     """
     Transformer block.
 
-    Parameters
-    ----------
+    ### Parameters
     config: configuration class containing arguments for SelfAttention and FeedForward
     """
 
@@ -217,7 +247,11 @@ class TransformerBlock(nn.Module):
         super().__init__()
 
         self.attn = SelfAttention(
-            seq_len=config.seq_len, emb_dim=config.emb_dim, nb_heads=config.nb_heads, rope_theta=config.rope_theta
+            seq_len=config.seq_len,
+            emb_dim=config.emb_dim,
+            nb_heads=config.nb_heads,
+            nb_kv_heads=config.nb_kv_heads,
+            rope_theta=config.rope_theta,
         )
         self.ffn = FeedForward(emb_dim=config.emb_dim, hidden_dim=config.hidden_dim)
         self.attn_norm = RMSNorm(config.emb_dim, eps=config.norm_eps)
@@ -240,12 +274,9 @@ class TransformerBlock(nn.Module):
         TODO
         Number of flop to process a new token
 
-        Parameters
-        ----------
-        mode:
-            Whether to consider the forward, backward pass or both
-        seq_len:
-            Sequence length.
+        ### Parameters
+        mode: whether to consider the forward, backward pass or both
+        seq_len: sequence length
         """
         mode_multiplier = dict(fwd=1, bwd=2.5, both=3.5)[mode]
         return 0 * mode_multiplier
