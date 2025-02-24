@@ -23,8 +23,8 @@ from typing import Any
 import numpy as np
 from numpy.random import default_rng
 from torch.distributed.checkpoint.stateful import Stateful
+from torch.distributed.device_mesh import DeviceMesh
 
-from ..distributed import get_rank, get_world_size
 from .loader import TokenLoader
 from .tokenizer import DialogTokenizer, TokenizerConfig, build_tokenizer
 from .utils import generate_seeds
@@ -288,7 +288,7 @@ class MultipleSourcesTokenGenerator(TokenLoader):
     ```
     """
 
-    def __init__(self, config: DataConfig):
+    def __init__(self, config: DataConfig, dp_mesh: DeviceMesh):
         super().__init__()
 
         self.batch_size = config.batch_size
@@ -296,7 +296,7 @@ class MultipleSourcesTokenGenerator(TokenLoader):
 
         # initialize the single source iterators
         tokenizer = build_tokenizer(config.tokenizer)
-        rank, world_size = get_rank(), get_world_size()
+        rank, world_size = dp_mesh.get_local_rank(), dp_mesh.size()
         iterators = [JSONLIterator(source.path, rank, world_size) for source in config.sources]
         self.generators = [SingleSourceTokenGenerator(config, iterator, tokenizer) for iterator in iterators]
 

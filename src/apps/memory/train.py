@@ -12,7 +12,7 @@ located in the root directory of this repository.
 import logging
 import os
 from contextlib import ExitStack
-from dataclasses import dataclass, field
+from dataclasses import asdict, dataclass, field
 from typing import Any
 
 import torch
@@ -98,7 +98,9 @@ def train(config: TrainingConfig) -> None:
         cluster: ClusterManager = context_stack.enter_context(ClusterManager(config.cluster))
         logger: Logger = context_stack.enter_context(Logger(config.orchestration.logging))
         utils: UtilityManager = context_stack.enter_context(UtilityManager(config.orchestration.utils))
-        wandb: WandbLogger = context_stack.enter_context(WandbLogger(config.orchestration.wandb, run_config=config))
+        wandb: WandbLogger = context_stack.enter_context(
+            WandbLogger(config.orchestration.wandb, run_config=asdict(config))
+        )
 
         # ---------------------------------------------------------------------
         # Build and Parallelize model, optimizer, scheduler
@@ -106,7 +108,7 @@ def train(config: TrainingConfig) -> None:
 
         _logger.info("Building model")
         model: nn.Module = config.model_gen(config.model)
-        model = cluster.initialize_model(model)
+        model = cluster.build_model(model)
 
         _logger.info("Building optimizer")
         optimizer = build_optimizer(model, config.optim)
@@ -118,7 +120,7 @@ def train(config: TrainingConfig) -> None:
         # DataLoader
         # ---------------------------------------------------------------------
 
-        token_gen = MultipleSourcesTokenGenerator(config.data)
+        token_gen = MultipleSourcesTokenGenerator(config.data, cluster.dp_mesh)
         dataloader: DataLoader = context_stack.enter_context(DataLoader(config.data, token_gen))
 
         # ---------------------------------------------------------------------
@@ -208,6 +210,7 @@ def train(config: TrainingConfig) -> None:
             checkpoint()
 
             print(loss.item())
+            wandb({"loss": loss.item(), "step": optim_state.step})
 
     _logger.info("Training done.")
 

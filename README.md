@@ -65,6 +65,10 @@ Launch a traning run locally
 ```bash
 python -m src.apps.memory.train src/apps/memory/config.yaml
 ```
+You can run the code locally with two GPUs (or more).
+```bash
+torchrun --nproc-per-node 2 -m src.apps.memory.train src/apps/memory/config.yaml
+```
 Launch a training on your cluster
 ```bash
 python -m nanollama.launcher src/apps/memory/config.yaml

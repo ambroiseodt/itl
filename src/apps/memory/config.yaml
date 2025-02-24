@@ -58,8 +58,8 @@ run_config:
     logging:
       period: 1
       level: debug
-    wandb:
-      active: false
+    # wandb:
+      # active: true
 
     profiler:
       active: false
