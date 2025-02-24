@@ -5,24 +5,50 @@ This codebase aims to study the "In-Tool Learning" of Large Language Models.
 - In-Weight Learning: Memorizing the solution to the prolem within the model's weights.
 
 ## Installation
-Please, make sure you have Python 3.10 or a newer version installed.
 
-It is preferred that the library be installed in a virtual environment, for instance with conda and Python 3.9:
+The code runs Python 3.10+.
+Here is some installation instruction:
+- Install [miniconda](https://docs.conda.io/projects/miniconda/en/latest/). Follow the instruction online, most likely you will execute the following commands.
 ```bash
-conda create -n myenv python==3.10
-conda activate myenv
+curl -O https://repo.anaconda.com/miniconda/Miniconda3-latest-Linux-x86_64.sh
+bash ~/Miniconda3-latest-Linux-x86_64.sh
+source ~/.bashrc
 ```
-
-If you only want use the library, you can install the latest version of the code with:
+- Install python in a new conda environment: be mindful to install a version of python that is compatible with PyTorch.
 ```bash
-pip install git+https://github.com/viviencabannes/memory.git#egg=draft
+conda create -n llm
+conda activate llm
+conda install pip python=3.12
 ```
-
-If you want to contribute, you can clone the repository and install the packages as follows:
+- Install Pytorch and check CUDA support: be mindful to install a version that is compatible with your CUDA driver ([example](https://docs.nvidia.com/cuda/cuda-toolkit-release-notes/index.html)) (use `nvidia-smi` to check your CUDA driver)
 ```bash
-git clone https://github.com/viviencabannes/memory.git
-cd memory
+pip install torch --index-url https://download.pytorch.org/whl/cu121
+python -c "import torch; print(torch.cuda.is_available())"
+```
+This should print "True".
+- Install this repo
+```bash
+git clone <repo url>
+cd <repo path>
 pip install -e .
+```
+If you want to install the development, visualization and mamba dependencies, you can swap the previous command for the following one:
+```bash
+pip install -e .[dev,ssm,visu]
+```
+
+For mamba, `causal_conv1d` can be a bit hard to load, as it is built upon environment variables that are not always set.
+If you are on a cluster utilizing `module`, you may want to set `CUDA_HOME` with
+```bash
+module load cuda/<latest version>
+```
+You may instantiate the path to `nvjitlink` with
+```bash
+export LD_LIBRARY_PATH=$(python -c "import site; print(site.getsitepackages()[0] + '/nvidia/nvjitlink/lib')"):$LD_LIBRARY_PATH
+```
+You can then try to install the package with `ssm` dependencies (namely `causal_conv1d` and `mamba_ssm`)
+```bash
+pip install -e .[ssm]
 ```
 
 ## Dataset creation
