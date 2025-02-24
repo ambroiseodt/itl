@@ -69,6 +69,9 @@ class TrainingConfig:
             assert self.optim.fused is False, "Fused Adam is not supported on CPU"
             assert self.orchestration.profiler.active is False, "Profiler is not supported on CPU"
 
+        # fill in missing values
+        self.model.block.seq_len = self.data.seq_len - 1
+
         # manual post initialization of all modules
         for module in self.__dict__.values():
             if hasattr(module, "__check_init__"):

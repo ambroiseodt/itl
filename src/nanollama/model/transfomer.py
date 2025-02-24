@@ -303,7 +303,7 @@ class Transformer(BlockLanguageModel):
 
     def __init__(self, config: TransformerConfig):
         super().__init__(config, block=TransformerBlock)
-        seq_len = config.seq_len
+        seq_len = config.block.seq_len
         self.mask = build_attention_mask("causal", seq_len=seq_len)
 
     def forward(self, x: torch.Tensor, mask: BlockMask = None) -> torch.Tensor:

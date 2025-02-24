@@ -28,7 +28,7 @@ run_config:
     tokenizer:
       name: byte
     batch_size: 128
-    seq_len: 128
+    seq_len: 129
     asynchronous: false
 
   model:
@@ -36,12 +36,11 @@ run_config:
     emb_dim: 64
     nb_layers: 2
     block:
-      seq_len: 2048
       nb_heads: 2
       hidden_dim: 256
 
   optim:
-    steps: 100
+    steps: 400
     lr: 1e-4
     weight_decay: 0.1
     fused: false
