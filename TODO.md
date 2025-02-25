@@ -8,7 +8,7 @@ Todo:
 Vivien's todo:
 - Generation.
     - Write inference loop logic, as well as sampling strategies.
-    - make sure KV cache first implementation work
+    - make sure KV cache first implementation work (test that generation work the same with and without KV caching).
     - clean up Transformer.__init__ and Transformer.prefilling logic.
     - Parallel completion of prompts with block diagonal mask.
 - Tool use mechanism.

@@ -29,6 +29,7 @@ from .norm import RMSNorm
 
 FLEX_ATTENTION = False
 
+
 # ------------------------------------------------------------------------------
 # Attention Mask
 # ------------------------------------------------------------------------------
@@ -76,7 +77,11 @@ class KVCache:
 
     key: torch.Tensor
     value: torch.Tensor
-    pos_idx: int
+    pos_idx: int = 0
+
+    def __post_init__(self):
+        if not self.pos_idx:
+            self.pos_idx = self.key.size(2)
 
     def __call__(self, key: torch.Tensor, value: torch.Tensor) -> tuple[torch.Tensor, torch.Tensor]:
         """
@@ -132,18 +137,16 @@ class SelfAttention(nn.Module):
         # dimensions
         self.seq_len = seq_len
         self.emb_dim = emb_dim
-        self.nb_heads = nb_heads
-        self.nb_kv_heads = nb_kv_heads
-        self.head_dim = self.emb_dim // self.nb_heads
-        self.heads_per_group = self.nb_heads // self.nb_kv_heads
-        assert self.emb_dim % self.nb_heads == 0, "embedding dimension must be divisible by number of heads"
-        assert self.nb_heads % self.nb_kv_heads == 0, "number of heads must be divisible by number of key-value heads"
+        self.head_dim = self.emb_dim // nb_heads
+        self.heads_per_group = nb_heads // nb_kv_heads
+        assert self.emb_dim % nb_heads == 0, "embedding dimension must be divisible by number of heads"
+        assert nb_heads % nb_kv_heads == 0, "number of heads must be divisible by number of key-value heads"
 
         # matrices
-        self.W_query = nn.Linear(self.emb_dim, self.head_dim * self.nb_heads, bias=False)
-        self.W_key = nn.Linear(self.emb_dim, self.head_dim * self.nb_kv_heads, bias=False)
-        self.W_val = nn.Linear(self.emb_dim, self.head_dim * self.nb_kv_heads, bias=False)
-        self.W_out = nn.Linear(self.nb_heads * self.head_dim, self.emb_dim, bias=False)
+        self.W_query = nn.Linear(self.emb_dim, self.head_dim * nb_heads, bias=False)
+        self.W_key = nn.Linear(self.emb_dim, self.head_dim * nb_kv_heads, bias=False)
+        self.W_val = nn.Linear(self.emb_dim, self.head_dim * nb_kv_heads, bias=False)
+        self.W_out = nn.Linear(nb_heads * self.head_dim, self.emb_dim, bias=False)
 
         # rotational positional encoding
         self.theta = rope_theta
@@ -200,7 +203,7 @@ class SelfAttention(nn.Module):
         if kv_cache:
             k, v = kv_cache(k, v)
 
-        # Flash attention implementation
+        # Efficient attention implementation
         # ... -> (B, H, S, D / H)
         if FLEX_ATTENTION:
             z = flex_attention(q, k, v, block_mask=mask, enable_gqa=True)
@@ -360,31 +363,37 @@ class Transformer(BlockLanguageModel):
     """Decoder only transformer."""
 
     def __init__(self, config: TransformerConfig):
-        # cache size (TODO: for tensor parallelism, typically nb_kv_heads /= tp_size)
-        seq_len = config.block.seq_len
-        head_dim = config.block.emb_dim // config.block.nb_heads
-        nb_kv_heads = config.block.nb_kv_heads
-        self.cache_size = (nb_kv_heads, seq_len, head_dim)
+        super().__init__(config, block=TransformerBlock)
+
+        # cache size
+        self.seq_len = config.block.seq_len
+        self.head_dim = config.block.emb_dim // config.block.nb_heads
+        self.nb_kv_heads = config.block.nb_kv_heads
 
         # default cache and mask
         self.kv_caches = [None for _ in range(config.nb_layers)]
-        self.mask = build_attention_mask("causal", seq_len=seq_len)
-
-        super().__init__(config, block=TransformerBlock)
+        self.mask = build_attention_mask("causal", seq_len=self.seq_len)
 
     def prefilling(self, x: torch.Tensor) -> None:
         """Tentative prefilling implementation"""
         bsz, seq_len, _ = x.size()
+
         # build cache
+        cache_size = (bsz, self.nb_kv_heads, 0, self.head_dim)
         self.kv_caches = [
             KVCache(
-                torch.empty((bsz, *self.cache_size[0]), dtype=x.dtype, device=x.device),
-                torch.empty((bsz, *self.cache_size[0]), dtype=x.dtype, device=x.device),
+                torch.empty(cache_size, dtype=x.dtype, device=x.device),
+                torch.empty(cache_size, dtype=x.dtype, device=x.device),
             )
         ]
-        # causal mask for the prefilling
+
+        # causal mask for prefilling
         mask = build_attention_mask("causal", seq_len=seq_len)
+
+        # forward pass
         self.forward(x, mask)
+
+        # reset attention mask
         self.mask = None
 
     def forward(self, x: torch.Tensor, mask: BlockMask = None) -> torch.Tensor:

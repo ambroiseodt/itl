@@ -71,6 +71,7 @@ for layer_id in range(len(model.layers)):
         f"layers.{layer_id}.ffn.W_in2": ColwiseParallel(),
         f"layers.{layer_id}.ffn.W_out": RowwiseParallel(output_layouts=Shard(1)),
     }
+model.nb_kv_heads /= tp_size
 
 parallelize_module(model, tp_mesh, tp_plan)
 
