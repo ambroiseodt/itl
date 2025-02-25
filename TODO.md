@@ -7,8 +7,8 @@ Todo:
 
 Vivien's todo:
 - Understand DeviceMesh. Look into torch (DP, TP) mesh.
-    - Start with using the device mesh for data parallel.
-    - Look into distributed training beyond DDP in pytorch (create a mesh, parallelize the model, checkpoint distribution, use torch.distributed.get_rank()).
+    - Distributed Checkpointing.
+    - Write the parallelization plan next to the transformer class, try to understand the impact of the shard_dim.
 - Generation.
     - KV caching.
     - Prefilling.
@@ -28,6 +28,7 @@ Other stuffs for Vivien's
 - Simple vanilla script with Byte Tokenizer over Shakespeare.
 - Simple vanilla script with real tokenizer over SmolLM v2.
 - Implement the tricks that Karpathy present in one of his recent workthrough.
+    - Activation checkpointing.
 
 Ambroise's ideas:
 - For scaling plot of [Physics of Language Models: Part 3.3](https://arxiv.org/pdf/2404.05405), could we plot contourlines to take the performance into account?
@@ -55,3 +56,7 @@ conda activate /checkpoint/amaia/explore/tscohen/envs/amaia-experimental-build-2
 #### Probing
 - Have something running in interactive fashion.
 - The logic is that we add module that checkpoint stuff during the forward and during the backward pass, while acting as the identity regarding the information passing through.
+
+
+Correct init_weight vs reset_parameters
+Correct docstring `args` to `- my_args`, and module docstring more readable.
