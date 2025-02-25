@@ -138,15 +138,10 @@ class SelfAttention(nn.Module):
         q, k, v = self.W_query(x), self.W_key(x), self.W_val(x)
 
         # reformating: (B, S, D) -> (B, S, H, D / H) -> (B, H, S, D / H)
-        q = q.view(bsz, seq_len, self.nb_heads, self.head_dim).transpose(1, 2)
-        k = k.view(bsz, seq_len, self.nb_kv_heads, self.head_dim).transpose(1, 2)
-        v = v.view(bsz, seq_len, self.nb_kv_heads, self.head_dim).transpose(1, 2)
-        # k, v = map(lambda t: t.view(bsz, seq_len, self.nb_kv_heads, self.head_dim).transpose(1, 2), (k, v))
+        q, k, v = map(lambda t: t.view(bsz, seq_len, -1, self.head_dim).transpose(1, 2), (q, k, v))
 
         # rope formatting
-        q = self._rope_view(q)
-        k = self._rope_view(k)
-        # q, k = map(lambda t: self._rope_view(t), (q, k))
+        q, k = map(lambda t: self._rope_view(t), (q, k))
 
         # KV cache for faster inference
         if kv_cache:
@@ -157,12 +152,11 @@ class SelfAttention(nn.Module):
         if FLEX_ATTENTION:
             z = flex_attention(q, k, v, block_mask=mask, enable_gqa=True)
         else:
-            k = torch.repeat_interleave(k, dim=2, repeats=self.heads_per_group)
-            v = torch.repeat_interleave(v, dim=2, repeats=self.heads_per_group)
+            k, v = map(lambda t: torch.repeat_interleave(t, dim=2, repeats=self.heads_per_group), (k, v))
             z = F.scaled_dot_product_attention(q, k, v, is_causal=True)
 
         # reformating: (B, H, S, D / H) -> (B, S, H, D / H) -> (B, S, D)
-        z = z.transpose(1, 2).reshape(bsz, seq_len, self.emb_dim)
+        z = z.transpose(1, 2).reshape(bsz, seq_len, -1)
 
         # output layer: (B, L, D) @ (D, D) -> (N, L, D)
         z = self.W_out(z)
