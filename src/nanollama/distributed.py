@@ -26,6 +26,7 @@ import torch.nn as nn
 from torch.distributed.device_mesh import DeviceMesh, init_device_mesh
 from torch.distributed.fsdp import FullyShardedDataParallel as FSDP
 from torch.distributed.tensor.parallel import ParallelStyle, parallelize_module
+from torch.nn.parallel import DistributedDataParallel as DDP
 
 logger = getLogger("nanollama")
 
@@ -203,13 +204,13 @@ class ClusterManager:
     Distributed computing manager that handles the initialization and destruction of the distributed environment.
 
     ### Parameters
-    config: ClusterConfig
+    - config: ClusterConfig
 
     ### Attributes
-    device: current torch.device
-    tp_mesh: tensor parallel mesh
-    dp_mesh: data parallel mesh
-    root_model: original nn.Module before parallelization
+    - device: current torch.device
+    - tp_mesh: tensor parallel mesh
+    - dp_mesh: data parallel mesh
+    - root_model: original nn.Module before parallelization
     """
 
     def __init__(self, config: ClusterConfig):
@@ -232,6 +233,7 @@ class ClusterManager:
         """Initialize distributed environment"""
         if not is_distributed_job():
             self.dp = self.tp = 1
+            self.tp_mesh = self.dp_mesh = None
             logger.info(f"Running on {self.device}")
             return self
 
@@ -248,9 +250,14 @@ class ClusterManager:
         self.dp_mesh = mesh["dp"]
         return self
 
-    def build_model(self, model: nn.Module, tp_plan: dict[str, ParallelStyle] = None) -> nn.Module:
+    def build_model(self, model: nn.Module, tp_plan: dict[str, ParallelStyle] = None, ddp: bool = False) -> nn.Module:
         """
         Initialize the model by casting it to the device, compiling and parallelizing it according to configuration.
+
+        ### Parameters
+        - model: model to be parallelized, and compiled
+        - tp_plan: tensor parallelization plan
+        - ddp: whether to use DistributedDataParallel or FullyShardedDataParallel
         """
         self.root_model = model
         model = model.to(device=self.device)
@@ -264,8 +271,10 @@ class ClusterManager:
 
         if self.dp > 1:
             logger.info("Parallelizing model with data parallel")
-            model = FSDP(model, device_mesh=self.dp_mesh, use_orig_params=True)
-            # model = DDP(model, device_mesh=self.dp_mesh)
+            if ddp:
+                model = DDP(model, device_mesh=self.dp_mesh)
+            else:
+                model = FSDP(model, device_mesh=self.dp_mesh, use_orig_params=True)
 
         if self.compile:
             logger.info("Compiling model")
