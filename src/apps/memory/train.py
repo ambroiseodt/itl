@@ -22,7 +22,7 @@ import yaml
 
 from ...nanollama.data.loader import DataLoader
 from ...nanollama.data.text import DataConfig, MultipleSourcesTokenGenerator
-from ...nanollama.distributed import ClusterConfig, ClusterManager
+from ...nanollama.distributed import ClusterConfig, ClusterManager, get_rank
 from ...nanollama.model import Transformer, TransformerConfig
 from ...nanollama.monitor import (
     Checkpointer,
@@ -127,16 +127,15 @@ def train(config: TrainingConfig) -> None:
         # Recover Checkpoint
         # ---------------------------------------------------------------------
 
-
         checkpoint: Checkpointer = context_stack.enter_context(
             Checkpointer(
                 config.orchestration.checkpoint,
-                stateful_objects={"scheduler": scheduler, "dataloader": dataloader, "state": optim_state},
                 model=model,
                 optimizer=optimizer,
+                stateful_objects={"scheduler": scheduler, "dataloader": dataloader, "state": optim_state},
             )
         )
-        checkpoint.step = optim_state.step
+        checkpoint.saved_step = checkpoint.step = optim_state.step
 
         # ---------------------------------------------------------------------
         # Global information
@@ -147,6 +146,8 @@ def train(config: TrainingConfig) -> None:
         # ---------------------------------------------------------------------
         # Training loop
         # ---------------------------------------------------------------------
+
+        print(model)
 
         model.train()
 
@@ -209,7 +210,7 @@ def train(config: TrainingConfig) -> None:
             profiler()
             checkpoint()
 
-            print(loss.item())
+            print(get_rank(), loss.item())
             wandb({"loss": loss.item(), "step": optim_state.step})
 
     _logger.info("Training done.")

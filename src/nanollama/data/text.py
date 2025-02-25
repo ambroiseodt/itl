@@ -296,7 +296,10 @@ class MultipleSourcesTokenGenerator(TokenLoader):
 
         # initialize the single source iterators
         tokenizer = build_tokenizer(config.tokenizer)
-        rank, world_size = dp_mesh.get_local_rank(), dp_mesh.size()
+        if dp_mesh is None:
+            rank, world_size = 0, 1
+        else:
+            rank, world_size = dp_mesh.get_local_rank(), dp_mesh.size()
         iterators = [JSONLIterator(source.path, rank, world_size) for source in config.sources]
         self.generators = [SingleSourceTokenGenerator(config, iterator, tokenizer) for iterator in iterators]
 

@@ -178,7 +178,7 @@ def clean_environment() -> Generator[None, None, None]:
 class ClusterConfig:
     device: torch.device = None
     compile_model: bool = True
-    backend: str = "nccl"
+    backend: str = "cpu:gloo,cuda:nccl"
     dp: int = 0
     tp: int = 1
 
@@ -250,7 +250,7 @@ class ClusterManager:
         self.dp_mesh = mesh["dp"]
         return self
 
-    def build_model(self, model: nn.Module, tp_plan: dict[str, ParallelStyle] = None, ddp: bool = False) -> nn.Module:
+    def build_model(self, model: nn.Module, tp_plan: dict[str, ParallelStyle] = None, ddp: bool = True) -> nn.Module:
         """
         Initialize the model by casting it to the device, compiling and parallelizing it according to configuration.
 
