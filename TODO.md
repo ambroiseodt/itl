@@ -7,18 +7,16 @@ Todo:
 
 Vivien's todo:
 - Generation.
-    - KV caching.
-    - Prefilling.
+    - Write inference loop logic, as well as sampling strategies.
+    - make sure KV cache first implementation work
+    - clean up Transformer.__init__ and Transformer.prefilling logic.
     - Parallel completion of prompts with block diagonal mask.
-    - Caching when dealing with tree of multi-turn dialogs.
 - Tool use mechanism.
     - Regex in token space for database BoS, parsing of previous message, anwser, end of generation.
 - Show how to run a grid with a grid.yaml configuration.
 
 Other stuffs for Vivien's
-- Caching for Mamba and RNN models.
 - Improve the light profiler.
-- Make sure one can extend model context size incrementally.
 - Simple vanilla script with Byte Tokenizer over Shakespeare.
 - Simple vanilla script with real tokenizer over SmolLM v2.
 - Correct init_weight vs reset_parameters
@@ -48,3 +46,10 @@ Ambroise's ideas:
     - Understand interaction with KV cache.
 
 - Activation checkpointing.
+
+- Caching when dealing with tree of multi-turn dialogs.
+- Prefix attention masking 
+
+- Caching for Mamba and RNN models.
+
+- Make sure one can extend model context size incrementally.
