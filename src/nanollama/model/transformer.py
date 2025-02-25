@@ -1,19 +1,18 @@
 """
 Transformer model.
 
-#### Notes
-Comments abbreviations:
-    B: batch size
-    S: sequence length
-    D: embedding dimension
-    H: number of heads
-
 #### License
 This source code is licensed under the terms specified in the `LICENSE` file,
 located in the root directory of this repository.
 
 @ 2025, Meta
 """
+
+# Comments abbreviations:
+#     B: batch size
+#     S: sequence length
+#     D: embedding dimension
+#     H: number of heads
 
 import math
 from dataclasses import dataclass, field
@@ -28,11 +27,10 @@ from .blocklm import BlockLanguageModel, BlockLanguageModelConfig, BlockModel
 from .feedforward import FeedForward
 from .norm import RMSNorm
 
-# At the moment, flex attention break debugpy, hence this flag to not use it.
 FLEX_ATTENTION = False
 
 # ------------------------------------------------------------------------------
-# Attention Layer
+# Attention Mask
 # ------------------------------------------------------------------------------
 
 
@@ -41,11 +39,11 @@ def build_attention_mask(type: str, **kwargs: dict[str, Any]) -> BlockMask:
     Build attention mask.
 
     ### Parameters
-    type: type of attention, either "causal" or "doc"
-    kwargs: additional arguments for the mask
+    - type: type of attention, either "causal" or "doc"
+    - kwargs: additional arguments for the mask
 
     ### Returns
-    mask: attention mask
+    - mask: attention mask
     """
     if type == "causal":
         assert "seq_len" in kwargs, "sequence length must be provided for causal mask"
@@ -60,16 +58,65 @@ def _causal_mask_sign(b: int, h: int, q_idx: int, kv_idx: int) -> bool:
     return q_idx >= kv_idx
 
 
+# ------------------------------------------------------------------------------
+# Attention Cache
+# ------------------------------------------------------------------------------
+
+
+@dataclass
+class KVCache:
+    """
+    Key-Value cache for faster inference.
+
+    ### Parameters
+    - key: prefilled key tensor
+    - value: prefilled value tensor
+    - pos_idx: current position in the cache
+    """
+
+    key: torch.Tensor
+    value: torch.Tensor
+    pos_idx: int
+
+    def __call__(self, key: torch.Tensor, value: torch.Tensor) -> tuple[torch.Tensor, torch.Tensor]:
+        """
+        Update KV cache with new key and value tensors.
+
+        ### Parameters
+        - key: key tensor
+        - value: value tensor
+
+        ### Returns
+        - key: updated key tensor (concatenating past values with new ones)
+        - value: updated value tensor
+        """
+
+        # Sequence length is the third dimension, (B, H, S, D / H)
+        seq_len = key.size(2)
+        self.key[..., self.pos_idx : self.pos_idx + seq_len, :] = key
+        self.value[..., self.pos_idx : self.pos_idx + seq_len, :] = value
+        self.pos_idx += seq_len
+        return self.key[..., : self.pos_idx, :], self.value[..., : self.pos_idx, :]
+
+    def reset(self) -> None:
+        self.pos_idx = 0
+
+
+# ------------------------------------------------------------------------------
+# Attention Layer
+# ------------------------------------------------------------------------------
+
+
 class SelfAttention(nn.Module):
     """
     Self-attention layer.
 
     ### Parameters
-    seq_len: maximum sequence length
-    emb_dim: embedding dimensionality of the input
-    nb_heads: number of attention heads (should divide emb_dim)
-    nb_kv_heads: number of key-value heads (should divide nb_heads)
-    rope_theta: rotational positional encoding parameter
+    - seq_len: maximum sequence length
+    - emb_dim: embedding dimensionality of the input
+    - nb_heads: number of attention heads (should divide emb_dim)
+    - nb_kv_heads: number of key-value heads (should divide nb_heads)
+    - rope_theta: rotational positional encoding parameter
     """
 
     def __init__(
@@ -106,7 +153,13 @@ class SelfAttention(nn.Module):
         self.rope_modulator: torch.Tensor
 
     def reset_parameters(self, init_std: float, factor: float) -> None:
-        """Weight initialization"""
+        """
+        Resetting module parameters
+
+        ### Parameters
+        - init_std: standard deviation of the initialization
+        - factor: scaling factor for the output layer
+        """
         # input
         in_std = init_std or (self.emb_dim ** (-0.5))
         for W_in in [self.W_query, self.W_key, self.W_val]:
@@ -129,7 +182,7 @@ class SelfAttention(nn.Module):
             b=3 * in_std,
         )
 
-    def forward(self, x: torch.Tensor, kv_cache: Any = None, mask: BlockMask = None) -> torch.Tensor:
+    def forward(self, x: torch.Tensor, kv_cache: KVCache = None, mask: BlockMask = None) -> torch.Tensor:
         """Self attention"""
         # dimensions
         bsz, seq_len, _ = x.size()
@@ -145,7 +198,7 @@ class SelfAttention(nn.Module):
 
         # KV cache for faster inference
         if kv_cache:
-            k, v = kv_cache.update(k, v)
+            k, v = kv_cache(k, v)
 
         # Flash attention implementation
         # ... -> (B, H, S, D / H)
@@ -168,12 +221,12 @@ class SelfAttention(nn.Module):
         Returns the rope modulator for the attention mechanism.
 
         ### Parameters
-        seq_len: sequence length
-        dim: embedding dimension
-        theta: rope angle parameter
+        - seq_len: sequence length
+        - dim: embedding dimension
+        - theta: rope angle parameter
 
         ### Returns
-        rope_modulator: tensor of shape (seq_len, dim, 2) whose (t, k) element is
+        - rope_modulator: tensor of shape (seq_len, dim, 2) whose (t, k) element is
             .. math::
                 \\cos(\\frac{2 \\pi t}{\\theta^{(2k / d)}}),
                 \\sin(\\frac{2 \\pi t}{\\theta^{(2k / d)}})
@@ -237,7 +290,7 @@ class TransformerBlock(BlockModel):
     Transformer block.
 
     ### Parameters
-    config: configuration class containing arguments for SelfAttention and FeedForward
+    - config: configuration class containing arguments for SelfAttention and FeedForward
     """
 
     def __init__(self, config: TransformerBlockConfig):
@@ -254,15 +307,14 @@ class TransformerBlock(BlockModel):
         self.attn_norm = RMSNorm(config.emb_dim, eps=config.norm_eps)
         self.ffn_norm = RMSNorm(config.emb_dim, eps=config.norm_eps)
 
-    def reset_parameters(self, init_std: float, factor: float) -> None:
-        """Weight initialization"""
+    def weight_initialization(self, init_std: float, factor: float) -> None:
         self.attn.reset_parameters(init_std, factor)
         self.attn_norm.reset_parameters()
         self.ffn.reset_parameters(init_std, factor)
         self.ffn_norm.reset_parameters()
 
-    def forward(self, x: torch.Tensor, mask: BlockMask = None) -> torch.Tensor:
-        out = x + self.attn(self.attn_norm(x), mask=mask)
+    def forward(self, x: torch.Tensor, kv_cache: KVCache = None, mask: BlockMask = None) -> torch.Tensor:
+        out = x + self.attn(self.attn_norm(x), kv_cache=kv_cache, mask=mask)
         out = out + self.ffn(self.ffn_norm(out))
         return out
 
@@ -272,8 +324,8 @@ class TransformerBlock(BlockModel):
         Number of flop to process a new token
 
         ### Parameters
-        mode: whether to consider the forward, backward pass or both
-        seq_len: sequence length
+        - mode: whether to consider the forward, backward pass or both
+        - seq_len: sequence length
         """
         mode_multiplier = dict(fwd=1, bwd=2.5, both=3.5)[mode]
         return 0 * mode_multiplier
@@ -308,15 +360,38 @@ class Transformer(BlockLanguageModel):
     """Decoder only transformer."""
 
     def __init__(self, config: TransformerConfig):
-        super().__init__(config, block=TransformerBlock)
+        # cache size (TODO: for tensor parallelism, typically nb_kv_heads /= tp_size)
         seq_len = config.block.seq_len
+        head_dim = config.block.emb_dim // config.block.nb_heads
+        nb_kv_heads = config.block.nb_kv_heads
+        self.cache_size = (nb_kv_heads, seq_len, head_dim)
+
+        # default cache and mask
+        self.kv_caches = [None for _ in range(config.nb_layers)]
         self.mask = build_attention_mask("causal", seq_len=seq_len)
+
+        super().__init__(config, block=TransformerBlock)
+
+    def prefilling(self, x: torch.Tensor) -> None:
+        """Tentative prefilling implementation"""
+        bsz, seq_len, _ = x.size()
+        # build cache
+        self.kv_caches = [
+            KVCache(
+                torch.empty((bsz, *self.cache_size[0]), dtype=x.dtype, device=x.device),
+                torch.empty((bsz, *self.cache_size[0]), dtype=x.dtype, device=x.device),
+            )
+        ]
+        # causal mask for the prefilling
+        mask = build_attention_mask("causal", seq_len=seq_len)
+        self.forward(x, mask)
+        self.mask = None
 
     def forward(self, x: torch.Tensor, mask: BlockMask = None) -> torch.Tensor:
         if mask is None:
             mask = self.mask
         out = self.embeddings(x)
-        for layer in self.layers:
-            out = layer(out, mask=mask)
+        for layer, kv_cache in zip(self.layers, self.kv_caches):
+            out = layer(out, kv_cache=kv_cache, mask=mask)
         logits = self.output(self.output_norm(out))
         return logits

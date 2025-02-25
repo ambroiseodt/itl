@@ -33,24 +33,19 @@ class BlockModel(nn.Module, ABC):
         """
         Number of flop to process a new token
 
-        Parameters
-        ----------
-        mode:
-            Whether to consider the forward, backward pass or both
+        ### Parameters
+        - mode: whether to consider the forward, backward pass or both
         """
         pass
 
     @abstractmethod
-    def reset_parameters(self, init_std: float, factor: float) -> None:
+    def weight_initialization(self, init_std: float, factor: float) -> None:
         """
-        Weight initialization
+        Weight initialization of submodules
 
-        Parameters
-        ----------
-        init_std:
-            Standard deviation for the initialization
-        factor:
-            Multiplicative factor to apply to the initialization
+        ### Parameters
+        - init_std: standard deviation of the initialization
+        - factor: scaling factor for the output layer
         """
         pass
 
@@ -107,11 +102,17 @@ class BlockLanguageModel(nn.Module):
             # Tying token embedding and un-embedding
             self.output.weight = self.embeddings.weight
 
-        self.reset_parameters(config.init_std, factor=1.0)
+        self.weight_initialization(config.init_std, factor=1.0)
 
     @torch.inference_mode()
     def reset_parameters(self, init_std: float, factor: float) -> None:
-        """Weight initialization"""
+        """
+        Resetting module parameters
+
+        ### Parameters
+        - init_std: standard deviation of the initialization
+        - factor: scaling factor for the output layer
+        """
         emb_std = init_std or (self.emb_dim ** (-0.5))
 
         # embeddings
@@ -123,11 +124,6 @@ class BlockLanguageModel(nn.Module):
             b=3 * emb_std,
         )
 
-        # layers
-        for layer in self.layers:
-            layer: BlockModel
-            layer.reset_parameters(init_std, factor=factor)
-
         # output
         self.output_norm.reset_parameters()
         if not self.weight_tying:
@@ -138,6 +134,21 @@ class BlockLanguageModel(nn.Module):
                 a=-3 * emb_std,
                 b=3 * emb_std,
             )
+
+    @torch.inference_mode()
+    def weight_initialization(self, init_std: float, factor: float) -> None:
+        """
+        Weight initialization of submodules
+
+        ### Parameters
+        - init_std: standard deviation of the initialization
+        - factor: scaling factor for the output layer
+        """
+        self.reset_parameters(init_std, factor)
+        # layers
+        for layer in self.layers:
+            layer: BlockModel
+            layer.weight_initialization(init_std, factor=factor)
 
     def forward(self, x: torch.Tensor) -> torch.Tensor:
         out = self.embeddings(x)
@@ -151,12 +162,9 @@ class BlockLanguageModel(nn.Module):
         TODO
         Number of flop to process a new token
 
-        Parameters
-        ----------
-        mode:
-            Whether to consider the forward, backward pass or both
-        kwargs:
-            Argument to compute the number of flops of the block
+        ### Parameters
+        - mode: whether to consider the forward, backward pass or both
+        - kwargs: argument to compute the number of flops of the block
         """
         mode_multiplier = dict(fwd=1, bwd=2.5, both=3.5)[mode]
         return 0 * mode_multiplier
