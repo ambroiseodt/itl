@@ -245,7 +245,7 @@ class SelfAttention(nn.Module):
         rm = self.rope_modulator[:S].view(1, 1, S, dim // 2, 2)
         qk = qk.reshape(B, H, S, dim // 2, 2)
 
-        # (x1 * cos - x2 * sin, x2 * cos + x1 * sin)
+        # # (x1 * cos - x2 * sin, x2 * cos + x1 * sin)
         # out = ((qk[..., 0] + qk[..., 1] * 1j) * (rm[..., 0] + rm[..., 1] * 1j))
         # out = torch.view_as_real(out)
         out = (qk[..., 0] * rm[..., 0] - qk[..., 1] * rm[..., 1], qk[..., 0] * rm[..., 1] + qk[..., 1] * rm[..., 0])
@@ -351,7 +351,7 @@ class TransformerConfig(BlockLanguageModelConfig):
         if not self.block.hidden_dim:
             self.block.hidden_dim = 4 * self.emb_dim
 
-        # no group query by default
+        # default to no group query
         if not self.block.nb_kv_heads:
             self.block.nb_kv_heads = self.block.nb_heads
 
