@@ -1,5 +1,5 @@
 """
-Checkpoint manager
+Checkpoint Manager
 
 #### License
 This source code is licensed under the terms specified in the `LICENSE` file,
@@ -17,13 +17,16 @@ See https://pytorch.org/tutorials/recipes/distributed_async_checkpoint_recipe.ht
 
 import re
 import shutil
+from asyncio import Future
 from dataclasses import dataclass, field
 from logging import getLogger
 from pathlib import Path, PosixPath
 from types import TracebackType
 
 import torch
+import torch.distributed.checkpoint as dcp
 from torch import nn
+from torch.distributed.checkpoint.state_dict import get_state_dict, set_state_dict
 from torch.distributed.checkpoint.stateful import Stateful
 from torch.optim import Optimizer
 
@@ -33,11 +36,38 @@ from .monitor import Monitor
 logger = getLogger("nanollama")
 
 
+# ------------------------------------------------------------------------------
+# Stateful object to wrap all stateful objects
+# ------------------------------------------------------------------------------
+
+
+class AppState(Stateful):
+    """
+    Application state tracking model, optimizer and data state for checkpointing
+
+    ### Parameter
+    - model: model
+    - optimizer: optimizer
+    """
+
+    def __init__(self, model: nn.Module, optimizer: Optimizer = None):
+        self.model = model
+        self.optimizer = optimizer
+
+    def state_dict(self) -> dict[str, dict]:
+        model_state_dict, optimizer_state_dict = get_state_dict(self.model, self.optimizer)
+        return {"model": model_state_dict, "optim": optimizer_state_dict}
+
+    def load_state_dict(self, state_dict: dict[str, dict]) -> None:
+        set_state_dict(
+            self.model, self.optimizer, model_state_dict=state_dict["model"], optim_state_dict=state_dict["optim"]
+        )
+
+
 @dataclass
 class CheckpointConfig:
     period: int = 0
     keep_only: int = 0
-    sync_step: bool = True  # whether profiler step should be sync with optimizer step
     path: str = field(init=False, default="")
 
     def __check_init__(self):
@@ -50,23 +80,20 @@ class Checkpointer(Monitor):
     Checkpoint manager
 
     ### Attributes
-    stateful_objects: various objects to checkpoints
-    period: number of updates between each checkpoint
-    keep_only: number of checkpoints to keep
-    path: path to the checkpoint directory
-    saved: whether the latest model has been saved
+    - period: number of updates between each checkpoint
+    - keep_only: number of checkpoints to keep
+    - path: path to the checkpoint directory
+    - saved: whether the latest model has been saved
+    - stateful_objects: various objects to checkpoints
+    - app_state: AppState to track model and optimizer
 
     ### Params
-    config: configuration object
-    stateful_objects: various objects to checkpoint
-    model: model to checkpoint
-    optimizer: optimizer to checkpoint
-
-    #### Notes
-    `model` and `optimizer` are not passed in `stateful_objects` as they require special treatment.
+    - config: configuration object
+    - model: model to checkpoint
+    - optimizer: optimizer to checkpoint
+    - stateful_objects: various objects to checkpoint
     """
 
-    name = "{name}_{rank:05d}.pth"
     folder_name = "{:010d}"
     re_folder = r"\d{10}"
     re_digits = re.compile(r"\d+")
@@ -74,9 +101,9 @@ class Checkpointer(Monitor):
     def __init__(
         self,
         config: CheckpointConfig,
-        stateful_objects: dict[str, Stateful],
         model: nn.Module,
-        optimizer: Optimizer,
+        optimizer: Optimizer = None,
+        stateful_objects: dict[str, Stateful] = None,
     ):
         super().__init__(config)
 
@@ -84,43 +111,24 @@ class Checkpointer(Monitor):
         self.keep_only = config.keep_only
         self.path = Path(config.path)
         self.path.mkdir(parents=True, exist_ok=True)
-        self.sync = config.sync_step
 
         # Create alias for the objects to monitor.
+        self.app_state = AppState(model=model, optimizer=optimizer)
         self.model = model
-        self.stateful_objects = stateful_objects
-
-        self.stateful_objects.update({"model": model, "optimizer": optimizer})
-
-        # self.states.update({"model": DCPModelWrapper(model)})
-        # if optimizer is not None:
-        #     self.states.update({"optimizer": DCPOptimizerWrapper(model, optimizer)})
+        self.optimizer = optimizer
+        self.stateful_objects = stateful_objects if stateful_objects else {}
 
         self.device_rank = get_rank()
         self.saved_step = 0
         self.step = 0
 
-    @torch.no_grad()
+        self.checkpoint_process: Future = None
+
     def __enter__(self) -> "Checkpointer":
-        """
-        Loading checkpoint if any
-        """
+        """Enter checkpoint context by loading the last checkpoint"""
         path = self.get_last_checkpoint_path(self.path)
-        if not path:
-            return self
-
-        for name, object in self.stateful_objects.items():
-            logger.info(f"Reloading {name} state")
-            if name in ["model", "optimizer"]:
-                file_path = path / self.name.format(name=name, rank=0)
-            else:
-                file_path = path / self.name.format(name=name, rank=self.device_rank)
-            state_dict = torch.load(file_path)
-            object.load_state_dict(state_dict)
-            logger.info(f"{name} reloaded")
-
-        self.saved_step = self.step
-
+        if path:
+            self.load(path)
         return self
 
     def update(self, eval: bool = False) -> None:
@@ -128,7 +136,7 @@ class Checkpointer(Monitor):
         Checkpoint model, optimizer, scheduler and training state
 
         ### Parameters
-        eval: Whether to save the checkpoint for evaluation
+        - eval: Whether to save the checkpoint for evaluation
         """
         # do not checkpoint twice
         if self.saved_step == self.step:
@@ -142,18 +150,59 @@ class Checkpointer(Monitor):
             eval_flag = path / "eval"
             eval_flag.touch()
 
-        logger.info(f"Saving checkpoint at step {self.step} to {str(path)}")
-
-        for name, object in self.stateful_objects.items():
-            # only save the model and optimizer once
-            if name in ["model", "optimizer"] and not is_master_process():
-                continue
-            logger.info(f"Saving {name} state")
-            file_path = path / self.name.format(name=name, rank=self.device_rank)
-            torch.save(object.state_dict(), file_path)
+        self.save(path)
 
         self._cleaning()
         self.saved_step = self.step
+
+    def __exit__(self, exc: type[BaseException], value: BaseException, tb: TracebackType):
+        """Exit checkpoint context by saving checkpoint if needed"""
+        self.update()
+
+    def load(self, path: str) -> None:
+        """
+        Load checkpoint from path
+
+        ### Parameters
+        path: path to the checkpoint
+        """
+
+        logger.info(f"Loading checkpoint from {str(path)}.")
+        state_dict = self.get_state_dict()
+        dcp.load(state_dict=state_dict, checkpoint_id=path)
+
+        logger.info("Loading model weights and optimizer state.")
+        set_state_dict(
+            self.model, self.optimizer, model_state_dict=state_dict["model"], optim_state_dict=state_dict["optim"]
+        )
+
+        for name, obj in self.stateful_objects.items():
+            logger.info("Loading {name}.")
+            obj.load_state_dict(state_dict[name])
+
+    def save(self, path: str) -> None:
+        """
+        Save checkpoint to path
+
+        ### Parameters
+        path: path to save the checkpoint
+        """
+
+        if self.checkpoint_process is not None:
+            logger.info("Waiting for previous checkpoint to complete.")
+            self.checkpoint_process.result()
+
+        logger.info(f"Saving checkpoint at step {self.step} to {str(path)}.")
+        state_dict = self.get_state_dict()
+        self.checkpoint_process = dcp.async_save(state_dict, checkpoint_id=path)
+
+    @torch.no_grad()
+    def get_state_dict(self) -> dict[str, dict]:
+        """Return state dict of all tracked stateful objects."""
+        model_sd, optimizer_sd = get_state_dict(self.model, self.optimizer)
+        state_dict = {"model": model_sd, "optim": optimizer_sd}
+        state_dict |= {name: obj.state_dict() for name, obj in self.stateful_objects.items()}
+        return state_dict
 
     @classmethod
     def get_last_checkpoint_path(cls, path: str) -> str:
@@ -169,7 +218,7 @@ class Checkpointer(Monitor):
         """
         Clean up old checkpoints
         """
-        if self.keep_only <= 0:
+        if self.keep_only <= 0 or not is_master_process():
             return
         all_checkpoints = self._list_checkpoints(self.path)
         all_checkpoints.sort(key=lambda p: self._get_key_step(p.name))
@@ -189,12 +238,6 @@ class Checkpointer(Monitor):
     def _get_key_step(cls, name: str) -> int:
         return int(re.findall(cls.re_digits, name)[-1])
 
-    def __exit__(self, exc: type[BaseException], value: BaseException, tb: TracebackType):
-        """
-        Exit checkpoint context by saving checkpoint if needed
-        """
-        self.update()
-
 
 # ------------------------------------------------------------------------------
 # Evaluation logic
@@ -202,6 +245,9 @@ class Checkpointer(Monitor):
 
 
 class EvalCheckpointer:
+    """
+    Evaluation Checkpoint Manager
+    """
     def __init__(self, model: nn.Module, path: str, train_step: int = None) -> None:
         self.model = model
         if train_step is None:
@@ -211,9 +257,17 @@ class EvalCheckpointer:
             self.save_dir = Path(path) / Checkpointer.folder_name.format(train_step)
 
     def __enter__(self):
+        """Enter checkpoint context by loading the last checkpoint"""
         logger.info(f"Loading model from: {str(self.save_dir)}")
         state_dict = torch.load(self.save_dir / "checkpoint.pth", weights_only=True)
         self.model.load_state_dict(state_dict["model"])
+
+        logger.info(f"Loading model from {str(self.save_dir)}.")
+        state_dict = {"model": self.model.state_dict()}
+        dcp.load(state_dict=state_dict, checkpoint_id=self.save_dir)
+
+        logger.info("Loading model weights.")
+        set_state_dict(self.model, model_state_dict=state_dict["model"])
 
     def __exit__(self, exc: type[BaseException], value: BaseException, tb: TracebackType):
         """

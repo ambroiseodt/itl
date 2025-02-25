@@ -1,8 +1,7 @@
 """
 Distributed Computing Manager
 
-License
--------
+#### License
 This source code is licensed under the terms specified in the `LICENSE` file,
 located in the root directory of this repository.
 
@@ -24,6 +23,9 @@ from typing import Any
 import torch
 import torch.distributed as dist
 import torch.nn as nn
+from torch.distributed.device_mesh import DeviceMesh, init_device_mesh
+from torch.distributed.fsdp import FullyShardedDataParallel as FSDP
+from torch.distributed.tensor.parallel import ParallelStyle, parallelize_module
 from torch.nn.parallel import DistributedDataParallel as DDP
 
 logger = getLogger("nanollama")
@@ -145,6 +147,7 @@ def set_os_environment(config: OsEnvironment) -> None:
 
 @contextmanager
 def clean_environment() -> Generator[None, None, None]:
+    """Context that momentarily clean OS environment variables."""
     distrib_names = (
         "MASTER_ADDR",
         "MASTER_PORT",
@@ -175,7 +178,9 @@ def clean_environment() -> Generator[None, None, None]:
 class ClusterConfig:
     device: torch.device = None
     compile_model: bool = True
-    backend: str = "nccl"
+    backend: str = "cpu:gloo,cuda:nccl"
+    dp: int = 0
+    tp: int = 1
 
     # submanager
     os_environment: OsEnvironment = field(default_factory=OsEnvironment)
@@ -185,6 +190,8 @@ class ClusterConfig:
             self.device = "cuda" if torch.cuda.is_available() else "cpu"
         if isinstance(self.device, str):
             self.device = torch.device(self.device)
+        if not self.dp:
+            self.dp = torch.cuda.device_count() // self.tp if self.device.type == "cuda" else 1
 
     def to_dict(self) -> dict[str, Any]:
         output = asdict(self)
@@ -193,47 +200,90 @@ class ClusterConfig:
 
 
 class ClusterManager:
+    """
+    Distributed computing manager that handles the initialization and destruction of the distributed environment.
+
+    ### Parameters
+    - config: ClusterConfig
+
+    ### Attributes
+    - device: current torch.device
+    - tp_mesh: tensor parallel mesh
+    - dp_mesh: data parallel mesh
+    - root_model: original nn.Module before parallelization
+    """
+
     def __init__(self, config: ClusterConfig):
         self.backend = config.backend
         self.device = config.device
+        self.tp = config.tp
+        self.dp = config.dp
+        nb_devices = torch.cuda.device_count() if self.device.type == "cuda" else 1
+        assert self.device.type == "cpu" or self.dp * self.tp == nb_devices, (
+            f"DP * TP must equal the number of GPUs {self.tp} * {self.dp} != {nb_devices}"
+        )
         self.compile = config.compile_model
         set_os_environment(config.os_environment)
 
+        self.tp_mesh: DeviceMesh
+        self.dp_mesh: DeviceMesh
+        self.root_model: nn.Module
+
     def __enter__(self):
-        """
-        Initialize distributed environment
-        """
-        if is_distributed_job():
-            rank = get_rank()
-            local_rank = get_local_rank()
-            world_size = get_world_size()
-            dist.init_process_group(backend=self.backend, rank=rank, world_size=world_size)
-            logger.info(f"Setting up device ranked {rank + 1} / {world_size}")
-            self.device = torch.device(f"cuda:{local_rank}")
-        else:
+        """Initialize distributed environment"""
+        if not is_distributed_job():
+            self.dp = self.tp = 1
+            self.tp_mesh = self.dp_mesh = None
             logger.info(f"Running on {self.device}")
+            return self
+
+        rank = get_rank()
+        local_rank = get_local_rank()
+        world_size = get_world_size()
+        dist.init_process_group(backend=self.backend, rank=rank, world_size=world_size)
+        logger.info(f"Setting up device ranked {rank + 1} / {world_size}")
+        self.device = torch.device(f"cuda:{local_rank}")
+
+        logger.info("Creating device mesh")
+        mesh = init_device_mesh(self.device.type, mesh_shape=(self.dp, self.tp), mesh_dim_names=("dp", "tp"))
+        self.tp_mesh = mesh["tp"]
+        self.dp_mesh = mesh["dp"]
         return self
 
-    def initialize_model(self, model: nn.Module) -> nn.Module:
+    def build_model(self, model: nn.Module, tp_plan: dict[str, ParallelStyle] = None, ddp: bool = True) -> nn.Module:
         """
         Initialize the model by casting it to the device, compiling and parallelizing it according to configuration.
+
+        ### Parameters
+        - model: model to be parallelized, and compiled
+        - tp_plan: tensor parallelization plan
+        - ddp: whether to use DistributedDataParallel or FullyShardedDataParallel
         """
+        self.root_model = model
         model = model.to(device=self.device)
+
+        if self.tp > 1:
+            logger.info("Parallelizing model with tensor parallel")
+            model = parallelize_module(model, device_mesh=self.tp_mesh, parallelize_plan=tp_plan)
+
+        # logger.info("Preparing for activation checkpointing")
+        # # TODO
+
+        if self.dp > 1:
+            logger.info("Parallelizing model with data parallel")
+            if ddp:
+                model = DDP(model, device_mesh=self.dp_mesh)
+            else:
+                model = FSDP(model, device_mesh=self.dp_mesh, use_orig_params=True)
+
         if self.compile:
             logger.info("Compiling model")
             model = torch.compile(model)
-        logger.info("Done building model")
-        local_rank = get_local_rank()
-        world_size = get_world_size()
-        if world_size > 1:
-            logger.info("Parallelizing model")
-            model = DDP(model, device_ids=[local_rank])
+
         return model
 
     def __exit__(self, exc: type[BaseException], value: BaseException, tb: TracebackType):
-        """
-        Exit distributed environment
-        """
+        """Exit distributed environment"""
         rank = get_rank()
         world_size = get_world_size()
         logger.info(f"Exiting distributed environment {rank + 1} / {world_size}")
