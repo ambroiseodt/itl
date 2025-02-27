@@ -72,16 +72,12 @@ class KVCache:
     ### Parameters
     - key: prefilled key tensor
     - value: prefilled value tensor
-    - pos_idx: current position in the cache
+    - pos_idx: current position for each sentence in the cache
     """
 
     key: torch.Tensor
     value: torch.Tensor
     pos_idx: int = 0
-
-    def __post_init__(self):
-        if not self.pos_idx:
-            self.pos_idx = self.key.size(2)
 
     def __call__(self, key: torch.Tensor, value: torch.Tensor) -> tuple[torch.Tensor, torch.Tensor]:
         """
@@ -197,7 +193,10 @@ class SelfAttention(nn.Module):
         q, k, v = map(lambda t: t.view(bsz, seq_len, -1, self.head_dim).transpose(1, 2), (q, k, v))
 
         # rope formatting
-        q, k = map(lambda t: self._rope_view(t), (q, k))
+        # ... retrieve position in sequence if generating on the fly
+        idx = kv_cache.pos_idx if kv_cache else 0
+
+        q, k = map(lambda t: self._rope_view(t, idx), (q, k))
 
         # KV cache for faster inference
         if kv_cache:
@@ -209,7 +208,8 @@ class SelfAttention(nn.Module):
             z = flex_attention(q, k, v, block_mask=mask, enable_gqa=True)
         else:
             k, v = map(lambda t: torch.repeat_interleave(t, dim=2, repeats=self.heads_per_group), (k, v))
-            z = F.scaled_dot_product_attention(q, k, v, is_causal=True)
+            is_causal = mask is not None
+            z = F.scaled_dot_product_attention(q, k, v, is_causal=is_causal)
 
         # reformating: (B, H, S, D / H) -> (B, S, H, D / H) -> (B, S, D)
         z = z.transpose(1, 2).reshape(bsz, seq_len, -1)
@@ -240,12 +240,18 @@ class SelfAttention(nn.Module):
         cos, sin = angles.cos(), angles.sin()
         return torch.stack((cos, sin), dim=-1)
 
-    def _rope_view(self, qk: torch.Tensor) -> torch.Tensor:
-        """Recast tensor to complex numbers and apply rotational position filter."""
+    def _rope_view(self, qk: torch.Tensor, idx: int = 0) -> torch.Tensor:
+        """
+        Recast tensor to complex numbers and apply rotational position filter.
+
+        ### Parameters
+        - qk: query or key tensor
+        - idx: position in sequence
+        """
         B, H, S, dim = qk.size()
         assert S <= self.rope_modulator.size(0), "sequence length is too long for rope attention"
 
-        rm = self.rope_modulator[:S].view(1, 1, S, dim // 2, 2)
+        rm = self.rope_modulator[idx : idx + S].view(1, 1, S, dim // 2, 2)
         qk = qk.reshape(B, H, S, dim // 2, 2)
 
         # # (x1 * cos - x2 * sin, x2 * cos + x1 * sin)
@@ -372,33 +378,46 @@ class Transformer(BlockLanguageModel):
 
         # default cache and mask
         self.kv_caches = [None for _ in range(config.nb_layers)]
-        self.mask = build_attention_mask("causal", seq_len=self.seq_len)
+        self.default_mask = build_attention_mask("causal", seq_len=self.seq_len)
 
-    def prefilling(self, x: torch.Tensor) -> None:
-        """Tentative prefilling implementation"""
-        bsz, seq_len, _ = x.size()
+    def build_mask(self, x: torch.Tensor) -> BlockMask:
+        """
+        Build attention mask for the input tensor.
 
+        ### Parameters
+        - x: input tensor
+
+        ### Returns
+        - mask: attention mask
+        """
+        # during pretraining all sequences are of the same length, return default mask
+        if x.size(1) == self.seq_len:
+            return self.default_mask.to(x.device)
+
+        # at inference time, we pass tokens one by one
+        elif x.size(1) == 1:
+            return None
+
+        # otherwise, we assume that we are in prefilling mode
+        else:
+            return build_attention_mask("causal", seq_len=x.size(1)).to(x.device)
+
+    def build_cache(self, bsz: int) -> KVCache:
         # build cache
-        cache_size = (bsz, self.nb_kv_heads, 0, self.head_dim)
+        cache_size = (bsz, self.nb_kv_heads, self.seq_len, self.head_dim)
+        dtype = self.embeddings.weight.dtype
+        device = self.embeddings.weight.device
         self.kv_caches = [
             KVCache(
-                torch.empty(cache_size, dtype=x.dtype, device=x.device),
-                torch.empty(cache_size, dtype=x.dtype, device=x.device),
+                torch.zeros(cache_size, dtype=dtype, device=device),
+                torch.zeros(cache_size, dtype=dtype, device=device),
             )
+            for _ in self.layers
         ]
-
-        # causal mask for prefilling
-        mask = build_attention_mask("causal", seq_len=seq_len)
-
-        # forward pass
-        self.forward(x, mask)
-
-        # reset attention mask
-        self.mask = None
 
     def forward(self, x: torch.Tensor, mask: BlockMask = None) -> torch.Tensor:
         if mask is None:
-            mask = self.mask
+            mask = self.build_mask(x)
         out = self.embeddings(x)
         for layer, kv_cache in zip(self.layers, self.kv_caches):
             out = layer(out, kv_cache=kv_cache, mask=mask)
