@@ -3,12 +3,11 @@ Todo:
 - Integrate Sam evaluation scripts.
 - Get some curves of accuracy when training with the tool use, or without. and write some visualization notebooks/scripts to get plots out of many experimental logs.
 - Change a bit the logic for the tool use interaction. Extract the text in ```sql<TEXT>``` and make sure it matches the right text. If so, then we can use the tool use, and we manually inject the database answer.
-- ?Use tiktoken tokenizer instead of tokenizing at byte level?
 
 Vivien's todo:
 - Generation.
-    - Parallel completion of prompts with block diagonal mask.
-    - modify the pos_idx to be a list to allow for parallel completion of prompts.
+    - test generation one big block little by little, vs one big block at once.
+    - test generation one big block little by little vs each sentence little by little.
 
     - Write inference loop logic, as well as sampling strategies.
 - Tool use mechanism.
@@ -53,3 +52,5 @@ Ambroise's ideas:
 - Caching for Mamba and RNN models.
 
 - Make sure one can extend model context size incrementally.
+
+- Implement logic for tiktoken, and sentencepiece.
