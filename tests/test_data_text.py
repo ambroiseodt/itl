@@ -31,7 +31,9 @@ class MockTokenizer:
         pass
 
     def encode(self, sequence: str) -> list[int]:
-        return [ord(c) for c in sequence]
+        data = [ord(c) for c in sequence[0]["content"]]
+        mask = [True for _ in data]
+        return data, mask
 
     def decode(self, tokens: list[int]) -> str:
         return "".join([chr(c) for c in tokens])
@@ -98,11 +100,11 @@ class TestSingleSourceTokenGenerator(unittest.TestCase):
     def setUp(self) -> None:
         # Create a temporary JSONL file for testing
         self.temp_file = tempfile.NamedTemporaryFile(delete=False, mode="w+")
-        self.temp_file.write('{"text": "sentence one"}\n')
-        self.temp_file.write('{"text": "sentence two"}\n')
-        self.temp_file.write('{"text": "sentence three"}\n')
-        self.temp_file.write('{"text": "sentence four"}\n')
-        self.temp_file.write('{"text": "sentence five"}\n')
+        self.temp_file.write('{"dialog": [{"source": "assistant", "content": "sentence one"}]}\n')
+        self.temp_file.write('{"dialog": [{"source": "assistant", "content": "sentence two"}]}\n')
+        self.temp_file.write('{"dialog": [{"source": "assistant", "content": "sentence three"}]}\n')
+        self.temp_file.write('{"dialog": [{"source": "assistant", "content": "sentence four"}]}\n')
+        self.temp_file.write('{"dialog": [{"source": "assistant", "content": "sentence five"}]}\n')
         self.temp_file.flush()
         self.temp_file.seek(0)
 
@@ -131,27 +133,27 @@ class TestSingleSourceTokenGenerator(unittest.TestCase):
 
     def test_token_generation(self) -> None:
         # Test if the generator produces the expected output
-        batch = next(self.token_generator)
+        batch = next(self.token_generator)[0]
         expected_shape = (self.config.batch_size, self.config.seq_len)
         self.assertEqual(batch.shape, expected_shape)
 
     def test_padding(self) -> None:
         # Test if padding is applied correctly
         next(self.token_generator)
-        batch = next(self.token_generator)
-        self.assertTrue(batch[0, -1] == self.mock_tokenizer.pad_id)
+        batch = next(self.token_generator)[0]
+        self.assertTrue(batch[0, -1] == 0)
 
     def test_restart(self) -> None:
         # Restart from previous state_dict
         initial_state = self.token_generator.state_dict()
-        batch = next(self.token_generator)
+        batch = next(self.token_generator)[0]
         next(self.token_generator)
 
         # Create a new TokenGenerator and load the saved state
         new_token_generator = SingleSourceTokenGenerator(self.config, self.iterator, self.mock_tokenizer)
         new_token_generator.load_state_dict(initial_state)
         # Generate a batch from the new generator
-        restarted_batch = next(new_token_generator)
+        restarted_batch = next(new_token_generator)[0]
         assert np.array_equal(batch, restarted_batch)
 
     def test_bsz(self) -> None:
@@ -160,12 +162,12 @@ class TestSingleSourceTokenGenerator(unittest.TestCase):
         n = 10
         self.token_generator.set_batch_size(1)
         for _ in range(n):
-            batch = next(self.token_generator)
+            batch = next(self.token_generator)[0]
         assert batch.shape == (1, self.config.seq_len)
 
         self.token_generator.load_state_dict(initial_state)
         self.token_generator.set_batch_size(n)
-        new_batch = next(self.token_generator)
+        new_batch = next(self.token_generator)[0]
         assert new_batch.shape == (n, self.config.seq_len)
         assert np.array_equal(batch, new_batch[-1:])
 
@@ -176,8 +178,8 @@ class TestMultipleSourcesTokenGenerator(unittest.TestCase):
         self.temp_files: list[tempfile._TemporaryFileWrapper] = []
         for i in range(2):
             temp_file = tempfile.NamedTemporaryFile(delete=False, mode="w+")
-            temp_file.write('{"text": "sentence one, file ' + str(i) + '"}\n')
-            temp_file.write('{"text": "sentence two, file ' + str(i) + '"}\n')
+            temp_file.write('{"dialog": [{"source": "assistant", "content": "sentence one, file ' + str(i) + '"}]}\n')
+            temp_file.write('{"dialog": [{"source": "assistant", "content": "sentence two, file ' + str(i) + '"}]}\n')
             temp_file.flush()
             temp_file.seek(0)
             self.temp_files.append(temp_file)
@@ -207,7 +209,7 @@ class TestMultipleSourcesTokenGenerator(unittest.TestCase):
     def test_token_generation(self) -> None:
         # Test if the generator produces the expected output
         batch = next(self.token_generator)
-        expected_shape = (self.config.batch_size, self.config.seq_len)
+        expected_shape = (2 * self.config.batch_size, self.config.seq_len)
         self.assertEqual(batch.shape, expected_shape)
 
     def test_restart(self) -> None:
