@@ -7,10 +7,10 @@ Todo:
 
 Vivien's todo:
 - Generation.
-    - Write inference loop logic, as well as sampling strategies.
-    - make sure KV cache first implementation work (test that generation work the same with and without KV caching).
-    - clean up Transformer.__init__ and Transformer.prefilling logic.
     - Parallel completion of prompts with block diagonal mask.
+    - modify the pos_idx to be a list to allow for parallel completion of prompts.
+
+    - Write inference loop logic, as well as sampling strategies.
 - Tool use mechanism.
     - Regex in token space for database BoS, parsing of previous message, anwser, end of generation.
 - Show how to run a grid with a grid.yaml configuration.
@@ -47,7 +47,7 @@ Ambroise's ideas:
 
 - Activation checkpointing.
 
-- Caching when dealing with tree of multi-turn dialogs.
+- Caching when dealing with tree of multi-turn dialogs, cpu page-in/page-out mechanism
 - Prefix attention masking 
 
 - Caching for Mamba and RNN models.
