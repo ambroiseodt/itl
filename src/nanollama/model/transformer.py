@@ -16,6 +16,7 @@ located in the root directory of this repository.
 
 import math
 from dataclasses import dataclass, field
+from logging import getLogger
 from typing import Any
 
 import torch
@@ -27,7 +28,8 @@ from .blocklm import BlockLanguageModel, BlockLanguageModelConfig, BlockModel
 from .feedforward import FeedForward
 from .norm import RMSNorm
 
-FLEX_ATTENTION = False
+logger = getLogger("nanollama")
+FLEX_ATTENTION = True
 
 
 # ------------------------------------------------------------------------------
@@ -218,6 +220,7 @@ class SelfAttention(nn.Module):
         if FLEX_ATTENTION:
             z = flex_attention(q, k, v, block_mask=mask, enable_gqa=True)
         else:
+            logger.warning("Using the deprecated scaled dot product attention")
             k, v = map(lambda t: torch.repeat_interleave(t, dim=2, repeats=self.heads_per_group), (k, v))
             is_causal = mask is not None
             z = F.scaled_dot_product_attention(q, k, v, is_causal=is_causal)
@@ -391,25 +394,6 @@ class Transformer(BlockLanguageModel):
         self.kv_caches = [None for _ in range(config.nb_layers)]
         self.default_mask = build_attention_mask("causal", seq_len=self.seq_len)
 
-    def build_cache(self, bsz: int) -> None:
-        """
-        Build a KV cache for faster inference.
-
-        ### Parameters
-        - bsz: batch size
-        """
-        # build cache
-        cache_size = (bsz, self.nb_kv_heads, self.seq_len, self.head_dim)
-        dtype = self.embeddings.weight.dtype
-        device = self.embeddings.weight.device
-        self.kv_caches = [
-            KVCache(
-                torch.zeros(cache_size, dtype=dtype, device=device),
-                torch.zeros(cache_size, dtype=dtype, device=device),
-            )
-            for _ in self.layers
-        ]
-
     def forward(self, x: torch.Tensor, mask: BlockMask = None, doc_start: torch.Tensor = None) -> torch.Tensor:
         """
         Forward pass of the transformer.
@@ -459,7 +443,33 @@ class Transformer(BlockLanguageModel):
             return build_attention_mask("causal", seq_len=seq_len).to(x.device)
         # ... we cache a default mask for sequences of full lengths
         else:
-            return self.default_mask.to(x.device)
+            self.default_mask = self.default_mask.to(x.device)
+            return self.default_mask
+
+    def build_cache(self, bsz: int) -> None:
+        """
+        Build a KV cache for faster inference.
+
+        ### Parameters
+        - bsz: batch size
+        """
+        # build cache
+        cache_size = (bsz, self.nb_kv_heads, self.seq_len, self.head_dim)
+        dtype = self.embeddings.weight.dtype
+        device = self.embeddings.weight.device
+        self.kv_caches = [
+            KVCache(
+                torch.zeros(cache_size, dtype=dtype, device=device),
+                torch.zeros(cache_size, dtype=dtype, device=device),
+            )
+            for _ in self.layers
+        ]
+
+    def reset_cache(self) -> None:
+        """Reset KV cache."""
+        for cache in self.kv_caches:
+            if cache is not None:
+                cache.reset()
 
     @staticmethod
     def build_prompts(data: torch.Tensor, prefix_lens: torch.Tensor) -> tuple[torch.Tensor, torch.Tensor]:
@@ -478,11 +488,11 @@ class Transformer(BlockLanguageModel):
         # prompt placeholder
         max_len = prefix_lens.max()
         data = data[:, :max_len]
-        x = torch.zeros(data.size(), dtype=data.dtype)
+        x = torch.zeros(data.size(), dtype=data.dtype, device=data.device)
 
         # create index mask
         doc_start = max_len - prefix_lens
-        tmp = torch.arange(data.size(1)).unsqueeze(0)
+        tmp = torch.arange(data.size(1), device=data.device).unsqueeze(0)
         data_ind = tmp < prefix_lens.unsqueeze(1)
         x_ind = tmp >= doc_start.unsqueeze(1)
 
