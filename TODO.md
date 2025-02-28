@@ -27,6 +27,7 @@ Other stuffs for Vivien's
 
 Ambroise's ideas:
 - For scaling plot of [Physics of Language Models: Part 3.3](https://arxiv.org/pdf/2404.05405), could we plot contourlines to take the performance into account?
+- Adapt Sam evaluation files
 
 ## Some references
 - [ToolFormer](https://arxiv.org/pdf/2302.04761)
