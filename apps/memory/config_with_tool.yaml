@@ -1,7 +1,7 @@
 launcher:
   name: memory
   overwrite: true
-  log_dir: $HOME/memory_qua
+  log_dir: $HOME/memory
 
   script: apps.memory.train
 
