@@ -17,12 +17,11 @@ located in the root directory of this repository.
 import math
 from dataclasses import dataclass, field
 from logging import getLogger
-from typing import Any
 
 import torch
 import torch.nn as nn
 import torch.nn.functional as F
-from torch.nn.attention.flex_attention import BlockMask, create_block_mask, flex_attention
+from torch.nn.attention.flex_attention import BlockMask, and_masks, create_block_mask, flex_attention
 
 from .blocklm import BlockLanguageModel, BlockLanguageModelConfig, BlockModel
 from .feedforward import FeedForward
@@ -30,46 +29,6 @@ from .norm import RMSNorm
 
 logger = getLogger("nanollama")
 FLEX_ATTENTION = True
-
-
-# ------------------------------------------------------------------------------
-# Attention Mask
-# ------------------------------------------------------------------------------
-
-
-def build_attention_mask(type: str, **kwargs: dict[str, Any]) -> BlockMask:
-    """
-    Build attention mask.
-
-    ### Parameters
-    - type: type of attention, either "causal" or "doc"
-    - kwargs: additional arguments for the mask
-
-    ### Returns
-    - mask: attention mask
-    """
-    if type == "causal":
-        assert "seq_len" in kwargs, "sequence length must be provided for causal mask"
-        seq_len = kwargs["seq_len"]
-        return create_block_mask(_causal_mask, None, None, seq_len, seq_len)
-
-    elif type == "doc_causal":
-        assert "doc_start" in kwargs, "document_start must be provided for document mask"
-        assert "seq_len" in kwargs, "sequence length must be provided for document mask"
-        doc_start: list[int] = kwargs["doc_start"]
-        bsz = len(doc_start)
-        seq_len = kwargs["seq_len"]
-
-        def _doc_causal_mask(b: int, h: int, q_idx: int, kv_idx: int) -> bool:
-            return (kv_idx >= doc_start[b]) & (q_idx >= kv_idx)
-
-        return create_block_mask(_doc_causal_mask, bsz, None, seq_len, seq_len)
-
-    else:
-        raise ValueError(f"Unknown attention mask type: {type}")
-
-def _causal_mask(b: int, h: int, q_idx: int, kv_idx: int) -> bool:
-    return q_idx >= kv_idx
 
 
 # ------------------------------------------------------------------------------
@@ -389,22 +348,23 @@ class Transformer(BlockLanguageModel):
         self.head_dim = config.block.emb_dim // config.block.nb_heads
         self.nb_kv_heads = config.block.nb_kv_heads
 
-        # default cache and mask
-        self.kv_caches = [None for _ in range(config.nb_layers)]
-        self.default_mask = build_attention_mask("causal", seq_len=self.seq_len)
+        # default mask for pretraining
+        self.default_mask: BlockMask
 
-    def forward(self, x: torch.Tensor, mask: BlockMask = None, doc_start: torch.Tensor = None) -> torch.Tensor:
+        # inference attributes
+        self.kv_caches: list[KVCache]
+        self.batch_offset: torch.Tensor
+        self.setup_training()
+
+    def forward(self, x: torch.Tensor) -> torch.Tensor:
         """
         Forward pass of the transformer.
 
         ### Parameters
         - x: input tensor
-        - mask: attention mask
-        - doc_start: tensor mapping each sequence to its start index.
         """
-        # arguments parsing
-        if mask is None:
-            mask = self._build_mask(x, doc_start=doc_start)
+        # retrieve mask for this batch
+        mask = self._get_mask(x)
 
         # forward pass
         out = self.embeddings(x)
@@ -413,92 +373,151 @@ class Transformer(BlockLanguageModel):
         logits = self.output(self.output_norm(out))
         return logits
 
-    def _build_mask(self, x: torch.Tensor, doc_start: torch.Tensor = None) -> BlockMask:
+    # --------------------------------------------------------------------------
+    # Flex Attention mask utilities
+    # --------------------------------------------------------------------------
+
+    def _get_mask(self, x: torch.Tensor) -> BlockMask:
         """
         Build attention mask for the input tensor.
 
         ### Parameters
         - x: input tensor
-        - doc_start: tensor mapping each sequence to its start index
 
         ### Returns
         - mask: attention mask
         """
         seq_len = x.size(1)
+        device = x.device
 
-        # at inference time, we can attend all previous tokens
+        # if at inference time,
+        if self.kv_caches[0] is not None:
+            return self._build_inference_mask(seq_len).to(device)
+
+        # else at pretraining
         if seq_len == 1:
             return None
+        return self._build_pretraining_mask(seq_len).to(device)
 
-        # document masking
-        if doc_start is not None:
-            assert FLEX_ATTENTION, "document masking is only supported with flex attention, which is currently disabled"
-            # ... work around for flex attention building mask on gpu
-            if doc_start.device.type == "cpu":
-                doc_start = doc_start.cuda()
-            return build_attention_mask("doc_causal", seq_len=seq_len, doc_start=doc_start).to(x.device)
+    @staticmethod
+    def _causal_mask(b: int, h: int, q_idx: int, kv_idx: int) -> bool:
+        return q_idx >= kv_idx
 
-        # causal masking
-        if seq_len < self.seq_len:
-            return build_attention_mask("causal", seq_len=seq_len).to(x.device)
-        # ... we cache a default mask for sequences of full lengths
-        else:
-            self.default_mask = self.default_mask.to(x.device)
-            return self.default_mask
+    def _doc_mask(self, b: int, h: int, q_idx: int, kv_idx: int) -> bool:
+        return kv_idx >= self.batch_offset[b]
 
-    def build_cache(self, bsz: int) -> None:
+    # --------------------------------------------------------------------------
+    # Training utilities
+    # --------------------------------------------------------------------------
+
+    def setup_training(self, seq_len: int = None) -> tuple[torch.Tensor, torch.Tensor]:
         """
-        Build a KV cache for faster inference.
+        Setup FlexAttention masks and reset inference attributes.
+
+        ### Parameters
+        - data: list of input tensors corresponding to many prompts of various lengths
+
+        ### Returns
+        - x: shifted prompts
+
+        ### Modified attributes
+        - default_mask: default `document` mask for inference
+        """
+        seq_len = seq_len or self.seq_len
+
+        # build default causal mask
+        self.default_mask = create_block_mask(self._causal_mask, None, None, seq_len, seq_len)
+
+        # Reset inference attributes.
+        self.kv_caches = [None for _ in range(len(self.layers))]
+        self.batch_offset = None
+
+    def _build_pretraining_mask(self, seq_len: int) -> BlockMask:
+        # TODO: add option for dialog masks that break causality for non-assistant turns
+        if seq_len == self.seq_len:
+            return self.default_mask
+        else:
+            # return self.default_mask._adjust(seq_len, seq_len) # this did not work at time of writting
+            return create_block_mask(self._causal_mask, None, None, seq_len, seq_len)
+
+    # --------------------------------------------------------------------------
+    # Inference utilities
+    # --------------------------------------------------------------------------
+
+    def setup_inference(self, data: list[torch.Tensor]) -> torch.Tensor:
+        """
+        Merge prompt together for the LLM to process them in parallel, and setup caches.
+
+        ### Parameters
+        - data: list of input tensors corresponding to many prompts of various lengths
+
+        ### Returns
+        - x: shifted prompts
+
+        ### Modified attributes
+        - kv_caches: list of key-value caches
+        - batch_offset: list of padding offset for each prompt
+        """
+        assert len(data) > 0, "no data provided"
+        bsz = len(data)
+        seq_len = max(len(d) for d in data)
+        dtype, device = data[0].dtype, data[0].device
+
+        # fill in input tensor while remembering document offsets
+        x = torch.zeros((bsz, seq_len), dtype=dtype, device=device)
+        self.batch_offset = torch.zeros(bsz, dtype=torch.long, device=device)
+        for i, datum in enumerate(data):
+            x[i, -len(datum) :] = datum
+            self.batch_offset[i] = seq_len - len(datum)
+
+        # build kv cache
+        self._build_kv_cache(bsz)
+
+        return x
+
+    def _build_kv_cache(self, bsz: int = None) -> None:
+        """
+        Build key-value caches for inference.
 
         ### Parameters
         - bsz: batch size
         """
-        # build cache
         cache_size = (bsz, self.nb_kv_heads, self.seq_len, self.head_dim)
         dtype = self.embeddings.weight.dtype
         device = self.embeddings.weight.device
-        self.kv_caches = [
-            KVCache(
-                torch.zeros(cache_size, dtype=dtype, device=device),
-                torch.zeros(cache_size, dtype=dtype, device=device),
-            )
-            for _ in self.layers
-        ]
-
-    def reset_cache(self) -> None:
-        """Reset KV cache."""
-        for cache in self.kv_caches:
-            if cache is not None:
+        for i, cache in enumerate(self.kv_caches):
+            if cache is None or cache.key.size() != cache_size:
+                self.kv_caches[i] = KVCache(
+                    torch.zeros(cache_size, dtype=dtype, device=device),
+                    torch.zeros(cache_size, dtype=dtype, device=device),
+                )
+            else:
                 cache.reset()
 
-    @staticmethod
-    def build_prompts(data: torch.Tensor, prefix_lens: torch.Tensor) -> tuple[torch.Tensor, torch.Tensor]:
+    def _build_inference_mask(self, seq_len: int = 1) -> BlockMask:
         """
-        Shift prompts to align their final tokens (instead of the first ones)
+        Build attention masks for inference, ensuring that attention do not attend to padded tokens.
 
         ### Parameters
-        - data: data containing prefixes to be used as prompts
-        - prefix_lens: lengths of the prefixes
+        - seq_len: sequence length currently processed
 
-        ### Returns
-        - x: shifted prompts
-        - start_ind: starting index of the shifted prompts
+        ### Attributes
+        - mask: attention mask
         """
+        # assert FLEX_ATTENTION, "inferennce masks require flex attention, which is currently disabled"
 
-        # prompt placeholder
-        max_len = prefix_lens.max()
-        data = data[:, :max_len]
-        x = torch.zeros(data.size(), dtype=data.dtype, device=data.device)
+        # ... work around for flex attention building mask on gpu
+        if self.batch_offset.device.type == "cpu":
+            self.batch_offset = self.batch_offset.cuda()
 
-        # create index mask
-        doc_start = max_len - prefix_lens
-        tmp = torch.arange(data.size(1), device=data.device).unsqueeze(0)
-        data_ind = tmp < prefix_lens.unsqueeze(1)
-        x_ind = tmp >= doc_start.unsqueeze(1)
+        cur_len = self.kv_caches[0].pos_idx
+        bsz = len(self.batch_offset)
+        seq_len = cur_len + seq_len
 
-        # use linear order to fill values
-        x = x.view(-1)
-        x[x_ind.view(-1)] = data.reshape(-1)[data_ind.view(-1)]
-        x = x.view(data.size())
+        # prefilling
+        if cur_len == 0:
+            return create_block_mask(and_masks(self._doc_mask, self._causal_mask), bsz, None, seq_len, seq_len)
 
-        return x, doc_start
+        # continuing generation
+        assert seq_len - cur_len == 1, "only one token can be generated at a time"
+        return create_block_mask(self._doc_mask, bsz, None, 1, seq_len)
