@@ -180,7 +180,7 @@ class SelfAttention(nn.Module):
             z = flex_attention(q, k, v, block_mask=mask, enable_gqa=True)
         else:
             k, v = map(lambda t: torch.repeat_interleave(t, dim=2, repeats=self.heads_per_group), (k, v))
-            is_causal = mask is not None
+            is_causal = seq_len != 1
             z = F.scaled_dot_product_attention(q, k, v, is_causal=is_causal)
 
         # reformating: (B, H, S, D / H) -> (B, S, H, D / H) -> (B, S, D)
@@ -387,8 +387,11 @@ class Transformer(BlockLanguageModel):
         ### Returns
         - mask: attention mask
         """
-        seq_len = x.size(1)
+        bsz, seq_len = x.size()
         device = x.device
+
+        if bsz == seq_len == 1:
+            return None
 
         # if at inference time,
         if self.kv_caches[0] is not None:
@@ -504,7 +507,8 @@ class Transformer(BlockLanguageModel):
         ### Attributes
         - mask: attention mask
         """
-        # assert FLEX_ATTENTION, "inferennce masks require flex attention, which is currently disabled"
+        if not FLEX_ATTENTION:
+            assert len(self.batch_offset) == 1, "flex attention is required for batched inference"
 
         # ... work around for flex attention building mask on gpu
         if self.batch_offset.device.type == "cpu":
