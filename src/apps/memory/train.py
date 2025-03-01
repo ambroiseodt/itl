@@ -24,6 +24,7 @@ from ...nanollama.data.loader import DataLoader
 from ...nanollama.data.text import DataConfig, MultipleSourcesTokenGenerator
 from ...nanollama.distributed import ClusterConfig, ClusterManager, get_rank
 from ...nanollama.model import Transformer, TransformerConfig
+from ...nanollama.model import transformer as tf
 from ...nanollama.monitor import (
     Checkpointer,
     Logger,
@@ -41,6 +42,7 @@ from ...nanollama.optim import (
 )
 from ...nanollama.utils import initialize_nested_object
 
+tf.FLEX_ATTENTION = True
 _logger = logging.getLogger("nanollama")
 
 
@@ -89,6 +91,7 @@ def loss_func(preds: torch.Tensor, targets: torch.Tensor) -> torch.Tensor:
 
 
 def train(config: TrainingConfig) -> None:
+
     with ExitStack() as context_stack:
         # ---------------------------------------------------------------------
         # Handle preemption, computing environment, logging, and utils
@@ -178,7 +181,7 @@ def train(config: TrainingConfig) -> None:
             # get mask associated to which token is supposed to be produced by the LLM.
             batch, mask = batch.chunk(2)
             X_batch = batch[:, :-1]
-            mask = mask[:, 1:].to(bool)
+            mask = mask[:, :-1].to(bool)
             y_batch = batch[:, 1:][mask]
 
             # -----------------------------------------------------------------
