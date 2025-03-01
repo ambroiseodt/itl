@@ -1,9 +1,9 @@
 launcher:
   name: memory
   overwrite: true
-  log_dir: $HOME/memory
+  log_dir: $HOME/memory_qua
 
-  script: src.apps.memory.train
+  script: apps.memory.train
 
   slurm:
     # partition: scavenge
@@ -19,24 +19,25 @@ run_config:
 
   data:
     sources:
-    - path: src/apps/memory/dataset/qatool.jsonl
+    - path: apps/memory/dataset/qatool.jsonl
       weight: 1
     tokenizer:
       name: byte
     batch_size: 128
-    seq_len: 128
+    seq_len: 256
+    padding: true
+    asynchronous: false
 
   model:
     vocab_size: 300
     emb_dim: 64
     nb_layers: 2
     block:
-      seq_len: 2048
       nb_heads: 2
       hidden_dim: 256
 
   optim:
-    steps: 100
+    steps: 2000
     lr: 1e-4
     weight_decay: 0.1
     fused: true
