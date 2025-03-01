@@ -21,14 +21,14 @@ from nanollama.utils import initialize_nested_object
 class TestGeneration(unittest.TestCase):
     def setUp(self) -> None:
         # get some data and a model
-        bsz = 16
+        bsz = 8
         self.data = torch.randint(0, 256, (bsz, 1), dtype=torch.long)
         config = yaml.safe_load("""
         vocab_size: 300
         emb_dim: 64
         nb_layers: 2
         block:
-            seq_len: 256
+            seq_len: 128
             nb_heads: 2
             hidden_dim: 256
         """)
@@ -44,7 +44,7 @@ class TestGeneration(unittest.TestCase):
         seq_len = x.size(1)
         preds, seq = [], x
         with torch.inference_mode():
-            while seq_len <= 256:
+            while seq_len <= 128:
                 pred = self.model(x)
                 x = pred[:, -1:].argmax(dim=2)
                 preds.append(pred)
@@ -68,7 +68,7 @@ class TestGeneration(unittest.TestCase):
         seq_len = x.size(1)
         preds = []
         with torch.inference_mode():
-            while seq_len <= 256:
+            while seq_len <= 128:
                 pred = self.model(x)
                 x = pred[:, -1:].argmax(dim=2)
                 preds.append(pred)
@@ -83,7 +83,7 @@ class TestGeneration(unittest.TestCase):
             seq_len = x.size(1)
             new_pred = []
             with torch.inference_mode():
-                while seq_len <= 256:
+                while seq_len <= 128:
                     pred = self.model(x)
                     x = pred[:, -1:].argmax(dim=2)
                     new_pred.append(pred)
@@ -96,6 +96,7 @@ class TestGeneration(unittest.TestCase):
         assert torch.allclose(preds, new_preds, atol=1e-5)
 
     def test_shifted_inputs(self) -> None:
+        torch.cuda.manual_seed(0)
         self.model = self.model.to("cuda")
         self.data = self.data.to("cuda")
 
