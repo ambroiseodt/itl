@@ -54,32 +54,32 @@ pip install -e .[ssm]
 ## Dataset creation
 Create a dataset of people, biographies of 1000 peoples, and questions/answers with the following commands (to be run from the root of the repository):
 ```bash
-python -m src.apps.memory.dataset.generate people
-python -m src.apps.memory.dataset.generate biographies --num 1000
-python -m src.apps.memory.dataset.generate qa --num 100
-python -m src.apps.memory.dataset.generate qa --tooluse --num 100
+python -m apps.memory.dataset.generate people
+python -m apps.memory.dataset.generate biographies --num 1000
+python -m apps.memory.dataset.generate qa --num 100
+python -m apps.memory.dataset.generate qa --tooluse --num 100
 ```
 
 ## Training
 Launch a traning run locally
 ```bash
-python -m src.apps.memory.train src/apps/memory/config.yaml
+python -m apps.memory.train apps/memory/config.yaml
 ```
 You can run the code locally with two GPUs (or more).
 ```bash
-torchrun --nproc-per-node 2 -m src.apps.memory.train src/apps/memory/config.yaml
+torchrun --nproc-per-node 2 -m apps.memory.train apps/memory/config.yaml
 ```
 Launch a training on your cluster
 ```bash
-python -m nanollama.launcher src/apps/memory/config.yaml
+python -m nanollama.launcher apps/memory/config.yaml
 ```
 
 #### Notes for the team
 I have added two configs `config_with_tool.yaml` and `config_without_tool.yaml` to reproduce Sam's exp1, and continue on our exp1 (get the number of facts a networks can recall with and without access to a tool).
 Modify these configs (as well as the datasets -- adding or removing facts) to fit your needs and run the following commands
 ```bash
-python -m src.apps.memory.train src/apps/memory/config_with_tool.yaml
-python -m src.apps.memory.train src/apps/memory/config_without_tool.yaml
+python -m apps.memory.train apps/memory/config_with_tool.yaml
+python -m apps.memory.train apps/memory/config_without_tool.yaml
 ```
 
 ## Development
