@@ -27,4 +27,8 @@ class TestMultipleSourcesTokenGenerator(unittest.TestCase):
 
         tokens = tokenizer.encode(dialog)[0]
         decoded = tokenizer.decode(tokens)
-        assert decoded == "Salut AssistantBonjourComment vas-tu?Tres bien, comment puis-je vous etre utile aujourd'hui?"
+        print(decoded)
+        assert (
+            decoded
+            == "USER:>Salut Assistant\nASSISTANT:>Bonjour\nUSER:>Comment vas-tu?\nASSISTANT:>Tres bien, comment puis-je vous etre utile aujourd'hui?"  # noqa: E501
+        )
