@@ -220,7 +220,6 @@ class SelfAttention(nn.Module):
         if FLEX_ATTENTION:
             z = flex_attention(q, k, v, block_mask=mask, enable_gqa=True)
         else:
-            logger.warning("Using the deprecated scaled dot product attention")
             k, v = map(lambda t: torch.repeat_interleave(t, dim=2, repeats=self.heads_per_group), (k, v))
             is_causal = mask is not None
             z = F.scaled_dot_product_attention(q, k, v, is_causal=is_causal)
@@ -433,6 +432,7 @@ class Transformer(BlockLanguageModel):
 
         # document masking
         if doc_start is not None:
+            assert FLEX_ATTENTION, "document masking is only supported with flex attention, which is currently disabled"
             # ... work around for flex attention building mask on gpu
             if doc_start.device.type == "cpu":
                 doc_start = doc_start.cuda()
