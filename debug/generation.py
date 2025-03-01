@@ -30,7 +30,7 @@ with dataloader:
     batch = next(dataloader)
 
 data, mask = batch.chunk(2)
-prefix_lens = mask.argmax(dim=1)
+prefix_lens = mask.argmax(dim=1) + 1
 
 print("printing data")
 decode_func = token_gen.generators[0].tokenizer.decode
