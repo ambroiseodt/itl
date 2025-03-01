@@ -217,6 +217,8 @@ class DialogTokenizer(Tokenizer):
         self.current_actor = None
         self.buffer = []
         return output
+
+
 # ------------------------------------------------------------------------------
 # Byte Tokenizer
 # ------------------------------------------------------------------------------
@@ -233,7 +235,7 @@ class ByteTokenizer(Tokenizer):
         Byte Tokenizer
 
         ### Parameters
-        special_tokens: list of special tokens to register (e.g. `["eos", "bos"]`)
+        - special_tokens: list of special tokens to register (e.g. `["eos", "bos"]`)
         """
         super().__init__()
         special_tokens = special_tokens if special_tokens else []
@@ -290,7 +292,7 @@ class TikTokenTokenizer(Tokenizer):
         Tiktoken Tokenizer
 
         ### Parameters
-        path: path to the tiktoken model.
+        - path: path to the tiktoken model.
         """
         import tiktoken
         from tiktoken.load import load_tiktoken_bpe
@@ -352,10 +354,10 @@ class TokenizerConfig:
     Tokenizer configuration
 
     ### Attributes
-    name: name of the tokenizer.
-    path: path to the tokenizer model.
-    bots: list of actors for which to add `begining of turn` token
-    eod: whether to add an `end of dialog` token.
+    - name: name of the tokenizer.
+    - path: path to the tokenizer model.
+    - bots: list of actors for which to add `begining of turn` token
+    - eod: whether to add an `end of dialog` token.
     """
 
     name: str
@@ -374,10 +376,10 @@ def build_tokenizer(config: TokenizerConfig) -> Tokenizer:
     Build tokenizer based on the configuration.
 
     ### Parameters
-    config: tokenizer configuration.
+    - config: tokenizer configuration.
 
     ### Returns
-    tokenizer instance.
+    - tokenizer instance.
     """
     special_tokens = [f"bot_{actor.value}" for actor in config.bots]
     if config.eod:
