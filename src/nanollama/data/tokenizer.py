@@ -6,11 +6,6 @@ This source code is licensed under the terms specified in the `LICENSE` file,
 located in the root directory of this repository.
 
 @ 2025, Meta
-
-#### TODO
-The dialog decoding is minimalistic.
-It should be improved by catching special tokens and adding "\n<{Actor}> " for bos, or "</{Actor}>\n" for eos.
-I wrote it offline, I should ask ChatGPT how to do it when back online. If you see this note, is that I forgot to do it.
 """
 
 from abc import ABC, abstractmethod
@@ -66,9 +61,10 @@ class Tokenizer(ABC):
     Tokenizer
 
     ### Attributes
-    name: name of the tokenizer.
-    vocab_size: size of the vocabulary.
+    - name: name of the tokenizer.
+    - vocab_size: size of the vocabulary.
     """
+
     name: str
     vocab_size: int
 
@@ -78,11 +74,11 @@ class Tokenizer(ABC):
         Encode a sentence into a list of token IDs.
 
         ### Parameters
-        sentence: sentence to encode.
-        bos: token id to add at the beginning of sentence (if `bos != 0`)
+        - sentence: sentence to encode.
+        - bos: token id to add at the beginning of sentence (if `bos != 0`)
 
         ### Returns
-        list of token IDs.
+        - tokens: list of token IDs.
         """
         ...
 
@@ -92,10 +88,10 @@ class Tokenizer(ABC):
         Decode a list of token IDs into a sentence.
 
         ### Parameters
-        tokens: list of token IDs to decode.
+        - tokens: list of token IDs to decode.
 
         ### Returns
-        decoded sentence.
+        - decoded sentence.
         """
         ...
 
@@ -110,9 +106,9 @@ class DialogTokenizer(Tokenizer):
     Dialog Tokenizer
 
     ### Parameters
-    tokenizer: encoder and decoder from string to list of integers.
-    bots: dictionary mapping actors to `begin_of_turn` tags.
-    eod: token_id to put at the end of a dialog (if `eod != 0`).
+    - tokenizer: encoder and decoder from string to list of integers.
+    - bots: dictionary mapping actors to `begin_of_turn` tags.
+    - eod: token_id to put at the end of a dialog (if `eod != 0`).
     """
 
     name = "dialog"
@@ -125,21 +121,23 @@ class DialogTokenizer(Tokenizer):
         self.eod = eod
         self.vocab_size = tokenizer.vocab_size
 
-        # reverse to speed up decoding
+        # decoding attributes
         self.bot2actor = {v: k for k, v in self.bots.items()}
         if 0 in self.bot2actor:
             self.bot2actor.pop(0)
+        self.current_actor = None
+        self.buffer = []
 
     def encode(self, dialog: list[dict[str, str]]) -> tuple[list[int], list[bool]]:
         """
         Encode a dialog into a list of token IDs.
 
         ### Parameters
-        dialog: list of messages
+        - dialog: list of messages
 
         ### Returns
-        tokens: list of token IDs
-        mask: list of boolean flag specifying tokens produced by the assistant
+        - tokens: list of token IDs
+        - mask: list of boolean flag specifying tokens produced by the assistant
 
         ### Note
         The mask specifies tokens for which the LLM needs to predict the next token.
@@ -163,45 +161,62 @@ class DialogTokenizer(Tokenizer):
             mask.append(False)  # do not predict what follows the EoS token
         return tokens, mask
 
-    def decode(self, tokens: list[int]) -> str:
+    def decode(self, tokens: list[int], bot_char: str = ":>") -> str:
         """
         Decode a list of token IDs into a sentence.
 
         ### Parameters
-        tokens: list of token IDs to decode.
+        - tokens: list of token IDs to decode.
+        - bot_char: character to signal begining of turn.
 
         ### Returns
-        decoded sentence.
+        - decoded sentence.
+        """
+        output = ""
+        for token in tokens:
+            output += self.decode_online(token, bot_char=bot_char)
+        output += self.flush_decoding_buffer()
+        return output
+
+    def decode_online(self, token: int, bot_char: str = ":>") -> str:
+        """
+        Decode a single token in an online fashion.
+
+        ### Parameters
+        - tokens: last token id.
+        - bot_char: character to signal begining of turn.
+
+        ### Returns
+        - output: decoded sentence.
         """
         # argument parsing
-        if isinstance(tokens, torch.Tensor):
-            tokens = tokens.tolist()
+        if isinstance(token, torch.Tensor):
+            token = token.item()
 
-        nb_tokens, output, ind = len(tokens), "", 0
-        while True:
+        output = ""
+        actor = self.bot2actor.get(token, None)
 
-            # find current actor
-            actor = self.bot2actor.get(tokens[ind], None)
-            if actor:
-                output += f"{actor.value.upper()}:>"
-                ind = ind + 1
-            else:
-                output += "UNKNOWN:>"
-            start = ind
+        # if at the start of a new turn, flush the buffer
+        if actor:
+            add_eol = self.current_actor is not None
+            output += self.flush_decoding_buffer()
+            output += "\n" if add_eol else ""
+            self.current_actor = actor
+            output += f"{actor.value.upper()}{bot_char}"
 
-            # find next begining of turn
-            while ind < nb_tokens and tokens[ind] not in self.bot2actor:
-                ind += 1
+        # else bufferize the current token
+        else:
+            self.buffer.append(token)
+        return output
 
-            # decode the segment
-            output += self.tokenizer.decode(tokens[start:ind])
-
-            if ind == nb_tokens:
-                return output
-            else:
-                output += "\n"
-
-
+    def flush_decoding_buffer(self) -> str:
+        """
+        Decode bufferized tokens into text.
+        """
+        output = self.tokenizer.decode(self.buffer)
+        self.current_actor = None
+        self.buffer = []
+        return output
 # ------------------------------------------------------------------------------
 # Byte Tokenizer
 # ------------------------------------------------------------------------------
