@@ -148,8 +148,6 @@ class FileEvaluator(TokenLoader):
     config: configuration of the data loader.
     """
 
-    TYPE = "test"
-
     def __init__(self, config: DataConfig):
         super().__init__(config)
 
