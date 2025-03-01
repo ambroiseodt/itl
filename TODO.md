@@ -5,13 +5,13 @@ Todo:
 - Change a bit the logic for the tool use interaction. Extract the text in ```sql<TEXT>``` and make sure it matches the right text. If so, then we can use the tool use, and we manually inject the database answer.
 
 Vivien's todo:
+- Agentic interaction:
+    - write a simple script that do the interaction with a mock SQL agent.
+    - implement a SQL agent module.
+    - make a class that deal with the generation at a more abstract level / or an agentic app (in the `apps` folder).
+        - tooluse mechanism: regex in token space for database BoS, parsing of previous message, anwser, end of generation.
 - Generation.
-    - test generation one big block little by little, vs one big block at once.
-    - test generation one big block little by little vs each sentence little by little.
-
     - Write inference loop logic, as well as sampling strategies.
-- Tool use mechanism.
-    - Regex in token space for database BoS, parsing of previous message, anwser, end of generation.
 - Show how to run a grid with a grid.yaml configuration.
 
 Other stuffs for Vivien's
@@ -21,6 +21,9 @@ Other stuffs for Vivien's
 - Correct init_weight vs reset_parameters
 - Correct docstring `args` to `- my_args`, and module docstring more readable.
 - Remove Statefulness of scheduler.
+- Option to remove the tokenizer mask when doing pure pretraining.
+- Change mask so that the LLM can have non-causal interaction between tokens that it has not generated.
+- Improve logging in the train loop, and add visualization of training logs.
 
 Ambroise's ideas:
 - For scaling plot of [Physics of Language Models: Part 3.3](https://arxiv.org/pdf/2404.05405), could we plot contourlines to take the performance into account?
