@@ -18,6 +18,8 @@ from dataclasses import dataclass, field
 from enum import Enum
 from logging import getLogger
 
+import torch
+
 from ..utils import initialize_nested_object
 
 logger = getLogger("nanollama")
@@ -47,7 +49,7 @@ class Actor(str, Enum):
 class Message:
     """
     A message is made of a content and a source.
-    It may be decorated in token space with some bos and eos tokens.
+    It may be decorated in token space with some `begining of turn` and `end of dialog` tokens.
     """
 
     source: Actor
@@ -66,21 +68,18 @@ class Tokenizer(ABC):
     ### Attributes
     name: name of the tokenizer.
     vocab_size: size of the vocabulary.
-    num_output: number of stream of tokens produce for a string of text.
     """
     name: str
     vocab_size: int
-    num_output: int = 1
 
     @abstractmethod
-    def encode(self, sentence: str, bos: int = 0, eos: int = 0) -> list[int]:
+    def encode(self, sentence: str, bos: int = 0) -> list[int]:
         """
         Encode a sentence into a list of token IDs.
 
         ### Parameters
         sentence: sentence to encode.
-        bos: token id to add at the beginning (if bos != 0)
-        eos: token id to add at the end (if eos != 0)
+        bos: token id to add at the beginning of sentence (if `bos != 0`)
 
         ### Returns
         list of token IDs.
@@ -112,17 +111,24 @@ class DialogTokenizer(Tokenizer):
 
     ### Parameters
     tokenizer: encoder and decoder from string to list of integers.
-    bos: dictionary mapping actors to begin_of_sentence tags.
-    eos: dictionary mapping actors to end_of_sentence tags.
+    bots: dictionary mapping actors to `begin_of_turn` tags.
+    eod: token_id to put at the end of a dialog (if `eod != 0`).
     """
 
     name = "dialog"
-    num_output = 2
+    bots: dict[Actor, int]
+    eod: bool
 
-    def __init__(self, tokenizer: Tokenizer, bos: dict[Actor, int], eos: dict[Actor, int]) -> None:
+    def __init__(self, tokenizer: Tokenizer, bots: dict[Actor, int], eod: int) -> None:
         self.tokenizer = tokenizer
-        self.bos = {actor: 0 for actor in Actor} | bos
-        self.eos = {actor: 0 for actor in Actor} | eos
+        self.bots = {actor: 0 for actor in Actor} | bots
+        self.eod = eod
+        self.vocab_size = tokenizer.vocab_size
+
+        # reverse to speed up decoding
+        self.bot2actor = {v: k for k, v in self.bots.items()}
+        if 0 in self.bot2actor:
+            self.bot2actor.pop(0)
 
     def encode(self, dialog: list[dict[str, str]]) -> tuple[list[int], list[bool]]:
         """
@@ -133,20 +139,28 @@ class DialogTokenizer(Tokenizer):
 
         ### Returns
         tokens: list of token IDs
-        mask: list of boolean flag specifying if token produced by the assistant
+        mask: list of boolean flag specifying tokens produced by the assistant
+
+        ### Note
+        The mask specifies tokens for which the LLM needs to predict the next token.
+        This is because each turn starts with a special `bot` tokens.
+        When we end a non-assistant turn, we manually add the assistant bos token.
+        When the assistant finishes its turn, it chooses the next actor by predicting its `bos` token.
         """
         tokens = []
         mask = []
         for _message in dialog:
             message = initialize_nested_object(Message, _message, inplace=False)
-            bos = self.bos[message.source]
-            eos = self.eos[message.source]
-            new_tokens = self.tokenizer.encode(message.content, bos=bos, eos=eos)
+            bos = self.bots[message.source]
+            new_tokens = self.tokenizer.encode(message.content, bos=bos)
             tokens += new_tokens
             if message.source == Actor.assistant:
-                mask += [True] * len(new_tokens)
+                mask.extend([True] * len(new_tokens))
             else:
-                mask += [False] * len(new_tokens)
+                mask.extend([False] * len(new_tokens))
+        if self.eod:
+            tokens.append(self.eod)
+            mask.append(False)  # do not predict what follows the EoS token
         return tokens, mask
 
     def decode(self, tokens: list[int]) -> str:
@@ -159,7 +173,33 @@ class DialogTokenizer(Tokenizer):
         ### Returns
         decoded sentence.
         """
-        return self.tokenizer.decode(tokens)
+        # argument parsing
+        if isinstance(tokens, torch.Tensor):
+            tokens = tokens.tolist()
+
+        nb_tokens, output, ind = len(tokens), "", 0
+        while True:
+
+            # find current actor
+            actor = self.bot2actor.get(tokens[ind], None)
+            if actor:
+                output += f"{actor.value.upper()}:>"
+                ind = ind + 1
+            else:
+                output += "UNKNOWN:>"
+            start = ind
+
+            # find next begining of turn
+            while ind < nb_tokens and tokens[ind] not in self.bot2actor:
+                ind += 1
+
+            # decode the segment
+            output += self.tokenizer.decode(tokens[start:ind])
+
+            if ind == nb_tokens:
+                return output
+            else:
+                output += "\n"
 
 
 # ------------------------------------------------------------------------------
@@ -187,13 +227,11 @@ class ByteTokenizer(Tokenizer):
             logger.info(f"Registering token {tok}")
             setattr(self, tok, i + 256)
 
-    def encode(self, sentence: str, bos: int = 0, eos: int = 0) -> list[int]:
+    def encode(self, sentence: str, bos: int = 0) -> list[int]:
         tokens = []
         if bos:
             tokens.append(bos)
         tokens.extend(sentence.encode(self.encoding))
-        if eos:
-            tokens.append(eos)
         return tokens
 
     def decode(self, tokens: list[int]) -> str:
@@ -270,7 +308,7 @@ class TikTokenTokenizer(Tokenizer):
     def piece_to_id(self, piece: str) -> int:
         return piece
 
-    def encode(self, text: str, bos: int, eos: int) -> list[int]:
+    def encode(self, text: str, bos: int) -> list[int]:
         assert isinstance(text, str)
         subs = [
             text[i : i + self.TIKTOKEN_MAX_ENCODE_CHARS] for i in range(0, len(text), self.TIKTOKEN_MAX_ENCODE_CHARS)
@@ -282,8 +320,6 @@ class TikTokenTokenizer(Tokenizer):
         )
         if bos:
             t.insert(0, self.bos_id)
-        if eos:
-            t.append(self.eos_id)
         return t
 
     def decode(self, tokens: list[int]) -> str:
@@ -303,14 +339,14 @@ class TokenizerConfig:
     ### Attributes
     name: name of the tokenizer.
     path: path to the tokenizer model.
-    bos_actor: list of actors for which to add bos token
-    eos_actor: list of actors for which to add eos token
+    bots: list of actors for which to add `begining of turn` token
+    eod: whether to add an `end of dialog` token.
     """
 
     name: str
     path: str | None = None
-    bos_actor: list[Actor] = field(default_factory=lambda: [actor for actor in Actor])
-    eos_actor: list[Actor] = field(default_factory=list)
+    bots: list[Actor] = field(default_factory=lambda: [actor for actor in Actor])
+    eod: bool = True
 
     def __post_init__(self):
         assert self.name, "Tokenizer name is required."
@@ -328,11 +364,12 @@ def build_tokenizer(config: TokenizerConfig) -> Tokenizer:
     ### Returns
     tokenizer instance.
     """
-    bos_tokens = [f"bos_{actor}" for actor in config.bos_actor]
-    eos_tokens = [f"eos_{actor}" for actor in config.eos_actor]
+    special_tokens = [f"bot_{actor.value}" for actor in config.bots]
+    if config.eod:
+        special_tokens.append("eod")
 
     if config.name == ByteTokenizer.name:
-        tokenizer = ByteTokenizer(special_tokens=bos_tokens + eos_tokens)
+        tokenizer = ByteTokenizer(special_tokens=special_tokens)
 
     elif config.name == TikTokenTokenizer.name:
         tokenizer = TikTokenTokenizer(path=config.path)
@@ -340,7 +377,7 @@ def build_tokenizer(config: TokenizerConfig) -> Tokenizer:
     else:
         raise NotImplementedError(f"No implementation for tokenizer {config.name}")
 
-    bos = {actor: getattr(tokenizer, f"bos_{actor}") for actor in config.bos_actor}
-    eos = {actor: getattr(tokenizer, f"eos_{actor}") for actor in config.eos_actor}
+    bots: dict[Actor, int] = {actor: getattr(tokenizer, f"bot_{actor.value}") for actor in config.bots}
+    eod: int = getattr(tokenizer, "eod", 0)
 
-    return DialogTokenizer(tokenizer=tokenizer, bos=bos, eos=eos)
+    return DialogTokenizer(tokenizer=tokenizer, bots=bots, eod=eod)
