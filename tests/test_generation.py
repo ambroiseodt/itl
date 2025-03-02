@@ -23,7 +23,6 @@ class TestGeneration(unittest.TestCase):
         # get some data and a model
         bsz = 8
         self.device = "cuda" if torch.cuda.is_available() else "cpu"
-        # self.device = "cpu"
         self.data = [torch.randint(0, 30, (1,), dtype=torch.long, device=self.device) for _ in range(bsz)]
         config = yaml.safe_load("""
         vocab_size: 30
