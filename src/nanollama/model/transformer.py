@@ -349,12 +349,11 @@ class Transformer(BlockLanguageModel):
         self.nb_kv_heads = config.block.nb_kv_heads
 
         # default mask for pretraining
-        self.default_mask: BlockMask
+        self.default_mask: BlockMask = None
 
         # inference attributes
-        self.kv_caches: list[KVCache]
-        self.batch_offset: torch.Tensor
-        self.setup_training()
+        self.kv_caches: list[KVCache] = None
+        self.batch_offset: torch.Tensor = None
 
     def forward(self, x: torch.Tensor) -> torch.Tensor:
         """
@@ -363,6 +362,10 @@ class Transformer(BlockLanguageModel):
         ### Parameters
         - x: input tensor
         """
+        # initialize caches during the first call to ensure device compatibility
+        if self.kv_caches is None:
+            self.setup_training()
+
         # retrieve mask for this batch
         mask = self._get_mask(x)
 
