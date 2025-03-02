@@ -167,7 +167,7 @@ class Checkpointer(Monitor):
         )
 
         for name, obj in self.stateful_objects.items():
-            logger.info("Loading {name}.")
+            logger.info(f"Loading {name}.")
             obj.load_state_dict(state_dict[name])
 
     def save(self, path: str) -> None:
