@@ -3,7 +3,7 @@ launcher:
   overwrite: true
   log_dir: $HOME/memory_debug
 
-  script: src.apps.memory.train
+  script: apps.memory.train
 
   slurm:
     # partition: scavenge
@@ -19,11 +19,11 @@ run_config:
 
   data:
     sources:
-    - path: src/apps/memory/dataset/biographies.jsonl
+    - path: apps/memory/dataset/biographies.jsonl
       weight: 90
-    - path: src/apps/memory/dataset/qa.jsonl
+    - path: apps/memory/dataset/qa.jsonl
       weight: 10
-    - path: src/apps/memory/dataset/qatool.jsonl
+    - path: apps/memory/dataset/qatool.jsonl
       weight: 50
     tokenizer:
       name: byte
