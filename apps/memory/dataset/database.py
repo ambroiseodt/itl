@@ -11,7 +11,7 @@ located in the root directory of this repository.
 import json
 from pathlib import Path
 
-from src.nanollama.agents.sql import SQLiteDB
+from src.nanollama.agents import SQLAgent
 
 SAVE_DIR = Path(__file__).resolve().parent
 
@@ -20,7 +20,7 @@ def create_database() -> None:
     """
     Create a SQLite database and populate it with data from a JSONL file.
     """
-    with SQLiteDB(SAVE_DIR / "people.db") as database:
+    with SQLAgent(SAVE_DIR / "people.db") as database:
         database.create("people", ["name", "birth_date", "birth_place", "current_address", "occupation"])
 
         # Read the JSONL file and insert data into the database
@@ -37,7 +37,7 @@ def query_database(prompt: str = "SELECT * FROM people") -> None:
     ### Parameters
     - prompt: the SQL query to execute
     """
-    with SQLiteDB(SAVE_DIR / "people.db") as database:
+    with SQLAgent(SAVE_DIR / "people.db") as database:
         results = database.query(prompt)
         for row in results:
             print(row)
