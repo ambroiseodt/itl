@@ -6,13 +6,6 @@ This source code is licensed under the terms specified in the `LICENSE` file,
 located in the root directory of this repository.
 
 @ 2025, Meta
-
-#### Notes
-Checkpointing does not support `DCP` yet.
-See https://pytorch.org/tutorials/recipes/distributed_checkpoint_recipe.html
-
-Checkpointing is done `synchronously` in the main process, this may slow down the training process.
-See https://pytorch.org/tutorials/recipes/distributed_async_checkpoint_recipe.html.
 """
 
 import re
