@@ -78,7 +78,7 @@ class QueuedBatchedInference:
         bsz, total_len = x.size()
         self.model.build_cache(bsz)
 
-        output = []
+        output = [x]
         buffers = [[] for _ in prompts]
         ongoing = torch.ones(bsz, dtype=torch.bool, device=self.device)
 
@@ -95,12 +95,20 @@ class QueuedBatchedInference:
 
                 # check if the LLM is calling a tool
                 token = x[i, 0].item()
+
+                # check for end of dialog token
+                if token == eod:
+                    ongoing[i] = False
+
                 actor = bot2actor.get(token, None)
 
                 # if so, decode the current LLM message, seen as instructions
                 if actor is not None:
                     instructions = decode(buffers[i])
                     buffers[i] = []
+                else:
+                    buffers[i].append(token)
+                    continue
 
                 # ask the agent to execute itself based on the instructions
                 if actor == self.agent.actor:
@@ -109,10 +117,6 @@ class QueuedBatchedInference:
                     self.queue[i].extend(encode(answer))
                     # and call assistant turn
                     self.queue[i].append(assistant)
-
-                # check for end of dialog token
-                if token == eod:
-                    ongoing[i] = False
 
             total_len += 1
             output.append(x)

@@ -66,5 +66,5 @@ inference_engine = QueuedBatchedInference(model, tokenizer, DB_PATH)
 with inference_engine:
     outputs = inference_engine.generate(prompts)
 
-for p, o in zip(prompts, outputs):
-    print(p, "\n", o, "\n\n")
+for dialog in outputs:
+    print(dialog, "\n")
