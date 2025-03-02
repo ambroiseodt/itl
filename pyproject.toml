@@ -23,6 +23,7 @@ dependencies = [
 
 [project.optional-dependencies]
 dev = [
+  "pytest",             # testing
   "ruff",               # formatting
   "torch_tb_profiler",  # visualizing profiling trace with tensorboard
   "viztracer",          # visualizing profiling trace with perfetto

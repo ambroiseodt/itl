@@ -1,7 +1,7 @@
 launcher:
   name: memory
   overwrite: true
-  log_dir: $HOME/memory
+  log_dir: $HOME/memory_debug
 
   script: src.apps.memory.train
 
@@ -15,7 +15,7 @@ launcher:
 
 run_config:
   cluster:
-    compile_model: false
+    compile_model: true
 
   data:
     sources:
@@ -40,7 +40,8 @@ run_config:
       hidden_dim: 256
 
   optim:
-    steps: 400
+    steps: 1000
+    max_steps: 1000
     lr: 1e-4
     weight_decay: 0.1
     fused: false
@@ -53,7 +54,7 @@ run_config:
 
     checkpoint:
       period: 20
-      keep_only: 3
+      nb_kept: 3
 
     logging:
       period: 1

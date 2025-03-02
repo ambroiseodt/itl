@@ -10,7 +10,7 @@ located in the root directory of this repository.
 
 import unittest
 
-from nanollama.data.tokenizer import Actor, Message, TokenizerConfig, build_tokenizer
+from nanollama.data.tokenizer import TokenizerConfig, build_tokenizer
 
 
 class TestMultipleSourcesTokenGenerator(unittest.TestCase):
@@ -19,12 +19,16 @@ class TestMultipleSourcesTokenGenerator(unittest.TestCase):
         tokenizer = build_tokenizer(config)
 
         dialog = [
-            Message(content="Salut Assistant", source=Actor.user),
-            Message(content="Bonjour", source=Actor.assistant),
-            Message(content="Comment vas-tu?", source=Actor.user),
-            Message(content="Tres bien, comment puis-je vous etre utile aujourd'hui?", source=Actor.assistant),
+            {"content": "Salut Assistant", "source": "user"},
+            {"content": "Bonjour", "source": "assistant"},
+            {"content": "Comment vas-tu?", "source": "user"},
+            {"content": "Tres bien, comment puis-je vous etre utile aujourd'hui?", "source": "assistant"},
         ]
 
-        tokens = tokenizer.encode(dialog)
+        tokens = tokenizer.encode(dialog)[0]
         decoded = tokenizer.decode(tokens)
-        assert decoded == "Salut AssistantBonjourComment vas-tu?Tres bien, comment puis-je vous etre utile aujourd'hui?"
+        print(decoded)
+        assert (
+            decoded
+            == "USER:>Salut Assistant\nASSISTANT:>Bonjour\nUSER:>Comment vas-tu?\nASSISTANT:>Tres bien, comment puis-je vous etre utile aujourd'hui?"  # noqa: E501
+        )

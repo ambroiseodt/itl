@@ -67,7 +67,7 @@ class AppState(Stateful):
 @dataclass
 class CheckpointConfig:
     period: int = 0
-    keep_only: int = 0
+    nb_kept: int = 0
     path: str = field(init=False, default="")
 
     def __check_init__(self):
@@ -81,11 +81,9 @@ class Checkpointer(Monitor):
 
     ### Attributes
     - period: number of updates between each checkpoint
-    - keep_only: number of checkpoints to keep
+    - nb_kept: number of checkpoints to keep
     - path: path to the checkpoint directory
     - saved: whether the latest model has been saved
-    - stateful_objects: various objects to checkpoints
-    - app_state: AppState to track model and optimizer
 
     ### Params
     - config: configuration object
@@ -108,12 +106,11 @@ class Checkpointer(Monitor):
         super().__init__(config)
 
         self.period = config.period
-        self.keep_only = config.keep_only
+        self.nb_kept = config.nb_kept
         self.path = Path(config.path)
         self.path.mkdir(parents=True, exist_ok=True)
 
         # Create alias for the objects to monitor.
-        self.app_state = AppState(model=model, optimizer=optimizer)
         self.model = model
         self.optimizer = optimizer
         self.stateful_objects = stateful_objects if stateful_objects else {}
@@ -218,11 +215,11 @@ class Checkpointer(Monitor):
         """
         Clean up old checkpoints
         """
-        if self.keep_only <= 0 or not is_master_process():
+        if self.nb_kept <= 0 or not is_master_process():
             return
         all_checkpoints = self._list_checkpoints(self.path)
         all_checkpoints.sort(key=lambda p: self._get_key_step(p.name))
-        for prefix in all_checkpoints[: -self.keep_only]:
+        for prefix in all_checkpoints[: -self.nb_kept]:
             if not (prefix / "eval").exists():
                 logger.info(f"Removing: {str(prefix)}")
                 shutil.rmtree(prefix)

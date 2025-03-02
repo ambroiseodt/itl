@@ -20,11 +20,12 @@ import torch.nn as nn
 import torch.nn.functional as F
 import yaml
 
-from ...nanollama.data.loader import DataLoader
-from ...nanollama.data.text import DataConfig, MultipleSourcesTokenGenerator
-from ...nanollama.distributed import ClusterConfig, ClusterManager, get_rank
-from ...nanollama.model import Transformer, TransformerConfig
-from ...nanollama.monitor import (
+from src.nanollama.data.loader import DataLoader
+from src.nanollama.data.text import DataConfig, MultipleSourcesTokenGenerator
+from src.nanollama.distributed import ClusterConfig, ClusterManager, get_rank
+from src.nanollama.model import Transformer, TransformerConfig
+from src.nanollama.model import transformer as tf
+from src.nanollama.monitor import (
     Checkpointer,
     Logger,
     OrchestratorConfig,
@@ -33,14 +34,15 @@ from ...nanollama.monitor import (
     UtilityManager,
     WandbLogger,
 )
-from ...nanollama.optim import (
+from src.nanollama.optim import (
     OptimizerConfig,
     OptimizerState,
     build_optimizer,
     build_scheduler,
 )
-from ...nanollama.utils import initialize_nested_object
+from src.nanollama.utils import initialize_nested_object
 
+tf.FLEX_ATTENTION = False
 _logger = logging.getLogger("nanollama")
 
 
@@ -178,7 +180,8 @@ def train(config: TrainingConfig) -> None:
             # get mask associated to which token is supposed to be produced by the LLM.
             batch, mask = batch.chunk(2)
             X_batch = batch[:, :-1]
-            mask = mask[:, 1:].to(bool)
+            mask = mask[:, :-1].to(bool)
+            # mask = mask[:, 1:].to(bool)
             y_batch = batch[:, 1:][mask]
 
             # -----------------------------------------------------------------

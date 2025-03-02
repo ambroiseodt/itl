@@ -6,17 +6,14 @@ This source code is licensed under the terms specified in the `LICENSE` file,
 located in the root directory of this repository.
 
 @ 2025, Meta
-
-#### TODO
-The dialog decoding is minimalistic.
-It should be improved by catching special tokens and adding "\n<{Actor}> " for bos, or "</{Actor}>\n" for eos.
-I wrote it offline, I should ask ChatGPT how to do it when back online. If you see this note, is that I forgot to do it.
 """
 
 from abc import ABC, abstractmethod
 from dataclasses import dataclass, field
 from enum import Enum
 from logging import getLogger
+
+import torch
 
 from ..utils import initialize_nested_object
 
@@ -47,7 +44,7 @@ class Actor(str, Enum):
 class Message:
     """
     A message is made of a content and a source.
-    It may be decorated in token space with some bos and eos tokens.
+    It may be decorated in token space with some `begining of turn` and `end of dialog` tokens.
     """
 
     source: Actor
@@ -64,26 +61,24 @@ class Tokenizer(ABC):
     Tokenizer
 
     ### Attributes
-    name: name of the tokenizer.
-    vocab_size: size of the vocabulary.
-    num_output: number of stream of tokens produce for a string of text.
+    - name: name of the tokenizer.
+    - vocab_size: size of the vocabulary.
     """
+
     name: str
     vocab_size: int
-    num_output: int = 1
 
     @abstractmethod
-    def encode(self, sentence: str, bos: int = 0, eos: int = 0) -> list[int]:
+    def encode(self, sentence: str, bos: int = 0) -> list[int]:
         """
         Encode a sentence into a list of token IDs.
 
         ### Parameters
-        sentence: sentence to encode.
-        bos: token id to add at the beginning (if bos != 0)
-        eos: token id to add at the end (if eos != 0)
+        - sentence: sentence to encode.
+        - bos: token id to add at the beginning of sentence (if `bos != 0`)
 
         ### Returns
-        list of token IDs.
+        - tokens: list of token IDs.
         """
         ...
 
@@ -93,10 +88,10 @@ class Tokenizer(ABC):
         Decode a list of token IDs into a sentence.
 
         ### Parameters
-        tokens: list of token IDs to decode.
+        - tokens: list of token IDs to decode.
 
         ### Returns
-        decoded sentence.
+        - decoded sentence.
         """
         ...
 
@@ -111,55 +106,117 @@ class DialogTokenizer(Tokenizer):
     Dialog Tokenizer
 
     ### Parameters
-    tokenizer: encoder and decoder from string to list of integers.
-    bos: dictionary mapping actors to begin_of_sentence tags.
-    eos: dictionary mapping actors to end_of_sentence tags.
+    - tokenizer: encoder and decoder from string to list of integers.
+    - bots: dictionary mapping actors to `begin_of_turn` tags.
+    - eod: token_id to put at the end of a dialog (if `eod != 0`).
     """
 
     name = "dialog"
-    num_output = 2
+    bots: dict[Actor, int]
+    eod: bool
 
-    def __init__(self, tokenizer: Tokenizer, bos: dict[Actor, int], eos: dict[Actor, int]) -> None:
+    def __init__(self, tokenizer: Tokenizer, bots: dict[Actor, int], eod: int) -> None:
         self.tokenizer = tokenizer
-        self.bos = {actor: 0 for actor in Actor} | bos
-        self.eos = {actor: 0 for actor in Actor} | eos
+        self.bots = {actor: 0 for actor in Actor} | bots
+        self.eod = eod
+        self.vocab_size = tokenizer.vocab_size
+
+        # decoding attributes
+        self.bot2actor = {v: k for k, v in self.bots.items()}
+        if 0 in self.bot2actor:
+            self.bot2actor.pop(0)
+        self.current_actor = None
+        self.buffer = []
 
     def encode(self, dialog: list[dict[str, str]]) -> tuple[list[int], list[bool]]:
         """
         Encode a dialog into a list of token IDs.
 
         ### Parameters
-        dialog: list of messages
+        - dialog: list of messages
 
         ### Returns
-        tokens: list of token IDs
-        mask: list of boolean flag specifying if token produced by the assistant
+        - tokens: list of token IDs
+        - mask: list of boolean flag specifying tokens produced by the assistant
+
+        ### Note
+        The mask specifies tokens for which the LLM needs to predict the next token.
+        This is because each turn starts with a special `bot` tokens.
+        When we end a non-assistant turn, we manually add the assistant bos token.
+        When the assistant finishes its turn, it chooses the next actor by predicting its `bos` token.
         """
         tokens = []
         mask = []
         for _message in dialog:
             message = initialize_nested_object(Message, _message, inplace=False)
-            bos = self.bos[message.source]
-            eos = self.eos[message.source]
-            new_tokens = self.tokenizer.encode(message.content, bos=bos, eos=eos)
+            bos = self.bots[message.source]
+            new_tokens = self.tokenizer.encode(message.content, bos=bos)
             tokens += new_tokens
             if message.source == Actor.assistant:
-                mask += [True] * len(new_tokens)
+                mask.extend([True] * len(new_tokens))
             else:
-                mask += [False] * len(new_tokens)
+                mask.extend([False] * len(new_tokens))
+        if self.eod:
+            tokens.append(self.eod)
+            mask.append(False)  # do not predict what follows the EoS token
         return tokens, mask
 
-    def decode(self, tokens: list[int]) -> str:
+    def decode(self, tokens: list[int], bot_char: str = ":>") -> str:
         """
         Decode a list of token IDs into a sentence.
 
         ### Parameters
-        tokens: list of token IDs to decode.
+        - tokens: list of token IDs to decode.
+        - bot_char: character to signal begining of turn.
 
         ### Returns
-        decoded sentence.
+        - decoded sentence.
         """
-        return self.tokenizer.decode(tokens)
+        output = ""
+        for token in tokens:
+            output += self.decode_online(token, bot_char=bot_char)
+        output += self.flush_decoding_buffer()
+        return output
+
+    def decode_online(self, token: int, bot_char: str = ":>") -> str:
+        """
+        Decode a single token in an online fashion.
+
+        ### Parameters
+        - tokens: last token id.
+        - bot_char: character to signal begining of turn.
+
+        ### Returns
+        - output: decoded sentence.
+        """
+        # argument parsing
+        if isinstance(token, torch.Tensor):
+            token = token.item()
+
+        output = ""
+        actor = self.bot2actor.get(token, None)
+
+        # if at the start of a new turn, flush the buffer
+        if actor:
+            add_eol = self.current_actor is not None
+            output += self.flush_decoding_buffer()
+            output += "\n" if add_eol else ""
+            self.current_actor = actor
+            output += f"{actor.value.upper()}{bot_char}"
+
+        # else bufferize the current token
+        else:
+            self.buffer.append(token)
+        return output
+
+    def flush_decoding_buffer(self) -> str:
+        """
+        Decode bufferized tokens into text.
+        """
+        output = self.tokenizer.decode(self.buffer)
+        self.current_actor = None
+        self.buffer = []
+        return output
 
 
 # ------------------------------------------------------------------------------
@@ -178,7 +235,7 @@ class ByteTokenizer(Tokenizer):
         Byte Tokenizer
 
         ### Parameters
-        special_tokens: list of special tokens to register (e.g. `["eos", "bos"]`)
+        - special_tokens: list of special tokens to register (e.g. `["eos", "bos"]`)
         """
         super().__init__()
         special_tokens = special_tokens if special_tokens else []
@@ -187,13 +244,11 @@ class ByteTokenizer(Tokenizer):
             logger.info(f"Registering token {tok}")
             setattr(self, tok, i + 256)
 
-    def encode(self, sentence: str, bos: int = 0, eos: int = 0) -> list[int]:
+    def encode(self, sentence: str, bos: int = 0) -> list[int]:
         tokens = []
         if bos:
             tokens.append(bos)
         tokens.extend(sentence.encode(self.encoding))
-        if eos:
-            tokens.append(eos)
         return tokens
 
     def decode(self, tokens: list[int]) -> str:
@@ -237,7 +292,7 @@ class TikTokenTokenizer(Tokenizer):
         Tiktoken Tokenizer
 
         ### Parameters
-        path: path to the tiktoken model.
+        - path: path to the tiktoken model.
         """
         import tiktoken
         from tiktoken.load import load_tiktoken_bpe
@@ -270,7 +325,7 @@ class TikTokenTokenizer(Tokenizer):
     def piece_to_id(self, piece: str) -> int:
         return piece
 
-    def encode(self, text: str, bos: int, eos: int) -> list[int]:
+    def encode(self, text: str, bos: int) -> list[int]:
         assert isinstance(text, str)
         subs = [
             text[i : i + self.TIKTOKEN_MAX_ENCODE_CHARS] for i in range(0, len(text), self.TIKTOKEN_MAX_ENCODE_CHARS)
@@ -282,8 +337,6 @@ class TikTokenTokenizer(Tokenizer):
         )
         if bos:
             t.insert(0, self.bos_id)
-        if eos:
-            t.append(self.eos_id)
         return t
 
     def decode(self, tokens: list[int]) -> str:
@@ -301,16 +354,16 @@ class TokenizerConfig:
     Tokenizer configuration
 
     ### Attributes
-    name: name of the tokenizer.
-    path: path to the tokenizer model.
-    bos_actor: list of actors for which to add bos token
-    eos_actor: list of actors for which to add eos token
+    - name: name of the tokenizer.
+    - path: path to the tokenizer model.
+    - bots: list of actors for which to add `begining of turn` token
+    - eod: whether to add an `end of dialog` token.
     """
 
     name: str
     path: str | None = None
-    bos_actor: list[Actor] = field(default_factory=lambda: [actor for actor in Actor])
-    eos_actor: list[Actor] = field(default_factory=list)
+    bots: list[Actor] = field(default_factory=lambda: [actor for actor in Actor])
+    eod: bool = True
 
     def __post_init__(self):
         assert self.name, "Tokenizer name is required."
@@ -323,16 +376,17 @@ def build_tokenizer(config: TokenizerConfig) -> Tokenizer:
     Build tokenizer based on the configuration.
 
     ### Parameters
-    config: tokenizer configuration.
+    - config: tokenizer configuration.
 
     ### Returns
-    tokenizer instance.
+    - tokenizer instance.
     """
-    bos_tokens = [f"bos_{actor}" for actor in config.bos_actor]
-    eos_tokens = [f"eos_{actor}" for actor in config.eos_actor]
+    special_tokens = [f"bot_{actor.value}" for actor in config.bots]
+    if config.eod:
+        special_tokens.append("eod")
 
     if config.name == ByteTokenizer.name:
-        tokenizer = ByteTokenizer(special_tokens=bos_tokens + eos_tokens)
+        tokenizer = ByteTokenizer(special_tokens=special_tokens)
 
     elif config.name == TikTokenTokenizer.name:
         tokenizer = TikTokenTokenizer(path=config.path)
@@ -340,7 +394,7 @@ def build_tokenizer(config: TokenizerConfig) -> Tokenizer:
     else:
         raise NotImplementedError(f"No implementation for tokenizer {config.name}")
 
-    bos = {actor: getattr(tokenizer, f"bos_{actor}") for actor in config.bos_actor}
-    eos = {actor: getattr(tokenizer, f"eos_{actor}") for actor in config.eos_actor}
+    bots: dict[Actor, int] = {actor: getattr(tokenizer, f"bot_{actor.value}") for actor in config.bots}
+    eod: int = getattr(tokenizer, "eod", 0)
 
-    return DialogTokenizer(tokenizer=tokenizer, bos=bos, eos=eos)
+    return DialogTokenizer(tokenizer=tokenizer, bots=bots, eod=eod)

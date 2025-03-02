@@ -288,7 +288,7 @@ class MultipleSourcesTokenGenerator(TokenLoader):
     ```
     """
 
-    def __init__(self, config: DataConfig, dp_mesh: DeviceMesh):
+    def __init__(self, config: DataConfig, dp_mesh: DeviceMesh = None):
         super().__init__()
 
         self.batch_size = config.batch_size
