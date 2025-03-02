@@ -37,6 +37,7 @@ If you want to install the development, visualization and mamba dependencies, yo
 pip install -e .[dev,ssm,visu]
 ```
 
+#### Mamba specific instructions
 For mamba, `causal_conv1d` can be a bit hard to load, as it is built upon environment variables that are not always set.
 If you are on a cluster utilizing `module`, you may want to set `CUDA_HOME` with
 ```bash
@@ -49,6 +50,19 @@ export LD_LIBRARY_PATH=$(python -c "import site; print(site.getsitepackages()[0]
 You can then try to install the package with `ssm` dependencies (namely `causal_conv1d` and `mamba_ssm`)
 ```bash
 pip install -e .[ssm]
+```
+
+#### Database specific instructions
+This codebase allows you to create an agent making call to a database with PostGresSQL.
+When installing our packing, the `database` option will try to install the `psycopg2` package.
+If you want to experiment with this part of the codebase, you need to make sure that you have postgresql installed on your machine.
+On MacOS, you may want to install it with `brew`:
+```bash
+brew install postgresql
+```
+Once PostGresSQL is installed, you may proceed with our package installation:
+```bash
+pip install -e .[database]
 ```
 
 ## Dataset creation

@@ -51,6 +51,10 @@ ssm = [
   "mamba_ssm",
 ]
 
+database = [
+  psycopg2
+]
+
 [tool.setuptools.packages.find]
 where = ["src"]
 exclude = ["src.apps"]
