@@ -1,15 +1,10 @@
+# This source code is licensed under the terms specified in the `LICENSE` file.
 """
 Asynchronous Dataloader wrapped around a Token Generator.
 
-Notes
------
+### Notes
 Ideally this should use PyTorch new data loading library, `torchdata`
 https://pytorch.org/data/beta/what_is_torchdata_nodes.html#why-torchdata-nodes
-
-License
--------
-This source code is licensed under the terms specified in the `LICENSE` file,
-located in the root directory of this repository.
 
 @ 2025, Meta
 """
@@ -67,8 +62,8 @@ class DataLoader(Stateful):
     Asynchronous Dataloader
 
     ### Parameters
-    config: configuration of the data loader.
-    generator: token loader to use to generate batches.
+    - config: configuration of the data loader.
+    - generator: token loader to use to generate batches.
 
     Usage:
     ```python

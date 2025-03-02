@@ -12,7 +12,7 @@ from torch.distributed.tensor.parallel import (
     parallelize_module,
 )
 
-from nanollama.model.transformer import (  # Replace 'your_module' with the actual module name
+from nanollama.model.transformer import (
     Transformer,
     TransformerBlockConfig,
     TransformerConfig,

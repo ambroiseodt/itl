@@ -1,9 +1,6 @@
+# This source code is licensed under the terms specified in the `LICENSE` file.
 """
 Create a SQLite database and populate it with data from a JSONL file.
-
-#### License
-This source code is licensed under the terms specified in the `LICENSE` file,
-located in the root directory of this repository.
 
 @ 2025, Meta
 """
@@ -11,7 +8,7 @@ located in the root directory of this repository.
 import json
 from pathlib import Path
 
-from src.nanollama.agents import SQLAgent
+from src.nanollama.agent import SQLAgent
 
 SAVE_DIR = Path(__file__).resolve().parent
 

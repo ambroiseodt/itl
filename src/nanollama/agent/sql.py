@@ -1,9 +1,6 @@
+# This source code is licensed under the terms specified in the `LICENSE` file.
 """
-SQL Agent
-
-#### License
-This source code is licensed under the terms specified in the `LICENSE` file,
-located in the root directory of this repository.
+Module defining a SQL Agent
 
 @ 2025, Meta
 """
@@ -12,7 +9,7 @@ import re
 import sqlite3
 from types import TracebackType
 
-from ..data.tokenizer import Actor
+from .actor import Actor
 
 NAME = "people"
 COLUMNS = ["name", "birth_date", "birth_place", "current_address", "occupation"]
@@ -60,6 +57,10 @@ class SQLAgent:
                 self.connection.commit()
             self.connection.close()
 
+    # --------------------------------------------------------------------------
+    # Database creation utilities
+    # --------------------------------------------------------------------------
+
     def create(self, name: str, columns: list[str]) -> None:
         """
         initialize the database by creating a table
@@ -103,6 +104,10 @@ class SQLAgent:
         for person in persons:
             self.insert_element(person)
 
+    # --------------------------------------------------------------------------
+    # Agentic behavior
+    # --------------------------------------------------------------------------
+
     def query(self, query: str, args: tuple[str]) -> list[tuple[str]]:
         """
         Execute a query and return the results.
@@ -116,10 +121,6 @@ class SQLAgent:
         except sqlite3.OperationalError as e:
             return [(str(e),)]
         return self.cursor.fetchall()
-
-    # --------------------------------------------------------------------------
-    # Agentic behavior
-    # --------------------------------------------------------------------------
 
     def execute(self, prompt: str) -> str:
         """

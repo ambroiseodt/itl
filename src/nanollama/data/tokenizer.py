@@ -1,54 +1,20 @@
+# This source code is licensed under the terms specified in the `LICENSE` file.
 """
-Tokenizers based on dialog environment
-
-#### License
-This source code is licensed under the terms specified in the `LICENSE` file,
-located in the root directory of this repository.
+Module providing tokenizers to cast dialog environments into lists of tokens
 
 @ 2025, Meta
 """
 
 from abc import ABC, abstractmethod
 from dataclasses import dataclass, field
-from enum import Enum
 from logging import getLogger
 
 import torch
 
+from ..agent import Actor
 from ..utils import initialize_nested_object
 
 logger = getLogger("nanollama")
-
-
-# ------------------------------------------------------------------------------
-# Classes for dialog environment
-# ------------------------------------------------------------------------------
-
-
-class Actor(str, Enum):
-    """
-    Potential interlocutor in a dialog, it could be:
-    - a `user` (i.e a human) asking a question
-    - an `assistant` (i.e. an LLM) answering
-
-    It may also be tools, in particular:
-    - a `database` providing response to a query
-    """
-
-    user = "user"
-    assistant = "assistant"
-    database = "database"
-
-
-@dataclass
-class Message:
-    """
-    A message is made of a content and a source.
-    It may be decorated in token space with some `begining of turn` and `end of dialog` tokens.
-    """
-
-    source: Actor
-    content: str
 
 
 # ------------------------------------------------------------------------------
@@ -58,8 +24,6 @@ class Message:
 
 class Tokenizer(ABC):
     """
-    Tokenizer
-
     ### Attributes
     - name: name of the tokenizer.
     - vocab_size: size of the vocabulary.
@@ -101,19 +65,31 @@ class Tokenizer(ABC):
 # ------------------------------------------------------------------------------
 
 
-class DialogTokenizer(Tokenizer):
+@dataclass
+class Message:
     """
-    Dialog Tokenizer
+    A dialog is made of a list of messages.
+    A message is made of a content and a source.
 
+    ### Parameters
+    - source: the actor that produced the message.
+    - content: the content of the message.
+    """
+
+    source: Actor
+    content: str
+
+
+class DialogTokenizer:
+    """
     ### Parameters
     - tokenizer: encoder and decoder from string to list of integers.
     - bots: dictionary mapping actors to `begin_of_turn` tags.
     - eod: token_id to put at the end of a dialog (if `eod != 0`).
     """
 
-    name = "dialog"
     bots: dict[Actor, int]
-    eod: bool
+    eod: int
 
     def __init__(self, tokenizer: Tokenizer, bots: dict[Actor, int], eod: int) -> None:
         self.tokenizer = tokenizer
@@ -175,6 +151,8 @@ class DialogTokenizer(Tokenizer):
         output = ""
         for token in tokens:
             output += self.decode_online(token, bot_char=bot_char)
+            if self.eod and token == self.eod:
+                break
         output += self.flush_decoding_buffer()
         return output
 

@@ -1,10 +1,6 @@
+# This source code is licensed under the terms specified in the `LICENSE` file.
 """
 Data utilities
-
-License
--------
-This source code is licensed under the terms specified in the `LICENSE` file,
-located in the root directory of this repository.
 
 @ 2025, Meta
 """
@@ -24,11 +20,11 @@ def generate_seeds(
 
     Parameters
     ----------
-    nb_shared: number of seeds shared across workers
-    nb_individual: number of seeds specific to each workers
-    root_seed: initial seed to spawn new seeds
-    rank: worker rank
-    world_size: total number of worker
+    - nb_shared: number of seeds shared across workers
+    - nb_individual: number of seeds specific to each workers
+    - root_seed: initial seed to spawn new seeds
+    - rank: worker rank
+    - world_size: total number of worker
     """
     nb_seeds = nb_shared + nb_individual * (rank + 1)
     seeds = SeedSequence(root_seed).spawn(nb_seeds)

@@ -1,10 +1,6 @@
+# This source code is licensed under the terms specified in the `LICENSE` file.
 """
 Training script with online generation of batch of data.
-
-License
--------
-This source code is licensed under the terms specified in the `LICENSE` file,
-located in the root directory of this repository.
 
 @ 2025, Meta
 """
@@ -42,7 +38,8 @@ from src.nanollama.optim import (
 )
 from src.nanollama.utils import initialize_nested_object
 
-tf.FLEX_ATTENTION = False
+# tf.FLEX_ATTENTION = False
+tf.FLEX_ATTENTION = True
 _logger = logging.getLogger("nanollama")
 
 

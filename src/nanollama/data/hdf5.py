@@ -1,9 +1,6 @@
+# This source code is licensed under the terms specified in the `LICENSE` file.
 """
 Dataloader from hdf5 file
-
-#### License
-This source code is licensed under the terms specified in the `LICENSE` file,
-located in the root directory of this repository.
 
 @ 2025, Meta
 """
@@ -48,7 +45,7 @@ class FileDataLoader(TokenLoader):
     Context manager for the data loader from file.
 
     ### Parameters
-    config: configuration of the data loader.
+    - config: configuration of the data loader.
     """
 
     def __init__(self, config: DataConfig):
@@ -145,7 +142,7 @@ class FileEvaluator(TokenLoader):
     Context manager for the evaluation data loader from file.
 
     ### Parameters
-    config: configuration of the data loader.
+    - config: configuration of the data loader.
     """
 
     def __init__(self, config: DataConfig):
@@ -166,13 +163,10 @@ class FileEvaluator(TokenLoader):
     def __enter__(self):
         return self
 
-    def __exit__(self, exc: type[BaseException], value: BaseException, tb: TracebackType):
-        pass
+    def __exit__(self, exc: type[BaseException], value: BaseException, tb: TracebackType): ...
 
     def batch_iterator(self) -> Generator[np.ndarray, None, None]:
-        """
-        Generate batches of sentences.
-        """
+        """Generate batches of sentences."""
         # iterate over batches
         end = self.start_ind
         while end < self.end_ind:

@@ -1,16 +1,13 @@
+# This source code is licensed under the terms specified in the `LICENSE` file.
 """
 Text loader
 
-#### License
-This source code is licensed under the terms specified in the `LICENSE` file,
-located in the root directory of this repository.
+#### Notes
+PyTorch introduces a new logic for dataloader with `torchdata`.
+The various classes defined in this modules are made to be cascaded.
+In `torchdata`, this logic will be replaced by operators applied to a single TorchData object to cascade operations.
 
 @ 2025, Meta
-
-#### NB
-PyTorch introduces a new logic for dataloader with `torchdata`.
-The various classes in this file are made to be cascaded.
-In `torchdata`, this logic will be replaced by operators applied to a single TorchData object to cascade operations.
 """
 
 import json
@@ -40,8 +37,8 @@ class SourceConfig:
     Text source configuration
 
     ### Attributes
-    path: path to text files
-    weight: weighting of the source in the datamix
+    - path: path to text files
+    - weight: weighting of the source in the datamix
     """
 
     path: str
@@ -57,13 +54,13 @@ class DataConfig:
     Data configuration for text data loader
 
     ### Attributes
-    source: corpus of text specification as a list of weighted sources
-    tokenizer: tokenizer configuration
-    batch_size: batch size
-    seq_len: sequence length
-    padding: whether to concatenate various sources into a sequence of tokens
-    asynchronous: whether to use asynchronous data loading
-    buffer_size: number of batches to bufferize asynchronously for data loading
+    - source: corpus of text specification as a list of weighted sources
+    - tokenizer: tokenizer configuration
+    - batch_size: batch size
+    - seq_len: sequence length
+    - padding: whether to concatenate various sources into a sequence of tokens
+    - asynchronous: whether to use asynchronous data loading
+    - buffer_size: number of batches to bufferize asynchronously for data loading
     """
 
     sources: list[SourceConfig]
@@ -87,16 +84,16 @@ class JSONLIterator(Stateful):
     Iterates over a JSON lines file, yielding a line every `world_size` lines
 
     ### Parameters
-    path: filepath
-    rank: rank of the worker
-    world_size: number of workers
-    loop: whether to loop over the file
+    - path: filepath
+    - rank: rank of the worker
+    - world_size: number of workers
+    - loop: whether to loop over the file
 
     ### Attributes
-    position: current position in the file
-    line_num: current line number
-    generator: generator that yields lines
-    loop: current loop number (useful to check how many times data were seen)
+    - position: current position in the file
+    - line_num: current line number
+    - generator: generator that yields lines
+    - loop: current loop number (useful to check how many times data were seen)
 
     ### Example
     ```python
@@ -177,19 +174,19 @@ class SingleSourceTokenGenerator(TokenLoader):
     Yield batches of tokens with shape `bsz x seq_len`.
 
     ### Parameters
-    config: data configuration
-    iterator: sequence (string) iterator
-    tokenizer: tokenizer
+    - config: data configuration
+    - iterator: sequence (string) iterator
+    - tokenizer: tokenizer
 
     ### Attributes
-    tokens: list of tokens that have not populated a batch yet
-    mask: list of specifying tokens produced by the LLM assistant
-    bsz: batch size
-    seq_len: sequence length
-    padding: whether to pad sequences
+    - tokens: list of tokens that have not populated a batch yet
+    - mask: list of specifying tokens produced by the LLM assistant
+    - bsz: batch size
+    - seq_len: sequence length
+    - padding: whether to pad sequences
 
     ### Methods
-    set_batch_size: modify the batch size of the generator
+    - set_batch_size: modify the batch size of the generator
 
     ### Example
     ```python
@@ -223,7 +220,7 @@ class SingleSourceTokenGenerator(TokenLoader):
         Modify the batch size of the generator
 
         ### Parameters
-        batch_size: new batch size
+        - batch_size: new batch size
         """
         self.batch_size = batch_size
         self.tokens_per_batch = self.batch_size * self.seq_len
@@ -273,12 +270,12 @@ class MultipleSourcesTokenGenerator(TokenLoader):
     Generate token from multiple single source iterators according to some weight.
 
     ### Parameters
-    config: data configuration
+    - config: data configuration
 
     ### Attributes
-    generators: list of single source token generators
-    weights: weights of the different sources in the datamix
-    rng: random number generator
+    - generators: list of single source token generators
+    - weights: weights of the different sources in the datamix
+    - rng: random number generator
 
     ### Example
     ```python
