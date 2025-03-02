@@ -50,21 +50,28 @@ class QueuedBatchedInference:
     def __exit__(self, exc: type[BaseException], value: BaseException, tb: TracebackType):
         self.agent.__exit__(exc, value, tb)
 
-    def generate(self, prompts: list[str]) -> list[str]:
+    def generate(self, prompts: list[str], max_len: int = None) -> list[str]:
         """
         Generate completions for the given prompts.
 
         ### Parameters
         - prompts: list of prompts
+        - max_len: maximum length of the dialog (completion and prompt)
 
         ### Returns
         - output: list of completions
         """
+        # parse arguments
+        if max_len is None:
+            max_len = getattr(self.model, "seq_len", torch.inf)
+
         # aliases
         bot2actor = self.tokenizer.bot2actor
         decode = self.tokenizer.tokenizer.decode
         encode = self.tokenizer.tokenizer.encode
         assistant = self.tokenizer.bots[Actor.assistant]
+        eod = self.tokenizer.eod
+        eod = eod if eod > 0 else None
 
         # prepare generation
         x = self.build_batch(prompts)
@@ -73,8 +80,9 @@ class QueuedBatchedInference:
 
         output = []
         buffers = [[] for _ in prompts]
+        ongoing = torch.ones(bsz, dtype=torch.bool, device=self.device)
 
-        while total_len < self.model.seq_len:
+        while total_len < max_len and ongoing.any():
             preds = self.model(x)
             x = preds[:, -1:].argmax(dim=-1)
 
@@ -102,6 +110,10 @@ class QueuedBatchedInference:
                     # and call assistant turn
                     self.queue[i].append(assistant)
 
+                # check for end of dialog token
+                if token == eod:
+                    ongoing[i] = False
+
             total_len += 1
             output.append(x)
 
@@ -122,12 +134,12 @@ class QueuedBatchedInference:
         data = [self.encode_prompt(prompt) for prompt in prompts]
         bsz = len(data)
         seq_len = min([len(datum) for datum in data])
-        dtype, device = torch.long, self.model.device
+        dtype, device = torch.long, self.device
 
         x = torch.zeros((bsz, seq_len), dtype=dtype, device=device)
         self.queue = [[] for _ in prompts]
         for i, datum in enumerate(data):
-            x[i, :seq_len] = datum[:seq_len]
+            x[i, :seq_len] = torch.tensor(datum[:seq_len], dtype=dtype, device=device)
             self.queue[i] = datum[seq_len:]
         return x
 

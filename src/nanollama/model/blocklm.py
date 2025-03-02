@@ -25,10 +25,6 @@ class BlockModel(nn.Module, ABC):
     """
 
     @abstractmethod
-    def forward(self, x: torch.Tensor) -> torch.Tensor:
-        pass
-
-    @abstractmethod
     def get_nb_flop(self, mode: str = "both", **kwargs) -> None:
         """
         Number of flop to process a new token
@@ -36,7 +32,7 @@ class BlockModel(nn.Module, ABC):
         ### Parameters
         - mode: whether to consider the forward, backward pass or both
         """
-        pass
+        ...
 
     @abstractmethod
     def weight_initialization(self, init_std: float, factor: float) -> None:
@@ -46,8 +42,12 @@ class BlockModel(nn.Module, ABC):
         ### Parameters
         - init_std: standard deviation of the initialization
         - factor: scaling factor for the output layer
+
+        ### Notes
+        The nomenclature `weight_initialization` is used to initialize of all sub-modules.
+        The nomeclature `reset_parameters` is used to solely initialize the parameters specific to the module.
         """
-        pass
+        ...
 
 
 @dataclass
@@ -80,7 +80,7 @@ class BlockLanguageModelConfig:
                 module.__check_init__()
 
 
-class BlockLanguageModel(nn.Module):
+class BlockLanguageModel(ABC, nn.Module):
     """
     Language model based on block acting in an embedding space.
     """
@@ -151,6 +151,10 @@ class BlockLanguageModel(nn.Module):
         ### Parameters
         - init_std: standard deviation of the initialization
         - factor: scaling factor for the output layer
+
+        ### Notes
+        The nomenclature `weight_initialization` is used to initialize of all sub-modules.
+        The nomeclature `reset_parameters` is used to solely initialize the parameters specific to the module.
         """
         self.reset_parameters(init_std, factor)
         # layers
@@ -176,3 +180,20 @@ class BlockLanguageModel(nn.Module):
         """
         mode_multiplier = dict(fwd=1, bwd=2.5, both=3.5)[mode]
         return 0 * mode_multiplier
+
+    @abstractmethod
+    def build_cache(self, bsz: int) -> None:
+        """
+        Build model cache for autoregressive inference
+
+        ### Parameters
+        - bsz: batch size
+        """
+        ...
+
+    @abstractmethod
+    def delete_cache(self) -> None:
+        """
+        Delete model cache
+        """
+        ...

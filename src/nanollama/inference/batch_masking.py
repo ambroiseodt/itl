@@ -77,7 +77,7 @@ class MaskedBatchedInference:
         data = [self.encode_prompt(prompt) for prompt in prompts]
         bsz = len(data)
         seq_len = max([len(datum) for datum in data])
-        dtype, device = torch.long, self.model.device
+        dtype, device = torch.long, self.device
 
         x = torch.zeros((bsz, seq_len), dtype=dtype, device=device)
         self.batch_offset = torch.zeros(bsz, dtype=torch.long, device=device)
