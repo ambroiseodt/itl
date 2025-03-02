@@ -407,7 +407,7 @@ class Transformer(BlockLanguageModel):
     # KV Cache utilities
     # --------------------------------------------------------------------------
 
-    def build_kv_cache(self, bsz: int = None) -> None:
+    def build_cache(self, bsz: int = None) -> None:
         """
         Build key-value caches for inference.
 

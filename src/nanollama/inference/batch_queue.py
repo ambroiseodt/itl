@@ -69,7 +69,7 @@ class QueuedBatchedInference:
         # prepare generation
         x = self.build_batch(prompts)
         bsz, total_len = x.size()
-        self.model.build_kv_cache(bsz)
+        self.model.build_cache(bsz)
 
         output = []
         buffers = [[] for _ in prompts]

@@ -14,7 +14,7 @@ import unittest
 import torch
 import yaml
 
-from nanollama.inference.batch_masking import MaskedBatchedInference
+from nanollama.inference import MaskedBatchedInference
 from nanollama.model import Transformer, TransformerConfig
 from nanollama.utils import initialize_nested_object
 
@@ -44,7 +44,7 @@ class TestGeneration(unittest.TestCase):
         # Generation token by token
         x = self.data
         bsz, seq_len = x.size()
-        self.model.build_kv_cache(bsz)
+        self.model.build_cache(bsz)
         preds, seq = [], x
         with torch.inference_mode():
             while seq_len <= 32:
@@ -67,7 +67,7 @@ class TestGeneration(unittest.TestCase):
         # Generation in parallel
         x = self.data
         bsz, seq_len = x.size()
-        self.model.build_kv_cache(bsz)
+        self.model.build_cache(bsz)
         preds = []
         with torch.inference_mode():
             while seq_len <= 32:
@@ -81,7 +81,7 @@ class TestGeneration(unittest.TestCase):
         new_preds = []
         for x in self.data:
             x = x.unsqueeze(0)
-            self.model.build_kv_cache(1)
+            self.model.build_cache(1)
             seq_len = x.size(1)
             new_pred = []
             with torch.inference_mode():
@@ -131,7 +131,7 @@ class TestGeneration(unittest.TestCase):
         ref_completion = inference_engine.generate([prompts[0]])[0]
 
         # without batch inference
-        self.model.build_kv_cache(1)
+        self.model.build_cache(1)
         x = data[:1, : prefix_lens[0]]
         seq = []
         with torch.inference_mode():
