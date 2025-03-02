@@ -3,9 +3,8 @@
 - Get some curves of accuracy when training with the tool use, or without. and write some visualization notebooks/scripts to get plots out of many experimental logs.
 
 #### Vivien's current todo:
-- Agentic interaction:
-    - continue the LLM generation once the agent has answered.
-    - make a `agent_generate.py` file in the memory apps to generate text with the agent.
+- Separate the code for inference with LLM from the Transformer class, as there are no unique (nor best) way to proceed.
+- Make a `agent_eval.py` file in the memory apps to evaluate text generate with tool-use.
 - Generation.
     - Write inference loop logic, as well as sampling strategies.
 
