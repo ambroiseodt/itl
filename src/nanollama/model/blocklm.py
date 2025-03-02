@@ -104,6 +104,14 @@ class BlockLanguageModel(nn.Module):
 
         self.weight_initialization(config.init_std, factor=1.0)
 
+    @property
+    def device(self) -> torch.device:
+        return self.embeddings.weight.device
+
+    @property
+    def dtype(self) -> torch.dtype:
+        return self.embeddings.weight.dtype
+
     @torch.inference_mode()
     def reset_parameters(self, init_std: float, factor: float) -> None:
         """

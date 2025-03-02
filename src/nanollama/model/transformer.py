@@ -351,9 +351,6 @@ class Transformer(BlockLanguageModel):
         # default mask for pretraining
         self.default_mask: BlockMask
 
-        # default device to initialize flex attention masks
-        self.default_device = torch.device("cuda" if torch.cuda.is_available() else "cpu")
-
         # inference attributes
         self.kv_caches: list[KVCache]
         self.batch_offset: torch.Tensor
@@ -397,17 +394,13 @@ class Transformer(BlockLanguageModel):
             return None
 
         seq_len = x.size(1)
-        device = x.device
 
         # if at inference time,
         if self.kv_caches[0] is not None:
-            mask = self._build_inference_mask(seq_len)
+            return self._build_inference_mask(seq_len)
 
         # else at pretraining
-        else:
-            mask = self._build_pretraining_mask(seq_len).to(device)
-
-        return mask.to(device) if mask is not None else None
+        return self._build_pretraining_mask(seq_len)
 
     @staticmethod
     def _causal_mask(b: int, h: int, q_idx: int, kv_idx: int) -> bool:
@@ -436,7 +429,7 @@ class Transformer(BlockLanguageModel):
         seq_len = seq_len or self.seq_len
 
         # build default causal mask
-        self.default_mask = create_block_mask(self._causal_mask, None, None, seq_len, seq_len, device=self.default_device)
+        self.default_mask = create_block_mask(self._causal_mask, None, None, seq_len, seq_len, device=self.device)
 
         # Reset inference attributes.
         self.kv_caches = [None for _ in range(len(self.layers))]
@@ -444,7 +437,6 @@ class Transformer(BlockLanguageModel):
 
     def _build_pretraining_mask(self, seq_len: int) -> BlockMask:
         # TODO: add option for dialog masks that break causality for non-assistant turns
-
         # save overhead if no mask is needed
         if seq_len == 1:
             return None
@@ -453,7 +445,7 @@ class Transformer(BlockLanguageModel):
             return self.default_mask
 
         # TODO ideally, we would simply adjust the default mask, but this does not seem to work at time of writting
-        return create_block_mask(self._causal_mask, None, None, seq_len, seq_len, device=self.default_device)
+        return create_block_mask(self._causal_mask, None, None, seq_len, seq_len, device=self.device)
 
     # --------------------------------------------------------------------------
     # Inference utilities
@@ -498,13 +490,11 @@ class Transformer(BlockLanguageModel):
         - bsz: batch size
         """
         cache_size = (bsz, self.nb_kv_heads, self.seq_len, self.head_dim)
-        dtype = self.embeddings.weight.dtype
-        device = self.embeddings.weight.device
         for i, cache in enumerate(self.kv_caches):
             if cache is None or cache.key.size() != cache_size:
                 self.kv_caches[i] = KVCache(
-                    torch.zeros(cache_size, dtype=dtype, device=device),
-                    torch.zeros(cache_size, dtype=dtype, device=device),
+                    torch.zeros(cache_size, dtype=self.dtype, device=self.device),
+                    torch.zeros(cache_size, dtype=self.dtype, device=self.device),
                 )
             else:
                 cache.reset()
@@ -529,7 +519,9 @@ class Transformer(BlockLanguageModel):
 
         # prefilling
         if cur_len == 0:
-            return create_block_mask(and_masks(self._doc_mask, self._causal_mask), bsz, None, seq_len, seq_len)
+            return create_block_mask(
+                and_masks(self._doc_mask, self._causal_mask), bsz, None, seq_len, seq_len, device=self.device
+            )
 
         # online generation
         assert seq_len - cur_len == 1, "only one token can be generated at a time"
@@ -538,4 +530,4 @@ class Transformer(BlockLanguageModel):
         if (self.batch_offset == 0).all():
             return None
 
-        return create_block_mask(self._doc_mask, bsz, None, 1, seq_len)
+        return create_block_mask(self._doc_mask, bsz, None, 1, seq_len, device=self.device)
