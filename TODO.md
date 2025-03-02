@@ -3,7 +3,6 @@
 - Get some curves of accuracy when training with the tool use, or without. and write some visualization notebooks/scripts to get plots out of many experimental logs.
 
 #### Vivien's current todo:
-- Code the `batch_queue` class.
 - Make a `agent_eval.py` file in the memory apps to evaluate text generate with tool-use.
 - Generation.
     - Write inference loop logic, as well as sampling strategies.
