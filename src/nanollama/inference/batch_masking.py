@@ -1,8 +1,11 @@
 # This source code is licensed under the terms specified in the `LICENSE` file.
 """
-Generate completions in parallel with a attention masking mechanism when lengths differs.
+Module to generate completions in parallel with a attention masking mechanism when lengths differs.
 
 @ 2025, Meta
+
+### Notes
+This implementation does not support agent calls.
 """
 
 import torch
