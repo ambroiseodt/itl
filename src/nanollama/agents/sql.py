@@ -8,25 +8,43 @@ located in the root directory of this repository.
 @ 2025, Meta
 """
 
+import re
 import sqlite3
 from types import TracebackType
 
+from ..data.tokenizer import Actor
 
-class SQLiteDB:
-    def __init__(self, db_path: str, name: str = "", columns: list[str] = None):
-        """
-        Initialize the SQLiteDB with the path to the database file.
+NAME = "people"
+COLUMNS = ["name", "birth_date", "birth_place", "current_address", "occupation"]
 
-        ### Parameters
-        - db_path: the path to the SQLite database file
-        - name: the name of the table
-        - columns: a list of column names
-        """
+
+class SQLAgent:
+    """
+    SQL agent based on sqlite3.
+
+    ### Parameters
+    - db_path: the path to the SQLite database file
+    - name: the name of the table
+    - columns: a list of column names
+
+    ### Attributes
+    - pattern: the pattern to extract SQL queries `(```sql ... ```)`
+    - llm_query: the format of the LLM query (`FIND ... FOR ...`)
+    - sql_query: the format of the SQL query (`SELECT ... FROM ...`)
+    - actor: the `source` associated with the agent
+    """
+
+    pattern = r"```sql\n(.*?)\n```"
+    llm_query = r"FIND (\w+) FOR (.+)"
+    sql_query = r"SELECT {attribute} FROM people WHERE name = ?"
+    actor = Actor.database
+
+    def __init__(self, db_path: str, name: str = NAME, columns: list[str] = None):
         self.db_path = db_path
         self.connection = None
         self.cursor = None
 
-        self.columns = [] if columns is None else columns
+        self.columns = COLUMNS if columns is None else columns
         self.name = name
 
     def __enter__(self):
@@ -85,7 +103,48 @@ class SQLiteDB:
         for person in persons:
             self.insert_element(person)
 
-    def query(self, prompt: str) -> list[tuple[str]]:
-        """Execute a query and return the results."""
-        self.cursor.execute(prompt)
+    def query(self, query: str, args: tuple[str]) -> list[tuple[str]]:
+        """
+        Execute a query and return the results.
+
+        ### Parameters
+        - query: the SQL query to execute (e.g., "SELECT * FROM table")
+        - args: arguments to pass to the query (useful to avoid SQL injection)
+        """
+        try:
+            self.cursor.execute(query, args)
+        except sqlite3.OperationalError as e:
+            return [(str(e),)]
         return self.cursor.fetchall()
+
+    # --------------------------------------------------------------------------
+    # Agentic behavior
+    # --------------------------------------------------------------------------
+
+    def execute(self, prompt: str) -> str:
+        """
+        Answer a LLM prompt by parsing instruction, executing them, and answering the LLM in text space.
+
+        In our setting the instruction are not SQL query, but in a simpler language.
+        This is useful to avoid SQL injection.
+
+        ### Parameters
+        - prompt: the prompt to execute
+
+        ### Returns
+        - answer: agent response
+        """
+        instructions = re.findall(self.pattern, prompt, re.DOTALL)
+        res = []
+        for instruction in instructions:
+            groups = re.match(self.llm_query, instruction)
+            attribute = groups.group(1)
+            name = groups.group(2)
+            query = self.sql_query.format(attribute=attribute)
+            query_res = self.query(query, (name,))
+            res.extend([row[0] for row in query_res])
+
+        answer = ", ".join(res)
+        if not answer:
+            answer = "No result found"
+        return answer

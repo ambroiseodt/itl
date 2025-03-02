@@ -1,9 +1,6 @@
+# Copyright (c) Meta Platforms, Inc. and affiliates.
 """
-Module registering agents that the LLM can interact with.
-
-#### License
-This source code is licensed under the terms specified in the `LICENSE` file,
-located in the root directory of this repository.
-
-@ 2025, Meta
+Module registering agents that a LLM can interact with.
 """
+
+from .sql import SQLAgent
