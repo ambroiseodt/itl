@@ -351,6 +351,9 @@ class Transformer(BlockLanguageModel):
         # default mask for pretraining
         self.default_mask: BlockMask
 
+        # default device to initialize flex attention masks
+        self.default_device = torch.device("cuda" if torch.cuda.is_available() else "cpu")
+
         # inference attributes
         self.kv_caches: list[KVCache]
         self.batch_offset: torch.Tensor
@@ -433,7 +436,7 @@ class Transformer(BlockLanguageModel):
         seq_len = seq_len or self.seq_len
 
         # build default causal mask
-        self.default_mask = create_block_mask(self._causal_mask, None, None, seq_len, seq_len)
+        self.default_mask = create_block_mask(self._causal_mask, None, None, seq_len, seq_len, device=self.default_device)
 
         # Reset inference attributes.
         self.kv_caches = [None for _ in range(len(self.layers))]
@@ -450,7 +453,7 @@ class Transformer(BlockLanguageModel):
             return self.default_mask
 
         # TODO ideally, we would simply adjust the default mask, but this does not seem to work at time of writting
-        return create_block_mask(self._causal_mask, None, None, seq_len, seq_len)
+        return create_block_mask(self._causal_mask, None, None, seq_len, seq_len, device=self.default_device)
 
     # --------------------------------------------------------------------------
     # Inference utilities
