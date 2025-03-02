@@ -424,18 +424,8 @@ class Transformer(BlockLanguageModel):
                 for _ in range(len(self.layers))
             ]
         else:
-            self.reset_cache(verbose=False)
-
-    def reset_cache(self, verbose: bool = True) -> None:
-        """
-        Delete key-value caches.
-        """
-        if self.kv_caches[0] is None:
-            raise ValueError("KV cache is not initialized")
-        if verbose:
-            logger.info("Reseting KV cache, make sure to keep similar batch size in future call")
-        for cache in self.kv_caches:
-            cache.reset()
+            for cache in self.kv_caches:
+                cache.reset()
 
     def delete_cache(self) -> None:
         """
