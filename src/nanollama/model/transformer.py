@@ -21,7 +21,7 @@ from logging import getLogger
 import torch
 import torch.nn as nn
 import torch.nn.functional as F
-from torch.nn.attention.flex_attention import BlockMask, and_masks, create_block_mask, flex_attention
+from torch.nn.attention.flex_attention import BlockMask, create_block_mask, flex_attention
 
 from .blocklm import BlockLanguageModel, BlockLanguageModelConfig, BlockModel
 from .feedforward import FeedForward
@@ -351,23 +351,20 @@ class Transformer(BlockLanguageModel):
         # default mask for pretraining
         self.default_mask: BlockMask = None
 
-        # inference attributes
-        self.kv_caches: list[KVCache] = None
-        self.batch_offset: torch.Tensor = None
+        # kv caches
+        self.kv_caches: list[KVCache] = [None for _ in self.layers]
 
-    def forward(self, x: torch.Tensor) -> torch.Tensor:
+    def forward(self, x: torch.Tensor, mask: BlockMask | None = None) -> torch.Tensor:
         """
         Forward pass of the transformer.
 
         ### Parameters
         - x: input tensor
+        - mask: attention mask (if using FlexAttention)
         """
-        # initialize caches during the first call to ensure device compatibility
-        if self.kv_caches is None:
-            self.setup_training()
-
-        # retrieve mask for this batch
-        mask = self._get_mask(x)
+        # retrieve flex attention mask if needed
+        if mask is None:
+            mask = self._build_mask(x.size(1))
 
         # forward pass
         out = self.embeddings(x)
@@ -380,110 +377,35 @@ class Transformer(BlockLanguageModel):
     # Flex Attention mask utilities
     # --------------------------------------------------------------------------
 
-    def _get_mask(self, x: torch.Tensor) -> BlockMask:
+    def _build_mask(self, seq_len: int) -> BlockMask:
         """
-        Build attention mask for the input tensor.
+        Retrieve attention mask if needed.
 
         ### Parameters
-        - x: input tensor
+        - seq_len: sequence length
 
         ### Returns
         - mask: attention mask
         """
-        # mask if only used for flex attention
-        if not FLEX_ATTENTION:
-            if self.kv_caches[0] is not None:
-                assert (self.batch_offset == 0).all(), "flex attention is required for heterogeneous batched inference."
-            return None
+        if not FLEX_ATTENTION or seq_len == 1:
+            return
 
-        seq_len = x.size(1)
+        if seq_len == self.seq_len:
+            if self.default_mask is None:
+                self.default_mask = create_block_mask(
+                    self._causal_mask, None, None, seq_len, seq_len, device=self.device
+                )
+            return self.default_mask
 
-        # if at inference time,
-        if self.kv_caches[0] is not None:
-            return self._build_inference_mask(seq_len)
-
-        # else at pretraining
-        return self._build_pretraining_mask(seq_len)
+        return create_block_mask(self._causal_mask, None, None, seq_len, seq_len, device=self.device)
 
     @staticmethod
     def _causal_mask(b: int, h: int, q_idx: int, kv_idx: int) -> bool:
         return q_idx >= kv_idx
 
-    def _doc_mask(self, b: int, h: int, q_idx: int, kv_idx: int) -> bool:
-        return kv_idx >= self.batch_offset[b]
-
     # --------------------------------------------------------------------------
-    # Training utilities
+    # KV Cache utilities
     # --------------------------------------------------------------------------
-
-    def setup_training(self, seq_len: int = None) -> tuple[torch.Tensor, torch.Tensor]:
-        """
-        Setup FlexAttention masks and reset inference attributes.
-
-        ### Parameters
-        - data: list of input tensors corresponding to many prompts of various lengths
-
-        ### Returns
-        - x: shifted prompts
-
-        ### Modified attributes
-        - default_mask: default `document` mask for inference
-        """
-        seq_len = seq_len or self.seq_len
-
-        # build default causal mask
-        self.default_mask = create_block_mask(self._causal_mask, None, None, seq_len, seq_len, device=self.device)
-
-        # Reset inference attributes.
-        self.kv_caches = [None for _ in range(len(self.layers))]
-        self.batch_offset = None
-
-    def _build_pretraining_mask(self, seq_len: int) -> BlockMask:
-        # TODO: add option for dialog masks that break causality for non-assistant turns
-        # save overhead if no mask is needed
-        if seq_len == 1:
-            return None
-
-        if seq_len == self.seq_len:
-            return self.default_mask
-
-        # TODO ideally, we would simply adjust the default mask, but this does not seem to work at time of writting
-        return create_block_mask(self._causal_mask, None, None, seq_len, seq_len, device=self.device)
-
-    # --------------------------------------------------------------------------
-    # Inference utilities
-    # --------------------------------------------------------------------------
-
-    def setup_inference(self, data: list[torch.Tensor]) -> torch.Tensor:
-        """
-        Merge prompt together for the LLM to process them in parallel, and setup caches.
-
-        ### Parameters
-        - data: list of input tensors corresponding to many prompts of various lengths
-
-        ### Returns
-        - x: shifted prompts
-
-        ### Modified attributes
-        - kv_caches: list of key-value caches
-        - batch_offset: list of padding offset for each prompt
-        """
-        assert len(data) > 0, "no data provided"
-        bsz = len(data)
-        seq_len = max(len(d) for d in data)
-        dtype, device = data[0].dtype, data[0].device
-
-        # fill in input tensor while remembering document offsets
-        x = torch.zeros((bsz, seq_len), dtype=dtype, device=device)
-        self.batch_offset = torch.zeros(bsz, dtype=torch.long, device=device)
-        for i, datum in enumerate(data):
-            x[i, -len(datum) :] = datum
-            self.batch_offset[i] = seq_len - len(datum)
-
-        # build kv cache
-        self.build_kv_cache(bsz)
-
-        return x
 
     def build_kv_cache(self, bsz: int = None) -> None:
         """
@@ -493,7 +415,7 @@ class Transformer(BlockLanguageModel):
         - bsz: batch size
         """
         cache_size = (bsz, self.nb_kv_heads, self.seq_len, self.head_dim)
-        if self.kv_caches is None or self.kv_caches[0] is None or self.kv_caches[0].key.size() != cache_size:
+        if self.kv_caches[0] is None or self.kv_caches[0].key.size() != cache_size:
             self.kv_caches = [
                 KVCache(
                     torch.zeros(cache_size, dtype=self.dtype, device=self.device),
@@ -502,38 +424,21 @@ class Transformer(BlockLanguageModel):
                 for _ in range(len(self.layers))
             ]
         else:
-            for cache in self.kv_caches:
-                cache.reset()
+            self.reset_kv_cache(verbose=False)
 
-    def _build_inference_mask(self, seq_len: int = 1) -> BlockMask:
+    def reset_kv_cache(self, verbose: bool = True) -> None:
         """
-        Build attention masks for inference, ensuring that attention do not attend to padded tokens.
-
-        ### Parameters
-        - seq_len: sequence length currently processed
-
-        ### Attributes
-        - mask: attention mask
-
-        ### Notes
-        Ideally, we would precomputed a big document mask, and a big causal mask, and simply adjust them.
-        However, at time of writting, flex attention does not seem to allow it.
+        Delete key-value caches.
         """
-        cur_len = self.kv_caches[0].pos_idx
-        bsz = len(self.batch_offset)
-        seq_len = cur_len + seq_len
+        if self.kv_caches[0] is None:
+            raise ValueError("KV cache is not initialized")
+        if verbose:
+            logger.info("Reseting KV cache, make sure to keep similar batch size in future call")
+        for cache in self.kv_caches:
+            cache.reset()
 
-        # prefilling
-        if cur_len == 0:
-            return create_block_mask(
-                and_masks(self._doc_mask, self._causal_mask), bsz, None, seq_len, seq_len, device=self.device
-            )
-
-        # online generation
-        assert seq_len - cur_len == 1, "only one token can be generated at a time"
-
-        # save overhead if no mask is needed
-        if (self.batch_offset == 0).all():
-            return None
-
-        return create_block_mask(self._doc_mask, bsz, None, 1, seq_len, device=self.device)
+    def delete_kv_cache(self) -> None:
+        """
+        Delete key-value caches.
+        """
+        self.kv_caches = [None for _ in self.layers]
