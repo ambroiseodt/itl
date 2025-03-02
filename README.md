@@ -62,7 +62,7 @@ python -m apps.memory.dataset.generate qa --tooluse --num 100
 ```
 To format the database as a SQLlite database, run the following command
 ```bash
-python -m apps.memory.dataset.sql_db create
+python -m apps.memory.dataset.database create
 ```
 
 ## Training
