@@ -481,11 +481,11 @@ class Transformer(BlockLanguageModel):
             self.batch_offset[i] = seq_len - len(datum)
 
         # build kv cache
-        self._build_kv_cache(bsz)
+        self.build_kv_cache(bsz)
 
         return x
 
-    def _build_kv_cache(self, bsz: int = None) -> None:
+    def build_kv_cache(self, bsz: int = None) -> None:
         """
         Build key-value caches for inference.
 
