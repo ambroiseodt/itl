@@ -6,10 +6,8 @@ Todo:
 
 Vivien's todo:
 - Agentic interaction:
-    - write a simple script that do the interaction with a mock SQL agent.
-    - implement a SQL agent module.
-    - make a class that deal with the generation at a more abstract level / or an agentic app (in the `apps` folder).
-        - tooluse mechanism: regex in token space for database BoS, parsing of previous message, anwser, end of generation.
+    - continue the LLM generation once the agent has answered.
+    - make a `agent_generate.py` file in the memory apps to generate text with the agent.
 - Generation.
     - Write inference loop logic, as well as sampling strategies.
 - Show how to run a grid with a grid.yaml configuration.
@@ -24,6 +22,7 @@ Other stuffs for Vivien's
 - Option to remove the tokenizer mask when doing pure pretraining.
 - Change mask so that the LLM can have non-causal interaction between tokens that it has not generated.
 - Improve logging in the train loop, and add visualization of training logs.
+- Improve the docstring at module level (the ones at the start of files).
 
 Ambroise's ideas:
 - For scaling plot of [Physics of Language Models: Part 3.3](https://arxiv.org/pdf/2404.05405), could we plot contourlines to take the performance into account?
