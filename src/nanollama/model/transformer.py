@@ -493,13 +493,16 @@ class Transformer(BlockLanguageModel):
         - bsz: batch size
         """
         cache_size = (bsz, self.nb_kv_heads, self.seq_len, self.head_dim)
-        for i, cache in enumerate(self.kv_caches):
-            if cache is None or cache.key.size() != cache_size:
-                self.kv_caches[i] = KVCache(
+        if self.kv_caches is None or self.kv_caches[0] is None or self.kv_caches[0].key.size() != cache_size:
+            self.kv_caches = [
+                KVCache(
                     torch.zeros(cache_size, dtype=self.dtype, device=self.device),
                     torch.zeros(cache_size, dtype=self.dtype, device=self.device),
                 )
-            else:
+                for _ in range(len(self.layers))
+            ]
+        else:
+            for cache in self.kv_caches:
                 cache.reset()
 
     def _build_inference_mask(self, seq_len: int = 1) -> BlockMask:
