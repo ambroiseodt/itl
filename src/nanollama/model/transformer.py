@@ -387,20 +387,24 @@ class Transformer(BlockLanguageModel):
         ### Returns
         - mask: attention mask
         """
-        bsz, seq_len = x.size()
-        device = x.device
-
-        if bsz == seq_len == 1:
+        # mask if only used for flex attention
+        if not FLEX_ATTENTION:
+            if self.kv_caches[0] is not None:
+                assert (self.batch_offset == 0).all(), "flex attention is required for heterogeneous batched inference."
             return None
+
+        seq_len = x.size(1)
+        device = x.device
 
         # if at inference time,
         if self.kv_caches[0] is not None:
-            return self._build_inference_mask(seq_len).to(device)
+            mask = self._build_inference_mask(seq_len)
 
         # else at pretraining
-        if seq_len == 1:
-            return None
-        return self._build_pretraining_mask(seq_len).to(device)
+        else:
+            mask = self._build_pretraining_mask(seq_len).to(device)
+
+        return mask.to(device) if mask is not None else None
 
     @staticmethod
     def _causal_mask(b: int, h: int, q_idx: int, kv_idx: int) -> bool:
@@ -437,11 +441,16 @@ class Transformer(BlockLanguageModel):
 
     def _build_pretraining_mask(self, seq_len: int) -> BlockMask:
         # TODO: add option for dialog masks that break causality for non-assistant turns
+
+        # save overhead if no mask is needed
+        if seq_len == 1:
+            return None
+
         if seq_len == self.seq_len:
             return self.default_mask
-        else:
-            # return self.default_mask._adjust(seq_len, seq_len) # this did not work at time of writting
-            return create_block_mask(self._causal_mask, None, None, seq_len, seq_len)
+
+        # TODO ideally, we would simply adjust the default mask, but this does not seem to work at time of writting
+        return create_block_mask(self._causal_mask, None, None, seq_len, seq_len)
 
     # --------------------------------------------------------------------------
     # Inference utilities
@@ -506,14 +515,11 @@ class Transformer(BlockLanguageModel):
 
         ### Attributes
         - mask: attention mask
+
+        ### Notes
+        Ideally, we would precomputed a big document mask, and a big causal mask, and simply adjust them.
+        However, at time of writting, flex attention does not seem to allow it.
         """
-        if not FLEX_ATTENTION:
-            assert len(self.batch_offset) == 1, "flex attention is required for batched inference"
-
-        # ... work around for flex attention building mask on gpu
-        if self.batch_offset.device.type == "cpu":
-            self.batch_offset = self.batch_offset.cuda()
-
         cur_len = self.kv_caches[0].pos_idx
         bsz = len(self.batch_offset)
         seq_len = cur_len + seq_len
@@ -522,6 +528,11 @@ class Transformer(BlockLanguageModel):
         if cur_len == 0:
             return create_block_mask(and_masks(self._doc_mask, self._causal_mask), bsz, None, seq_len, seq_len)
 
-        # continuing generation
+        # online generation
         assert seq_len - cur_len == 1, "only one token can be generated at a time"
+
+        # save overhead if no mask is needed
+        if (self.batch_offset == 0).all():
+            return None
+
         return create_block_mask(self._doc_mask, bsz, None, 1, seq_len)
