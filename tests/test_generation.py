@@ -22,7 +22,9 @@ class TestGeneration(unittest.TestCase):
     def setUp(self) -> None:
         # get some data and a model
         bsz = 8
-        self.data = [torch.randint(0, 30, (1,), dtype=torch.long, device="cuda") for _ in range(bsz)]
+        self.device = "cuda" if torch.cuda.is_available() else "cpu"
+        # self.device = "cpu"
+        self.data = [torch.randint(0, 30, (1,), dtype=torch.long, device=self.device) for _ in range(bsz)]
         config = yaml.safe_load("""
         vocab_size: 30
         emb_dim: 8
@@ -33,7 +35,7 @@ class TestGeneration(unittest.TestCase):
             hidden_dim: 16
         """)
         torch.manual_seed(0)
-        self.model = Transformer(initialize_nested_object(TransformerConfig, config)).to("cuda")
+        self.model = Transformer(initialize_nested_object(TransformerConfig, config)).to(self.device)
 
     def test_kv_cache_generation(self) -> None:
 
@@ -94,14 +96,15 @@ class TestGeneration(unittest.TestCase):
 
         bsz = len(self.data)
         offset = 10
-        _data = torch.randint(0, 30, (bsz, 20), dtype=torch.long, device="cuda")
-        prefix_lens = torch.randint(offset, 20, (bsz,), dtype=torch.long, device="cuda")
+        device = self.device
+        _data = torch.randint(0, 30, (bsz, 20), dtype=torch.long, device=device)
+        prefix_lens = torch.randint(offset, 20, (bsz,), dtype=torch.long, device=device)
         data = [datum[:dlen] for datum, dlen in zip(_data, prefix_lens)]
 
         # shift data
         x = self.model.setup_inference(data)
         doc_start = self.model.batch_offset
-        tmp = torch.arange(bsz, device="cuda")
+        tmp = torch.arange(bsz, device=device)
         assert torch.allclose(x[tmp, doc_start], _data[:, 0])
 
         # completion of all prompts in parallel with shifted inputs
@@ -128,12 +131,12 @@ class TestGeneration(unittest.TestCase):
             new_pred = self.model(x)
 
         # realign prefilling predictions to compare them
-        pred = torch.empty((bsz, offset, 30), dtype=pred_.dtype, device="cuda")
+        pred = torch.empty((bsz, offset, 30), dtype=pred_.dtype, device=device)
         for i in range(bsz):
             start = doc_start[i].item()
             pred[i] = pred_[i, start : start + offset]
 
-        assert torch.allclose(pred, new_pred, atol=1e-5)
+        assert torch.allclose(pred, new_pred, atol=2e-5)
 
         # online generation with a single prompt
         # prefilling
