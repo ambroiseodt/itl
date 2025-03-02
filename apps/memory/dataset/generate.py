@@ -1,11 +1,11 @@
 """
 Generate a list of entities with random attributes.
 
-License
--------
-This source code is licensed under the license found in the LICENSE file in the root directory of this source tree.
+#### License
+This source code is licensed under the terms specified in the `LICENSE` file,
+located in the root directory of this repository.
 
-@ 2025, the authors
+@ 2025, Meta
 """
 
 import json
@@ -94,31 +94,43 @@ def generate_biographies(num: int = float("inf")) -> None:
 def generate_qa(num: int = float("inf"), tooluse: bool = False) -> None:
     """
     Generate a list of questions about people biographies.
-
-    Notes
-    -----
-    This is a simple implementation, a better implementation would store the attribute to retrieve.
     """
     templates: list[list[dict[str, Template]]] = []
     identifier = "qa" + ("tool" if tooluse else "")
     for file in (SAVE_DIR / "templates").glob(f"{identifier}*.j2"):
         with open(file) as f:
-            dialog = f.readlines()
-            out = []
+            dialog = f.read().splitlines()  # Read all lines and split them
+            out, source, content = [], None, []
             for message in dialog:
-                source, content = message.split(":>")
-                out.append({"source": source.lower(), "content": Template(content)})
+                if ":>" in message:
+                    if source is not None:
+                        # Append the accumulated message
+                        out.append({"source": source, "content": Template("\n".join(content))})
 
+                    # Start a new message
+                    source, message = message.split(":>", 1)
+                    source = source.lower()
+                    content = [message.strip()]
+                else:
+                    # Accumulate lines for the current message
+                    content.append(message.strip())
+
+            # Append the last accumulated message
+            if source is not None:
+                out.append({"source": source, "content": Template("\n".join(content))})
             templates.append(out)
 
     with open(SAVE_DIR / f"{identifier}.jsonl", "w") as f:
         for i, people in enumerate(collect_people(num=num)):
             for dialog in templates:
                 out = []
+                answer = None
                 for message in dialog:
                     content = message["content"].render(**people)
                     out.append(message | {"content": content})
-                print(json.dumps({"dialog": out, "people_id": i}), file=f, flush=True)
+                    if message["source"] == "database":
+                        answer = message["content"].render(**people)
+                print(json.dumps({"dialog": out, "people_id": i, "answer": answer}), file=f, flush=True)
 
 
 if __name__ == "__main__":
