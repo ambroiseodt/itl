@@ -56,7 +56,7 @@ class TestGeneration(unittest.TestCase):
         preds = torch.hstack(preds)
 
         # Generation all at once
-        self.model.delete_kv_cache()
+        self.model.delete_cache()
         with torch.inference_mode():
             new_data = seq[:, :-1]
             new_preds = self.model(new_data)

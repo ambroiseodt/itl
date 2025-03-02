@@ -424,9 +424,9 @@ class Transformer(BlockLanguageModel):
                 for _ in range(len(self.layers))
             ]
         else:
-            self.reset_kv_cache(verbose=False)
+            self.reset_cache(verbose=False)
 
-    def reset_kv_cache(self, verbose: bool = True) -> None:
+    def reset_cache(self, verbose: bool = True) -> None:
         """
         Delete key-value caches.
         """
@@ -437,7 +437,7 @@ class Transformer(BlockLanguageModel):
         for cache in self.kv_caches:
             cache.reset()
 
-    def delete_kv_cache(self) -> None:
+    def delete_cache(self) -> None:
         """
         Delete key-value caches.
         """
