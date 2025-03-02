@@ -8,6 +8,7 @@ dist
 
 # data
 *.jsonl
+*.db
 
 # temporary files
 tmp_*

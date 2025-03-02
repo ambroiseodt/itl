@@ -52,9 +52,8 @@ def collect_people(num: int = float("inf")) -> list[dict[str, str]]:
     """
     Collect a list of people with random attributes.
 
-    Parameters
-    ----------
-    num: Number of people to collect (by default, it collect everyone).
+    ### Parameters
+    - num: Number of people to collect (by default, it collect everyone).
     """
     save_file = SAVE_DIR / "people.jsonl"
     people = []
