@@ -1,12 +1,8 @@
+# This source code is licensed under the terms specified in the `LICENSE` file.
 """
 MinLSTM model
 
 https://arxiv.org/abs/2410.01201
-
-License
--------
-This source code is licensed under the terms specified in the `LICENSE` file,
-located in the root directory of this repository.
 
 @ 2025, Meta
 """
@@ -128,9 +124,7 @@ class LSTMBlock(BlockModel):
         TODO
         Number of flop to process a new token
 
-        Parameters
-        ----------
-        mode:
-            Whether to consider the forward, backward pass or both
+        ### Parameters
+        - mode: Whether to consider the forward, backward pass or both
         """
         return 0

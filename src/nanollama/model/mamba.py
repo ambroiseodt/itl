@@ -1,12 +1,8 @@
+# This source code is licensed under the terms specified in the `LICENSE` file.
 """
 Mamba model
 
 https://arxiv.org/abs/2405.21060
-
-License
--------
-This source code is licensed under the terms specified in the `LICENSE` file,
-located in the root directory of this repository.
 
 @ 2025, Meta
 """

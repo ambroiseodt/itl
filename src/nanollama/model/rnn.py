@@ -1,10 +1,6 @@
+# This source code is licensed under the terms specified in the `LICENSE` file.
 """
 RNN utilities
-
-License
--------
-This source code is licensed under the terms specified in the `LICENSE` file,
-located in the root directory of this repository.
 
 @ 2025, Meta
 """
@@ -24,14 +20,13 @@ from .ssm.utils_rnn import RNNBlockConfig
 
 @dataclass
 class FastRNNConfig(BlockLanguageModelConfig):
-    implementation: str = None
+    implementation: str
     block: RNNBlockConfig = field(default_factory=RNNBlockConfig)
 
     def __post_init__(self):
         super().__post_init__()
 
         # check validity
-        assert self.implementation, "implementation should be specified"
         self.implementation = self.implementation.lower()
         assert self.implementation in ["minlstm", "mingru", "hawk"], f"{self.implementation} not found"
 

@@ -1,12 +1,8 @@
+# This source code is licensed under the terms specified in the `LICENSE` file.
 """
 Hawk model
 
 https://arxiv.org/abs/2402.19427
-
-License
--------
-This source code is licensed under the terms specified in the `LICENSE` file,
-located in the root directory of this repository.
 
 @ 2025, Meta
 """
@@ -233,10 +229,8 @@ class HawkBlock(BlockModel):
         TODO
         Number of flop to process a new token
 
-        Parameters
-        ----------
-        mode:
-            Whether to consider the forward, backward pass or both
+        ### Parameters
+        - mode: Whether to consider the forward, backward pass or both
         """
         mode_multiplier = dict(fwd=1, bwd=2.5, both=3.5)[mode]
         return 0 * mode_multiplier
