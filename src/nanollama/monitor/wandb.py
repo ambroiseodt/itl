@@ -138,8 +138,9 @@ def jsonl_to_wandb(
     config: dict[str, Any] = None,
 ) -> None:
     """
-    Push the metric saved locally to wandb for visualization purposes
+    Push metric saved locally to wandb for visualization purposes
     """
+
     wandb.init(
         name=name,
         project=project,
