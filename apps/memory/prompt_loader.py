@@ -19,7 +19,9 @@ from typing import Any
 from torch.distributed.checkpoint.stateful import Stateful
 from torch.distributed.device_mesh import DeviceMesh
 
-from src.nanollama.data.text import JSONLIterator
+from nanollama.data.text import JSONLIterator
+
+# from src.nanollama.data.text import JSONLIterator
 
 logger = getLogger("nanollama")
 
@@ -94,10 +96,11 @@ class PromptLoader(Stateful):
     def __exit__(self, exc: type[BaseException], value: BaseException, tb: TracebackType):
         self.jsonl_iterator.__exit__(exc, value, tb)
 
-    def batch_iterator(self) -> Generator[str, None, None]:
+    def batch_iterator(self) -> Generator[tuple[list[str], list[str]], None, None]:
         while True:
             try:
-                output = []
+                prompts = []
+                answers = []
                 for _ in range(self.batch_size):
                     # receive sentences
                     json_data = next(self.jsonl_iterator)
@@ -105,11 +108,12 @@ class PromptLoader(Stateful):
 
                     message = dialog[0]
                     assert message["source"] == "user"
-                    output.append(message["content"])
-                yield output
+                    prompts.append(message["content"])
+                    answers.append(json_data["answer"])
+                yield prompts, answers
             except StopIteration:
-                if len(output):
-                    yield output
+                if len(prompts):
+                    yield prompts, answers
                 else:
                     break
 
@@ -142,7 +146,7 @@ class PromptLoader(Stateful):
                     logger.debug("Buffer is full. Waiting for data comsumption.")
             logger.debug("New batch put in the buffer.")
 
-    def async_get_batch(self) -> str:
+    def async_get_batch(self) -> tuple[list[str], list[str]]:
         """Asynchronous batch acquisition, reading batches from the buffer."""
         # read batch from the buffer
         while True:
@@ -156,7 +160,7 @@ class PromptLoader(Stateful):
         """Return an iterator over batches"""
         return self
 
-    def __next__(self) -> str:
+    def __next__(self) -> tuple[list[str], list[str]]:
         """Get the next batch of sentences."""
         if self.asynchronous:
             batch, self.gen_state_dict = self.async_get_batch()
@@ -187,3 +191,18 @@ class PromptLoader(Stateful):
         if self.asynchronous:
             self.process = Process(target=self.async_batch_creator)
             self.process.start()
+
+
+if __name__ == "__main__":
+    config = DataConfig(
+        source="/private/home/vivc/code/memory/apps/memory/dataset/qatool.jsonl",
+        batch_size=10,
+        asynchronous=False,
+        buffer_size=4,
+    )
+
+    data_loader = PromptLoader(config)
+    with data_loader:
+        for batch in data_loader:
+            print(batch)
+            break
