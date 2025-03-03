@@ -252,7 +252,7 @@ def main() -> None:
     # casting logging directory to run_config
     if "orchestration" not in run_config:
         run_config["orchestration"] = {}
-    for key in ["name", "log_dir"]:
+    for key in ["name", "log_dir", "overwrite"]:
         if key in launcher and key not in run_config["orchestration"]:
             run_config["orchestration"][key] = launcher[key]
 
