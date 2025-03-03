@@ -344,7 +344,6 @@ class TokenizerConfig:
     eod: bool = True
 
     def __post_init__(self):
-        assert self.name, "Tokenizer name is required."
         self.name = self.name.lower()
         assert self.name in [ByteTokenizer.name, TikTokenTokenizer.name]
 

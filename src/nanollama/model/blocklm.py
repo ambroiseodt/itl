@@ -47,21 +47,16 @@ class BlockLanguageModelConfig:
     # Block configuration
     implementation: str
     block: Any
+    nb_layers: int
 
     # Embedding parameters
+    emb_dim: int
     vocab_size: int = 0
-    emb_dim: int = 0
 
     # Model parameters
-    nb_layers: int = 0
     weight_tying: bool = False
     norm_eps: float = 1e-5
     init_std: float = None
-
-    def __post_init__(self):
-        assert self.block, "block should be specified"
-        assert self.emb_dim, "embedding dimension should be specified"
-        assert self.nb_layers, "number of layers should be specified"
 
     def __check_init__(self):
         """Check validity of arguments that may have been inherited."""

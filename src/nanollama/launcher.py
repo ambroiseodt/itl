@@ -112,6 +112,8 @@ class SlurmConfig:
 
 @dataclass
 class LauncherConfig:
+    script: str
+
     name: str = "composition_default"
 
     log_dir: str = ""
@@ -121,7 +123,6 @@ class LauncherConfig:
     launcher: str = "sbatch"
     torchrun: bool = False
     python_env: str = "default"
-    script: str = ""
 
     grid: dict[str, Any] = field(default_factory=dict)
 
@@ -131,8 +132,6 @@ class LauncherConfig:
         """
         Check validity of arguments and fill in missing values.
         """
-        assert self.script, "No script specified to run the job."
-
         for key in self.grid:
           if isinstance(self.grid[key], str):
               self.grid[key] = eval(self.grid[key])
