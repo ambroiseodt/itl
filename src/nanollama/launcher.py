@@ -153,7 +153,7 @@ class LauncherConfig:
     torchrun: bool = False
     python_env: str = "default"
 
-    grid: dict[str, Any] = field(default_factory=dict)
+    grid: dict[str, list[Any]] = field(default_factory=dict)
 
     slurm: SlurmConfig = field(default_factory=SlurmConfig)
 

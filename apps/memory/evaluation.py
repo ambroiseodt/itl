@@ -16,12 +16,13 @@ import torch
 import torch.distributed.checkpoint as dcp  # noqa: F401
 import yaml  # noqa: F401
 
-from src.nanollama.data.loader import DataLoader  # noqa: F401
-from src.nanollama.data.text import DataConfig, MultipleSourcesTokenGenerator  # noqa: F401
+from src.nanollama.data.text import MultipleSourcesTokenGenerator  # noqa: F401
 from src.nanollama.distributed import ClusterConfig, ClusterManager, get_rank, is_master_process  # noqa: F401
 from src.nanollama.inference import QueuedBatchedInference
 from src.nanollama.model import BlockLanguageModel, build_config_with_model_dispatch  # noqa: F401
 from src.nanollama.utils import initialize_nested_object  # noqa: F401
+
+from .evaluation import DataConfig, PromptLoader
 
 logger = getLogger("nanollama")
 
@@ -81,7 +82,7 @@ class EvalComputer:
 
         # data loader
         tokenizer = None
-        self.loader = None
+        self.loader = PromptLoader(config.data, dp_mesh=None)
 
         # inference engine
         self.inference_engine = QueuedBatchedInference(model, tokenizer, config.db_path)
@@ -127,16 +128,22 @@ class EvalComputer:
         """
         Run evaluation
         """
+
         # TODO: create this dataloader
-        for prompts, answer in self.loader:
+        for prompts, answers in self.loader:
             outputs = self.inference_engine.generate(prompts)
 
             # TODO correct this evaluation snippet
+
+            for output, answer in zip(outputs, answers):
+                loss = int(output.endswith(f"{answer}."))
+
             bsz = len(prompts)
-            scaling = bsz / self.loader.bsz
+            scaling = bsz / self.loader.batch_size
             self.scaling += scaling
             loss = sum(outputs == answer)
             self.loss += scaling * loss
+            self.step += 1
 
             logger.debug(f"Evaluation: partial step: {self.step} - loss: {round(self.loss, 4):>7}")
 
@@ -158,6 +165,9 @@ def run_evaluation(config: OnlineEvaluationConfig, model: BlockLanguageModel, st
 
     if is_master_process():
         logger.info(f"Test loss: {round(computer.loss, 4):>7}")
+
+
+# TODO: try to run this piece of code.
 
 
 # ------------------------------------------------------------------------------

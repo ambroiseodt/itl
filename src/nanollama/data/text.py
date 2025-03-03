@@ -271,6 +271,7 @@ class MultipleSourcesTokenGenerator(TokenLoader):
 
     ### Parameters
     - config: data configuration
+    - dp_mesh: device mesh
 
     ### Attributes
     - generators: list of single source token generators

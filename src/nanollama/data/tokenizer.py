@@ -255,13 +255,10 @@ class TikTokenTokenizer(Tokenizer):
     NUM_RESERVED_TOKENS = 256
     DEFAULT_TIKTOKEN_PATTERN = r"""(?i:'s|'t|'re|'ve|'m|'ll|'d)|[^\r\n\p{L}\p{N}]?\p{L}+|\p{N}{1,3}| ?[^\s\p{L}\p{N}]+[\r\n]*|\s*[\r\n]+|\s+(?!\S)|\s+"""  # noqa: E501
     DEFAULT_TIKTOKEN_SPECIAL_TOKENS = {
-        "<|begin_of_text|>": 0,
-        "<|end_of_text|>": 1,
-        "<|fim_prefix|>": 2,
-        "<|fim_middle|>": 3,
-        "<|fim_end_fill|>": 253,
-        "<|fim_pad|>": 254,
-        "<|fim_suffix|>": 255,
+        "<|user_turn|>": 0,
+        "<|llm_turn|>": 1,
+        "<|sql_turn|>": 2,
+        "<|eod|>": 3,
     }
     TIKTOKEN_MAX_ENCODE_CHARS = 400_000
 
