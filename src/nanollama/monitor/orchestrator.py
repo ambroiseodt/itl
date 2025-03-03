@@ -11,6 +11,7 @@ located in the root directory of this repository.
 """
 
 import os
+import shutil
 from dataclasses import asdict, dataclass, field
 from logging import getLogger
 from pathlib import Path, PosixPath
@@ -29,6 +30,7 @@ logger = getLogger("nanollama")
 @dataclass
 class OrchestratorConfig:
     log_dir: str = ""
+    overwrite: bool = False
     name: str = "composition_default"
 
     # submanagers
@@ -51,6 +53,18 @@ class OrchestratorConfig:
         else:
             self.log_dir = os.path.expandvars(self.log_dir)
             log_dir = Path(self.log_dir)
+
+        # decide whether to overwrite directory if it exists
+        if self.overwrite:
+            confirm = input(
+                f"Are you sure you want to delete the directory '{log_dir}'? This action cannot be undone. (yes/no): "
+            )
+            if confirm.upper().startswith("Y"):
+                shutil.rmtree(log_dir)
+                logger.info(f"Directory '{log_dir}' has been deleted.")
+            else:
+                logger.info("Operation cancelled.")
+                return
         log_dir.mkdir(parents=True, exist_ok=True)
 
         # add discriminative information if array job
