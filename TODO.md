@@ -3,7 +3,13 @@
 - Get some curves of accuracy when training with the tool use, or without. and write some visualization notebooks/scripts to get plots out of many experimental logs.
 
 #### Vivien's current todo:
-- Make a `agent_eval.py` file in the memory apps to evaluate text generate with tool-use.
+- Finish the `evaluation.py` file.
+    - Finish the online evaluation.
+        - change the step method to look more like the training run (which is also a loop, i.e. an iterator, but hides it, which is more natural).
+    - Make a offline evaluation.
+- Integrate evaluation option to the training run.
+- Make nice plots, and visualization methods.
+
 - Generation.
     - Write inference loop logic, as well as sampling strategies.
 
