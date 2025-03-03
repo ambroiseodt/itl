@@ -11,7 +11,6 @@ located in the root directory of this repository.
 """
 
 import os
-import shutil
 from dataclasses import asdict, dataclass, field
 from logging import getLogger
 from pathlib import Path, PosixPath

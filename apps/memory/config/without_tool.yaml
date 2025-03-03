@@ -27,6 +27,7 @@ run_config:
     seq_len: 128
 
   model:
+    implementation: transformer
     vocab_size: 300
     emb_dim: 64
     nb_layers: 2

@@ -23,7 +23,7 @@ from torch.optim import AdamW, Optimizer, lr_scheduler
 @dataclass
 class OptimizerConfig:
     # total number of update steps
-    steps: int = 0
+    steps: int
     max_steps: int = 0
     # number of gradient accumulation before update
     grad_acc_steps: int = 1
@@ -45,7 +45,6 @@ class OptimizerConfig:
     lr_min_ratio: float = 0.1
 
     def __post_init__(self):
-        assert self.steps, "Total number of steps should be defined"
         if not self.max_steps:
             self.max_steps = self.steps
 

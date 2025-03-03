@@ -223,6 +223,37 @@ def train(config: TrainingConfig) -> None:
     _logger.info("Training done.")
 
 
+# ------------------------------------------------------------------------------
+# Configuration utilities
+# ------------------------------------------------------------------------------
+
+
+def heritage_config(run_config: dict[str, Any], launcher: dict[str, Any]) -> None:
+    """
+    Heritage of configuration from launcher to run_config.
+
+    ### Parameters
+    - run_config: configuration to run this file.
+    - launcher: meta configuration to orchestrate the launch of this run.
+    """
+    if "orchestration" not in run_config:
+        run_config["orchestration"] = {}
+    for key in ["name", "log_dir"]:
+        if key in launcher and key not in run_config["orchestration"]:
+            run_config["orchestration"][key] = launcher[key]
+
+
+def heritage_grid_id(run_config: dict[str, Any], grid_id: int) -> None:
+    """
+    Specify configuration according to a grid id specified for job array.
+
+    ### Parameters
+    - run_config: configuration to run this file.
+    - grid_id: id of the grid.
+    """
+    pass
+
+
 def build_config(file_config: dict[str, Any]) -> TrainingConfig:
     """
     Build configuration from file configuration.
@@ -240,26 +271,11 @@ def build_config(file_config: dict[str, Any]) -> TrainingConfig:
         run_config = file_config
     launcher: dict[str, Any] = file_config.pop("launcher", {})
 
-    # casting logging directory to run_config
-    if "orchestration" not in run_config:
-        run_config["orchestration"] = {}
-    for key in ["name", "log_dir"]:
-        if key in launcher and key not in run_config["orchestration"]:
-            run_config["orchestration"][key] = launcher[key]
-
-    # configuration inheritance between training and evaluation
-    run_config["slurm"] = launcher.pop("slurm", {})
-    run_config.pop("slurm")
+    heritage_config(run_config, launcher)
 
     # grid id system to handle multiple datasets
     grid_id = run_config.get("grid_id", 0)
-    try:
-        run_config["data"]["path"] = run_config["data"]["path"].replace("$GRIDID", str(grid_id))
-        run_config["evaluation"]["data"]["path"] = run_config["evaluation"]["data"]["path"].replace(
-            "$GRIDID", str(grid_id)
-        )
-    except KeyError:
-        pass
+    heritage_grid_id(run_config, grid_id)
 
     file_config = copy.deepcopy(run_config)
     config = build_config_with_model_dispatch(TrainingConfig, run_config)
@@ -271,6 +287,11 @@ def build_config(file_config: dict[str, Any]) -> TrainingConfig:
         json.dump(file_config, fp)
 
     return config
+
+
+# ------------------------------------------------------------------------------
+# Main file
+# ------------------------------------------------------------------------------
 
 
 def main() -> None:

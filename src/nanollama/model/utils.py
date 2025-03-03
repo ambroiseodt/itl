@@ -22,9 +22,15 @@ def build_config_with_model_dispatch(ConfigClass: type, run_config: dict[str, An
     ### Returns
     - config: The initialized configuration object.
     """
-    if "model" not in run_config:
-        run_config["model"] = {}
-    implementation = run_config["model"].get("implementation", "transformer").lower()
+    # argument parsing
+    assert "model" in run_config and "implementation" in run_config["model"], "Model implementation not found"
+    implementation = run_config["model"]["implementation"]
+
+    if ConfigClass is None:
+
+        @dataclass
+        class ConfigClass:
+            pass
 
     match implementation:
         case "transformer":

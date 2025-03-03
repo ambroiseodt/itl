@@ -1,4 +1,8 @@
 launcher:
+  launcher: bash
+  torchrun: true
+  copy_code: false
+
   name: memory
   overwrite: true
   log_dir: $HOME/memory_debug
@@ -9,7 +13,7 @@ launcher:
     # partition: scavenge
     mem: 16G
     nodes: 1
-    nb_gpus: 1        # use torchrun, or slurm, for multi-gpu runs
+    nb_gpus: 2        # use torchrun, or slurm, for multi-gpu runs
     time: 10          # job time in minutes
     signal_time: 60   # alert time in seconds
 
@@ -32,6 +36,7 @@ run_config:
     asynchronous: false
 
   model:
+    implementation: transformer
     vocab_size: 300
     emb_dim: 64
     nb_layers: 2
@@ -40,7 +45,7 @@ run_config:
       hidden_dim: 256
 
   optim:
-    steps: 1000
+    steps: 100
     max_steps: 1000
     lr: 1e-4
     weight_decay: 0.1
