@@ -1,10 +1,6 @@
+# This source code is licensed under the terms specified in the `LICENSE` file.
 """
 Script to launch jobs on a Slurm cluster.
-
-License
--------
-This source code is licensed under the terms specified in the `LICENSE` file,
-located in the root directory of this repository.
 
 @ 2025, Meta
 """
@@ -34,6 +30,24 @@ logger = logging.getLogger("nanollama")
 
 @dataclass
 class SlurmConfig:
+    """
+    Configuration to lease ressources on a Slurm cluster.
+
+    ### Parameters
+    - partition: partition to run the job on.
+    - time: time limit of the job (in minutes).
+    - mem: amount of memory to allocate per node.
+    - nodes: number of nodes to run the job on.
+    - nb_gpus: number of GPUs required per node.
+    - nb_cpus: number of CPUs allocated per GPU.
+    - signal_time: time between USR signal and job termination (in seconds).
+    - slurm_extra: extra configuration for the job.
+    - constraint: constraint on the nodes.
+    - exclude: nodes to exclude.
+    - account: account to use.
+    - qos: quality of service.
+    - script_extra: extra script to run when executing sbatch.
+    """
     # basic configuration
     partition: str = ""
     time: int = -1  # time limit of the job (in minutes).
@@ -112,6 +126,21 @@ class SlurmConfig:
 
 @dataclass
 class LauncherConfig:
+    """
+    Configuration to launch a job on a Slurm cluster.
+
+    ### Parameters
+    - script: script to launch (relative to the root of the project).
+    - name: name of the job.
+    - log_dir: directory to store logs.
+    - overwrite: whether to overwrite the log directory.
+    - copy_code: whether to copy the code to the log directory.
+    - launcher: command to launch the job.
+    - torchrun: whether to use torchrun to launch the job.
+    - python_env: python environment to use.
+    - grid: grid configuration to launch multiple jobs.
+    - slurm: slurm configuration.
+    """
     script: str
 
     name: str = "composition_default"
@@ -196,15 +225,11 @@ def get_configs_from_grid(config: dict[str, Any], grid_config: dict[str, Any]) -
     """
     Get a set of configurations from a base configuration and a grid configuration.
 
-    Parameters
-    ----------
-    config:
-        The base configuration.
-    grid_config:
-        The grid configuration to launch a grid job.
+    ### Parameters
+    config: base configuration.
+    grid_config: grid configuration to launch a grid job.
 
-    Returns
-    -------
+    ### Returns
     List of configurations.
     """
 
@@ -265,12 +290,9 @@ def launch_job(config: LauncherConfig, file_config: Any) -> None:
     """
     Launch a job on a Slurm cluster.
 
-    Parameters
-    ----------
-    config:
-        The configuration to launch the job.
-    run_config:
-        The training configuration of the job.
+    ### Parameters
+    config: configuration to launch the job.
+    run_config: training configuration of the job.
     """
     # alias
     slurm = config.slurm
