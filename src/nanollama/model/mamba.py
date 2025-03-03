@@ -195,6 +195,7 @@ class MambaBlock(BlockModel):
 
 @dataclass
 class MambaConfig(BlockLanguageModelConfig):
+    implementation: str = "mamba"
     block: MambaBlockConfig = field(default_factory=MambaBlockConfig)
 
     def __post_init__(self):

@@ -18,7 +18,12 @@ import yaml
 from src.nanollama.data.loader import DataLoader
 from src.nanollama.data.text import DataConfig, MultipleSourcesTokenGenerator
 from src.nanollama.distributed import ClusterConfig, ClusterManager, get_rank
-from src.nanollama.model import BlockLanguageModel, Transformer, TransformerConfig
+from src.nanollama.model import (
+    BlockLanguageModel,
+    BlockLanguageModelConfig,
+    TransformerConfig,
+    build_config_with_model_dispatch,
+)
 from src.nanollama.model import transformer as tf
 from src.nanollama.monitor import (
     Checkpointer,
@@ -35,7 +40,6 @@ from src.nanollama.optim import (
     build_optimizer,
     build_scheduler,
 )
-from src.nanollama.utils import initialize_nested_object
 
 # tf.FLEX_ATTENTION = False
 tf.FLEX_ATTENTION = True
@@ -54,8 +58,8 @@ class TrainingConfig:
     data: DataConfig = field(default_factory=DataConfig)
     optim: OptimizerConfig = field(default_factory=OptimizerConfig)
 
-    model: TransformerConfig = field(default_factory=TransformerConfig)
-    model_gen: callable = field(init=False, default=Transformer)
+    model: BlockLanguageModelConfig = field(default_factory=TransformerConfig)
+    model_gen: callable = field(init=False, default=BlockLanguageModel)
 
     def __post_init__(self):
         """
@@ -104,6 +108,7 @@ def train(config: TrainingConfig) -> None:
         # ---------------------------------------------------------------------
 
         _logger.info("Building model")
+        # model = config.model_gen(config.model)
         model: BlockLanguageModel = config.model_gen(config.model)
         model = cluster.build_model(model)
 
@@ -215,31 +220,17 @@ def train(config: TrainingConfig) -> None:
     _logger.info("Training done.")
 
 
-def main() -> None:
+def build_config(file_config: dict[str, Any]) -> TrainingConfig:
     """
-    Launch a training job from configuration file specified by cli argument.
+    Build configuration from file configuration.
 
-    Usage:
-    ```
-    python -m apps.my_app.train apps/my_app/configs/my_config.yaml
-    ```
+    ### Parameters
+    - file_config: configuration as a dictionary.
+
+    ### Returns
+    - config: configuration as a dataclass.
     """
-    import argparse
 
-    logging.basicConfig(
-        level=logging.INFO,
-        format="[%(levelname)s] %(filename)s:%(lineno)d - %(message)s",
-        handlers=[logging.StreamHandler()],
-    )
-
-    # parse file configuration path
-    parser = argparse.ArgumentParser(description=main.__doc__)
-    parser.add_argument("config", type=str, help="Path to configuration file")
-    path = parser.parse_args().config
-
-    # obtain configuration from file
-    with open(os.path.expandvars(path)) as f:
-        file_config: dict[str, Any] = yaml.safe_load(f)
     if "run_config" in file_config:
         run_config: dict[str, Any] = file_config.pop("run_config")
     else:
@@ -267,8 +258,39 @@ def main() -> None:
     except KeyError:
         pass
 
+    config = build_config_with_model_dispatch(TrainingConfig, run_config)
+
+    return config
+
+
+def main() -> None:
+    """
+    Launch a training job from configuration file specified by cli argument.
+
+    Usage:
+    ```
+    python -m apps.my_app.train apps/my_app/configs/my_config.yaml
+    ```
+    """
+    import argparse
+
+    logging.basicConfig(
+        level=logging.INFO,
+        format="[%(levelname)s] %(filename)s:%(lineno)d - %(message)s",
+        handlers=[logging.StreamHandler()],
+    )
+
+    # parse file configuration path
+    parser = argparse.ArgumentParser(description=main.__doc__)
+    parser.add_argument("config", type=str, help="Path to configuration file")
+    path = parser.parse_args().config
+
+    # obtain configuration from file
+    with open(os.path.expandvars(path)) as f:
+        file_config: dict[str, Any] = yaml.safe_load(f)
+
     # initialize configuration
-    config = initialize_nested_object(TrainingConfig, run_config)
+    config = build_config(file_config)
 
     # launch job
     train(config)

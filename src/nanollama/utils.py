@@ -88,6 +88,8 @@ def initialize_nested_object(object_type: type[T], data: dict[str, Any], inplace
     if is_dataclass(object_type):
         field_values = {}
         for data_field in fields(object_type):
+            if not data_field.init:
+                continue
             fname, ftype = data_field.name, data_field.type
             if fname in data:
                 value = data.pop(fname)
@@ -97,6 +99,7 @@ def initialize_nested_object(object_type: type[T], data: dict[str, Any], inplace
         for fname in data:
             logger.warning(f"Field '{fname}' ignored when initializing {object_type}.")
         return object_type(**field_values)
+
 
     # list
     elif get_origin(object_type) is list and len(args) == 1:

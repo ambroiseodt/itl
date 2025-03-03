@@ -45,7 +45,7 @@ class BlockModel(nn.Module, ABC):
 @dataclass
 class BlockLanguageModelConfig:
     # Block configuration
-    name: str
+    implementation: str
     block: Any
 
     # Embedding parameters

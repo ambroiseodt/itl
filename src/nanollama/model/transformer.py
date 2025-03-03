@@ -316,7 +316,7 @@ class TransformerBlock(BlockModel):
 
 @dataclass
 class TransformerConfig(BlockLanguageModelConfig):
-    name: str = field(init=False, default="transformer")
+    implementation: str = "transformer"
     block: TransformerBlockConfig = field(default_factory=TransformerBlockConfig)
     flex_attention: bool = True
 

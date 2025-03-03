@@ -7,3 +7,4 @@ Module containing models
 
 from .blocklm import BlockLanguageModel, BlockLanguageModelConfig
 from .transformer import Transformer, TransformerConfig
+from .utils import build_config_with_model_dispatch

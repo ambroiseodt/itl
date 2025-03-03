@@ -4,49 +4,71 @@ Utilities to load models
 
 @ 2025, Meta
 """
+from dataclasses import dataclass, field
+from typing import Any
 
-from .blocklm import BlockLanguageModel, BlockLanguageModelConfig
+from ..utils import initialize_nested_object
 from .transformer import Transformer, TransformerConfig
 
 
-def build_config(implementation: str) -> tuple[BlockLanguageModelConfig, BlockLanguageModel]:
+def build_config_with_model_dispatch(ConfigClass: type, run_config: dict[str, Any]) -> Any:
     """
-    Return the configuration and model class for the given implementation
+    Initialize configuration based on the model implementation specified in the run_config.
 
     ### Parameters
-    - implementation: str
+    - ConfigClass: The configuration class to be used.
+    - run_config: A dictionary containing the configuration details.
 
     ### Returns
-    - config: BlockLanguageModelConfig
-    - model: BlockLanguageModel
+    - config: The initialized configuration object.
     """
+    if "model" not in run_config:
+        run_config["model"] = {}
+    implementation = run_config["model"].get("implementation", "transformer").lower()
+
     match implementation:
         case "transformer":
-            config = TransformerConfig
-            model = Transformer
+
+            @dataclass
+            class Config(ConfigClass):
+                model: TransformerConfig = field(default_factory=TransformerConfig)
+                model_gen: callable = field(init=False, default=Transformer)
 
         case "mamba":
-            from .mamba import Mamba, MambaConfig
+            from src.nanollama.model.mamba import Mamba, MambaConfig
 
-            config = MambaConfig
-            model = Mamba
+            @dataclass
+            class Config(ConfigClass):
+                model: MambaConfig = field(default_factory=MambaConfig)
+                model_gen: callable = field(init=False, default=Mamba)
 
         case "hawk":
-            from .rnn import FastRNNConfig, Hawk
+            from src.nanollama.model.rnn import FastRNNConfig, Hawk
 
-            config = FastRNNConfig
-            model = Hawk
+            @dataclass
+            class Config(ConfigClass):
+                model: FastRNNConfig = field(default_factory=FastRNNConfig)
+                model_gen: callable = field(init=False, default=Hawk)
 
         case "mingru":
-            from .rnn import FastRNNConfig, MinGRU
+            from src.nanollama.model.rnn import FastRNNConfig, MinGRU
 
-            config = FastRNNConfig
-            model = MinGRU
+            @dataclass
+            class Config(ConfigClass):
+                model: FastRNNConfig = field(default_factory=FastRNNConfig)
+                model_gen: callable = field(init=False, default=MinGRU)
 
         case "minlstm":
-            from .rnn import FastRNNConfig, MinLSTM
+            from src.nanollama.model.rnn import FastRNNConfig, MinLSTM
 
-            config = FastRNNConfig
-            model = MinLSTM
+            @dataclass
+            class Config(ConfigClass):
+                model: FastRNNConfig = field(default_factory=FastRNNConfig)
+                model_gen: callable = field(init=False, default=MinLSTM)
 
-    return config, model
+        case _:
+            raise ValueError(f"Model implementation {implementation} not found")
+
+    # Initialize configuration
+    config = initialize_nested_object(Config, run_config)
+    return config
