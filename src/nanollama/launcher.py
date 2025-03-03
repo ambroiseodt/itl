@@ -14,6 +14,7 @@ import logging
 import os
 import shutil
 import subprocess
+import sys
 from dataclasses import asdict, dataclass, field
 from itertools import product
 from pathlib import Path
@@ -287,7 +288,7 @@ def launch_job(config: LauncherConfig, file_config: Any) -> None:
             logger.info(f"Directory '{log_dir}' has been deleted.")
         else:
             logger.info("Operation cancelled.")
-            return
+            sys.exit(0)
     log_dir.mkdir(exist_ok=True, parents=True)
 
     # copy code
