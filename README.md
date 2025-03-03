@@ -62,7 +62,7 @@ You will be asked whether to format the database as a SQLlite database. Answer "
 ## Training
 Launch a traning run locally
 ```bash
-python -m apps.memory.train apps/memory/config.yaml
+python -m apps.memory.train apps/memory/config/debug.yaml
 ```
 You can run the code locally with two GPUs (or more).
 ```bash
@@ -74,11 +74,11 @@ python -m nanollama.launcher apps/memory/config.yaml
 ```
 
 #### Notes for the team
-I have added two configs `config_with_tool.yaml` and `config_without_tool.yaml` to reproduce Sam's exp1, and continue on our exp1 (get the number of facts a networks can recall with and without access to a tool).
+I have added two configs `config/with_tool.yaml` and `config/without_tool.yaml` to reproduce Sam's exp1, and continue on our exp1 (get the number of facts a networks can recall with and without access to a tool).
 Modify these configs (as well as the datasets -- adding or removing facts) to fit your needs and run the following commands
 ```bash
-python -m apps.memory.train apps/memory/config_with_tool.yaml
-python -m apps.memory.train apps/memory/config_without_tool.yaml
+python -m apps.memory.train apps/memory/config/with_tool.yaml
+python -m apps.memory.train apps/memory/config/without_tool.yaml
 ```
 
 ## Development
@@ -90,7 +90,7 @@ python -m unittest
 #### Code convention
 - Avoid packages that are not well maintained
 - If using heavy/hard-to-install packages that are not mandatory, make sure that the code still run if people do not install these packages
-- Make sure that the code is open-source-able
+- Make sure that the code is open-source-able.
 - Name `build_<method>` any method that initialize a class.
 - Use Object-Oriented Programming, as well as Context-Oriented Programming.
 - Make sure that the code can run on CPU and V100 (so that people can easily develop from their own laptop without connection on small datasets).
