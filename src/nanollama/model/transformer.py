@@ -1,9 +1,6 @@
+# This source code is licensed under the terms specified in the `LICENSE` file.
 """
 Transformer model.
-
-#### License
-This source code is licensed under the terms specified in the `LICENSE` file,
-located in the root directory of this repository.
 
 @ 2025, Meta
 """
@@ -288,7 +285,7 @@ class TransformerBlock(BlockModel):
         self.attn_norm = RMSNorm(config.emb_dim, eps=config.norm_eps)
         self.ffn_norm = RMSNorm(config.emb_dim, eps=config.norm_eps)
 
-    def weight_initialization(self, init_std: float, factor: float) -> None:
+    def reset_parameters(self, init_std: float, factor: float) -> None:
         self.attn.reset_parameters(init_std, factor)
         self.attn_norm.reset_parameters()
         self.ffn.reset_parameters(init_std, factor)
@@ -319,10 +316,15 @@ class TransformerBlock(BlockModel):
 
 @dataclass
 class TransformerConfig(BlockLanguageModelConfig):
+    name: str = field(init=False, default="transformer")
     block: TransformerBlockConfig = field(default_factory=TransformerBlockConfig)
+    flex_attention: bool = True
 
     def __post_init__(self):
+        global FLEX_ATTENTION
         super().__post_init__()
+
+        FLEX_ATTENTION = self.flex_attention
 
         # Inherit parameters from the block model configuration.
         for attr in ["emb_dim", "norm_eps"]:

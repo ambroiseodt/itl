@@ -1,10 +1,6 @@
+# This source code is licensed under the terms specified in the `LICENSE` file.
 """
 Model as blocks acting in an embedding space.
-
-License
--------
-This source code is licensed under the terms specified in the `LICENSE` file,
-located in the root directory of this repository.
 
 @ 2025, Meta
 """
@@ -35,17 +31,13 @@ class BlockModel(nn.Module, ABC):
         ...
 
     @abstractmethod
-    def weight_initialization(self, init_std: float, factor: float) -> None:
+    def reset_parameters(self, init_std: float, factor: float) -> None:
         """
         Weight initialization of submodules
 
         ### Parameters
         - init_std: standard deviation of the initialization
         - factor: scaling factor for the output layer
-
-        ### Notes
-        The nomenclature `weight_initialization` is used to initialize of all sub-modules.
-        The nomeclature `reset_parameters` is used to solely initialize the parameters specific to the module.
         """
         ...
 
@@ -53,7 +45,8 @@ class BlockModel(nn.Module, ABC):
 @dataclass
 class BlockLanguageModelConfig:
     # Block configuration
-    block: Any = None
+    name: str
+    block: Any
 
     # Embedding parameters
     vocab_size: int = 0
@@ -102,7 +95,7 @@ class BlockLanguageModel(ABC, nn.Module):
             # Tying token embedding and un-embedding
             self.output.weight = self.embeddings.weight
 
-        self.weight_initialization(config.init_std, factor=1.0)
+        self.reset_parameters(config.init_std, factor=1.0)
 
     @property
     def device(self) -> torch.device:
@@ -143,24 +136,10 @@ class BlockLanguageModel(ABC, nn.Module):
                 b=3 * emb_std,
             )
 
-    @torch.inference_mode()
-    def weight_initialization(self, init_std: float, factor: float) -> None:
-        """
-        Weight initialization of submodules
-
-        ### Parameters
-        - init_std: standard deviation of the initialization
-        - factor: scaling factor for the output layer
-
-        ### Notes
-        The nomenclature `weight_initialization` is used to initialize of all sub-modules.
-        The nomeclature `reset_parameters` is used to solely initialize the parameters specific to the module.
-        """
-        self.reset_parameters(init_std, factor)
         # layers
         for layer in self.layers:
             layer: BlockModel
-            layer.weight_initialization(init_std, factor=factor)
+            layer.reset_parameters(init_std, factor=factor)
 
     def forward(self, x: torch.Tensor) -> torch.Tensor:
         out = self.embeddings(x)

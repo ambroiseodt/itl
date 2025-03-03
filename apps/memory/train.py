@@ -12,14 +12,13 @@ from dataclasses import asdict, dataclass, field
 from typing import Any
 
 import torch
-import torch.nn as nn
 import torch.nn.functional as F
 import yaml
 
 from src.nanollama.data.loader import DataLoader
 from src.nanollama.data.text import DataConfig, MultipleSourcesTokenGenerator
 from src.nanollama.distributed import ClusterConfig, ClusterManager, get_rank
-from src.nanollama.model import Transformer, TransformerConfig
+from src.nanollama.model import BlockLanguageModel, Transformer, TransformerConfig
 from src.nanollama.model import transformer as tf
 from src.nanollama.monitor import (
     Checkpointer,
@@ -46,7 +45,6 @@ _logger = logging.getLogger("nanollama")
 # ------------------------------------------------------------------------------
 # Configuration Class
 # ------------------------------------------------------------------------------
-
 
 @dataclass
 class TrainingConfig:
@@ -106,7 +104,7 @@ def train(config: TrainingConfig) -> None:
         # ---------------------------------------------------------------------
 
         _logger.info("Building model")
-        model: nn.Module = config.model_gen(config.model)
+        model: BlockLanguageModel = config.model_gen(config.model)
         model = cluster.build_model(model)
 
         _logger.info("Building optimizer")
@@ -135,7 +133,6 @@ def train(config: TrainingConfig) -> None:
             )
         )
         checkpoint.saved_step = checkpoint.step = optim_state.step
-
         model.config = asdict(config.model)
 
         # ---------------------------------------------------------------------
