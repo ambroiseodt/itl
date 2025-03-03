@@ -5,10 +5,13 @@ Training script with online generation of batch of data.
 @ 2025, Meta
 """
 
+import copy
+import json
 import logging
 import os
 from contextlib import ExitStack
 from dataclasses import asdict, dataclass, field
+from pathlib import Path
 from typing import Any
 
 import torch
@@ -274,7 +277,14 @@ def build_config(file_config: dict[str, Any]) -> TrainingConfig:
     grid_id = run_config.get("grid_id", 0)
     heritage_grid_id(run_config, grid_id)
 
+    file_config = copy.deepcopy(run_config)
     config = build_config_with_model_dispatch(TrainingConfig, run_config)
+
+    # save config file
+    path = Path(config.orchestration.logging.config_path)
+    path.mkdir(parents=True, exist_ok=True)
+    with open(path/"config.json", 'w') as fp:
+        json.dump(file_config, fp)
 
     return config
 
@@ -315,7 +325,6 @@ def main() -> None:
 
     # launch job
     train(config)
-
 
 if __name__ == "__main__":
     main()
