@@ -4,7 +4,7 @@
 # as a SQLLite database is also possible. To that end, run the following command
 # in the terminal from the root directory of the project.
 # ```shell
-# $ bash <path_to_file_folder>/generate_data.sh
+# bash <path_to_file_folder>/generate_data.sh
 # ```
 #
 
