@@ -60,7 +60,7 @@ bash apps/memory/bash/generate_data.sh
 You will be asked whether to format the database as a SQLlite database. Answer "Yes" is you want to do it.
 
 ## Training
-Launch a traning run locally
+Launch a training run locally
 ```bash
 python -m apps.memory.train apps/memory/config/debug.yaml
 ```
