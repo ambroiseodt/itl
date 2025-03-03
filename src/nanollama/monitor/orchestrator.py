@@ -30,7 +30,6 @@ logger = getLogger("nanollama")
 @dataclass
 class OrchestratorConfig:
     log_dir: str = ""
-    overwrite: bool = False
     name: str = "composition_default"
 
     # submanagers
@@ -53,18 +52,6 @@ class OrchestratorConfig:
         else:
             self.log_dir = os.path.expandvars(self.log_dir)
             log_dir = Path(self.log_dir)
-
-        # decide whether to overwrite directory if it exists
-        if self.overwrite:
-            confirm = input(
-                f"Are you sure you want to delete the directory '{log_dir}'? This action cannot be undone. (yes/no): "
-            )
-            if confirm.upper().startswith("Y"):
-                shutil.rmtree(log_dir)
-                logger.info(f"Directory '{log_dir}' has been deleted.")
-            else:
-                logger.info("Operation cancelled.")
-                return
         log_dir.mkdir(parents=True, exist_ok=True)
 
         # add discriminative information if array job
@@ -79,6 +66,7 @@ class OrchestratorConfig:
         # logging related
         self.logging.stdout_path = str(log_dir / "logs" / task_id)
         self.logging.metric_path = str(log_dir / "metrics" / task_id)
+        self.logging.config_path = str(log_dir / "configs" / task_id)
         self.wandb.path = str(log_dir / "wandb" / task_id)
         self.wandb.name = f"{self.name}_{task_id}"
 
