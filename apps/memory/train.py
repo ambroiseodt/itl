@@ -43,7 +43,7 @@ from src.nanollama.optim import (
 
 # tf.FLEX_ATTENTION = False
 tf.FLEX_ATTENTION = True
-_logger = logging.getLogger("nanollama")
+logger = logging.getLogger("nanollama")
 
 
 # ------------------------------------------------------------------------------
@@ -97,7 +97,7 @@ def train(config: TrainingConfig) -> None:
 
         preemption: PreemptionHandler = context_stack.enter_context(PreemptionHandler())
         cluster: ClusterManager = context_stack.enter_context(ClusterManager(config.cluster))
-        logger: Logger = context_stack.enter_context(Logger(config.orchestration.logging))
+        metric_logger: Logger = context_stack.enter_context(Logger(config.orchestration.logging))
         utils: UtilityManager = context_stack.enter_context(UtilityManager(config.orchestration.utils))
         wandb: WandbLogger = context_stack.enter_context(
             WandbLogger(config.orchestration.wandb, run_config=asdict(config))
@@ -107,16 +107,16 @@ def train(config: TrainingConfig) -> None:
         # Build and Parallelize model, optimizer, scheduler
         # ---------------------------------------------------------------------
 
-        _logger.info("Building model")
+        logger.info("Building model")
         # model = config.model_gen(config.model)
         model: BlockLanguageModel = config.model_gen(config.model)
         model = cluster.build_model(model)
 
-        _logger.info("Building optimizer")
+        logger.info("Building optimizer")
         optimizer = build_optimizer(model, config.optim)
         scheduler = build_scheduler(optimizer, config.optim)
         optim_state = OptimizerState(step=0, acc_step=0)
-        _logger.info("Done building optimizer")
+        logger.info("Done building optimizer")
 
         # ---------------------------------------------------------------------
         # DataLoader
@@ -150,8 +150,6 @@ def train(config: TrainingConfig) -> None:
         # Training loop
         # ---------------------------------------------------------------------
 
-        print(model)
-
         model.train()
 
         # aliases
@@ -160,7 +158,7 @@ def train(config: TrainingConfig) -> None:
         while optim_state.step < config.optim.steps:
             # handle preemption
             if preemption():
-                _logger.warning("Preemption flag set")
+                logger.warning("Preemption flag set")
                 break
 
             # accumulation step
@@ -217,7 +215,7 @@ def train(config: TrainingConfig) -> None:
             print(get_rank(), loss.item())
             wandb({"loss": loss.item(), "step": optim_state.step})
 
-    _logger.info("Training done.")
+    logger.info("Training done.")
 
 
 # ------------------------------------------------------------------------------
@@ -233,6 +231,8 @@ def heritage_config(run_config: dict[str, Any], launcher: dict[str, Any]) -> Non
     - run_config: configuration to run this file.
     - launcher: meta configuration to orchestrate the launch of this run.
     """
+
+    logger.info("Heritage from launcher to run_config")
     if "orchestration" not in run_config:
         run_config["orchestration"] = {}
     for key in ["name", "log_dir"]:
