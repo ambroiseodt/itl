@@ -94,6 +94,9 @@ class PromptLoader(Stateful):
         return self
 
     def __exit__(self, exc: type[BaseException], value: BaseException, tb: TracebackType):
+        if self.asynchronous:
+            self.process.kill()
+            self.buffer.close()
         self.jsonl_iterator.__exit__(exc, value, tb)
 
     def batch_iterator(self) -> Generator[tuple[list[str], list[str]], None, None]:
@@ -115,7 +118,7 @@ class PromptLoader(Stateful):
                 if len(prompts):
                     yield prompts, answers
                 else:
-                    break
+                    return
 
     def sync_state_dict(self) -> dict[str, Any]:
         return {"iterator": self.jsonl_iterator.state_dict()}
@@ -194,15 +197,15 @@ class PromptLoader(Stateful):
 
 
 if __name__ == "__main__":
+
     config = DataConfig(
         source="/private/home/vivc/code/memory/apps/memory/dataset/qatool.jsonl",
-        batch_size=10,
-        asynchronous=False,
+        batch_size=12,
+        asynchronous=True,
         buffer_size=4,
     )
 
     data_loader = PromptLoader(config)
     with data_loader:
         for batch in data_loader:
-            print(batch)
-            break
+            print(len(batch[0]), len(batch[1]))
