@@ -29,6 +29,7 @@ run_config:
     asynchronous: false
 
   model:
+    implementation: transformer
     vocab_size: 300
     emb_dim: 64
     nb_layers: 2
@@ -37,11 +38,11 @@ run_config:
       hidden_dim: 256
 
   optim:
-    steps: 2000
-    lr: 1e-4
+    steps: 10000
+    lr: 1e-3
     weight_decay: 0.1
     fused: true
-    warmup: 15
+    warmup: 50
     lr_min_ratio: 0
 
   orchestration:
