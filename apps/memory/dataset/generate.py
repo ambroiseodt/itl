@@ -93,7 +93,7 @@ def generate_qa(num: int = float("inf"), tooluse: bool = False) -> None:
     """
     templates: list[list[dict[str, Template]]] = []
     identifier = "qa" + ("tool" if tooluse else "")
-    for file in (SAVE_DIR / "templates").glob(f"{identifier}*.j2"):
+    for file in (SAVE_DIR / "templates").glob(f"{identifier}?.j2"):
         with open(file) as f:
             dialog = f.read().splitlines()  # Read all lines and split them
             out, source, content = [], None, []
