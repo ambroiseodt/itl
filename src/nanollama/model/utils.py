@@ -23,7 +23,7 @@ def build_config_with_model_dispatch(ConfigClass: type, run_config: dict[str, An
     - config: The initialized configuration object.
     """
     # argument parsing
-    assert "model" not in run_config and "implementation" in run_config["model"], "Model implementation not found"
+    assert "model" in run_config and "implementation" in run_config["model"], "Model implementation not found"
     implementation = run_config["model"]["implementation"]
 
     if ConfigClass is None:
