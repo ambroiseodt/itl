@@ -194,18 +194,3 @@ class PromptLoader(Stateful):
         if self.asynchronous:
             self.process = Process(target=self.async_batch_creator)
             self.process.start()
-
-
-if __name__ == "__main__":
-
-    config = DataConfig(
-        source="/private/home/vivc/code/memory/apps/memory/dataset/qatool.jsonl",
-        batch_size=12,
-        asynchronous=True,
-        buffer_size=4,
-    )
-
-    data_loader = PromptLoader(config)
-    with data_loader:
-        for batch in data_loader:
-            print(len(batch[0]), len(batch[1]))
