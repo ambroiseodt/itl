@@ -8,6 +8,7 @@ located in the root directory of this repository.
 @ 2025, Meta
 """
 
+import json
 import re
 import shutil
 from asyncio import Future
@@ -185,6 +186,10 @@ class Checkpointer(Monitor):
         logger.info(f"Saving checkpoint at step {self.step} to {str(path)}.")
         state_dict = self.get_state_dict()
         self.checkpoint_process = dcp.async_save(state_dict, checkpoint_id=path)
+
+        if hasattr(self.model, "config") and is_master_process():
+            with open(path / "params.json", "w") as f:
+                json.dump(self.model.config, f)
 
     @torch.no_grad()
     def get_state_dict(self) -> dict[str, dict]:

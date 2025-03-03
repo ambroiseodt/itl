@@ -136,6 +136,8 @@ def train(config: TrainingConfig) -> None:
         )
         checkpoint.saved_step = checkpoint.step = optim_state.step
 
+        model.config = asdict(config.model)
+
         # ---------------------------------------------------------------------
         # Global information
         # ---------------------------------------------------------------------
