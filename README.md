@@ -54,16 +54,10 @@ pip install -e .[ssm]
 
 ## Dataset creation
 Create a dataset of people, biographies of 1000 peoples, and questions/answers with the following commands (to be run from the root of the repository):
-```bash
-python -m apps.memory.dataset.generate people
-python -m apps.memory.dataset.generate biographies --num 1000
-python -m apps.memory.dataset.generate qa --num 100
-python -m apps.memory.dataset.generate qa --tooluse --num 100
+```shell
+$ bash apps/memory/bash/generate_data.sh
 ```
-To format the database as a SQLlite database, run the following command
-```bash
-python -m apps.memory.dataset.database create
-```
+You will be asked whether to format the database as a SQLlite database. Answer "Yes" is you want to do it.
 
 ## Training
 Launch a traning run locally
