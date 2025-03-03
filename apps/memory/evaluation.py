@@ -123,10 +123,12 @@ class EvalComputer:
         self.loader.__exit__(exc, value, tb)
 
     @torch.inference_mode()
-    def __next__(self):
-        try:
-            # TODO: create this dataloader
-            prompts, answer = next(self.loader)
+    def __call__(self):
+        """
+        Run evaluation
+        """
+        # TODO: create this dataloader
+        for prompts, answer in self.loader:
             outputs = self.inference_engine.generate(prompts)
 
             # TODO correct this evaluation snippet
@@ -138,23 +140,15 @@ class EvalComputer:
 
             logger.debug(f"Evaluation: partial step: {self.step} - loss: {round(self.loss, 4):>7}")
 
-        except StopIteration:
-            # rescale loss and save it
-            self.loss /= self.scaling
-            with open(self.log_path, "a") as f:
-                print(json.dumps({"loss": self.loss} | self.metadata), file=f, flush=True)
+        # rescale loss and save it
+        self.loss /= self.scaling
+        with open(self.log_path, "a") as f:
+            print(json.dumps({"loss": self.loss} | self.metadata), file=f, flush=True)
 
-            # remove temporary file
-            self.tmp_file.unlink()
-            return False
+        # remove temporary file
+        self.tmp_file.unlink()
+        return False
 
-    def __call__(self):
-        """
-        Run evaluation
-        """
-        with self:
-            while next(self):
-                ...
 
 
 @torch.no_grad()
