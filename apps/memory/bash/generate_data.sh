@@ -8,16 +8,22 @@
 # ```
 #
 
+echo "Generating data for the memory app..."
+echo "people..."
 python -m apps.memory.dataset.generate people
+echo "biographies..."
 python -m apps.memory.dataset.generate biographies --num 1000
+echo "question/answer..."
 python -m apps.memory.dataset.generate qa --num 100
+echo "question/answer with tool use..."
 python -m apps.memory.dataset.generate qa --tooluse --num 100
 
-printf 'Do you want to format the database as a SQLlite database? (Y/N)? '
+printf 'Do you want to format the dataset as a SQLlite database? (Y/N)? '
 read answer
 
 if [ "$answer" != "${answer#[Yy]}" ] ;then
     echo "SQLlite formatting."
+    python -m apps.memory.dataset.database delete
     python -m apps.memory.dataset.database create
 fi
 
