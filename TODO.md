@@ -4,9 +4,9 @@
 
 #### Vivien's current todo:
 - Finish the `evaluation.py` file.
-    - Finish the online evaluation.
-        - change the step method to look more like the training run (which is also a loop, i.e. an iterator, but hides it, which is more natural).
-    - Make a offline evaluation.
+    - Change the step method to look more like the training run (which is also a loop, i.e. an iterator, but hides it, which is more natural).
+    - Make a run where evaluation is launch at various time in training, and look at the curves.
+    - Make the offline evaluation.
 - Integrate evaluation option to the training run.
 - Make nice plots, and visualization methods.
 
@@ -32,6 +32,7 @@
 - Correct init_weight vs reset_parameters
 - Correct docstring `args` to `- my_args`, and module docstring more readable.
 - Improve the docstring at module level (the ones at the start of files).
+- Switch from ACTOR:> tag to <|actor|> tag.
 
 #### Small improvements to the codebase
 - (?) Remove Statefulness of scheduler.
