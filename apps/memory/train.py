@@ -21,10 +21,8 @@ from src.nanollama.distributed import ClusterConfig, ClusterManager, get_rank, i
 from src.nanollama.model import (
     BlockLanguageModel,
     BlockLanguageModelConfig,
-    TransformerConfig,
     build_config_with_model_dispatch,
 )
-from src.nanollama.model import transformer as tf
 from src.nanollama.monitor import (
     Checkpointer,
     Logger,
@@ -43,8 +41,6 @@ from src.nanollama.optim import (
 
 from .evaluation import OnlineEvaluationConfig, run_evaluation
 
-# tf.FLEX_ATTENTION = False
-tf.FLEX_ATTENTION = True
 logger = logging.getLogger("nanollama")
 
 
@@ -67,7 +63,7 @@ class TrainingConfig:
     data: DataConfig = field(default_factory=DataConfig)
     optim: OptimizerConfig = field(default_factory=OptimizerConfig)
 
-    model: BlockLanguageModelConfig = field(default_factory=TransformerConfig)
+    model: BlockLanguageModelConfig = field(default_factory=BlockLanguageModelConfig)
     model_gen: callable = field(init=False, default=BlockLanguageModel)
 
     evaluation: EvalConfig = field(default_factory=EvalConfig)
@@ -119,7 +115,6 @@ def train(config: TrainingConfig) -> None:
         # ---------------------------------------------------------------------
 
         logger.info("Building model")
-        # model = config.model_gen(config.model)
         model: BlockLanguageModel = config.model_gen(config.model)
         model = cluster.build_model(model)
 
