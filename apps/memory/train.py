@@ -39,7 +39,7 @@ from src.nanollama.optim import (
     build_scheduler,
 )
 
-from .evaluation import OnlineEvaluationConfig, run_evaluation
+from .eval import OnlineEvaluationConfig, run_evaluation
 
 logger = logging.getLogger("nanollama")
 

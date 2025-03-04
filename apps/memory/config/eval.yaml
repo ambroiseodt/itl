@@ -1,3 +1,6 @@
+
+checkpoint_dir: /private/home/vivc/memory/checkpoints/0/0000001000
+
 log_path: $HOME/logs/eval.jsonl
 db_path: data/memory/people.db
 data:
@@ -7,3 +10,10 @@ data:
 tmp_file: $HOME/logs/tmp_eval.jsonl
 tokenizer:
   name: byte
+
+cluster:
+  compile: false
+
+orchestration:
+  profiler:
+    active: false

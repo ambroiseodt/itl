@@ -73,6 +73,12 @@ Launch a training on your cluster
 python -m nanollama.launcher apps/memory/config/debug.yaml
 ```
 
+## Evaluation
+Launch an evaluation run locally
+```bash
+python -m apps.memory.eval apps/memory/config/eval.yaml
+```
+
 #### Notes for the team
 I have added two configs `config/with_tool.yaml` and `config/without_tool.yaml` to reproduce Sam's exp1, and continue on our exp1 (get the number of facts a networks can recall with and without access to a tool).
 Modify these configs (as well as the datasets -- adding or removing facts) to fit your needs and run the following commands

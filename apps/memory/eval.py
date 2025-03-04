@@ -19,6 +19,7 @@ import torch
 import torch.distributed.checkpoint as dcp
 import yaml
 from torch.distributed.checkpoint.stateful import Stateful
+from torch.distributed.device_mesh import DeviceMesh
 
 from src.nanollama.data.tokenizer import TokenizerConfig, build_tokenizer
 from src.nanollama.distributed import ClusterConfig, ClusterManager, get_rank, is_master_process
@@ -80,6 +81,7 @@ class EvalCheckpointer:
                 state = json.load(f)
             self.state.load_state_dict(state)
         else:
+            self.tmp_file.parent.mkdir(parents=True, exist_ok=True)
             self.tmp_file.touch()
         return self
 
@@ -126,9 +128,17 @@ class OnlineEvaluationConfig:
 
 
 @torch.inference_mode()
-def run_evaluation(config: OnlineEvaluationConfig, model: BlockLanguageModel, preemption: PreemptionHandler = None, **metadata) -> None:
+def run_evaluation(
+    config: OnlineEvaluationConfig,
+    model: BlockLanguageModel,
+    preemption: PreemptionHandler = None,
+    dp_mesh: DeviceMesh = None,
+    **metadata,
+) -> None:
     if preemption is None:
-        preemption = lambda: False
+
+        def preemption():
+            return False
 
     with ExitStack() as context_stack:
         state = EvalState()
@@ -138,7 +148,7 @@ def run_evaluation(config: OnlineEvaluationConfig, model: BlockLanguageModel, pr
         checkpointer: EvalCheckpointer = context_stack.enter_context(checkpointer)
 
         # data loader
-        loader = PromptLoader(config.data, dp_mesh=None)
+        loader = PromptLoader(config.data, dp_mesh=dp_mesh)
         loader: PromptLoader = context_stack.enter_context(loader)
 
         # inference engine
@@ -198,7 +208,7 @@ class EvaluationConfig(OnlineEvaluationConfig):
     - tmp_file: temporary file to store partial results
     """
 
-    checkpoint_dir: str = "/private/home/vivc/memory/checkpoints/0/0000010000"
+    checkpoint_dir: str = ""
 
     cluster: ClusterConfig = field(default_factory=ClusterConfig)
     orchestration: EvalOrchestratorConfig = field(default_factory=EvalOrchestratorConfig)
@@ -207,12 +217,12 @@ class EvaluationConfig(OnlineEvaluationConfig):
         """
         Check validity of arguments and fill in missing values.
         """
+        assert self.checkpoint_dir, "Checkpoint directory must be set."
         # path to stored results
-        self.path = self.orchestration.logging.metric_path
 
-        self.log_path = ...
-        self.db_path = ...
-        self.tmp_file = ...
+        # self.log_path = ...
+        # self.db_path = ...
+        # self.tmp_file = ...
 
         super().__post_init__()
 
@@ -234,7 +244,7 @@ def eval(config: EvaluationConfig) -> None:
         metric_logger: Logger = context_stack.enter_context(Logger(config.orchestration.logging))
 
         # ---------------------------------------------------------------------
-        # Build and Parallelize model
+        # Build, Recover Checkpoint and Parallelize model
         # ---------------------------------------------------------------------
 
         # build model architecture
@@ -244,7 +254,7 @@ def eval(config: EvaluationConfig) -> None:
         model: BlockLanguageModel = model_config.model_gen(model_config.model)
 
         # parallelize model
-        model = cluster.build_model(model)
+        # model = cluster.build_model(model)
 
         # load model weights
         state_dict = {"model": model.state_dict()}
@@ -252,21 +262,14 @@ def eval(config: EvaluationConfig) -> None:
         model.load_state_dict(state_dict["model"])
 
         # ---------------------------------------------------------------------
-        # Recover Checkpoint
+        # Evaluation loop
         # ---------------------------------------------------------------------
 
-        train_step = config.orchestration.train_step
-        context_stack.enter_context(EvalCheckpointer(model, config.orchestration.checkpoint_path, train_step))
-
-        # ---------------------------------------------------------------------
-        # Run evaluation into chunks
-        # ---------------------------------------------------------------------
-
-        metric = run_evaluation(config, model, preemption=preemption, step=train_step)
+        metric = run_evaluation(config, model, preemption=preemption, step=0)
 
         # wandb logging
         wandb: WandbLogger = context_stack.enter_context(WandbLogger(config.orchestration.wandb, config))
-        wandb({"test_loss": metric, "step": train_step})
+        wandb({"test_loss": metric, "step": 0})
 
         if is_master_process():
             logger.info(f"Test loss: {round(metric, 4):>7}")

@@ -9,6 +9,7 @@
 - Integrate this to the training script
     - Evaluation working asynchronously
     - Configuration inheritage between training and evaluation
+- Change EvalCheckpointer Logic so that it works very similarly to the TrainCheckpointer.
 - Proper parallelization
     - Make generation (KV cache / masking) work with DDP
 

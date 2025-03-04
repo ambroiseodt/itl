@@ -13,7 +13,7 @@ located in the root directory of this repository.
 import os
 from dataclasses import asdict, dataclass, field
 from logging import getLogger
-from pathlib import Path, PosixPath
+from pathlib import Path
 from typing import Any
 
 from ..distributed import is_master_process
@@ -91,14 +91,10 @@ class OrchestratorConfig:
 @dataclass
 class EvalOrchestratorConfig:
     name: str = "composition_default"
-    parent_dir: str = ""  # log dir of parent training run
     log_dir: str = ""
 
-    train_step: int = 0  # train step at which evaluation is performed
-    task_id: str = "0"  # task id of the training job
-
     # submanagers
-    checkpoint_path: str = field(init=False, default="")
+    # checkpoint: CheckpointConfig = field(default_factory=CheckpointConfig)
     logging: LoggerConfig = field(default_factory=LoggerConfig)
     profiler: ProfilerConfig = field(default_factory=ProfilerConfig)
     utils: UtilityConfig = field(default_factory=UtilityConfig)
@@ -109,19 +105,10 @@ class EvalOrchestratorConfig:
         Check validity of arguments and fill in missing values.
         """
 
-        # parent directory (same logic as OrchestratorConfig)
-        if not self.parent_dir:
-            parent_dir = Path.home() / "logs" / self.name
-            self.parent_dir = str(parent_dir)
-            logger.info(f"No logging directory set. Setting it to {self.parent_dir}")
-        else:
-            self.parent_dir = os.path.expandvars(self.parent_dir)
-            parent_dir = Path(self.parent_dir)
-        self.checkpoint_path = str(parent_dir / "checkpoints" / str(self.task_id))
-
         # logging directory
         if not self.log_dir:
-            log_dir: PosixPath = parent_dir / "evals" / str(self.task_id) / f"{self.train_step:010d}"
+            log_dir = Path.home() / "logs_evals" / self.name
+            # log_dir: PosixPath = parent_dir / "evals" / str(self.task_id) / f"{self.train_step:010d}"
             self.log_dir = str(log_dir)
             logger.info(f"No logging directory set. Setting it to {self.log_dir}")
         else:
@@ -129,21 +116,19 @@ class EvalOrchestratorConfig:
             log_dir = Path(self.log_dir)
 
         # wandb directory (single dir for any steps)
-        task_id = os.environ.get("SLURM_ARRAY_TASK_ID", "0")
-        self.wandb.path = str(log_dir.parent / "wandb" / task_id)
-        self.wandb.name = f"{self.name}_{self.task_id}_{task_id}"
+        self.wandb.path = str(log_dir.parent / "wandb")
+        self.wandb.name = self.name
 
         # same logic as OrchestratorConfig
-        self.profiler.path = str(log_dir / "metrics" / task_id)
-        self.logging.stdout_path = str(log_dir / "logs" / task_id)
-        self.logging.metric_path = str(log_dir / "metrics" / task_id)
+        self.profiler.path = str(log_dir / "metrics")
+        self.logging.stdout_path = str(log_dir / "logs")
+        self.logging.metric_path = str(log_dir / "metrics")
 
         for module in self.__dict__.values():
             if hasattr(module, "__check_init__"):
                 module.__check_init__()
 
         # create directory
-        Path(self.parent_dir).mkdir(parents=True, exist_ok=True)
         Path(self.log_dir).mkdir(parents=True, exist_ok=True)
 
         # keep a mapping of job_id to task_id
@@ -160,11 +145,8 @@ class EvalOrchestratorConfig:
         Convert configuration to dictionnary to reinitialize it.
         """
         return {
-            "parent_dir": self.parent_dir,
             "log_dir": self.log_dir,
             "name": self.name,
-            "train_step": self.train_step,
-            "task_id": self.task_id,
             "logging": self.logging.to_dict(),
             "profiler": self.profiler.to_dict(),
             "utils": asdict(self.utils),
