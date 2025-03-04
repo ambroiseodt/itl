@@ -63,13 +63,9 @@ class Logger:
     def __init__(self, config: LoggerConfig, eval: bool = False) -> None:
         rank = get_rank()
 
-        if eval:
-            self.metric = Path(config.metric_path)
-            self.path = None
-        else:
-            self.path = Path(config.metric_path)
-            self.path.mkdir(parents=True, exist_ok=True)
-            self.metric = str(self.path / f"raw_{rank}.jsonl")
+        self.path = Path(config.metric_path)
+        self.path.mkdir(parents=True, exist_ok=True)
+        self.metric = str(self.path / f"raw_{rank}.jsonl")
 
         path = Path(config.stdout_path)
         path.mkdir(parents=True, exist_ok=True)

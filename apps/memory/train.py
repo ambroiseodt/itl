@@ -19,7 +19,8 @@ import yaml
 from src.nanollama.data.loader import DataLoader
 from src.nanollama.data.text import DataConfig, MultipleSourcesTokenGenerator
 from src.nanollama.data.tokenizer import TokenizerConfig
-from src.nanollama.distributed import ClusterConfig, ClusterManager, is_master_process
+from src.nanollama.distributed import ClusterConfig, ClusterManager, clean_environment, get_rank, is_master_process
+from src.nanollama.launcher import LauncherConfig, SlurmConfig, launch_job
 from src.nanollama.model import (
     BlockLanguageModel,
     BlockLanguageModelConfig,
@@ -43,7 +44,7 @@ from src.nanollama.optim import (
     build_optimizer,
     build_scheduler,
 )
-from src.nanollama.utils import flatten_config, unflatten_config
+from src.nanollama.utils import flatten_config, initialize_nested_object, unflatten_config
 
 from .eval import EvaluationConfig, OnlineEvaluationConfig, run_evaluation
 from .prompt_loader import DataConfig as EvalDataConfig
@@ -61,10 +62,11 @@ class EvalConfig(EvaluationConfig):
     period: int = 0
     asynchronous: bool = False
 
+    launcher: dict[str, Any] = field(default_factory=dict)
+    slurm: SlurmConfig = field(default_factory=SlurmConfig)
+
     def __post_init__(self):
-        if self.asynchronous:
-            super().__post_init__()
-        else:
+        if not self.asynchronous:
             OnlineEvaluationConfig.__post_init__(self)
 
 
@@ -246,14 +248,15 @@ def train(config: TrainingConfig) -> None:
             checkpoint()
             utils()
 
+            # alias
+            step = optim_state.step
+
             # -----------------------------------------------------------------
             # Log metrics
             # -----------------------------------------------------------------
 
-            if log_period > 0 and optim_state.step % log_period == 0:
-                # TODO make a real call to the metric logger
-                print("here")
-                metrics = {"loss": loss.item(), "step": optim_state.step}
+            if log_period > 0 and step % log_period == 0:
+                metrics = {"loss": loss.item(), "step": step}
                 metric_logger(metrics)
                 wandb(metrics)
 
@@ -263,7 +266,7 @@ def train(config: TrainingConfig) -> None:
 
             profiler.start_timer()
 
-            if eval_period > 0 and optim_state.step % eval_period == 0:
+            if eval_period > 0 and step % eval_period == 0:
                 model.eval()
 
                 # run evaluation now
@@ -272,41 +275,44 @@ def train(config: TrainingConfig) -> None:
 
                 # launch evaluation job on slurm
                 elif is_master_process():
-                    raise NotImplementedError("Asynchronous evaluation is not implemented yet.")
-                    # # checkpoint
-                    # checkpoint.update(eval=True)
+                    # checkpoint
+                    eval_flag = "eval_flag"
+                    checkpoint.update(eval_flag=eval_flag)
 
-                    # # alias
-                    # orchestration_config = config.evaluation.orchestration
-                    # orchestration_config.log_dir = str(Path(orchestration_config.log_dir) / f"{step:010d}")
+                    # alias
+                    eval_config = config.evaluation
+                    orch = config.orchestration
+                    eval_orch = config.evaluation.orchestration
+                    step_id = checkpoint.folder_name.format(step)
 
-                    # # launcher config
-                    # launch_config = initialize_nested_object(
-                    #     LauncherConfig,
-                    #     {
-                    #         "name": orchestration_config.name,
-                    #         "log_dir": orchestration_config.log_dir,
-                    #         "overwrite": False,
-                    #         "copy_code": False,
-                    #         "script": "src.apps.gssm.evaluation",
-                    #         "slurm": config.evaluation.slurm.to_dict(),
-                    #     },
-                    # )
+                    # specify training step etc.
+                    eval_config.log_path = str(Path(orch.logging.metric_path) / f"eval_{get_rank()}.jsonl")
+                    eval_config.model_dir = str(Path(orch.checkpoint.path) / step_id)
+                    eval_config.checkpoint_flag = eval_flag
+                    eval_config.metadata = {"step": step}
+                    eval_orch.log_dir = str(Path(eval_orch.log_dir) / step_id)
 
-                    # # run config
-                    # orchestration_config.train_step = step
-                    # eval_config: EvaluationRunConfig = {
-                    #     "model": asdict(config.model),
-                    #     "data": asdict(config.evaluation.data),
-                    #     "cluster": config.evaluation.cluster.to_dict(),
-                    #     "orchestration": orchestration_config.to_dict(),
-                    # }
+                    # launcher config
+                    launch_config = initialize_nested_object(
+                        LauncherConfig,
+                        {
+                            "name": eval_orch.name,
+                            "log_dir": eval_orch.log_dir,
+                            "overwrite": False,
+                            "copy_code": False,
+                            "script": "apps.memory.eval",
+                            "slurm": config.evaluation.slurm.to_dict(),
+                        },
+                    )
 
-                    # # luanch job without device binding
-                    # with clean_environment():
-                    #     launch_job(launch_config, eval_config)
+                    # check config
+                    eval_config.__post_init__()
 
-                    # orchestration_config.log_dir = str(Path(orchestration_config.log_dir).parent)
+                    # launch job without device binding
+                    with clean_environment():
+                        launch_job(launch_config, eval_config)
+
+                    eval_orch.log_dir = str(Path(eval_orch.log_dir).parent)
 
     logger.info("Training done.")
 
@@ -340,12 +346,13 @@ def heritage_config(run_config: dict[str, Any], launcher: dict[str, Any]) -> Non
 
     # flatten configurations for easier access
     flat_config = flatten_config(run_config)
+    # hack to add slurm inheritance
+    flat_config |= flatten_config({"_slurm": launcher.pop("slurm", {})})
     eval_config = flatten_config(eval_config)
 
     # special inheritance
     # orchestration
     eval_config["orchestration.name"] = flat_config["orchestration.name"] + "_eval"
-    eval_config["orchestration.log_dir"] = flat_config["orchestration.log_dir"]
     task_id = os.environ.get("SLURM_ARRAY_TASK_ID", "")
     eval_config["orchestration.log_dir"] = str(Path(flat_config["orchestration.log_dir"]) / "evals" / task_id)
 
@@ -357,11 +364,13 @@ def heritage_config(run_config: dict[str, Any], launcher: dict[str, Any]) -> Non
 
     if eval_config.get("asynchronous"):
         configs_keys += [
+            (SlurmConfig, "slurm", "_slurm"),
             (ClusterConfig, "cluster", "cluster"),
             (LoggerConfig, "orchestration.logging", "orchestration.logging"),
             (ProfilerConfig, "orchestration.profiler", "orchestration.profiler"),
             (WandbConfig, "orchestration.wandb", "orchestration.wandb"),
         ]
+        eval_config["launcher"] = flatten_config(launcher)
 
     for config_cls, cls_key, inherited_key in configs_keys:
         for key, finfo in config_cls.__dataclass_fields__.items():
@@ -419,12 +428,7 @@ def build_config(file_config: dict[str, Any]) -> TrainingConfig:
     if grid_id is not None:
         run_config = heritage_grid_id(run_config, grid_id)
 
-    # TODO:
-    for key, val in flatten_config(run_config).items():
-        print(key, val)
-
     config = build_config_with_model_dispatch(TrainingConfig, run_config)
-
     return config
 
 

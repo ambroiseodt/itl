@@ -50,7 +50,7 @@ class SlurmConfig:
     """
     # basic configuration
     partition: str = ""
-    time: int = -1  # time limit of the job (in minutes).
+    time: int = 0  # time limit of the job (in minutes).
     mem: str = ""  # amount of memory to allocate per node.
     nodes: int = 1  # number of nodes to run the job on.
     nb_gpus: int = 1  # number of GPUs required per node.
@@ -78,15 +78,15 @@ class SlurmConfig:
 
         # if partition, time or memory was not set
         priorities, max_times, memories = {}, {}, {}
-        if self.partition == "" or self.time == -1 or self.mem == "":
+        if not (self.partition and self.time and self.mem):
             priorities, max_times, memories = self.extract_slurm_info()
-        if self.partition == "":
+        if not self.partition:
             self.partition = min(priorities.keys(), key=lambda k: priorities[k]["job_factor"])
             logger.info(f"No partition specified default to {self.partition}")
-        if self.time == -1:
+        if not self.time:
             self.time = max_times[self.partition]
             logger.info(f"No time specified, default to {self.time} minutes")
-        if self.mem == "":
+        if not self.mem:
             self.mem = memories[self.partition]
             logger.info(f"No memory specified, default to {self.mem}MB")
 

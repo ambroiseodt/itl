@@ -104,7 +104,7 @@ class Checkpointer(Monitor):
             self.load(path)
         return self
 
-    def update(self, eval_id: str = "") -> None:
+    def update(self, eval_flag: str = "") -> None:
         """
         Checkpoint model, optimizer, scheduler and training state
 
@@ -119,9 +119,8 @@ class Checkpointer(Monitor):
         path.mkdir(parents=False, exist_ok=True)
 
         # add evaluation flag, if needed
-        if eval_id:
-            eval_flag = path / f"eval_{eval_id}"
-            eval_flag.touch()
+        if eval_flag:
+            (path / eval_flag).touch()
 
         self.save(path)
 
