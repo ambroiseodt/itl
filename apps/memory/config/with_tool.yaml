@@ -15,7 +15,7 @@ launcher:
 
 run_config:
   cluster:
-    compile_model: false
+    compile_model: true
 
   data:
     sources:
@@ -30,6 +30,7 @@ run_config:
 
   model:
     implementation: transformer
+    flex_attention: false
     vocab_size: 300
     emb_dim: 64
     nb_layers: 2
@@ -73,9 +74,11 @@ run_config:
     data:
       source: data/memory/qatool.jsonl
       batch_size: 16
+      asynchronous: false
 
     # these arguments should be inherited
-    tmp_file: $HOME/memory/evals.jsonl
-    log_path: $HOME/memory/tmp_eval.jsonl
     tokenizer:
       name: byte
+
+    checkpoint:
+      path: $HOME/tmp_eval.jsonl

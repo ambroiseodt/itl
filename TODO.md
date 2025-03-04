@@ -7,12 +7,10 @@
 - Integrate this to the training script
     - Configuration inheritage between training and evaluation
     - Evaluation working asynchronously
-
 - Proper parallelization
     - Make generation (KV cache / masking) work with DDP / TP.
-
 - Make nice plots, and visualization methods.
-
+    - check that wandb is working correctly.
 - Generation.
     - Write inference loop logic, as well as sampling strategies.
 

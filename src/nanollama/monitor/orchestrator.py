@@ -111,7 +111,6 @@ class EvalOrchestratorConfig:
     # submanagers
     logging: LoggerConfig = field(default_factory=LoggerConfig)
     profiler: ProfilerConfig = field(default_factory=ProfilerConfig)
-    utils: UtilityConfig = field(default_factory=UtilityConfig)
     wandb: WandbConfig = field(default_factory=WandbConfig)
 
     def __post_init__(self) -> None:

@@ -1,10 +1,8 @@
 
-
-db_path: data/memory/people.db
 data:
   source: data/memory/qatool.jsonl
   batch_size: 16
-  asynchronous: false
+db_path: data/memory/people.db
 tokenizer:
   name: byte
 
@@ -12,8 +10,11 @@ model_dir: /private/home/vivc/memory/checkpoints/0/0000001000
 log_path: $HOME/final_eval
 checkpoint_flag: eval
 
+metadata:
+  step: 1000
+
 cluster:
-  compile: false
+  compile: true
 
 checkpoint:
   path: $HOME/tmp_eval
@@ -22,6 +23,9 @@ orchestration:
   log_dir: $HOME/eval
   profiler:
     active: false
+
+  wandb:
+    active: true
 
 
 # class EvalCheckpointer:

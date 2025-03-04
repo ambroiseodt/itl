@@ -9,7 +9,7 @@ import json
 import logging
 import os
 from contextlib import ExitStack
-from dataclasses import dataclass, field
+from dataclasses import asdict, dataclass, field
 from logging import getLogger
 from pathlib import Path
 from typing import Any
@@ -215,9 +215,17 @@ def eval(config: EvaluationConfig) -> None:
         # Handle preemption, computing environment, logging, and utils
         # ---------------------------------------------------------------------
 
-        preemption: PreemptionHandler = context_stack.enter_context(PreemptionHandler())
-        cluster: ClusterManager = context_stack.enter_context(ClusterManager(config.cluster))
-        metric_logger: Logger = context_stack.enter_context(Logger(config.orchestration.logging))
+        preemption = PreemptionHandler()
+        context_stack.enter_context(preemption)
+
+        cluster = ClusterManager(config.cluster)
+        context_stack.enter_context(cluster)
+
+        metric_logger = Logger(config.orchestration.logging, eval=True)
+        context_stack.enter_context(metric_logger)
+
+        wandb = WandbLogger(config.orchestration.wandb, asdict(config))
+        context_stack.enter_context(wandb)
 
         # ---------------------------------------------------------------------
         # Build, Recover Checkpoint and Parallelize model
@@ -241,16 +249,15 @@ def eval(config: EvaluationConfig) -> None:
         # Evaluation loop
         # ---------------------------------------------------------------------
 
-        metric = run_evaluation(config, model, preemption=preemption)
+        metrics = run_evaluation(config, model, preemption=preemption)
 
         # logging metrics
-        metric |= config.metadata
-        metric_logger(metric)
-        wandb: WandbLogger = context_stack.enter_context(WandbLogger(config.orchestration.wandb, config))
-        wandb(metric)
+        metrics |= config.metadata
+        metric_logger(metrics)
+        wandb(metrics)
 
         if is_master_process():
-            logger.info(f"Final metric: {metric}")
+            logger.info(f"Evaluation metrics: {metrics}")
 
     logger.info("Evaluation done.")
 

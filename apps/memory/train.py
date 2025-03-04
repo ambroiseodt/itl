@@ -102,13 +102,20 @@ def train(config: TrainingConfig) -> None:
         # Handle preemption, computing environment, logging, and utils
         # ---------------------------------------------------------------------
 
-        preemption: PreemptionHandler = context_stack.enter_context(PreemptionHandler())
-        cluster: ClusterManager = context_stack.enter_context(ClusterManager(config.cluster))
-        metric_logger: Logger = context_stack.enter_context(Logger(config.orchestration.logging))
-        utils: UtilityManager = context_stack.enter_context(UtilityManager(config.orchestration.utils))
-        wandb: WandbLogger = context_stack.enter_context(
-            WandbLogger(config.orchestration.wandb, run_config=asdict(config))
-        )
+        preemption = PreemptionHandler()
+        context_stack.enter_context(preemption)
+
+        cluster = ClusterManager(config.cluster)
+        context_stack.enter_context(cluster)
+
+        metric_logger = Logger(config.orchestration.logging)
+        context_stack.enter_context(metric_logger)
+
+        utils = UtilityManager(config.orchestration.utils)
+        context_stack.enter_context(utils)
+
+        wandb = WandbLogger(config.orchestration.wandb, run_config=asdict(config))
+        context_stack.enter_context(wandb)
 
         # ---------------------------------------------------------------------
         # Build and Parallelize model, optimizer, scheduler
@@ -246,7 +253,7 @@ def train(config: TrainingConfig) -> None:
 
                 # run evaluation now
                 if not config.evaluation.asynchronous:
-                    run_evaluation(config.evaluation, model=model, step=optim_state.step)
+                    run_evaluation(config.evaluation, model=model)
 
                 # launch evaluation job on slurm
                 elif is_master_process():
