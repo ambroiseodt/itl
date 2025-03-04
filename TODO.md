@@ -4,19 +4,19 @@
 
 #### Vivien's current todo:
 
-- Integrate this to the training script
-    - Configuration inheritage between training and evaluation
-    - Evaluation working asynchronously
-- Proper parallelization
-    - Make generation (KV cache / masking) work with DDP / TP.
+- Debug the evaluation run launched in an asynchronous fashion.
+
 - Make nice plots, and visualization methods.
     - check that wandb is working correctly.
 - Generation.
     - Write inference loop logic, as well as sampling strategies.
 
+- Proper parallelization [maybe assume we do everything on a single gpu for the moment]
+    - Make generation (KV cache / masking) work with DDP / TP.
+
 #### Other stuffs for Vivien's
 - Improve the light profiler.
-- Improve logging in the train loop, and add visualization of training logs.
+
 - Linear Probing of the weights of the network
     - Have something running in interactive fashion.
     - The logic is that we add module that checkpoint stuff during the forward and during the backward pass, while acting as the identity regarding the information passing through.
