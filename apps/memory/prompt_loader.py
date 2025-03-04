@@ -8,6 +8,7 @@ PyTorch introduces a new logic for dataloader with `torchdata`, which could impr
 @ 2025, Meta
 """
 
+import os
 from collections.abc import Generator
 from dataclasses import dataclass
 from logging import getLogger
@@ -42,6 +43,9 @@ class DataConfig:
     batch_size: int
     asynchronous: bool = True
     buffer_size: int = 4
+
+    def __post_init__(self):
+        self.source = os.path.expandvars(self.source)
 
 
 # ------------------------------------------------------------------------------

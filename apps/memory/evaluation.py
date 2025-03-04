@@ -13,21 +13,22 @@ from pathlib import Path
 from types import TracebackType
 
 import torch
-import torch.distributed.checkpoint as dcp  # noqa: F401
-import yaml  # noqa: F401
+import torch.distributed.checkpoint as dcp
+import yaml
 
-from src.nanollama.data.text import MultipleSourcesTokenGenerator  # noqa: F401
-from src.nanollama.distributed import ClusterConfig, ClusterManager, get_rank, is_master_process  # noqa: F401
-from src.nanollama.inference import QueuedBatchedInference
-from src.nanollama.model import BlockLanguageModel, build_config_with_model_dispatch  # noqa: F401
-from src.nanollama.utils import initialize_nested_object  # noqa: F401
+from nanollama.data.tokenizer import TokenizerConfig, build_tokenizer
+from nanollama.distributed import ClusterConfig, ClusterManager, get_rank, is_master_process  # noqa: F401
+from nanollama.inference import QueuedBatchedInference
+from nanollama.model import BlockLanguageModel, build_config_with_model_dispatch
+from nanollama.utils import initialize_nested_object
 
-from .evaluation import DataConfig, PromptLoader
+from .prompt_loader import DataConfig, PromptLoader
 
 logger = getLogger("nanollama")
 
+
 # ------------------------------------------------------------------------------
-# Configuration Classes
+# Online Evaluation
 # ------------------------------------------------------------------------------
 
 
@@ -46,20 +47,20 @@ class OnlineEvaluationConfig:
     log_path: str
     db_path: str
     data: DataConfig = field(default_factory=DataConfig)
+    tokenizer: TokenizerConfig = field(default_factory=TokenizerConfig)
 
     tmp_file: str = ""
 
     def __post_init__(self):
+        self.log_path = os.path.expandvars(self.log_path)
+        self.db_path = os.path.expandvars(self.db_path)
+        self.tmp_file = os.path.expandvars(self.tmp_file)
+
         if not self.tmp_file:
             self.tmp_file = Path(self.log_path).parent / f".tmp_eval_{get_rank()}.jsonl"
 
 
-# ------------------------------------------------------------------------------
-# Online Evaluation
-# ------------------------------------------------------------------------------
-
-
-class EvalComputer:
+class Evaluator:
     """
     Evaluation manager
 
@@ -70,6 +71,10 @@ class EvalComputer:
     with EvalComputer(*args) as computer:
         while next(computer):
             pass
+
+    # TODO
+    Make it a function, with a context manager for partial saving.
+    evaluation_state, eval_checkpointer.
     """
 
     def __init__(self, model: BlockLanguageModel, config: OnlineEvaluationConfig, **metadata):
@@ -81,13 +86,13 @@ class EvalComputer:
         self.tmp_file = Path(config.tmp_file)
 
         # data loader
-        tokenizer = None
+        tokenizer = build_tokenizer(config.tokenizer)
         self.loader = PromptLoader(config.data, dp_mesh=None)
 
         # inference engine
         self.inference_engine = QueuedBatchedInference(model, tokenizer, config.db_path)
 
-    def __enter__(self) -> "EvalComputer":
+    def __enter__(self) -> "Evaluator":
         """Enter evaluation runtime context"""
 
         # initialize sub-context
@@ -103,6 +108,9 @@ class EvalComputer:
                 self.step = state["step"]
         else:
             self.tmp_file.touch()
+            self.loss = 0
+            self.scaling = 0
+            self.step = 0
 
         # skip batches that were already evaluated
         self.loader.__enter__()
@@ -120,7 +128,7 @@ class EvalComputer:
                 print(json.dumps({"loss": self.loss, "scaling": self.scaling, "step": self.step}), file=f, flush=True)
 
         # exit sub-context
-        self.inference_engine.__enter__(exc, value, tb)
+        self.inference_engine.__exit__(exc, value, tb)
         self.loader.__exit__(exc, value, tb)
 
     @torch.inference_mode()
@@ -135,13 +143,15 @@ class EvalComputer:
 
             # TODO correct this evaluation snippet
 
+            loss = 0
             for output, answer in zip(outputs, answers):
-                loss = int(output.endswith(f"{answer}."))
+                loss += 1 - int(output.endswith(f"{answer}."))
+                print(output, answer, loss)
 
             bsz = len(prompts)
             scaling = bsz / self.loader.batch_size
             self.scaling += scaling
-            loss = sum(outputs == answer)
+
             self.loss += scaling * loss
             self.step += 1
 
@@ -160,15 +170,60 @@ class EvalComputer:
 
 @torch.no_grad()
 def run_evaluation(config: OnlineEvaluationConfig, model: BlockLanguageModel, step: int) -> None:
-    computer = EvalComputer(config, model, step=step)
+    computer = Evaluator(config, model, step=step)
     computer()
 
     if is_master_process():
         logger.info(f"Test loss: {round(computer.loss, 4):>7}")
 
 
-# TODO: try to run this piece of code.
+if __name__ == "__main__":
+    import logging
 
+    logging.basicConfig(level=logging.DEBUG)
+
+    text_config = yaml.safe_load("""
+    log_path: $HOME/logs/eval.jsonl
+    db_path: $HOME/code/memory/apps/memory/dataset/people.db
+    data:
+        source: $HOME/code/memory/apps/memory/dataset/qatool.jsonl
+        batch_size: 16
+        asynchronous: false
+    tmp_file: $HOME/logs/tmp_eval.jsonl
+    tokenizer:
+        name: byte
+    """)
+
+    print(text_config)
+
+    config = initialize_nested_object(OnlineEvaluationConfig, text_config, inplace=False)
+
+    checkpoint_dir = Path("/private/home/vivc/memory/checkpoints/0/0000010000")
+
+    # Model configuration
+    # reload model parameters from checkpoint
+    # checkpointer = Checkpointer()
+    with open(f"{checkpoint_dir}/params.json") as f:
+        model_config = {"model": json.load(f)}
+
+    # # TODO: change some parameters (seq_len, flex_attention)
+
+    # build model architecture
+    model_config = build_config_with_model_dispatch(None, model_config)
+    model: BlockLanguageModel = model_config.model_gen(model_config.model)
+
+    # # TODO: parallelize model eventually
+    model = model.to("cuda")
+
+    # # load weights from checkpoint
+    # # with checkpointer:
+    state_dict = {"model": model.state_dict()}
+    dcp.load(state_dict=state_dict, checkpoint_id=checkpoint_dir)
+    model.load_state_dict(state_dict["model"])
+
+    evaluator = Evaluator(model, config, step=0)
+    with evaluator:
+        evaluator()
 
 # ------------------------------------------------------------------------------
 # Evaluation Run
@@ -247,90 +302,6 @@ def run_evaluation(config: OnlineEvaluationConfig, model: BlockLanguageModel, st
 #     logger.info("Evaluation done.")
 
 
-# # ------------------------------------------------------------------------------
-# # Asynchronous Evaluation Launcher
-# # ------------------------------------------------------------------------------
-
-
-# @dataclass
-# class AsyncEvaluationConfig:
-#     """
-#     Configuration to launch an evaluation during a training run asynchronously (as a separate process).
-#     """
-
-#     slurm: ...
-
-
-# def tmp():
-#     x = ClusterManager()
-
-
-# checkpoint_dir = Path("/private/home/vivc/memory/checkpoints/0/0000010000")
-# DB_PATH = "/private/home/vivc/code/memory/apps/memory/dataset/people.db"
-
-
-# # Model configuration
-# # reload model parameters from checkpoint
-# # checkpointer = Checkpointer()
-# with open(f"{checkpoint_dir}/params.json") as f:
-#     config = {"model": json.load(f)}
-
-
-# # TODO: change some parameters (seq_len, flex_attention)
-
-# # build model architecture
-# config = build_config_with_model_dispatch(None, config)
-# model: BlockLanguageModel = config.model_gen(config.model)
-
-# # TODO: parallelize model eventually
-# model = model.to("cuda")
-
-# # load weights from checkpoint
-# # with checkpointer:
-# state_dict = {"model": model.state_dict()}
-# dcp.load(state_dict=state_dict, checkpoint_id=checkpoint_dir)
-# model.load_state_dict(state_dict["model"])
-
-# # TODO DATA configuration
-
-# config = yaml.safe_load("""
-# sources:
-# - path: $HOME/code/memory/apps/memory/dataset/qatool.jsonl
-#   weight: 50
-# tokenizer:
-#     name: byte
-# padding: true
-# batch_size: 8
-# seq_len: 257
-# asynchronous: false
-# """)
-# data_config = initialize_nested_object(DataConfig, config)
-# token_gen = MultipleSourcesTokenGenerator(data_config)
-# dataloader = DataLoader(data_config, token_gen)
-# with dataloader:
-#     batch = next(dataloader)
-
-# data, mask = batch.chunk(2)
-# prompts = []
-# prefix_lens = mask.argmax(dim=1) + 1
-
-# print("printing data")
-# decode_func = token_gen.generators[0].tokenizer.tokenizer.decode
-# for datum, dlen in zip(data, prefix_lens):
-#     prompts.append(decode_func(datum[:dlen]))
-#     print(prompts[-1], "\n")
-
-# tokenizer = token_gen.generators[0].tokenizer
-
-# # generation
-# inference_engine = QueuedBatchedInference(model, tokenizer, DB_PATH)
-
-# with inference_engine:
-#     outputs = inference_engine.generate(prompts)
-
-# for dialog in outputs:
-#     print(dialog, "\n")
-
-# # ------------------------------------------------------------------------------
-# # Offline Evaluation Function
-# # ------------------------------------------------------------------------------
+# ------------------------------------------------------------------------------
+# Asynchronous Evaluation Launcher
+# ------------------------------------------------------------------------------
