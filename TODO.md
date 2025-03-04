@@ -3,11 +3,15 @@
 - Get some curves of accuracy when training with the tool use, or without. and write some visualization notebooks/scripts to get plots out of many experimental logs.
 
 #### Vivien's current todo:
-- Finish the `evaluation.py` file.
-    - Change the step method to look more like the training run (which is also a loop, i.e. an iterator, but hides it, which is more natural).
-    - Make a run where evaluation is launch at various time in training, and look at the curves.
-    - Make the offline evaluation.
-- Integrate evaluation option to the training run.
+- Evaluation script working from confgi
+    - correct EvalOrchestrator.
+    - use metric logger.
+- Integrate this to the training script
+    - Evaluation working asynchronously
+    - Configuration inheritage between training and evaluation
+- Proper parallelization
+    - Make generation (KV cache / masking) work with DDP
+
 - Make nice plots, and visualization methods.
 
 - Generation.
@@ -32,7 +36,6 @@
 - Correct init_weight vs reset_parameters
 - Correct docstring `args` to `- my_args`, and module docstring more readable.
 - Improve the docstring at module level (the ones at the start of files).
-- Switch from ACTOR:> tag to <|actor|> tag.
 
 #### Small improvements to the codebase
 - (?) Remove Statefulness of scheduler.
