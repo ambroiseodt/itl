@@ -150,7 +150,7 @@ class PromptLoader(Stateful):
                     break
                 # if the buffer is full, wait until there is space
                 except Full:
-                    logger.debug("Buffer is full. Waiting for data comsumption.")
+                    ...
             logger.debug("New batch put in the buffer.")
 
     def async_get_batch(self) -> tuple[list[str], list[str]]:
