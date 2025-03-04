@@ -105,7 +105,7 @@ class EvalOrchestratorConfig:
     - wandb: configuration of the wandb logger
     """
 
-    log_dir: str
+    log_dir: str = ""
     name: str = "eval"
 
     # submanagers
@@ -119,6 +119,7 @@ class EvalOrchestratorConfig:
         """
 
         # logging directory
+        assert self.log_dir, "log_dir must be set."
         self.log_dir = os.path.expandvars(self.log_dir)
         log_dir = Path(self.log_dir)
 

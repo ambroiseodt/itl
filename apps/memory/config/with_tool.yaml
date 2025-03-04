@@ -26,7 +26,7 @@ run_config:
     batch_size: 128
     seq_len: 256
     padding: true
-    asynchronous: false
+    asynchronous: true
 
   model:
     implementation: transformer
@@ -56,7 +56,7 @@ run_config:
 
     logging:
       period: 1
-      level: debug
+      level: info
     wandb:
       active: false
 
@@ -75,10 +75,6 @@ run_config:
       source: data/memory/qatool.jsonl
       batch_size: 16
       asynchronous: false
-
-    # these arguments should be inherited
-    tokenizer:
-      name: byte
 
     checkpoint:
       path: $HOME/tmp_eval.jsonl

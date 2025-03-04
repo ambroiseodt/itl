@@ -109,6 +109,7 @@ class Logger:
         """
         metrics |= {"ts": time.time()}
         print(json.dumps(metrics), file=self.metric, flush=True)
+        logger.info(metrics)
 
     def report_statistics(self, model: torch.nn.Module) -> None:
         """

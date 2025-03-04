@@ -9,6 +9,7 @@ import logging
 import os
 from contextlib import ExitStack
 from dataclasses import asdict, dataclass, field
+from pathlib import Path
 from typing import Any
 
 import torch
@@ -17,7 +18,8 @@ import yaml
 
 from src.nanollama.data.loader import DataLoader
 from src.nanollama.data.text import DataConfig, MultipleSourcesTokenGenerator
-from src.nanollama.distributed import ClusterConfig, ClusterManager, get_rank, is_master_process
+from src.nanollama.data.tokenizer import TokenizerConfig
+from src.nanollama.distributed import ClusterConfig, ClusterManager, is_master_process
 from src.nanollama.model import (
     BlockLanguageModel,
     BlockLanguageModelConfig,
@@ -26,10 +28,13 @@ from src.nanollama.model import (
 from src.nanollama.monitor import (
     Checkpointer,
     Logger,
+    LoggerConfig,
     OrchestratorConfig,
     PreemptionHandler,
     Profiler,
+    ProfilerConfig,
     UtilityManager,
+    WandbConfig,
     WandbLogger,
 )
 from src.nanollama.optim import (
@@ -38,8 +43,10 @@ from src.nanollama.optim import (
     build_optimizer,
     build_scheduler,
 )
+from src.nanollama.utils import flatten_config, unflatten_config
 
-from .eval import OnlineEvaluationConfig, run_evaluation
+from .eval import EvaluationConfig, OnlineEvaluationConfig, run_evaluation
+from .prompt_loader import DataConfig as EvalDataConfig
 
 logger = logging.getLogger("nanollama")
 
@@ -50,9 +57,15 @@ logger = logging.getLogger("nanollama")
 
 
 @dataclass
-class EvalConfig(OnlineEvaluationConfig):
+class EvalConfig(EvaluationConfig):
     period: int = 0
     asynchronous: bool = False
+
+    def __post_init__(self):
+        if self.asynchronous:
+            super().__post_init__()
+        else:
+            OnlineEvaluationConfig.__post_init__(self)
 
 
 @dataclass
@@ -239,8 +252,10 @@ def train(config: TrainingConfig) -> None:
 
             if log_period > 0 and optim_state.step % log_period == 0:
                 # TODO make a real call to the metric logger
-                print(get_rank(), loss.item())
-                wandb({"loss": loss.item(), "step": optim_state.step})
+                print("here")
+                metrics = {"loss": loss.item(), "step": optim_state.step}
+                metric_logger(metrics)
+                wandb(metrics)
 
             # -----------------------------------------------------------------
             # Evaluation
@@ -303,7 +318,7 @@ def train(config: TrainingConfig) -> None:
 
 def heritage_config(run_config: dict[str, Any], launcher: dict[str, Any]) -> None:
     """
-    Heritage of configuration from launcher to run_config.
+    Heritage of configuration from launcher to run_config, and from run to evaluation config.
 
     ### Parameters
     - run_config: configuration to run this file.
@@ -317,18 +332,67 @@ def heritage_config(run_config: dict[str, Any], launcher: dict[str, Any]) -> Non
         if key in launcher and key not in run_config["orchestration"]:
             run_config["orchestration"][key] = launcher[key]
 
-    # TODO: heritage from main_config to evaluation config if evaluation is asynchronous
+    # heritage from training to evaluation
+    eval_config = run_config.get("evaluation", {})
+    if eval_config.get("period", 0) <= 0:
+        run_config["evaluation"] = eval_config
+        return
+
+    # flatten configurations for easier access
+    flat_config = flatten_config(run_config)
+    eval_config = flatten_config(eval_config)
+
+    # special inheritance
+    # orchestration
+    eval_config["orchestration.name"] = flat_config["orchestration.name"] + "_eval"
+    eval_config["orchestration.log_dir"] = flat_config["orchestration.log_dir"]
+    task_id = os.environ.get("SLURM_ARRAY_TASK_ID", "")
+    eval_config["orchestration.log_dir"] = str(Path(flat_config["orchestration.log_dir"]) / "evals" / task_id)
+
+    # generic inheritance
+    configs_keys = [
+        (EvalDataConfig, "data", "data"),
+        (TokenizerConfig, "tokenizer", "data.tokenizer"),
+    ]
+
+    if eval_config.get("asynchronous"):
+        configs_keys += [
+            (ClusterConfig, "cluster", "cluster"),
+            (LoggerConfig, "orchestration.logging", "orchestration.logging"),
+            (ProfilerConfig, "orchestration.profiler", "orchestration.profiler"),
+            (WandbConfig, "orchestration.wandb", "orchestration.wandb"),
+        ]
+
+    for config_cls, cls_key, inherited_key in configs_keys:
+        for key, finfo in config_cls.__dataclass_fields__.items():
+            if not finfo.init:
+                continue
+            eval_key = f"{cls_key}.{key}"
+            train_key = f"{inherited_key}.{key}"
+            if eval_key not in eval_config and train_key in flat_config:
+                eval_config[eval_key] = flat_config[train_key]
+
+    # merge configuration
+    run_config["evaluation"] = unflatten_config(eval_config)
 
 
 def heritage_grid_id(run_config: dict[str, Any], grid_id: int) -> None:
     """
     Specify configuration according to a grid id specified for job array.
 
+    In the config, one can specify `launch.grid.grid_id: [...]`.
+    The launcher will distributed these id into the run configs.
+    This function will instanciate any `$GRID_ID` in the configuration with the right id.
+
     ### Parameters
     - run_config: configuration to run this file.
     - grid_id: id of the grid.
     """
-    pass
+    flat_config = flatten_config(run_config)
+    for key in flat_config:
+        if isinstance(flat_config[key], str):
+            flat_config[key] = flat_config[key].replace("$GRID_ID", str(grid_id))
+    return unflatten_config(flat_config)
 
 
 def build_config(file_config: dict[str, Any]) -> TrainingConfig:
@@ -350,9 +414,14 @@ def build_config(file_config: dict[str, Any]) -> TrainingConfig:
 
     heritage_config(run_config, launcher)
 
-    # grid id system to handle multiple datasets
-    grid_id = run_config.get("grid_id", 0)
-    heritage_grid_id(run_config, grid_id)
+    # grid id system to handle special grid cases
+    grid_id = run_config.get("grid_id", None)
+    if grid_id is not None:
+        run_config = heritage_grid_id(run_config, grid_id)
+
+    # TODO:
+    for key, val in flatten_config(run_config).items():
+        print(key, val)
 
     config = build_config_with_model_dispatch(TrainingConfig, run_config)
 
