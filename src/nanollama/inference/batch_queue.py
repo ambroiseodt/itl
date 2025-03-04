@@ -49,7 +49,9 @@ class QueuedBatchedInference:
 
     def __exit__(self, exc: type[BaseException], value: BaseException, tb: TracebackType):
         self.agent.__exit__(exc, value, tb)
+        self.model.delete_cache()
 
+    @torch.inference_mode()
     def generate(self, prompts: list[str], max_len: int = None) -> list[str]:
         """
         Generate completions for the given prompts.
