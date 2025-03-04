@@ -32,12 +32,10 @@ class LoggerConfig:
     level: str = "INFO"
     stdout_path: str = field(init=False, default="")
     metric_path: str = field(init=False, default="")
-    config_path: str = field(init=False, default="")
 
     def __post_init__(self):
         self.stdout_path = self.stdout_path
         self.metric_path = self.metric_path
-        self.config_path = self.config_path
         self.level = self.level.upper()
         assert self.level in ["DEBUG", "INFO", "WARNING", "ERROR", "CRITICAL"]
 
@@ -45,7 +43,6 @@ class LoggerConfig:
         """Check validity of arguments."""
         assert self.stdout_path, "stdout_path was not set"
         assert self.metric_path, "metric_path was not set"
-        assert self.config_path, "config_path was not set"
 
     def to_dict(self) -> dict[str, Any]:
         """
@@ -54,7 +51,6 @@ class LoggerConfig:
         output = asdict(self)
         output.pop("stdout_path")
         output.pop("metric_path")
-        output.pop("config_path")
         return output
 
 

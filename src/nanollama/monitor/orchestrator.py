@@ -51,6 +51,7 @@ class OrchestratorConfig:
         else:
             self.log_dir = os.path.expandvars(self.log_dir)
             log_dir = Path(self.log_dir)
+
         log_dir.mkdir(parents=True, exist_ok=True)
 
         # add discriminative information if array job
@@ -65,7 +66,6 @@ class OrchestratorConfig:
         # logging related
         self.logging.stdout_path = str(log_dir / "logs" / task_id)
         self.logging.metric_path = str(log_dir / "metrics" / task_id)
-        self.logging.config_path = str(log_dir / "configs" / task_id)
         self.wandb.path = str(log_dir / "wandb" / task_id)
         self.wandb.name = f"{self.name}_{task_id}"
 
