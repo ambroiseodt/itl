@@ -217,7 +217,7 @@ class ByteTokenizer(Tokenizer):
         special_tokens = special_tokens if special_tokens else []
         self.vocab_size = 256 + len(special_tokens)
         for i, tok in enumerate(special_tokens):
-            logger.info(f"Registering token {tok}")
+            logger.debug(f"Registering token {tok}")
             setattr(self, tok, i + 256)
 
     def encode(self, sentence: str, bos: int = 0) -> list[int]:

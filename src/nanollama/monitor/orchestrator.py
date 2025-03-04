@@ -1,11 +1,6 @@
+# This source code is licensed under the terms specified in the `LICENSE` file.
 """
-Generic Orchestrator Configuration
-
-This file is useful to define the structure of logging directories (checkpoints, evaluations, logs, metrics, ...).
-
-#### License
-This source code is licensed under the terms specified in the `LICENSE` file,
-located in the root directory of this repository.
+Generic Orchestrator Configuration, used to define the structure of logging directories (checkpoints, logs, ...).
 
 @ 2025, Meta
 """
@@ -28,8 +23,21 @@ logger = getLogger("nanollama")
 
 @dataclass
 class OrchestratorConfig:
-    log_dir: str = ""
-    name: str = "composition_default"
+    """
+    Orchestrator of logging organization for training runs.
+
+    ### Attributes
+    - log_dir: path to the root directory of the logs
+    - name: name of the experiment
+    - checkpoint: configuration of the checkpoint manager
+    - logging: configuration of the logger
+    - profiler: configuration of the profiler
+    - utils: configuration of utility functions
+    - wandb: configuration of the wandb logger
+    """
+
+    log_dir: str
+    name: str = "train"
 
     # submanagers
     checkpoint: CheckpointConfig = field(default_factory=CheckpointConfig)
@@ -44,18 +52,12 @@ class OrchestratorConfig:
         """
 
         # logging directory
-        if not self.log_dir:
-            log_dir = Path.home() / "logs" / self.name
-            self.log_dir = str(log_dir)
-            logger.info(f"No logging directory set. Setting it to {self.log_dir}")
-        else:
-            self.log_dir = os.path.expandvars(self.log_dir)
-            log_dir = Path(self.log_dir)
-
+        self.log_dir = os.path.expandvars(self.log_dir)
+        log_dir = Path(self.log_dir)
         log_dir.mkdir(parents=True, exist_ok=True)
 
         # add discriminative information if array job
-        task_id = os.environ.get("SLURM_ARRAY_TASK_ID", "0")
+        task_id = os.environ.get("SLURM_ARRAY_TASK_ID", "")
 
         # checkpoint directory
         self.checkpoint.path = str(log_dir / "checkpoints" / task_id)
@@ -67,10 +69,10 @@ class OrchestratorConfig:
         self.logging.stdout_path = str(log_dir / "logs" / task_id)
         self.logging.metric_path = str(log_dir / "metrics" / task_id)
         self.wandb.path = str(log_dir / "wandb" / task_id)
-        self.wandb.name = f"{self.name}_{task_id}"
+        self.wandb.name = self.name + (f"_{task_id}" if task_id else "")
 
         # keep a mapping of job_id to task_id
-        if task_id != "0" and is_master_process():
+        if task_id and is_master_process():
             job_id = os.environ.get("SLURM_JOB_ID")
             path = log_dir / "stdout"
             path.mkdir(parents=True, exist_ok=True)
@@ -90,39 +92,48 @@ class OrchestratorConfig:
 
 @dataclass
 class EvalOrchestratorConfig:
-    name: str = "composition_default"
-    log_dir: str = ""
+    """
+    Orchestrator of logging organization for evaluation runs.
+
+    ### Attributes
+    - log_dir: path to the root directory of the logs
+    - name: name of the experiment
+    - checkpoint: configuration of the checkpoint manager
+    - logging: configuration of the logger
+    - profiler: configuration of the profiler
+    - utils: configuration of utility functions
+    - wandb: configuration of the wandb logger
+    """
+
+    log_dir: str
+    name: str = "eval"
 
     # submanagers
-    # checkpoint: CheckpointConfig = field(default_factory=CheckpointConfig)
     logging: LoggerConfig = field(default_factory=LoggerConfig)
     profiler: ProfilerConfig = field(default_factory=ProfilerConfig)
     utils: UtilityConfig = field(default_factory=UtilityConfig)
     wandb: WandbConfig = field(default_factory=WandbConfig)
 
-    def __check_init__(self) -> None:
+    def __post_init__(self) -> None:
         """
         Check validity of arguments and fill in missing values.
         """
 
         # logging directory
-        if not self.log_dir:
-            log_dir = Path.home() / "logs_evals" / self.name
-            # log_dir: PosixPath = parent_dir / "evals" / str(self.task_id) / f"{self.train_step:010d}"
-            self.log_dir = str(log_dir)
-            logger.info(f"No logging directory set. Setting it to {self.log_dir}")
-        else:
-            self.log_dir = os.path.expandvars(self.log_dir)
-            log_dir = Path(self.log_dir)
+        self.log_dir = os.path.expandvars(self.log_dir)
+        log_dir = Path(self.log_dir)
+
+        # add discriminative information if array job
+        task_id = os.environ.get("SLURM_ARRAY_TASK_ID", "")
 
         # wandb directory (single dir for any steps)
         self.wandb.path = str(log_dir.parent / "wandb")
         self.wandb.name = self.name
 
         # same logic as OrchestratorConfig
-        self.profiler.path = str(log_dir / "metrics")
-        self.logging.stdout_path = str(log_dir / "logs")
-        self.logging.metric_path = str(log_dir / "metrics")
+        self.profiler.path = str(log_dir / "metrics" / task_id)
+        self.logging.stdout_path = str(log_dir / "logs" / task_id)
+        self.logging.metric_path = str(log_dir / "metrics" / task_id)
 
         for module in self.__dict__.values():
             if hasattr(module, "__check_init__"):

@@ -8,7 +8,7 @@ located in the root directory of this repository.
 @ 2025, Meta
 """
 
-from .checkpoint import Checkpointer, EvalCheckpointer
+from .checkpoint import Checkpointer, EvalCheckpointConfig, EvalCheckpointer
 from .logger import Logger, LoggerConfig
 from .orchestrator import EvalOrchestratorConfig, OrchestratorConfig
 from .preemption import PreemptionHandler

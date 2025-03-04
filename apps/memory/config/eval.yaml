@@ -1,19 +1,61 @@
 
-checkpoint_dir: /private/home/vivc/memory/checkpoints/0/0000001000
 
-log_path: $HOME/logs/eval.jsonl
 db_path: data/memory/people.db
 data:
   source: data/memory/qatool.jsonl
   batch_size: 16
   asynchronous: false
-tmp_file: $HOME/logs/tmp_eval.jsonl
 tokenizer:
   name: byte
+
+model_dir: /private/home/vivc/memory/checkpoints/0/0000001000
+log_path: $HOME/final_eval
+checkpoint_flag: eval
 
 cluster:
   compile: false
 
+checkpoint:
+  path: $HOME/tmp_eval
+
 orchestration:
+  log_dir: $HOME/eval
   profiler:
     active: false
+
+
+# class EvalCheckpointer:
+#     """
+#     Evaluation Checkpoint Manager
+#     """
+#     def __init__(self, model: nn.Module, path: str, train_step: int = None) -> None:
+#         self.model = model
+#         if train_step is None:
+#             path = Path(path)
+#             self.save_dir = Path(Checkpointer.get_last_checkpoint_path(path))
+#         else:
+#             self.save_dir = Path(path) / Checkpointer.folder_name.format(train_step)
+
+#     def __enter__(self):
+#         """Enter checkpoint context by loading the last checkpoint"""
+#         logger.info(f"Loading model from: {str(self.save_dir)}")
+#         state_dict = torch.load(self.save_dir / "checkpoint.pth", weights_only=True)
+#         self.model.load_state_dict(state_dict["model"])
+
+#         logger.info(f"Loading model from {str(self.save_dir)}.")
+#         state_dict = {"model": self.model.state_dict()}
+#         dcp.load(state_dict=state_dict, checkpoint_id=self.save_dir)
+
+#         logger.info("Loading model weights.")
+#         set_state_dict(self.model, model_state_dict=state_dict["model"])
+
+#     def __exit__(self, exc: type[BaseException], value: BaseException, tb: TracebackType):
+#         """
+#         Exit checkpoint context by remove `eval` flag
+
+#         #### See Also
+#         Checkpointer.update(eval=True)
+#         """
+#         eval_flag = self.save_dir / "eval"
+#         if eval_flag.exists():
+#             eval_flag.unlink()

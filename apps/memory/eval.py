@@ -12,7 +12,6 @@ from contextlib import ExitStack
 from dataclasses import dataclass, field
 from logging import getLogger
 from pathlib import Path
-from types import TracebackType
 from typing import Any
 
 import torch
@@ -22,13 +21,15 @@ from torch.distributed.checkpoint.stateful import Stateful
 from torch.distributed.device_mesh import DeviceMesh
 
 from src.nanollama.data.tokenizer import TokenizerConfig, build_tokenizer
-from src.nanollama.distributed import ClusterConfig, ClusterManager, get_rank, is_master_process
+from src.nanollama.distributed import ClusterConfig, ClusterManager, is_master_process
 from src.nanollama.inference import QueuedBatchedInference
 from src.nanollama.model import (
     BlockLanguageModel,
     build_config_with_model_dispatch,
 )
 from src.nanollama.monitor import (
+    EvalCheckpointConfig,
+    EvalCheckpointer,
     EvalOrchestratorConfig,
     Logger,
     PreemptionHandler,
@@ -61,39 +62,6 @@ class EvalState(Stateful):
         self.step = state_dict["step"]
 
 
-class EvalCheckpointer:
-    """
-    Automatically save and load evaluation state to avoid repeated computation.
-
-    ### Parameters
-    - tmp_file: temporary file to store partial results
-    - eval_state: evaluation state
-    """
-
-    def __init__(self, tmp_file: str, eval_state: EvalState):
-        self.tmp_file = Path(tmp_file)
-        self.state = eval_state
-
-    def __enter__(self):
-        # retrieve previous computations
-        if self.tmp_file.exists():
-            with open(os.path.expandvars(self.tmp_file)) as f:
-                state = json.load(f)
-            self.state.load_state_dict(state)
-        else:
-            self.tmp_file.parent.mkdir(parents=True, exist_ok=True)
-            self.tmp_file.touch()
-        return self
-
-    def delete(self) -> None:
-        self.tmp_file.unlink()
-
-    def __exit__(self, exc: type[BaseException], value: BaseException, tb: TracebackType):
-        if self.tmp_file.exists():
-            with open(os.path.expandvars(self.tmp_file), "w") as f:
-                print(json.dumps(self.state.state_dict()), file=f, flush=True)
-
-
 # ------------------------------------------------------------------------------
 # Online Evaluation
 # ------------------------------------------------------------------------------
@@ -111,20 +79,14 @@ class OnlineEvaluationConfig:
     - tmp_file: temporary file to store partial results
     """
 
-    log_path: str
     db_path: str
     data: DataConfig = field(default_factory=DataConfig)
     tokenizer: TokenizerConfig = field(default_factory=TokenizerConfig)
 
-    tmp_file: str = ""
+    checkpoint: EvalCheckpointConfig = field(default_factory=EvalCheckpointConfig)
 
     def __post_init__(self):
-        self.log_path = os.path.expandvars(self.log_path)
         self.db_path = os.path.expandvars(self.db_path)
-        self.tmp_file = os.path.expandvars(self.tmp_file)
-
-        if not self.tmp_file:
-            self.tmp_file = Path(self.log_path).parent / f".tmp_eval_{get_rank()}.jsonl"
 
 
 @torch.inference_mode()
@@ -133,8 +95,16 @@ def run_evaluation(
     model: BlockLanguageModel,
     preemption: PreemptionHandler = None,
     dp_mesh: DeviceMesh = None,
-    **metadata,
-) -> None:
+) -> dict[str, Any]:
+    """
+    Run evaluation and return a dictionary of metrics.
+
+    ### Parameters
+    - config: evaluation configuration.
+    - model: model to evaluate.
+    - preemption: preemption handler.
+    - dp_mesh: device mesh for distributed training.
+    """
     if preemption is None:
 
         def preemption():
@@ -144,7 +114,7 @@ def run_evaluation(
         state = EvalState()
 
         # partial evaluation checkpointer
-        checkpointer = EvalCheckpointer(config.tmp_file, state)
+        checkpointer = EvalCheckpointer(config.checkpoint, state)
         checkpointer: EvalCheckpointer = context_stack.enter_context(checkpointer)
 
         # data loader
@@ -169,6 +139,7 @@ def run_evaluation(
             loss = 0
             for output, answer in zip(outputs, answers):
                 loss += int(output.endswith(f"{answer}."))
+                print(output)
             loss /= bsz
 
             # TODO: double check this scaling (the goal is to end up with the mean of the individual loss)
@@ -183,12 +154,8 @@ def run_evaluation(
         # rescale loss and save it
         state.loss /= state.scaling
         state.scaling = 1
-        with open(config.log_path, "a") as f:
-            print(json.dumps({"loss": state.loss} | metadata), file=f, flush=True)
 
-        checkpointer.delete()
-
-    return state.loss
+    return {"loss": state.loss}
 
 
 # ------------------------------------------------------------------------------
@@ -208,7 +175,9 @@ class EvaluationConfig(OnlineEvaluationConfig):
     - tmp_file: temporary file to store partial results
     """
 
-    checkpoint_dir: str = ""
+    model_dir: str = ""
+    checkpoint_flag: str = ""
+    log_path: str = ""
 
     cluster: ClusterConfig = field(default_factory=ClusterConfig)
     orchestration: EvalOrchestratorConfig = field(default_factory=EvalOrchestratorConfig)
@@ -217,14 +186,16 @@ class EvaluationConfig(OnlineEvaluationConfig):
         """
         Check validity of arguments and fill in missing values.
         """
-        assert self.checkpoint_dir, "Checkpoint directory must be set."
-        # path to stored results
-
-        # self.log_path = ...
-        # self.db_path = ...
-        # self.tmp_file = ...
-
         super().__post_init__()
+
+        assert self.log_path, "log_path must be set."
+        assert self.model_dir, "Checkpoint directory must be set."
+        self.log_path = os.path.expandvars(self.log_path)
+
+        # checkpoint configuration (not managed by orchestrator due to inheritance issue)
+        self.checkpoint.path = str(Path(self.orchestration.log_dir) / "checkpoint")
+        if self.checkpoint_flag:
+            self.checkpoint.flag = str(Path(self.model_dir) / self.checkpoint_flag)
 
         # manual post initialization of all modules
         for module in self.__dict__.values():
@@ -248,31 +219,37 @@ def eval(config: EvaluationConfig) -> None:
         # ---------------------------------------------------------------------
 
         # build model architecture
-        with open(f"{config.checkpoint_dir}/params.json") as f:
+        with open(f"{config.model_dir}/params.json") as f:
             model_config = {"model": json.load(f)}
         model_config = build_config_with_model_dispatch(None, model_config)
         model: BlockLanguageModel = model_config.model_gen(model_config.model)
 
-        # parallelize model
-        # model = cluster.build_model(model)
-
         # load model weights
         state_dict = {"model": model.state_dict()}
-        dcp.load(state_dict=state_dict, checkpoint_id=config.checkpoint_dir)
+        dcp.load(state_dict=state_dict, checkpoint_id=config.model_dir)
         model.load_state_dict(state_dict["model"])
+
+        # parallelize model
+        model = cluster.build_model(model)
 
         # ---------------------------------------------------------------------
         # Evaluation loop
         # ---------------------------------------------------------------------
 
-        metric = run_evaluation(config, model, preemption=preemption, step=0)
+        metric = run_evaluation(config, model, preemption=preemption)
 
-        # wandb logging
+        # logging
+        step = 0
+        metadata = {"step": step}
+        metric |= metadata
+        with open(config.log_path, "a") as f:
+            print(json.dumps(metric), file=f, flush=True)
+
         wandb: WandbLogger = context_stack.enter_context(WandbLogger(config.orchestration.wandb, config))
-        wandb({"test_loss": metric, "step": 0})
+        wandb(metric)
 
         if is_master_process():
-            logger.info(f"Test loss: {round(metric, 4):>7}")
+            logger.info(f"Test loss: {round(metric['loss'], 4):>7}")
 
     logger.info("Evaluation done.")
 

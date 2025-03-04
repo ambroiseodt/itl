@@ -9,6 +9,7 @@ located in the root directory of this repository.
 """
 
 import json
+import os
 import re
 import shutil
 from asyncio import Future
@@ -31,31 +32,8 @@ logger = getLogger("nanollama")
 
 
 # ------------------------------------------------------------------------------
-# Stateful object to wrap all stateful objects
+# Checkpointing logic at training time
 # ------------------------------------------------------------------------------
-
-
-class AppState(Stateful):
-    """
-    Application state tracking model, optimizer and data state for checkpointing
-
-    ### Parameter
-    - model: model
-    - optimizer: optimizer
-    """
-
-    def __init__(self, model: nn.Module, optimizer: Optimizer = None):
-        self.model = model
-        self.optimizer = optimizer
-
-    def state_dict(self) -> dict[str, dict]:
-        model_state_dict, optimizer_state_dict = get_state_dict(self.model, self.optimizer)
-        return {"model": model_state_dict, "optim": optimizer_state_dict}
-
-    def load_state_dict(self, state_dict: dict[str, dict]) -> None:
-        set_state_dict(
-            self.model, self.optimizer, model_state_dict=state_dict["model"], optim_state_dict=state_dict["optim"]
-        )
 
 
 @dataclass
@@ -65,7 +43,11 @@ class CheckpointConfig:
     path: str = field(init=False, default="")
 
     def __check_init__(self):
-        """Check validity of arguments."""
+        """Check validity of arguments.
+
+        ### Note
+        The `path` should be set by an orchestrator.
+        """
         assert self.path, "path was not set"
 
 
@@ -122,7 +104,7 @@ class Checkpointer(Monitor):
             self.load(path)
         return self
 
-    def update(self, eval: bool = False) -> None:
+    def update(self, eval_id: str = "") -> None:
         """
         Checkpoint model, optimizer, scheduler and training state
 
@@ -137,8 +119,8 @@ class Checkpointer(Monitor):
         path.mkdir(parents=False, exist_ok=True)
 
         # add evaluation flag, if needed
-        if eval:
-            eval_flag = path / "eval"
+        if eval_id:
+            eval_flag = path / f"eval_{eval_id}"
             eval_flag.touch()
 
         self.save(path)
@@ -218,7 +200,7 @@ class Checkpointer(Monitor):
         all_checkpoints = self._list_checkpoints(self.path)
         all_checkpoints.sort(key=lambda p: self._get_key_step(p.name))
         for prefix in all_checkpoints[: -self.nb_kept]:
-            if not (prefix / "eval").exists():
+            if not any(prefix.glob("eval_*")):
                 logger.info(f"Removing: {str(prefix)}")
                 shutil.rmtree(prefix)
 
@@ -235,42 +217,62 @@ class Checkpointer(Monitor):
 
 
 # ------------------------------------------------------------------------------
-# Evaluation logic
+# Checkpointing logic at training time
 # ------------------------------------------------------------------------------
+
+
+@dataclass
+class EvalCheckpointConfig:
+    """
+    Configuration for the evaluation checkpoint manager.
+
+    ### Attributes
+    - path: path to checkpoint partial results
+    - flag: file acting as a flag to avoid deleting checkpoints before evaluation
+    """
+
+    path: str = "$HOME/.tmp_nanollama"
+    flag: str = field(init=False, default="")
+
+    def __post_init__(self):
+        self.path = os.path.expandvars(self.path)
 
 
 class EvalCheckpointer:
     """
-    Evaluation Checkpoint Manager
+    Automatically save and load evaluation state to avoid repeated computation.
+
+    ### Parameters
+    - config: evaluation checkpoint configuration
+    - eval_state: evaluation state
     """
-    def __init__(self, model: nn.Module, path: str, train_step: int = None) -> None:
-        self.model = model
-        if train_step is None:
-            path = Path(path)
-            self.save_dir = Path(Checkpointer.get_last_checkpoint_path(path))
-        else:
-            self.save_dir = Path(path) / Checkpointer.folder_name.format(train_step)
+
+    def __init__(self, config: EvalCheckpointConfig, eval_state: Stateful):
+        self.path = Path(config.path) / f"tmp_{get_rank()}.json"
+        self.flag = config.flag
+        self.state = eval_state
 
     def __enter__(self):
-        """Enter checkpoint context by loading the last checkpoint"""
-        logger.info(f"Loading model from: {str(self.save_dir)}")
-        state_dict = torch.load(self.save_dir / "checkpoint.pth", weights_only=True)
-        self.model.load_state_dict(state_dict["model"])
-
-        logger.info(f"Loading model from {str(self.save_dir)}.")
-        state_dict = {"model": self.model.state_dict()}
-        dcp.load(state_dict=state_dict, checkpoint_id=self.save_dir)
-
-        logger.info("Loading model weights.")
-        set_state_dict(self.model, model_state_dict=state_dict["model"])
+        """enter runtime context by reloading partial computation"""
+        if self.path.exists():
+            with open(self.path) as f:
+                state = json.load(f)
+            self.state.load_state_dict(state)
+        return self
 
     def __exit__(self, exc: type[BaseException], value: BaseException, tb: TracebackType):
-        """
-        Exit checkpoint context by remove `eval` flag
+        """enter runtime context by saving (partial) computation"""
+        # if the context was exited anormally, save partial computaton
+        check_dir = self.path.parent
+        if exc is not None:
+            check_dir.mkdir(parents=True, exist_ok=True)
+            with open(self.path, "w") as f:
+                print(json.dumps(self.state.state_dict()), file=f, flush=True)
 
-        #### See Also
-        Checkpointer.update(eval=True)
-        """
-        eval_flag = self.save_dir / "eval"
-        if eval_flag.exists():
-            eval_flag.unlink()
+        # otherwise, delete temporary file, and checkpoint flag
+        else:
+            self.path.unlink(missing_ok=True)
+            if check_dir.exists() and not any(check_dir.iterdir()):
+                check_dir.rmdir()
+            if self.flag:
+                Path(self.flag).unlink(missing_ok=True)
