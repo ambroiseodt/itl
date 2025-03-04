@@ -197,30 +197,35 @@ def copy_dir(input_dir: str, output_dir: str) -> None:
         "--exclude .ruff_cache "
         "--exclude '*.egg-info' "
         "--exclude '__pycache__' "
+        "--exclude '.pytest_cache' "
         # documentation
         "--exclude '*.md' "
         # data
-        "--exclude data/"
-        "--exclude '*.txt*"
-        # configuration
+        "--exclude data/ "
+        "--exclude '*.txt' "
+        "--exclude '*.j2' "
+        # configuration and scripts
         "--exclude .gitignore "
         "--exclude .vscode "
+        "--exclude '*.sh' "
         "--exclude '*.toml' "
         "--exclude '*.yaml' "
         # checkpoints and runs
         "--exclude logs/ "
         "--exclude savings/ "
+        # personal files and folders
         "--exclude wandb/ "
         "--exclude 'core.*' "
-        # personal files and folders
         "--exclude '*.ipynb' "
         "--exclude 'tmp_*' "
         # tests
         "--exclude tests/ "
         f"{input_dir}/ {output_dir}"
     )
-    subprocess.call([rsync_cmd], shell=True)
 
+    result = subprocess.run(rsync_cmd, shell=True, capture_output=True, text=True)
+    if result.returncode != 0:
+        print("Error:", result.stderr)
 
 # ------------------------------------------------------------------------------
 # Grid job utilities
@@ -398,7 +403,7 @@ def launch_job(config: LauncherConfig, file_config: dict[str, Any]) -> None:
         f.write(bash_command)
 
     logger.info(f"Launching job with `{config.launcher}` command.")
-    os.system(f"{config.launcher} {run_path}")
+    # os.system(f"{config.launcher} {run_path}")
 
 
 def main() -> None:
