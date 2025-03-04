@@ -156,6 +156,7 @@ def run_evaluation(config: OnlineEvaluationConfig, model: BlockLanguageModel, **
     if is_master_process():
         logger.info(f"Test loss: {round(state.loss, 4):>7}")
 
+
 # ------------------------------------------------------------------------------
 # Main file
 # ------------------------------------------------------------------------------
@@ -214,7 +215,7 @@ def main() -> None:
     dcp.load(state_dict=state_dict, checkpoint_id=checkpoint_dir)
     model.load_state_dict(state_dict["model"])
 
-    evaluator = run_evaluation(config, model, step=0)
+    run_evaluation(config, model, step=0)
 
 if __name__ == "__main__":
     main()

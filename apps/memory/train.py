@@ -17,7 +17,7 @@ import yaml
 
 from src.nanollama.data.loader import DataLoader
 from src.nanollama.data.text import DataConfig, MultipleSourcesTokenGenerator
-from src.nanollama.distributed import ClusterConfig, ClusterManager, get_rank
+from src.nanollama.distributed import ClusterConfig, ClusterManager, get_rank, is_master_process
 from src.nanollama.model import (
     BlockLanguageModel,
     BlockLanguageModelConfig,
@@ -41,6 +41,8 @@ from src.nanollama.optim import (
     build_scheduler,
 )
 
+from .evaluation import OnlineEvaluationConfig, run_evaluation
+
 # tf.FLEX_ATTENTION = False
 tf.FLEX_ATTENTION = True
 logger = logging.getLogger("nanollama")
@@ -49,6 +51,13 @@ logger = logging.getLogger("nanollama")
 # ------------------------------------------------------------------------------
 # Configuration Class
 # ------------------------------------------------------------------------------
+
+
+@dataclass
+class EvalConfig(OnlineEvaluationConfig):
+    period: int = 0
+    asynchronous: bool = False
+
 
 @dataclass
 class TrainingConfig:
@@ -60,6 +69,8 @@ class TrainingConfig:
 
     model: BlockLanguageModelConfig = field(default_factory=TransformerConfig)
     model_gen: callable = field(init=False, default=BlockLanguageModel)
+
+    evaluation: EvalConfig = field(default_factory=EvalConfig)
 
     def __post_init__(self):
         """
@@ -146,20 +157,23 @@ def train(config: TrainingConfig) -> None:
 
         profiler: Profiler = context_stack.enter_context(Profiler(config.orchestration.profiler, state=optim_state))
 
+        # TODO add a profiling
+
         # ---------------------------------------------------------------------
         # Training loop
         # ---------------------------------------------------------------------
 
-        model.train()
-
         # aliases
-        # eval_period = config.evaluation.period
+        eval_period = config.evaluation.period
+        log_period = config.orchestration.logging.period
 
         while optim_state.step < config.optim.steps:
             # handle preemption
             if preemption():
                 logger.warning("Preemption flag set")
                 break
+
+            model.train()
 
             # accumulation step
             optim_state.acc_step += 1
@@ -209,11 +223,73 @@ def train(config: TrainingConfig) -> None:
             optimizer.zero_grad()
             optim_state.step += 1
 
+            # -----------------------------------------------------------------
+            # Call monitors for garbage collection, checkpointing...
+            # -----------------------------------------------------------------
+
             profiler()
             checkpoint()
+            utils()
 
-            print(get_rank(), loss.item())
-            wandb({"loss": loss.item(), "step": optim_state.step})
+            # -----------------------------------------------------------------
+            # Log metrics
+            # -----------------------------------------------------------------
+
+            if log_period > 0 and optim_state.step % log_period == 0:
+                # TODO make a real call to the metric logger
+                print(get_rank(), loss.item())
+                wandb({"loss": loss.item(), "step": optim_state.step})
+
+            # -----------------------------------------------------------------
+            # Evaluation
+            # -----------------------------------------------------------------
+
+            profiler.start_timer()
+
+            if eval_period > 0 and optim_state.step % eval_period == 0:
+                model.eval()
+
+                # run evaluation now
+                if not config.evaluation.asynchronous:
+                    run_evaluation(config.evaluation, model=model, step=optim_state.step)
+
+                # launch evaluation job on slurm
+                elif is_master_process():
+                    raise NotImplementedError("Asynchronous evaluation is not implemented yet.")
+                    # # checkpoint
+                    # checkpoint.update(eval=True)
+
+                    # # alias
+                    # orchestration_config = config.evaluation.orchestration
+                    # orchestration_config.log_dir = str(Path(orchestration_config.log_dir) / f"{step:010d}")
+
+                    # # launcher config
+                    # launch_config = initialize_nested_object(
+                    #     LauncherConfig,
+                    #     {
+                    #         "name": orchestration_config.name,
+                    #         "log_dir": orchestration_config.log_dir,
+                    #         "overwrite": False,
+                    #         "copy_code": False,
+                    #         "script": "src.apps.gssm.evaluation",
+                    #         "slurm": config.evaluation.slurm.to_dict(),
+                    #     },
+                    # )
+
+                    # # run config
+                    # orchestration_config.train_step = step
+                    # eval_config: EvaluationRunConfig = {
+                    #     "model": asdict(config.model),
+                    #     "data": asdict(config.evaluation.data),
+                    #     "cluster": config.evaluation.cluster.to_dict(),
+                    #     "orchestration": orchestration_config.to_dict(),
+                    # }
+
+                    # # luanch job without device binding
+                    # with clean_environment():
+                    #     launch_job(launch_config, eval_config)
+
+                    # orchestration_config.log_dir = str(Path(orchestration_config.log_dir).parent)
 
     logger.info("Training done.")
 
@@ -238,6 +314,8 @@ def heritage_config(run_config: dict[str, Any], launcher: dict[str, Any]) -> Non
     for key in ["name", "log_dir"]:
         if key in launcher and key not in run_config["orchestration"]:
             run_config["orchestration"][key] = launcher[key]
+
+    # TODO: heritage from main_config to evaluation config if evaluation is asynchronous
 
 
 def heritage_grid_id(run_config: dict[str, Any], grid_id: int) -> None:

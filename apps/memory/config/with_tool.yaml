@@ -19,7 +19,7 @@ run_config:
 
   data:
     sources:
-    - path: apps/memory/dataset/qatool.jsonl
+    - path: data/memory/qatool.jsonl
       weight: 1
     tokenizer:
       name: byte
@@ -65,18 +65,17 @@ run_config:
       wait: 1
       steps: 20
 
-  # eval:
-  #   period: 0
-  #   dataset_dir: /checkpoint/$USER/datasets/eval
-  #   tasks: piqa
-  #   generator:
-  #     max_tokens: 2048
-      # dtype: fp32
+  evaluation:
+    period: 15
+    asynchronous: false
 
-  # evaluation:
-  #   period: 15
-  #   asynchronous: false
-  #   data:
-  #     path: $HOME/data/composition/base/testset.h5
-  #     n_data: 1_000
-  #     batch_size: 16
+    db_path: data/memory/people.db
+    data:
+      source: data/memory/qatool.jsonl
+      batch_size: 16
+
+    # these arguments should be inherited
+    tmp_file: $HOME/memory/evals.jsonl
+    log_path: $HOME/memory/tmp_eval.jsonl
+    tokenizer:
+      name: byte
