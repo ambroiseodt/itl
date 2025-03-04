@@ -3,16 +3,10 @@
 - Get some curves of accuracy when training with the tool use, or without. and write some visualization notebooks/scripts to get plots out of many experimental logs.
 
 #### Vivien's current todo:
-- Think of logging metrics, Use the metric logger, separation between train/eval, profiler/monitoring/loss/accuracy.
-- Configuration inheritage between training and evaluation, and running evaluation asynchronously.
 
-- Evaluation script working from config
-    - correct EvalOrchestrator.
-    - use metric logger.
 - Integrate this to the training script
-    - Evaluation working asynchronously
     - Configuration inheritage between training and evaluation
-- Change EvalCheckpointer Logic so that it works very similarly to the TrainCheckpointer.
+    - Evaluation working asynchronously
 
 - Proper parallelization
     - Make generation (KV cache / masking) work with DDP / TP.

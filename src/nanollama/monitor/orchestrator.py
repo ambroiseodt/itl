@@ -133,7 +133,9 @@ class EvalOrchestratorConfig:
         # same logic as OrchestratorConfig
         self.profiler.path = str(log_dir / "metrics" / task_id)
         self.logging.stdout_path = str(log_dir / "logs" / task_id)
-        self.logging.metric_path = str(log_dir / "metrics" / task_id)
+
+        # fake metric path to be modified by in the evaluation config post-init
+        self.logging.metric_path = self.log_dir
 
         for module in self.__dict__.values():
             if hasattr(module, "__check_init__"):

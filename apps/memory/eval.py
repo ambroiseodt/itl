@@ -104,6 +104,9 @@ def run_evaluation(
     - model: model to evaluate.
     - preemption: preemption handler.
     - dp_mesh: device mesh for distributed training.
+
+    ### Returns
+    - dictionary of metrics.
     """
     if preemption is None:
 
@@ -139,7 +142,6 @@ def run_evaluation(
             loss = 0
             for output, answer in zip(outputs, answers):
                 loss += int(output.endswith(f"{answer}."))
-                print(output)
             loss /= bsz
 
             # TODO: double check this scaling (the goal is to end up with the mean of the individual loss)
@@ -149,7 +151,7 @@ def run_evaluation(
             state.scaling += scaling
             state.step += 1
 
-            logger.debug(f"Evaluation: partial step: {state.step} - loss: {round(state.loss / state.scaling, 4):>7}")
+            logger.info(f"Evaluation: partial step: {state.step} - loss: {round(state.loss / state.scaling, 4):>7}")
 
         # rescale loss and save it
         state.loss /= state.scaling
@@ -169,15 +171,17 @@ class EvaluationConfig(OnlineEvaluationConfig):
     Configuration to launch an evaluation during a training run.
 
     ### Parameters
+    - model_dir: path to the model directory.
     - log_path: path to store the evaluation logs.
-    - db_path: path to SQL database.
-    - data: data configuration.
-    - tmp_file: temporary file to store partial results
+    - checkpoint_flag: file acting as a flag to avoid deleting checkpoints before evaluation
+    - metadata: metadata to add to the evaluation metrics.
     """
 
     model_dir: str = ""
-    checkpoint_flag: str = ""
     log_path: str = ""
+
+    checkpoint_flag: str = ""
+    metadata: dict[str, Any] = field(default_factory=dict)
 
     cluster: ClusterConfig = field(default_factory=ClusterConfig)
     orchestration: EvalOrchestratorConfig = field(default_factory=EvalOrchestratorConfig)
@@ -192,10 +196,11 @@ class EvaluationConfig(OnlineEvaluationConfig):
         assert self.model_dir, "Checkpoint directory must be set."
         self.log_path = os.path.expandvars(self.log_path)
 
-        # checkpoint configuration (not managed by orchestrator due to inheritance issue)
+        # configuration not managed by orchestrator due to inheritance issues
         self.checkpoint.path = str(Path(self.orchestration.log_dir) / "checkpoint")
         if self.checkpoint_flag:
             self.checkpoint.flag = str(Path(self.model_dir) / self.checkpoint_flag)
+        self.orchestration.logging.metric_path = self.log_path
 
         # manual post initialization of all modules
         for module in self.__dict__.values():
@@ -238,18 +243,14 @@ def eval(config: EvaluationConfig) -> None:
 
         metric = run_evaluation(config, model, preemption=preemption)
 
-        # logging
-        step = 0
-        metadata = {"step": step}
-        metric |= metadata
-        with open(config.log_path, "a") as f:
-            print(json.dumps(metric), file=f, flush=True)
-
+        # logging metrics
+        metric |= config.metadata
+        metric_logger(metric)
         wandb: WandbLogger = context_stack.enter_context(WandbLogger(config.orchestration.wandb, config))
         wandb(metric)
 
         if is_master_process():
-            logger.info(f"Test loss: {round(metric['loss'], 4):>7}")
+            logger.info(f"Final metric: {metric}")
 
     logger.info("Evaluation done.")
 
