@@ -8,15 +8,16 @@ Evaluation script.
 import json
 import logging
 import os
+from contextlib import ExitStack
 from dataclasses import dataclass, field
 from logging import getLogger
 from pathlib import Path
 from types import TracebackType
 from typing import Any
 
-import torch
 import torch.distributed.checkpoint as dcp
 import yaml
+from torch.distributed.checkpoint.stateful import Stateful
 
 from nanollama.data.tokenizer import TokenizerConfig, build_tokenizer
 from nanollama.distributed import ClusterConfig, ClusterManager, get_rank, is_master_process  # noqa: F401
@@ -62,121 +63,98 @@ class OnlineEvaluationConfig:
             self.tmp_file = Path(self.log_path).parent / f".tmp_eval_{get_rank()}.jsonl"
 
 
-class Evaluator:
+@dataclass
+class EvalState(Stateful):
+    loss: float = 0
+    scaling: float = 0
+    step: int = 0
+
+    def state_dict(self) -> dict:
+        return {"loss": self.loss, "scaling": self.scaling, "step": self.step}
+
+    def load_state_dict(self, state_dict: dict) -> None:
+        self.loss = state_dict["loss"]
+        self.scaling = state_dict["scaling"]
+        self.step = state_dict["step"]
+
+
+class EvalCheckpointer:
     """
-    Evaluation manager
+    Automatically save and load evaluation state to avoid repeated computation.
 
-    Running evaluation into chunks in order to handle job preemption.
-
-    Usage:
-    ```python
-    with EvalComputer(*args) as computer:
-        while next(computer):
-            pass
-
-    # TODO
-    Make it a function, with a context manager for partial saving.
-    evaluation_state, eval_checkpointer.
+    ### Parameters
+    - tmp_file: temporary file to store partial results
+    - eval_state: evaluation state
     """
 
-    def __init__(self, model: BlockLanguageModel, config: OnlineEvaluationConfig, **metadata):
-        # metadata (e.g. training step)
-        self.metadata = metadata
+    def __init__(self, tmp_file: str, eval_state: EvalState):
+        self.tmp_file = Path(tmp_file)
+        self.state = eval_state
 
-        # file paths
-        self.log_path = Path(config.log_path)
-        self.tmp_file = Path(config.tmp_file)
-
-        # data loader
-        tokenizer = build_tokenizer(config.tokenizer)
-        self.loader = PromptLoader(config.data, dp_mesh=None)
-
-        # inference engine
-        self.inference_engine = QueuedBatchedInference(model, tokenizer, config.db_path)
-
-    def __enter__(self) -> "Evaluator":
-        """Enter evaluation runtime context"""
-
-        # initialize sub-context
-        self.inference_engine.__enter__()
-        self.loader.__enter__()
-
+    def __enter__(self):
         # retrieve previous computations
         if self.tmp_file.exists():
             with open(os.path.expandvars(self.tmp_file)) as f:
                 state = json.load(f)
-                self.loss = state["loss"]
-                self.scaling = state["scaling"]
-                self.step = state["step"]
+            self.state.load_state_dict(state)
         else:
             self.tmp_file.touch()
-            self.loss = 0
-            self.scaling = 0
-            self.step = 0
-
-        # skip batches that were already evaluated
-        self.loader.__enter__()
-        for _ in range(self.step):
-            next(self.loader)
-
         return self
 
-    def __exit__(self, exc: type[BaseException], value: BaseException, tb: TracebackType):
-        """Enter evaluation runtime context"""
+    def delete(self) -> None:
+        self.tmp_file.unlink()
 
-        # if the evaluation was interrupted, save the current state
+    def __exit__(self, exc: type[BaseException], value: BaseException, tb: TracebackType):
         if self.tmp_file.exists():
             with open(os.path.expandvars(self.tmp_file), "w") as f:
-                print(json.dumps({"loss": self.loss, "scaling": self.scaling, "step": self.step}), file=f, flush=True)
+                print(json.dumps(self.state.state_dict()), file=f, flush=True)
 
-        # exit sub-context
-        self.inference_engine.__exit__(exc, value, tb)
-        self.loader.__exit__(exc, value, tb)
 
-    @torch.inference_mode()
-    def __call__(self):
-        """
-        Run evaluation
-        """
+def run_evaluation(config: OnlineEvaluationConfig, model: BlockLanguageModel, **metadata) -> None:
+    with ExitStack() as context_stack:
+        state = EvalState()
 
-        # TODO: create this dataloader
-        for prompts, answers in self.loader:
-            outputs = self.inference_engine.generate(prompts)
+        # partial evaluation checkpointer
+        checkpointer = EvalCheckpointer(config.tmp_file, state)
+        checkpointer: EvalCheckpointer = context_stack.enter_context(checkpointer)
 
-            # TODO correct this evaluation snippet
+        # data loader
+        loader = PromptLoader(config.data, dp_mesh=None)
+        loader: PromptLoader = context_stack.enter_context(loader)
 
+        # inference engine
+        tokenizer = build_tokenizer(config.tokenizer)
+        inference_engine = QueuedBatchedInference(model, tokenizer, config.db_path)
+        inference_engine: QueuedBatchedInference = context_stack.enter_context(inference_engine)
+
+        for prompts, answers in loader:
+            outputs = inference_engine.generate(prompts)
+
+            # TODO add evaluation if needed
+            bsz = len(prompts)
             loss = 0
             for output, answer in zip(outputs, answers):
-                loss += 1 - int(output.endswith(f"{answer}."))
-                print(output, answer, loss)
+                loss += int(output.endswith(f"{answer}."))
+            loss /= bsz
 
-            bsz = len(prompts)
-            scaling = bsz / self.loader.batch_size
-            self.scaling += scaling
+            # TODO: double check this scaling (the goal is to end up with the mean of the individual loss)
+            scaling = bsz / loader.batch_size
 
-            self.loss += scaling * loss
-            self.step += 1
+            state.loss += scaling * loss
+            state.scaling += scaling
+            state.step += 1
 
-            logger.debug(f"Evaluation: partial step: {self.step} - loss: {round(self.loss, 4):>7}")
+            logger.debug(f"Evaluation: partial step: {state.step} - loss: {round(state.loss / state.scaling, 4):>7}")
 
         # rescale loss and save it
-        self.loss /= self.scaling
-        with open(self.log_path, "a") as f:
-            print(json.dumps({"loss": self.loss} | self.metadata), file=f, flush=True)
+        state.loss /= state.scaling
+        with open(config.log_path, "a") as f:
+            print(json.dumps({"loss": state.loss} | metadata), file=f, flush=True)
 
-        # remove temporary file
-        self.tmp_file.unlink()
-        return False
-
-
-
-@torch.no_grad()
-def run_evaluation(config: OnlineEvaluationConfig, model: BlockLanguageModel, step: int) -> None:
-    computer = Evaluator(config, model, step=step)
-    computer()
+        checkpointer.delete()
 
     if is_master_process():
-        logger.info(f"Test loss: {round(computer.loss, 4):>7}")
+        logger.info(f"Test loss: {round(state.loss, 4):>7}")
 
 # ------------------------------------------------------------------------------
 # Main file
@@ -236,9 +214,7 @@ def main() -> None:
     dcp.load(state_dict=state_dict, checkpoint_id=checkpoint_dir)
     model.load_state_dict(state_dict["model"])
 
-    evaluator = Evaluator(model, config, step=0)
-    with evaluator:
-        evaluator()
+    evaluator = run_evaluation(config, model, step=0)
 
 if __name__ == "__main__":
     main()
