@@ -6,11 +6,13 @@ Evaluation script.
 """
 
 import json
+import logging
 import os
 from dataclasses import dataclass, field
 from logging import getLogger
 from pathlib import Path
 from types import TracebackType
+from typing import Any
 
 import torch
 import torch.distributed.checkpoint as dcp
@@ -176,23 +178,36 @@ def run_evaluation(config: OnlineEvaluationConfig, model: BlockLanguageModel, st
     if is_master_process():
         logger.info(f"Test loss: {round(computer.loss, 4):>7}")
 
+# ------------------------------------------------------------------------------
+# Main file
+# ------------------------------------------------------------------------------
 
-if __name__ == "__main__":
-    import logging
 
-    logging.basicConfig(level=logging.DEBUG)
+def main() -> None:
+    """
+    Launch an evaluation job from configuration file specified by cli argument.
 
-    text_config = yaml.safe_load("""
-    log_path: $HOME/logs/eval.jsonl
-    db_path: $HOME/code/memory/apps/memory/dataset/people.db
-    data:
-        source: $HOME/code/memory/apps/memory/dataset/qatool.jsonl
-        batch_size: 16
-        asynchronous: false
-    tmp_file: $HOME/logs/tmp_eval.jsonl
-    tokenizer:
-        name: byte
-    """)
+    Usage:
+    ```
+    python -m apps.my_app.evaluation apps/my_app/configs/my_config.yaml
+    ```
+    """
+    import argparse
+
+    logging.basicConfig(
+        level=logging.DEBUG,
+        format="[%(levelname)s] %(filename)s:%(lineno)d - %(message)s",
+        handlers=[logging.StreamHandler()],
+    )
+
+    # parse file configuration path
+    parser = argparse.ArgumentParser(description=main.__doc__)
+    parser.add_argument("config", type=str, help="Path to configuration file")
+    path = parser.parse_args().config
+
+    # obtain configuration from file
+    with open(os.path.expandvars(path)) as f:
+        text_config: dict[str, Any] = yaml.safe_load(f)
 
     print(text_config)
 
@@ -224,6 +239,9 @@ if __name__ == "__main__":
     evaluator = Evaluator(model, config, step=0)
     with evaluator:
         evaluator()
+
+if __name__ == "__main__":
+    main()
 
 # ------------------------------------------------------------------------------
 # Evaluation Run
