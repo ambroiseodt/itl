@@ -310,7 +310,7 @@ def train(config: TrainingConfig) -> None:
 
                     # launch job without device binding
                     with clean_environment():
-                        launch_job(launch_config, eval_config)
+                        launch_job(launch_config, {"run_config": asdict(eval_config)})
 
                     eval_orch.log_dir = str(Path(eval_orch.log_dir).parent)
 

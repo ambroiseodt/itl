@@ -292,7 +292,7 @@ export OMP_NUM_THREADS=1
 """
 
 
-def launch_job(config: LauncherConfig, file_config: Any) -> None:
+def launch_job(config: LauncherConfig, file_config: dict[str, Any]) -> None:
     """
     Launch a job on a Slurm cluster.
 
