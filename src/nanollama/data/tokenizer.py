@@ -137,32 +137,30 @@ class DialogTokenizer:
             mask.append(False)  # do not predict what follows the EoS token
         return tokens, mask
 
-    def decode(self, tokens: list[int], bot_char: str = ":>") -> str:
+    def decode(self, tokens: list[int]) -> str:
         """
         Decode a list of token IDs into a sentence.
 
         ### Parameters
         - tokens: list of token IDs to decode.
-        - bot_char: character to signal begining of turn.
 
         ### Returns
         - decoded sentence.
         """
         output = ""
         for token in tokens:
-            output += self.decode_online(token, bot_char=bot_char)
+            output += self.decode_online(token)
             if self.eod and token == self.eod:
                 break
         output += self.flush_decoding_buffer()
         return output
 
-    def decode_online(self, token: int, bot_char: str = ":>") -> str:
+    def decode_online(self, token: int) -> str:
         """
         Decode a single token in an online fashion.
 
         ### Parameters
         - tokens: last token id.
-        - bot_char: character to signal begining of turn.
 
         ### Returns
         - output: decoded sentence.
@@ -180,7 +178,7 @@ class DialogTokenizer:
             output += self.flush_decoding_buffer()
             output += "\n" if add_eol else ""
             self.current_actor = actor
-            output += f"{actor.value.upper()}{bot_char}"
+            output += f"<|{actor.value}|>"
 
         # else bufferize the current token
         else:
