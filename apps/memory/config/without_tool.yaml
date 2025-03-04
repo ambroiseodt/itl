@@ -19,7 +19,7 @@ run_config:
 
   data:
     sources:
-    - path: apps/memory/dataset/qa.jsonl
+    - path: data/memory/qa.jsonl
       weight: 1
     tokenizer:
       name: byte

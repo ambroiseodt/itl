@@ -23,11 +23,11 @@ run_config:
 
   data:
     sources:
-    - path: apps/memory/dataset/biographies.jsonl
+    - path: data/memory/biographies.jsonl
       weight: 90
-    - path: apps/memory/dataset/qa.jsonl
+    - path: data/memory/qa.jsonl
       weight: 10
-    - path: apps/memory/dataset/qatool.jsonl
+    - path: data/memory/qatool.jsonl
       weight: 50
     tokenizer:
       name: byte
