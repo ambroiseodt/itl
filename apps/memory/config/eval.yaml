@@ -1,7 +1,7 @@
 log_path: $HOME/logs/eval.jsonl
-db_path: $HOME/code/memory/apps/memory/dataset/people.db
+db_path: apps/memory/dataset/people.db
 data:
-  source: $HOME/code/memory/apps/memory/dataset/qatool.jsonl
+  source: apps/memory/dataset/qatool.jsonl
   batch_size: 16
   asynchronous: false
 tmp_file: $HOME/logs/tmp_eval.jsonl
