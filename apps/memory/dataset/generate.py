@@ -9,23 +9,38 @@ import json
 import random
 import re
 from itertools import product
-from pathlib import Path
+from pathlib import Path, PosixPath
 
 from jinja2 import Template
 
-seed = 42
-SAVE_DIR = Path(__file__).resolve().parent
+# relative paths
+TEMPLATE_DIR = Path(__file__).resolve().parent / "templates"
+ATOM_DIR = Path(__file__).resolve().parent / "atoms"
+
+# default variables
+SEED = 42
+DATA_DIR = Path(__file__).resolve().parents[3] / "data" / "memory"
 
 
-def generate_people() -> None:
+def generate_people(save_dir: str = DATA_DIR, seed: int = SEED) -> None:
     """
     Generate a list of people with random attributes.
     """
-    global first_names, last_names, cities, countries, occupations
-    keys = ["first_names", "last_names", "cities", "countries", "occupations"]
-    for key in keys:
-        with open(SAVE_DIR / "atoms" / f"{key}.txt") as f:
-            globals()[key] = f.read().splitlines()
+    # parse arguments
+    save_dir: PosixPath = Path(save_dir)
+    save_dir.mkdir(parents=True, exist_ok=True)
+
+    # recover atom data
+    with open(ATOM_DIR / "first_names.txt") as f:
+        first_names = f.read().splitlines()
+    with open(ATOM_DIR / "last_names.txt") as f:
+        last_names = f.read().splitlines()
+    with open(ATOM_DIR / "cities.txt") as f:
+        cities = f.read().splitlines()
+    with open(ATOM_DIR / "countries.txt") as f:
+        countries = f.read().splitlines()
+    with open(ATOM_DIR / "occupations.txt") as f:
+        occupations = f.read().splitlines()
 
     # shuffle people ordering
     random.seed(seed)
@@ -33,7 +48,7 @@ def generate_people() -> None:
     random.shuffle(all_pairs)
 
     # generate all unique combinations of first and last names and save to file
-    save_file = SAVE_DIR / "people.jsonl"
+    save_file = save_dir / "people.jsonl"
     with open(save_file, "w") as f:
         for first_name, last_name in all_pairs:
             entity = {
@@ -46,14 +61,18 @@ def generate_people() -> None:
             print(json.dumps(entity), file=f, flush=True)
 
 
-def collect_people(num: int = float("inf")) -> list[dict[str, str]]:
+def collect_people(save_dir: str = DATA_DIR, num: int = float("inf")) -> list[dict[str, str]]:
     """
     Collect a list of people with random attributes.
 
     ### Parameters
     - num: Number of people to collect (by default, it collect everyone).
     """
-    save_file = SAVE_DIR / "people.jsonl"
+    # parse arguments
+    save_dir: PosixPath = Path(save_dir)
+    save_dir.mkdir(parents=True, exist_ok=True)
+
+    save_file = save_dir / "people.jsonl"
     people = []
     with open(save_file) as f:
         while len(people) < num:
@@ -64,18 +83,22 @@ def collect_people(num: int = float("inf")) -> list[dict[str, str]]:
     return people
 
 
-def generate_biographies(num: int = float("inf")) -> None:
+def generate_biographies(save_dir: str = DATA_DIR, num: int = float("inf")) -> None:
     """
     Generate a list of biographies of people.
     """
+    # parse arguments
+    save_dir: PosixPath = Path(save_dir)
+    save_dir.mkdir(parents=True, exist_ok=True)
+
     # recover templates
     templates: list[Template] = []
-    for file in (SAVE_DIR / "templates").glob("bio*.j2"):
+    for file in (TEMPLATE_DIR).glob("bio*.j2"):
         with open(file) as f:
             templates.append(Template(f.read()))
 
     # write biographies to file
-    with open(SAVE_DIR / "biographies.jsonl", "w") as f:
+    with open(save_dir / "biographies.jsonl", "w") as f:
         for i, people in enumerate(collect_people(num=num)):
             for template in templates:
                 biography = template.render(**people)
@@ -87,16 +110,21 @@ def generate_biographies(num: int = float("inf")) -> None:
                 )
 
 
-def generate_qa(num: int = float("inf"), tooluse: bool = False) -> None:
+def generate_qa(save_dir: str = DATA_DIR, num: int = float("inf"), tooluse: bool = False) -> None:
     """
     Generate a list of questions about people biographies.
     """
+    # parse arguments
+    save_dir: PosixPath = Path(save_dir)
+    save_dir.mkdir(parents=True, exist_ok=True)
+
+    # recover templates
     templates: list[list[dict[str, Template]]] = []
     identifier = "qa" + ("tool" if tooluse else "")
     # regular expression to match special tokens
     pattern = re.compile(r"^<\|(\w+)\|>(.*)$")
 
-    for file in (SAVE_DIR / "templates").glob(f"{identifier}?.j2"):
+    for file in (TEMPLATE_DIR).glob(f"{identifier}?.j2"):
         with open(file) as f:
             dialog = f.read().splitlines()
             out, source, buffer = [], None, []
@@ -119,7 +147,7 @@ def generate_qa(num: int = float("inf"), tooluse: bool = False) -> None:
                 out.append({"source": source, "content": Template("\n".join(buffer))})
             templates.append(out)
 
-    with open(SAVE_DIR / f"{identifier}.jsonl", "w") as f:
+    with open(save_dir / f"{identifier}.jsonl", "w") as f:
         for i, people in enumerate(collect_people(num=num)):
             for dialog in templates:
                 out, answer = [], None

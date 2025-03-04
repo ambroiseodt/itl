@@ -10,7 +10,9 @@ from pathlib import Path
 
 from src.nanollama.agent import SQLAgent
 
-SAVE_DIR = Path(__file__).resolve().parent
+# default variables
+DATA_DIR = Path(__file__).resolve().parents[3] / "data" / "memory"
+SAVE_DIR = Path(__file__).resolve().parents[3] / "data" / "memory"
 
 
 def create_database() -> None:
@@ -21,7 +23,7 @@ def create_database() -> None:
         database.create("people", ["name", "birth_date", "birth_place", "current_address", "occupation"])
 
         # Read the JSONL file and insert data into the database
-        with open(SAVE_DIR / "people.jsonl") as file:
+        with open(DATA_DIR / "people.jsonl") as file:
             for line in file:
                 person = json.loads(line)
                 database.insert_element(person)

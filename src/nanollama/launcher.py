@@ -193,13 +193,18 @@ def copy_dir(input_dir: str, output_dir: str) -> None:
     rsync_cmd = (
         "rsync -ar --copy-links "
         "--exclude .git/ "
-        # configuration and cache
-        "--exclude .gitignore "
-        "--exclude .vscode "
+        # cache
         "--exclude .ruff_cache "
         "--exclude '*.egg-info' "
         "--exclude '__pycache__' "
+        # documentation
         "--exclude '*.md' "
+        # data
+        "--exclude data/"
+        "--exclude '*.txt*"
+        # configuration
+        "--exclude .gitignore "
+        "--exclude .vscode "
         "--exclude '*.toml' "
         "--exclude '*.yaml' "
         # checkpoints and runs
@@ -210,6 +215,7 @@ def copy_dir(input_dir: str, output_dir: str) -> None:
         # personal files and folders
         "--exclude '*.ipynb' "
         "--exclude 'tmp_*' "
+        # tests
         "--exclude tests/ "
         f"{input_dir}/ {output_dir}"
     )
