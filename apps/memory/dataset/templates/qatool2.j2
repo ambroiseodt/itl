@@ -1,7 +1,7 @@
-USER:>Where was {{name}} born?
-ASSISTANT:>To answer this question I will make a request to the database:
+<|user|>Where was {{name}} born?
+<|assistant|>To answer this question I will make a request to the database:
 ```sql
 FIND birth_place FOR {{name}}
 ```
-DATABASE:>{{birth_place}}
-ASSISTANT:>{{name}} was born in {{birth_place}}.
+<|database|>{{birth_place}}
+<|assistant|>{{name}} was born in {{birth_place}}.

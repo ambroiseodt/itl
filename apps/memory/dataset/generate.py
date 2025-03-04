@@ -7,6 +7,7 @@ Generate a list of entities with random attributes.
 
 import json
 import random
+import re
 from itertools import product
 from pathlib import Path
 
@@ -60,7 +61,6 @@ def collect_people(num: int = float("inf")) -> list[dict[str, str]]:
             if not line:
                 break
             people.append(json.loads(line))
-
     return people
 
 
@@ -93,34 +93,36 @@ def generate_qa(num: int = float("inf"), tooluse: bool = False) -> None:
     """
     templates: list[list[dict[str, Template]]] = []
     identifier = "qa" + ("tool" if tooluse else "")
+    # regular expression to match special tokens
+    pattern = re.compile(r"^<\|(\w+)\|>(.*)$")
+
     for file in (SAVE_DIR / "templates").glob(f"{identifier}?.j2"):
         with open(file) as f:
-            dialog = f.read().splitlines()  # Read all lines and split them
-            out, source, content = [], None, []
+            dialog = f.read().splitlines()
+            out, source, buffer = [], None, []
             for message in dialog:
-                if ":>" in message:
+                match = pattern.match(message)
+                if match:
                     if source is not None:
-                        # Append the accumulated message
-                        out.append({"source": source, "content": Template("\n".join(content))})
+                        # flush bufferized text
+                        out.append({"source": source, "content": Template("\n".join(buffer))})
 
-                    # Start a new message
-                    source, message = message.split(":>", 1)
+                    # start a new message
+                    source, message = match.groups()
                     source = source.lower()
-                    content = [message.strip()]
+                    buffer = [message.strip()]
                 else:
-                    # Accumulate lines for the current message
-                    content.append(message.strip())
-
-            # Append the last accumulated message
+                    # accumulate lines to the buffer
+                    buffer.append(message.strip())
+            # empty the buffer
             if source is not None:
-                out.append({"source": source, "content": Template("\n".join(content))})
+                out.append({"source": source, "content": Template("\n".join(buffer))})
             templates.append(out)
 
     with open(SAVE_DIR / f"{identifier}.jsonl", "w") as f:
         for i, people in enumerate(collect_people(num=num)):
             for dialog in templates:
-                out = []
-                answer = None
+                out, answer = [], None
                 for message in dialog:
                     content = message["content"].render(**people)
                     out.append(message | {"content": content})

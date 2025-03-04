@@ -1,7 +1,7 @@
-USER:>What is {{name}}'s occupation?
-ASSISTANT:>To answer this question I will make a request to the database:
+<|user|>What is {{name}}'s occupation?
+<|assistant|>To answer this question I will make a request to the database:
 ```sql
 FIND occupation FOR {{name}}
 ```
-DATABASE:>{{occupation}}
-ASSISTANT:>{{name}} works as an {{occupation}}.
+<|database|>{{occupation}}
+<|assistant|>{{name}} works as an {{occupation}}.

@@ -1,7 +1,7 @@
-USER:>Where does {{name}} live?
-ASSISTANT:>To answer this question I will make a request to the database:
+<|user|>Where does {{name}} live?
+<|assistant|>To answer this question I will make a request to the database:
 ```sql
 FIND current_address FOR {{name}}
 ```
-DATABASE:>{{current_address}}
-ASSISTANT:>{{name}} lives at {{current_address}}.
+<|database|>{{current_address}}
+<|assistant|>{{name}} lives at {{current_address}}.
