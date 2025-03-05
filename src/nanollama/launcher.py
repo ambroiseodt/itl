@@ -403,7 +403,7 @@ def launch_job(config: LauncherConfig, file_config: dict[str, Any]) -> None:
         f.write(bash_command)
 
     logger.info(f"Launching job with `{config.launcher}` command.")
-    # os.system(f"{config.launcher} {run_path}")
+    os.system(f"{config.launcher} {run_path}")
 
 
 def main() -> None:

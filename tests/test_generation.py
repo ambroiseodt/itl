@@ -1,9 +1,6 @@
+# This source code is licensed under the terms specified in the `LICENSE` file.
 """
 Unit tests for generation.
-
-#### License
-This source code is licensed under the terms specified in the `LICENSE` file,
-located in the root directory of this repository.
 
 @ 2025, Meta
 """
@@ -101,11 +98,10 @@ class TestGeneration(unittest.TestCase):
         bsz = len(self.data)
         max_prompt_len = 20
         min_prompt_len = 10
-        gen_len = self.model.seq_len - max_prompt_len
         device = self.device
 
         class MockTokenizer:
-            def decode(self, x):
+            def decode(self, x: list[int]):
                 return x
 
         inference_engine = MaskedBatchedInference(model=self.model, tokenizer=MockTokenizer())

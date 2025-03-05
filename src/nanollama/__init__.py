@@ -1,9 +1,6 @@
+# This source code is licensed under the terms specified in the `LICENSE` file.
 """
-Initialization of the NanoLLaMa module
-
-#### License
-This source code is licensed under the terms specified in the `LICENSE` file,
-located in the root directory of this repository.
+NanoLLaMa: a module to train state of the art small language models with a focus on hackability and simplicity.
 
 @ 2025, Meta
 """

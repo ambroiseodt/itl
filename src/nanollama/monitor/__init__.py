@@ -1,9 +1,6 @@
+# This source code is licensed under the terms specified in the `LICENSE` file.
 """
-Initialization of the monitor module
-
-#### License
-This source code is licensed under the terms specified in the `LICENSE` file,
-located in the root directory of this repository.
+Monitoring utilities for training runs.
 
 @ 2025, Meta
 """

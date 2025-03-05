@@ -1,9 +1,6 @@
+# This source code is licensed under the terms specified in the `LICENSE` file.
 """
 Checkpoint Manager
-
-#### License
-This source code is licensed under the terms specified in the `LICENSE` file,
-located in the root directory of this repository.
 
 @ 2025, Meta
 """
@@ -136,7 +133,7 @@ class Checkpointer(Monitor):
         Load checkpoint from path
 
         ### Parameters
-        path: path to the checkpoint
+        - path: path to the checkpoint
         """
 
         logger.info(f"Loading checkpoint from {str(path)}.")
@@ -157,7 +154,7 @@ class Checkpointer(Monitor):
         Save checkpoint to path
 
         ### Parameters
-        path: path to save the checkpoint
+        - path: path to save the checkpoint
         """
 
         if self.checkpoint_process is not None:

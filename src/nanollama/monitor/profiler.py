@@ -1,9 +1,6 @@
+# This source code is licensed under the terms specified in the `LICENSE` file.
 """
 Profiler
-
-#### License
-This source code is licensed under the terms specified in the `LICENSE` file,
-located in the root directory of this repository.
 
 @ 2025, Meta
 """
@@ -205,9 +202,9 @@ class LightProfiler(BaseProfiler):
         Report flop per step
 
         ### Parameters
-        model: model to profile.
-        seq_len: sequence length.
-        flop_multiplier: number of token updates per training step.
+        - model: model to profile.
+        - seq_len: sequence length.
+        - flop_multiplier: number of token updates per training step.
         """
         module = model.module if get_world_size() > 1 else model
         self.token_per_step = token_per_step
@@ -267,7 +264,7 @@ class Profiler(BaseProfiler):
     Profiler Context
 
     #### Note
-    Implementation is compatible with the simultaneous usage of multiple profilers
+    One can easily tweak the implementation run multiple profilers simultaneously.
     """
 
     def __init__(self, config: ProfilerConfig, state: OptimizerState = None):

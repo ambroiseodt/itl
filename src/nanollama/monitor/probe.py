@@ -1,9 +1,6 @@
+# This source code is licensed under the terms specified in the `LICENSE` file.
 """
 Probing manager
-
-#### License
-This source code is licensed under the terms specified in the `LICENSE` file,
-located in the root directory of this repository.
 
 @ 2025, Meta
 """
@@ -56,8 +53,8 @@ def log_stats(x: torch.Tensor, name: str) -> torch.Tensor:
     Register a probe module in a computational graph.
 
     ### Parameters
-    x: torch.Tensor to log
-    name: name to log the tensor information
+    - x: torch.Tensor to log
+    - name: name to log the tensor information
 
     The probe will call a operator register as torch.ops.probe,
     this operator should take as input the tensor (or its gradient), name (or {name}.g), and a uid as arguments.
@@ -95,9 +92,9 @@ def print_stats(x: torch.Tensor, name: str, uid: str) -> None:
     Default probe logging function.
 
     ### Parameters
-    x: torch.Tensor to log
-    name: name to log the tensor information
-    uid: unique identifier for the tensor
+    - x: torch.Tensor to log
+    - name: name to log the tensor information
+    - uid: unique identifier for the tensor
     """
     print(f"Logging {name} with UID {uid}:")
     stats = probe_stats(x)
@@ -113,9 +110,9 @@ def saved_probe_tensor(x: torch.Tensor, name: str, uid: str) -> None:
     Default probe logging function.
 
     ### Parameters
-    x: torch.Tensor to log
-    name: name to log the tensor information
-    uid: unique identifier for the tensor
+    - x: torch.Tensor to log
+    - name: name to log the tensor information
+    - uid: unique identifier for the tensor
     """
     if name.endswith(".g"):
         return
@@ -134,7 +131,7 @@ class Probe(TorchDispatchMode):
     Probing Context Manager.
 
     ### Parameters
-    func_hook: dictionary to hook operators to functions to call when the operator is called.
+    - func_hook: dictionary to hook operators to functions to call when the operator is called.
     """
 
     def __init__(self, func_hook: dict[OpOverload, callable] = None):
