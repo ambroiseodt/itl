@@ -188,7 +188,7 @@ class ClusterConfig:
         if isinstance(self.device, str):
             self.device = torch.device(self.device)
         if not self.dp:
-            self.dp = torch.cuda.device_count() // self.tp if self.device.type == "cuda" else 1
+            self.dp = get_world_size() // self.tp
 
     def to_dict(self) -> dict[str, Any]:
         output = asdict(self)
@@ -215,7 +215,7 @@ class ClusterManager:
         self.device = config.device
         self.tp = config.tp
         self.dp = config.dp
-        nb_devices = torch.cuda.device_count() if self.device.type == "cuda" else 1
+        nb_devices = get_world_size()
         assert self.device.type == "cpu" or self.dp * self.tp == nb_devices, (
             f"DP * TP must equal the number of GPUs {self.tp} * {self.dp} != {nb_devices}"
         )

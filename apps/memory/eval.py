@@ -208,10 +208,8 @@ class EvaluationConfig(OnlineEvaluationConfig):
         self.orchestration.logging.metric_path = self.log_path
 
         # manual post initialization of all modules
-        print("HERE")
         for module in self.__dict__.values():
             if hasattr(module, "__check_init__"):
-                print("MODULE", module)
                 module.__check_init__()
 
 
@@ -299,6 +297,9 @@ def main() -> None:
     # obtain configuration from file
     with open(os.path.expandvars(path)) as f:
         text_config: dict[str, Any] = yaml.safe_load(f)
+
+    if "run_config" in text_config:
+        text_config = text_config["run_config"]
 
     # initialize configuration
     config = initialize_nested_object(EvaluationConfig, text_config, inplace=False)
