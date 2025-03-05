@@ -31,13 +31,12 @@
 - Show how to run a grid with a grid.yaml configuration.
 
 #### Cosmetic changes
-- Correct init_weight vs reset_parameters
-- Correct docstring `args` to `- my_args`, and module docstring more readable.
 - Improve the docstring at module level (the ones at the start of files).
 
 #### Small improvements to the codebase
 - (?) Remove Statefulness of scheduler.
 - Option to remove the tokenizer mask when doing pure pretraining.
+- It is a bit weird to mix the metric logger with the stdout logger.
 
 #### Bigger improvement to the codebase
 - Add various initialization scheme.
