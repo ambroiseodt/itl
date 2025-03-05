@@ -5,6 +5,7 @@
 #### Vivien's current todo:
 
 - Debug the evaluation run launched in an asynchronous fashion.
+    - the issue is with attributes that are not serializable for yaml (torch.device, and Actor.database).
 
 - Make nice plots, and visualization methods.
     - check that wandb is working correctly.

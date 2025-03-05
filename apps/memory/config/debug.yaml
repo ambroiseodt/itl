@@ -63,7 +63,7 @@ run_config:
 
     logging:
       period: 1
-      level: debug
+      level: DEBUG
     # wandb:
       # active: true
 

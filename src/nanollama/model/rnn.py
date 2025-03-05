@@ -6,6 +6,7 @@ RNN utilities
 """
 
 from dataclasses import dataclass, field
+from typing import Literal
 
 from .blocklm import BlockLanguageModel, BlockLanguageModelConfig
 from .ssm.hawk import HawkBlock
@@ -20,15 +21,11 @@ from .ssm.utils_rnn import RNNBlockConfig
 
 @dataclass
 class FastRNNConfig(BlockLanguageModelConfig):
-    implementation: str
+    implementation: Literal["minlstm", "mingru", "hawk"]
     block: RNNBlockConfig = field(default_factory=RNNBlockConfig)
 
     def __post_init__(self):
         super().__post_init__()
-
-        # check validity
-        self.implementation = self.implementation.lower()
-        assert self.implementation in ["minlstm", "mingru", "hawk"], f"{self.implementation} not found"
 
         # inherit parameters from the block model configuration
         for attr in ["emb_dim"]:

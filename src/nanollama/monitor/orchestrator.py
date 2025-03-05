@@ -6,7 +6,7 @@ Generic Orchestrator Configuration, used to define the structure of logging dire
 """
 
 import os
-from dataclasses import asdict, dataclass, field
+from dataclasses import dataclass, field
 from logging import getLogger
 from pathlib import Path
 from typing import Any
@@ -113,7 +113,7 @@ class EvalOrchestratorConfig:
     profiler: ProfilerConfig = field(default_factory=ProfilerConfig)
     wandb: WandbConfig = field(default_factory=WandbConfig)
 
-    def __post_init__(self) -> None:
+    def __check_init__(self) -> None:
         """
         Check validity of arguments and fill in missing values.
         """
@@ -162,6 +162,5 @@ class EvalOrchestratorConfig:
             "name": self.name,
             "logging": self.logging.to_dict(),
             "profiler": self.profiler.to_dict(),
-            "utils": asdict(self.utils),
             "wandb": self.wandb.to_dict(),
         }

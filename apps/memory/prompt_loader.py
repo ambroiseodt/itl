@@ -20,9 +20,7 @@ from typing import Any
 from torch.distributed.checkpoint.stateful import Stateful
 from torch.distributed.device_mesh import DeviceMesh
 
-from nanollama.data.text import JSONLIterator
-
-# from src.nanollama.data.text import JSONLIterator
+from src.nanollama.data.text import JSONLIterator
 
 logger = getLogger("nanollama")
 
@@ -39,12 +37,14 @@ class DataConfig:
     - buffer_size: number of batches to bufferize asynchronously for data loading
     """
 
-    source: str
-    batch_size: int
+    source: str = ""
+    batch_size: int = 0
     asynchronous: bool = True
     buffer_size: int = 4
 
-    def __post_init__(self):
+    def __check_init__(self):
+        assert self.source, "source should be specified."
+        assert self.batch_size, "batch_size should be specified."
         self.source = os.path.expandvars(self.source)
 
 

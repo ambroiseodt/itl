@@ -1,9 +1,6 @@
+# This source code is licensed under the terms specified in the `LICENSE` file.
 """
 Utils functions
-
-#### License
-This source code is licensed under the terms specified in the `LICENSE` file,
-located in the root directory of this repository.
 
 @ 2025, Meta
 """
@@ -12,7 +9,7 @@ import copy
 from collections.abc import MutableMapping
 from dataclasses import fields, is_dataclass
 from logging import getLogger
-from typing import Any, TypeVar, Union, get_args, get_origin
+from typing import Any, Literal, TypeVar, Union, get_args, get_origin
 
 logger = getLogger("nanollama")
 
@@ -116,6 +113,12 @@ def initialize_nested_object(object_type: type[T], data: dict[str, Any], inplace
                 return initialize_nested_object(arg, data)
             except (TypeError, ValueError):
                 continue
+
+    # Literal
+    elif get_origin(object_type) is Literal:
+        if data not in args:
+            raise ValueError(f"Value '{data}' is not a valid literal for {object_type}.")
+        return data
 
     # primitive types
     try:

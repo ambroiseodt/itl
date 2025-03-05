@@ -79,14 +79,19 @@ class OnlineEvaluationConfig:
     - tmp_file: temporary file to store partial results
     """
 
-    db_path: str
+    db_path: str = ""
     data: DataConfig = field(default_factory=DataConfig)
     tokenizer: TokenizerConfig = field(default_factory=TokenizerConfig)
 
     checkpoint: EvalCheckpointConfig = field(default_factory=EvalCheckpointConfig)
 
     def __post_init__(self):
+        assert self.db_path, "db_path should be specified."
         self.db_path = os.path.expandvars(self.db_path)
+
+        for module in self.__dict__.values():
+            if hasattr(module, "__check_init__"):
+                module.__check_init__()
 
 
 @torch.inference_mode()
@@ -203,8 +208,10 @@ class EvaluationConfig(OnlineEvaluationConfig):
         self.orchestration.logging.metric_path = self.log_path
 
         # manual post initialization of all modules
+        print("HERE")
         for module in self.__dict__.values():
             if hasattr(module, "__check_init__"):
+                print("MODULE", module)
                 module.__check_init__()
 
 

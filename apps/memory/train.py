@@ -62,12 +62,18 @@ class EvalConfig(EvaluationConfig):
     period: int = 0
     asynchronous: bool = False
 
-    launcher: dict[str, Any] = field(default_factory=dict)
     slurm: SlurmConfig = field(default_factory=SlurmConfig)
 
     def __post_init__(self):
-        if not self.asynchronous:
+        if not self.asynchronous and self.period > 0:
             OnlineEvaluationConfig.__post_init__(self)
+
+    def to_dict(self) -> dict[str, Any]:
+        """handle serialization issue"""
+        output = asdict(self)
+        output["cluster"] = self.cluster.to_dict()
+        output["tokenizer"] = self.tokenizer.to_dict()
+        return output
 
 
 @dataclass
@@ -293,6 +299,7 @@ def train(config: TrainingConfig) -> None:
                     eval_orch.log_dir = str(Path(eval_orch.log_dir) / step_id)
 
                     # launcher config
+                    eval_config.slurm.__check_init__()
                     launch_config = initialize_nested_object(
                         LauncherConfig,
                         {
@@ -305,12 +312,16 @@ def train(config: TrainingConfig) -> None:
                         },
                     )
 
-                    # check config
-                    eval_config.__post_init__()
+                    # check and format config
+                    EvaluationConfig.__post_init__(eval_config)
+                    eval_dict = eval_config.to_dict()
+                    eval_dict.pop("period")
+                    eval_dict.pop("asynchronous")
+                    eval_dict.pop("slurm")
 
                     # launch job without device binding
                     with clean_environment():
-                        launch_job(launch_config, {"run_config": asdict(eval_config)})
+                        launch_job(launch_config, {"run_config": eval_dict})
 
                     eval_orch.log_dir = str(Path(eval_orch.log_dir).parent)
 

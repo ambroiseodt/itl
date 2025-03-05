@@ -6,7 +6,7 @@ Module providing tokenizers to cast dialog environments into lists of tokens
 """
 
 from abc import ABC, abstractmethod
-from dataclasses import dataclass, field
+from dataclasses import asdict, dataclass, field
 from logging import getLogger
 
 import torch
@@ -333,7 +333,7 @@ class TokenizerConfig:
     - eod: whether to add an `end of dialog` token.
     """
 
-    name: str
+    name: str = "byte"
     path: str | None = None
     bots: list[Actor] = field(default_factory=lambda: [actor for actor in Actor])
     eod: bool = True
@@ -341,6 +341,11 @@ class TokenizerConfig:
     def __post_init__(self):
         self.name = self.name.lower()
         assert self.name in [ByteTokenizer.name, TikTokenTokenizer.name]
+
+    def to_dict(self) -> dict:
+        output = asdict(self)
+        output["bots"] = [actor.value for actor in self.bots]
+        return output
 
 
 def build_tokenizer(config: TokenizerConfig) -> Tokenizer:

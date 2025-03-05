@@ -1,9 +1,6 @@
+# This source code is licensed under the terms specified in the `LICENSE` file.
 """
 Logging Managor
-
-#### License
-This source code is licensed under the terms specified in the `LICENSE` file,
-located in the root directory of this repository.
 
 @ 2025, Meta
 """
@@ -17,7 +14,7 @@ from logging import getLogger
 from pathlib import Path
 from traceback import format_exception
 from types import TracebackType
-from typing import Any
+from typing import Any, Literal
 
 import torch
 
@@ -29,7 +26,7 @@ logger = getLogger("nanollama")
 @dataclass
 class LoggerConfig:
     period: int = 100
-    level: str = "INFO"
+    level: Literal["DEBUG", "INFO", "WARNING", "ERROR", "CRITICAL"] = "INFO"
     stdout_path: str = field(init=False, default="")
     metric_path: str = field(init=False, default="")
 
@@ -37,7 +34,6 @@ class LoggerConfig:
         self.stdout_path = self.stdout_path
         self.metric_path = self.metric_path
         self.level = self.level.upper()
-        assert self.level in ["DEBUG", "INFO", "WARNING", "ERROR", "CRITICAL"]
 
     def __check_init__(self):
         """Check validity of arguments."""
