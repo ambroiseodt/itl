@@ -201,16 +201,23 @@ class EvaluationConfig(OnlineEvaluationConfig):
         assert self.model_dir, "Checkpoint directory must be set."
         self.log_path = os.path.expandvars(self.log_path)
 
+        # manual post initialization of all modules
+        for module in self.__dict__.values():
+            if hasattr(module, "__check_init__"):
+                module.__check_init__()
+
         # configuration not managed by orchestrator due to inheritance issues
         self.checkpoint.path = str(Path(self.orchestration.log_dir) / "checkpoint")
         if self.checkpoint_flag:
             self.checkpoint.flag = str(Path(self.model_dir) / self.checkpoint_flag)
         self.orchestration.logging.metric_path = self.log_path
 
-        # manual post initialization of all modules
-        for module in self.__dict__.values():
-            if hasattr(module, "__check_init__"):
-                module.__check_init__()
+    def to_dict(self) -> dict[str, Any]:
+        output = asdict(self)
+        output["tokenizer"] = self.tokenizer.to_dict()
+        output["cluster"] = self.cluster.to_dict()
+        output["orchestration"] = self.orchestration.to_dict()
+        return output
 
 
 @torch.inference_mode()

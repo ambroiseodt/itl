@@ -68,13 +68,6 @@ class EvalConfig(EvaluationConfig):
         if not self.asynchronous and self.period > 0:
             OnlineEvaluationConfig.__post_init__(self)
 
-    def to_dict(self) -> dict[str, Any]:
-        """handle serialization issue"""
-        output = asdict(self)
-        output["cluster"] = self.cluster.to_dict()
-        output["tokenizer"] = self.tokenizer.to_dict()
-        return output
-
 
 @dataclass
 class TrainingConfig:
@@ -282,7 +275,7 @@ def train(config: TrainingConfig) -> None:
                 # launch evaluation job on slurm
                 elif is_master_process():
                     # checkpoint
-                    eval_flag = "eval_flag"
+                    eval_flag = "flag"
                     checkpoint.update(eval_flag=eval_flag)
 
                     # alias

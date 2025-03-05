@@ -288,9 +288,7 @@ LAUNCHER_SCRIPT = """#!/bin/bash
 eval "$({conda_exe} shell.bash hook)"
 conda activate {conda_env_path}
 
-# go to code directory
 {go_to_code_dir}
-
 # launch the job
 export OMP_NUM_THREADS=1
 {run_command}
@@ -329,7 +327,7 @@ def launch_job(config: LauncherConfig, file_config: dict[str, Any]) -> None:
         code_dir.mkdir(exist_ok=True)
         logger.info(f"Copying code to {code_dir}.")
         copy_dir(os.getcwd(), code_dir)
-        go_to_code_dir = f"cd {code_dir}"
+        go_to_code_dir = f"# go to code directory\ncd {code_dir}\n"
     else:
         go_to_code_dir = ""
 

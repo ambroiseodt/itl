@@ -108,16 +108,16 @@ class Checkpointer(Monitor):
         ### Parameters
         - eval: Whether to save the checkpoint for evaluation
         """
-        # do not checkpoint twice
-        if self.saved_step == self.step:
-            return
-
         path = self.path / self.folder_name.format(self.step)
         path.mkdir(parents=False, exist_ok=True)
 
         # add evaluation flag, if needed
         if eval_flag:
-            (path / eval_flag).touch()
+            (path / f"eval_{eval_flag}").touch()
+
+        # do not checkpoint twice
+        if self.saved_step == self.step:
+            return
 
         self.save(path)
 
