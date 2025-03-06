@@ -210,7 +210,6 @@ def train(config: TrainingConfig) -> None:
             batch, mask = batch.chunk(2)
             X_batch = batch[:, :-1]
             mask = mask[:, :-1].to(bool)
-            # mask = mask[:, 1:].to(bool)
             y_batch = batch[:, 1:][mask]
 
             # -----------------------------------------------------------------
