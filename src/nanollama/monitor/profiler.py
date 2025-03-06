@@ -45,7 +45,7 @@ class BaseProfiler(ABC):
         pass
 
     def report_statistics(self, *args, **kwargs) -> None:
-        """Report gobal statistics about the device."""
+        """Report global statistics about the device."""
         return
 
     def start_timer(self) -> None:
