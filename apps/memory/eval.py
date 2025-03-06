@@ -49,15 +49,15 @@ logger = getLogger("nanollama")
 
 @dataclass
 class EvalState(Stateful):
-    loss: float = 0
+    accuracy: float = 0
     scaling: float = 0
     step: int = 0
 
     def state_dict(self) -> dict:
-        return {"loss": self.loss, "scaling": self.scaling, "step": self.step}
+        return {"accuracy": self.accuracy, "scaling": self.scaling, "step": self.step}
 
     def load_state_dict(self, state_dict: dict) -> None:
-        self.loss = state_dict["loss"]
+        self.accuracy = state_dict["accuracy"]
         self.scaling = state_dict["scaling"]
         self.step = state_dict["step"]
 
@@ -144,25 +144,25 @@ def run_evaluation(
 
             # TODO add evaluation if needed
             bsz = len(prompts)
-            loss = 0
+            accuracy = 0
             for output, answer in zip(outputs, answers):
-                loss += int(output.endswith(f"{answer}."))
-            loss /= bsz
+                accuracy += int(output.endswith(f"{answer}."))
+            accuracy /= bsz
 
-            # TODO: double check this scaling (the goal is to end up with the mean of the individual loss)
+            # TODO: double check this scaling (the goal is to end up with the mean of the individual accuracy)
             scaling = bsz / loader.batch_size
 
-            state.loss += scaling * loss
+            state.accuracy += scaling * accuracy
             state.scaling += scaling
             state.step += 1
 
-            logger.info(f"Evaluation: partial step: {state.step} - loss: {round(state.loss / state.scaling, 4):>7}")
+            logger.info(f"Evaluation: partial step: {state.step} - accuracy: {round(state.accuracy / state.scaling, 4):>7}")
 
-        # rescale loss and save it
-        state.loss /= state.scaling
+        # rescale accuracy and save it
+        state.accuracy /= state.scaling
         state.scaling = 1
 
-    return {"loss": state.loss}
+    return {"accuracy": state.accuracy}
 
 
 # ------------------------------------------------------------------------------
