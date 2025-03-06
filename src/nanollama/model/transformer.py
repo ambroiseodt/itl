@@ -25,8 +25,6 @@ from .feedforward import FeedForward
 from .norm import RMSNorm
 
 logger = getLogger("nanollama")
-FLEX_ATTENTION = True
-
 
 # ------------------------------------------------------------------------------
 # Attention Cache
