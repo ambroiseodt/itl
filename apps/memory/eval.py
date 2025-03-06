@@ -144,6 +144,8 @@ def run_evaluation(
                 logger.warning("Preemption flag set")
                 break
 
+            # TODO modify inference_engine.generate to return
+            # perplexity and/or logits/softmax proba
             outputs = inference_engine.generate(prompts)
 
             # TODO add evaluation if needed
