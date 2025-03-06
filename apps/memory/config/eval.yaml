@@ -14,7 +14,7 @@ metadata:
   step: 1000
 
 cluster:
-  compile: true
+  compile_model: true
 
 checkpoint:
   path: $HOME/tmp_eval
