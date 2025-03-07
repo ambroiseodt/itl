@@ -92,7 +92,7 @@ class Checkpointer(Monitor):
         self.saved_step = 0
         self.step = 0
 
-        self.checkpoint_process: Future = None
+        self.process: Future = None
 
     def __enter__(self) -> "Checkpointer":
         """Enter checkpoint context by loading the last checkpoint"""
@@ -157,13 +157,13 @@ class Checkpointer(Monitor):
         - path: path to save the checkpoint
         """
 
-        if self.checkpoint_process is not None:
+        if self.process is not None:
             logger.info("Waiting for previous checkpoint to complete.")
-            self.checkpoint_process.result()
+            self.process.result()
 
         logger.info(f"Saving checkpoint at step {self.step} to {str(path)}.")
         state_dict = self.get_state_dict()
-        self.checkpoint_process = dcp.async_save(state_dict, checkpoint_id=path)
+        self.process = dcp.async_save(state_dict, checkpoint_id=path)
 
         if hasattr(self.model, "config") and is_master_process():
             with open(path / "params.json", "w") as f:
