@@ -6,6 +6,7 @@ Module providing tokenizers to cast dialog environments into lists of tokens
 """
 
 import functools
+import json
 import operator
 import os
 import re
@@ -310,7 +311,7 @@ class TikTokenizer(Tokenizer):
             special_tokens[f"<|special_token_{tok_id}|>"] = tok_id
         # ... offset all special tokens to restricted tokens slots
         for name in special_tokens:
-            special_tokens[name] += len(special_tokens)
+            special_tokens[name] += len(merges)
         self._register_special_tokens(special_tokens)
 
         # build tiktoken engine
@@ -337,6 +338,48 @@ class TikTokenizer(Tokenizer):
 
     def decode(self, tokens: list[int]) -> str:
         return self.engine.decode(tokens)
+
+    @staticmethod
+    def download_model(name: str, save_dir: str) -> None:
+        """
+        Download tokenizer from tiktoken repository.
+
+        ### Parameters
+        - name: name of the tokenizer to download
+        - save_dir: directory to save the tokenizer
+
+        ### Usage
+        ```python
+        from nanollama.data.tokenizer import TikTokenizer
+
+        TikTokenizer.download_model("cl100k_base", "$HOME/tokenizer")
+        ```
+        """
+        import tiktoken
+        from tiktoken.load import dump_tiktoken_bpe
+
+        save_dir = Path(os.path.expandvars(save_dir))
+        save_dir.mkdir(parents=True, exist_ok=True)
+
+        # build tiktoken engine
+        engine = tiktoken.get_encoding(name)
+
+        # save merges
+        merges = engine._mergeable_ranks
+        dump_tiktoken_bpe(merges, save_dir / f"{name}.bpe")
+
+        # save parameters
+        special_tokens = {}
+        specials = engine.special_tokens_set
+        for token in specials:
+            special_tokens |= {token: engine.encode(token, allowed_special=specials)}
+        params = {
+            "pattern": engine._pat_str,
+            "special_tokens": special_tokens,
+            "nb_special_tokens": engine.n_vocab - len(merges),
+        }
+        with open(save_dir / f"{name}.json", "w") as f:
+            print(json.dumps(params), file=f, flush=True)
 
 
 # ------------------------------------------------------------------------------
