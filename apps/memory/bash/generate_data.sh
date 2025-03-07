@@ -12,11 +12,11 @@ echo "Generating data for the memory app..."
 echo "...people"
 python -m apps.memory.dataset.generate people
 echo "...biographies"
-python -m apps.memory.dataset.generate biographies
+python -m apps.memory.dataset.generate biographies ${1:+--num $1}
 echo "...question/answer"
-python -m apps.memory.dataset.generate qa
+python -m apps.memory.dataset.generate qa ${1:+--num $1}
 echo "...question/answer with tool use"
-python -m apps.memory.dataset.generate qa --tooluse
+python -m apps.memory.dataset.generate qa --tooluse ${1:+--num $1}
 
 printf 'Do you want to format the dataset as a SQLlite database? (Y/N)? '
 read answer

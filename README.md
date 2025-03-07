@@ -55,7 +55,7 @@ pip install -e .[ssm]
 ## Dataset creation
 Create a dataset of people, biographies of 1000 peoples, and questions/answers with the following commands (to be run from the root of the repository):
 ```bash
-bash apps/memory/bash/generate_data.sh
+bash apps/memory/bash/generate_data.sh 1000
 ```
 You will be asked whether to format the database as a SQLlite database. Answer "Yes" is you want to do it.
 

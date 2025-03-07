@@ -4,6 +4,15 @@
 
 #### Vivien's current todo:
 
+- Better data structure to easily varies the number of facts in the dataset.
+    - Script to create the dataset on a machine lease on the cluster.
+    - logic to copy file and create a dataset at start of training
+        -> TMP_DIR/uuid
+        -> python -m apps.memory.dataset.generate build 100 qa {data_dir}
+    - make sure the multijsonliterator work correctly.
+    - (maybe look into torchdata).
+    - make sure the pipeline runs
+
 - Launch some big grids to get first plots.
 
 - Make nice plots, and visualization methods.

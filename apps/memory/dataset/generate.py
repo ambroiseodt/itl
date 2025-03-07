@@ -8,6 +8,7 @@ Generate a list of entities with random attributes.
 import json
 import random
 import re
+import shutil
 from itertools import product
 from pathlib import Path, PosixPath
 
@@ -19,7 +20,7 @@ ATOM_DIR = Path(__file__).resolve().parent / "atoms"
 
 # default variables
 SEED = 42
-DATA_DIR = Path(__file__).resolve().parents[3] / "data" / "memory"
+DATA_DIR = Path().home() / "data" / "memory"
 
 
 def generate_people(save_dir: str = DATA_DIR, seed: int = SEED) -> None:
@@ -166,6 +167,36 @@ def generate_qa(save_dir: str = DATA_DIR, num: int = float("inf"), tooluse: bool
                 print(json.dumps({"dialog": out, "people_id": i, "answer": answer}), file=f, flush=True)
 
 
+def build_data(n_data: int, key: str, save_dir: str, data_dir: str = DATA_DIR) -> None:
+    """
+    Build a dataset folder by merging person data.
+
+    ### Parameters:
+    - num: number of people to merge into the dataset
+    - key: key indicating which file to copy (e.g., 'qa', 'biographies', 'qatool').
+    - save_dir: directory where the files should be copied to.
+    - data_dir: directory where the data is stored.
+    """
+    # Ensure the target directory exists
+    target_dir = Path(save_dir)
+    target_dir.mkdir(parents=True, exist_ok=True)
+
+    # Iterate over the specified number of directories
+    for i in range(n_data):
+        # Define the source file path
+        source_file = Path(data_dir / f"person{i + 1}/{key}.jsonl")
+
+        # Define the target file path
+        target_file = target_dir / f"chunk.{i}.jsonl"
+
+        # Copy the file if it exists
+        if source_file.exists():
+            shutil.copy(source_file, target_file)
+        else:
+            print(f"File {source_file} does not exist and was skipped.")
+    print(f"Dataset created at {target_dir}, from {n_data} people.")
+
+
 if __name__ == "__main__":
     import fire
 
@@ -174,5 +205,6 @@ if __name__ == "__main__":
             "people": generate_people,
             "biographies": generate_biographies,
             "qa": generate_qa,
+            "build": build_data,
         }
     )
