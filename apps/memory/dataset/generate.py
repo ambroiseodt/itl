@@ -98,8 +98,11 @@ def generate_biographies(save_dir: str = DATA_DIR, num: int = float("inf")) -> N
             templates.append(Template(f.read()))
 
     # write biographies to file
-    with open(save_dir / "biographies.jsonl", "w") as f:
-        for i, people in enumerate(collect_people(num=num)):
+    for i, people in enumerate(collect_people(num=num)):
+        person_dir = save_dir / f"person{i + 1}"
+        person_dir.mkdir(parents=True, exist_ok=True)
+
+        with open(person_dir / "biographies.jsonl", "w") as f:
             for template in templates:
                 biography = template.render(**people)
                 dialog = [{"source": "assistant", "content": biography}]
@@ -147,8 +150,12 @@ def generate_qa(save_dir: str = DATA_DIR, num: int = float("inf"), tooluse: bool
                 out.append({"source": source, "content": Template("\n".join(buffer))})
             templates.append(out)
 
-    with open(save_dir / f"{identifier}.jsonl", "w") as f:
-        for i, people in enumerate(collect_people(num=num)):
+    # Create a directory for each person
+    for i, people in enumerate(collect_people(num=num)):
+        person_dir = save_dir / f"person{i + 1}"
+        person_dir.mkdir(parents=True, exist_ok=True)
+
+        with open(person_dir / f"{identifier}.jsonl", "w") as f:
             for dialog in templates:
                 out, answer = [], None
                 for message in dialog:
