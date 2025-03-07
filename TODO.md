@@ -4,7 +4,7 @@
 
 #### Vivien's current todo:
 
-- implement tiktoken tokenizer.
+- Launch some big grids to get first plots.
 
 - Make nice plots, and visualization methods.
     - check that wandb is working correctly.
