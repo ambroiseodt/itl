@@ -162,7 +162,9 @@ def run_evaluation(
             state.scaling += scaling
             state.step += 1
 
-            logger.info(f"Evaluation: partial step: {state.step} - accuracy: {round(state.accuracy / state.scaling, 4):>7}")
+            logger.info(
+                f"Evaluation: partial step: {state.step} - accuracy: {round(state.accuracy / state.scaling, 4)}"
+            )
 
         # rescale accuracy and save it
         state.accuracy /= state.scaling
