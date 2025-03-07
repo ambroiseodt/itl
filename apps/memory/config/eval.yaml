@@ -5,6 +5,12 @@ data:
 db_path: data/memory/people.db
 tokenizer:
   name: byte
+  special_tokens:
+    <|user|>: 0
+    <|assistant|>: 1
+    <|database|>: 2
+    <|eod|>: 3
+
 
 model_dir: /private/home/vivc/memory/checkpoints/0/0000001000
 log_path: $HOME/final_eval

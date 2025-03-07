@@ -18,13 +18,19 @@ run_config:
     compile_model: false
 
   data:
+    batch_size: 128
+    seq_len: 128
+    padding: true
     sources:
     - path: data/memory/qa.jsonl
       weight: 1
     tokenizer:
       name: byte
-    batch_size: 128
-    seq_len: 128
+      special_tokens:
+        <|user|>: 0
+        <|assistant|>: 1
+        <|database|>: 2
+        <|eod|>: 3
 
   model:
     implementation: transformer

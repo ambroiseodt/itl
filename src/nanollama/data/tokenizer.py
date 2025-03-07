@@ -5,9 +5,15 @@ Module providing tokenizers to cast dialog environments into lists of tokens
 @ 2025, Meta
 """
 
+import functools
+import operator
+import os
+import re
 from abc import ABC, abstractmethod
-from dataclasses import asdict, dataclass, field
+from dataclasses import dataclass, field
 from logging import getLogger
+from pathlib import Path
+from typing import Any
 
 import torch
 
@@ -31,6 +37,20 @@ class Tokenizer(ABC):
 
     name: str
     vocab_size: int
+
+    def _register_special_tokens(self, special_tokens: dict[str, int]) -> None:
+        """
+        Add attributes to the tokenizer corresponding to the special tokens
+
+        ### Parameters
+        - special_tokens: dictionary of special tokens to their ids
+        """
+        logger.debug(f"Registering special tokens: {special_tokens}")
+
+        special_tokens = special_tokens if special_tokens else []
+        for tok_id, tok_str in enumerate(special_tokens):
+            tok = re.sub(r"<\|(.+?)\|>", r"\1", tok_str)  # Remove <| and |>
+            setattr(self, tok, tok_id)
 
     @abstractmethod
     def encode(self, sentence: str, bos: int = 0) -> list[int]:
@@ -84,6 +104,8 @@ class DialogTokenizer:
     """
     ### Parameters
     - tokenizer: encoder and decoder from string to list of integers.
+
+    ### Attributes
     - bots: dictionary mapping actors to `begin_of_turn` tags.
     - eod: token_id to put at the end of a dialog (if `eod != 0`).
     """
@@ -91,11 +113,13 @@ class DialogTokenizer:
     bots: dict[Actor, int]
     eod: int
 
-    def __init__(self, tokenizer: Tokenizer, bots: dict[Actor, int], eod: int) -> None:
+    def __init__(self, tokenizer: Tokenizer) -> None:
         self.tokenizer = tokenizer
-        self.bots = {actor: 0 for actor in Actor} | bots
-        self.eod = eod
         self.vocab_size = tokenizer.vocab_size
+
+        # attributes associated to dialog format
+        self.bots = {actor: getattr(self.tokenizer, actor.value, 0) for actor in Actor}
+        self.eod = getattr(self.tokenizer, "eod", 0)
 
         # decoding attributes
         self.bot2actor = {v: k for k, v in self.bots.items()}
@@ -214,11 +238,16 @@ class ByteTokenizer(Tokenizer):
         - special_tokens: list of special tokens to register (e.g. `["eos", "bos"]`)
         """
         super().__init__()
-        special_tokens = special_tokens if special_tokens else []
-        self.vocab_size = 256 + len(special_tokens)
-        for i, tok in enumerate(special_tokens):
-            logger.debug(f"Registering token {tok}")
-            setattr(self, tok, i + 256)
+
+        # build special_tokens
+        special_tokens = special_tokens if special_tokens else {}
+        # offset all special tokens to restricted tokens slots
+        for name in special_tokens:
+            special_tokens[name] += 256
+        self._register_special_tokens(special_tokens)
+
+        # register vocabulary size
+        self.vocab_size = max(special_tokens.values())
 
     def encode(self, sentence: str, bos: int = 0) -> list[int]:
         tokens = []
@@ -236,84 +265,78 @@ class ByteTokenizer(Tokenizer):
 # Tiktoken Tokenizer
 # ------------------------------------------------------------------------------
 
-"""
-TODO
 
-I have put some code that I found online, it needs to be modified to fit our needs.
-"""
-import functools  # noqa: E402
-import operator  # noqa: E402
-from copy import copy  # noqa: E402
-from pathlib import Path  # noqa: E402
+class TikTokenizer(Tokenizer):
+    """
+    Tiktoken Tokenizer
 
+    ### Parameters
+    - tokenizer_dir: directory containing a `merge.bpe` and `params.json` file defining BPE merges, and special tokens.
 
-class TikTokenTokenizer(Tokenizer):
+    The special tokens configuration files should be structured as
+    ```json
+    nb_special_tokens: ...
+    pattern: <regex_pattern>
+    special_tokens:
+        <token_str>: <token_id>
+    ```
+
+    The tokenizer string should be <|eod|>, or of the form <|actor|> where `actor` can be `assistant`, `user`, ...
+    """
+
     name = "tiktoken"
 
-    NUM_RESERVED_TOKENS = 256
-    DEFAULT_TIKTOKEN_PATTERN = r"""(?i:'s|'t|'re|'ve|'m|'ll|'d)|[^\r\n\p{L}\p{N}]?\p{L}+|\p{N}{1,3}| ?[^\s\p{L}\p{N}]+[\r\n]*|\s*[\r\n]+|\s+(?!\S)|\s+"""  # noqa: E501
-    DEFAULT_TIKTOKEN_SPECIAL_TOKENS = {
-        "<|user_turn|>": 0,
-        "<|llm_turn|>": 1,
-        "<|sql_turn|>": 2,
-        "<|eod|>": 3,
-    }
-    TIKTOKEN_MAX_ENCODE_CHARS = 400_000
+    ENCODE_CHUNK = 400_000
 
-    def __init__(self, path: str) -> None:
-        """
-        Tiktoken Tokenizer
-
-        ### Parameters
-        - path: path to the tiktoken model.
-        """
+    def __init__(
+        self,
+        path: str,
+        special_tokens: dict[str, int] = None,
+        pattern: str = None,
+        nb_special_tokens: int = None,
+    ) -> None:
         import tiktoken
         from tiktoken.load import load_tiktoken_bpe
 
-        super().__init__()
-        mergeable_ranks = load_tiktoken_bpe(path)
-        all_special_tokens_with_ids = self.get_all_special_tokens_with_ids(mergeable_ranks)
-        self.tkt_model = tiktoken.core.Encoding(
-            name=Path(path).stem,
-            pat_str=self.DEFAULT_TIKTOKEN_PATTERN,
-            mergeable_ranks=mergeable_ranks,
-            special_tokens=all_special_tokens_with_ids,
+        # load merges
+        merges = load_tiktoken_bpe(path)
+
+        # build special tokens
+        special_tokens = special_tokens or {}
+        nb_special_tokens = nb_special_tokens or (max(special_tokens.values()) + 1)
+        # ... add special tokens to restricted tokens slots
+        missing_ids = set(range(nb_special_tokens)) - set(special_tokens.values())
+        for tok_id in missing_ids:
+            special_tokens[f"<|special_token_{tok_id}|>"] = tok_id
+        # ... offset all special tokens to restricted tokens slots
+        for name in special_tokens:
+            special_tokens[name] += len(special_tokens)
+        self._register_special_tokens(special_tokens)
+
+        # build tiktoken engine
+        self.engine = tiktoken.core.Encoding(
+            name=Path(path).name,
+            pat_str=pattern,
+            mergeable_ranks=merges,
+            special_tokens=special_tokens,
         )
-        self.bos_id: int = self.tkt_model.encode_single_token("<|begin_of_text|>")
-        self.eos_id: int = self.tkt_model.encode_single_token("<|end_of_text|>")
-        self.n_words: int = self.tkt_model.n_vocab
 
-    def get_all_special_tokens_with_ids(self, mergeable_ranks: dict[bytes, int]) -> dict:
-        all_special_tokens_with_ids = copy(self.DEFAULT_TIKTOKEN_SPECIAL_TOKENS)
-        missing_ids = set(range(self.NUM_RESERVED_TOKENS)) - set(all_special_tokens_with_ids.values())
-        for id_ in missing_ids:
-            all_special_tokens_with_ids[f"<|reserved_special_token_{id_}|>"] = id_
-        for name in all_special_tokens_with_ids:
-            all_special_tokens_with_ids[name] += len(mergeable_ranks)
-        return all_special_tokens_with_ids
+        # register vocabulary size
+        self.vocab_size: int = self.engine.n_vocab
 
-    def id_to_piece(self, token_id: int) -> str:
-        return self.tkt_model.decode_single_token_bytes(token_id).decode()
-
-    def piece_to_id(self, piece: str) -> int:
-        return piece
-
-    def encode(self, text: str, bos: int) -> list[int]:
-        assert isinstance(text, str)
-        subs = [
-            text[i : i + self.TIKTOKEN_MAX_ENCODE_CHARS] for i in range(0, len(text), self.TIKTOKEN_MAX_ENCODE_CHARS)
-        ]
+    def encode(self, sentence: str, bos: int) -> list[int]:
+        subs = [sentence[i : i + self.ENCODE_CHUNK] for i in range(0, len(sentence), self.ENCODE_CHUNK)]
         t: list = functools.reduce(
             operator.iadd,
-            self.tkt_model.encode_ordinary_batch(subs),
+            self.engine.encode_ordinary_batch(subs),
             [],
         )
         if bos:
-            t.insert(0, self.bos_id)
+            t.insert(0, bos)
         return t
 
     def decode(self, tokens: list[int]) -> str:
-        return self.tkt_model.decode(tokens)
+        return self.engine.decode(tokens)
 
 
 # ------------------------------------------------------------------------------
@@ -335,17 +358,17 @@ class TokenizerConfig:
 
     name: str = "byte"
     path: str | None = None
-    bots: list[Actor] = field(default_factory=lambda: [actor for actor in Actor])
-    eod: bool = True
+    special_tokens: dict[str, int] = field(default_factory=dict)
+    configuration: dict[str, Any] = None
 
     def __post_init__(self):
         self.name = self.name.lower()
-        assert self.name in [ByteTokenizer.name, TikTokenTokenizer.name]
+        assert self.name in [ByteTokenizer.name, TikTokenizer.name]
+        if self.name == TikTokenizer.name:
+            assert "pattern" in self.configuration, "Missing `pattern` in configuration"
 
-    def to_dict(self) -> dict:
-        output = asdict(self)
-        output["bots"] = [actor.value for actor in self.bots]
-        return output
+        if self.path:
+            self.path = os.path.expandvars(self.path)
 
 
 def build_tokenizer(config: TokenizerConfig) -> Tokenizer:
@@ -358,20 +381,13 @@ def build_tokenizer(config: TokenizerConfig) -> Tokenizer:
     ### Returns
     - tokenizer instance.
     """
-    special_tokens = [f"bot_{actor.value}" for actor in config.bots]
-    if config.eod:
-        special_tokens.append("eod")
-
     if config.name == ByteTokenizer.name:
-        tokenizer = ByteTokenizer(special_tokens=special_tokens)
+        tokenizer = ByteTokenizer(special_tokens=config.special_tokens)
 
-    elif config.name == TikTokenTokenizer.name:
-        tokenizer = TikTokenTokenizer(path=config.path)
+    elif config.name == TikTokenizer.name:
+        tokenizer = TikTokenizer(path=config.path, special_tokens=config.special_tokens, **config.configuration)
 
     else:
         raise NotImplementedError(f"No implementation for tokenizer {config.name}")
 
-    bots: dict[Actor, int] = {actor: getattr(tokenizer, f"bot_{actor.value}") for actor in config.bots}
-    eod: int = getattr(tokenizer, "eod", 0)
-
-    return DialogTokenizer(tokenizer=tokenizer, bots=bots, eod=eod)
+    return DialogTokenizer(tokenizer=tokenizer)

@@ -22,6 +22,9 @@ run_config:
     compile_model: true
 
   data:
+    batch_size: 128
+    seq_len: 129
+    asynchronous: false
     sources:
     - path: data/memory/biographies.jsonl
       weight: 90
@@ -31,9 +34,11 @@ run_config:
       weight: 50
     tokenizer:
       name: byte
-    batch_size: 128
-    seq_len: 129
-    asynchronous: false
+      special_tokens:
+        <|user|>: 0
+        <|assistant|>: 1
+        <|database|>: 2
+        <|eod|>: 3
 
   model:
     implementation: transformer
