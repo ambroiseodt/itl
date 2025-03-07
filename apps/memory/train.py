@@ -346,6 +346,7 @@ def heritage_config(run_config: dict[str, Any], launcher: dict[str, Any]) -> Non
             run_config["orchestration"][key] = launcher[key]
 
     # heritage from training to evaluation
+    logger.info("Heritage from run_config to eval_config")
     eval_config = run_config.get("evaluation", {})
     if eval_config.get("period", 0) <= 0:
         run_config["evaluation"] = eval_config
