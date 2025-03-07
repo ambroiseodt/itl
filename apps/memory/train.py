@@ -310,10 +310,14 @@ def train(config: TrainingConfig) -> None:
                     eval_dict.pop("period")
                     eval_dict.pop("asynchronous")
                     eval_dict.pop("slurm")
+                    run_config = {"run_config": eval_dict}
 
                     # launch job without device binding
                     with clean_environment():
-                        launch_job(launch_config, {"run_config": eval_dict})
+                        # wait for checkpoint to be saved to launch job
+                        checkpoint.process.add_done_callback(
+                            lambda fut, cfg=launch_config, run_cfg=run_config: launch_job(cfg, run_cfg)
+                        )
 
                     eval_orch.log_dir = str(Path(eval_orch.log_dir).parent)
 
