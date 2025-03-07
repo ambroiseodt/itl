@@ -4,11 +4,10 @@ from logging import getLogger
 from pathlib import PosixPath
 from typing import Any
 
-import numpy as np
-import pandas as pd
 import yaml
 
-from .utils import flatten_config
+from ..utils import flatten_config
+from .loader import load_jsonl_to_numpy
 
 logger = getLogger("nanollama")
 
@@ -60,61 +59,6 @@ def extract_config_info(
     return res
 
 
-# ------------------------------------------------------------------------------
-# Metrics Utilities
-# ------------------------------------------------------------------------------
-
-
-def jsonl_to_numpy(path: str, keys: list[str]) -> dict[str, np.ndarray]:
-    """
-    Convert a jsonl file to a dictionnary of numpy array
-
-    Parameters
-    ----------
-    path:
-        Path to the jsonl file
-    keys:
-        List of keys to extract from the jsonl file
-
-    Returns
-    -------
-    A dictionnary of numpy array
-    """
-    data: dict[str, list] = {key: [] for key in keys}
-    with open(os.path.expandvars(path)) as f:
-        # read jsonl as a csv with missing values
-        for line in f:
-            values: dict[str, Any] = json.loads(line)
-            for key in keys:
-                data[key].append(values.get(key, None))
-    return {k: np.array(v) for k, v in data.items()}
-
-
-def get_keys(path: str, readall: bool = True) -> list[str]:
-    """
-    Get keys from a jsonl file
-
-    Parameters
-    ----------
-    path:
-        Path to the jsonl file
-    readall:
-        Wether to read all lines of the file or the first one only
-
-    Returns
-    -------
-    keys:
-        List of keys in the jsonl file
-    """
-    keys = set()
-    with open(os.path.expandvars(path)) as f:
-        for line in f:
-            keys |= json.loads(line).keys()
-            if not readall:
-                break
-    return list(keys)
-
-
 def get_losses(metric_path: PosixPath, steps: list, eval: bool = False) -> dict[str, float]:
     """
     Get the loss for the given metric path.
@@ -140,7 +84,7 @@ def get_losses(metric_path: PosixPath, steps: list, eval: bool = False) -> dict[
     world_size = 0
     for filepath in metric_path.glob(f"{prefix}_*.jsonl"):
         keys = ["loss", "step"]
-        data = jsonl_to_numpy(filepath, keys=keys)
+        data = load_jsonl_to_numpy(filepath, keys=keys)
         if loss is None:
             loss = data["loss"]
         else:
@@ -238,30 +182,3 @@ def process_results(
             print(log_dir / "metrics" / str(task_id))
             logger.error(f"Error processing task {task_id}: {e}")
             continue
-
-
-def get_processed_results(log_dir: PosixPath) -> pd.DataFrame:
-    """
-    Load multiple JSON files into a single pandas DataFrame.
-
-    Parameters
-    ----------
-    log_dir:
-        Path to logging directory.
-
-    Returns
-    -------
-    A DataFrame containing the data from all the loaded JSON files.
-    """
-
-    logger.info(f"Loading processed results in {log_dir}")
-    data = []
-    for file in log_dir.rglob("process.json"):
-        try:
-            with open(os.path.expandvars(file)) as f:
-                json_data = json.load(f)
-            data.append(json_data)
-        except Exception as e:
-            print(f"Error loading file {file}: {str(e)}")
-
-    return pd.DataFrame(data)
