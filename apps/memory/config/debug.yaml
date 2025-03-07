@@ -34,16 +34,21 @@ run_config:
       weight: 50
     tokenizer:
       name: byte
-      special_tokens:
-        <|user|>: 0
-        <|assistant|>: 1
-        <|database|>: 2
-        <|eod|>: 3
+      # name: tiktoken
+      # path: $HOME/tokenizer/cl100k_base.bpe
+      # special_tokens:
+      #   <|user|>: 0
+      #   <|assistant|>: 1
+      #   <|database|>: 2
+      #   <|eod|>: 3
+      # configuration:
+      #   nb_special_tokens: 21
+      #   pattern: '(?i:[sdmt]|ll|ve|re)|[^\\r\\n\\p{L}\\p{N}]?+\\p{L}++|\\p{N}{1,3}+| ?[^\\s\\p{L}\\p{N}]++[\\r\\n]*+|\\s++$|\\s*[\\r\\n]|\\s+(?!\\S)|\\s'
 
   model:
     implementation: transformer
     flex_attention: true
-    vocab_size: 300
+    vocab_size: 100277 
     emb_dim: 64
     nb_layers: 2
     block:
