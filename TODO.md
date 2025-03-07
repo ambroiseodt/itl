@@ -4,6 +4,8 @@
 
 #### Vivien's current todo:
 
+- implement tiktoken tokenizer.
+
 - Make nice plots, and visualization methods.
     - check that wandb is working correctly.
 - Generation.
@@ -32,7 +34,8 @@
 - (?) Remove Statefulness of scheduler.
 - It is a bit weird to mix the metric logger with the stdout logger.
 
-#### Bigger improvement to the codebase
+#### Bigger improvement to the codebas
+- Move toward tasks-based evaluation a la llm-harness. Get inspiration from https://github.com/facebookresearch/lingua/blob/main/apps/main/eval.py
 - Improve the generation part to have a async scheme for lane, with page in / page out mechanisms.
 - Add various initialization scheme.
 - Parallelization with (DP, TP) mesh.
