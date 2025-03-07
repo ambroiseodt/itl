@@ -1,6 +1,6 @@
 # This source code is licensed under the terms specified in the `LICENSE` file.
 """
-Monitoring utilities for training runs.
+Monitoring utilities to monitor runs.
 
 @ 2025, Meta
 """
