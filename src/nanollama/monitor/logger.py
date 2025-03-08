@@ -92,6 +92,8 @@ class Logger:
 
         logger.info(f"Running on machine {get_hostname()}")
 
+        self.start_time = time.time()
+
     def __enter__(self) -> "Logger":
         """
         Open logging files.
@@ -103,7 +105,7 @@ class Logger:
         """
         Report metrics to file.
         """
-        metrics |= {"ts": time.time()}
+        metrics |= {"ts": time.time() - self.start_time}
         print(json.dumps(metrics), file=self.metric, flush=True)
         logger.info(metrics)
 
