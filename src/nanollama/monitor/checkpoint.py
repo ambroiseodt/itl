@@ -39,7 +39,7 @@ class CheckpointConfig:
     nb_kept: int = 0
     path: str = field(init=False, default="")
 
-    def __check_init__(self):
+    def check_init(self) -> None:
         """Check validity of arguments.
 
         ### Note

@@ -35,7 +35,7 @@ class LoggerConfig:
         self.metric_path = self.metric_path
         self.level = self.level.upper()
 
-    def __check_init__(self):
+    def check_init(self) -> None:
         """Check validity of arguments."""
         assert self.stdout_path, "stdout_path was not set"
         assert self.metric_path, "metric_path was not set"

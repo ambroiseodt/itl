@@ -69,7 +69,7 @@ class SlurmConfig:
     # cluster environment
     script_extra: str = ""
 
-    def __check_init__(self):
+    def check_init(self) -> None:
         self.slurm_extra = ""
         for name in ["exclude", "qos", "account", "constraint"]:
             val = getattr(self, name)
@@ -180,8 +180,8 @@ class LauncherConfig:
             assert os.path.isfile(self.python_env)
 
         for module in self.__dict__.values():
-            if hasattr(module, "__check_init__"):
-                module.__check_init__()
+            if hasattr(module, "check_init"):
+                module.check_init()
 
 
 # ------------------------------------------------------------------------------

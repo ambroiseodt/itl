@@ -246,7 +246,7 @@ class ProfilerConfig:
     heavy: bool = False
     path: str = field(init=False, default="")
 
-    def __check_init__(self):
+    def check_init(self) -> None:
         """Check validity of arguments."""
         assert self.path, "path was not set"
 
