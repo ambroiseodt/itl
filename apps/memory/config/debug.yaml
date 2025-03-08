@@ -24,7 +24,7 @@ run_config:
   data:
     batch_size: 128
     seq_len: 129
-    asynchronous: false
+    asynchronous: true
 
     n_data: 1000
     key: biographies
@@ -54,8 +54,8 @@ run_config:
       hidden_dim: 256
 
   optim:
-    steps: 100
-    max_steps: 1000
+    steps: 10000
+    max_steps: 10000
     lr: 1e-4
     weight_decay: 0.1
     fused: false
@@ -72,7 +72,7 @@ run_config:
 
     logging:
       period: 1
-      level: DEBUG
+      level: INFO
     # wandb:
     #   active: true
 

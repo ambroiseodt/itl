@@ -4,26 +4,28 @@
 
 #### Vivien's current todo:
 
-- Better data structure to easily varies the number of facts in the dataset.
-    - Script to create the dataset on a machine lease on the cluster.
-    - logic to copy file and create a dataset at start of training
-        -> TMP_DIR/uuid
-        -> python -m apps.memory.dataset.generate build 100 qa {data_dir}
-    - make sure the multijsonliterator work correctly.
-    - (maybe look into torchdata).
-    - make sure the pipeline runs
+- Correct the unit tests
+
+- Show how to run a grid with a grid.yaml configuration.
 
 - Launch some big grids to get first plots.
+
+- improve the metric logging, as well as the profiler.
+    - log learning rate.
+    - log gradient norm.
+    - log activation norm.
+    - log gpu utilization.
+    - log throughput.
+    - have a way to compute exactly the number of flops.
 
 - Make nice plots, and visualization methods.
     - check that wandb is working correctly.
 - Generation.
     - Write inference loop logic, as well as sampling strategies.
 
-- Proper parallelization [maybe assume we do everything on a single gpu for the moment]
-    - Make generation (KV cache / masking) work with DDP / TP.
-
-- Show how to run a grid with a grid.yaml configuration.
+- Proper parallelization when using many GPUs.
+    - DDP at generation time (make KV cache / masking work there).
+    - TP at generation time.
 
 #### Other stuffs for Vivien's
 - Improve the light profiler.
@@ -44,7 +46,9 @@
 - It is a bit weird to mix the metric logger with the stdout logger.
 
 #### Bigger improvement to the codebas
-- Move toward tasks-based evaluation a la llm-harness. Get inspiration from https://github.com/facebookresearch/lingua/blob/main/apps/main/eval.py
+- Option to disable compile at generation time (it seems to slow the generation quite a bit).
+- Move toward omegaconf to handle configurations with `__post_init__` becoming `check_init`.
+- Move toward tasks-based evaluation a la llm-harness. Get inspiration from https://github.com/facebookresearch/lingua/blob/main/apps/main/eval.py.
 - Improve the generation part to have a async scheme for lane, with page in / page out mechanisms.
 - Add various initialization scheme.
 - Parallelization with (DP, TP) mesh.

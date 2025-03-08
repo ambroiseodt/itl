@@ -1,7 +1,7 @@
 launcher:
   name: memory
   overwrite: true
-  log_dir: $HOME/memory
+  log_dir: $HOME/memory_debug
 
   script: apps.memory.train
 
@@ -18,11 +18,11 @@ run_config:
     compile_model: true
 
   data:
+    key: qatool
+    n_data: 100
     batch_size: 128
     seq_len: 256
     padding: true
-    key: qatool
-    n_data: 100
     tokenizer:
       name: byte
       special_tokens:
@@ -53,15 +53,13 @@ run_config:
     utils:
       seed: 100
 
-    checkpoint:
-      period: 20
-      nb_kept: 3
-
     logging:
       period: 1
-      level: INFO
     wandb:
       active: false
+
+    checkpoint:
+      nb_kept: 1
 
     profiler:
       active: true
@@ -70,13 +68,11 @@ run_config:
       steps: 20
 
   evaluation:
-    period: 200
-    asynchronous: true
+    period: 20
+    asynchronous: false
 
-    db_path: data/memory/people.db
+    db_path: $HOME/data/memory/people.db
     data:
-      source: data/memory/qatool.jsonl
-      batch_size: 16
       asynchronous: false
 
     checkpoint:
