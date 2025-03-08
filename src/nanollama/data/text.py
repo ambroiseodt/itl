@@ -14,6 +14,7 @@ import json
 import os
 from collections.abc import Generator
 from dataclasses import dataclass
+from pathlib import Path
 from types import TracebackType
 from typing import Any
 
@@ -63,15 +64,21 @@ class DataConfig:
     - buffer_size: number of batches to bufferize asynchronously for data loading
     """
 
-    sources: list[SourceConfig]
-    tokenizer: TokenizerConfig
+    sources: list[SourceConfig] = None
+    tokenizer: TokenizerConfig = None
 
-    batch_size: int
-    seq_len: int
+    batch_size: int = 0
+    seq_len: int = 0
     padding: bool = False
     seed: int = 0
     asynchronous: bool = True
     buffer_size: int = 4
+
+    def __post_init__(self):
+        assert self.sources, "sources must be specified."
+        assert self.tokenizer, "tokenizer must be specified."
+        assert self.batch_size, "batch_size must be specified."
+        assert self.seq_len, "seq_len must be specified."
 
 
 # ------------------------------------------------------------------------------
@@ -298,12 +305,24 @@ class MultipleSourcesTokenGenerator(TokenLoader):
             rank, world_size = 0, 1
         else:
             rank, world_size = dp_mesh.get_local_rank(), dp_mesh.size()
-        iterators = [JSONLIterator(source.path, rank, world_size) for source in config.sources]
-        self.generators = [SingleSourceTokenGenerator(config, iterator, tokenizer) for iterator in iterators]
 
-        # initialize the source weights
-        self.weights = np.array([source.weight for source in config.sources], dtype=float)
+        # initialize file iterators
+        iterators = []
+        weights = []
+        for source in config.sources:
+            path = Path(source.path)
+            if path.is_dir():
+                weight = source.weight / len(list(path.glob("*.jsonl")))
+                for file in path.glob("*.jsonl"):
+                    iterators.append(JSONLIterator(file, rank, world_size))
+                    weights.append(weight)
+            else:
+                iterators.append(JSONLIterator(source.path, rank, world_size))
+                weights.append(source.weight)
+        self.weights = np.array(weights, dtype=float)
         self.weights /= np.sum(self.weights)
+
+        self.generators = [SingleSourceTokenGenerator(config, iterator, tokenizer) for iterator in iterators]
 
         # initialize the random number generator
         _, seeds = generate_seeds(nb_shared=0, nb_individual=1, root_seed=config.seed, rank=rank)

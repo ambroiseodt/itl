@@ -7,17 +7,18 @@ Training script with online generation of batch of data.
 
 import logging
 import os
+import subprocess
 from contextlib import ExitStack
 from dataclasses import asdict, dataclass, field
 from pathlib import Path
-from typing import Any
+from typing import Any, Literal
 
 import torch
 import torch.nn.functional as F
 import yaml
 
 from src.nanollama.data.loader import DataLoader
-from src.nanollama.data.text import DataConfig, MultipleSourcesTokenGenerator
+from src.nanollama.data.text import DataConfig, MultipleSourcesTokenGenerator, SourceConfig
 from src.nanollama.data.tokenizer import TokenizerConfig
 from src.nanollama.distributed import ClusterConfig, ClusterManager, clean_environment, get_rank, is_master_process
 from src.nanollama.launcher import LauncherConfig, SlurmConfig, launch_job
@@ -46,6 +47,7 @@ from src.nanollama.optim import (
 )
 from src.nanollama.utils import flatten_config, initialize_nested_object, unflatten_config
 
+from .dataset.generate import DATA_DIR
 from .eval import EvaluationConfig, OnlineEvaluationConfig, run_evaluation
 from .prompt_loader import DataConfig as EvalDataConfig
 
@@ -55,6 +57,51 @@ logger = logging.getLogger("nanollama")
 # ------------------------------------------------------------------------------
 # Configuration Class
 # ------------------------------------------------------------------------------
+
+
+@dataclass
+class MemoryDataConfig(DataConfig):
+    """
+    Data configuration for text data loader
+
+    ### Attributes
+    - tokenizer: tokenizer configuration
+    - source: corpus of text specification as a list of weighted sources
+    """
+
+    n_data: int = 0
+    key: Literal["qa", "qatool", "biographies"] = ""
+
+    data_dir: str = str(DATA_DIR)
+    save_dir: str = str(DATA_DIR)
+    sources: list[SourceConfig] = field(init=False, default=None)
+
+    def __post_init__(self):
+        assert self.n_data, "Number of data must be specified"
+        assert self.key, "Key must be specified"
+        assert self.tokenizer, "Tokenizer must be specified"
+
+        logger.info("Building dataset from configuration")
+        data_dir = os.path.expandvars(self.data_dir)
+        save_dir = str(Path(os.path.expandvars(self.save_dir)) / f"{self.key}_{self.n_data}")
+        subprocess.run(
+            [
+                "python",
+                "-m",
+                "apps.memory.dataset.generate",
+                "build",
+                "--n-data",
+                str(self.n_data),
+                "--key",
+                self.key,
+                "--save-dir",
+                save_dir,
+                "--data-dir",
+                data_dir,
+            ]
+        )
+        self.sources = [SourceConfig(path=save_dir, weight=1)]
+        super().__post_init__()
 
 
 @dataclass
@@ -74,7 +121,7 @@ class TrainingConfig:
     cluster: ClusterConfig = field(default_factory=ClusterConfig)
     orchestration: OrchestratorConfig = field(default_factory=OrchestratorConfig)
 
-    data: DataConfig = field(default_factory=DataConfig)
+    data: MemoryDataConfig = field(default_factory=MemoryDataConfig)
     optim: OptimizerConfig = field(default_factory=OptimizerConfig)
 
     model: BlockLanguageModelConfig = field(default_factory=BlockLanguageModelConfig)

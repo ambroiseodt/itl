@@ -6,9 +6,10 @@ Generate a list of entities with random attributes.
 """
 
 import json
+import logging
+import os
 import random
 import re
-import shutil
 from itertools import product
 from pathlib import Path, PosixPath
 
@@ -21,6 +22,7 @@ ATOM_DIR = Path(__file__).resolve().parent / "atoms"
 # default variables
 SEED = 42
 DATA_DIR = Path().home() / "data" / "memory"
+logger = logging.getLogger("nanollama")
 
 
 def generate_people(save_dir: str = DATA_DIR, seed: int = SEED) -> None:
@@ -178,27 +180,33 @@ def build_data(n_data: int, key: str, save_dir: str, data_dir: str = DATA_DIR) -
     - data_dir: directory where the data is stored.
     """
     # Ensure the target directory exists
-    target_dir = Path(save_dir)
-    target_dir.mkdir(parents=True, exist_ok=True)
+    save_dir: PosixPath = Path(os.path.expandvars(save_dir))
+    save_dir.mkdir(parents=True, exist_ok=True)
 
     # Iterate over the specified number of directories
+    data_dir: PosixPath = Path(os.path.expandvars(data_dir))
     for i in range(n_data):
+
         # Define the source file path
-        source_file = Path(data_dir / f"person{i + 1}/{key}.jsonl")
+        source_file = data_dir / f"person{i + 1}/{key}.jsonl"
 
         # Define the target file path
-        target_file = target_dir / f"chunk.{i}.jsonl"
+        target_file = save_dir / f"chunk.{i}.jsonl"
 
         # Copy the file if it exists
-        if source_file.exists():
-            shutil.copy(source_file, target_file)
+        if not source_file.exists():
+            logger.debug(f"File {source_file} does not exist and was skipped.")
+        elif target_file.exists():
+            logger.debug(f"File {target_file} already exists and was skipped.")
         else:
-            print(f"File {source_file} does not exist and was skipped.")
-    print(f"Dataset created at {target_dir}, from {n_data} people.")
+            os.symlink(source_file, target_file)
+    logger.debug(f"Dataset created at {save_dir}, from {n_data} people.")
 
 
 if __name__ == "__main__":
     import fire
+
+    logging.basicConfig(level=logging.DEBUG)
 
     fire.Fire(
         {
