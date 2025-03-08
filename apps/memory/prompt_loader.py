@@ -8,11 +8,11 @@ PyTorch introduces a new logic for dataloader with `torchdata`, which could impr
 @ 2025, Meta
 """
 
-import os
 from collections.abc import Generator
-from dataclasses import dataclass
+from dataclasses import dataclass, field
 from logging import getLogger
 from multiprocessing import Process, Queue
+from pathlib import Path
 from queue import Empty, Full
 from types import TracebackType
 from typing import Any
@@ -20,7 +20,7 @@ from typing import Any
 from torch.distributed.checkpoint.stateful import Stateful
 from torch.distributed.device_mesh import DeviceMesh
 
-from src.nanollama.data.text import JSONLIterator
+from src.nanollama.data.text import JSONLIterator, SourceConfig
 
 logger = getLogger("nanollama")
 
@@ -37,15 +37,14 @@ class DataConfig:
     - buffer_size: number of batches to bufferize asynchronously for data loading
     """
 
-    source: str = ""
+    sources: list[SourceConfig] = field(default_factory=list)
     batch_size: int = 0
     asynchronous: bool = True
     buffer_size: int = 4
 
-    def __check_init__(self):
-        assert self.source, "source should be specified."
+    def check_init(self) -> None:
+        assert self.sources, "source should be specified."
         assert self.batch_size, "batch_size should be specified."
-        self.source = os.path.expandvars(self.source)
 
 
 # ------------------------------------------------------------------------------
@@ -78,7 +77,12 @@ class PromptLoader(Stateful):
             rank, world_size = 0, 1
         else:
             rank, world_size = dp_mesh.get_local_rank(), dp_mesh.size()
-        self.jsonl_iterator = JSONLIterator(config.source, rank, world_size, loop=False)
+
+        self.jsonl_iterators: list[JSONLIterator] = []
+        for source in config.sources:
+            for path in Path(source.path).glob("*.jsonl"):
+                self.jsonl_iterators.append(JSONLIterator(str(path), rank, world_size, loop=False))
+        self.file_idx = 0
 
         # asynchronous data loading: a worker writes batches in a buffer, that a reader consumes
         self.asynchronous = config.asynchronous
@@ -92,7 +96,8 @@ class PromptLoader(Stateful):
 
     def __enter__(self) -> "PromptLoader":
         logger.info("Entering dataloader.")
-        self.jsonl_iterator.__enter__()
+        for iterator in self.jsonl_iterators:
+            iterator.__enter__()
         if self.asynchronous:
             self.process.start()
         return self
@@ -101,31 +106,39 @@ class PromptLoader(Stateful):
         if self.asynchronous:
             self.process.kill()
             self.buffer.close()
-        self.jsonl_iterator.__exit__(exc, value, tb)
+        for iterator in self.jsonl_iterators:
+            iterator.__exit__(exc, value, tb)
 
     def batch_iterator(self) -> Generator[tuple[list[str], list[str]], None, None]:
+        nb_files = len(self.jsonl_iterators)
         while True:
-            try:
-                prompts = []
-                answers = []
-                for _ in range(self.batch_size):
-                    # receive sentences
-                    json_data = next(self.jsonl_iterator)
+            prompts = []
+            answers = []
+            while len(prompts) < self.batch_size:
+                # check the current iterator
+                if self.file_idx >= nb_files:
+                    break
+                jsonl_iterator = self.jsonl_iterators[self.file_idx]
+                try:
+                    # Receive sentences and put them in the current batch
+                    json_data = next(jsonl_iterator)
                     dialog = json_data["dialog"]
-
                     message = dialog[0]
                     assert message["source"] == "user"
                     prompts.append(message["content"])
                     answers.append(json_data["answer"])
+                except StopIteration:
+                    # Move to the next iterator
+                    self.file_idx += 1
+            # if a batch was built, yield it
+            if prompts:
                 yield prompts, answers
-            except StopIteration:
-                if len(prompts):
-                    yield prompts, answers
-                else:
-                    return
+            # otherwise, stop the generator
+            else:
+                return
 
     def sync_state_dict(self) -> dict[str, Any]:
-        return {"iterator": self.jsonl_iterator.state_dict()}
+        return {"iterators": [iterator.state_dict() for iterator in self.jsonl_iterators], "file_idx": self.file_idx}
 
     # --------------------------------------------------------------------------
     # Asynchronous Data Loading
@@ -191,7 +204,9 @@ class PromptLoader(Stateful):
                 self.buffer.get()
 
         # reset the generator
-        self.jsonl_iterator.load_state_dict(state_dict["iterator"])
+        for iterator, value in zip(self.jsonl_iterators, state_dict["iterators"]):
+            iterator.load_state_dict(value)
+        self.file_idx = state_dict["file_idx"]
         self.gen_state_dict = self.sync_state_dict()
 
         # restart the process

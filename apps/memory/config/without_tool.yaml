@@ -1,7 +1,7 @@
 launcher:
-  name: memory
+  name: mem_tool
   overwrite: true
-  log_dir: $HOME/memory_four
+  log_dir: $HOME/memory_tool
 
   script: apps.memory.train
 
@@ -15,14 +15,14 @@ launcher:
 
 run_config:
   cluster:
-    compile_model: false
+    compile_model: true
 
   data:
-    batch_size: 128
-    seq_len: 128
-    padding: true
     key: qa
     n_data: 100
+    batch_size: 128
+    seq_len: 256
+    padding: true
     tokenizer:
       name: byte
       special_tokens:
@@ -37,16 +37,15 @@ run_config:
     emb_dim: 64
     nb_layers: 2
     block:
-      seq_len: 2048
       nb_heads: 2
       hidden_dim: 256
 
   optim:
-    steps: 100
-    lr: 1e-4
+    steps: 1000
+    lr: 1e-3
     weight_decay: 0.1
     fused: true
-    warmup: 15
+    warmup: 50
     lr_min_ratio: 0
 
   orchestration:
@@ -54,12 +53,10 @@ run_config:
       seed: 100
 
     checkpoint:
-      period: 20
       nb_kept: 3
 
     logging:
       period: 1
-      level: DEBUG
     wandb:
       active: false
 
@@ -69,18 +66,13 @@ run_config:
       wait: 1
       steps: 20
 
-  # eval:
-  #   period: 0
-  #   dataset_dir: /checkpoint/$USER/datasets/eval
-  #   tasks: piqa
-  #   generator:
-  #     max_tokens: 2048
-      # dtype: fp32
+  evaluation:
+    period: 200
+    asynchronous: true
 
-  # evaluation:
-  #   period: 15
-  #   asynchronous: false
-  #   data:
-  #     path: $HOME/data/composition/base/testset.h5
-  #     n_data: 1_000
-  #     batch_size: 16
+    db_path: data/memory/people.db
+    data:
+      asynchronous: false
+
+    checkpoint:
+      path: $HOME/tmp_eval.jsonl

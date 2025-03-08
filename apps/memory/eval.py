@@ -94,8 +94,8 @@ class OnlineEvaluationConfig:
         self.db_path = os.path.expandvars(self.db_path)
 
         for module in self.__dict__.values():
-            if hasattr(module, "__check_init__"):
-                module.__check_init__()
+            if hasattr(module, "check_init"):
+                module.check_init()
 
 
 @torch.inference_mode()
@@ -211,8 +211,8 @@ class EvaluationConfig(OnlineEvaluationConfig):
 
         # manual post initialization of all modules
         for module in self.__dict__.values():
-            if hasattr(module, "__check_init__"):
-                module.__check_init__()
+            if hasattr(module, "check_init"):
+                module.check_init()
 
         # configuration not managed by orchestrator due to inheritance issues
         self.checkpoint.path = str(Path(self.orchestration.log_dir) / "checkpoint")
@@ -222,7 +222,6 @@ class EvaluationConfig(OnlineEvaluationConfig):
 
     def to_dict(self) -> dict[str, Any]:
         output = asdict(self)
-        output["tokenizer"] = self.tokenizer.to_dict()
         output["cluster"] = self.cluster.to_dict()
         output["orchestration"] = self.orchestration.to_dict()
         return output

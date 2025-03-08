@@ -18,6 +18,7 @@ from ..agent import Actor, SQLAgent
 from ..data.tokenizer import DialogTokenizer
 from ..model import Transformer
 
+torch._dynamo.config.suppress_errors = True
 
 class QueuedBatchedInference:
     """
@@ -52,6 +53,7 @@ class QueuedBatchedInference:
         self.model.delete_cache()
 
     @torch.inference_mode()
+    @torch._dynamo.disable()
     def generate(self, prompts: list[str], max_len: int = None) -> list[str]:
         """
         Generate completions for the given prompts.

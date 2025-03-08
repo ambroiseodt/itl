@@ -139,11 +139,14 @@ class SQLAgent:
         res = []
         for instruction in instructions:
             groups = re.match(self.llm_query, instruction)
-            attribute = groups.group(1)
-            name = groups.group(2)
-            query = self.sql_query.format(attribute=attribute)
-            query_res = self.query(query, (name,))
-            res.extend([row[0] for row in query_res])
+            if groups:
+                attribute = groups.group(1)
+                name = groups.group(2)
+                query = self.sql_query.format(attribute=attribute)
+                query_res = self.query(query, (name,))
+                res.extend([row[0] for row in query_res])
+            else:
+                res = []
 
         answer = ", ".join(res)
         if not answer:

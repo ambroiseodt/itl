@@ -39,19 +39,20 @@ class Tokenizer(ABC):
     name: str
     vocab_size: int
 
-    def _register_special_tokens(self, special_tokens: dict[str, int]) -> None:
+    def _register_special_tokens(self, special_tokens: dict[str, int], offset: int) -> None:
         """
         Add attributes to the tokenizer corresponding to the special tokens
 
         ### Parameters
         - special_tokens: dictionary of special tokens to their ids
+        - offset: offset to avoid collision with existing tokens
         """
         logger.debug(f"Registering special tokens: {special_tokens}")
 
-        special_tokens = special_tokens if special_tokens else []
-        for tok_id, tok_str in enumerate(special_tokens):
+        special_tokens = special_tokens if special_tokens else {}
+        for tok_str, tok_id in special_tokens.items():
             tok = re.sub(r"<\|(.+?)\|>", r"\1", tok_str)  # Remove <| and |>
-            setattr(self, tok, tok_id)
+            setattr(self, tok, tok_id + offset)
 
     @abstractmethod
     def encode(self, sentence: str, bos: int = 0) -> list[int]:
@@ -231,7 +232,7 @@ class ByteTokenizer(Tokenizer):
     error_scheme = "backslashreplace"
     encoding = "utf-8"
 
-    def __init__(self, special_tokens: list[str] = None) -> None:
+    def __init__(self, special_tokens: dict[str, int] = None) -> None:
         """
         Byte Tokenizer
 
@@ -243,13 +244,11 @@ class ByteTokenizer(Tokenizer):
         # build special_tokens
         special_tokens = special_tokens if special_tokens else {}
         # offset all special tokens to restricted tokens slots
-        for name in special_tokens:
-            special_tokens[name] += 256
-        self._register_special_tokens(special_tokens)
+        self._register_special_tokens(special_tokens, offset=256)
 
         # register vocabulary size
         if special_tokens:
-            self.vocab_size = max(special_tokens.values())
+            self.vocab_size = 256 + max(special_tokens.values())
         else:
             self.vocab_size = 256
 
@@ -313,9 +312,7 @@ class TikTokenizer(Tokenizer):
         for tok_id in missing_ids:
             special_tokens[f"<|special_token_{tok_id}|>"] = tok_id
         # ... offset all special tokens to restricted tokens slots
-        for name in special_tokens:
-            special_tokens[name] += len(merges)
-        self._register_special_tokens(special_tokens)
+        self._register_special_tokens(special_tokens, offset=len(merges))
 
         # build tiktoken engine
         self.engine = tiktoken.core.Encoding(

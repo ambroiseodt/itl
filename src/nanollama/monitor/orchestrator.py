@@ -81,8 +81,8 @@ class OrchestratorConfig:
 
         # check validity of submodule
         for module in self.__dict__.values():
-            if hasattr(module, "__check_init__"):
-                module.__check_init__()
+            if hasattr(module, "check_init"):
+                module.check_init()
 
 
 # ------------------------------------------------------------------------------
@@ -113,7 +113,7 @@ class EvalOrchestratorConfig:
     profiler: ProfilerConfig = field(default_factory=ProfilerConfig)
     wandb: WandbConfig = field(default_factory=WandbConfig)
 
-    def __check_init__(self) -> None:
+    def check_init(self) -> None:
         """
         Check validity of arguments and fill in missing values.
         """
@@ -138,8 +138,8 @@ class EvalOrchestratorConfig:
         self.logging.metric_path = self.log_dir
 
         for module in self.__dict__.values():
-            if hasattr(module, "__check_init__"):
-                module.__check_init__()
+            if hasattr(module, "check_init"):
+                module.check_init()
 
         # create directory
         Path(self.log_dir).mkdir(parents=True, exist_ok=True)

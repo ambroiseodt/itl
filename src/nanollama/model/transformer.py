@@ -249,7 +249,7 @@ class TransformerBlockConfig:
     hidden_dim: int = 0
     norm_eps: float = 1e-5
 
-    def __check_init__(self):
+    def check_init(self) -> None:
         """Check validity of arguments that may have been inherited."""
         assert self.seq_len, "sequence length should be specified"
         assert self.emb_dim, "embedding dimension should be specified"

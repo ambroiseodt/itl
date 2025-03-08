@@ -34,7 +34,7 @@ class WandbConfig:
     name: str = field(init=False, default="")
     path: str = field(init=False, default="")
 
-    def __check_init__(self):
+    def check_init(self) -> None:
         """Check validity of arguments and fill in missing values."""
         assert self.name, "name was not set"
         assert self.path, "path was not set"

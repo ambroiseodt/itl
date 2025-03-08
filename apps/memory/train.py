@@ -81,9 +81,13 @@ class MemoryDataConfig(DataConfig):
         assert self.key, "Key must be specified"
         assert self.tokenizer, "Tokenizer must be specified"
 
+        self.data_dir = os.path.expandvars(self.data_dir)
+        self.save_dir = str(Path(os.path.expandvars(self.save_dir)) / f"{self.key}_{self.n_data}")
+        self.sources = [SourceConfig(path=self.save_dir, weight=1)]
+        super().__post_init__()
+
+    def check_init(self) -> None:
         logger.info("Building dataset from configuration")
-        data_dir = os.path.expandvars(self.data_dir)
-        save_dir = str(Path(os.path.expandvars(self.save_dir)) / f"{self.key}_{self.n_data}")
         subprocess.run(
             [
                 "python",
@@ -95,13 +99,11 @@ class MemoryDataConfig(DataConfig):
                 "--key",
                 self.key,
                 "--save-dir",
-                save_dir,
+                self.save_dir,
                 "--data-dir",
-                data_dir,
+                self.data_dir,
             ]
         )
-        self.sources = [SourceConfig(path=save_dir, weight=1)]
-        super().__post_init__()
 
 
 @dataclass
@@ -139,12 +141,13 @@ class TrainingConfig:
             assert self.orchestration.profiler.active is False, "Profiler is not supported on CPU"
 
         # fill in missing values
-        self.model.block.seq_len = self.data.seq_len - 1
+        if hasattr(self.model.block, "seq_len") and not self.model.block.seq_len:
+            self.model.block.seq_len = self.data.seq_len - 1
 
         # manual post initialization of all modules
         for module in self.__dict__.values():
-            if hasattr(module, "__check_init__"):
-                module.__check_init__()
+            if hasattr(module, "check_init"):
+                module.check_init()
 
 
 # ------------------------------------------------------------------------------
@@ -338,7 +341,7 @@ def train(config: TrainingConfig) -> None:
                     eval_orch.log_dir = str(Path(eval_orch.log_dir) / step_id)
 
                     # launcher config
-                    eval_config.slurm.__check_init__()
+                    eval_config.slurm.check_init()
                     launch_config = initialize_nested_object(
                         LauncherConfig,
                         {
@@ -376,9 +379,9 @@ def train(config: TrainingConfig) -> None:
 # ------------------------------------------------------------------------------
 
 
-def heritage_config(run_config: dict[str, Any], launcher: dict[str, Any]) -> None:
+def heritage_launch_config(run_config: dict[str, Any], launcher: dict[str, Any]) -> None:
     """
-    Heritage of configuration from launcher to run_config, and from run to evaluation config.
+    Heritage of configuration from launcher to run_config.
 
     ### Parameters
     - run_config: configuration to run this file.
@@ -392,7 +395,16 @@ def heritage_config(run_config: dict[str, Any], launcher: dict[str, Any]) -> Non
         if key in launcher and key not in run_config["orchestration"]:
             run_config["orchestration"][key] = launcher[key]
 
-    # heritage from training to evaluation
+
+def heritage_eval_config(run_config: dict[str, Any], launcher: dict[str, Any]) -> None:
+    """
+    Heritage of configuration from run to evaluation config.
+
+    ### Parameters
+    - run_config: configuration to run this file.
+    - launcher: meta configuration to orchestrate the launch of this run.
+    """
+
     logger.info("Heritage from run_config to eval_config")
     eval_config = run_config.get("evaluation", {})
     if eval_config.get("period", 0) <= 0:
@@ -414,10 +426,18 @@ def heritage_config(run_config: dict[str, Any], launcher: dict[str, Any]) -> Non
     # generic inheritance
     configs_keys = [
         (EvalDataConfig, "data", "data"),
+        (SourceConfig, "data.sources", "data.sources"),
         (TokenizerConfig, "tokenizer", "data.tokenizer"),
     ]
 
-    if eval_config.get("asynchronous"):
+    # deal with data configuration being defined in its post_init method
+    sources = initialize_nested_object(MemoryDataConfig, run_config["data"], inplace=False).sources
+    flat_config |= {"data.sources": [asdict(s) for s in sources]}
+    flat_config |= {
+        "data.tokenizer.special_tokens": run_config.get("data", {}).get("tokenizer", {}).get("special_tokens", {})
+    }
+
+    if eval_config.get("asynchronous", False):
         configs_keys += [
             (SlurmConfig, "slurm", "_slurm"),
             (ClusterConfig, "cluster", "cluster"),
@@ -476,7 +496,8 @@ def build_config(file_config: dict[str, Any]) -> TrainingConfig:
         run_config = file_config
     launcher: dict[str, Any] = file_config.pop("launcher", {})
 
-    heritage_config(run_config, launcher)
+    heritage_launch_config(run_config, launcher)
+    heritage_eval_config(run_config, launcher)
 
     # grid id system to handle special grid cases
     grid_id = run_config.get("grid_id", None)
