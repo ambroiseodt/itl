@@ -21,9 +21,8 @@ run_config:
     batch_size: 128
     seq_len: 128
     padding: true
-    sources:
-    - path: data/memory/qa.jsonl
-      weight: 1
+    key: qa
+    n_data: 100
     tokenizer:
       name: byte
       special_tokens:

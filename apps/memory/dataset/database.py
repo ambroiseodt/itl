@@ -11,8 +11,8 @@ from pathlib import Path
 from src.nanollama.agent import SQLAgent
 
 # default variables
-DATA_DIR = Path(__file__).resolve().parents[3] / "data" / "memory"
-SAVE_DIR = Path(__file__).resolve().parents[3] / "data" / "memory"
+DATA_DIR = Path.home() / "data" / "memory"
+SAVE_DIR = Path.home() / "data" / "memory"
 
 
 def create_database() -> None:

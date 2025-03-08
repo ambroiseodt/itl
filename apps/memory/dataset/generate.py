@@ -6,6 +6,8 @@ Generate a list of entities with random attributes.
 """
 
 import json
+import logging
+import os
 import random
 import re
 from itertools import product
@@ -19,7 +21,8 @@ ATOM_DIR = Path(__file__).resolve().parent / "atoms"
 
 # default variables
 SEED = 42
-DATA_DIR = Path(__file__).resolve().parents[3] / "data" / "memory"
+DATA_DIR = Path().home() / "data" / "memory"
+logger = logging.getLogger("nanollama")
 
 
 def generate_people(save_dir: str = DATA_DIR, seed: int = SEED) -> None:
@@ -166,13 +169,50 @@ def generate_qa(save_dir: str = DATA_DIR, num: int = float("inf"), tooluse: bool
                 print(json.dumps({"dialog": out, "people_id": i, "answer": answer}), file=f, flush=True)
 
 
+def build_data(n_data: int, key: str, save_dir: str, data_dir: str = DATA_DIR) -> None:
+    """
+    Build a dataset folder by merging person data.
+
+    ### Parameters:
+    - num: number of people to merge into the dataset
+    - key: key indicating which file to copy (e.g., 'qa', 'biographies', 'qatool').
+    - save_dir: directory where the files should be copied to.
+    - data_dir: directory where the data is stored.
+    """
+    # Ensure the target directory exists
+    save_dir: PosixPath = Path(os.path.expandvars(save_dir))
+    save_dir.mkdir(parents=True, exist_ok=True)
+
+    # Iterate over the specified number of directories
+    data_dir: PosixPath = Path(os.path.expandvars(data_dir))
+    for i in range(n_data):
+
+        # Define the source file path
+        source_file = data_dir / f"person{i + 1}/{key}.jsonl"
+
+        # Define the target file path
+        target_file = save_dir / f"chunk.{i}.jsonl"
+
+        # Copy the file if it exists
+        if not source_file.exists():
+            logger.debug(f"File {source_file} does not exist and was skipped.")
+        elif target_file.exists():
+            logger.debug(f"File {target_file} already exists and was skipped.")
+        else:
+            os.symlink(source_file, target_file)
+    logger.debug(f"Dataset created at {save_dir}, from {n_data} people.")
+
+
 if __name__ == "__main__":
     import fire
+
+    logging.basicConfig(level=logging.DEBUG)
 
     fire.Fire(
         {
             "people": generate_people,
             "biographies": generate_biographies,
             "qa": generate_qa,
+            "build": build_data,
         }
     )

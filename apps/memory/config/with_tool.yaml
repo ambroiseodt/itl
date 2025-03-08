@@ -21,9 +21,8 @@ run_config:
     batch_size: 128
     seq_len: 256
     padding: true
-    sources:
-    - path: data/memory/qatool.jsonl
-      weight: 1
+    key: qatool
+    n_data: 100
     tokenizer:
       name: byte
       special_tokens:
