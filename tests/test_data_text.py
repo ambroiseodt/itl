@@ -111,8 +111,8 @@ class TestSingleSourceTokenGenerator(unittest.TestCase):
 
         # Configuration
         self.config = DataConfig(
-            sources=None,
-            tokenizer=None,
+            sources="fake",
+            tokenizer="fake",
             batch_size=2,
             seq_len=5,
             padding=True,

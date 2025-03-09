@@ -12,7 +12,7 @@ from nanollama.data.tokenizer import TokenizerConfig, build_tokenizer
 
 class TestMultipleSourcesTokenGenerator(unittest.TestCase):
     def test_dialog_token(self) -> None:
-        config = TokenizerConfig(name="byte")
+        config = TokenizerConfig(name="byte", special_tokens={"<|user|>": 0, "<|assistant|>": 1})
         tokenizer = build_tokenizer(config)
 
         dialog = [
@@ -27,5 +27,5 @@ class TestMultipleSourcesTokenGenerator(unittest.TestCase):
         print(decoded)
         assert (
             decoded
-            == "USER:>Salut Assistant\nASSISTANT:>Bonjour\nUSER:>Comment vas-tu?\nASSISTANT:>Tres bien, comment puis-je vous etre utile aujourd'hui?"  # noqa: E501
+            == "<|user|>Salut Assistant\n<|assistant|>Bonjour\n<|user|>Comment vas-tu?\n<|assistant|>Tres bien, comment puis-je vous etre utile aujourd'hui?"  # noqa: E501
         )
