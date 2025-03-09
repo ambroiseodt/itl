@@ -327,7 +327,9 @@ def launch_job(config: LauncherConfig, file_config: dict[str, Any]) -> None:
         code_dir.mkdir(exist_ok=True)
         logger.info(f"Copying code to {code_dir}.")
         copy_dir(os.getcwd(), code_dir)
-        go_to_code_dir = f"# go to code directory\ncd {code_dir}\n"
+        go_to_code_dir = "# go to code directory\n"
+        go_to_code_dir = f"cd {code_dir}\n"
+        go_to_code_dir = f"export PYTHONPATH=$PYTHONPATH:{code_dir}\n"
     else:
         go_to_code_dir = ""
 
