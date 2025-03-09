@@ -4,13 +4,13 @@
 
 #### Vivien's current todo:
 
-- Correct the unit tests
-
-- Show how to run a grid with a grid.yaml configuration.
-
-- Launch some big grids to get first plots.
+- simplify the argument parsing.
+    - remove the `to_dict`: ensure everything is serializable.
+    - only add a `post_init` method that is trigger manually, and propagate to submethods.
+    - remove all the fancy methods, such as `field(init=False)`.
 
 - improve the metric logging, as well as the profiler.
+    - log number of parameters
     - log learning rate.
     - log gradient norm.
     - log activation norm.
@@ -45,9 +45,16 @@
 - (?) Remove Statefulness of scheduler.
 - It is a bit weird to mix the metric logger with the stdout logger.
 
+#### Known issues
+- Issue with compile at inference time.
+    - Option to disable compile at generation time (it seems to slow the generation quite a bit).
+    - Use `compiled_model = torch.compile(model, dynamic=True)` ?
+    - TODO: look at Claude suggestion.
+- Parsing configuration starts to be a bit messy. It would be nice to switch to OmegaConf to avoid speding to much time on these issues.
+    - issue with slurm inheritage.
+    - TODO: look at Cursor suggestion.
+
 #### Bigger improvement to the codebas
-- Option to disable compile at generation time (it seems to slow the generation quite a bit).
-- Move toward omegaconf to handle configurations with `__post_init__` becoming `check_init`.
 - Move toward tasks-based evaluation a la llm-harness. Get inspiration from https://github.com/facebookresearch/lingua/blob/main/apps/main/eval.py.
 - Improve the generation part to have a async scheme for lane, with page in / page out mechanisms.
 - Add various initialization scheme.

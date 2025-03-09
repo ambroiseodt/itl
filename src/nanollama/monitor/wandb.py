@@ -8,7 +8,7 @@ Wandb Logger
 import json
 import os
 import sys
-from dataclasses import asdict, dataclass, field
+from dataclasses import dataclass
 from logging import getLogger
 from pathlib import Path
 from types import TracebackType
@@ -26,27 +26,26 @@ logger = getLogger("nanollama")
 
 @dataclass
 class WandbConfig:
-    active: bool = False
+    """
+    Wandb Configuration
 
-    # Wandb user and project name
+    ### Attributes
+    - active: whether to use wandb or not
+    - entity: wandb user name
+    - project: wandb project name
+    - name: wandb run name
+    - path: path to a file storing existing wandb run id
+    """
+    active: bool = False
     entity: str = ""
     project: str = "composition"
-    name: str = field(init=False, default="")
-    path: str = field(init=False, default="")
+    name: str = ""
+    path: str = ""
 
-    def check_init(self) -> None:
-        """Check validity of arguments and fill in missing values."""
-        assert self.name, "name was not set"
-        assert self.path, "path was not set"
-
-    def to_dict(self) -> dict[str, Any]:
-        """
-        Convert configuration to dictionnary to reinitialize it.
-        """
-        output = asdict(self)
-        output.pop("name")
-        output.pop("path")
-        return output
+    def post_init(self) -> None:
+        if self.active:
+            assert self.name, "name was not set"
+            assert self.path, "path was not set"
 
 
 class WandbLogger:
