@@ -41,7 +41,7 @@ class SlurmConfig:
     - nb_gpus: number of GPUs required per node.
     - nb_cpus: number of CPUs allocated per GPU.
     - signal_time: time between USR signal and job termination (in seconds).
-    - slurm_extra: extra configuration for the job.
+    - slurm_extra: extra configuration for the job (automatically filled).
     - constraint: constraint on the nodes.
     - exclude: nodes to exclude.
     - account: account to use.
@@ -60,7 +60,7 @@ class SlurmConfig:
     signal_time: int = 120
 
     # extra configuration
-    slurm_extra: str = field(init=False, default="")  # placeholder
+    slurm_extra: str = ""  # placeholder
     constraint: str = ""  # constraint on the nodes.
     exclude: str = ""  # nodes to exclude.
     account: str = ""
@@ -149,7 +149,7 @@ class LauncherConfig:
 
     slurm: SlurmConfig = field(default_factory=SlurmConfig)
 
-    def post_init(self) -> None:
+    def __post_init__(self) -> None:
         """
         Check validity of arguments and fill in missing values.
         """
@@ -322,6 +322,11 @@ def launch_job(config: LauncherConfig, file_config: dict[str, Any]) -> None:
         go_to_code_dir = f"export PYTHONPATH=$PYTHONPATH:{code_dir}\n"
     else:
         go_to_code_dir = ""
+
+    # add slurm configuration to the file_config
+    slurm_config = file_config.get("slurm", {})
+    for key in ["partition", "time", "mem"]:
+        slurm_config[key] = getattr(slurm, key)
 
     # write configs
     config_dir = log_dir / "tasks"
