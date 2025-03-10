@@ -13,7 +13,7 @@ import yaml
 
 from nanollama.inference import MaskedBatchedInference
 from nanollama.model import Transformer, TransformerConfig
-from nanollama.utils import initialize_nested_object
+from nanollama.utils import build_with_type_check
 
 
 class TestGeneration(unittest.TestCase):
@@ -34,7 +34,9 @@ class TestGeneration(unittest.TestCase):
         torch.manual_seed(0)
         if torch.cuda.is_available():
             torch.cuda.manual_seed_all(0)
-        self.model = Transformer(initialize_nested_object(TransformerConfig, config)).to(self.device)
+        config = build_with_type_check(TransformerConfig, config)
+        config.post_init()
+        self.model = Transformer(config).to(self.device)
 
     def test_kv_cache_generation(self) -> None:
 

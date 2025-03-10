@@ -18,7 +18,7 @@ from typing import Any
 
 import yaml
 
-from .utils import flatten_config, initialize_nested_object, unflatten_config
+from .utils import build_with_type_check, flatten_config, unflatten_config
 
 logger = logging.getLogger("nanollama")
 
@@ -424,7 +424,7 @@ def main() -> None:
         file_config: dict[str, Any] = yaml.safe_load(f)
 
     # initialize configuration
-    config = initialize_nested_object(LauncherConfig, file_config["launcher"], inplace=False)
+    config = build_with_type_check(LauncherConfig, file_config["launcher"], inplace=False)
 
     # launch job
     launch_job(config, file_config)

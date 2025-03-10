@@ -19,7 +19,7 @@ from typing import Any
 import torch
 
 from ..agent import Actor
-from ..utils import initialize_nested_object
+from ..utils import build_with_type_check
 
 logger = getLogger("nanollama")
 
@@ -150,7 +150,7 @@ class DialogTokenizer:
         tokens = []
         mask = []
         for _message in dialog:
-            message = initialize_nested_object(Message, _message, inplace=False)
+            message = build_with_type_check(Message, _message, inplace=False)
             bos = self.bots[message.source]
             new_tokens = self.tokenizer.encode(message.content, bos=bos)
             tokens += new_tokens

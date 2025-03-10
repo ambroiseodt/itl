@@ -7,7 +7,7 @@ Utilities to load models
 from dataclasses import dataclass, field
 from typing import Any
 
-from ..utils import initialize_nested_object
+from ..utils import build_with_type_check
 from .transformer import Transformer, TransformerConfig
 
 
@@ -76,5 +76,5 @@ def build_config_with_model_dispatch(ConfigClass: type, run_config: dict[str, An
             raise ValueError(f"Model implementation {implementation} not found")
 
     # Initialize configuration
-    config = initialize_nested_object(Config, run_config)
+    config = build_with_type_check(Config, run_config)
     return config
