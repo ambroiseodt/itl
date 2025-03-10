@@ -10,7 +10,6 @@ import logging
 import os
 from contextlib import ExitStack
 from dataclasses import asdict
-from pathlib import Path
 from typing import Any
 
 import torch
@@ -19,8 +18,8 @@ import yaml
 
 from src.nanollama.data.loader import DataLoader
 from src.nanollama.data.text import MultipleSourcesTokenGenerator
-from src.nanollama.distributed import ClusterManager, clean_environment, get_rank, is_master_process
-from src.nanollama.launcher import LauncherConfig, launch_job
+from src.nanollama.distributed import ClusterManager, clean_environment, is_master_process
+from src.nanollama.launcher import launch_job
 from src.nanollama.model import (
     BlockLanguageModel,
 )
@@ -36,9 +35,8 @@ from src.nanollama.optim import (
     build_optimizer,
     build_scheduler,
 )
-from src.nanollama.utils import build_with_type_check
 
-from .args import TrainingConfig, build_train_config
+from .args import TrainingConfig, build_eval_launch_config, build_train_config
 from .eval import run_evaluation
 
 logger = logging.getLogger("nanollama")
@@ -213,44 +211,9 @@ def train(config: TrainingConfig) -> None:
 
                 # launch evaluation job on slurm
                 elif is_master_process():
-                    # TODO simplify this part (put it in the args.py file?)
-                    # checkpoint
-                    eval_flag = "flag"
-                    checkpoint.update(eval_flag=eval_flag)
-
-                    # alias
-                    eval_config = config.evaluation
-                    orch = config.orchestration
-                    eval_orch = config.evaluation.orchestration
-                    step_id = checkpoint.folder_name.format(step)
-
-                    # specify training step etc.
-                    eval_config.log_path = str(Path(orch.logging.metric_path) / f"eval_{get_rank()}.jsonl")
-                    eval_config.model_dir = str(Path(orch.checkpoint.path) / step_id)
-                    eval_config.checkpoint_flag = eval_flag
-                    eval_config.metadata = {"step": step}
-                    eval_orch.log_dir = str(Path(eval_orch.log_dir) / step_id)
-
-                    # launcher config
-                    eval_config.slurm.post_init()
-                    launch_config = build_with_type_check(
-                        LauncherConfig,
-                        {
-                            "name": eval_orch.name,
-                            "log_dir": eval_orch.log_dir,
-                            "overwrite": False,
-                            "copy_code": False,
-                            "script": "apps.memory.eval",
-                            "slurm": asdict(config.evaluation.slurm),
-                        },
+                    launch_config, run_config = build_eval_launch_config(
+                        config.evaluation, config.orchestration, checkpoint, step
                     )
-
-                    # check and format config
-                    eval_dict = asdict(eval_config)
-                    eval_dict.pop("period")
-                    eval_dict.pop("asynchronous")
-                    eval_dict.pop("slurm")
-                    run_config = {"run_config": eval_dict}
 
                     # launch job without device binding
                     with clean_environment():
@@ -258,8 +221,6 @@ def train(config: TrainingConfig) -> None:
                         checkpoint.process.add_done_callback(
                             lambda fut, cfg=launch_config, run_cfg=run_config: launch_job(cfg, run_cfg)
                         )
-
-                    eval_orch.log_dir = str(Path(eval_orch.log_dir).parent)
 
     logger.info("Training done.")
 

@@ -16,13 +16,14 @@ import torch
 from src.nanollama.data.text import DataConfig, SourceConfig
 from src.nanollama.data.tokenizer import TokenizerConfig
 from src.nanollama.distributed import ClusterConfig
-from src.nanollama.launcher import SlurmConfig
+from src.nanollama.launcher import LauncherConfig, SlurmConfig
 from src.nanollama.model import (
     BlockLanguageModel,
     BlockLanguageModelConfig,
     build_config_with_model_dispatch,
 )
 from src.nanollama.monitor import (
+    Checkpointer,
     EvalCheckpointConfig,
     EvalOrchestratorConfig,
     LoggerConfig,
@@ -100,17 +101,41 @@ class EvaluationConfig(OnlineEvaluationConfig):
         self.log_path = os.path.expandvars(self.log_path)
 
         # configuration not managed by orchestrator due to inheritance issues
+        self.orchestration.post_init()
         self.checkpoint.path = str(Path(self.orchestration.log_dir) / "checkpoint")
         if self.checkpoint_flag:
             self.checkpoint.flag = str(Path(self.model_dir) / self.checkpoint_flag)
         self.orchestration.logging.metric_path = self.log_path
 
         self.cluster.post_init()
-        self.orchestration.post_init()
         super().post_init()
 
     def __post_init__(self):
         self.post_init()
+
+
+def build_eval_config(file_config: dict[str, Any]) -> EvaluationConfig:
+    """
+    Build configuration from file configuration for evaluation run.
+
+    ### Parameters
+    - file_config: configuration as a dictionary.
+
+    ### Returns
+    - config: configuration as a dataclass.
+    """
+
+    if "run_config" in file_config:
+        text_config = file_config["run_config"]
+
+    # initialize configuration
+    config = build_with_type_check(EvaluationConfig, text_config, inplace=False)
+    return config
+
+
+# ------------------------------------------------------------------------------
+# Evaluation Configuration for Training runs
+# ------------------------------------------------------------------------------
 
 
 @dataclass
@@ -134,27 +159,51 @@ class EvalConfig(EvaluationConfig):
         ...
 
 
-def build_eval_config(file_config: dict[str, Any]) -> EvaluationConfig:
-    """
-    Build configuration from file configuration for evaluation run.
+def build_eval_launch_config(
+    eval_config: EvalConfig, orch: OrchestratorConfig, checkpoint: Checkpointer, step: int
+) -> tuple[LauncherConfig, dict[str, Any]]:
+    eval_flag = "flag"
+    checkpoint.update(eval_flag=eval_flag)
+    step_id = checkpoint.folder_name.format(step)
 
-    ### Parameters
-    - file_config: configuration as a dictionary.
+    eval_orch = eval_config.orchestration
 
-    ### Returns
-    - config: configuration as a dataclass.
-    """
+    # specify training step etc.
+    eval_config.log_path = str(Path(orch.logging.metric_path) / "eval_0.jsonl")
+    eval_config.model_dir = str(Path(orch.checkpoint.path) / step_id)
+    eval_config.checkpoint_flag = eval_flag
+    eval_config.metadata = {"step": step}
+    eval_orch.log_dir = str(Path(eval_orch.log_dir) / step_id)
 
-    if "run_config" in file_config:
-        text_config = file_config["run_config"]
+    # launcher config
+    eval_config.slurm.post_init()
+    launch_config = build_with_type_check(
+        LauncherConfig,
+        {
+            "name": eval_orch.name,
+            "log_dir": eval_orch.log_dir,
+            "overwrite": False,
+            "copy_code": False,
+            "script": "apps.memory.eval",
+            "slurm": asdict(eval_config.slurm),
+        },
+    )
 
-    # initialize configuration
-    config = build_with_type_check(EvaluationConfig, text_config, inplace=False)
-    return config
+    # check and format config
+    eval_dict = asdict(eval_config)
+    eval_dict.pop("period")
+    eval_dict.pop("asynchronous")
+    eval_dict.pop("slurm")
+    run_config = {"run_config": eval_dict}
+
+    # remove step from log_dir
+    eval_orch.log_dir = str(Path(eval_orch.log_dir).parent)
+
+    return launch_config, run_config
 
 
 # ------------------------------------------------------------------------------
-# Data Configuration
+# Simple Data Configuration
 # ------------------------------------------------------------------------------
 
 
