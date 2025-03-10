@@ -69,7 +69,7 @@ class SlurmConfig:
     # cluster environment
     script_extra: str = ""
 
-    def check_init(self) -> None:
+    def post_init(self) -> None:
         self.slurm_extra = ""
         for name in ["exclude", "qos", "account", "constraint"]:
             val = getattr(self, name)
@@ -157,7 +157,7 @@ class LauncherConfig:
 
     slurm: SlurmConfig = field(default_factory=SlurmConfig)
 
-    def __post_init__(self):
+    def post_init(self) -> None:
         """
         Check validity of arguments and fill in missing values.
         """
@@ -179,9 +179,7 @@ class LauncherConfig:
                 self.python_env = f"{self.python_env}/bin/python"
             assert os.path.isfile(self.python_env)
 
-        for module in self.__dict__.values():
-            if hasattr(module, "check_init"):
-                module.check_init()
+        self.slurm.post_init()
 
 
 # ------------------------------------------------------------------------------

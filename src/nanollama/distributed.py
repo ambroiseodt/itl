@@ -15,7 +15,6 @@ from dataclasses import asdict, dataclass, field
 from functools import lru_cache
 from logging import getLogger
 from types import TracebackType
-from typing import Any
 
 import torch
 import torch.distributed as dist
@@ -182,18 +181,11 @@ class ClusterConfig:
     # submanager
     os_environment: OsEnvironment = field(default_factory=OsEnvironment)
 
-    def __post_init__(self):
+    def post_init(self) -> None:
         if not self.device:
             self.device = "cuda" if torch.cuda.is_available() else "cpu"
-        if isinstance(self.device, str):
-            self.device = torch.device(self.device)
         if not self.dp:
             self.dp = get_world_size() // self.tp
-
-    def to_dict(self) -> dict[str, Any]:
-        output = asdict(self)
-        output["device"] = str(self.device)
-        return output
 
 
 class ClusterManager:
@@ -212,7 +204,7 @@ class ClusterManager:
 
     def __init__(self, config: ClusterConfig):
         self.backend = config.backend
-        self.device = config.device
+        self.device = torch.device(config.device)
         self.tp = config.tp
         self.dp = config.dp
         nb_devices = get_world_size()
