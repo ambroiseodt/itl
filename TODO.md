@@ -61,6 +61,13 @@
 - Make sure one can extend model context size incrementally.
 - Implement logic for tiktoken, and sentencepiece.
 
+### Ambroise & Sam TODO:
+- Read technical reports of open-source LLms (Qwen, DeepSeek, HuggingFace, Olmo, etc.)
+- Gain insights on empirical tricks known in the LLM literature to be validated
+- Using the codebase, validate (or invalidate) those tricks from the lens of scaling laws
+- Important question: given fixed budget (= nb. of params), what is the opitmla design (nb. layers, nb. heads, embd. dim.) to learn the
+maximal amount of facts?
+
 # Ambroise's ideas:
 - For scaling plot of [Physics of Language Models: Part 3.3](https://arxiv.org/pdf/2404.05405), could we plot contourlines to take the performance into account?
 - Adapt Sam evaluation files
