@@ -198,8 +198,8 @@ class MambaConfig(BlockLanguageModelConfig):
     implementation: str = "mamba"
     block: MambaBlockConfig = field(default_factory=MambaBlockConfig)
 
-    def __post_init__(self):
-        super().__post_init__()
+    def post_init(self) -> None:
+        super().post_init()
 
         # Inherit parameters from the block model configuration.
         for attr in ["emb_dim", "norm_eps", "init_std"]:

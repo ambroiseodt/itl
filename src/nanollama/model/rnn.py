@@ -24,8 +24,8 @@ class FastRNNConfig(BlockLanguageModelConfig):
     implementation: Literal["minlstm", "mingru", "hawk"]
     block: RNNBlockConfig = field(default_factory=RNNBlockConfig)
 
-    def __post_init__(self):
-        super().__post_init__()
+    def post_init(self) -> None:
+        super().post_init()
 
         # inherit parameters from the block model configuration
         for attr in ["emb_dim"]:
@@ -40,6 +40,8 @@ class FastRNNConfig(BlockLanguageModelConfig):
         else:
             if not self.block.hidden_dim:
                 self.block.hidden_dim = 3 * self.emb_dim
+
+        self.block.post_init()
 
 
 # ------------------------------------------------------------------------------

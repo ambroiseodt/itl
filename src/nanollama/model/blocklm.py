@@ -58,19 +58,11 @@ class BlockLanguageModelConfig:
     norm_eps: float = 1e-5
     init_std: float = None
 
-    def __post_init__(self):
+    def post_init(self) -> None:
         assert self.block, "block should be specified"
         assert self.emb_dim, "embedding dimension should be specified"
         assert self.nb_layers, "number of layers should be specified"
-
-    def check_init(self) -> None:
-        """Check validity of arguments that may have been inherited."""
         assert self.vocab_size, "vocabulary size should be specified"
-
-        # manual post initialization of all modules
-        for module in self.__dict__.values():
-            if hasattr(module, "check_init"):
-                module.check_init()
 
 
 class BlockLanguageModel(ABC, nn.Module):
