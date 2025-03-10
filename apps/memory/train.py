@@ -5,13 +5,17 @@ Training script with online generation of batch of data.
 @ 2025, Meta
 """
 
+import argparse
 import logging
+import os
 from contextlib import ExitStack
 from dataclasses import asdict
 from pathlib import Path
+from typing import Any
 
 import torch
 import torch.nn.functional as F
+import yaml
 
 from src.nanollama.data.loader import DataLoader
 from src.nanollama.data.text import MultipleSourcesTokenGenerator
@@ -26,17 +30,16 @@ from src.nanollama.monitor import (
     PreemptionHandler,
     Profiler,
     UtilityManager,
-    WandbLogger,
 )
 from src.nanollama.optim import (
     OptimizerState,
     build_optimizer,
     build_scheduler,
 )
-from src.nanollama.utils import initialize_nested_object
+from src.nanollama.utils import build_with_type_check
 
-from .args import TrainingConfig
-from .eval import EvaluationConfig, run_evaluation
+from .args import TrainingConfig, build_train_config
+from .eval import run_evaluation
 
 logger = logging.getLogger("nanollama")
 
@@ -68,9 +71,6 @@ def train(config: TrainingConfig) -> None:
 
         utils = UtilityManager(config.orchestration.utils)
         context_stack.enter_context(utils)
-
-        wandb = WandbLogger(config.orchestration.wandb, run_config=asdict(config))
-        context_stack.enter_context(wandb)
 
         # ---------------------------------------------------------------------
         # Build and Parallelize model, optimizer, scheduler
@@ -197,7 +197,6 @@ def train(config: TrainingConfig) -> None:
             if log_period > 0 and step % log_period == 0:
                 metrics = {"loss": loss.item(), "step": step}
                 metric_logger(metrics)
-                wandb(metrics)
 
             # -----------------------------------------------------------------
             # Evaluation
@@ -214,6 +213,7 @@ def train(config: TrainingConfig) -> None:
 
                 # launch evaluation job on slurm
                 elif is_master_process():
+                    # TODO simplify this part (put it in the args.py file?)
                     # checkpoint
                     eval_flag = "flag"
                     checkpoint.update(eval_flag=eval_flag)
@@ -232,8 +232,8 @@ def train(config: TrainingConfig) -> None:
                     eval_orch.log_dir = str(Path(eval_orch.log_dir) / step_id)
 
                     # launcher config
-                    eval_config.slurm.check_init()
-                    launch_config = initialize_nested_object(
+                    eval_config.slurm.post_init()
+                    launch_config = build_with_type_check(
                         LauncherConfig,
                         {
                             "name": eval_orch.name,
@@ -241,13 +241,12 @@ def train(config: TrainingConfig) -> None:
                             "overwrite": False,
                             "copy_code": False,
                             "script": "apps.memory.eval",
-                            "slurm": config.evaluation.slurm.to_dict(),
+                            "slurm": asdict(config.evaluation.slurm),
                         },
                     )
 
                     # check and format config
-                    EvaluationConfig.__post_init__(eval_config)
-                    eval_dict = eval_config.to_dict()
+                    eval_dict = asdict(eval_config)
                     eval_dict.pop("period")
                     eval_dict.pop("asynchronous")
                     eval_dict.pop("slurm")
@@ -274,14 +273,24 @@ def main() -> None:
     python -m apps.my_app.train apps/my_app/configs/my_config.yaml
     ```
     """
+
     logging.basicConfig(
         level=logging.INFO,
         format="[%(levelname)s] %(filename)s:%(lineno)d - %(message)s",
         handlers=[logging.StreamHandler()],
     )
 
-    from .args import parse_args
-    config = parse_args()
+    parser = argparse.ArgumentParser(description="Launch a training job from configuration file")
+    parser.add_argument("config", type=str, help="Path to configuration file")
+    path = parser.parse_args().config
+
+    # obtain configuration from file
+    with open(os.path.expandvars(path)) as f:
+        file_config: dict[str, Any] = yaml.safe_load(f)
+
+    # initialize configuration
+    config = build_train_config(file_config)
+
     train(config)
 
 

@@ -11,7 +11,7 @@ from dataclasses import asdict, dataclass, field
 from pathlib import Path
 from typing import Any, Literal
 
-import yaml
+import torch
 
 from src.nanollama.data.text import DataConfig, SourceConfig
 from src.nanollama.data.tokenizer import TokenizerConfig
@@ -23,6 +23,8 @@ from src.nanollama.model import (
     build_config_with_model_dispatch,
 )
 from src.nanollama.monitor import (
+    EvalCheckpointConfig,
+    EvalOrchestratorConfig,
     LoggerConfig,
     OrchestratorConfig,
     ProfilerConfig,
@@ -31,17 +33,128 @@ from src.nanollama.monitor import (
 from src.nanollama.optim import (
     OptimizerConfig,
 )
-from src.nanollama.utils import flatten_config, initialize_nested_object, unflatten_config
+from src.nanollama.utils import build_with_type_check, flatten_config, unflatten_config
 
 from .dataset.generate import DATA_DIR
-from .eval import EvaluationConfig, OnlineEvaluationConfig
 from .prompt_loader import DataConfig as EvalDataConfig
 
 logger = logging.getLogger("nanollama")
 
 
 # ------------------------------------------------------------------------------
-# Configuration Class
+# Evaluation Configurations
+# ------------------------------------------------------------------------------
+
+
+@dataclass
+class OnlineEvaluationConfig:
+    """
+    Configuration to launch an online evaluation during a training run.
+
+    ### Parameters
+    - db_path: path to SQL database to retrive facts.
+    - data: test data configuration.
+    - tokenizer: tokenizer configuration.
+    - checkpoint: evaluation checkpointing configuration.
+    """
+
+    db_path: str = ""
+    data: EvalDataConfig = field(default_factory=EvalDataConfig)
+    tokenizer: TokenizerConfig = field(default_factory=TokenizerConfig)
+    checkpoint: EvalCheckpointConfig = field(default_factory=EvalCheckpointConfig)
+
+    def post_init(self) -> None:
+        assert self.db_path, "db_path should be specified."
+        self.db_path = os.path.expandvars(self.db_path)
+
+        self.data.post_init()
+        self.tokenizer.post_init()
+        self.checkpoint.post_init()
+
+
+@dataclass
+class EvaluationConfig(OnlineEvaluationConfig):
+    """
+    Configuration to schedule an offline evaluation during a training run.
+
+    ### Parameters
+    - model_dir: path to the model directory.
+    - log_path: path to store the evaluation logs.
+    - checkpoint_flag: file acting as a flag to avoid deleting checkpoints before evaluation
+    - metadata: metadata to add to the evaluation metrics.
+    - cluster: computing configuration.
+    - orchestration: monitoring configuration.
+    """
+
+    model_dir: str = ""
+    log_path: str = ""
+    checkpoint_flag: str = ""
+    metadata: dict[str, Any] = field(default_factory=dict)
+
+    cluster: ClusterConfig = field(default_factory=ClusterConfig)
+    orchestration: EvalOrchestratorConfig = field(default_factory=EvalOrchestratorConfig)
+
+    def post_init(self) -> None:
+        assert self.log_path, "log_path should be specified."
+        assert self.model_dir, "model_dir should be specified."
+        self.log_path = os.path.expandvars(self.log_path)
+
+        # configuration not managed by orchestrator due to inheritance issues
+        self.checkpoint.path = str(Path(self.orchestration.log_dir) / "checkpoint")
+        if self.checkpoint_flag:
+            self.checkpoint.flag = str(Path(self.model_dir) / self.checkpoint_flag)
+        self.orchestration.logging.metric_path = self.log_path
+
+        self.cluster.post_init()
+        self.orchestration.post_init()
+        super().post_init()
+
+    def __post_init__(self):
+        self.post_init()
+
+
+@dataclass
+class EvalConfig(EvaluationConfig):
+    """
+    Evaluation configuration to add to the training configuration.
+
+    ### Parameters
+    - period: period of evaluation
+    - asynchronous: whether to launch evaluation asynchronously
+    - slurm: slurm configuration for asynchronous evaluation
+
+    It equally inherits from both the online and offline evaluation configuration.
+    """
+    period: int = 0
+    asynchronous: bool = False
+    slurm: SlurmConfig = field(default_factory=SlurmConfig)
+
+    def __post_init__(self):
+        """disable automatic post init"""
+        ...
+
+
+def build_eval_config(file_config: dict[str, Any]) -> EvaluationConfig:
+    """
+    Build configuration from file configuration for evaluation run.
+
+    ### Parameters
+    - file_config: configuration as a dictionary.
+
+    ### Returns
+    - config: configuration as a dataclass.
+    """
+
+    if "run_config" in file_config:
+        text_config = file_config["run_config"]
+
+    # initialize configuration
+    config = build_with_type_check(EvaluationConfig, text_config, inplace=False)
+    return config
+
+
+# ------------------------------------------------------------------------------
+# Data Configuration
 # ------------------------------------------------------------------------------
 
 
@@ -60,9 +173,9 @@ class MemoryDataConfig(DataConfig):
 
     data_dir: str = str(DATA_DIR)
     save_dir: str = str(DATA_DIR)
-    sources: list[SourceConfig] = field(init=False, default=None)
+    sources: list[SourceConfig] = field(default_factory=list)
 
-    def __post_init__(self):
+    def post_init(self) -> None:
         assert self.n_data, "Number of data must be specified"
         assert self.key, "Key must be specified"
         assert self.tokenizer, "Tokenizer must be specified"
@@ -70,9 +183,8 @@ class MemoryDataConfig(DataConfig):
         self.data_dir = os.path.expandvars(self.data_dir)
         self.save_dir = str(Path(os.path.expandvars(self.save_dir)) / f"{self.key}_{self.n_data}")
         self.sources = [SourceConfig(path=self.save_dir, weight=1)]
-        super().__post_init__()
+        super().post_init()
 
-    def check_init(self) -> None:
         logger.info("Building dataset from configuration")
         subprocess.run(
             [
@@ -92,16 +204,9 @@ class MemoryDataConfig(DataConfig):
         )
 
 
-@dataclass
-class EvalConfig(EvaluationConfig):
-    period: int = 0
-    asynchronous: bool = False
-
-    slurm: SlurmConfig = field(default_factory=SlurmConfig)
-
-    def __post_init__(self):
-        if not self.asynchronous and self.period > 0:
-            OnlineEvaluationConfig.__post_init__(self)
+# ------------------------------------------------------------------------------
+# Training Configuration
+# ------------------------------------------------------------------------------
 
 
 @dataclass
@@ -117,12 +222,13 @@ class TrainingConfig:
 
     evaluation: EvalConfig = field(default_factory=EvalConfig)
 
-    def __post_init__(self):
+    def __post_init__(self) -> None:
         """
         Check validity of arguments and fill in missing values.
         """
         # restriction for cpu run
-        if self.cluster.device.type == "cpu":
+        self.cluster.post_init()
+        if torch.device(self.cluster.device).type == "cpu":
             assert self.optim.fused is False, "Fused Adam is not supported on CPU"
             assert self.orchestration.profiler.active is False, "Profiler is not supported on CPU"
 
@@ -131,9 +237,15 @@ class TrainingConfig:
             self.model.block.seq_len = self.data.seq_len - 1
 
         # manual post initialization of all modules
-        for module in self.__dict__.values():
-            if hasattr(module, "check_init"):
-                module.check_init()
+        self.orchestration.post_init()
+        self.data.post_init()
+        self.optim.post_init()
+        self.model.post_init()
+
+        # only post init evaluation if online
+        eval = self.evaluation
+        if eval.period and not eval.asynchronous:
+            OnlineEvaluationConfig.post_init(self.evaluation)
 
 
 def heritage_launch_config(run_config: dict[str, Any], launcher: dict[str, Any]) -> None:
@@ -160,6 +272,9 @@ def heritage_eval_config(run_config: dict[str, Any], launcher: dict[str, Any]) -
     ### Parameters
     - run_config: configuration to run this file.
     - launcher: meta configuration to orchestrate the launch of this run.
+
+    ### Note
+    The logic of this file is a bit hard to parse, feel free to suggest better solutions.
     """
 
     logger.info("Heritage from run_config to eval_config")
@@ -170,8 +285,6 @@ def heritage_eval_config(run_config: dict[str, Any], launcher: dict[str, Any]) -
 
     # flatten configurations for easier access
     flat_config = flatten_config(run_config)
-    # hack to add slurm inheritance
-    flat_config |= flatten_config({"_slurm": launcher.pop("slurm", {})})
     eval_config = flatten_config(eval_config)
 
     # special inheritance
@@ -183,27 +296,33 @@ def heritage_eval_config(run_config: dict[str, Any], launcher: dict[str, Any]) -
     # generic inheritance
     configs_keys = [
         (EvalDataConfig, "data", "data"),
-        (SourceConfig, "data.sources", "data.sources"),
         (TokenizerConfig, "tokenizer", "data.tokenizer"),
     ]
 
     # deal with data configuration being defined in its post_init method
-    sources = initialize_nested_object(MemoryDataConfig, run_config["data"], inplace=False).sources
+    tmp_config = build_with_type_check(MemoryDataConfig, run_config["data"], inplace=False)
+    tmp_config.post_init()
+    sources = tmp_config.sources
     flat_config |= {"data.sources": [asdict(s) for s in sources]}
+
+    # deal with attributes that are dictionnary and get overly flattened
     flat_config |= {
         "data.tokenizer.special_tokens": run_config.get("data", {}).get("tokenizer", {}).get("special_tokens", {})
     }
 
     if eval_config.get("asynchronous", False):
+        # hack to add slurm inheritance
+        flat_config |= flatten_config({"_slurm": launcher.pop("slurm", {})})
+
         configs_keys += [
             (SlurmConfig, "slurm", "_slurm"),
             (ClusterConfig, "cluster", "cluster"),
             (LoggerConfig, "orchestration.logging", "orchestration.logging"),
             (ProfilerConfig, "orchestration.profiler", "orchestration.profiler"),
-            (WandbConfig, "orchestration.wandb", "orchestration.wandb"),
+            (WandbConfig, "orchestration.logging.wandb", "orchestration.logging.wandb"),
         ]
-        eval_config["launcher"] = flatten_config(launcher)
 
+    # proceed with inheritance
     for config_cls, cls_key, inherited_key in configs_keys:
         for key, finfo in config_cls.__dataclass_fields__.items():
             if not finfo.init:
@@ -236,9 +355,9 @@ def heritage_grid_id(run_config: dict[str, Any], grid_id: int) -> None:
     return unflatten_config(flat_config)
 
 
-def build_config(file_config: dict[str, Any]) -> TrainingConfig:
+def build_train_config(file_config: dict[str, Any]) -> TrainingConfig:
     """
-    Build configuration from file configuration.
+    Build configuration from file configuration for training run.
 
     ### Parameters
     - file_config: configuration as a dictionary.
@@ -263,24 +382,3 @@ def build_config(file_config: dict[str, Any]) -> TrainingConfig:
 
     config = build_config_with_model_dispatch(TrainingConfig, run_config)
     return config
-
-
-def parse_args() -> TrainingConfig:
-    """
-    Parse command line arguments and build configuration.
-
-    Returns:
-        TrainingConfig: The parsed and processed training configuration
-    """
-    import argparse
-
-    parser = argparse.ArgumentParser(description="Launch a training job from configuration file")
-    parser.add_argument("config", type=str, help="Path to configuration file")
-    path = parser.parse_args().config
-
-    # obtain configuration from file
-    with open(os.path.expandvars(path)) as f:
-        file_config: dict[str, Any] = yaml.safe_load(f)
-
-    # initialize configuration
-    return build_config(file_config)
