@@ -4,12 +4,9 @@
 
 #### Vivien's current todo:
 
-- simplify the argument parsing.
-    - remove the `to_dict`: ensure everything is serializable.
-    - only add a `post_init` method that is trigger manually, and propagate to submethods.
-    - remove all the fancy methods, such as `field(init=False)`.
+- Make sure the pipeline works well under various configurations.
 
-- improve the metric logging, as well as the profiler.
+- Improve the metric logging, as well as the profiler.
     - log number of parameters
     - log learning rate.
     - log gradient norm.
@@ -19,7 +16,7 @@
     - have a way to compute exactly the number of flops.
 
 - Make nice plots, and visualization methods.
-    - check that wandb is working correctly.
+    - Check that wandb is working correctly.
 - Generation.
     - Write inference loop logic, as well as sampling strategies.
 
