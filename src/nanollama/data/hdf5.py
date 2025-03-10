@@ -36,7 +36,7 @@ class DataConfig:
     asynchronous: bool = True  # asynchronous data loading
     buffer_size: int = 4  # number of batches to bufferize asynchronously for data loading
 
-    def __post_init__(self):
+    def post_init(self) -> None:
         self.path = os.path.expandvars(self.path)
 
 

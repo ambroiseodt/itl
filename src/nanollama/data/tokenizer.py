@@ -404,7 +404,7 @@ class TokenizerConfig:
     special_tokens: dict[str, int] = field(default_factory=dict)
     configuration: dict[str, Any] = None
 
-    def __post_init__(self):
+    def post_init(self) -> None:
         self.name = self.name.lower()
         assert self.name in [ByteTokenizer.name, TikTokenizer.name]
         if self.name == TikTokenizer.name:
