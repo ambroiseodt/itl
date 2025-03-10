@@ -121,9 +121,9 @@ class EvalOrchestratorConfig:
         # logging related
         self.logging.stdout_path = str(log_dir / "logs" / task_id)
         # ...fake metric path to be modified by in the evaluation config post-init
-        self.logging.metric_path = self.log_dir
+        self.logging.metric_path = str(log_dir / "metrics" / task_id / "TBD")
         # ...wandb directory (single dir for any steps)
-        self.logging.wandb.path = str(log_dir.parent / "wandb")
+        self.logging.wandb.path = str(log_dir.parents[1] / "wandb")
         self.logging.wandb.name = self.name
 
         # create directory
