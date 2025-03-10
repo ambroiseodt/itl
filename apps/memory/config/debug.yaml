@@ -1,7 +1,7 @@
 launcher:
-  launcher: bash
-  torchrun: true
-  copy_code: false
+  # launcher: bash
+  # torchrun: true
+  # copy_code: false
 
   name: memory
   overwrite: true
@@ -26,8 +26,8 @@ run_config:
     seq_len: 129
     asynchronous: true
 
-    n_data: 1000
-    key: biographies
+    n_data: 10
+    key: qa
     data_dir: $HOME/data/memory
     save_dir: $HOME/data/temporary
     tokenizer:
@@ -54,9 +54,9 @@ run_config:
       hidden_dim: 256
 
   optim:
-    steps: 10000
-    max_steps: 10000
-    lr: 1e-4
+    steps: 200
+    max_steps: 1000
+    lr: 1e-3
     weight_decay: 0.1
     fused: false
     warmup: 15
@@ -73,8 +73,8 @@ run_config:
     logging:
       period: 1
       level: INFO
-    # wandb:
-    #   active: true
+      wandb:
+        active: true
 
     profiler:
       active: false
@@ -82,18 +82,9 @@ run_config:
       wait: 1
       steps: 20
 
-  # eval:
-  #   period: 0
-  #   dataset_dir: /checkpoint/$USER/datasets/eval
-  #   tasks: piqa
-  #   generator:
-  #     max_tokens: 2048
-      # dtype: fp32
-
-  # evaluation:
-  #   period: 15
-  #   asynchronous: false
-  #   data:
-  #     path: $HOME/data/composition/base/testset.h5
-  #     n_data: 1_000
-  #     batch_size: 16
+  evaluation:
+    db_path: $HOME/data/memory/people.db
+    period: 50
+    asynchronous: true
+    slurm:
+      nb_gpus: 1
