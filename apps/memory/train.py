@@ -211,16 +211,24 @@ def train(config: TrainingConfig) -> None:
 
                 # launch evaluation job on slurm
                 elif is_master_process():
+                    logger.info("Launching evaluation")
                     launch_config, run_config = build_eval_launch_config(
                         config.evaluation, config.orchestration, checkpoint, step
                     )
 
                     # launch job without device binding
-                    with clean_environment():
-                        # wait for checkpoint to be saved to launch job
-                        checkpoint.process.add_done_callback(
-                            lambda fut, cfg=launch_config, run_cfg=run_config: launch_job(cfg, run_cfg)
-                        )
+                    def launcher(cfg: Any, run_cfg: dict[str, Any]) -> None:
+                        with clean_environment():
+                            launch_job(cfg, run_cfg)
+
+                    # wait for checkpoint to be saved to launch job
+                    checkpoint.process.add_done_callback(
+                        lambda fut, cfg=launch_config, run_cfg=run_config: launcher(cfg, run_cfg)
+                    )
+
+                else:
+                    logger.info("Saving model for evaluation")
+                    checkpoint.update()
 
     logger.info("Training done.")
 
