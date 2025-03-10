@@ -73,7 +73,7 @@ class OrchestratorConfig:
             with open(path / "id_mapping", "a") as f:
                 f.write(f"task {task_id}: {job_id}\n")
 
-        # check validity of submodule
+        # check validity of submodules
         self.checkpoint.post_init()
         self.logging.post_init()
         self.profiler.post_init()
@@ -137,6 +137,6 @@ class EvalOrchestratorConfig:
             with open(path / "id_mapping", "a") as f:
                 f.write(f"task {task_id}: {job_id}\n")
 
-        # check validity of submodule
+        # check validity of submodules
         self.logging.post_init()
         self.profiler.post_init()
