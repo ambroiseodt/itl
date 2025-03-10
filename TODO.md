@@ -4,6 +4,11 @@
 
 #### Vivien's current todo:
 
+- Make nice plots, and visualization methods.
+    - Check that wandb is working correctly.
+- Generation.
+    - Write inference loop logic, as well as sampling strategies.
+
 - Improve the metric logging, as well as the profiler.
     - log number of parameters
     - log learning rate.
@@ -13,21 +18,9 @@
     - log throughput.
     - have a way to compute exactly the number of flops.
 
-- Make nice plots, and visualization methods.
-    - Check that wandb is working correctly.
-- Generation.
-    - Write inference loop logic, as well as sampling strategies.
-
 - Proper parallelization when using many GPUs.
     - DDP at generation time (make KV cache / masking work there).
     - TP at generation time.
-
-#### Other stuffs for Vivien's
-- Improve the light profiler.
-
-- Linear Probing of the weights of the network
-    - Have something running in interactive fashion.
-    - The logic is that we add module that checkpoint stuff during the forward and during the backward pass, while acting as the identity regarding the information passing through.
 
 #### Pipeline modification ideas
 - Change mask so that the LLM can have non-causal interaction between tokens that it has not generated.
@@ -38,16 +31,13 @@
 
 #### Small improvements to the codebase
 - (?) Remove Statefulness of scheduler.
-- It is a bit weird to mix the metric logger with the stdout logger.
 
 #### Known issues
 - Issue with compile at inference time.
     - Option to disable compile at generation time (it seems to slow the generation quite a bit).
     - Use `compiled_model = torch.compile(model, dynamic=True)` ?
     - TODO: look at Claude suggestion.
-- Parsing configuration starts to be a bit messy. It would be nice to switch to OmegaConf to avoid speding to much time on these issues.
-    - issue with slurm inheritage.
-    - TODO: look at Cursor suggestion.
+- Parsing configuration starts to be a bit messy. Not clear if there is a clean solution though.
 - Wandb restarting does not work well. To have nice eval plots, best is to update local results to wandb after the runs.
 
 #### Bigger improvement to the codebas
