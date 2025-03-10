@@ -11,7 +11,7 @@ import os
 import shutil
 import subprocess
 import sys
-from dataclasses import asdict, dataclass, field
+from dataclasses import dataclass, field
 from itertools import product
 from pathlib import Path
 from typing import Any
@@ -114,14 +114,6 @@ class SlurmConfig:
                 max_times[partition] = info["partition"]["maximums"]["time"]["number"]  # in minutes
 
         return priorities, max_times, memories
-
-    def to_dict(self) -> dict[str, Any]:
-        """
-        Convert configuration to dictionnary to reinitialize it.
-        """
-        output = asdict(self)
-        output.pop("slurm_extra")
-        return output
 
 
 @dataclass
