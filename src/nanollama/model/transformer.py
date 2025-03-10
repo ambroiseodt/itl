@@ -249,7 +249,7 @@ class TransformerBlockConfig:
     hidden_dim: int = 0
     norm_eps: float = 1e-5
 
-    def check_init(self) -> None:
+    def post_init(self) -> None:
         """Check validity of arguments that may have been inherited."""
         assert self.seq_len, "sequence length should be specified"
         assert self.emb_dim, "embedding dimension should be specified"
@@ -320,9 +320,9 @@ class TransformerConfig(BlockLanguageModelConfig):
     block: TransformerBlockConfig = field(default_factory=TransformerBlockConfig)
     flex_attention: bool = True
 
-    def __post_init__(self):
+    def post_init(self) -> None:
         global FLEX_ATTENTION
-        super().__post_init__()
+        super().post_init()
 
         FLEX_ATTENTION = self.flex_attention
 
@@ -337,6 +337,9 @@ class TransformerConfig(BlockLanguageModelConfig):
         # default to no group query
         if not self.block.nb_kv_heads:
             self.block.nb_kv_heads = self.block.nb_heads
+
+        # check validity of submodules
+        self.block.post_init()
 
 
 class Transformer(BlockLanguageModel):

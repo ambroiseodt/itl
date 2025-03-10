@@ -9,9 +9,8 @@ import json
 import logging
 import os
 from contextlib import ExitStack
-from dataclasses import asdict, dataclass, field
+from dataclasses import dataclass
 from logging import getLogger
-from pathlib import Path
 from typing import Any
 
 import torch
@@ -21,24 +20,21 @@ import yaml
 from torch.distributed.checkpoint.stateful import Stateful
 from torch.distributed.device_mesh import DeviceMesh
 
-from src.nanollama.data.tokenizer import TokenizerConfig, build_tokenizer
-from src.nanollama.distributed import ClusterConfig, ClusterManager, is_master_process
+from src.nanollama.data.tokenizer import build_tokenizer
+from src.nanollama.distributed import ClusterManager, is_master_process
 from src.nanollama.inference import QueuedBatchedInference
 from src.nanollama.model import (
     BlockLanguageModel,
     build_config_with_model_dispatch,
 )
 from src.nanollama.monitor import (
-    EvalCheckpointConfig,
     EvalCheckpointer,
-    EvalOrchestratorConfig,
     Logger,
     PreemptionHandler,
-    WandbLogger,
 )
-from src.nanollama.utils import initialize_nested_object
 
-from .prompt_loader import DataConfig, PromptLoader
+from .args import EvaluationConfig, OnlineEvaluationConfig, build_eval_config
+from .prompt_loader import PromptLoader
 
 logger = getLogger("nanollama")
 
@@ -70,32 +66,6 @@ class EvalState(Stateful):
 def perplexity_func(preds: torch.Tensor, targets: torch.Tensor) -> torch.Tensor:
     vocab_size = preds.size(-1)
     return torch.exp(F.cross_entropy(preds.reshape(-1, vocab_size), targets.reshape(-1)))
-
-@dataclass
-class OnlineEvaluationConfig:
-    """
-    Configuration to launch an evaluation during a training run.
-
-    ### Parameters
-    - log_path: path to store the evaluation logs.
-    - db_path: path to SQL database.
-    - data: data configuration.
-    - tmp_file: temporary file to store partial results
-    """
-
-    db_path: str = ""
-    data: DataConfig = field(default_factory=DataConfig)
-    tokenizer: TokenizerConfig = field(default_factory=TokenizerConfig)
-
-    checkpoint: EvalCheckpointConfig = field(default_factory=EvalCheckpointConfig)
-
-    def __post_init__(self):
-        assert self.db_path, "db_path should be specified."
-        self.db_path = os.path.expandvars(self.db_path)
-
-        for module in self.__dict__.values():
-            if hasattr(module, "check_init"):
-                module.check_init()
 
 
 @torch.inference_mode()
@@ -178,60 +148,11 @@ def run_evaluation(
 # ------------------------------------------------------------------------------
 
 
-@dataclass
-class EvaluationConfig(OnlineEvaluationConfig):
-    """
-    Configuration to launch an evaluation during a training run.
-
-    ### Parameters
-    - model_dir: path to the model directory.
-    - log_path: path to store the evaluation logs.
-    - checkpoint_flag: file acting as a flag to avoid deleting checkpoints before evaluation
-    - metadata: metadata to add to the evaluation metrics.
-    """
-
-    model_dir: str = ""
-    log_path: str = ""
-
-    checkpoint_flag: str = ""
-    metadata: dict[str, Any] = field(default_factory=dict)
-
-    cluster: ClusterConfig = field(default_factory=ClusterConfig)
-    orchestration: EvalOrchestratorConfig = field(default_factory=EvalOrchestratorConfig)
-
-    def __post_init__(self):
-        """
-        Check validity of arguments and fill in missing values.
-        """
-        super().__post_init__()
-
-        assert self.log_path, "log_path must be set."
-        assert self.model_dir, "Checkpoint directory must be set."
-        self.log_path = os.path.expandvars(self.log_path)
-
-        # manual post initialization of all modules
-        for module in self.__dict__.values():
-            if hasattr(module, "check_init"):
-                module.check_init()
-
-        # configuration not managed by orchestrator due to inheritance issues
-        self.checkpoint.path = str(Path(self.orchestration.log_dir) / "checkpoint")
-        if self.checkpoint_flag:
-            self.checkpoint.flag = str(Path(self.model_dir) / self.checkpoint_flag)
-        self.orchestration.logging.metric_path = self.log_path
-
-    def to_dict(self) -> dict[str, Any]:
-        output = asdict(self)
-        output["cluster"] = self.cluster.to_dict()
-        output["orchestration"] = self.orchestration.to_dict()
-        return output
-
-
 @torch.inference_mode()
 def eval(config: EvaluationConfig) -> None:
     with ExitStack() as context_stack:
         # ---------------------------------------------------------------------
-        # Handle preemption, computing environment, logging, and utils
+        # Handle preemption, computing environment and logging
         # ---------------------------------------------------------------------
 
         preemption = PreemptionHandler()
@@ -242,9 +163,6 @@ def eval(config: EvaluationConfig) -> None:
 
         metric_logger = Logger(config.orchestration.logging, eval=True)
         context_stack.enter_context(metric_logger)
-
-        wandb = WandbLogger(config.orchestration.wandb, asdict(config))
-        context_stack.enter_context(wandb)
 
         # ---------------------------------------------------------------------
         # Build, Recover Checkpoint and Parallelize model
@@ -273,7 +191,6 @@ def eval(config: EvaluationConfig) -> None:
         # logging metrics
         metrics |= config.metadata
         metric_logger(metrics)
-        wandb(metrics)
 
         if is_master_process():
             logger.info(f"Evaluation metrics: {metrics}")
@@ -310,13 +227,10 @@ def main() -> None:
 
     # obtain configuration from file
     with open(os.path.expandvars(path)) as f:
-        text_config: dict[str, Any] = yaml.safe_load(f)
-
-    if "run_config" in text_config:
-        text_config = text_config["run_config"]
+        file_config: dict[str, Any] = yaml.safe_load(f)
 
     # initialize configuration
-    config = initialize_nested_object(EvaluationConfig, text_config, inplace=False)
+    config = build_eval_config(file_config)
 
     # launch job
     eval(config)

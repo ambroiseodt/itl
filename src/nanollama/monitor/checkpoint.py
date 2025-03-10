@@ -10,7 +10,7 @@ import os
 import re
 import shutil
 from asyncio import Future
-from dataclasses import dataclass, field
+from dataclasses import dataclass
 from logging import getLogger
 from pathlib import Path, PosixPath
 from types import TracebackType
@@ -35,17 +35,21 @@ logger = getLogger("nanollama")
 
 @dataclass
 class CheckpointConfig:
+    """
+    Checkpoint Configuration
+
+    ### Attributes
+    - period: number of updates between each checkpoint
+    - nb_kept: number of checkpoints to keep
+    - path: path to the checkpoint directory (set automatically by the orchestrator)
+    """
     period: int = 0
     nb_kept: int = 0
-    path: str = field(init=False, default="")
+    path: str = ""
 
-    def check_init(self) -> None:
-        """Check validity of arguments.
-
-        ### Note
-        The `path` should be set by an orchestrator.
-        """
-        assert self.path, "path was not set"
+    def post_init(self) -> None:
+        if self.period > 0:
+            assert self.path, "path was not set"
 
 
 class Checkpointer(Monitor):
@@ -228,9 +232,9 @@ class EvalCheckpointConfig:
     """
 
     path: str = "$HOME/.tmp_nanollama"
-    flag: str = field(init=False, default="")
+    flag: str = ""
 
-    def __post_init__(self):
+    def post_init(self) -> None:
         self.path = os.path.expandvars(self.path)
 
 

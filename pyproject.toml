@@ -17,7 +17,7 @@ dependencies = [
   "fire",           # argument parsing
   "jinja2",         # template rendering
   "numpy",
-  "pyaml",          # configuration
+  "omegaconf",      # configuration
   "torch",
 ]
 
@@ -53,7 +53,6 @@ ssm = [
 
 [tool.setuptools.packages.find]
 where = ["src"]
-exclude = ["src.apps"]
 
 [tool.ruff]
 line-length = 120

@@ -46,8 +46,7 @@ class RNNBlockConfig:
     # Model parameters
     init_std: float = None
 
-    def check_init(self) -> None:
-        """Check validity of arguments."""
+    def post_init(self) -> None:
         assert self.emb_dim, "embedding dimension should be specified"
         assert self.nb_heads, "number of heads should be specified"
 

@@ -1,7 +1,7 @@
 launcher:
   name: memory
   overwrite: true
-  log_dir: $HOME/memory_debug
+  log_dir: $HOME/memory_grid
 
   script: apps.memory.train
 
@@ -14,7 +14,7 @@ launcher:
       nb_layers: [1, 2, 3, 4, 5, 6]
       block: 
         nb_heads: [1, 2, 4, 8]
-    
+
   slurm:
     # partition: scavenge
     mem: 32G

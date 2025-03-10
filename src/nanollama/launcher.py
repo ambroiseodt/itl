@@ -11,14 +11,14 @@ import os
 import shutil
 import subprocess
 import sys
-from dataclasses import asdict, dataclass, field
+from dataclasses import dataclass, field
 from itertools import product
 from pathlib import Path
 from typing import Any
 
 import yaml
 
-from .utils import flatten_config, initialize_nested_object, unflatten_config
+from .utils import build_with_type_check, flatten_config, unflatten_config
 
 logger = logging.getLogger("nanollama")
 
@@ -41,7 +41,7 @@ class SlurmConfig:
     - nb_gpus: number of GPUs required per node.
     - nb_cpus: number of CPUs allocated per GPU.
     - signal_time: time between USR signal and job termination (in seconds).
-    - slurm_extra: extra configuration for the job.
+    - slurm_extra: extra configuration for the job (automatically filled).
     - constraint: constraint on the nodes.
     - exclude: nodes to exclude.
     - account: account to use.
@@ -60,7 +60,7 @@ class SlurmConfig:
     signal_time: int = 120
 
     # extra configuration
-    slurm_extra: str = field(init=False, default="")  # placeholder
+    slurm_extra: str = ""  # placeholder
     constraint: str = ""  # constraint on the nodes.
     exclude: str = ""  # nodes to exclude.
     account: str = ""
@@ -69,7 +69,7 @@ class SlurmConfig:
     # cluster environment
     script_extra: str = ""
 
-    def check_init(self) -> None:
+    def post_init(self) -> None:
         self.slurm_extra = ""
         for name in ["exclude", "qos", "account", "constraint"]:
             val = getattr(self, name)
@@ -115,14 +115,6 @@ class SlurmConfig:
 
         return priorities, max_times, memories
 
-    def to_dict(self) -> dict[str, Any]:
-        """
-        Convert configuration to dictionnary to reinitialize it.
-        """
-        output = asdict(self)
-        output.pop("slurm_extra")
-        return output
-
 
 @dataclass
 class LauncherConfig:
@@ -157,7 +149,7 @@ class LauncherConfig:
 
     slurm: SlurmConfig = field(default_factory=SlurmConfig)
 
-    def __post_init__(self):
+    def __post_init__(self) -> None:
         """
         Check validity of arguments and fill in missing values.
         """
@@ -179,9 +171,7 @@ class LauncherConfig:
                 self.python_env = f"{self.python_env}/bin/python"
             assert os.path.isfile(self.python_env)
 
-        for module in self.__dict__.values():
-            if hasattr(module, "check_init"):
-                module.check_init()
+        self.slurm.post_init()
 
 
 # ------------------------------------------------------------------------------
@@ -333,6 +323,11 @@ def launch_job(config: LauncherConfig, file_config: dict[str, Any]) -> None:
     else:
         go_to_code_dir = ""
 
+    # add slurm configuration to the file_config
+    slurm_config = file_config.get("launcher", {}).get("slurm", {})
+    for key in ["partition", "time", "mem"]:
+        slurm_config[key] = getattr(slurm, key)
+
     # write configs
     config_dir = log_dir / "tasks"
     config_dir.mkdir(exist_ok=True)
@@ -434,7 +429,7 @@ def main() -> None:
         file_config: dict[str, Any] = yaml.safe_load(f)
 
     # initialize configuration
-    config = initialize_nested_object(LauncherConfig, file_config["launcher"], inplace=False)
+    config = build_with_type_check(LauncherConfig, file_config["launcher"], inplace=False)
 
     # launch job
     launch_job(config, file_config)

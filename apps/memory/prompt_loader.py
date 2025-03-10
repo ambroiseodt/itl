@@ -42,7 +42,7 @@ class DataConfig:
     asynchronous: bool = True
     buffer_size: int = 4
 
-    def check_init(self) -> None:
+    def post_init(self) -> None:
         assert self.sources, "source should be specified."
         assert self.batch_size, "batch_size should be specified."
 

@@ -39,6 +39,7 @@ class UtilityManager(Monitor):
 
         # disable garbage collection
         gc.disable()
+        gc.collect()
         return self
 
     def update(self) -> None:

@@ -69,7 +69,7 @@ def unflatten_config(config: dict[str, Any]) -> dict[str, Any]:
 T = TypeVar("T")
 
 
-def initialize_nested_object(object_type: type[T], data: dict[str, Any], inplace: bool = True) -> T:
+def build_with_type_check(object_type: type[T], data: dict[str, Any], inplace: bool = True) -> T:
     """
     Recursively initializes a typed object from a nested dictionary.
     """
@@ -90,27 +90,26 @@ def initialize_nested_object(object_type: type[T], data: dict[str, Any], inplace
             fname, ftype = data_field.name, data_field.type
             if fname in data:
                 value = data.pop(fname)
-                field_values[fname] = initialize_nested_object(ftype, value)
+                field_values[fname] = build_with_type_check(ftype, value)
             else:
                 logger.debug(f"Field '{fname}' not found in {object_type}.")
         for fname in data:
             logger.warning(f"Field '{fname}' ignored when initializing {object_type}.")
         return object_type(**field_values)
 
-
     # list
     elif get_origin(object_type) is list and len(args) == 1:
-        return [initialize_nested_object(args[0], item) for item in data]
+        return [build_with_type_check(args[0], item) for item in data]
 
     # dict
     elif get_origin(object_type) is dict and len(args) == 2:
-        return {initialize_nested_object(args[0], k): initialize_nested_object(args[1], v) for k, v in data.items()}
+        return {build_with_type_check(args[0], k): build_with_type_check(args[1], v) for k, v in data.items()}
 
     # union
     elif get_origin(object_type) is Union:
         for arg in args:
             try:
-                return initialize_nested_object(arg, data)
+                return build_with_type_check(arg, data)
             except (TypeError, ValueError):
                 continue
 

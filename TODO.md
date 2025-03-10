@@ -4,13 +4,13 @@
 
 #### Vivien's current todo:
 
-- Correct the unit tests
+- Make nice plots, and visualization methods.
+    - Check that wandb is working correctly.
+- Generation.
+    - Write inference loop logic, as well as sampling strategies.
 
-- Show how to run a grid with a grid.yaml configuration.
-
-- Launch some big grids to get first plots.
-
-- improve the metric logging, as well as the profiler.
+- Improve the metric logging, as well as the profiler.
+    - log number of parameters
     - log learning rate.
     - log gradient norm.
     - log activation norm.
@@ -18,21 +18,9 @@
     - log throughput.
     - have a way to compute exactly the number of flops.
 
-- Make nice plots, and visualization methods.
-    - check that wandb is working correctly.
-- Generation.
-    - Write inference loop logic, as well as sampling strategies.
-
 - Proper parallelization when using many GPUs.
     - DDP at generation time (make KV cache / masking work there).
     - TP at generation time.
-
-#### Other stuffs for Vivien's
-- Improve the light profiler.
-
-- Linear Probing of the weights of the network
-    - Have something running in interactive fashion.
-    - The logic is that we add module that checkpoint stuff during the forward and during the backward pass, while acting as the identity regarding the information passing through.
 
 #### Pipeline modification ideas
 - Change mask so that the LLM can have non-causal interaction between tokens that it has not generated.
@@ -43,11 +31,16 @@
 
 #### Small improvements to the codebase
 - (?) Remove Statefulness of scheduler.
-- It is a bit weird to mix the metric logger with the stdout logger.
+
+#### Known issues
+- Issue with compile at inference time.
+    - Option to disable compile at generation time (it seems to slow the generation quite a bit).
+    - Use `compiled_model = torch.compile(model, dynamic=True)` ?
+    - TODO: look at Claude suggestion.
+- Parsing configuration starts to be a bit messy. Not clear if there is a clean solution though.
+- Wandb restarting does not work well. To have nice eval plots, best is to update local results to wandb after the runs.
 
 #### Bigger improvement to the codebas
-- Option to disable compile at generation time (it seems to slow the generation quite a bit).
-- Move toward omegaconf to handle configurations with `__post_init__` becoming `check_init`.
 - Move toward tasks-based evaluation a la llm-harness. Get inspiration from https://github.com/facebookresearch/lingua/blob/main/apps/main/eval.py.
 - Improve the generation part to have a async scheme for lane, with page in / page out mechanisms.
 - Add various initialization scheme.

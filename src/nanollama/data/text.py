@@ -45,7 +45,7 @@ class SourceConfig:
     path: str
     weight: float
 
-    def __post_init__(self):
+    def post_init(self) -> None:
         self.path = os.path.expandvars(self.path)
 
 
@@ -74,11 +74,16 @@ class DataConfig:
     asynchronous: bool = True
     buffer_size: int = 4
 
-    def __post_init__(self):
+    def post_init(self) -> None:
         assert self.sources, "sources must be specified."
         assert self.tokenizer, "tokenizer must be specified."
         assert self.batch_size, "batch_size must be specified."
         assert self.seq_len, "seq_len must be specified."
+
+        # check validity of submodules
+        self.tokenizer.post_init()
+        for source in self.sources:
+            source.post_init()
 
 
 # ------------------------------------------------------------------------------

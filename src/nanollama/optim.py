@@ -41,7 +41,7 @@ class OptimizerConfig:
     warmup: int = 2000
     lr_min_ratio: float = 0.1
 
-    def __post_init__(self):
+    def post_init(self) -> None:
         if not self.max_steps:
             self.max_steps = self.steps
 
