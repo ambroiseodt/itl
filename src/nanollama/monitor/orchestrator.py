@@ -74,9 +74,9 @@ class OrchestratorConfig:
                 f.write(f"task {task_id}: {job_id}\n")
 
         # check validity of submodule
-        for module in self.__dict__.values():
-            if hasattr(module, "post_init"):
-                module.post_init()
+        self.checkpoint.post_init()
+        self.logging.post_init()
+        self.profiler.post_init()
 
 
 # ------------------------------------------------------------------------------
@@ -138,6 +138,5 @@ class EvalOrchestratorConfig:
                 f.write(f"task {task_id}: {job_id}\n")
 
         # check validity of submodule
-        for module in self.__dict__.values():
-            if hasattr(module, "post_init"):
-                module.post_init()
+        self.logging.post_init()
+        self.profiler.post_init()

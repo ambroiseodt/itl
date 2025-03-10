@@ -46,6 +46,7 @@ class LoggerConfig:
         assert self.stdout_path, "stdout_path was not set"
         assert self.metric_path, "metric_path was not set"
         self.level = self.level.upper()
+        self.wandb.post_init()
 
 
 # ------------------------------------------------------------------------------
