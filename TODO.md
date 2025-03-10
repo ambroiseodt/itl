@@ -4,8 +4,6 @@
 
 #### Vivien's current todo:
 
-- Make sure the pipeline works well under various configurations.
-
 - Improve the metric logging, as well as the profiler.
     - log number of parameters
     - log learning rate.
@@ -50,6 +48,7 @@
 - Parsing configuration starts to be a bit messy. It would be nice to switch to OmegaConf to avoid speding to much time on these issues.
     - issue with slurm inheritage.
     - TODO: look at Cursor suggestion.
+- Wandb restarting does not work well. To have nice eval plots, best is to update local results to wandb after the runs.
 
 #### Bigger improvement to the codebas
 - Move toward tasks-based evaluation a la llm-harness. Get inspiration from https://github.com/facebookresearch/lingua/blob/main/apps/main/eval.py.

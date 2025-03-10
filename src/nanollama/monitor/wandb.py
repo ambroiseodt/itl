@@ -7,7 +7,6 @@ Wandb Logger
 
 import json
 import os
-import sys
 from dataclasses import dataclass
 from logging import getLogger
 from pathlib import Path
@@ -38,7 +37,7 @@ class WandbConfig:
     """
     active: bool = False
     entity: str = ""
-    project: str = "composition"
+    project: str = "nanollama"
     name: str = ""
     path: str = ""
 
@@ -84,7 +83,6 @@ class WandbLogger:
             run_state = api.run(f"{self.entity}/{self.project}/{run_id}").state
             if run_state == "running":
                 logger.warning(f"Run with ID: {run_id} is currently active and running.")
-                sys.exit(1)
 
             self.run = wandb.init(
                 project=self.project,
