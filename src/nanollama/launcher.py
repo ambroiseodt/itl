@@ -324,7 +324,7 @@ def launch_job(config: LauncherConfig, file_config: dict[str, Any]) -> None:
         go_to_code_dir = ""
 
     # add slurm configuration to the file_config
-    slurm_config = file_config.get("slurm", {})
+    slurm_config = file_config.get("launcher", {}).get("slurm", {})
     for key in ["partition", "time", "mem"]:
         slurm_config[key] = getattr(slurm, key)
 
