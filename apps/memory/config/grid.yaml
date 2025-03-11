@@ -25,7 +25,7 @@ launcher:
 
 run_config:
   cluster:
-    compile_model: true
+    compile_model: false
 
   data:
     key: qatool
