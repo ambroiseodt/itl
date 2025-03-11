@@ -207,7 +207,9 @@ def train(config: TrainingConfig) -> None:
 
                 # run evaluation now
                 if not config.evaluation.asynchronous:
-                    run_evaluation(config.evaluation, model=model)
+                    metrics = run_evaluation(config.evaluation, model=model)
+                    metrics |= {"step": step}
+                    metric_logger(metrics)
 
                 # launch evaluation job on slurm
                 elif is_master_process():

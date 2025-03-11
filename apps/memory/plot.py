@@ -12,8 +12,10 @@ from nanollama.visualization.loader import load_results
 
 # %% Load results
 
-log_dir = Path.home() / "memory"
-metric_dir = log_dir / "metrics"
+# log_dir = Path.home() / "memory"
+log_dir = Path.home() / "grid_first_runs"
+task_id = "1"
+metric_dir = log_dir / "metrics" / task_id
 
 dfs = {}
 dfs["train"] = load_results(metric_dir, "raw")
