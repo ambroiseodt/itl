@@ -28,6 +28,7 @@
 #### Simple recipes in the apps folder
 - Simple vanilla script with real tokenizer over SmolLM v2.
     - Option to remove the tokenizer mask when doing pure pretraining.
+- Simple vanilla script on the Shakespear dataset to debug on cpu.
 
 #### Small improvements to the codebase
 - (?) Remove Statefulness of scheduler.
