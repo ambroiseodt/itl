@@ -16,7 +16,7 @@ from types import TracebackType
 import torch
 import torch.profiler as profiler
 
-from ..distributed import get_local_rank, get_rank, get_world_size
+from ..distributed import get_local_rank, get_rank
 from ..model.blocklm import BlockModel
 from ..optim import OptimizerState
 
@@ -178,8 +178,8 @@ class LightProfiler(BaseProfiler):
 
             metrics = self.times | {
                 "step": self.state.step,
-                "flop_freq": flops,
-                "token_freq": token_freq,
+                "flop_freq (TF)": flops / 1e12,
+                "token_freq (M)": token_freq / 1e6,
                 "mem_GiB": mem / (1024**3),
                 "mem_reserved_GiB": mem_reserved / (1024**3),
                 "mem_percentage": mem / self.capacity,
@@ -188,7 +188,7 @@ class LightProfiler(BaseProfiler):
             }
 
             print(json.dumps(metrics), file=self.file, flush=True)
-            logger.info(metrics)
+            logger.info({k: round(v, 5) for k, v in metrics.items()})
 
             torch.cuda.reset_peak_memory_stats()
 
@@ -206,9 +206,8 @@ class LightProfiler(BaseProfiler):
         - seq_len: sequence length.
         - flop_multiplier: number of token updates per training step.
         """
-        module = model.module if get_world_size() > 1 else model
         self.token_per_step = token_per_step
-        self.flop_per_step = module.get_nb_flop(**kwargs) * token_per_step
+        self.flop_per_step = model.get_nb_flop(**kwargs) * token_per_step
 
     def start_timer(self) -> None:
         if self.device:  # act as an active flag

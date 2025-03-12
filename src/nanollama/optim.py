@@ -34,7 +34,7 @@ class OptimizerConfig:
     fused: bool = True
 
     # gradient clipping
-    clip: float = 1.0
+    clip: float = float("inf")
 
     # scheduler parameters
     scheduler: str = "cosine"

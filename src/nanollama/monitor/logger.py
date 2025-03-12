@@ -112,7 +112,7 @@ class Logger:
         """
         metrics |= {"ts": time.time() - self.start_time}
         print(json.dumps(metrics), file=self.metric, flush=True)
-        logger.info(metrics)
+        logger.info({k: round(v, 5) for k, v in metrics.items()})
         self.wandb(metrics)
 
     def report_statistics(self, model: torch.nn.Module) -> None:

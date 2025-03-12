@@ -127,6 +127,9 @@ def train(config: TrainingConfig) -> None:
         log_period = config.orchestration.logging.period
 
         while optim_state.step < config.optim.steps:
+            # alias
+            step = optim_state.step
+
             # handle preemption
             if preemption():
                 logger.warning("Preemption flag set")
@@ -143,17 +146,19 @@ def train(config: TrainingConfig) -> None:
             # -----------------------------------------------------------------
 
             profiler.start_timer()
+
             batch = next(dataloader)
             if cluster.device.type != "cpu":
                 batch = batch.pin_memory()
-
             batch = batch.to(device=cluster.device, non_blocking=True)
 
             # get mask associated to which token is supposed to be produced by the LLM.
+            profiler.start_timer()
             batch, mask = batch.chunk(2)
             X_batch = batch[:, :-1]
             mask = mask[:, :-1].to(bool)
             y_batch = batch[:, 1:][mask]
+
             profiler.end_timer("data_io_time")
 
             # -----------------------------------------------------------------
@@ -178,6 +183,9 @@ def train(config: TrainingConfig) -> None:
             if optim_state.acc_step != 0:
                 continue
 
+            # extract gradient norm if logging
+            grad_norm = torch.nn.utils.clip_grad_norm_(model.parameters(), config.optim.clip)
+
             # optimizer step
             optimizer.step()
             scheduler.step()
@@ -198,9 +206,6 @@ def train(config: TrainingConfig) -> None:
 
             profiler.end_timer("monitor_time")
 
-            # alias
-            step = optim_state.step
-
             # -----------------------------------------------------------------
             # Log metrics
             # -----------------------------------------------------------------
@@ -209,6 +214,15 @@ def train(config: TrainingConfig) -> None:
 
             if log_period > 0 and step % log_period == 0:
                 metrics = {"loss": loss.item(), "step": step}
+                # extra metrics
+                lr = optimizer.param_groups[0]["lr"]
+                grad_norm = grad_norm.item()
+                # TODO: if TP probably we should do the following instead
+                # (grad_norm.full_tensor() if isinstance(grad_norm, DTensor) else grad_norm).item()
+                metrics |= {
+                    "lr": lr,
+                    "grad_norm": grad_norm,
+                }
                 metric_logger(metrics)
 
             profiler.end_timer("log_time")

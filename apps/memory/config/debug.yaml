@@ -25,6 +25,7 @@ run_config:
     batch_size: 128
     seq_len: 129
     asynchronous: true
+    buffer: 120
 
     n_data: 10
     key: qa
@@ -66,25 +67,25 @@ run_config:
     utils:
       seed: 100
 
-    checkpoint:
-      period: 20
-      nb_kept: 3
+    # checkpoint:
+    #   period: 20
+    #   nb_kept: 3
 
     logging:
       period: 1
       level: INFO
-      wandb:
-        active: true
+      # wandb:
+      #   active: true
 
     profiler:
-      active: false
-      heavy: true
+      active: true
+      heavy: false
       wait: 1
-      steps: 20
+      steps: -1
 
-  evaluation:
-    db_path: $HOME/data/memory/people.db
-    period: 50
-    asynchronous: true
-    slurm:
-      nb_gpus: 1
+  # evaluation:
+  #   db_path: $HOME/data/memory/people.db
+  #   period: 50
+  #   asynchronous: true
+  #   slurm:
+  #     nb_gpus: 1
