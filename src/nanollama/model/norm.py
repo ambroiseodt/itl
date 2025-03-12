@@ -36,3 +36,19 @@ class RMSNorm(nn.Module):
 
     def reset_parameters(self) -> None:
         torch.nn.init.ones_(self.weight)
+
+    def get_nb_flop(self, mode: str = "both") -> int:
+        """
+        Number of flop to process a new token
+
+        ### Notes
+        The following formula is somewhat sketchy, it would be nice to validate it empirically.
+        This could be done by using the torch dispatcher
+        https://dev-discuss.pytorch.org/t/the-ideal-pytorch-flop-counter-with-torch-dispatch/505
+
+        ### Parameters
+        - mode: whether to consider the forward, backward pass or both
+        """
+        mode_multiplier = dict(fwd=1, bwd=1, both=2)[mode]
+        flops = 2 * self.weight.numel()
+        return mode_multiplier * flops

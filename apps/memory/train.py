@@ -112,7 +112,11 @@ def train(config: TrainingConfig) -> None:
 
         profiler: Profiler = context_stack.enter_context(Profiler(config.orchestration.profiler, state=optim_state))
 
-        # TODO add a profiling
+        # TODO flops calculation
+        raw_model = cluster.root_model
+        token_per_step = config.data.seq_len * config.data.batch_size * config.optim.grad_acc_steps
+        profiler.report_statistics(model=raw_model, token_per_step=token_per_step)
+        metric_logger.report_statistics(raw_model)
 
         # ---------------------------------------------------------------------
         # Training loop
@@ -138,7 +142,7 @@ def train(config: TrainingConfig) -> None:
             # Batch of data (with reproducibility information)
             # -----------------------------------------------------------------
 
-            # profiler.start_timer()
+            profiler.start_timer()
             batch = next(dataloader)
             if cluster.device.type != "cpu":
                 batch = batch.pin_memory()
@@ -150,10 +154,13 @@ def train(config: TrainingConfig) -> None:
             X_batch = batch[:, :-1]
             mask = mask[:, :-1].to(bool)
             y_batch = batch[:, 1:][mask]
+            profiler.end_timer("data_io_time")
 
             # -----------------------------------------------------------------
             # Forward and backward pass
             # -----------------------------------------------------------------
+
+            profiler.start_timer()
 
             # forward propagation
             preds = model(X_batch)
@@ -177,13 +184,19 @@ def train(config: TrainingConfig) -> None:
             optimizer.zero_grad()
             optim_state.step += 1
 
+            profiler.end_timer("model_time", sync=True)
+
             # -----------------------------------------------------------------
             # Call monitors for garbage collection, checkpointing...
             # -----------------------------------------------------------------
 
+            profiler.start_timer()
+
             profiler()
             checkpoint()
             utils()
+
+            profiler.end_timer("monitor_time")
 
             # alias
             step = optim_state.step
@@ -192,9 +205,13 @@ def train(config: TrainingConfig) -> None:
             # Log metrics
             # -----------------------------------------------------------------
 
+            profiler.start_timer()
+
             if log_period > 0 and step % log_period == 0:
                 metrics = {"loss": loss.item(), "step": step}
                 metric_logger(metrics)
+
+            profiler.end_timer("log_time")
 
             # -----------------------------------------------------------------
             # Evaluation
@@ -231,6 +248,8 @@ def train(config: TrainingConfig) -> None:
                 else:
                     logger.info("Saving model for evaluation")
                     checkpoint.update()
+
+            profiler.end_timer("eval_time")
 
     logger.info("Training done.")
 

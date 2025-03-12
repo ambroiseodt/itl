@@ -63,3 +63,19 @@ class FeedForward(nn.Module):
             a=-3 * out_std,
             b=3 * out_std,
         )
+
+    def get_nb_flop(self, mode: str = "both") -> int:
+        """
+        Number of flop to process a new token
+
+        ### Notes
+        The following formula is somewhat sketchy, it would be nice to validate it empirically.
+        This could be done by using the torch dispatcher
+        https://dev-discuss.pytorch.org/t/the-ideal-pytorch-flop-counter-with-torch-dispatch/505
+
+        ### Parameters
+        - mode: whether to consider the forward, backward pass or both
+        """
+        mode_multiplier = dict(fwd=1, bwd=2, both=3)[mode]
+        flops = 2 * 3 * self.W_in1.weight.numel()
+        return flops * mode_multiplier

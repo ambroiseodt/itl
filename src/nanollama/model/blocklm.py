@@ -140,17 +140,19 @@ class BlockLanguageModel(ABC, nn.Module):
         logits = self.output(self.output_norm(out))
         return logits
 
-    def get_nb_flop(self, mode: str = "both", **kwargs) -> int:
+    def get_nb_flop(self, mode: str = "both") -> int:
         """
-        TODO
         Number of flop to process a new token
 
         ### Parameters
         - mode: whether to consider the forward, backward pass or both
-        - kwargs: argument to compute the number of flops of the block
         """
-        mode_multiplier = dict(fwd=1, bwd=2.5, both=3.5)[mode]
-        return 0 * mode_multiplier
+        layer: BlockModel = self.layers[0]
+        flops = len(self.layers) * layer.get_nb_flop(mode=mode)
+        mode_multiplier = dict(fwd=1, bwd=2, both=3)[mode]
+        flops += mode_multiplier * self.output.weight.numel()
+        flops += self.output_norm.get_nb_flop(mode=mode)
+        return flops
 
     @abstractmethod
     def build_cache(self, bsz: int) -> None:

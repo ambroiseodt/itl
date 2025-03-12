@@ -231,6 +231,31 @@ class SelfAttention(nn.Module):
 
         return out.type_as(qk).view((B, H, S, dim))
 
+    def get_nb_flop(self, mode: str = "both") -> int:
+        """
+        Number of flop to process a new token
+
+        ### Notes
+        The following formula is somewhat sketchy, it would be nice to validate it empirically.
+        This could be done by using the torch dispatcher
+        https://dev-discuss.pytorch.org/t/the-ideal-pytorch-flop-counter-with-torch-dispatch/505
+
+        ### Parameters
+        - mode: whether to consider the forward, backward pass or both
+        """
+        # flops due to matrix multiplication
+        mat_flops = 2 * 2 * self.W_query.weight.numel()
+        mat_flops += 2 * 2 * self.W_key.weight.numel()
+        mode_multiplier = dict(fwd=1, bwd=2, both=3)[mode]
+        flops = mode_multiplier * mat_flops
+
+        # flops due to attention
+        # adapated from https://github.com/Dao-AILab/flash-attention/blob/main/benchmarks/benchmark_flash_attention.py#L27-L30
+        attn_flops = 2 * self.seq_len * self.W_query.weight.shape[1]
+        mode_multiplier = dict(fwd=1, bwd=2.5, both=3.5)[mode]
+        flops += mode_multiplier * attn_flops
+        return flops
+
 
 # ------------------------------------------------------------------------------
 # Configuration Class
@@ -296,17 +321,21 @@ class TransformerBlock(BlockModel):
         out = out + self.ffn(self.ffn_norm(out))
         return out
 
-    def get_nb_flop(self, mode: str = "both", seq_len: int = None) -> int:
+    def get_nb_flop(self, mode: str = "both") -> int:
         """
-        TODO
         Number of flop to process a new token
+
+        ### Notes
+        The following formula is somewhat sketchy, it notably forgets the normalization layers.
 
         ### Parameters
         - mode: whether to consider the forward, backward pass or both
-        - seq_len: sequence length
         """
-        mode_multiplier = dict(fwd=1, bwd=2.5, both=3.5)[mode]
-        return 0 * mode_multiplier
+        flops = self.attn.get_nb_flop(mode)
+        flops += self.attn_norm.get_nb_flop(mode)
+        flops += self.ffn.get_nb_flop(mode)
+        flops += self.ffn_norm.get_nb_flop(mode)
+        return flops
 
 
 # ------------------------------------------------------------------------------

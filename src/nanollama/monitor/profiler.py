@@ -178,7 +178,7 @@ class LightProfiler(BaseProfiler):
 
             metrics = self.times | {
                 "step": self.state.step,
-                "flops": flops,
+                "flop_freq": flops,
                 "token_freq": token_freq,
                 "mem_GiB": mem / (1024**3),
                 "mem_reserved_GiB": mem_reserved / (1024**3),
@@ -188,6 +188,7 @@ class LightProfiler(BaseProfiler):
             }
 
             print(json.dumps(metrics), file=self.file, flush=True)
+            logger.info(metrics)
 
             torch.cuda.reset_peak_memory_stats()
 
