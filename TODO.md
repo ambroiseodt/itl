@@ -1,5 +1,4 @@
 # Todo:
-- Integrate Sam evaluation scripts.
 - Get some curves of accuracy when training with the tool use, or without. and write some visualization notebooks/scripts to get plots out of many experimental logs.
 
 #### Vivien's current todo:
@@ -9,12 +8,8 @@
 - Generation.
     - Write inference loop logic, as well as sampling strategies.
 
-
-- Improve the metric logging, as well as the profiler.
-    - log activation norm -> use probing.
-    - have a way to compute exactly the number of flops -> use torch dispatcher.
-
 - Proper parallelization when using many GPUs.
+    - TP at training time.
     - DDP at generation time (make KV cache / masking work there).
     - TP at generation time.
     - Check Meta Lingua logic.
@@ -40,18 +35,20 @@
 - Wandb restarting does not work well. To have nice eval plots, best is to update local results to wandb after the runs.
 
 #### Bigger improvement to the codebas
+- Improve the metric logging, as well as the profiler.
+    - log activation norm -> use probing.
+    - have a way to compute exactly the number of flops -> use torch dispatcher.
 - Move toward tasks-based evaluation a la llm-harness. Get inspiration from https://github.com/facebookresearch/lingua/blob/main/apps/main/eval.py.
 - Improve the generation part to have a async scheme for lane, with page in / page out mechanisms.
+    - Caching when dealing with tree of multi-turn dialogs, cpu page-in/page-out mechanism
 - Add various initialization scheme.
 - Parallelization with (DP, TP) mesh.
     - Understand better the impact of the shard_dim.
     - Check for consolidated checkpointing, as well as saving params.json.
     - Understand interaction with KV cache.
 - Activation checkpointing.
-- Caching when dealing with tree of multi-turn dialogs, cpu page-in/page-out mechanism
 - Caching for Mamba and RNN models.
 - Make sure one can extend model context size incrementally.
-- Implement logic for tiktoken, and sentencepiece.
 
 ### Ambroise & Sam TODO:
 - Read technical reports of open-source LLms (Qwen, DeepSeek, HuggingFace, Olmo, etc.)
