@@ -25,7 +25,7 @@ run_config:
     batch_size: 128
     seq_len: 129
     asynchronous: true
-    buffer: 120
+    buffer_size: 120
 
     n_data: 10
     key: qa
