@@ -9,18 +9,16 @@
 - Generation.
     - Write inference loop logic, as well as sampling strategies.
 
+
 - Improve the metric logging, as well as the profiler.
-    - log number of parameters
-    - log learning rate.
-    - log gradient norm.
-    - log activation norm.
-    - log gpu utilization.
-    - log throughput.
-    - have a way to compute exactly the number of flops.
+    - log activation norm -> use probing.
+    - have a way to compute exactly the number of flops -> use torch dispatcher.
 
 - Proper parallelization when using many GPUs.
     - DDP at generation time (make KV cache / masking work there).
     - TP at generation time.
+    - Check Meta Lingua logic.
+    - Check torch.compile(dynamic=True).
 
 #### Pipeline modification ideas
 - Change mask so that the LLM can have non-causal interaction between tokens that it has not generated.
