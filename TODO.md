@@ -3,10 +3,15 @@
 
 #### Vivien's current todo:
 
+- QA without tools does not seem to work properly at the moment (I have issues with diverging losses).
+
 - Make nice plots, and visualization methods.
     - Check that wandb is working correctly.
 - Generation.
     - Write inference loop logic, as well as sampling strategies.
+
+- Correct the generation with compile and FlexAttention.
+    - Ensure static KV cache to go fast.
 
 - Proper parallelization when using many GPUs.
     - TP at training time.
@@ -14,6 +19,9 @@
     - TP at generation time.
     - Check Meta Lingua logic.
     - Check torch.compile(dynamic=True).
+
+- Checkout https://github.com/pytorch-labs/gpt-fast to improve the inference scheduled.
+    - See also https://github.com/Edward-Sun/gpt-accelera
 
 #### Pipeline modification ideas
 - Change mask so that the LLM can have non-causal interaction between tokens that it has not generated.
@@ -37,6 +45,7 @@
 #### Bigger improvement to the codebas
 - Improve the metric logging, as well as the profiler.
     - log activation norm -> use probing.
+        - We may easily log the norm of the weights.
     - have a way to compute exactly the number of flops -> use torch dispatcher.
 - Move toward tasks-based evaluation a la llm-harness. Get inspiration from https://github.com/facebookresearch/lingua/blob/main/apps/main/eval.py.
 - Improve the generation part to have a async scheme for lane, with page in / page out mechanisms.
