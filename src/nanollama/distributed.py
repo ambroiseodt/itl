@@ -256,7 +256,7 @@ class ClusterManager:
             model = parallelize_module(model, device_mesh=self.tp_mesh, parallelize_plan=tp_plan)
 
         # logger.info("Preparing for activation checkpointing")
-        # # TODO
+        # TODO
 
         if self.dp > 1:
             logger.info("Parallelizing model with data parallel")

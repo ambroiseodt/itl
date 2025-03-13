@@ -238,7 +238,7 @@ def train(config: TrainingConfig) -> None:
 
                 # run evaluation now
                 if not config.evaluation.asynchronous:
-                    metrics = run_evaluation(config.evaluation, model=model)
+                    metrics = run_evaluation(config.evaluation, model=model, preemption=preemption)
                     metrics |= {"step": step}
                     metric_logger(metrics)
 
