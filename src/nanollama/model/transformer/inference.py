@@ -15,8 +15,6 @@ from torch.nn.attention.flex_attention import BlockMask, create_block_mask
 from . import architecture as implementation
 from .architecture import Transformer
 
-# COMPILE = True
-
 # ------------------------------------------------------------------------------
 # Pretraining
 # ------------------------------------------------------------------------------
@@ -26,7 +24,17 @@ def _causal_mask(b: int, h: int, q_idx: int, kv_idx: int) -> bool:
     return q_idx >= kv_idx
 
 
-def build_causal_mask(seq_len: int, device: torch.device) -> BlockMask:
+def build_pretrain_mask(seq_len: int, device: torch.device) -> BlockMask:
+    """
+    Build a causal mask for pretraining.
+
+    ### Parameters
+    - seq_len: sequence length.
+    - device: device to use.
+
+    ### Returns
+    - mask: causal mask.
+    """
     if implementation.FLEX_ATTENTION:
         return create_block_mask(_causal_mask, None, None, seq_len, seq_len, device=device)
     else:
@@ -47,6 +55,7 @@ def pretrain(model: Transformer, x: Tensor, y: Tensor, mask: BlockMask, loss_mas
     ### Returns
     - loss: cross-entropy loss value.
     """
+    # forward propagation
     preds = model(x, mask=mask)
     vocab_size = preds.size(-1)
     if loss_mask is not None:
@@ -55,19 +64,34 @@ def pretrain(model: Transformer, x: Tensor, y: Tensor, mask: BlockMask, loss_mas
         y = y[loss_mask]
     preds = preds.reshape(-1, vocab_size)
     y = y.reshape(-1)
-    return F.cross_entropy(preds, y, weight=loss_mask)
-
-
-# if COMPILE:
-#     pretrain = torch.compile(_pretrain)
-# else:
-#     pretrain = _pretrain
+    return F.cross_entropy(preds, y)
 
 
 # ------------------------------------------------------------------------------
 # Prefilling
 # ------------------------------------------------------------------------------
 
-# TODO: prefilling
-# TODO: generate_token
-# TODO: logic set cache, prefill, generate, delete cache
+
+def setup_caches() -> None:
+    ...
+    # setup cache for inference
+
+
+def prefill() -> Tensor:
+    ...
+    # prefill KV cache from prompts
+
+
+# ------------------------------------------------------------------------------
+# Token Generation
+# ------------------------------------------------------------------------------
+
+
+def generate() -> Tensor:
+    ...
+    # generate tokens one by one
+
+
+def delete_caches() -> None:
+    ...
+    # delete cache to switch from inference back to training
