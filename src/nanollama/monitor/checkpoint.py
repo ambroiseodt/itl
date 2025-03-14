@@ -136,7 +136,9 @@ class Checkpointer:
 
     def __exit__(self, exc: type[BaseException], value: BaseException, tb: TracebackType):
         """Exit checkpoint context by saving checkpoint if needed"""
-        self.update()
+        # save checkpoint on exiting if not done already
+        if self.saved_step != self.step:
+            self.update()
 
     def load(self, path: str) -> None:
         """
