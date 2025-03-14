@@ -18,11 +18,12 @@ from logging import getLogger
 import torch
 import torch.nn as nn
 import torch.nn.functional as F
-from torch.nn.attention.flex_attention import BlockMask, create_block_mask, flex_attention
+from torch import Tensor
+from torch.nn.attention.flex_attention import BlockMask, flex_attention
 
-from .embedding_model import EmbeddingModel, EmbeddingModelConfig
-from .feedforward import FeedForward
-from .norm import RMSNorm
+from ..embedding_model import EmbeddingModel, EmbeddingModelConfig
+from ..feedforward import FeedForward
+from ..norm import RMSNorm
 
 logger = getLogger("nanollama")
 FLEX_ATTENTION = True
@@ -33,43 +34,57 @@ FLEX_ATTENTION = True
 # ------------------------------------------------------------------------------
 
 
-@dataclass
-class KVCache:
+class KVCache(nn.Module):
     """
     Key-Value cache for faster inference.
 
     ### Parameters
+    - shape: shape of the cache in terms of (bsz, nb_kv_heads, seq_len, head_dim)
+    - dynamic: whether to use dynamic shape for the attention mechanisms
+
+    ### Attributes
+    - pos_idx: current position in the cache
     - key: prefilled key tensor
     - value: prefilled value tensor
-    - pos_idx: current position for each sentence in the cache
     """
 
-    key: torch.Tensor
-    value: torch.Tensor
-    pos_idx: int = 0
+    def __init__(self, shape: list[int], dtype: torch.dtype, dynamic: bool = False):
+        super().__init__()
+        self.pos_idx = 0
+        self.dynamic = dynamic
 
-    def __call__(self, key: torch.Tensor, value: torch.Tensor) -> tuple[torch.Tensor, torch.Tensor]:
+        self.register_buffer("k_cache", torch.zeros(shape, dtype=dtype))
+        self.register_buffer("v_cache", torch.zeros(shape, dtype=dtype))
+        self.key: Tensor
+        self.value: Tensor
+
+    def update(self, key: Tensor, value: Tensor) -> None:
         """
         Update KV cache with new key and value tensors.
 
         ### Parameters
         - key: key tensor
         - value: value tensor
+        - pos_idx: position index to update the cache
 
         ### Returns
         - key: updated key tensor (concatenating past values with new ones)
         - value: updated value tensor
         """
-
         # Sequence length is the third dimension, (B, H, S, D / H)
-        seq_len = key.size(2)
-        self.key[..., self.pos_idx : self.pos_idx + seq_len, :] = key
-        self.value[..., self.pos_idx : self.pos_idx + seq_len, :] = value
-        self.pos_idx += seq_len
-        return self.key[..., : self.pos_idx, :], self.value[..., : self.pos_idx, :]
+        S = key.size(2)
+        self.key[:, :, self.pos_idx : self.pos_idx + S] = key
+        self.value[:, :, self.pos_idx : self.pos_idx + S] = value
+        self.pos_idx = self.pos_idx + S
+        if self.dynamic:
+            return self.key[:, :, : self.pos_idx], self.value[:, :, : self.pos_idx]
+        return self.key, self.value
 
     def reset(self) -> None:
         self.pos_idx = 0
+        # zero out values to gain from sparse kernels
+        self.key.zero_()
+        self.value.zero_()
 
 
 # ------------------------------------------------------------------------------
@@ -96,6 +111,7 @@ class SelfAttention(nn.Module):
         nb_heads: int,
         nb_kv_heads: int,
         rope_theta: float,
+        qkv_bias: bool,
     ):
         super().__init__()
 
@@ -108,9 +124,9 @@ class SelfAttention(nn.Module):
         assert nb_heads % nb_kv_heads == 0, "number of heads must be divisible by number of key-value heads"
 
         # matrices
-        self.W_query = nn.Linear(self.emb_dim, self.head_dim * nb_heads, bias=False)
-        self.W_key = nn.Linear(self.emb_dim, self.head_dim * nb_kv_heads, bias=False)
-        self.W_val = nn.Linear(self.emb_dim, self.head_dim * nb_kv_heads, bias=False)
+        self.W_query = nn.Linear(self.emb_dim, self.head_dim * nb_heads, bias=qkv_bias)
+        self.W_key = nn.Linear(self.emb_dim, self.head_dim * nb_kv_heads, bias=qkv_bias)
+        self.W_val = nn.Linear(self.emb_dim, self.head_dim * nb_kv_heads, bias=qkv_bias)
         self.W_out = nn.Linear(nb_heads * self.head_dim, self.emb_dim, bias=False)
 
         # rotational positional encoding
@@ -118,7 +134,10 @@ class SelfAttention(nn.Module):
         self.register_buffer(
             "rope_modulator", self._get_rope_modulator(self.seq_len, self.head_dim, self.theta), persistent=False
         )
-        self.rope_modulator: torch.Tensor
+        self.rope_modulator: Tensor
+
+        # caching
+        self.kv_cache: KVCache = None
 
     def reset_parameters(self, init_std: float, factor: float) -> None:
         """
@@ -138,6 +157,8 @@ class SelfAttention(nn.Module):
                 a=-3 * in_std,
                 b=3 * in_std,
             )
+            if W_in.bias is not None:
+                nn.init.constant_(W_in.bias, 0.0)
 
         # output
         out_std = init_std or (self.emb_dim ** (-0.5))
@@ -150,7 +171,7 @@ class SelfAttention(nn.Module):
             b=3 * in_std,
         )
 
-    def forward(self, x: torch.Tensor, kv_cache: KVCache = None, mask: BlockMask = None) -> torch.Tensor:
+    def forward(self, x: Tensor, mask: BlockMask = None) -> Tensor:
         """Self attention"""
         # dimensions
         bsz, seq_len, _ = x.size()
@@ -163,22 +184,21 @@ class SelfAttention(nn.Module):
 
         # rope formatting
         # ... retrieve position in sequence if generating on the fly
-        idx = kv_cache.pos_idx if kv_cache else 0
+        pos_idx = self.kv_cache.pos_idx if self.kv_cache is not None else 0
 
-        q, k = map(lambda t: self._rope_view(t, idx), (q, k))
+        q, k = map(lambda t: self._rope_view(t, pos_idx), (q, k))
 
         # KV cache for faster inference
-        if kv_cache:
-            k, v = kv_cache(k, v)
+        if self.kv_cache is not None:
+            k, v = self.kv_cache(k, v)
 
         # Efficient attention implementation
         # ... -> (B, H, S, D / H)
         if FLEX_ATTENTION:
             z = flex_attention(q, k, v, block_mask=mask, enable_gqa=True)
         else:
-            k, v = map(lambda t: torch.repeat_interleave(t, dim=2, repeats=self.heads_per_group), (k, v))
-            is_causal = seq_len != 1
-            z = F.scaled_dot_product_attention(q, k, v, is_causal=is_causal)
+            is_causal = q.size(2) == k.size(2)
+            z = F.scaled_dot_product_attention(q, k, v, is_causal=is_causal, enable_gqa=True)
 
         # reformating: (B, H, S, D / H) -> (B, S, H, D / H) -> (B, S, D)
         z = z.transpose(1, 2).reshape(bsz, seq_len, -1)
@@ -188,7 +208,7 @@ class SelfAttention(nn.Module):
         return z
 
     @staticmethod
-    def _get_rope_modulator(seq_len: int, dim: int, theta: float) -> torch.Tensor:
+    def _get_rope_modulator(seq_len: int, dim: int, theta: float) -> Tensor:
         """
         Returns the rope modulator for the attention mechanism.
 
@@ -209,7 +229,7 @@ class SelfAttention(nn.Module):
         cos, sin = angles.cos(), angles.sin()
         return torch.stack((cos, sin), dim=-1)
 
-    def _rope_view(self, qk: torch.Tensor, idx: int = 0) -> torch.Tensor:
+    def _rope_view(self, qk: Tensor, idx: int = 0) -> Tensor:
         """
         Recast tensor to complex numbers and apply rotational position filter.
 
@@ -220,14 +240,17 @@ class SelfAttention(nn.Module):
         B, H, S, dim = qk.size()
         assert S <= self.rope_modulator.size(0), "sequence length is too long for rope attention"
 
-        rm = self.rope_modulator[idx : idx + S].view(1, 1, S, dim // 2, 2)
+        cos_sin = self.rope_modulator[idx : idx + S].view(1, 1, S, dim // 2, 2)
         qk = qk.reshape(B, H, S, dim // 2, 2)
 
         # # (x1 * cos - x2 * sin, x2 * cos + x1 * sin)
-        # out = ((qk[..., 0] + qk[..., 1] * 1j) * (rm[..., 0] + rm[..., 1] * 1j))
-        # out = torch.view_as_real(out)
-        out = (qk[..., 0] * rm[..., 0] - qk[..., 1] * rm[..., 1], qk[..., 0] * rm[..., 1] + qk[..., 1] * rm[..., 0])
-        out = torch.stack((out[0], out[1]), dim=-1)
+        out = torch.stack(
+            [
+                qk[..., 0] * cos_sin[..., 0] - qk[..., 1] * cos_sin[..., 1],
+                qk[..., 0] * cos_sin[..., 1] + qk[..., 1] * cos_sin[..., 0],
+            ],
+            dim=-1,
+        )
 
         return out.type_as(qk).view((B, H, S, dim))
 
@@ -273,6 +296,7 @@ class TransformerBlockConfig:
     rope_theta: float = 10_000
     hidden_dim: int = 0
     norm_eps: float = 1e-5
+    qkv_bias: bool = False
 
     def post_init(self) -> None:
         """Check validity of arguments that may have been inherited."""
@@ -305,6 +329,7 @@ class TransformerBlock:
             nb_heads=config.nb_heads,
             nb_kv_heads=config.nb_kv_heads,
             rope_theta=config.rope_theta,
+            qkv_bias=config.qkv_bias,
         )
         self.ffn = FeedForward(emb_dim=config.emb_dim, hidden_dim=config.hidden_dim)
         self.attn_norm = RMSNorm(config.emb_dim, eps=config.norm_eps)
@@ -316,8 +341,8 @@ class TransformerBlock:
         self.ffn.reset_parameters(init_std, factor)
         self.ffn_norm.reset_parameters()
 
-    def forward(self, x: torch.Tensor, kv_cache: KVCache = None, mask: BlockMask = None) -> torch.Tensor:
-        out = x + self.attn(self.attn_norm(x), kv_cache=kv_cache, mask=mask)
+    def forward(self, x: Tensor, mask: BlockMask, pos_idx: Tensor) -> Tensor:
+        out = x + self.attn(self.attn_norm(x), mask=mask, pos_idx=pos_idx)
         out = out + self.ffn(self.ffn_norm(out))
         return out
 
@@ -385,10 +410,7 @@ class Transformer(EmbeddingModel):
         # default mask for pretraining
         self.default_mask: BlockMask = None
 
-        # kv caches
-        self.kv_caches: list[KVCache] = [None for _ in self.layers]
-
-    def forward(self, x: torch.Tensor, mask: BlockMask | None = None) -> torch.Tensor:
+    def forward(self, x: Tensor, mask: BlockMask, pos_idx: Tensor) -> Tensor:
         """
         Forward pass of the transformer.
 
@@ -396,73 +418,9 @@ class Transformer(EmbeddingModel):
         - x: input tensor
         - mask: attention mask (if using FlexAttention)
         """
-        # retrieve flex attention mask if needed
-        if mask is None:
-            mask = self._build_mask(x.size(1))
-
         # forward pass
         out = self.embeddings(x)
-        for layer, kv_cache in zip(self.layers, self.kv_caches):
-            out = layer(out, kv_cache=kv_cache, mask=mask)
+        for layer in self.layers:
+            out = layer(out, mask=mask, pos_idx=pos_idx)
         logits = self.output(self.output_norm(out))
         return logits
-
-    # --------------------------------------------------------------------------
-    # Flex Attention mask utilities
-    # --------------------------------------------------------------------------
-
-    def _build_mask(self, seq_len: int) -> BlockMask:
-        """
-        Retrieve attention mask if needed.
-
-        ### Parameters
-        - seq_len: sequence length
-
-        ### Returns
-        - mask: attention mask
-        """
-        if not FLEX_ATTENTION or seq_len == 1:
-            return
-
-        if seq_len == self.seq_len:
-            if self.default_mask is None:
-                self.default_mask = create_block_mask(
-                    self._causal_mask, None, None, seq_len, seq_len, device=self.device
-                )
-            return self.default_mask
-
-        return create_block_mask(self._causal_mask, None, None, seq_len, seq_len, device=self.device)
-
-    @staticmethod
-    def _causal_mask(b: int, h: int, q_idx: int, kv_idx: int) -> bool:
-        return q_idx >= kv_idx
-
-    # --------------------------------------------------------------------------
-    # KV Cache utilities
-    # --------------------------------------------------------------------------
-
-    def build_cache(self, bsz: int = None) -> None:
-        """
-        Build key-value caches for inference.
-
-        ### Parameters
-        - bsz: batch size
-        """
-        cache_size = (bsz, self.nb_kv_heads, self.seq_len, self.head_dim)
-        if self.kv_caches[0] is None or self.kv_caches[0].key.size() != cache_size:
-            self.kv_caches = [
-                KVCache(
-                    torch.zeros(cache_size, dtype=self.dtype, device=self.device),
-                    torch.zeros(cache_size, dtype=self.dtype, device=self.device),
-                )
-                for _ in range(len(self.layers))
-            ]
-        else:
-            for cache in self.kv_caches:
-                cache.reset()
-
-    def delete_cache(self) -> None:
-        """
-        Delete key-value caches.
-        """
-        self.kv_caches = [None for _ in self.layers]
