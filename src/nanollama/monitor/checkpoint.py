@@ -23,7 +23,6 @@ from torch.distributed.checkpoint.stateful import Stateful
 from torch.optim import Optimizer
 
 from ..distributed import get_rank, is_master_process
-from .monitor import Monitor
 
 logger = getLogger("nanollama")
 
@@ -52,7 +51,7 @@ class CheckpointConfig:
             assert self.path, "path was not set"
 
 
-class Checkpointer(Monitor):
+class Checkpointer:
     """
     Checkpoint manager
 
@@ -95,6 +94,7 @@ class Checkpointer(Monitor):
         self.device_rank = get_rank()
         self.saved_step = 0
         self.step = 0
+        self.period = config.period
 
         self.process: Future = None
 
@@ -105,9 +105,17 @@ class Checkpointer(Monitor):
             self.load(path)
         return self
 
+    def __call__(self) -> None:
+        """Call update function periodically."""
+        self.step += 1
+        if self.period <= 0:
+            return
+        if self.step % self.period == 0:
+            self.update()
+
     def update(self, eval_flag: str = "") -> None:
         """
-        Checkpoint model, optimizer, scheduler and training state
+        Checkpoint model, optimizer, scheduler and training state.
 
         ### Parameters
         - eval: Whether to save the checkpoint for evaluation

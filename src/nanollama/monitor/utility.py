@@ -14,8 +14,6 @@ from types import TracebackType
 
 import torch
 
-from .monitor import Monitor
-
 logger = getLogger("nanollama")
 
 
@@ -25,10 +23,12 @@ class UtilityConfig:
     period: int = 1000  # garbage collection frequency
 
 
-class UtilityManager(Monitor):
+class UtilityManager:
     def __init__(self, config: UtilityConfig):
         super().__init__(config)
+        self.period = config.period
         self.seed = config.seed
+        self.step = 0
 
     def __enter__(self) -> "UtilityManager":
         # set seed
@@ -42,12 +42,16 @@ class UtilityManager(Monitor):
         gc.collect()
         return self
 
-    def update(self) -> None:
+    def __call__(self) -> None:
         """
-        Running utility functions: garbage collection.
+        Running garbage collection periodically.
         """
-        logger.info("garbage collection")
-        gc.collect()
+        self.step += 1
+        if self.period <= 0:
+            return
+        if self.step % self.period == 0:
+            logger.info("garbage collection")
+            gc.collect()
 
     def __exit__(self, exc: type[BaseException], value: BaseException, tb: TracebackType):
         # enable garbage collection
