@@ -14,7 +14,7 @@ import torch
 from torch import nn
 from torch.nn import functional as F
 
-from .blocklm import BlockLanguageModel, BlockLanguageModelConfig, BlockModel
+from .embedding_model import EmbeddingModel, EmbeddingModelConfig
 from .norm import RMSNorm
 from .ssm.utils_mamba import mamba_chunk_scan_combined
 from .ssm.wrapper_causal_conv1d import causal_conv1d_fn
@@ -157,7 +157,7 @@ class MambaBlockConfig:
 # ------------------------------------------------------------------------------
 
 
-class MambaBlock(BlockModel):
+class MambaBlock:
     def __init__(self, config: MambaBlockConfig):
         super().__init__()
 
@@ -194,7 +194,7 @@ class MambaBlock(BlockModel):
 
 
 @dataclass
-class MambaConfig(BlockLanguageModelConfig):
+class MambaConfig(EmbeddingModelConfig):
     implementation: str = "mamba"
     block: MambaBlockConfig = field(default_factory=MambaBlockConfig)
 
@@ -210,7 +210,7 @@ class MambaConfig(BlockLanguageModelConfig):
             self.block.hidden_dim = 3 * self.emb_dim
 
 
-class Mamba(BlockLanguageModel):
+class Mamba(EmbeddingModel):
     """Mamba Language Model"""
 
     def __init__(self, config: MambaConfig):

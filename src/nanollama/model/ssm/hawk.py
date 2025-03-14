@@ -12,7 +12,6 @@ from torch import nn
 from torch.autograd.function import FunctionCtx
 from torch.nn import functional as F
 
-from ..blocklm import BlockModel
 from ..feedforward import FeedForward
 from ..norm import RMSNorm
 from .utils_rnn import RNNBlockConfig, conv1d, scan
@@ -198,7 +197,7 @@ class RGLRUBlock(nn.Module):
         self.rglru.reset_parameters(init_std, factor)
 
 
-class HawkBlock(BlockModel):
+class HawkBlock:
     def __init__(self, config: RNNBlockConfig):
         super().__init__()
 

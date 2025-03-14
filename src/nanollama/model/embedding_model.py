@@ -17,7 +17,7 @@ from .norm import RMSNorm
 
 class BlockModel(nn.Module, ABC):
     """
-    Abstract class for models
+    Abstract class for model blocks
     """
 
     @abstractmethod
@@ -43,10 +43,10 @@ class BlockModel(nn.Module, ABC):
 
 
 @dataclass
-class BlockLanguageModelConfig:
+class EmbeddingModelConfig:
     # Block configuration
-    implementation: str
-    block: Any
+    implementation: str = ""
+    block: Any = None
 
     # Embedding parameters
     emb_dim: int = 0
@@ -59,18 +59,19 @@ class BlockLanguageModelConfig:
     init_std: float = None
 
     def post_init(self) -> None:
+        assert self.implementation, "implementation should be specified"
         assert self.block, "block should be specified"
         assert self.emb_dim, "embedding dimension should be specified"
         assert self.nb_layers, "number of layers should be specified"
         assert self.vocab_size, "vocabulary size should be specified"
 
 
-class BlockLanguageModel(ABC, nn.Module):
+class EmbeddingModel(ABC, nn.Module):
     """
     Language model based on block acting in an embedding space.
     """
 
-    def __init__(self, config: BlockLanguageModelConfig, block: BlockModel):
+    def __init__(self, config: EmbeddingModelConfig, block: BlockModel):
         super().__init__()
 
         self.emb_dim = config.emb_dim

@@ -17,7 +17,7 @@ import torch
 import torch.profiler as profiler
 
 from ..distributed import get_local_rank, get_rank
-from ..model.blocklm import BlockModel
+from ..model.embedding_model import EmbeddingModel
 from ..optim import OptimizerState
 
 logger = getLogger("nanollama")
@@ -197,7 +197,7 @@ class LightProfiler(BaseProfiler):
 
         self.step += 1
 
-    def report_statistics(self, model: BlockModel, token_per_step: int, **kwargs) -> None:
+    def report_statistics(self, model: EmbeddingModel, token_per_step: int, **kwargs) -> None:
         """
         Report flop per step
 

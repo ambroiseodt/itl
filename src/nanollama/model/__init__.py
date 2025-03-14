@@ -5,6 +5,6 @@ Module containing models
 @ 2025, Meta
 """
 
-from .blocklm import BlockLanguageModel, BlockLanguageModelConfig
+from .embedding_model import EmbeddingModel, EmbeddingModelConfig
 from .transformer import Transformer, TransformerConfig
 from .utils import build_config_with_model_dispatch

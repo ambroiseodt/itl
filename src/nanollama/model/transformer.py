@@ -20,7 +20,7 @@ import torch.nn as nn
 import torch.nn.functional as F
 from torch.nn.attention.flex_attention import BlockMask, create_block_mask, flex_attention
 
-from .blocklm import BlockLanguageModel, BlockLanguageModelConfig, BlockModel
+from .embedding_model import EmbeddingModel, EmbeddingModelConfig
 from .feedforward import FeedForward
 from .norm import RMSNorm
 
@@ -288,7 +288,7 @@ class TransformerBlockConfig:
 # ------------------------------------------------------------------------------
 
 
-class TransformerBlock(BlockModel):
+class TransformerBlock:
     """
     Transformer block.
 
@@ -344,7 +344,7 @@ class TransformerBlock(BlockModel):
 
 
 @dataclass
-class TransformerConfig(BlockLanguageModelConfig):
+class TransformerConfig(EmbeddingModelConfig):
     implementation: str = "transformer"
     block: TransformerBlockConfig = field(default_factory=TransformerBlockConfig)
     flex_attention: bool = True
@@ -371,7 +371,7 @@ class TransformerConfig(BlockLanguageModelConfig):
         self.block.post_init()
 
 
-class Transformer(BlockLanguageModel):
+class Transformer(EmbeddingModel):
     """Decoder only transformer."""
 
     def __init__(self, config: TransformerConfig):

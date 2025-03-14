@@ -3,6 +3,12 @@
 
 #### Vivien's current todo:
 
+- Simplify some function: remove class inheritance for simpler stuff that create more folder to look at when trying to understand the code.
+- Integrate https://github.com/pytorch-labs/gpt-fast to improve the inference scheduled.
+- See also https://github.com/Edward-Sun/gpt-accelera
+
+- Add an run_config.implementation.{model,profiler} to simplify the parsing of the configs (catch case where `run_cfg.im.profiler: null`).
+
 - QA without tools does not seem to work properly at the moment (I have issues with diverging losses).
 
 - Make nice plots, and visualization methods.
@@ -20,8 +26,6 @@
     - Check Meta Lingua logic.
     - Check torch.compile(dynamic=True).
 
-- Checkout https://github.com/pytorch-labs/gpt-fast to improve the inference scheduled.
-    - See also https://github.com/Edward-Sun/gpt-accelera
 
 #### Pipeline modification ideas
 - Change mask so that the LLM can have non-causal interaction between tokens that it has not generated.

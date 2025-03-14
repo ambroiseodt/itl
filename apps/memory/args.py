@@ -18,8 +18,8 @@ from src.nanollama.data.tokenizer import TokenizerConfig
 from src.nanollama.distributed import ClusterConfig
 from src.nanollama.launcher import LauncherConfig, SlurmConfig
 from src.nanollama.model import (
-    BlockLanguageModel,
-    BlockLanguageModelConfig,
+    EmbeddingModel,
+    EmbeddingModelConfig,
     build_config_with_model_dispatch,
 )
 from src.nanollama.monitor import (
@@ -266,8 +266,8 @@ class TrainingConfig:
     data: MemoryDataConfig = field(default_factory=MemoryDataConfig)
     optim: OptimizerConfig = field(default_factory=OptimizerConfig)
 
-    model: BlockLanguageModelConfig = field(default_factory=BlockLanguageModelConfig)
-    model_gen: callable = field(init=False, default=BlockLanguageModel)
+    model: EmbeddingModelConfig = field(default_factory=EmbeddingModelConfig)
+    model_gen: callable = field(init=False, default=EmbeddingModel)
 
     evaluation: EvalConfig = field(default_factory=EvalConfig)
 

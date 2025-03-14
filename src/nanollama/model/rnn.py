@@ -8,7 +8,7 @@ RNN utilities
 from dataclasses import dataclass, field
 from typing import Literal
 
-from .blocklm import BlockLanguageModel, BlockLanguageModelConfig
+from .embedding_model import EmbeddingModel, EmbeddingModelConfig
 from .ssm.hawk import HawkBlock
 from .ssm.mingru import GRUBlock
 from .ssm.minlstm import LSTMBlock
@@ -20,7 +20,7 @@ from .ssm.utils_rnn import RNNBlockConfig
 
 
 @dataclass
-class FastRNNConfig(BlockLanguageModelConfig):
+class FastRNNConfig(EmbeddingModelConfig):
     implementation: Literal["minlstm", "mingru", "hawk"]
     block: RNNBlockConfig = field(default_factory=RNNBlockConfig)
 
@@ -49,16 +49,16 @@ class FastRNNConfig(BlockLanguageModelConfig):
 # ------------------------------------------------------------------------------
 
 
-class Hawk(BlockLanguageModel):
+class Hawk(EmbeddingModel):
     def __init__(self, config: FastRNNConfig) -> None:
         super().__init__(config, block=HawkBlock)
 
 
-class MinGRU(BlockLanguageModel):
+class MinGRU(EmbeddingModel):
     def __init__(self, config: FastRNNConfig) -> None:
         super().__init__(config, block=GRUBlock)
 
 
-class MinLSTM(BlockLanguageModel):
+class MinLSTM(EmbeddingModel):
     def __init__(self, config: FastRNNConfig) -> None:
         super().__init__(config, block=LSTMBlock)

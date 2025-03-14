@@ -21,7 +21,7 @@ from src.nanollama.data.text import MultipleSourcesTokenGenerator
 from src.nanollama.distributed import ClusterManager, clean_environment, is_master_process
 from src.nanollama.launcher import launch_job
 from src.nanollama.model import (
-    BlockLanguageModel,
+    EmbeddingModel,
 )
 from src.nanollama.monitor import (
     Checkpointer,
@@ -75,7 +75,7 @@ def train(config: TrainingConfig) -> None:
         # ---------------------------------------------------------------------
 
         logger.info("Building model")
-        model: BlockLanguageModel = config.model_gen(config.model)
+        model: EmbeddingModel = config.model_gen(config.model)
         model = cluster.build_model(model)
 
         logger.info("Building optimizer")

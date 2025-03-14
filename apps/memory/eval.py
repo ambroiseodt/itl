@@ -24,7 +24,7 @@ from src.nanollama.data.tokenizer import build_tokenizer
 from src.nanollama.distributed import ClusterManager, is_master_process
 from src.nanollama.inference import QueuedBatchedInference
 from src.nanollama.model import (
-    BlockLanguageModel,
+    EmbeddingModel,
     build_config_with_model_dispatch,
 )
 from src.nanollama.monitor import (
@@ -71,7 +71,7 @@ def perplexity_func(preds: torch.Tensor, targets: torch.Tensor) -> torch.Tensor:
 @torch.inference_mode()
 def run_evaluation(
     config: OnlineEvaluationConfig,
-    model: BlockLanguageModel,
+    model: EmbeddingModel,
     preemption: PreemptionHandler = None,
     dp_mesh: DeviceMesh = None,
 ) -> dict[str, Any]:
@@ -172,7 +172,7 @@ def eval(config: EvaluationConfig) -> None:
         with open(f"{config.model_dir}/params.json") as f:
             model_config = {"model": json.load(f)}
         model_config = build_config_with_model_dispatch(None, model_config)
-        model: BlockLanguageModel = model_config.model_gen(model_config.model)
+        model: EmbeddingModel = model_config.model_gen(model_config.model)
 
         # load model weights
         state_dict = {"model": model.state_dict()}
