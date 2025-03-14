@@ -17,7 +17,7 @@ from types import TracebackType
 
 import torch
 import torch.distributed.checkpoint as dcp
-from torch import nn
+import torch.nn as nn
 from torch.distributed.checkpoint.state_dict import get_state_dict, set_state_dict
 from torch.distributed.checkpoint.stateful import Stateful
 from torch.optim import Optimizer

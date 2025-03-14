@@ -9,7 +9,7 @@ import math
 from dataclasses import dataclass
 from functools import partial
 
-from torch import nn
+import torch.nn as nn
 from torch.optim import AdamW, Optimizer, lr_scheduler
 
 # ------------------------------------------------------------------------------
