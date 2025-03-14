@@ -3,11 +3,18 @@
 
 #### Vivien's current todo:
 
+- Make pretraining work with the new pretrain function:
+    - try without compile, then (after fixing the rest) with compile and with tp
+- Make the pipeline works without flex-attention, without compile and without tp, then add flex-attention, then compile, then tp.
+
+- Fix generation based on gpt-fast and flex-attention.
+    - We setup the KVCache after having parallelize the model
+
 - Simplify some function: remove class inheritance for simpler stuff that create more folder to look at when trying to understand the code.
 - Integrate https://github.com/pytorch-labs/gpt-fast to improve the inference scheduled.
 - See also https://github.com/Edward-Sun/gpt-accelera
 
-- Add an run_config.implementation.{model,profiler} to simplify the parsing of the configs (catch case where `run_cfg.im.profiler: null`).
+- Add an run_config.implementation.{model,profiler} to simplify the parsing of the configs (catch case where `run_cfg.im.profiler: null`), and remove the config dispatcher (in `model.utils`).
 
 - QA without tools does not seem to work properly at the moment (I have issues with diverging losses).
 
@@ -85,3 +92,13 @@ maximal amount of facts?
 - Mixture of experts.
 - Low rank finetuning.
 - Quantization.
+
+
+## Some TODOs of an open-source project:
+- torch.compile, int8 quantization, speculative decoding (7x inference acceleration)
+- static key-value cache enabled for all HF models (8.5x inference acceleration)
+- GPTQ int4 quantization and optimized int4 matmul kernels enabled for all HF models (9x inference acceleration)
+- Tensor parallelism + GPU distributed inference
+- PagedAttention (vLLM) + FlashAttention integration
+- BitNet and 1-bit quantization, AWQ, QoQ, GGUF, HQQ
+- Medusa, Speculative Sampling, Eagle
