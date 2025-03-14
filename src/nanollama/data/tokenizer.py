@@ -16,7 +16,7 @@ from logging import getLogger
 from pathlib import Path
 from typing import Any
 
-import torch
+from torch import Tensor
 
 from ..agent import Actor
 from ..utils import build_with_type_check
@@ -192,7 +192,7 @@ class DialogTokenizer:
         - output: decoded sentence.
         """
         # argument parsing
-        if isinstance(token, torch.Tensor):
+        if isinstance(token, Tensor):
             token = token.item()
 
         output = ""

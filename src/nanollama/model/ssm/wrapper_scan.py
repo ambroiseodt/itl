@@ -6,6 +6,7 @@ Wrapper around `scan` layer from the `accelerated_scan` library.
 """
 
 import torch
+from torch import Tensor
 
 # from accelerated_scan.triton import scan as triton_scan
 from torch.autograd.function import FunctionCtx
@@ -29,10 +30,10 @@ except OSError as e:
     device_types="cuda",
 )
 def scan_fwd(
-    gates: torch.Tensor,
-    tokens: torch.Tensor,
+    gates: Tensor,
+    tokens: Tensor,
     reverse: bool = False,
-) -> torch.Tensor:
+) -> Tensor:
     B, dim, seq_len = gates.shape
     assert tokens.shape == (B, dim, seq_len)
     assert gates.is_contiguous()
@@ -44,7 +45,7 @@ def scan_fwd(
 
 
 @scan_fwd.register_fake
-def _scan_fwd_fake(gates: torch.Tensor, tokens: torch.Tensor, reverse: bool = False) -> torch.Tensor:
+def _scan_fwd_fake(gates: Tensor, tokens: Tensor, reverse: bool = False) -> Tensor:
     return torch.empty_like(tokens)
 
 
@@ -54,10 +55,10 @@ def _scan_fwd_fake(gates: torch.Tensor, tokens: torch.Tensor, reverse: bool = Fa
     device_types="cuda",
 )
 def scan_bwd(
-    dout: torch.Tensor,
-    states: torch.Tensor,
-    gates: torch.Tensor,
-) -> tuple[torch.Tensor, torch.Tensor]:
+    dout: Tensor,
+    states: Tensor,
+    gates: Tensor,
+) -> tuple[Tensor, Tensor]:
     dout = dout.contiguous()
     assert states.is_contiguous()
     assert gates.is_contiguous()
@@ -70,16 +71,16 @@ def scan_bwd(
 
 
 @scan_bwd.register_fake
-def _scan_bwd_fake(dout: torch.Tensor, states: torch.Tensor, gates: torch.Tensor) -> tuple[torch.Tensor, torch.Tensor]:
+def _scan_bwd_fake(dout: Tensor, states: Tensor, gates: Tensor) -> tuple[Tensor, Tensor]:
     return torch.empty_like(gates), torch.empty_like(gates)
 
 
-def scan_setup_context(ctx: FunctionCtx, inputs: tuple[torch.Tensor, torch.Tensor, bool], output: torch.Tensor) -> None:
+def scan_setup_context(ctx: FunctionCtx, inputs: tuple[Tensor, Tensor, bool], output: Tensor) -> None:
     gates, tokens, reverse = inputs
     ctx.save_for_backward(gates, output)
 
 
-def scan_bwd_bridge(ctx: FunctionCtx, dout: torch.Tensor) -> tuple[torch.Tensor, torch.Tensor, None]:
+def scan_bwd_bridge(ctx: FunctionCtx, dout: Tensor) -> tuple[Tensor, Tensor, None]:
     gates, states = ctx.saved_tensors
     d_gates, d_tokens = scan_bwd(dout, states, gates)
 
@@ -93,5 +94,5 @@ torch.library.register_autograd(
 )
 
 
-def scan(gates: torch.Tensor, tokens: torch.Tensor, reverse: bool = False) -> torch.Tensor:
+def scan(gates: Tensor, tokens: Tensor, reverse: bool = False) -> Tensor:
     return scan_fwd(gates, tokens, reverse)

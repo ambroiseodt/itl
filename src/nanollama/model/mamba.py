@@ -11,7 +11,7 @@ from dataclasses import dataclass, field
 from typing import Optional
 
 import torch
-from torch import nn
+from torch import Tensor, nn
 from torch.nn import functional as F
 
 from .embedding_model import EmbeddingModel, EmbeddingModelConfig
@@ -72,8 +72,8 @@ class SSM(nn.Module):
 
     def forward(
         self,
-        x: torch.Tensor,
-    ) -> torch.Tensor:
+        x: Tensor,
+    ) -> Tensor:
         bsz, seq_len, _ = x.shape
 
         zxbcdt = self.W_in(x)
@@ -172,7 +172,7 @@ class MambaBlock:
             chunk_size=config.ssm_chunk_size,
         )
 
-    def forward(self, x: torch.Tensor) -> torch.Tensor:
+    def forward(self, x: Tensor) -> Tensor:
         x = x + self.ssm(self.ssm_norm(x))
         return x
 

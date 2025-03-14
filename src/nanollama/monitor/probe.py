@@ -12,6 +12,7 @@ from typing import Any
 
 import torch
 import torch.nn as nn
+from torch import Tensor
 from torch._ops import OpOverload
 from torch.autograd.function import FunctionCtx
 from torch.utils._python_dispatch import TorchDispatchMode
@@ -25,7 +26,7 @@ PROBE_MODE: bool = False
 
 
 @torch.library.custom_op("probe::hook", mutates_args=(), device_types=None)
-def _log(x: torch.Tensor, name: str, uid: str) -> None:
+def _log(x: Tensor, name: str, uid: str) -> None:
     pass
 
 
@@ -35,7 +36,7 @@ class ProbeModule(torch.autograd.Function):
     """
 
     @staticmethod
-    def forward(ctx: FunctionCtx, x: torch.Tensor, name: str) -> torch.Tensor:
+    def forward(ctx: FunctionCtx, x: Tensor, name: str) -> Tensor:
         uid = str(uuid.uuid4())
         torch.ops.probe.hook(x, name, uid)
         ctx.name = name
@@ -43,17 +44,17 @@ class ProbeModule(torch.autograd.Function):
         return x
 
     @staticmethod
-    def backward(ctx: FunctionCtx, grad: torch.Tensor) -> tuple:
+    def backward(ctx: FunctionCtx, grad: Tensor) -> tuple:
         torch.ops.probe.hook(grad, f"{ctx.name}.g", ctx.uid)
         return grad, None, None
 
 
-def log_stats(x: torch.Tensor, name: str) -> torch.Tensor:
+def log_stats(x: Tensor, name: str) -> Tensor:
     """
     Register a probe module in a computational graph.
 
     ### Parameters
-    - x: torch.Tensor to log
+    - x: Tensor to log
     - name: name to log the tensor information
 
     The probe will call a operator register as torch.ops.probe,
@@ -70,7 +71,7 @@ def log_stats(x: torch.Tensor, name: str) -> torch.Tensor:
 # ------------------------------------------------------------------------------
 
 
-def probe_stats(x: torch.Tensor) -> dict[str, Any]:
+def probe_stats(x: Tensor) -> dict[str, Any]:
     shape = x.shape
     x = x.flatten()
     mean = x.mean()
@@ -87,12 +88,12 @@ def probe_stats(x: torch.Tensor) -> dict[str, Any]:
     return metrics
 
 
-def print_stats(x: torch.Tensor, name: str, uid: str) -> None:
+def print_stats(x: Tensor, name: str, uid: str) -> None:
     """
     Default probe logging function.
 
     ### Parameters
-    - x: torch.Tensor to log
+    - x: Tensor to log
     - name: name to log the tensor information
     - uid: unique identifier for the tensor
     """
@@ -105,12 +106,12 @@ def print_stats(x: torch.Tensor, name: str, uid: str) -> None:
 SAVE_DIR: PosixPath = Path.home() / "probe"
 
 
-def saved_probe_tensor(x: torch.Tensor, name: str, uid: str) -> None:
+def saved_probe_tensor(x: Tensor, name: str, uid: str) -> None:
     """
     Default probe logging function.
 
     ### Parameters
-    - x: torch.Tensor to log
+    - x: Tensor to log
     - name: name to log the tensor information
     - uid: unique identifier for the tensor
     """
@@ -173,7 +174,7 @@ if __name__ == "__main__":
             super().__init__()
             self.linear = nn.Linear(10, 10)
 
-        def forward(self, x: torch.Tensor) -> torch.Tensor:
+        def forward(self, x: Tensor) -> Tensor:
             x = log_stats(x, "input")
             x = self.linear(x)
             x = log_stats(x, "output")

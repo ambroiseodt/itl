@@ -19,6 +19,7 @@ from types import TracebackType
 
 import numpy as np
 import torch
+from torch import Tensor
 from torch.distributed.checkpoint.stateful import Stateful
 
 logger = getLogger("nanollama")
@@ -138,7 +139,7 @@ class DataLoader(Stateful):
         """Return an iterator over batches"""
         return self
 
-    def __next__(self) -> torch.Tensor:
+    def __next__(self) -> Tensor:
         """Get the next batch of sentences."""
         if self.asynchronous:
             batch, self.gen_state_dict = self.async_get_batch()

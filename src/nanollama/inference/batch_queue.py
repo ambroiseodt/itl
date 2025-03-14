@@ -13,6 +13,7 @@ Some page-in/page-out mechanism should be implemented to ensure maximum throughp
 from types import TracebackType
 
 import torch
+from torch import Tensor
 
 from ..agent import Actor, SQLAgent
 from ..data.tokenizer import DialogTokenizer
@@ -128,7 +129,7 @@ class QueuedBatchedInference:
         output = torch.hstack(output)
         return [self.tokenizer.decode(out.tolist()) for out in output]
 
-    def build_batch(self, prompts: list[str]) -> torch.Tensor:
+    def build_batch(self, prompts: list[str]) -> Tensor:
         """
         Build the batch for the model.
 

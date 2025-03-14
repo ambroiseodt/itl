@@ -7,6 +7,7 @@ Normalization layers
 
 import torch
 import torch.nn as nn
+from torch import Tensor
 
 # ------------------------------------------------------------------------------
 # Normalization Layer
@@ -30,7 +31,7 @@ class RMSNorm(nn.Module):
         self.eps = eps
         self.weight = nn.Parameter(torch.ones(dim))
 
-    def forward(self, x: torch.Tensor) -> torch.Tensor:
+    def forward(self, x: Tensor) -> Tensor:
         output = x * torch.rsqrt((x * x).mean(-1, keepdim=True) + self.eps)
         return (output * self.weight).type_as(x)
 

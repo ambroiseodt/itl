@@ -15,6 +15,7 @@ from typing import Any
 import torch
 import torch.nn.functional as F
 import yaml
+from torch import Tensor
 
 from src.nanollama.data.loader import DataLoader
 from src.nanollama.data.text import MultipleSourcesTokenGenerator
@@ -47,7 +48,7 @@ logger = logging.getLogger("nanollama")
 # ------------------------------------------------------------------------------
 
 
-def loss_func(preds: torch.Tensor, targets: torch.Tensor) -> torch.Tensor:
+def loss_func(preds: Tensor, targets: Tensor) -> Tensor:
     vocab_size = preds.size(-1)
     return F.cross_entropy(preds.reshape(-1, vocab_size), targets.reshape(-1))
 

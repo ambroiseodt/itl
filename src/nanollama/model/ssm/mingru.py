@@ -8,7 +8,7 @@ https://arxiv.org/abs/2410.01201
 """
 
 import torch
-from torch import nn
+from torch import Tensor, nn
 from torch.nn import functional as F
 
 from ..norm import RMSNorm
@@ -45,7 +45,7 @@ class GRU(nn.Module):
             )
             self.conv_weight = nn.Parameter(torch.empty((self.hidden_dim, conv_size)))
 
-    def forward(self, x: torch.Tensor) -> torch.Tensor:
+    def forward(self, x: Tensor) -> Tensor:
         # dimensions
         bsz, seq_len, _ = x.shape
 
@@ -109,7 +109,7 @@ class GRUBlock:
         self.gru.reset_parameters(init_std, factor)
         self.gru_norm.reset_parameters()
 
-    def forward(self, x: torch.Tensor) -> torch.Tensor:
+    def forward(self, x: Tensor) -> Tensor:
         x = x + self.gru(self.gru_norm(x))
         return x
 

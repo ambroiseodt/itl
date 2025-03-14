@@ -5,9 +5,9 @@ Feed-forward network.
 @ 2025, Meta
 """
 
-import torch
 import torch.nn as nn
 import torch.nn.functional as F
+from torch import Tensor
 
 # ------------------------------------------------------------------------------
 # Feed-forward Layer
@@ -35,7 +35,7 @@ class FeedForward(nn.Module):
         self.W_in2 = nn.Linear(emb_dim, hidden_dim, bias=False)
         self.W_out = nn.Linear(hidden_dim, emb_dim, bias=False)
 
-    def forward(self, x: torch.Tensor) -> torch.Tensor:
+    def forward(self, x: Tensor) -> Tensor:
         out = F.silu(self.W_in1(x)) * self.W_in2(x)
         out = self.W_out(out)
         return out

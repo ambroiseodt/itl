@@ -9,6 +9,7 @@ from dataclasses import dataclass
 from typing import Any
 
 import torch
+from torch import Tensor
 
 # from accelerated_scan.triton import scan as triton_scan
 try:
@@ -57,12 +58,12 @@ class RNNBlockConfig:
 
 
 def conv1d(
-    x: torch.Tensor,
-    conv_weight: torch.Tensor,
-    cu_seqlens: torch.Tensor = None,
+    x: Tensor,
+    conv_weight: Tensor,
+    cu_seqlens: Tensor = None,
     impl: str = "parallel",
     cache: Any = None,
-) -> torch.Tensor:
+) -> Tensor:
     if impl == "parallel":
         if cache is not None:
             conv_varlen_states = causal_conv1d_varlen_states(
@@ -98,9 +99,7 @@ def conv1d(
 # ------------------------------------------------------------------------------
 
 
-def _prepare_for_cache(
-    a: torch.Tensor, b: torch.Tensor, cu_seqlen: torch.Tensor, seq_len: int
-) -> tuple[torch.Tensor, torch.Tensor, torch.Tensor, torch.Tensor]:
+def _prepare_for_cache(a: Tensor, b: Tensor, cu_seqlen: Tensor, seq_len: int) -> tuple[Tensor, Tensor, Tensor, Tensor]:
     """
     This function reset the hidden state at the beginning of each sequence in the batch,
     so that the hidden state is not carried over between sequences.
@@ -122,13 +121,11 @@ def _prepare_for_cache(
     return _a, _b, cu_seqlen[1:] + offsets - 1, mask
 
 
-def sequential_step(states: torch.Tensor, a: torch.Tensor, b: torch.Tensor) -> torch.Tensor:
+def sequential_step(states: Tensor, a: Tensor, b: Tensor) -> Tensor:
     return a * states + b
 
 
-def scan(
-    a: torch.Tensor, b: torch.Tensor, cu_seqlens: torch.Tensor = None, impl: str = "parallel", cache: Any = None
-) -> torch.Tensor:
+def scan(a: Tensor, b: Tensor, cu_seqlens: Tensor = None, impl: str = "parallel", cache: Any = None) -> Tensor:
     if impl == "parallel":
         if cache is not None:
             # For accelerated_scan give me illegal memory access error when seqlen > ~2048

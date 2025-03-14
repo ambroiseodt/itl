@@ -17,6 +17,7 @@ import torch
 import torch.distributed.checkpoint as dcp
 import torch.nn.functional as F
 import yaml
+from torch import Tensor
 from torch.distributed.checkpoint.stateful import Stateful
 from torch.distributed.device_mesh import DeviceMesh
 
@@ -63,7 +64,7 @@ class EvalState(Stateful):
 # Online Evaluation
 # ------------------------------------------------------------------------------
 
-def perplexity_func(preds: torch.Tensor, targets: torch.Tensor) -> torch.Tensor:
+def perplexity_func(preds: Tensor, targets: Tensor) -> Tensor:
     vocab_size = preds.size(-1)
     return torch.exp(F.cross_entropy(preds.reshape(-1, vocab_size), targets.reshape(-1)))
 

@@ -13,6 +13,7 @@ from typing import Any
 import numpy as np
 import torch
 from numpy.random import default_rng
+from torch import Tensor
 
 from nanollama.data.loader import DataLoader, TokenLoader
 from nanollama.data.utils import generate_seeds
@@ -71,7 +72,7 @@ class TestDataLoader(unittest.TestCase):
             batch = next(self.data_loader)
             sync_batch = next(sync_data_loader)
             self.assertEqual(batch.shape, (config.batch_size, config.seq_len))
-            self.assertIsInstance(batch, torch.Tensor)
+            self.assertIsInstance(batch, Tensor)
             assert np.array_equal(batch, sync_batch)
 
     def test_restart(self) -> None:

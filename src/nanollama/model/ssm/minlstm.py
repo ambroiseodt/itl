@@ -8,7 +8,7 @@ https://arxiv.org/abs/2410.01201
 """
 
 import torch
-from torch import nn
+from torch import Tensor, nn
 from torch.nn import functional as F
 
 from ..norm import RMSNorm
@@ -44,7 +44,7 @@ class LSTM(nn.Module):
             )
             self.conv_weight = nn.Parameter(torch.empty((2 * self.hidden_dim, conv_size)))
 
-    def forward(self, x: torch.Tensor) -> torch.Tensor:
+    def forward(self, x: Tensor) -> Tensor:
         bsz, seq_len, _ = x.shape
 
         tmp, fi = self.W_in(x).chunk(2, dim=-1)
@@ -114,7 +114,7 @@ class LSTMBlock:
         self.lstm.reset_parameters(init_std, factor)
         self.lstm_norm.reset_parameters()
 
-    def forward(self, x: torch.Tensor) -> torch.Tensor:
+    def forward(self, x: Tensor) -> Tensor:
         x = x + self.lstm(self.lstm_norm(x))
         return x
 

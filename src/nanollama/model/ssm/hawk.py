@@ -8,7 +8,7 @@ https://arxiv.org/abs/2402.19427
 """
 
 import torch
-from torch import nn
+from torch import Tensor, nn
 from torch.autograd.function import FunctionCtx
 from torch.nn import functional as F
 
@@ -28,20 +28,20 @@ class SqrtBoundDerivative(torch.autograd.Function):
     """Computes a square root with a gradient clipped at `_MAX_SQRT_GRADIENT`."""
 
     @staticmethod
-    def forward(ctx: FunctionCtx, x: torch.Tensor) -> torch.Tensor:
+    def forward(ctx: FunctionCtx, x: Tensor) -> Tensor:
         """The forward pass, which is a normal `sqrt`."""
         ctx.save_for_backward(x)
         return torch.sqrt(x)
 
     @staticmethod
-    def backward(ctx: FunctionCtx, grad_output: torch.Tensor) -> torch.Tensor:
+    def backward(ctx: FunctionCtx, grad_output: Tensor) -> Tensor:
         """The backward pass, which clips the `sqrt` gradient."""
         (x,) = ctx.saved_tensors
         clipped_x_times_4 = torch.clip(4.0 * x, min=1 / (_MAX_SQRT_GRADIENT**2))
         return grad_output / torch.sqrt(clipped_x_times_4)
 
 
-def sqrt_bounded_derivative(x: torch.Tensor) -> torch.Tensor:
+def sqrt_bounded_derivative(x: Tensor) -> Tensor:
     return SqrtBoundDerivative.apply(x)
 
 
@@ -85,7 +85,7 @@ class RGLRU(nn.Module):
         self.c = 8.0
         self.register_parameter("a", nn.Parameter(torch.empty(head_dim)))
 
-    def forward(self, x: torch.Tensor) -> torch.Tensor:
+    def forward(self, x: Tensor) -> Tensor:
         bsz, seqlen, _ = x.shape
 
         if self.conv_size is not None:
@@ -175,7 +175,7 @@ class RGLRUBlock(nn.Module):
             conv_size=conv_size,
         )
 
-    def forward(self, x: torch.Tensor) -> torch.Tensor:
+    def forward(self, x: Tensor) -> Tensor:
         out1, out2 = self.W_in(x).chunk(2, dim=-1)
         out2 = self.rglru(out2)
         out = F.silu(out1) * out2
@@ -218,7 +218,7 @@ class HawkBlock:
         self.ffn.reset_parameters(init_std, factor)
         self.ffn_norm.reset_parameters()
 
-    def forward(self, x: torch.Tensor) -> torch.Tensor:
+    def forward(self, x: Tensor) -> Tensor:
         out = x + self.rlgru_block(self.rlgru_norm(x))
         out = out + self.ffn(self.ffn_norm(out))
         return out

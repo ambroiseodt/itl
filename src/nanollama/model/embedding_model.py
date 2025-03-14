@@ -11,6 +11,7 @@ from typing import Any
 
 import torch
 import torch.nn as nn
+from torch import Tensor
 
 from .norm import RMSNorm
 
@@ -134,7 +135,7 @@ class EmbeddingModel(ABC, nn.Module):
             layer: BlockModel
             layer.reset_parameters(init_std, factor=factor)
 
-    def forward(self, x: torch.Tensor) -> torch.Tensor:
+    def forward(self, x: Tensor) -> Tensor:
         out = self.embeddings(x)
         for layer in self.layers:
             out = layer(out)

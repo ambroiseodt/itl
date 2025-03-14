@@ -8,6 +8,7 @@ Wrapper around `causal_conv1d` layer from the `causal_conv1d` library.
 from typing import Optional
 
 import torch
+from torch import Tensor
 from torch.autograd.function import FunctionCtx
 
 try:
@@ -27,12 +28,12 @@ except ImportError as e:
     device_types="cuda",
 )
 def causal_conv1d_fwd(
-    x: torch.Tensor,
-    weight: torch.Tensor,
-    bias: Optional[torch.Tensor] = None,
-    seq_idx: Optional[torch.Tensor] = None,
+    x: Tensor,
+    weight: Tensor,
+    bias: Optional[Tensor] = None,
+    seq_idx: Optional[Tensor] = None,
     activation: Optional[str] = None,
-) -> torch.Tensor:
+) -> Tensor:
     # Ensure activation is valid
     if activation not in [None, "silu", "swish"]:
         raise NotImplementedError("activation must be None, silu, or swish")
@@ -56,12 +57,12 @@ def causal_conv1d_fwd(
 # Register a fake forward pass for tracing
 @causal_conv1d_fwd.register_fake
 def _causal_conv1d_fwd_fake(
-    x: torch.Tensor,
-    weight: torch.Tensor,
-    bias: Optional[torch.Tensor] = None,
-    seq_idx: Optional[torch.Tensor] = None,
+    x: Tensor,
+    weight: Tensor,
+    bias: Optional[Tensor] = None,
+    seq_idx: Optional[Tensor] = None,
     activation: Optional[str] = None,
-) -> torch.Tensor:
+) -> Tensor:
     torch._check(x.shape[-2] == weight.shape[0])
     return torch.empty_like(x)
 
@@ -73,13 +74,13 @@ def _causal_conv1d_fwd_fake(
     device_types="cuda",
 )
 def causal_conv1d_bwd(
-    x: torch.Tensor,
-    weight: torch.Tensor,
-    bias: Optional[torch.Tensor],
-    dout: torch.Tensor,
-    seq_idx: Optional[torch.Tensor],
+    x: Tensor,
+    weight: Tensor,
+    bias: Optional[Tensor],
+    dout: Tensor,
+    seq_idx: Optional[Tensor],
     activation: bool,
-) -> tuple[torch.Tensor, torch.Tensor, torch.Tensor]:
+) -> tuple[Tensor, Tensor, Tensor]:
     # Ensure dout is contiguous
     if dout.stride(2) != 1 and dout.stride(1) != 1:
         dout = dout.contiguous()
@@ -98,11 +99,11 @@ def causal_conv1d_bwd(
 # Register a fake backward pass for tracing
 @causal_conv1d_bwd.register_fake
 def _causal_conv1d_bwd_fake(
-    x: torch.Tensor,
-    weight: torch.Tensor,
-    bias: Optional[torch.Tensor],
-    dout: torch.Tensor,
-    seq_idx: Optional[torch.Tensor],
+    x: Tensor,
+    weight: Tensor,
+    bias: Optional[Tensor],
+    dout: Tensor,
+    seq_idx: Optional[Tensor],
     activation: bool,
 ):
     return (
@@ -113,14 +114,14 @@ def _causal_conv1d_bwd_fake(
 
 
 # Setup context for autograd
-def causal_conv1d_setup_context(ctx: FunctionCtx, inputs: tuple[torch.Tensor], output: torch.Tensor) -> None:
+def causal_conv1d_setup_context(ctx: FunctionCtx, inputs: tuple[Tensor], output: Tensor) -> None:
     x, weight, bias, seq_idx, activation = inputs
     ctx.activation = activation in ["silu", "swish"]
     ctx.save_for_backward(x, weight, bias, seq_idx)
 
 
 # Bridge for backward pass in autograd
-def causal_conv1d_bwd_bridge(ctx: FunctionCtx, dout: torch.Tensor) -> tuple:
+def causal_conv1d_bwd_bridge(ctx: FunctionCtx, dout: Tensor) -> tuple:
     x, weight, bias, seq_idx = ctx.saved_tensors
     dx, dweight, dbias = causal_conv1d_bwd(x, weight, bias, dout, seq_idx, ctx.activation)
 
@@ -139,12 +140,12 @@ torch.library.register_autograd(
 
 # Define a higher-level function to invoke the custom op
 def causal_conv1d_fn(
-    x: torch.Tensor,
-    weight: torch.Tensor,
-    bias: torch.Tensor = None,
-    seq_idx: torch.Tensor = None,
+    x: Tensor,
+    weight: Tensor,
+    bias: Tensor = None,
+    seq_idx: Tensor = None,
     activation: str = None,
-) -> torch.Tensor:
+) -> Tensor:
     return causal_conv1d_fwd(x, weight, bias, seq_idx, activation)
 
 
@@ -154,13 +155,13 @@ def causal_conv1d_fn(
     device_types="cuda",
 )
 def causal_conv1d_update_fwd(
-    x: torch.Tensor,
-    conv_state: torch.Tensor,
-    weight: torch.Tensor,
-    bias: Optional[torch.Tensor] = None,
+    x: Tensor,
+    conv_state: Tensor,
+    weight: Tensor,
+    bias: Optional[Tensor] = None,
     activation: Optional[str] = None,
-    cache_seqlens: Optional[torch.Tensor] = None,
-) -> torch.Tensor:
+    cache_seqlens: Optional[Tensor] = None,
+) -> Tensor:
     """
     x: (batch, dim) or (batch, dim, seqlen)
     conv_state: (batch, dim, state_len), where state_len >= width - 1
@@ -187,24 +188,24 @@ def causal_conv1d_update_fwd(
 
 @causal_conv1d_update_fwd.register_fake
 def _causal_conv1d_update_fwd(
-    x: torch.Tensor,
-    conv_state: torch.Tensor,
-    weight: torch.Tensor,
-    bias: Optional[torch.Tensor] = None,
+    x: Tensor,
+    conv_state: Tensor,
+    weight: Tensor,
+    bias: Optional[Tensor] = None,
     activation: Optional[str] = None,
-    cache_seqlens: Optional[torch.Tensor] = None,
-) -> torch.Tensor:
+    cache_seqlens: Optional[Tensor] = None,
+) -> Tensor:
     return torch.empty_like(x)
 
 
 def causal_conv1d_update(
-    x: torch.Tensor,
-    conv_state: torch.Tensor,
-    weight: torch.Tensor,
-    bias: torch.Tensor = None,
+    x: Tensor,
+    conv_state: Tensor,
+    weight: Tensor,
+    bias: Tensor = None,
     activation: str = None,
-    cache_seqlens: torch.Tensor = None,
-) -> torch.Tensor:
+    cache_seqlens: Tensor = None,
+) -> Tensor:
     return causal_conv1d_update_fwd(x, conv_state, weight, bias, activation, cache_seqlens)
 
 

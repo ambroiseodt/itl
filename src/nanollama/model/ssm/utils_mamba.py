@@ -10,6 +10,7 @@ https://arxiv.org/abs/2405.21060
 from typing import List, Optional  # noqa: UP035 (torch compile does not parse `list` keyword yet)
 
 import torch
+from torch import Tensor
 from torch.autograd.function import FunctionCtx
 
 try:
@@ -28,21 +29,21 @@ except ImportError as e:
 
 @torch.compile(fullgraph=True)
 def _compiled_mamba_chunk_scan_combined_fwd(
-    x: torch.Tensor,
-    dt: torch.Tensor,
-    A: torch.Tensor,
-    B: torch.Tensor,
-    C: torch.Tensor,
+    x: Tensor,
+    dt: Tensor,
+    A: Tensor,
+    B: Tensor,
+    C: Tensor,
     chunk_size: int,
-    D: Optional[torch.Tensor] = None,
-    z: Optional[torch.Tensor] = None,
-    dt_bias: Optional[torch.Tensor] = None,
-    initial_states: Optional[torch.Tensor] = None,
-    seq_idx: Optional[torch.Tensor] = None,
-    cu_seqlens: Optional[torch.Tensor] = None,
+    D: Optional[Tensor] = None,
+    z: Optional[Tensor] = None,
+    dt_bias: Optional[Tensor] = None,
+    initial_states: Optional[Tensor] = None,
+    seq_idx: Optional[Tensor] = None,
+    cu_seqlens: Optional[Tensor] = None,
     dt_softplus: bool = False,
     dt_limit: Optional[List[float]] = None,  # noqa: UP006
-) -> tuple[torch.Tensor, torch.Tensor, torch.Tensor]:
+) -> tuple[Tensor, Tensor, Tensor]:
     return _mamba_chunk_scan_combined_fwd(
         x,
         dt,
@@ -63,32 +64,32 @@ def _compiled_mamba_chunk_scan_combined_fwd(
 
 @torch.compile(fullgraph=True)
 def _compiled_mamba_chunk_scan_combined_bwd(
-    dout: torch.Tensor,
-    x: torch.Tensor,
-    dt: torch.Tensor,
-    A: torch.Tensor,
-    B: torch.Tensor,
-    C: torch.Tensor,
-    out: torch.Tensor,
+    dout: Tensor,
+    x: Tensor,
+    dt: Tensor,
+    A: Tensor,
+    B: Tensor,
+    C: Tensor,
+    out: Tensor,
     chunk_size: int,
-    D: Optional[torch.Tensor] = None,
-    z: Optional[torch.Tensor] = None,
-    dt_bias: Optional[torch.Tensor] = None,
-    initial_states: Optional[torch.Tensor] = None,
-    dfinal_states: Optional[torch.Tensor] = None,
-    seq_idx: Optional[torch.Tensor] = None,
+    D: Optional[Tensor] = None,
+    z: Optional[Tensor] = None,
+    dt_bias: Optional[Tensor] = None,
+    initial_states: Optional[Tensor] = None,
+    dfinal_states: Optional[Tensor] = None,
+    seq_idx: Optional[Tensor] = None,
     dt_softplus: bool = False,
     dt_limit: Optional[List[float]] = None,  # noqa: UP006
 ) -> tuple[
-    torch.Tensor,
-    torch.Tensor,
-    torch.Tensor,
-    torch.Tensor,
-    torch.Tensor,
-    torch.Tensor,
-    torch.Tensor,
-    torch.Tensor,
-    torch.Tensor,
+    Tensor,
+    Tensor,
+    Tensor,
+    Tensor,
+    Tensor,
+    Tensor,
+    Tensor,
+    Tensor,
+    Tensor,
 ]:
     return _mamba_chunk_scan_combined_bwd(
         dout,
@@ -116,21 +117,21 @@ def _compiled_mamba_chunk_scan_combined_bwd(
     device_types="cuda",
 )
 def ssm_chunk_scan_combined_fwd(
-    x: torch.Tensor,
-    dt: torch.Tensor,
-    A: torch.Tensor,
-    B: torch.Tensor,
-    C: torch.Tensor,
+    x: Tensor,
+    dt: Tensor,
+    A: Tensor,
+    B: Tensor,
+    C: Tensor,
     chunk_size: int,
-    D: Optional[torch.Tensor] = None,
-    z: Optional[torch.Tensor] = None,
-    dt_bias: Optional[torch.Tensor] = None,
-    initial_states: Optional[torch.Tensor] = None,
-    seq_idx: Optional[torch.Tensor] = None,
-    cu_seqlens: Optional[torch.Tensor] = None,
+    D: Optional[Tensor] = None,
+    z: Optional[Tensor] = None,
+    dt_bias: Optional[Tensor] = None,
+    initial_states: Optional[Tensor] = None,
+    seq_idx: Optional[Tensor] = None,
+    cu_seqlens: Optional[Tensor] = None,
     dt_softplus: bool = False,
     dt_limit: Optional[List[float]] = None,  # noqa: UP006
-) -> tuple[torch.Tensor, torch.Tensor, torch.Tensor]:
+) -> tuple[Tensor, Tensor, Tensor]:
     out, out_x, dt_out, dA_cumsum, states, final_states, *rest = _mamba_chunk_scan_combined_fwd(
         x,
         dt,
@@ -157,18 +158,18 @@ def ssm_chunk_scan_combined_fwd(
 
 @ssm_chunk_scan_combined_fwd.register_fake
 def _ssm_chunk_scan_combined_fwd_fake(
-    x: torch.Tensor,
-    dt: torch.Tensor,
-    A: torch.Tensor,
-    B: torch.Tensor,
-    C: torch.Tensor,
+    x: Tensor,
+    dt: Tensor,
+    A: Tensor,
+    B: Tensor,
+    C: Tensor,
     chunk_size: int,
-    D: Optional[torch.Tensor] = None,
-    z: Optional[torch.Tensor] = None,
-    dt_bias: Optional[torch.Tensor] = None,
-    initial_states: Optional[torch.Tensor] = None,
-    seq_idx: Optional[torch.Tensor] = None,
-    cu_seqlens: Optional[torch.Tensor] = None,
+    D: Optional[Tensor] = None,
+    z: Optional[Tensor] = None,
+    dt_bias: Optional[Tensor] = None,
+    initial_states: Optional[Tensor] = None,
+    seq_idx: Optional[Tensor] = None,
+    cu_seqlens: Optional[Tensor] = None,
     dt_softplus: bool = False,
     dt_limit: Optional[List[float]] = None,  # noqa: UP006
 ):
@@ -186,31 +187,31 @@ def _ssm_chunk_scan_combined_fwd_fake(
     device_types="cuda",
 )
 def ssm_chunk_scan_combined_bwd(
-    dout: torch.Tensor,
-    x: torch.Tensor,
-    dt: torch.Tensor,
-    A: torch.Tensor,
-    B: torch.Tensor,
-    C: torch.Tensor,
-    out: torch.Tensor,
+    dout: Tensor,
+    x: Tensor,
+    dt: Tensor,
+    A: Tensor,
+    B: Tensor,
+    C: Tensor,
+    out: Tensor,
     chunk_size: int,
-    D: Optional[torch.Tensor] = None,
-    z: Optional[torch.Tensor] = None,
-    dt_bias: Optional[torch.Tensor] = None,
-    initial_states: Optional[torch.Tensor] = None,
-    seq_idx: Optional[torch.Tensor] = None,
+    D: Optional[Tensor] = None,
+    z: Optional[Tensor] = None,
+    dt_bias: Optional[Tensor] = None,
+    initial_states: Optional[Tensor] = None,
+    seq_idx: Optional[Tensor] = None,
     dt_softplus: bool = False,
     dt_limit: Optional[List[float]] = None,  # noqa: UP006
 ) -> tuple[
-    torch.Tensor,
-    torch.Tensor,
-    torch.Tensor,
-    torch.Tensor,
-    torch.Tensor,
-    torch.Tensor,
-    torch.Tensor,
-    torch.Tensor,
-    torch.Tensor,
+    Tensor,
+    Tensor,
+    Tensor,
+    Tensor,
+    Tensor,
+    Tensor,
+    Tensor,
+    Tensor,
+    Tensor,
 ]:
     dx, ddt, dA, dB, dC, dD, dz, ddt_bias, dinitial_states = _mamba_chunk_scan_combined_bwd(
         dout,
@@ -245,19 +246,19 @@ def ssm_chunk_scan_combined_bwd(
 
 @ssm_chunk_scan_combined_bwd.register_fake
 def _ssm_chunk_scan_combined_bwd_fake(
-    dout: torch.Tensor,
-    x: torch.Tensor,
-    dt: torch.Tensor,
-    A: torch.Tensor,
-    B: torch.Tensor,
-    C: torch.Tensor,
-    out: torch.Tensor,
+    dout: Tensor,
+    x: Tensor,
+    dt: Tensor,
+    A: Tensor,
+    B: Tensor,
+    C: Tensor,
+    out: Tensor,
     chunk_size: int,
-    D: Optional[torch.Tensor] = None,
-    z: Optional[torch.Tensor] = None,
-    dt_bias: Optional[torch.Tensor] = None,
-    initial_states: Optional[torch.Tensor] = None,
-    seq_idx: Optional[torch.Tensor] = None,
+    D: Optional[Tensor] = None,
+    z: Optional[Tensor] = None,
+    dt_bias: Optional[Tensor] = None,
+    initial_states: Optional[Tensor] = None,
+    seq_idx: Optional[Tensor] = None,
     dt_softplus: bool = False,
     dt_limit: Optional[List[float]] = None,  # noqa: UP006
 ):
@@ -277,7 +278,7 @@ def _ssm_chunk_scan_combined_bwd_fake(
 def ssm_chunk_scan_combined_setup_context(
     ctx: FunctionCtx,
     inputs: tuple,
-    output: tuple[torch.Tensor, torch.Tensor, torch.Tensor],
+    output: tuple[Tensor, Tensor, Tensor],
 ) -> None:
     x, dt, A, B, C, chunk_size, D, z, dt_bias, initial_states, seq_idx, cu_seqlens, dt_softplus, dt_limit = inputs
     out, out_x, state_varlen = output
@@ -290,25 +291,25 @@ def ssm_chunk_scan_combined_setup_context(
 
 def ssm_chunk_scan_combined_bridge(
     ctx: FunctionCtx,
-    dout: torch.Tensor,
-    dout_x: torch.Tensor,
-    dout_state_varlen: torch.Tensor,
+    dout: Tensor,
+    dout_x: Tensor,
+    dout_state_varlen: Tensor,
 ) -> tuple[
-    torch.Tensor,
-    torch.Tensor,
-    torch.Tensor,
-    torch.Tensor,
-    torch.Tensor,
-    torch.Tensor,
-    torch.Tensor,
-    torch.Tensor,
-    torch.Tensor,
-    torch.Tensor,
-    torch.Tensor,
-    torch.Tensor,
-    torch.Tensor,
-    torch.Tensor,
-    torch.Tensor,
+    Tensor,
+    Tensor,
+    Tensor,
+    Tensor,
+    Tensor,
+    Tensor,
+    Tensor,
+    Tensor,
+    Tensor,
+    Tensor,
+    Tensor,
+    Tensor,
+    Tensor,
+    Tensor,
+    Tensor,
 ]:
     out, x, dt, A, B, C, D, z, dt_bias, initial_states, seq_idx = ctx.saved_tensors
 
@@ -357,21 +358,21 @@ torch.library.register_autograd(
 
 
 def mamba_chunk_scan_combined(
-    x: torch.Tensor,
-    dt: torch.Tensor,
-    A: torch.Tensor,
-    B: torch.Tensor,
-    C: torch.Tensor,
+    x: Tensor,
+    dt: Tensor,
+    A: Tensor,
+    B: Tensor,
+    C: Tensor,
     chunk_size: int,
-    D: torch.Tensor = None,
-    z: torch.Tensor = None,
-    dt_bias: torch.Tensor = None,
-    initial_states: torch.Tensor = None,
-    seq_idx: torch.Tensor = None,
-    cu_seqlens: torch.Tensor = None,
+    D: Tensor = None,
+    z: Tensor = None,
+    dt_bias: Tensor = None,
+    initial_states: Tensor = None,
+    seq_idx: Tensor = None,
+    cu_seqlens: Tensor = None,
     dt_softplus: bool = False,
     dt_limit: tuple[float, float] = (0.0, float("inf")),
-) -> tuple[torch.Tensor, torch.Tensor]:
+) -> tuple[Tensor, Tensor]:
     out = _mamba_chunk_scan_combined_fwd(
         x,
         dt,

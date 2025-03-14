@@ -9,6 +9,7 @@ This implementation does not support agent calls.
 """
 
 import torch
+from torch import Tensor
 from torch.nn.attention.flex_attention import BlockMask, create_block_mask
 
 from ..agent import Actor
@@ -29,7 +30,7 @@ class MaskedBatchedInference:
         # Attributes for generation and decoding
         self.model = model
         self.tokenizer = tokenizer
-        self.batch_offset: torch.Tensor
+        self.batch_offset: Tensor
 
     @property
     def device(self) -> torch.device:
@@ -63,7 +64,7 @@ class MaskedBatchedInference:
         output = torch.hstack(output)
         return [self.tokenizer.decode(out.tolist()) for out in output]
 
-    def build_batch(self, prompts: list[str]) -> torch.Tensor:
+    def build_batch(self, prompts: list[str]) -> Tensor:
         """
         Build the batch for the model.
 
