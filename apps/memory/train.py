@@ -81,6 +81,7 @@ def train(config: TrainingConfig) -> None:
         model = cluster.build_model(model)
 
         if config.cluster.compile_model:
+            logger.info("Compiling pipeline")
             pretrain_logic = torch.compile(pretrain)
         else:
             pretrain_logic = pretrain

@@ -265,10 +265,6 @@ class ClusterManager:
             else:
                 model = FSDP(model, device_mesh=self.dp_mesh, use_orig_params=True)
 
-        if self.compile:
-            logger.info("Compiling model")
-            model = torch.compile(model)
-
         return model
 
     def __exit__(self, exc: type[BaseException], value: BaseException, tb: TracebackType):
