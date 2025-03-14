@@ -92,7 +92,7 @@ class GRU(nn.Module):
             nn.init.trunc_normal_(self.conv_weight, std=conv_std, a=-3 * conv_std, b=3 * conv_std)
 
 
-class GRUBlock:
+class GRUBlock(nn.Module):
     def __init__(self, config: RNNBlockConfig):
         super().__init__()
 

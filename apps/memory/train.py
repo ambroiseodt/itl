@@ -84,7 +84,7 @@ def train(config: TrainingConfig) -> None:
             pretrain_logic = torch.compile(pretrain)
         else:
             pretrain_logic = pretrain
-        attn_mask = build_pretrain_mask(config.data.seq_len, model.device)
+        attn_mask = build_pretrain_mask(config.data.seq_len - 1, model.device)
 
         logger.info("Building optimizer")
         optimizer = build_optimizer(model, config.optim)
@@ -160,8 +160,7 @@ def train(config: TrainingConfig) -> None:
                 batch = batch.pin_memory()
             batch = batch.to(device=cluster.device, non_blocking=True)
 
-            # get mask associated to which token is supposed to be produced by the LLM.
-            profiler.start_timer()
+            # the batch includes a mask associated to tokens supposed to be produced by the LLM.
             batch, loss_mask = batch.chunk(2)
             X_batch = batch[:, :-1]
             loss_mask = loss_mask[:, :-1].to(bool)

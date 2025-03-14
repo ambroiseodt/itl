@@ -16,7 +16,7 @@ from torch import Tensor
 from .norm import RMSNorm
 
 
-class BlockModel(nn.Module, ABC):
+class BlockModel(ABC):
     """
     Abstract class for model blocks
     """
@@ -67,7 +67,7 @@ class EmbeddingModelConfig:
         assert self.vocab_size, "vocabulary size should be specified"
 
 
-class EmbeddingModel(ABC, nn.Module):
+class EmbeddingModel(nn.Module):
     """
     Language model based on block acting in an embedding space.
     """
@@ -155,20 +155,3 @@ class EmbeddingModel(ABC, nn.Module):
         flops += mode_multiplier * self.output.weight.numel()
         flops += self.output_norm.get_nb_flop(mode=mode)
         return flops
-
-    @abstractmethod
-    def build_cache(self, bsz: int) -> None:
-        """
-        Build model cache for autoregressive inference
-
-        ### Parameters
-        - bsz: batch size
-        """
-        ...
-
-    @abstractmethod
-    def delete_cache(self) -> None:
-        """
-        Delete model cache
-        """
-        ...

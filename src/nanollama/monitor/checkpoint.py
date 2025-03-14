@@ -79,8 +79,6 @@ class Checkpointer:
         optimizer: Optimizer = None,
         stateful_objects: dict[str, Stateful] = None,
     ):
-        super().__init__(config)
-
         self.period = config.period
         self.nb_kept = config.nb_kept
         self.path = Path(config.path)

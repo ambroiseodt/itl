@@ -197,7 +197,7 @@ class RGLRUBlock(nn.Module):
         self.rglru.reset_parameters(init_std, factor)
 
 
-class HawkBlock:
+class HawkBlock(nn.Module):
     def __init__(self, config: RNNBlockConfig):
         super().__init__()
 

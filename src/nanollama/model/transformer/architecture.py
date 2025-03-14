@@ -312,7 +312,7 @@ class TransformerBlockConfig:
 # ------------------------------------------------------------------------------
 
 
-class TransformerBlock:
+class TransformerBlock(nn.Module):
     """
     Transformer block.
 
@@ -341,8 +341,8 @@ class TransformerBlock:
         self.ffn.reset_parameters(init_std, factor)
         self.ffn_norm.reset_parameters()
 
-    def forward(self, x: Tensor, mask: BlockMask, pos_idx: Tensor) -> Tensor:
-        out = x + self.attn(self.attn_norm(x), mask=mask, pos_idx=pos_idx)
+    def forward(self, x: Tensor, mask: BlockMask) -> Tensor:
+        out = x + self.attn(self.attn_norm(x), mask=mask)
         out = out + self.ffn(self.ffn_norm(out))
         return out
 
@@ -410,7 +410,7 @@ class Transformer(EmbeddingModel):
         # default mask for pretraining
         self.default_mask: BlockMask = None
 
-    def forward(self, x: Tensor, mask: BlockMask, pos_idx: Tensor) -> Tensor:
+    def forward(self, x: Tensor, mask: BlockMask) -> Tensor:
         """
         Forward pass of the transformer.
 
@@ -421,6 +421,6 @@ class Transformer(EmbeddingModel):
         # forward pass
         out = self.embeddings(x)
         for layer in self.layers:
-            out = layer(out, mask=mask, pos_idx=pos_idx)
+            out = layer(out, mask=mask)
         logits = self.output(self.output_norm(out))
         return logits

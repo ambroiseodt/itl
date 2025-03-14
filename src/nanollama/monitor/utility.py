@@ -25,7 +25,6 @@ class UtilityConfig:
 
 class UtilityManager:
     def __init__(self, config: UtilityConfig):
-        super().__init__(config)
         self.period = config.period
         self.seed = config.seed
         self.step = 0

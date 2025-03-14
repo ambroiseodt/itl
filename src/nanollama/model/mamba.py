@@ -157,7 +157,7 @@ class MambaBlockConfig:
 # ------------------------------------------------------------------------------
 
 
-class MambaBlock:
+class MambaBlock(nn.Module):
     def __init__(self, config: MambaBlockConfig):
         super().__init__()
 
