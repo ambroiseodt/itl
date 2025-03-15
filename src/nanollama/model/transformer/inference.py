@@ -5,7 +5,15 @@ Utilities for inference and training with transformers.
 For compilation reason, we want to distinguish between pretraining, prefilling and token generation.
 
 @ 2025, Meta
+
+### Notes
+There are many variants of attention implementation for fast inference.
+Ultimately, the best implementation depends on your usecase.
+Our implementation trades performance for simplicity.
 """
+
+from logging import getLogger
+from types import TracebackType
 
 import torch
 import torch.nn.functional as F
@@ -13,7 +21,9 @@ from torch import Tensor
 from torch.nn.attention.flex_attention import BlockMask, create_block_mask
 
 from . import architecture as implementation
-from .architecture import Transformer
+from .architecture import KVCache, Transformer, TransformerBlock
+
+logger = getLogger("nanollama")
 
 # ------------------------------------------------------------------------------
 # Pretraining
@@ -68,30 +78,78 @@ def pretrain(model: Transformer, x: Tensor, y: Tensor, mask: BlockMask, loss_mas
 
 
 # ------------------------------------------------------------------------------
-# Prefilling
-# ------------------------------------------------------------------------------
-
-
-def setup_caches() -> None:
-    ...
-    # setup cache for inference
-
-
-def prefill() -> Tensor:
-    ...
-    # prefill KV cache from prompts
-
-
-# ------------------------------------------------------------------------------
 # Token Generation
 # ------------------------------------------------------------------------------
 
 
-def generate() -> Tensor:
-    ...
-    # generate tokens one by one
+class InferenceContext:
+    def __init__(self, model: Transformer, batch_size: int, seq_len: int = None, dynamic_cache: bool = True):
+        # alias
+        seq_len = seq_len or model.seq_len
+        self.model = model
+        self.cache_shape = (batch_size, model.nb_kv_heads, seq_len, model.head_dim)
+        self.dynamic_cache = dynamic_cache
+
+    def __enter__(self) -> "InferenceContext":
+        logger.info("Entering inference context. Setting up KV caches.")
+        self.model.eval()
+        device, dtype = self.model.device, self.model.dtype
+        for layer in self.model.layers:
+            layer: TransformerBlock
+            layer.attn.kv_cache = KVCache(self.cache_shape, device=device, dtype=dtype, dynamic=self.dynamic_cache)
+        return self
+
+    def __exit__(self, exc: type[BaseException], value: BaseException, tb: TracebackType):
+        logger.info("Exiting inference context. Deleting KV caches.")
+        for layer in self.model.layers:
+            layer: TransformerBlock
+            layer.attn.kv_cache = None
+        self.model.train()
 
 
-def delete_caches() -> None:
-    ...
-    # delete cache to switch from inference back to training
+def sample(logits: Tensor, **kwargs) -> Tensor:
+    # TODO implement various sampling strategy in a different file (..inference.sampling)
+    return logits.argmax(dim=-1)
+
+
+@torch.inference_mode()
+def generate(model: Transformer, x: Tensor, mask: BlockMask, **kwargs) -> Tensor:
+    """
+    Generate tokens from a transformer model.
+
+    ### Parameters
+    - model: transformer model to generate tokens from.
+    - x: input tensor.
+    - mask: attention mask to apply queries and keys.
+    - kwargs: additional arguments for sampling first tokens.
+
+    ### Returns
+    - tokens: generated tokens.
+    """
+    logit = model(x, mask=mask)
+    return sample(logit, **kwargs)
+
+
+# ------------------------------------------------------------------------------
+# Prefilling
+# ------------------------------------------------------------------------------
+
+
+@torch.inference_mode()
+def prefill(model: Transformer, x: Tensor, mask: BlockMask, **kwargs) -> Tensor:
+    """
+    Prefill caches based on prompts.
+
+    ### Parameters
+    - model: transformer model to prefill.
+    - x: input tensor.
+    - mask: attention mask to apply queries and keys.
+    - kwargs: additional arguments for sampling first tokens.
+    """
+    for layer in model.layers:
+        layer: TransformerBlock
+        layer.attn.kv_cache.reset()
+    logits = model(x, mask=mask)
+    # only sample the last token
+    logit = logits[:, -1, :]
+    return sample(logit, **kwargs)

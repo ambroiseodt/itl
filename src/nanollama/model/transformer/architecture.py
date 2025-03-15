@@ -48,13 +48,13 @@ class KVCache(nn.Module):
     - value: prefilled value tensor
     """
 
-    def __init__(self, shape: list[int], dtype: torch.dtype, dynamic: bool = False):
+    def __init__(self, shape: list[int], device: torch.device, dtype: torch.dtype, dynamic: bool = False):
         super().__init__()
         self.pos_idx = 0
         self.dynamic = dynamic
 
-        self.register_buffer("k_cache", torch.zeros(shape, dtype=dtype))
-        self.register_buffer("v_cache", torch.zeros(shape, dtype=dtype))
+        self.register_buffer("k_cache", torch.zeros(shape, device=device, dtype=dtype))
+        self.register_buffer("v_cache", torch.zeros(shape, device=device, dtype=dtype))
         self.key: Tensor
         self.value: Tensor
 
@@ -119,7 +119,6 @@ class SelfAttention(nn.Module):
         self.seq_len = seq_len
         self.emb_dim = emb_dim
         self.head_dim = self.emb_dim // nb_heads
-        self.heads_per_group = nb_heads // nb_kv_heads
         assert self.emb_dim % nb_heads == 0, "embedding dimension must be divisible by number of heads"
         assert nb_heads % nb_kv_heads == 0, "number of heads must be divisible by number of key-value heads"
 
