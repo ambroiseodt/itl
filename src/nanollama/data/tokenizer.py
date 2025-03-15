@@ -414,7 +414,7 @@ class TokenizerConfig:
             self.path = os.path.expandvars(self.path)
 
 
-def build_tokenizer(config: TokenizerConfig) -> Tokenizer:
+def build_tokenizer(config: TokenizerConfig) -> DialogTokenizer:
     """
     Build tokenizer based on the configuration.
 
