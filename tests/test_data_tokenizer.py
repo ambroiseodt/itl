@@ -10,7 +10,7 @@ import unittest
 from nanollama.data.tokenizer import TokenizerConfig, build_tokenizer
 
 
-class TestMultipleSourcesTokenGenerator(unittest.TestCase):
+class TestTokenizer(unittest.TestCase):
     def test_dialog_token(self) -> None:
         config = TokenizerConfig(name="byte", special_tokens={"<|user|>": 0, "<|assistant|>": 1})
         tokenizer = build_tokenizer(config)

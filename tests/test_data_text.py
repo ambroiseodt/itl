@@ -14,9 +14,9 @@ import numpy as np
 from nanollama.data.text import (
     DataConfig,
     JSONLIterator,
-    MultipleSourcesTokenGenerator,
     SingleSourceTokenGenerator,
     SourceConfig,
+    TokenLoader,
 )
 from nanollama.data.tokenizer import TokenizerConfig
 
@@ -116,10 +116,17 @@ class TestSingleSourceTokenGenerator(unittest.TestCase):
             batch_size=2,
             seq_len=5,
             padding=True,
+            asynchronous=False,
         )
 
         # Initialize TokenGenerator
-        self.token_generator = SingleSourceTokenGenerator(self.config, self.iterator, self.mock_tokenizer)
+        self.token_generator = SingleSourceTokenGenerator(
+            batch_size=self.config.batch_size,
+            seq_len=self.config.seq_len,
+            padding=self.config.padding,
+            iterator=self.iterator,
+            tokenizer=self.mock_tokenizer,
+        )
         self.token_generator.__enter__()
 
     def tearDown(self) -> None:
@@ -147,7 +154,13 @@ class TestSingleSourceTokenGenerator(unittest.TestCase):
         next(self.token_generator)
 
         # Create a new TokenGenerator and load the saved state
-        new_token_generator = SingleSourceTokenGenerator(self.config, self.iterator, self.mock_tokenizer)
+        new_token_generator = SingleSourceTokenGenerator(
+            batch_size=self.config.batch_size,
+            seq_len=self.config.seq_len,
+            padding=self.config.padding,
+            iterator=self.iterator,
+            tokenizer=self.mock_tokenizer,
+        )
         new_token_generator.load_state_dict(initial_state)
         # Generate a batch from the new generator
         restarted_batch = next(new_token_generator)[0]
@@ -169,7 +182,7 @@ class TestSingleSourceTokenGenerator(unittest.TestCase):
         assert np.array_equal(batch, new_batch[-1:])
 
 
-class TestMultipleSourcesTokenGenerator(unittest.TestCase):
+class TestTokenGenerator(unittest.TestCase):
     def setUp(self) -> None:
         # Create temporary JSONL files for testing
         self.temp_files: list[tempfile._TemporaryFileWrapper] = []
@@ -191,9 +204,10 @@ class TestMultipleSourcesTokenGenerator(unittest.TestCase):
             seq_len=5,
             padding=True,
             seed=42,
+            asynchronous=False,
         )
-        # Initialize MultipleSourcesTokenGenerator
-        self.token_generator = MultipleSourcesTokenGenerator(self.config)
+        # Initialize TokenLoader
+        self.token_generator = TokenLoader(self.config)
         self.token_generator.__enter__()
 
     def tearDown(self) -> None:
@@ -215,7 +229,7 @@ class TestMultipleSourcesTokenGenerator(unittest.TestCase):
         batch = next(self.token_generator)
 
         # Create a new generator and load the saved state
-        new_token_generator = MultipleSourcesTokenGenerator(self.config)
+        new_token_generator = TokenLoader(self.config)
         new_token_generator.__enter__()
         new_token_generator.load_state_dict(initial_state)
 

@@ -28,6 +28,7 @@ from src.nanollama.model import (
     EmbeddingModel,
     build_config_with_model_dispatch,
 )
+from src.nanollama.model.transformer import InferenceContext
 from src.nanollama.monitor import (
     EvalCheckpointer,
     Logger,
@@ -108,6 +109,9 @@ def run_evaluation(
         tokenizer = build_tokenizer(config.tokenizer)
         inference_engine = QueuedBatchedInference(model, tokenizer, config.db_path)
         inference_engine: QueuedBatchedInference = context_stack.enter_context(inference_engine)
+
+        # set model in evaluation mode
+        context_stack.enter_context(InferenceContext(model, batch_size=config.data.batch_size, dynamic_cache=False))
 
         for prompts, answers in loader:
             # handle preemption

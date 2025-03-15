@@ -1,8 +1,8 @@
 import torch.distributed.checkpoint as dcp
 import yaml
 
-from nanollama.data.loader import DataLoader
-from nanollama.data.text import DataConfig, MultipleSourcesTokenGenerator
+from nanollama.data.async_loader import DataLoader
+from nanollama.data.text import DataConfig, TokenLoader
 from nanollama.inference import QueuedBatchedInference
 from nanollama.model import Transformer, TransformerConfig
 from nanollama.model import transformer as tf
@@ -24,7 +24,7 @@ asynchronous: false
 """)
 data_config = initialize_nested_object(DataConfig, config)
 
-token_gen = MultipleSourcesTokenGenerator(data_config)
+token_gen = TokenLoader(data_config)
 dataloader = DataLoader(data_config, token_gen)
 with dataloader:
     batch = next(dataloader)

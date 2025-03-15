@@ -37,7 +37,6 @@ from src.nanollama.optim import (
 from src.nanollama.utils import build_with_type_check, flatten_config, unflatten_config
 
 from .dataset.generate import DATA_DIR
-from .prompt_loader import DataConfig as EvalDataConfig
 
 logger = logging.getLogger("nanollama")
 
@@ -60,7 +59,7 @@ class OnlineEvaluationConfig:
     """
 
     db_path: str = ""
-    data: EvalDataConfig = field(default_factory=EvalDataConfig)
+    data: DataConfig = field(default_factory=DataConfig)
     tokenizer: TokenizerConfig = field(default_factory=TokenizerConfig)
     checkpoint: EvalCheckpointConfig = field(default_factory=EvalCheckpointConfig)
 
@@ -344,8 +343,8 @@ def heritage_eval_config(run_config: dict[str, Any], launcher: dict[str, Any]) -
 
     # generic inheritance
     configs_keys = [
-        (EvalDataConfig, "data", "data"),
-        (TokenizerConfig, "tokenizer", "data.tokenizer"),
+        (DataConfig, "data"),
+        (TokenizerConfig, "data.tokenizer"),
     ]
 
     # deal with data configuration being defined in its post_init method
@@ -361,23 +360,23 @@ def heritage_eval_config(run_config: dict[str, Any], launcher: dict[str, Any]) -
 
     if eval_config.get("asynchronous", False):
         # hack to add slurm inheritance
-        flat_config |= flatten_config({"_slurm": launcher.pop("slurm", {})})
+        flat_config |= flatten_config({"slurm": launcher.pop("slurm", {})})
 
         configs_keys += [
-            (SlurmConfig, "slurm", "_slurm"),
-            (ClusterConfig, "cluster", "cluster"),
-            (LoggerConfig, "orchestration.logging", "orchestration.logging"),
-            (ProfilerConfig, "orchestration.profiler", "orchestration.profiler"),
-            (WandbConfig, "orchestration.logging.wandb", "orchestration.logging.wandb"),
+            (SlurmConfig, "slurm"),
+            (ClusterConfig, "cluster"),
+            (LoggerConfig, "orchestration.logging"),
+            (ProfilerConfig, "orchestration.profiler"),
+            (WandbConfig, "orchestration.logging.wandb"),
         ]
 
     # proceed with inheritance
-    for config_cls, cls_key, inherited_key in configs_keys:
+    for config_cls, cls_key in configs_keys:
         for key, finfo in config_cls.__dataclass_fields__.items():
             if not finfo.init:
                 continue
             eval_key = f"{cls_key}.{key}"
-            train_key = f"{inherited_key}.{key}"
+            train_key = f"{cls_key}.{key}"
             if eval_key not in eval_config and train_key in flat_config:
                 eval_config[eval_key] = flat_config[train_key]
 

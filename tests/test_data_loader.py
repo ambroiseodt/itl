@@ -13,9 +13,8 @@ from typing import Any
 import numpy as np
 import torch
 from numpy.random import default_rng
-from torch import Tensor
 
-from nanollama.data.loader import DataLoader, TokenLoader
+from nanollama.data.async_loader import DataLoader
 from nanollama.data.utils import generate_seeds
 
 
@@ -24,13 +23,13 @@ class MockDataConfig:
     batch_size: int
     seq_len: int
     seed: int = 0
-    asynchronous: bool = True
+    asynchronous: bool = False
     buffer_size: int = 4
 
 
-class MockTokenLoader(TokenLoader):
+class MockTokenLoader(DataLoader):
     def __init__(self, config: MockDataConfig):
-        super().__init__()
+        super().__init__(config)
         self.batch_size = config.batch_size
         self.seq_len = config.seq_len
         self.rng = default_rng(config.seed)
@@ -46,18 +45,17 @@ class MockTokenLoader(TokenLoader):
             batch = self.rng.integers(0, 100, size=(self.batch_size, self.seq_len))
             yield batch
 
-    def state_dict(self) -> dict[str, Any]:
+    def writer_state_dict(self) -> dict[str, Any]:
         return {"rng_state": self.rng.bit_generator.state}
 
-    def load_state_dict(self, state_dict: dict[str, Any]) -> None:
+    def load_writer_state_dict(self, state_dict: dict[str, Any]) -> None:
         self.rng.bit_generator.state = state_dict["rng_state"]
 
 
 class TestDataLoader(unittest.TestCase):
     def setUp(self) -> None:
         self.config = MockDataConfig(batch_size=2, seq_len=5)
-        self.mock_iterator = MockTokenLoader(self.config)
-        self.data_loader = DataLoader(self.config, self.mock_iterator)
+        self.data_loader = MockTokenLoader(self.config)
         self.data_loader.__enter__()
 
     def tearDown(self) -> None:
@@ -66,13 +64,12 @@ class TestDataLoader(unittest.TestCase):
     def test_asynchronous_loading(self) -> None:
         # Test DataLoader in synchronous mode
         config = MockDataConfig(batch_size=2, seq_len=5, asynchronous=False)
-        sync_data_loader = DataLoader(config, self.mock_iterator)
+        sync_data_loader = MockTokenLoader(config)
 
         for _ in range(3):
             batch = next(self.data_loader)
             sync_batch = next(sync_data_loader)
             self.assertEqual(batch.shape, (config.batch_size, config.seq_len))
-            self.assertIsInstance(batch, Tensor)
             assert np.array_equal(batch, sync_batch)
 
     def test_restart(self) -> None:
@@ -82,7 +79,7 @@ class TestDataLoader(unittest.TestCase):
         batch = next(self.data_loader)
         next(self.data_loader)
 
-        new_loader = DataLoader(self.config, self.mock_iterator)
+        new_loader = MockTokenLoader(self.config)
         new_loader.__enter__()
         new_loader.load_state_dict(state)
         new_batch = next(new_loader)

@@ -137,34 +137,13 @@ class QueuedBatchedInference:
         - input_ids: input tensor
         - batch_offset: position of the first token of each prompt
         """
-        data = [self.encode_prompt(prompt) for prompt in prompts]
-        bsz = len(data)
-        seq_len = min([len(datum) for datum in data])
+        bsz = len(prompts)
+        seq_len = min([len(datum) for datum in prompts])
         dtype, device = torch.long, self.device
 
         x = torch.zeros((bsz, seq_len), dtype=dtype, device=device)
         self.queue = [[] for _ in prompts]
-        for i, datum in enumerate(data):
+        for i, datum in enumerate(prompts):
             x[i, :seq_len] = torch.tensor(datum[:seq_len], dtype=dtype, device=device)
             self.queue[i] = datum[seq_len:]
         return x
-
-    def encode_prompt(self, prompt: str) -> list[int]:
-        """
-        Encode a prompt into a list of token IDs.
-
-        ### Parameters
-        - prompt: prompt
-
-        ### Returns
-        - tokens: list of token IDs
-        """
-        # aliases
-        bots = self.tokenizer.bots
-        tokenizer = self.tokenizer.tokenizer
-
-        # tokenization
-        tokens = [bots[Actor.user]]
-        tokens.extend(tokenizer.encode(prompt))
-        tokens.append(bots[Actor.assistant])
-        return tokens
