@@ -16,55 +16,27 @@ from logging import getLogger
 from multiprocessing import Process, Queue
 from queue import Empty, Full
 from types import TracebackType
+from typing import Any
 
-import numpy as np
-import torch
-from torch import Tensor
 from torch.distributed.checkpoint.stateful import Stateful
 
 logger = getLogger("nanollama")
 
 
-class TokenLoader(ABC, Stateful):
-    def __init__(self):
-        self.generator = self.batch_iterator()
-
-    def __iter__(self):
-        return self
-
-    def __next__(self) -> np.ndarray:
-        """Get the next batch of tokens."""
-        return next(self.generator)
-
-    @abstractmethod
-    def __enter__(self) -> Generator[np.ndarray, None, None]:
-        """Enter the batch generator context (opening files, ...)."""
-        ...
-
-    @abstractmethod
-    def __exit__(self, exc: type[BaseException], value: BaseException, tb: TracebackType):
-        """Exit the batch generator context (closing files, ...)."""
-        ...
-
-    @abstractmethod
-    def batch_iterator(self) -> Generator[np.ndarray, None, None]:
-        """Generate batches of tokens."""
-        ...
-
-
 @dataclass
-class DataConfig:
+class AsyncDataConfig:
     asynchronous: bool = True
     buffer_size: int = 4
 
 
-class DataLoader(Stateful):
+class DataLoader(ABC, Stateful):
     """
     Asynchronous Dataloader
 
+    Generates batches of data asynchronously, before consuming them.
+
     ### Parameters
     - config: configuration of the data loader.
-    - generator: token loader to use to generate batches.
 
     Usage:
     ```python
@@ -74,58 +46,70 @@ class DataLoader(Stateful):
     ```
     """
 
-    def __init__(self, config: DataConfig, generator: TokenLoader):
+    def __init__(self, config: AsyncDataConfig):
         # data loader configuration
         self.asynchronous = config.asynchronous
 
         # asynchronous data loader: a worker writes batches in a buffer, that a reader consumes
         if self.asynchronous:
-            self.process = Process(target=self.async_batch_creator)
+            self.async_state_dict = None
+            self.process = Process(target=self.write_batch)
             self.buffer = Queue(maxsize=config.buffer_size)
 
         # initialize the batch generator
-        self.generator = generator
-        self.gen_state_dict = self.generator.state_dict()
+        self.batch_generator = self.batch_iterator()
 
     def __enter__(self) -> "DataLoader":
-        """Enter the data generator context."""
+        """Enter the data loader context."""
         logger.info("Entering dataloader.")
-        self.generator.__enter__()
         if self.asynchronous:
             self.process.start()
         return self
 
     def __exit__(self, exc: type[BaseException], value: BaseException, tb: TracebackType):
-        """Exit the data generator context."""
+        """Exit the data loador context."""
         logger.info("Exiting dataloader.")
         if self.asynchronous:
             self.process.kill()
             self.buffer.close()
-        self.generator.__exit__(exc, value, tb)
 
-    def async_batch_creator(self) -> None:
+    @abstractmethod
+    def batch_iterator(self) -> Generator[Any, None, None]:
+        """Generate batch of data to be bufferized."""
+        ...
+
+    @abstractmethod
+    def writer_state_dict(self) -> None:
+        """State of the bufferized data writter."""
+        ...
+
+    @abstractmethod
+    def load_writer_state_dict(self, state_dict: dict) -> None:
+        """Reload the state of the bufferized data writter."""
+        ...
+
+    def write_batch(self) -> None:
         """Asynchronous batch generation, writting batches to the buffer."""
         # loop on batch creation
         while True:
             try:
-                batch = next(self.generator)
-                gen_state_dict = self.generator.state_dict()
-                batch = torch.from_numpy(batch).long()
+                batch = next(self.batch_generator)
+                state_dict = self.writer_state_dict()
             # handle end of data asynchrounously
             except StopIteration:
-                batch = gen_state_dict = None
+                batch = state_dict = None
 
             # put it in the buffer
             while True:
                 try:
-                    self.buffer.put((batch, gen_state_dict), timeout=0.1)
+                    self.buffer.put((batch, state_dict), timeout=0.1)
                     break
                 # if the buffer is full, wait until there is space
                 except Full:
                     logger.debug("Buffer is full. Waiting for data comsumption.")
             logger.debug("New batch put in the buffer.")
 
-    def async_get_batch(self) -> np.ndarray:
+    def read_batch(self) -> Any:
         """Asynchronous batch acquisition, reading batches from the buffer."""
         # read batch from the buffer
         while True:
@@ -136,26 +120,29 @@ class DataLoader(Stateful):
                 logger.debug("Buffer is empty. Waiting for data.")
 
     def __iter__(self) -> "DataLoader":
-        """Return an iterator over batches"""
+        """Iterator over batches."""
         return self
 
-    def __next__(self) -> Tensor:
-        """Get the next batch of sentences."""
+    def __next__(self) -> Any:
+        """Get next batch of data."""
         if self.asynchronous:
-            batch, self.gen_state_dict = self.async_get_batch()
+            batch, self.async_state_dict = self.read_batch()
             # handle end of data asynchrounously
             if batch is None:
                 raise StopIteration
         else:
-            batch = next(self.generator)
-            self.gen_state_dict = self.generator.state_dict()
-            batch = torch.from_numpy(batch).long()
+            batch = next(self.batch_generator)
         return batch
 
     def state_dict(self) -> dict:
-        return self.gen_state_dict
+        """State of the data reader."""
+        if self.asynchronous:
+            return self.async_state_dict
+        else:
+            return self.writer_state_dict()
 
     def load_state_dict(self, state_dict: dict) -> None:
+        """Reload the state of the data reader."""
         # stop the running process
         if self.asynchronous:
             self.process.kill()
@@ -164,10 +151,10 @@ class DataLoader(Stateful):
                 self.buffer.get()
 
         # reset the generator
-        self.generator.load_state_dict(state_dict)
-        self.gen_state_dict = self.generator.state_dict()
+        self.load_writer_state_dict(state_dict)
 
         # restart the process
         if self.asynchronous:
-            self.process = Process(target=self.async_batch_creator)
+            self._state_dict = state_dict
+            self.process = Process(target=self.write_batch)
             self.process.start()

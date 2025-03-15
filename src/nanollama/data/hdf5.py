@@ -9,7 +9,6 @@ import os
 from collections.abc import Generator
 from dataclasses import dataclass
 from logging import getLogger
-from types import TracebackType
 from typing import Any
 
 import h5py
@@ -17,7 +16,7 @@ import numpy as np
 from numpy.random import default_rng
 
 from ..distributed import get_rank, get_world_size
-from .loader import TokenLoader
+from .async_loader import DataLoader
 
 logger = getLogger("nanollama")
 
@@ -40,7 +39,7 @@ class DataConfig:
         self.path = os.path.expandvars(self.path)
 
 
-class FileDataLoader(TokenLoader):
+class FileDataLoader(DataLoader):
     """
     Context manager for the data loader from file.
 
@@ -122,10 +121,10 @@ class FileDataLoader(TokenLoader):
                 yield batch
                 logger.debug(f"Epoch {self.epoch}, Step {self.step}")
 
-    def state_dict(self) -> dict[str, Any]:
+    def writter_state_dict(self) -> dict[str, Any]:
         return {"rng_state": self.rng_state, "epoch": self.epoch, "step": self.step, "res": self.residual_idx.tolist()}
 
-    def load_state_dict(self, state_dict: dict[str, Any]) -> None:
+    def load_writter_state_dict(self, state_dict: dict[str, Any]) -> None:
         self.rng_state = state_dict["rng_state"]
         self.epoch = state_dict["epoch"]
         self.step = state_dict["step"]
@@ -137,7 +136,7 @@ class FileDataLoader(TokenLoader):
 # ------------------------------------------------------------------------------
 
 
-class FileEvaluator(TokenLoader):
+class FileEvaluator(DataLoader):
     """
     Context manager for the evaluation data loader from file.
 
@@ -160,11 +159,6 @@ class FileEvaluator(TokenLoader):
 
         logger.info(f"Intializing Evaluator on device {rank + 1}/{world_size}")
 
-    def __enter__(self):
-        return self
-
-    def __exit__(self, exc: type[BaseException], value: BaseException, tb: TracebackType): ...
-
     def batch_iterator(self) -> Generator[np.ndarray, None, None]:
         """Generate batches of sentences."""
         # iterate over batches
@@ -177,3 +171,7 @@ class FileEvaluator(TokenLoader):
             with h5py.File(self.path, "r") as f:
                 batch = f["data"][begin:end]
             yield batch
+
+    def writter_state_dict(self) -> dict[str, Any]: ...
+
+    def load_writter_state_dict(self, state_dict: dict[str, Any]) -> None: ...

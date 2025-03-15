@@ -19,11 +19,12 @@ from types import TracebackType
 from typing import Any
 
 import numpy as np
+import torch
 from numpy.random import default_rng
-from torch.distributed.checkpoint.stateful import Stateful
+from torch import Tensor
 from torch.distributed.device_mesh import DeviceMesh
 
-from .loader import TokenLoader
+from .async_loader import AsyncDataConfig, DataLoader
 from .tokenizer import DialogTokenizer, TokenizerConfig, build_tokenizer
 from .utils import generate_seeds
 
@@ -91,7 +92,7 @@ class DataConfig:
 # ------------------------------------------------------------------------------
 
 
-class JSONLIterator(Stateful):
+class JSONLIterator(DataLoader):
     """
     Iterates over a JSON lines file, yielding a line every `world_size` lines
 
@@ -124,6 +125,7 @@ class JSONLIterator(Stateful):
         world_size: int,
         loop: bool = True,
     ):
+        super().__init__(AsyncDataConfig(asynchronous=False))
         self.path = path
         self.rank = rank
         self.world_size = world_size
@@ -133,8 +135,6 @@ class JSONLIterator(Stateful):
         self.position = 0
         self.line_num = 0
 
-        self.generator = self.line_iterator()
-
     def __enter__(self) -> "JSONLIterator":
         self.file = open(self.path)
         self.file.seek(self.position)
@@ -143,13 +143,7 @@ class JSONLIterator(Stateful):
     def __exit__(self, exc: type[BaseException], value: BaseException, tb: TracebackType):
         self.file.close()
 
-    def __iter__(self):
-        return self
-
-    def __next__(self):
-        return next(self.generator)
-
-    def line_iterator(self) -> Generator[dict[str, str], None, None]:
+    def batch_iterator(self) -> Generator[dict[str, str], None, None]:
         while True:
             # read the file and yield lines according to the rank
             while line := self.file.readline():
@@ -164,10 +158,10 @@ class JSONLIterator(Stateful):
             self.loop += 1
             self.file.seek(0)
 
-    def state_dict(self) -> dict[str, Any]:
+    def writer_state_dict(self) -> dict[str, Any]:
         return {"line_num": self.line_num, "position": self.position}
 
-    def load_state_dict(self, state_dict: dict[str, Any]) -> None:
+    def load_writer_state_dict(self, state_dict: dict[str, Any]) -> None:
         self.line_num = state_dict["line_num"]
         self.position = state_dict["position"]
         self.file.seek(self.position)
@@ -178,7 +172,7 @@ class JSONLIterator(Stateful):
 # ------------------------------------------------------------------------------
 
 
-class SingleSourceTokenGenerator(TokenLoader):
+class SingleSourceTokenGenerator(DataLoader):
     """
     Generate token iteratively in order to feed an LLM based on a single sequence iterator.
 
@@ -208,17 +202,19 @@ class SingleSourceTokenGenerator(TokenLoader):
     ```
     """
 
-    def __init__(self, config: DataConfig, iterator: JSONLIterator, tokenizer: DialogTokenizer):
-        super().__init__()
+    def __init__(
+        self, batch_size: int, seq_len: int, padding: bool, iterator: JSONLIterator, tokenizer: DialogTokenizer
+    ):
+        super().__init__(AsyncDataConfig(asynchronous=False))
         self.jsonl_iterator = iterator
         self.tokenizer = tokenizer
 
         self.tokens = []
         self.mask = []
-        self.batch_size = config.batch_size
-        self.seq_len = config.seq_len
-        self.tokens_per_batch = self.batch_size * self.seq_len
-        self.padding = config.padding
+        self.batch_size = batch_size
+        self.seq_len = seq_len
+        self.tokens_per_batch = batch_size * seq_len
+        self.padding = padding
 
     def __enter__(self) -> "SingleSourceTokenGenerator":
         self.jsonl_iterator.__enter__()
@@ -263,10 +259,10 @@ class SingleSourceTokenGenerator(TokenLoader):
 
             yield batch, mask
 
-    def state_dict(self) -> dict[str, Any]:
+    def writer_state_dict(self) -> dict[str, Any]:
         return {"iterator": self.jsonl_iterator.state_dict(), "tokens": self.tokens, "mask": self.mask}
 
-    def load_state_dict(self, state_dict: dict[str, Any]) -> None:
+    def load_writer_state_dict(self, state_dict: dict[str, Any]) -> None:
         self.jsonl_iterator.load_state_dict(state_dict["iterator"])
         self.tokens = state_dict["tokens"]
         self.mask = state_dict["mask"]
@@ -277,7 +273,7 @@ class SingleSourceTokenGenerator(TokenLoader):
 # ------------------------------------------------------------------------------
 
 
-class MultipleSourcesTokenGenerator(TokenLoader):
+class TokenLoader(DataLoader):
     """
     Generate token from multiple single source iterators according to some weight.
 
@@ -292,14 +288,14 @@ class MultipleSourcesTokenGenerator(TokenLoader):
 
     ### Example
     ```python
-    with MultipleSourceTokenGenerator(config) as generator:
+    with TokenLoader(config) as generator:
         for batch in generator:
             print(batch)
     ```
     """
 
     def __init__(self, config: DataConfig, dp_mesh: DeviceMesh = None):
-        super().__init__()
+        super().__init__(config)
 
         self.batch_size = config.batch_size
         self.seq_len = config.seq_len
@@ -327,42 +323,60 @@ class MultipleSourcesTokenGenerator(TokenLoader):
         self.weights = np.array(weights, dtype=float)
         self.weights /= np.sum(self.weights)
 
-        self.generators = [SingleSourceTokenGenerator(config, iterator, tokenizer) for iterator in iterators]
+        # initialize single source token loaders
+        self.token_iterators = [
+            SingleSourceTokenGenerator(
+                batch_size=config.batch_size,
+                seq_len=config.seq_len,
+                padding=config.padding,
+                iterator=iterator,
+                tokenizer=tokenizer,
+            )
+            for iterator in iterators
+        ]
 
         # initialize the random number generator
         _, seeds = generate_seeds(nb_shared=0, nb_individual=1, root_seed=config.seed, rank=rank)
         self.rng = default_rng(seeds[0])
 
-    def __enter__(self) -> "MultipleSourcesTokenGenerator":
-        for generator in self.generators:
+    def __enter__(self) -> "TokenLoader":
+        for generator in self.token_iterators:
             generator.__enter__()
+        super().__enter__()
         return self
 
     def __exit__(self, exc: type[BaseException], value: BaseException, tb: TracebackType):
-        for generator in self.generators:
+        super().__exit__(exc, value, tb)
+        for generator in self.token_iterators:
             generator.__exit__(exc, value, tb)
 
-    def batch_iterator(self) -> Generator[tuple[np.ndarray[int], np.ndarray[bool]], None, None]:
+    def batch_iterator(self) -> Generator[tuple[Tensor, Tensor], None, None]:
         while True:
             # generate a random mix of sources
             source_mix = self.rng.multinomial(self.batch_size, self.weights)
 
             # create a batch accordingly
             batch = np.zeros((self.batch_size, self.seq_len), dtype=int)
-            mask = np.zeros((self.batch_size, self.seq_len), dtype=int)
+            mask = np.zeros((self.batch_size, self.seq_len), dtype=bool)
             ind = 0
-            for gen, bsz in zip(self.generators, source_mix):
+            for gen, bsz in zip(self.token_iterators, source_mix):
                 gen.set_batch_size(bsz)
                 local_batch, local_mask = next(gen)
                 batch[ind : ind + bsz] = local_batch
                 mask[ind : ind + bsz] = local_mask
                 ind = ind + bsz
-            yield np.vstack((batch, mask), dtype=int)
 
-    def state_dict(self) -> dict[str, Any]:
-        return {"generators": [gen.state_dict() for gen in self.generators], "rng_state": self.rng.bit_generator.state}
+            batch = torch.from_numpy(batch).long()
+            mask = torch.from_numpy(mask).bool()
+            yield batch, mask
 
-    def load_state_dict(self, state_dict: dict[str, Any]) -> None:
-        for gen, state in zip(self.generators, state_dict["generators"]):
+    def writer_state_dict(self) -> dict[str, Any]:
+        return {
+            "generators": [gen.state_dict() for gen in self.token_iterators],
+            "rng_state": self.rng.bit_generator.state,
+        }
+
+    def load_writer_state_dict(self, state_dict: dict[str, Any]) -> None:
+        for gen, state in zip(self.token_iterators, state_dict["generators"]):
             gen.load_state_dict(state)
         self.rng.bit_generator.state = state_dict["rng_state"]

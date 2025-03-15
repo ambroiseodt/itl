@@ -17,8 +17,7 @@ import torch.nn.functional as F
 import yaml
 from torch import Tensor
 
-from src.nanollama.data.loader import DataLoader
-from src.nanollama.data.text import MultipleSourcesTokenGenerator
+from src.nanollama.data.text import TokenLoader
 from src.nanollama.distributed import ClusterManager, clean_environment, is_master_process
 from src.nanollama.launcher import launch_job
 from src.nanollama.model import (
@@ -97,8 +96,8 @@ def train(config: TrainingConfig) -> None:
         # DataLoader
         # ---------------------------------------------------------------------
 
-        token_gen = MultipleSourcesTokenGenerator(config.data, cluster.dp_mesh)
-        dataloader: DataLoader = context_stack.enter_context(DataLoader(config.data, token_gen))
+        dataloader = TokenLoader(config.data, cluster.dp_mesh)
+        context_stack.enter_context(dataloader)
 
         # ---------------------------------------------------------------------
         # Recover Checkpoint
@@ -156,15 +155,18 @@ def train(config: TrainingConfig) -> None:
 
             profiler.start_timer()
 
-            batch = next(dataloader)
+            batch, loss_mask = next(dataloader)
+            batch: Tensor
+            loss_mask: Tensor
             if cluster.device.type != "cpu":
                 batch = batch.pin_memory()
+                loss_mask = loss_mask.pin_memory()
             batch = batch.to(device=cluster.device, non_blocking=True)
+            loss_mask = loss_mask.to(device=cluster.device, non_blocking=True)
 
             # the batch includes a mask associated to tokens supposed to be produced by the LLM.
-            batch, loss_mask = batch.chunk(2)
             X_batch = batch[:, :-1]
-            loss_mask = loss_mask[:, :-1].to(bool)
+            loss_mask = loss_mask[:, :-1]
             y_batch = batch[:, 1:]
 
             profiler.end_timer("data_io_time")
