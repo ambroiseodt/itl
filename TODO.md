@@ -3,16 +3,7 @@
 
 #### Vivien's current todo:
 
-- Make pretraining work with the new pretrain function:
-    - try without compile, then (after fixing the rest) with compile and with tp
-- Make the pipeline works without flex-attention, without compile and without tp, then add flex-attention, then compile, then tp.
-
-- Fix generation based on gpt-fast and flex-attention.
-    - We setup the KVCache after having parallelize the model
-
-- Simplify some function: remove class inheritance for simpler stuff that create more folder to look at when trying to understand the code.
-- Integrate https://github.com/pytorch-labs/gpt-fast to improve the inference scheduled.
-- See also https://github.com/Edward-Sun/gpt-accelera
+- Make sure eval work when launched from training runs.
 
 - Add an run_config.implementation.{model,profiler} to simplify the parsing of the configs (catch case where `run_cfg.im.profiler: null`), and remove the config dispatcher (in `model.utils`).
 
@@ -23,9 +14,6 @@
 - Generation.
     - Write inference loop logic, as well as sampling strategies.
 
-- Correct the generation with compile and FlexAttention.
-    - Ensure static KV cache to go fast.
-
 - Proper parallelization when using many GPUs.
     - TP at training time.
     - DDP at generation time (make KV cache / masking work there).
@@ -33,6 +21,7 @@
     - Check Meta Lingua logic.
     - Check torch.compile(dynamic=True).
 
+- Correct unit tests.
 
 #### Pipeline modification ideas
 - Change mask so that the LLM can have non-causal interaction between tokens that it has not generated.

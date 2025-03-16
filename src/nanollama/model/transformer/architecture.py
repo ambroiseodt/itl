@@ -209,6 +209,7 @@ class SelfAttention(nn.Module):
 
     def _prefill_attention(self, q: Tensor, k: Tensor, v: Tensor) -> Tensor:
         # current implement without sequence concatenation nor static caching
+        # not that an implementation change may require a change of the cache logic, and of the forward inputs
         assert q.size(2) == k.size(2), "you are breaking our prefilling logic"
         return F.scaled_dot_product_attention(q, k, v, is_causal=True, enable_gqa=True)
 
