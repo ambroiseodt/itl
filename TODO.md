@@ -3,8 +3,9 @@
 
 #### Vivien's current todo:
 
-- QA without tools does not seem to work properly at the moment (I have issues with diverging losses).
-    - this is because the eval dataloader inherits from the train dataloader, and the answer field are only present in the qatool datasets and not the qa ones, so the accuracy is not computed correctly.
+- Relaunch grid as the previous one was faulty due to qa dataset missing answer field.
+    - launch the dataset creation (this takes a long time)
+    - launch the grid job
 
 - Add an run_config.implementation.{model,profiler} to simplify the parsing of the configs (catch case where `run_cfg.im.profiler: null`), and remove the config dispatcher (in `model.utils`).
 
@@ -21,6 +22,7 @@
     - Check torch.compile(dynamic=True).
 
 - Correct unit tests.
+- Check if evals are still working asynchronously.
 
 #### Pipeline modification ideas
 - Change mask so that the LLM can have non-causal interaction between tokens that it has not generated.
