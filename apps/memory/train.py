@@ -23,7 +23,7 @@ from src.nanollama.launcher import launch_job
 from src.nanollama.model import (
     EmbeddingModel,
 )
-from src.nanollama.model.transformer import build_pretrain_mask, pretrain
+from src.nanollama.model.transformer import pretrain
 from src.nanollama.monitor import (
     Checkpointer,
     Logger,
@@ -84,7 +84,6 @@ def train(config: TrainingConfig) -> None:
             pretrain_logic = torch.compile(pretrain)
         else:
             pretrain_logic = pretrain
-        attn_mask = build_pretrain_mask(config.data.seq_len - 1, model.device)
 
         logger.info("Building optimizer")
         optimizer = build_optimizer(model, config.optim)
@@ -120,7 +119,7 @@ def train(config: TrainingConfig) -> None:
 
         profiler: Profiler = context_stack.enter_context(Profiler(config.orchestration.profiler, state=optim_state))
 
-        # TODO flops calculation
+        # flops and model size calculation
         raw_model = cluster.root_model
         token_per_step = config.data.seq_len * config.data.batch_size * config.optim.grad_acc_steps
         profiler.report_statistics(model=raw_model, token_per_step=token_per_step)
@@ -135,9 +134,6 @@ def train(config: TrainingConfig) -> None:
         log_period = config.orchestration.logging.period
 
         while optim_state.step < config.optim.steps:
-            # alias
-            step = optim_state.step
-
             # handle preemption
             if preemption():
                 logger.warning("Preemption flag set")
@@ -178,7 +174,7 @@ def train(config: TrainingConfig) -> None:
             profiler.start_timer()
 
             # forward propagation
-            loss = pretrain_logic(model, X_batch, y_batch, mask=attn_mask, loss_mask=loss_mask)
+            loss = pretrain_logic(model, X_batch, y_batch, loss_mask=loss_mask)
 
             # rescale when using gradient accumulation (backprop on mean, not sum)
             loss = loss / config.optim.grad_acc_steps
@@ -218,6 +214,9 @@ def train(config: TrainingConfig) -> None:
             # -----------------------------------------------------------------
 
             profiler.start_timer()
+
+            # alias
+            step = optim_state.step
 
             if log_period > 0 and step % log_period == 0:
                 metrics = {"loss": loss.item(), "step": step}

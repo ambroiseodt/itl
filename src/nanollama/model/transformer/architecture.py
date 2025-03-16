@@ -69,11 +69,11 @@ class KVCache(nn.Module):
         - value: updated value tensor
         """
         # Sequence length is the third dimension, (B, H, S, D / H)
-        S = key.size(2)
-        self.key[:, :, self.pos_idx : self.pos_idx + S] = key
-        self.value[:, :, self.pos_idx : self.pos_idx + S] = value
-        self.pos_idx = self.pos_idx + S
-        return self.key[:, :, : self.pos_idx], self.value[:, :, : self.pos_idx]
+        bsz, _, seq_len, _ = key.size()
+        self.key[:bsz, :, self.pos_idx : self.pos_idx + seq_len] = key
+        self.value[:bsz, :, self.pos_idx : self.pos_idx + seq_len] = value
+        self.pos_idx = self.pos_idx + seq_len
+        return self.key[:bsz, :, : self.pos_idx], self.value[:bsz, :, : self.pos_idx]
 
     def reset(self) -> None:
         self.pos_idx = 0
@@ -248,11 +248,11 @@ class SelfAttention(nn.Module):
         - qk: query or key tensor
         - idx: position in sequence
         """
-        B, H, S, dim = qk.size()
-        assert S <= self.rope_modulator.size(0), "sequence length is too long for rope attention"
+        bsz, nb_heads, seq_len, dim = qk.size()
+        assert seq_len <= self.rope_modulator.size(0), "sequence length is too long for rope attention"
 
-        cos_sin = self.rope_modulator[idx : idx + S].view(1, 1, S, dim // 2, 2)
-        qk = qk.reshape(B, H, S, dim // 2, 2)
+        cos_sin = self.rope_modulator[idx : idx + seq_len].view(1, 1, seq_len, dim // 2, 2)
+        qk = qk.reshape(bsz, nb_heads, seq_len, dim // 2, 2)
 
         # # (x1 * cos - x2 * sin, x2 * cos + x1 * sin)
         out = torch.stack(
@@ -263,7 +263,7 @@ class SelfAttention(nn.Module):
             dim=-1,
         )
 
-        return out.type_as(qk).view((B, H, S, dim))
+        return out.type_as(qk).view((bsz, nb_heads, seq_len, dim))
 
     def get_nb_flop(self, mode: str = "both") -> int:
         """
@@ -413,3 +413,9 @@ class Transformer(EmbeddingModel):
         self.seq_len = config.block.seq_len
         self.head_dim = config.block.emb_dim // config.block.nb_heads
         self.nb_kv_heads = config.block.nb_kv_heads
+
+    def set_mode(self, mode: str) -> None:
+        assert mode in ["train", "prefill", "generate"], f"unknown mode: {mode}"
+        for layer in self.layers:
+            layer: TransformerBlock
+            layer.attn.mode = mode

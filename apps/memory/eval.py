@@ -117,6 +117,7 @@ class BatchedInference:
         for layer in self.model.layers:
             layer: TransformerBlock
             layer.attn.kv_cache = None
+        self.model.set_mode("train")
         self.model.train()
 
     def generate(self, prompts: list[list[int]], max_len: int = None) -> list[str]:
@@ -156,9 +157,11 @@ class BatchedInference:
 
         while total_len < max_len and ongoing.any():
             if not prefilled:
+                self.model.set_mode("prefill")
                 x = self.prefilling_logic(self.model, x, **self.kwargs)
                 prefilled = True
             else:
+                self.model.set_mode("generate")
                 x = self.generation_logic(self.model, x, **self.kwargs)
 
             # inspect each lane
@@ -317,6 +320,8 @@ def run_evaluation(
             logger.info(
                 f"Evaluation: partial step: {state.step} - accuracy: {round(state.accuracy / state.scaling, 4)}"
             )
+
+        logger.info(f"Genration example:\n {output}")
 
         # rescale accuracy and save it
         state.accuracy /= state.scaling
