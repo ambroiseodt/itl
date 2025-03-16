@@ -60,7 +60,6 @@ class OnlineEvaluationConfig:
 
     db_path: str = ""
     data: DataConfig = field(default_factory=DataConfig)
-    tokenizer: TokenizerConfig = field(default_factory=TokenizerConfig)
     checkpoint: EvalCheckpointConfig = field(default_factory=EvalCheckpointConfig)
 
     def post_init(self) -> None:
@@ -68,7 +67,6 @@ class OnlineEvaluationConfig:
         self.db_path = os.path.expandvars(self.db_path)
 
         self.data.post_init()
-        self.tokenizer.post_init()
         self.checkpoint.post_init()
 
 
@@ -125,10 +123,12 @@ def build_eval_config(file_config: dict[str, Any]) -> EvaluationConfig:
     """
 
     if "run_config" in file_config:
-        text_config = file_config["run_config"]
+        run_config = file_config["run_config"]
+    else:
+        run_config = file_config
 
     # initialize configuration
-    config = build_with_type_check(EvaluationConfig, text_config, inplace=False)
+    config = build_with_type_check(EvaluationConfig, run_config, inplace=False)
     return config
 
 

@@ -14,19 +14,18 @@ Transformer model.
 import math
 from dataclasses import dataclass, field
 from logging import getLogger
+from typing import Literal
 
 import torch
 import torch.nn as nn
 import torch.nn.functional as F
 from torch import Tensor
-from torch.nn.attention.flex_attention import BlockMask, flex_attention
 
 from ..embedding_model import EmbeddingModel, EmbeddingModelConfig
 from ..feedforward import FeedForward
 from ..norm import RMSNorm
 
 logger = getLogger("nanollama")
-FLEX_ATTENTION = True
 
 
 # ------------------------------------------------------------------------------
@@ -48,17 +47,15 @@ class KVCache(nn.Module):
     - value: prefilled value tensor
     """
 
-    def __init__(self, shape: list[int], device: torch.device, dtype: torch.dtype, dynamic: bool = False):
+    def __init__(self, shape: list[int], device: torch.device, dtype: torch.dtype):
         super().__init__()
         self.pos_idx = 0
-        self.dynamic = dynamic
-
-        self.register_buffer("k_cache", torch.zeros(shape, device=device, dtype=dtype))
-        self.register_buffer("v_cache", torch.zeros(shape, device=device, dtype=dtype))
+        self.register_buffer("key", torch.zeros(shape, device=device, dtype=dtype))
+        self.register_buffer("value", torch.zeros(shape, device=device, dtype=dtype))
         self.key: Tensor
         self.value: Tensor
 
-    def update(self, key: Tensor, value: Tensor) -> None:
+    def forward(self, key: Tensor, value: Tensor) -> None:
         """
         Update KV cache with new key and value tensors.
 
@@ -76,9 +73,7 @@ class KVCache(nn.Module):
         self.key[:, :, self.pos_idx : self.pos_idx + S] = key
         self.value[:, :, self.pos_idx : self.pos_idx + S] = value
         self.pos_idx = self.pos_idx + S
-        if self.dynamic:
-            return self.key[:, :, : self.pos_idx], self.value[:, :, : self.pos_idx]
-        return self.key, self.value
+        return self.key[:, :, : self.pos_idx], self.value[:, :, : self.pos_idx]
 
     def reset(self) -> None:
         self.pos_idx = 0
@@ -135,8 +130,9 @@ class SelfAttention(nn.Module):
         )
         self.rope_modulator: Tensor
 
-        # caching
+        # inference utilities
         self.kv_cache: KVCache = None
+        self.mode: Literal["train", "prefill", "generate"] = "train"
 
     def reset_parameters(self, init_std: float, factor: float) -> None:
         """
@@ -170,8 +166,7 @@ class SelfAttention(nn.Module):
             b=3 * in_std,
         )
 
-    def forward(self, x: Tensor, mask: BlockMask = None) -> Tensor:
-        """Self attention"""
+    def forward(self, x: Tensor) -> Tensor:
         # dimensions
         bsz, seq_len, _ = x.size()
 
@@ -191,13 +186,16 @@ class SelfAttention(nn.Module):
         if self.kv_cache is not None:
             k, v = self.kv_cache(k, v)
 
-        # Efficient attention implementation
+        # Efficient attention implementation (one may use flex attention for fancy masks)
         # ... -> (B, H, S, D / H)
-        if FLEX_ATTENTION:
-            z = flex_attention(q, k, v, block_mask=mask, enable_gqa=True)
+        if self.mode == "train":
+            z = self._train_attention(q, k, v)
+        elif self.mode == "prefill":
+            z = self._prefill_attention(q, k, v)
+        elif self.mode == "generate":
+            z = self._generate_attention(q, k, v)
         else:
-            is_causal = q.size(2) == k.size(2)
-            z = F.scaled_dot_product_attention(q, k, v, is_causal=is_causal, enable_gqa=True)
+            raise ValueError(f"unknown mode: {self.mode}")
 
         # reformating: (B, H, S, D / H) -> (B, S, H, D / H) -> (B, S, D)
         z = z.transpose(1, 2).reshape(bsz, seq_len, -1)
@@ -205,6 +203,19 @@ class SelfAttention(nn.Module):
         # output layer: (B, L, D) @ (D, D) -> (N, L, D)
         z = self.W_out(z)
         return z
+
+    def _train_attention(self, q: Tensor, k: Tensor, v: Tensor) -> Tensor:
+        return F.scaled_dot_product_attention(q, k, v, is_causal=True, enable_gqa=True)
+
+    def _prefill_attention(self, q: Tensor, k: Tensor, v: Tensor) -> Tensor:
+        # current implement without sequence concatenation nor static caching
+        assert q.size(2) == k.size(2), "you are breaking our prefilling logic"
+        return F.scaled_dot_product_attention(q, k, v, is_causal=True, enable_gqa=True)
+
+    def _generate_attention(self, q: Tensor, k: Tensor, v: Tensor) -> Tensor:
+        # current implement without sequence concatenation nor static caching
+        assert q.size(2) == 1, "you are breaking our generation logic"
+        return F.scaled_dot_product_attention(q, k, v, enable_gqa=True)
 
     @staticmethod
     def _get_rope_modulator(seq_len: int, dim: int, theta: float) -> Tensor:
@@ -340,8 +351,8 @@ class TransformerBlock(nn.Module):
         self.ffn.reset_parameters(init_std, factor)
         self.ffn_norm.reset_parameters()
 
-    def forward(self, x: Tensor, mask: BlockMask) -> Tensor:
-        out = x + self.attn(self.attn_norm(x), mask=mask)
+    def forward(self, x: Tensor) -> Tensor:
+        out = x + self.attn(self.attn_norm(x))
         out = out + self.ffn(self.ffn_norm(out))
         return out
 
@@ -371,13 +382,9 @@ class TransformerBlock(nn.Module):
 class TransformerConfig(EmbeddingModelConfig):
     implementation: str = "transformer"
     block: TransformerBlockConfig = field(default_factory=TransformerBlockConfig)
-    flex_attention: bool = True
 
     def post_init(self) -> None:
-        global FLEX_ATTENTION
         super().post_init()
-
-        FLEX_ATTENTION = self.flex_attention
 
         # Inherit parameters from the block model configuration.
         for attr in ["emb_dim", "norm_eps"]:
@@ -405,21 +412,3 @@ class Transformer(EmbeddingModel):
         self.seq_len = config.block.seq_len
         self.head_dim = config.block.emb_dim // config.block.nb_heads
         self.nb_kv_heads = config.block.nb_kv_heads
-
-        # default mask for pretraining
-        self.default_mask: BlockMask = None
-
-    def forward(self, x: Tensor, mask: BlockMask) -> Tensor:
-        """
-        Forward pass of the transformer.
-
-        ### Parameters
-        - x: input tensor
-        - mask: attention mask (if using FlexAttention)
-        """
-        # forward pass
-        out = self.embeddings(x)
-        for layer in self.layers:
-            out = layer(out, mask=mask)
-        logits = self.output(self.output_norm(out))
-        return logits

@@ -153,7 +153,7 @@ class DialogTokenizer:
             message = build_with_type_check(Message, _message, inplace=False)
             bos = self.bots[message.source]
             new_tokens = self.tokenizer.encode(message.content, bos=bos)
-            tokens += new_tokens
+            tokens.extend(new_tokens)
             if message.source == Actor.assistant:
                 mask.extend([True] * len(new_tokens))
             else:

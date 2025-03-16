@@ -44,7 +44,7 @@ class SourceConfig:
     """
 
     path: str
-    weight: float
+    weight: float = 1
 
     def post_init(self) -> None:
         self.path = os.path.expandvars(self.path)

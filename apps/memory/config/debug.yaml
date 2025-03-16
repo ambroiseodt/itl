@@ -46,7 +46,6 @@ run_config:
 
   model:
     implementation: transformer
-    flex_attention: true
     vocab_size: 300
     emb_dim: 64
     nb_layers: 2

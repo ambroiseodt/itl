@@ -6,4 +6,4 @@ Transformer implementation.
 """
 
 from .architecture import Transformer, TransformerConfig
-from .inference import InferenceContext, build_pretrain_mask, generate, prefill, pretrain
+from .inference import InferenceContext, generate, prefill, pretrain
