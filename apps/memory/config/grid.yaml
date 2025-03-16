@@ -53,7 +53,6 @@ run_config:
     steps: 10000
     lr: 1e-3
     weight_decay: 0.1
-    fused: true
     warmup: 50
     lr_min_ratio: 0
 
@@ -78,5 +77,6 @@ run_config:
   evaluation:
     period: 20
     asynchronous: false
-
     db_path: $HOME/data/memory/people.db
+    data:
+      batch_size: 1024

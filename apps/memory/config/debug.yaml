@@ -26,8 +26,8 @@ run_config:
     seq_len: 257
     padding: true
 
-    n_data: 10
-    key: qa
+    n_data: 10000
+    key: qatool
     data_dir: $HOME/data/memory
     save_dir: $HOME/data/temporary
     tokenizer:
@@ -46,10 +46,10 @@ run_config:
   model:
     implementation: transformer
     vocab_size: 300
-    emb_dim: 64
-    nb_layers: 2
+    emb_dim: 128
+    nb_layers: 6
     block:
-      nb_heads: 2
+      nb_heads: 8
       hidden_dim: 256
 
   optim:
@@ -85,5 +85,7 @@ run_config:
     db_path: $HOME/data/memory/people.db
     period: 1000
     asynchronous: false
+    data:
+      batch_size: 1024
     slurm:
       nb_gpus: 1

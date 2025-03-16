@@ -8,6 +8,7 @@ Evaluation script.
 import json
 import logging
 import os
+import time
 from contextlib import ExitStack
 from dataclasses import dataclass
 from logging import getLogger
@@ -297,6 +298,7 @@ def run_evaluation(
         context_stack.enter_context(inference_engine)
 
         for prompts, answers in loader:
+            start = time.time()
             # handle preemption
             if preemption():
                 logger.warning("Preemption flag set")
@@ -317,11 +319,15 @@ def run_evaluation(
             state.scaling += scaling
             state.step += 1
 
+            throughput = len(outputs) / (time.time() - start)
+
             logger.info(
-                f"Evaluation: partial step: {state.step} - accuracy: {round(state.accuracy / state.scaling, 4)}"
+                f"Evaluation: partial step: {state.step}, "
+                f"accuracy: {round(state.accuracy / state.scaling, 4)}, "
+                f"prompt_freq: {round(throughput, 4)}"
             )
 
-        logger.info(f"Genration example:\n {output}")
+        logger.info(f"Generation example:\n {output}")
 
         # rescale accuracy and save it
         state.accuracy /= state.scaling

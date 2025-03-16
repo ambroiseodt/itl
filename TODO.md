@@ -3,23 +3,12 @@
 
 #### Vivien's current todo:
 
-- Relaunch grid as the previous one was faulty due to qa dataset missing answer field.
-    - launch the dataset creation (this takes a long time)
-    - launch the grid job
-
 - Add an run_config.implementation.{model,profiler} to simplify the parsing of the configs (catch case where `run_cfg.im.profiler: null`), and remove the config dispatcher (in `model.utils`).
 
 - Make nice plots, and visualization methods.
     - Check that wandb is working correctly.
 - Generation.
     - Write inference loop logic, as well as sampling strategies.
-
-- Proper parallelization when using many GPUs.
-    - TP at training time.
-    - DDP at generation time (make KV cache / masking work there).
-    - TP at generation time.
-    - Check Meta Lingua logic.
-    - Check torch.compile(dynamic=True).
 
 - Correct unit tests.
 - Check if evals are still working asynchronously.
@@ -36,14 +25,19 @@
 - (?) Remove Statefulness of scheduler.
 
 #### Known issues
-- Issue with compile at inference time.
-    - Option to disable compile at generation time (it seems to slow the generation quite a bit).
-    - Use `compiled_model = torch.compile(model, dynamic=True)` ?
-    - TODO: look at Claude suggestion.
-- Parsing configuration starts to be a bit messy. Not clear if there is a clean solution though.
 - Wandb restarting does not work well. To have nice eval plots, best is to update local results to wandb after the runs.
+- Restart after an interruption during eval when launched online are not handled correctly.
 
-#### Bigger improvement to the codebas
+#### Bigger improvement to the codebase
+- Modify the light profiler: 
+    - throughput and timing should be output in the metrics.
+    - probably best is to have a different config for the light and the heavy profiler.
+- Tinker with parallelization when using many GPUs.
+    - TP at training time.
+    - DDP at generation time (make KV cache / masking work there).
+    - TP at generation time.
+    - Check Meta Lingua logic.
+    - Check torch.compile(dynamic=True).
 - Improve the metric logging, as well as the profiler.
     - log activation norm -> use probing.
         - We may easily log the norm of the weights.
