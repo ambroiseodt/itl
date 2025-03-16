@@ -3,11 +3,10 @@
 
 #### Vivien's current todo:
 
-- Make sure eval work when launched from training runs.
+- QA without tools does not seem to work properly at the moment (I have issues with diverging losses).
+    - this is because the eval dataloader inherits from the train dataloader, and the answer field are only present in the qatool datasets and not the qa ones, so the accuracy is not computed correctly.
 
 - Add an run_config.implementation.{model,profiler} to simplify the parsing of the configs (catch case where `run_cfg.im.profiler: null`), and remove the config dispatcher (in `model.utils`).
-
-- QA without tools does not seem to work properly at the moment (I have issues with diverging losses).
 
 - Make nice plots, and visualization methods.
     - Check that wandb is working correctly.

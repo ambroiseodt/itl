@@ -163,9 +163,10 @@ def generate_qa(save_dir: str = DATA_DIR, num: int = float("inf"), tooluse: bool
                 out, answer = [], None
                 for message in dialog:
                     content = message["content"].render(**people)
-                    out.append(message | {"content": content})
-                    if message["source"] == "database":
-                        answer = message["content"].render(**people)
+                    if message["source"] == "answer":
+                        answer = content
+                    else:
+                        out.append(message | {"content": content})
                 print(json.dumps({"dialog": out, "people_id": i, "answer": answer}), file=f, flush=True)
 
 

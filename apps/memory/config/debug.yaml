@@ -27,7 +27,7 @@ run_config:
     padding: true
 
     n_data: 10
-    key: qatool
+    key: qa
     data_dir: $HOME/data/memory
     save_dir: $HOME/data/temporary
     tokenizer:
