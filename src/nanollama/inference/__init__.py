@@ -5,5 +5,9 @@ Module containing inference utilities.
 @ 2025, Meta
 """
 
-from .batch_masking import MaskedBatchedInference
-from .batch_queue import QueuedBatchedInference
+from torch import Tensor
+
+
+def sample_from_logits(logits: Tensor, **kwargs) -> Tensor:
+    # TODO implement various sampling strategy
+    return logits.argmax(dim=-1)

@@ -19,6 +19,7 @@ import torch
 import torch.nn.functional as F
 from torch import Tensor
 
+from ...inference import sample_from_logits
 from .architecture import KVCache, Transformer, TransformerBlock
 
 logger = getLogger("nanollama")
@@ -82,11 +83,6 @@ class InferenceContext:
         self.model.train()
 
 
-def sample(logits: Tensor, **kwargs) -> Tensor:
-    # TODO implement various sampling strategy in a different file (..inference.sampling)
-    return logits.argmax(dim=-1)
-
-
 @torch.inference_mode()
 def generate(model: Transformer, x: Tensor, **kwargs) -> Tensor:
     """
@@ -101,7 +97,7 @@ def generate(model: Transformer, x: Tensor, **kwargs) -> Tensor:
     - tokens: generated tokens.
     """
     logit = model(x)
-    return sample(logit, **kwargs)
+    return sample_from_logits(logit, **kwargs)
 
 
 # ------------------------------------------------------------------------------
@@ -125,4 +121,4 @@ def prefill(model: Transformer, x: Tensor, **kwargs) -> Tensor:
     logits = model(x)
     # only sample the last token
     logit = logits[:, -1:]
-    return sample(logit, **kwargs)
+    return sample_from_logits(logit, **kwargs)
