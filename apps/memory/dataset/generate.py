@@ -207,7 +207,7 @@ def build_data(n_data: int, key: str, save_dir: str, data_dir: str = DATA_DIR) -
 if __name__ == "__main__":
     import fire
 
-    logging.basicConfig(level=logging.DEBUG)
+    logging.basicConfig(level=logging.INFO)
 
     fire.Fire(
         {

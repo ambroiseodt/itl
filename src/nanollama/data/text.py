@@ -125,7 +125,6 @@ class JSONLIterator(DataLoader):
         world_size: int,
         loop: bool = True,
     ):
-        super().__init__(AsyncDataConfig(asynchronous=False))
         self.path = path
         self.rank = rank
         self.world_size = world_size
@@ -134,6 +133,8 @@ class JSONLIterator(DataLoader):
         self.file = None
         self.position = 0
         self.line_num = 0
+
+        super().__init__(AsyncDataConfig(asynchronous=False))
 
     def __enter__(self) -> "JSONLIterator":
         self.file = open(self.path)
@@ -164,7 +165,6 @@ class JSONLIterator(DataLoader):
     def load_writer_state_dict(self, state_dict: dict[str, Any]) -> None:
         self.line_num = state_dict["line_num"]
         self.position = state_dict["position"]
-        self.file.seek(self.position)
 
 
 # ------------------------------------------------------------------------------
@@ -205,7 +205,6 @@ class SingleSourceTokenGenerator(DataLoader):
     def __init__(
         self, batch_size: int, seq_len: int, padding: bool, iterator: JSONLIterator, tokenizer: DialogTokenizer
     ):
-        super().__init__(AsyncDataConfig(asynchronous=False))
         self.jsonl_iterator = iterator
         self.tokenizer = tokenizer
 
@@ -215,6 +214,8 @@ class SingleSourceTokenGenerator(DataLoader):
         self.seq_len = seq_len
         self.tokens_per_batch = batch_size * seq_len
         self.padding = padding
+
+        super().__init__(AsyncDataConfig(asynchronous=False))
 
     def __enter__(self) -> "SingleSourceTokenGenerator":
         self.jsonl_iterator.__enter__()
@@ -295,8 +296,6 @@ class TokenLoader(DataLoader):
     """
 
     def __init__(self, config: DataConfig, dp_mesh: DeviceMesh = None):
-        super().__init__(config)
-
         self.batch_size = config.batch_size
         self.seq_len = config.seq_len
 
@@ -338,6 +337,8 @@ class TokenLoader(DataLoader):
         # initialize the random number generator
         _, seeds = generate_seeds(nb_shared=0, nb_individual=1, root_seed=config.seed, rank=rank)
         self.rng = default_rng(seeds[0])
+
+        super().__init__(config)
 
     def __enter__(self) -> "TokenLoader":
         for generator in self.token_iterators:

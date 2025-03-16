@@ -17,7 +17,6 @@ import torch
 import torch.profiler as profiler
 
 from ..distributed import get_local_rank, get_rank
-from ..model.embedding_model import EmbeddingModel
 from ..optim import OptimizerState
 
 logger = getLogger("nanollama")
@@ -42,10 +41,6 @@ class BaseProfiler(ABC):
     def __call__(self):
         """Main function ran by the Profiler"""
         pass
-
-    def report_statistics(self, *args, **kwargs) -> None:
-        """Report global statistics about the device."""
-        return
 
     def start_timer(self) -> None:
         """Start a timer"""
@@ -136,10 +131,6 @@ class LightProfiler(BaseProfiler):
         # placeholder and alias
         self.times = {}
         self.state = state
-        self.token_per_step = 0
-        self.flop_per_step = 0
-        self.train_step = state.step
-        self.train_time = time.time()
 
         # device
         rank = get_local_rank()
@@ -168,18 +159,8 @@ class LightProfiler(BaseProfiler):
             mem = cuda_info["active_bytes.all.peak"]
             mem_reserved = cuda_info["reserved_bytes.all.peak"]
 
-            # flops information
-            new_steps = self.state.step - self.train_step
-            elapsed_time = time.time() - self.train_time
-            flops = new_steps * self.flop_per_step / elapsed_time
-            token_freq = new_steps * self.token_per_step / elapsed_time
-            self.train_step = self.state.step
-            self.train_time = time.time()
-
             metrics = self.times | {
                 "step": self.state.step,
-                "flop_freq (TF)": flops / 1e12,
-                "token_freq (M)": token_freq / 1e6,
                 "mem_GiB": mem / (1024**3),
                 "mem_reserved_GiB": mem_reserved / (1024**3),
                 "mem_percentage": mem / self.capacity,
@@ -196,18 +177,6 @@ class LightProfiler(BaseProfiler):
             self.__exit__(None, None, None)
 
         self.step += 1
-
-    def report_statistics(self, model: EmbeddingModel, token_per_step: int, **kwargs) -> None:
-        """
-        Report flop per step
-
-        ### Parameters
-        - model: model to profile.
-        - seq_len: sequence length.
-        - flop_multiplier: number of token updates per training step.
-        """
-        self.token_per_step = token_per_step
-        self.flop_per_step = model.get_nb_flop(**kwargs) * token_per_step
 
     def start_timer(self) -> None:
         if self.device:  # act as an active flag
@@ -286,13 +255,6 @@ class Profiler(BaseProfiler):
         """
         for prof in self.profilers:
             prof()
-
-    def report_statistics(self, *args, **kwargs) -> None:
-        """
-        Report global statistics
-        """
-        for prof in self.profilers:
-            prof.report_statistics(*args, **kwargs)
 
     def start_timer(self) -> None:
         """

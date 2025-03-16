@@ -45,7 +45,6 @@ class PromptLoader(DataLoader):
     """
 
     def __init__(self, config: DataConfig, dp_mesh: DeviceMesh = None):
-        super().__init__(config)
         self.batch_size = config.batch_size
 
         self.tokenizer = build_tokenizer(config.tokenizer)
@@ -65,6 +64,8 @@ class PromptLoader(DataLoader):
             else:
                 self.iterators.append(JSONLIterator(source.path, rank, world_size, loop=False))
         self.file_idx = 0
+
+        super().__init__(config)
 
     def __enter__(self) -> "PromptLoader":
         for iterator in self.iterators:

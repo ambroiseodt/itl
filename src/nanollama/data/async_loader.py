@@ -52,7 +52,7 @@ class DataLoader(ABC, Stateful):
 
         # asynchronous data loader: a worker writes batches in a buffer, that a reader consumes
         if self.asynchronous:
-            self.async_state_dict = None
+            self.async_state_dict = self.writer_state_dict()
             self.process = Process(target=self.write_batch)
             self.buffer = Queue(maxsize=config.buffer_size)
 
@@ -143,18 +143,4 @@ class DataLoader(ABC, Stateful):
 
     def load_state_dict(self, state_dict: dict) -> None:
         """Reload the state of the data reader."""
-        # stop the running process
-        if self.asynchronous:
-            self.process.kill()
-            # empty the buffer
-            while not self.buffer.empty():
-                self.buffer.get()
-
-        # reset the generator
         self.load_writer_state_dict(state_dict)
-
-        # restart the process
-        if self.asynchronous:
-            self._state_dict = state_dict
-            self.process = Process(target=self.write_batch)
-            self.process.start()

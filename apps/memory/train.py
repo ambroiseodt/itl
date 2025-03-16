@@ -8,6 +8,7 @@ Training script with online generation of batch of data.
 import argparse
 import logging
 import os
+import time
 from contextlib import ExitStack
 from dataclasses import asdict
 from typing import Any
@@ -96,7 +97,6 @@ def train(config: TrainingConfig) -> None:
         # ---------------------------------------------------------------------
 
         dataloader = TokenLoader(config.data, cluster.dp_mesh)
-        context_stack.enter_context(dataloader)
 
         # ---------------------------------------------------------------------
         # Recover Checkpoint
@@ -108,22 +108,24 @@ def train(config: TrainingConfig) -> None:
                 model=model,
                 optimizer=optimizer,
                 stateful_objects={"scheduler": scheduler, "dataloader": dataloader, "state": optim_state},
+                model_config=asdict(config.model),
             )
         )
         checkpoint.saved_step = checkpoint.step = optim_state.step
-        model.config = asdict(config.model)
+        context_stack.enter_context(dataloader)
 
         # ---------------------------------------------------------------------
-        # Global information
+        # Profile information
         # ---------------------------------------------------------------------
 
         profiler: Profiler = context_stack.enter_context(Profiler(config.orchestration.profiler, state=optim_state))
 
         # flops and model size calculation
-        raw_model = cluster.root_model
-        token_per_step = config.data.seq_len * config.data.batch_size * config.optim.grad_acc_steps
-        profiler.report_statistics(model=raw_model, token_per_step=token_per_step)
+        raw_model: EmbeddingModel = cluster.root_model
         metric_logger.report_statistics(raw_model)
+        token_per_step = config.data.seq_len * config.data.batch_size * config.optim.grad_acc_steps
+        flop_per_step = raw_model.get_nb_flop() * token_per_step
+        current_time, current_step = time.time(), optim_state.step
 
         # ---------------------------------------------------------------------
         # Training loop
@@ -139,14 +141,12 @@ def train(config: TrainingConfig) -> None:
                 logger.warning("Preemption flag set")
                 break
 
-            model.train()
-
             # accumulation step
             optim_state.acc_step += 1
             optim_state.acc_step = optim_state.acc_step % config.optim.grad_acc_steps
 
             # -----------------------------------------------------------------
-            # Batch of data (with reproducibility information)
+            # Batch of data
             # -----------------------------------------------------------------
 
             profiler.start_timer()
@@ -186,7 +186,7 @@ def train(config: TrainingConfig) -> None:
             if optim_state.acc_step != 0:
                 continue
 
-            # extract gradient norm if logging
+            # clip gradient norm
             grad_norm = torch.nn.utils.clip_grad_norm_(model.parameters(), config.optim.clip)
 
             # optimizer step
@@ -219,15 +219,31 @@ def train(config: TrainingConfig) -> None:
             step = optim_state.step
 
             if log_period > 0 and step % log_period == 0:
-                metrics = {"loss": loss.item(), "step": step}
-                # extra metrics
+                # undo gradient accumulation scaling
+                loss = loss.item() * config.optim.grad_acc_steps
+
+                # optimization information
                 lr = optimizer.param_groups[0]["lr"]
                 grad_norm = grad_norm.item()
                 # TODO: if TP probably we should do the following instead
                 # (grad_norm.full_tensor() if isinstance(grad_norm, DTensor) else grad_norm).item()
-                metrics |= {
+
+                # TODO: model information (add activation norm?)
+
+                # flops information
+                new_steps = optim_state.step - current_step
+                elapsed_time = time.time() - current_time
+                flops = new_steps * flop_per_step / elapsed_time
+                token_freq = new_steps * token_per_step / elapsed_time
+                current_time, current_step = time.time(), optim_state.step
+
+                metrics = {
+                    "loss": loss,
+                    "step": step,
                     "lr": lr,
                     "grad_norm": grad_norm,
+                    "flop_freq (TF)": flops / 1e12,
+                    "token_freq (M)": token_freq / 1e6,
                 }
                 metric_logger(metrics)
 

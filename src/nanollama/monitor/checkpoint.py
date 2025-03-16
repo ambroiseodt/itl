@@ -78,9 +78,11 @@ class Checkpointer:
         model: nn.Module,
         optimizer: Optimizer = None,
         stateful_objects: dict[str, Stateful] = None,
+        model_config: dict = None,
     ):
         self.period = config.period
         self.nb_kept = config.nb_kept
+        self.model_config = model_config
         self.path = Path(config.path)
         self.path.mkdir(parents=True, exist_ok=True)
 
@@ -177,9 +179,9 @@ class Checkpointer:
         state_dict = self.get_state_dict()
         self.process = dcp.async_save(state_dict, checkpoint_id=path)
 
-        if hasattr(self.model, "config") and is_master_process():
+        if self.model_config is not None and is_master_process():
             with open(path / "params.json", "w") as f:
-                json.dump(self.model.config, f)
+                json.dump(self.model_config, f)
 
     @torch.no_grad()
     def get_state_dict(self) -> dict[str, dict]:
