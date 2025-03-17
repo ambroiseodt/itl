@@ -71,16 +71,19 @@ run_config:
     #   nb_kept: 3
 
     logging:
-      period: 25
+      period: 10
       level: INFO
       # wandb:
       #   active: true
 
     profiler:
-      active: true
-      heavy: false
-      wait: 1
-      steps: 10
+      pytorch:
+        active: true 
+        wait: 1
+        steps: 10
+      light:
+        active: true
+        period: 25
 
   evaluation:
     db_path: $HOME/data/memory/people.db

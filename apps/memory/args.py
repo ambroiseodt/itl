@@ -21,9 +21,11 @@ from src.nanollama.monitor import (
     Checkpointer,
     EvalCheckpointConfig,
     EvalOrchestratorConfig,
+    LightProfilerConfig,
     LoggerConfig,
     OrchestratorConfig,
     ProfilerConfig,
+    PytorchProfilerConfig,
     WandbConfig,
 )
 from src.nanollama.optim import (
@@ -360,6 +362,8 @@ def heritage_eval_config(run_config: dict[str, Any], launcher: dict[str, Any]) -
             (dict, "tokenizer"),
             (LoggerConfig, "orchestration.logging"),
             (ProfilerConfig, "orchestration.profiler"),
+            (PytorchProfilerConfig, "orchestration.profiler.pytorch"),
+            (LightProfilerConfig, "orchestration.profiler.ligth"),
             (WandbConfig, "orchestration.logging.wandb"),
         ]
 

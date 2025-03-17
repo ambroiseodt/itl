@@ -3,16 +3,12 @@
 
 #### Vivien's current todo:
 
-- Add an run_config.implementation.{model,profiler,tokenizer} to simplify the parsing of the configs (catch case where `run_cfg.im.profiler: null`), and remove the config dispatcher (in `model.utils`).
-    - profiler should not be one or the other (the orchestrator should have both of them).
-
 - Make nice plots, and visualization methods.
     - Check that wandb is working correctly.
 - Generation.
     - Write inference loop logic, as well as sampling strategies.
 
 - Correct unit tests.
-- Check if evals are still working asynchronously.
 
 #### Pipeline modification ideas
 - Change mask so that the LLM can have non-causal interaction between tokens that it has not generated.

@@ -111,7 +111,6 @@ def train(config: TrainingConfig) -> None:
             model_config=model_config,
         )
         context_stack.enter_context(checkpoint)
-        checkpoint.saved_step = checkpoint.step = optim_state.step
         context_stack.enter_context(dataloader)
 
         # ---------------------------------------------------------------------
@@ -120,6 +119,7 @@ def train(config: TrainingConfig) -> None:
 
         profiler = Profiler(config.orchestration.profiler, state=optim_state)
         context_stack.enter_context(profiler)
+
 
         # flops and model size calculation
         raw_model: EmbeddingModel = cluster.root_model
@@ -131,6 +131,9 @@ def train(config: TrainingConfig) -> None:
         # ---------------------------------------------------------------------
         # Training loop
         # ---------------------------------------------------------------------
+
+        checkpoint.sync_step(optim_state.step)
+        profiler.sync_step(optim_state.step)
 
         # aliases
         eval_period = config.evaluation.period

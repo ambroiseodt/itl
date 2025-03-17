@@ -15,7 +15,6 @@ from logging import getLogger
 from pathlib import Path, PosixPath
 from types import TracebackType
 
-import torch
 import torch.distributed.checkpoint as dcp
 import torch.nn as nn
 from torch.distributed.checkpoint.state_dict import get_state_dict, set_state_dict
@@ -42,6 +41,7 @@ class CheckpointConfig:
     - nb_kept: number of checkpoints to keep
     - path: path to the checkpoint directory (set automatically by the orchestrator)
     """
+
     period: int = 0
     nb_kept: int = 0
     path: str = ""
@@ -98,12 +98,24 @@ class Checkpointer:
 
         self.process: Future = None
 
+    def sync_step(self, step: int) -> None:
+        """
+        Sync the step with the given value
+        """
+        self.saved_step = self.step = step
+
     def __enter__(self) -> "Checkpointer":
         """Enter checkpoint context by loading the last checkpoint"""
         path = self.get_last_checkpoint_path(self.path)
         if path:
             self.load(path)
         return self
+
+    def __exit__(self, exc: type[BaseException], value: BaseException, tb: TracebackType):
+        """Exit checkpoint context by saving checkpoint if needed"""
+        # save checkpoint on exiting if not done already
+        if self.saved_step != self.step:
+            self.update()
 
     def __call__(self) -> None:
         """Call update function periodically."""
@@ -135,12 +147,6 @@ class Checkpointer:
 
         self._cleaning()
         self.saved_step = self.step
-
-    def __exit__(self, exc: type[BaseException], value: BaseException, tb: TracebackType):
-        """Exit checkpoint context by saving checkpoint if needed"""
-        # save checkpoint on exiting if not done already
-        if self.saved_step != self.step:
-            self.update()
 
     def load(self, path: str) -> None:
         """
@@ -183,7 +189,6 @@ class Checkpointer:
             with open(path / "params.json", "w") as f:
                 json.dump(self.model_config, f)
 
-    @torch.no_grad()
     def get_state_dict(self) -> dict[str, dict]:
         """Return state dict of all tracked stateful objects."""
         model_sd, optimizer_sd = get_state_dict(self.model, self.optimizer)

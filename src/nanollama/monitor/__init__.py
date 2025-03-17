@@ -14,7 +14,7 @@ from ..distributed import is_master_process
 from .checkpoint import CheckpointConfig, Checkpointer, EvalCheckpointConfig, EvalCheckpointer
 from .logger import Logger, LoggerConfig
 from .preemption import PreemptionHandler
-from .profiler import Profiler, ProfilerConfig
+from .profiler import LightProfilerConfig, Profiler, ProfilerConfig, PytorchProfilerConfig
 from .utility import UtilityConfig, UtilityManager
 from .wandb import WandbConfig, WandbLogger
 
