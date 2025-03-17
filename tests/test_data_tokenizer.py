@@ -7,13 +7,12 @@ Unit tests for tokenizer.
 
 import unittest
 
-from nanollama.data.tokenizer import TokenizerConfig, build_tokenizer
+from nanollama.tokenizer import build_tokenizer
 
 
 class TestTokenizer(unittest.TestCase):
     def test_dialog_token(self) -> None:
-        config = TokenizerConfig(name="byte", special_tokens={"<|user|>": 0, "<|assistant|>": 1})
-        tokenizer = build_tokenizer(config)
+        tokenizer = build_tokenizer({"implementation": "byte", "special_tokens": {"<|user|>": 0, "<|assistant|>": 1}})
 
         dialog = [
             {"content": "Salut Assistant", "source": "user"},

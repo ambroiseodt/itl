@@ -23,12 +23,11 @@ from torch.distributed.checkpoint.stateful import Stateful
 from torch.distributed.device_mesh import DeviceMesh
 
 from src.nanollama.agent import Actor, SQLAgent
-from src.nanollama.data.tokenizer import DialogTokenizer
 from src.nanollama.distributed import ClusterManager, is_master_process
 from src.nanollama.model import (
     EmbeddingModel,
     Transformer,
-    build_model_config,
+    build_model,
 )
 from src.nanollama.model.transformer import generate, prefill
 from src.nanollama.model.transformer.architecture import KVCache, TransformerBlock
@@ -37,6 +36,7 @@ from src.nanollama.monitor import (
     Logger,
     PreemptionHandler,
 )
+from src.nanollama.tokenizer import DialogTokenizer, build_tokenizer
 
 from .args import EvaluationConfig, OnlineEvaluationConfig, build_eval_config
 from .prompt_loader import PromptLoader
@@ -255,6 +255,7 @@ class EvalState(Stateful):
 def run_evaluation(
     config: OnlineEvaluationConfig,
     model: EmbeddingModel,
+    tokenizer: DialogTokenizer,
     preemption: PreemptionHandler = None,
     dp_mesh: DeviceMesh = None,
 ) -> dict[str, Any]:
@@ -283,7 +284,7 @@ def run_evaluation(
         context_stack.enter_context(checkpointer)
 
         # data loader
-        loader = PromptLoader(config.data, dp_mesh=dp_mesh)
+        loader = PromptLoader(config.data, tokenizer, dp_mesh=dp_mesh)
         context_stack.enter_context(loader)
 
         # inference engine
@@ -364,8 +365,7 @@ def eval(config: EvaluationConfig) -> None:
         # build model architecture
         with open(f"{config.model_dir}/params.json") as f:
             file_config = json.load(f)
-        model_config, model_type = build_model_config(file_config)
-        model: EmbeddingModel = model_type(model_config)
+        model = build_model(file_config)
 
         # load model weights
         state_dict = {"model": model.state_dict()}
@@ -379,7 +379,8 @@ def eval(config: EvaluationConfig) -> None:
         # Evaluation loop
         # ---------------------------------------------------------------------
 
-        metrics = run_evaluation(config, model, preemption=preemption)
+        tokenizer = build_tokenizer(config.tokenizer)
+        metrics = run_evaluation(config, model, tokenizer, preemption=preemption)
 
         # logging metrics
         metrics |= config.metadata

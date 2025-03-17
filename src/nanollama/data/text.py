@@ -24,8 +24,8 @@ from numpy.random import default_rng
 from torch import Tensor
 from torch.distributed.device_mesh import DeviceMesh
 
+from ..tokenizer import DialogTokenizer
 from .async_loader import AsyncDataConfig, DataLoader
-from .tokenizer import DialogTokenizer, TokenizerConfig, build_tokenizer
 from .utils import generate_seeds
 
 # ------------------------------------------------------------------------------
@@ -66,7 +66,6 @@ class DataConfig:
     """
 
     sources: list[SourceConfig] = None
-    tokenizer: TokenizerConfig = None
 
     batch_size: int = 0
     seq_len: int = 0
@@ -77,12 +76,10 @@ class DataConfig:
 
     def post_init(self) -> None:
         assert self.sources, "sources must be specified."
-        assert self.tokenizer, "tokenizer must be specified."
         assert self.batch_size, "batch_size must be specified."
         assert self.seq_len, "seq_len must be specified."
 
         # check validity of submodules
-        self.tokenizer.post_init()
         for source in self.sources:
             source.post_init()
 
@@ -295,12 +292,11 @@ class TokenLoader(DataLoader):
     ```
     """
 
-    def __init__(self, config: DataConfig, dp_mesh: DeviceMesh = None):
+    def __init__(self, config: DataConfig, tokenizer: DialogTokenizer, dp_mesh: DeviceMesh = None):
         self.batch_size = config.batch_size
         self.seq_len = config.seq_len
 
         # initialize the single source iterators
-        tokenizer = build_tokenizer(config.tokenizer)
         if dp_mesh is None:
             rank, world_size = 0, 1
         else:

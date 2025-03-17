@@ -10,7 +10,6 @@ import logging
 import os
 import time
 from contextlib import ExitStack
-from dataclasses import asdict
 from typing import Any
 
 import torch
@@ -21,9 +20,7 @@ from torch import Tensor
 from src.nanollama.data.text import TokenLoader
 from src.nanollama.distributed import ClusterManager, clean_environment, is_master_process
 from src.nanollama.launcher import launch_job
-from src.nanollama.model import (
-    EmbeddingModel,
-)
+from src.nanollama.model import EmbeddingModel, build_model
 from src.nanollama.model.transformer import pretrain
 from src.nanollama.monitor import (
     Checkpointer,
@@ -37,6 +34,7 @@ from src.nanollama.optim import (
     build_optimizer,
     build_scheduler,
 )
+from src.nanollama.tokenizer import build_tokenizer
 
 from .args import TrainingConfig, build_eval_launch_config, build_train_config
 from .eval import run_evaluation
@@ -56,6 +54,7 @@ def loss_func(preds: Tensor, targets: Tensor) -> Tensor:
 
 def train(config: TrainingConfig) -> None:
     with ExitStack() as context_stack:
+
         # ---------------------------------------------------------------------
         # Handle preemption, computing environment, logging, and utils
         # ---------------------------------------------------------------------
@@ -77,7 +76,7 @@ def train(config: TrainingConfig) -> None:
         # ---------------------------------------------------------------------
 
         logger.info("Building model")
-        model: EmbeddingModel = config.model_type(config.model)
+        model, model_config = build_model(config.model, config.model_callback, return_config=True)
         model = cluster.build_model(model)
 
         if config.cluster.compile_model:
@@ -96,7 +95,9 @@ def train(config: TrainingConfig) -> None:
         # DataLoader
         # ---------------------------------------------------------------------
 
-        dataloader = TokenLoader(config.data, cluster.dp_mesh)
+        logger.info("Building dataloader")
+        tokenizer = build_tokenizer(config.tokenizer)
+        dataloader = TokenLoader(config.data, tokenizer, cluster.dp_mesh)
 
         # ---------------------------------------------------------------------
         # Recover Checkpoint
@@ -107,7 +108,7 @@ def train(config: TrainingConfig) -> None:
             model=model,
             optimizer=optimizer,
             stateful_objects={"scheduler": scheduler, "dataloader": dataloader, "state": optim_state},
-            model_config=asdict(config.model),
+            model_config=model_config,
         )
         context_stack.enter_context(checkpoint)
         checkpoint.saved_step = checkpoint.step = optim_state.step
@@ -260,7 +261,7 @@ def train(config: TrainingConfig) -> None:
 
                 # run evaluation now
                 if not config.evaluation.asynchronous:
-                    metrics = run_evaluation(config.evaluation, model=model, preemption=preemption)
+                    metrics = run_evaluation(config.evaluation, model=model, tokenizer=tokenizer, preemption=preemption)
                     metrics |= {"step": step}
                     metric_logger(metrics)
 

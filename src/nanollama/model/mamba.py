@@ -8,7 +8,7 @@ https://arxiv.org/abs/2405.21060
 """
 
 from dataclasses import dataclass, field
-from typing import Optional
+from typing import Literal, Optional
 
 import torch
 from torch import Tensor, nn
@@ -195,7 +195,7 @@ class MambaBlock(nn.Module):
 
 @dataclass
 class MambaConfig(EmbeddingModelConfig):
-    implementation: str = "mamba"
+    implementation: Literal["mamba"] = "mamba"
     block: MambaBlockConfig = field(default_factory=MambaBlockConfig)
 
     def post_init(self) -> None:

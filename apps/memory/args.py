@@ -14,14 +14,9 @@ from typing import Any, Literal
 import torch
 
 from src.nanollama.data.text import DataConfig, SourceConfig
-from src.nanollama.data.tokenizer import TokenizerConfig
 from src.nanollama.distributed import ClusterConfig
 from src.nanollama.launcher import LauncherConfig, SlurmConfig
-from src.nanollama.model import (
-    EmbeddingModel,
-    EmbeddingModelConfig,
-    build_model_config,
-)
+from src.nanollama.model import EmbeddingModelConfig
 from src.nanollama.monitor import (
     Checkpointer,
     EvalCheckpointConfig,
@@ -89,6 +84,7 @@ class EvaluationConfig(OnlineEvaluationConfig):
     checkpoint_flag: str = ""
     metadata: dict[str, Any] = field(default_factory=dict)
 
+    tokenizer: dict[str, Any] = field(default_factory=dict)
     cluster: ClusterConfig = field(default_factory=ClusterConfig)
     orchestration: EvalOrchestratorConfig = field(default_factory=EvalOrchestratorConfig)
 
@@ -226,7 +222,6 @@ class MemoryDataConfig(DataConfig):
     def post_init(self) -> None:
         assert self.n_data, "Number of data must be specified"
         assert self.key, "Key must be specified"
-        assert self.tokenizer, "Tokenizer must be specified"
 
         self.data_dir = os.path.expandvars(self.data_dir)
         self.save_dir = str(Path(os.path.expandvars(self.save_dir)) / f"{self.key}_{self.n_data}")
@@ -264,11 +259,12 @@ class TrainingConfig:
 
     data: MemoryDataConfig = field(default_factory=MemoryDataConfig)
     optim: OptimizerConfig = field(default_factory=OptimizerConfig)
-
-    model: EmbeddingModelConfig = field(default_factory=EmbeddingModelConfig)
-    model_type: type = field(default_factory=EmbeddingModel)
-
     evaluation: EvalConfig = field(default_factory=EvalConfig)
+
+    # to allow for various implementation, we do not type checked model and tokenizer here
+    model: dict[str, Any] = field(default_factory=dict)
+    tokenizer: dict[str, Any] = field(default_factory=dict)
+    model_callback: callable = field(init=False, default=None)
 
     def __post_init__(self) -> None:
         """
@@ -280,15 +276,17 @@ class TrainingConfig:
             assert self.optim.fused is False, "Fused Adam is not supported on CPU"
             assert self.orchestration.profiler.active is False, "Profiler is not supported on CPU"
 
-        # fill in missing values
-        if hasattr(self.model.block, "seq_len") and not self.model.block.seq_len:
-            self.model.block.seq_len = self.data.seq_len - 1
-
         # manual post initialization of all modules
         self.orchestration.post_init()
         self.data.post_init()
         self.optim.post_init()
-        self.model.post_init()
+
+        # callback when building model in the training script: add seq_len if not specified
+        def model_config_callback(model_config: EmbeddingModelConfig) -> None:
+            if hasattr(model_config.block, "seq_len") and not model_config.block.seq_len:
+                model_config.block.seq_len = self.data.seq_len - 1
+
+        self.model_callback = model_config_callback
 
         # only post init evaluation if online
         eval = self.evaluation
@@ -344,7 +342,6 @@ def heritage_eval_config(run_config: dict[str, Any], launcher: dict[str, Any]) -
     # generic inheritance
     configs_keys = [
         (DataConfig, "data"),
-        (TokenizerConfig, "data.tokenizer"),
     ]
 
     # deal with data configuration being defined in its post_init method
@@ -352,11 +349,6 @@ def heritage_eval_config(run_config: dict[str, Any], launcher: dict[str, Any]) -
     tmp_config.post_init()
     sources = tmp_config.sources
     flat_config |= {"data.sources": [asdict(s) for s in sources]}
-
-    # deal with attributes that are dictionnary and get overly flattened
-    flat_config |= {
-        "data.tokenizer.special_tokens": run_config.get("data", {}).get("tokenizer", {}).get("special_tokens", {})
-    }
 
     if eval_config.get("asynchronous", False):
         # hack to add slurm inheritance
@@ -375,10 +367,9 @@ def heritage_eval_config(run_config: dict[str, Any], launcher: dict[str, Any]) -
         for key, finfo in config_cls.__dataclass_fields__.items():
             if not finfo.init:
                 continue
-            eval_key = f"{cls_key}.{key}"
-            train_key = f"{cls_key}.{key}"
-            if eval_key not in eval_config and train_key in flat_config:
-                eval_config[eval_key] = flat_config[train_key]
+            flat_key = f"{cls_key}.{key}"
+            if flat_key not in eval_config and flat_key in flat_config:
+                eval_config[flat_key] = flat_config[flat_key]
 
     # merge configuration
     run_config["evaluation"] = unflatten_config(eval_config)
@@ -428,6 +419,5 @@ def build_train_config(file_config: dict[str, Any]) -> TrainingConfig:
     if grid_id is not None:
         run_config = heritage_grid_id(run_config, grid_id)
 
-    model_config, model_type = build_model_config(run_config.pop("model", {}))
-    config = build_with_type_check(TrainingConfig, run_config | {"model": model_config, "model_type": model_type})
+    config = build_with_type_check(TrainingConfig, run_config)
     return config

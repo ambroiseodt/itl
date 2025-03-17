@@ -8,16 +8,16 @@ data:
   - path: $HOME/data/memory/person4/qa.jsonl
   batch_size: 16
   seq_len: 129
-  tokenizer:
-    name: byte
-    special_tokens:
-      <|user|>: 0
-      <|assistant|>: 1
-      <|database|>: 2
-      <|eod|>: 3
 
+tokenizer:
+  implementation: byte
+  special_tokens:
+    <|user|>: 0
+    <|assistant|>: 1
+    <|database|>: 2
+    <|eod|>: 3
 
-model_dir: /private/home/vivc/memory_debug/checkpoints/0000001000
+model_dir: /private/home/vivc/memory_debug/checkpoints/0000000100
 log_path: $HOME/eval_debug/results.json
 checkpoint_flag: eval
 

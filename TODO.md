@@ -3,7 +3,8 @@
 
 #### Vivien's current todo:
 
-- Add an run_config.implementation.{model,profiler} to simplify the parsing of the configs (catch case where `run_cfg.im.profiler: null`), and remove the config dispatcher (in `model.utils`).
+- Add an run_config.implementation.{model,profiler,tokenizer} to simplify the parsing of the configs (catch case where `run_cfg.im.profiler: null`), and remove the config dispatcher (in `model.utils`).
+    - profiler should not be one or the other (the orchestrator should have both of them).
 
 - Make nice plots, and visualization methods.
     - Check that wandb is working correctly.
@@ -29,7 +30,7 @@
 - Restart after an interruption during eval when launched online are not handled correctly.
 
 #### Bigger improvement to the codebase
-- Modify the light profiler: 
+- Modify the light profiler:
     - throughput and timing should be output in the metrics.
     - probably best is to have a different config for the light and the heavy profiler.
 - Tinker with parallelization when using many GPUs.
@@ -44,15 +45,11 @@
     - have a way to compute exactly the number of flops -> use torch dispatcher.
 - Move toward tasks-based evaluation a la llm-harness. Get inspiration from https://github.com/facebookresearch/lingua/blob/main/apps/main/eval.py.
 - Improve the generation part to have a async scheme for lane, with page in / page out mechanisms.
-    - Caching when dealing with tree of multi-turn dialogs, cpu page-in/page-out mechanism
+    - Indeed, generation is currently bottlenecked by the SQL agent.
+    - Caching when dealing with tree of multi-turn dialogs, cpu page-in/page-out mechanism.
 - Add various initialization scheme.
-- Parallelization with (DP, TP) mesh.
-    - Understand better the impact of the shard_dim.
-    - Check for consolidated checkpointing, as well as saving params.json.
-    - Understand interaction with KV cache.
 - Activation checkpointing.
 - Caching for Mamba and RNN models.
-- Make sure one can extend model context size incrementally.
 
 ### Ambroise & Sam TODO:
 - Read technical reports of open-source LLms (Qwen, DeepSeek, HuggingFace, Olmo, etc.)
@@ -76,7 +73,6 @@ maximal amount of facts?
 - Mixture of experts.
 - Low rank finetuning.
 - Quantization.
-
 
 ## Some TODOs of an open-source project:
 - torch.compile, int8 quantization, speculative decoding (7x inference acceleration)

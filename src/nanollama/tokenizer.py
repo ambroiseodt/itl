@@ -14,12 +14,12 @@ from abc import ABC, abstractmethod
 from dataclasses import dataclass, field
 from logging import getLogger
 from pathlib import Path
-from typing import Any
+from typing import Any, Literal
 
 from torch import Tensor
 
-from ..agent import Actor
-from ..utils import build_with_type_check
+from .agent import Actor
+from .utils import build_with_type_check
 
 logger = getLogger("nanollama")
 
@@ -32,11 +32,9 @@ logger = getLogger("nanollama")
 class Tokenizer(ABC):
     """
     ### Attributes
-    - name: name of the tokenizer.
     - vocab_size: size of the vocabulary.
     """
 
-    name: str
     vocab_size: int
 
     def _register_special_tokens(self, special_tokens: dict[str, int], offset: int) -> None:
@@ -49,7 +47,6 @@ class Tokenizer(ABC):
         """
         logger.debug(f"Registering special tokens: {special_tokens}")
 
-        special_tokens = special_tokens if special_tokens else {}
         for tok_str, tok_id in special_tokens.items():
             tok = re.sub(r"<\|(.+?)\|>", r"\1", tok_str)  # Remove <| and |>
             setattr(self, tok, tok_id + offset)
@@ -226,13 +223,25 @@ class DialogTokenizer:
 # ------------------------------------------------------------------------------
 
 
-class ByteTokenizer(Tokenizer):
-    name = "byte"
+@dataclass
+class ByteTokenizerConfig:
+    """
+    Tokenizer configuration
 
+    ### Attributes
+    - name: name of the tokenizer.
+    - special_tokens: list of special tokens to register (e.g. `["<|eos|>", "<|user|>"]`)
+    """
+
+    implementation: Literal["byte"] = "byte"
+    special_tokens: dict[str, int] = field(default_factory=dict)
+
+
+class ByteTokenizer(Tokenizer):
     error_scheme = "backslashreplace"
     encoding = "utf-8"
 
-    def __init__(self, special_tokens: dict[str, int] = None) -> None:
+    def __init__(self, config: ByteTokenizerConfig) -> None:
         """
         Byte Tokenizer
 
@@ -242,15 +251,10 @@ class ByteTokenizer(Tokenizer):
         super().__init__()
 
         # build special_tokens
-        special_tokens = special_tokens if special_tokens else {}
-        # offset all special tokens to restricted tokens slots
-        self._register_special_tokens(special_tokens, offset=256)
+        self._register_special_tokens(config.special_tokens, offset=256)
 
         # register vocabulary size
-        if special_tokens:
-            self.vocab_size = 256 + max(special_tokens.values())
-        else:
-            self.vocab_size = 256
+        self.vocab_size = 256 + max(config.special_tokens.values())
 
     def encode(self, sentence: str, bos: int = 0) -> list[int]:
         tokens = []
@@ -267,6 +271,35 @@ class ByteTokenizer(Tokenizer):
 # ------------------------------------------------------------------------------
 # Tiktoken Tokenizer
 # ------------------------------------------------------------------------------
+
+
+@dataclass
+class TikTokenizerConfig:
+    """
+    TikTokenizer configuration
+
+    ### Attributes
+    - name: name of the tokenizer.
+    - path: path to the tokenizer model.
+    - special_tokens: list of special tokens to register (e.g. `["<|eos|>", "<|user|>"]`)
+    - pattern: regex pattern to match special tokens
+    - nb_special_tokens: number of special tokens
+    """
+
+    path: str
+    implementation: Literal["tiktoken"] = "tiktoken"
+    special_tokens: dict[str, int] = field(default_factory=dict)
+    pattern: str = None
+    nb_special_tokens: int = None
+
+    def __post_init__(self) -> None:
+        self.path = os.path.expandvars(self.path)
+        if self.nb_special_tokens is None:
+            self.nb_special_tokens = max(self.special_tokens.values()) + 1
+
+        missing_ids = set(range(self.nb_special_tokens)) - set(self.special_tokens.values())
+        for tok_id in missing_ids:
+            self.special_tokens[f"<|special_token_{tok_id}|>"] = tok_id
 
 
 class TikTokenizer(Tokenizer):
@@ -287,39 +320,29 @@ class TikTokenizer(Tokenizer):
     The tokenizer string should be <|eod|>, or of the form <|actor|> where `actor` can be `assistant`, `user`, ...
     """
 
-    name = "tiktoken"
-
     ENCODE_CHUNK = 400_000
 
     def __init__(
         self,
-        path: str,
-        special_tokens: dict[str, int] = None,
-        pattern: str = None,
-        nb_special_tokens: int = None,
+        config: TikTokenizerConfig,
     ) -> None:
         import tiktoken
         from tiktoken.load import load_tiktoken_bpe
 
         # load merges
-        merges = load_tiktoken_bpe(path)
+        merges = load_tiktoken_bpe(config.path)
 
         # build special tokens
-        special_tokens = special_tokens or {}
-        nb_special_tokens = nb_special_tokens or (max(special_tokens.values()) + 1)
         # ... add special tokens to restricted tokens slots
-        missing_ids = set(range(nb_special_tokens)) - set(special_tokens.values())
-        for tok_id in missing_ids:
-            special_tokens[f"<|special_token_{tok_id}|>"] = tok_id
         # ... offset all special tokens to restricted tokens slots
-        self._register_special_tokens(special_tokens, offset=len(merges))
+        self._register_special_tokens(config.special_tokens, offset=len(merges))
 
         # build tiktoken engine
         self.engine = tiktoken.core.Encoding(
-            name=Path(path).name,
-            pat_str=pattern,
+            name=Path(config.path).name,
+            pat_str=config.pattern,
             mergeable_ranks=merges,
-            special_tokens=special_tokens,
+            special_tokens=config.special_tokens,
         )
 
         # register vocabulary size
@@ -387,50 +410,28 @@ class TikTokenizer(Tokenizer):
 # ------------------------------------------------------------------------------
 
 
-@dataclass
-class TokenizerConfig:
+def build_tokenizer(config: dict[str, Any]) -> DialogTokenizer:
     """
-    Tokenizer configuration
-
-    ### Attributes
-    - name: name of the tokenizer.
-    - path: path to the tokenizer model.
-    - bots: list of actors for which to add `begining of turn` token
-    - eod: whether to add an `end of dialog` token.
-    """
-
-    name: str = "byte"
-    path: str | None = None
-    special_tokens: dict[str, int] = field(default_factory=dict)
-    configuration: dict[str, Any] = None
-
-    def post_init(self) -> None:
-        self.name = self.name.lower()
-        assert self.name in [ByteTokenizer.name, TikTokenizer.name]
-        if self.name == TikTokenizer.name:
-            assert "pattern" in self.configuration, "Missing `pattern` in configuration"
-
-        if self.path:
-            self.path = os.path.expandvars(self.path)
-
-
-def build_tokenizer(config: TokenizerConfig) -> DialogTokenizer:
-    """
-    Build tokenizer based on the configuration.
+    Initialize configuration based on the specified model implementation.
 
     ### Parameters
-    - config: tokenizer configuration.
+    - config: A dictionary containing the configuration details.
 
     ### Returns
-    - tokenizer instance.
+    -
     """
-    if config.name == ByteTokenizer.name:
-        tokenizer = ByteTokenizer(special_tokens=config.special_tokens)
+    implementation = config.get("implementation", "byte").lower()
 
-    elif config.name == TikTokenizer.name:
-        tokenizer = TikTokenizer(path=config.path, special_tokens=config.special_tokens, **config.configuration)
+    match implementation:
+        case "byte":
+            config = build_with_type_check(ByteTokenizerConfig, config)
+            tokenizer = ByteTokenizer(config)
 
-    else:
-        raise NotImplementedError(f"No implementation for tokenizer {config.name}")
+        case "tiktoken":
+            config = build_with_type_check(TikTokenizerConfig, config)
+            tokenizer = TikTokenizer(config)
+
+        case _:
+            raise ValueError(f"Tokenizer implementation {implementation} not found")
 
     return DialogTokenizer(tokenizer=tokenizer)

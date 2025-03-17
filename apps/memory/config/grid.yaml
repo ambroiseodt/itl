@@ -33,13 +33,14 @@ run_config:
     batch_size: 128
     seq_len: 256
     padding: true
-    tokenizer:
-      name: byte
-      special_tokens:
-        <|user|>: 0
-        <|assistant|>: 1
-        <|database|>: 2
-        <|eod|>: 3
+
+  tokenizer:
+    implementation: byte
+    special_tokens:
+      <|user|>: 0
+      <|assistant|>: 1
+      <|database|>: 2
+      <|eod|>: 3
 
   model:
     implementation: transformer

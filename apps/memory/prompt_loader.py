@@ -18,7 +18,7 @@ from torch.distributed.device_mesh import DeviceMesh
 
 from src.nanollama.data import DataLoader
 from src.nanollama.data.text import DataConfig, JSONLIterator
-from src.nanollama.data.tokenizer import build_tokenizer
+from src.nanollama.tokenizer import DialogTokenizer
 
 logger = getLogger("nanollama")
 
@@ -44,10 +44,9 @@ class PromptLoader(DataLoader):
     ```
     """
 
-    def __init__(self, config: DataConfig, dp_mesh: DeviceMesh = None):
+    def __init__(self, config: DataConfig, tokenizer: DialogTokenizer, dp_mesh: DeviceMesh = None):
         self.batch_size = config.batch_size
-
-        self.tokenizer = build_tokenizer(config.tokenizer)
+        self.tokenizer = tokenizer
 
         # initialize JSONLIterator
         if dp_mesh is None:

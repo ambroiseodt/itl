@@ -381,7 +381,7 @@ class TransformerBlock(nn.Module):
 
 @dataclass
 class TransformerConfig(EmbeddingModelConfig):
-    implementation: str = "transformer"
+    implementation: Literal["transformer"] = "transformer"
     block: TransformerBlockConfig = field(default_factory=TransformerBlockConfig)
 
     def post_init(self) -> None:

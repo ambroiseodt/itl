@@ -18,7 +18,7 @@ from nanollama.data.text import (
     SourceConfig,
     TokenLoader,
 )
-from nanollama.data.tokenizer import TokenizerConfig
+from nanollama.tokenizer import build_tokenizer
 
 
 class MockTokenizer:
@@ -199,15 +199,15 @@ class TestTokenGenerator(unittest.TestCase):
                 SourceConfig(path=self.temp_files[0].name, weight=0.5),
                 SourceConfig(path=self.temp_files[1].name, weight=0.5),
             ],
-            tokenizer=TokenizerConfig(name="byte"),
             batch_size=2,
             seq_len=5,
             padding=True,
             seed=42,
             asynchronous=False,
         )
+        self.tokenizer = (build_tokenizer({"implementation": "byte"}),)
         # Initialize TokenLoader
-        self.token_generator = TokenLoader(self.config)
+        self.token_generator = TokenLoader(self.config, self.tokenizer)
         self.token_generator.__enter__()
 
     def tearDown(self) -> None:
@@ -229,7 +229,7 @@ class TestTokenGenerator(unittest.TestCase):
         batch = next(self.token_generator)
 
         # Create a new generator and load the saved state
-        new_token_generator = TokenLoader(self.config)
+        new_token_generator = TokenLoader(self.config, self.tokenizer)
         new_token_generator.__enter__()
         new_token_generator.load_state_dict(initial_state)
 

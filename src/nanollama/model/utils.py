@@ -4,56 +4,69 @@ Utilities to load models
 
 @ 2025, Meta
 """
+from dataclasses import asdict
 from typing import Any
 
 from ..utils import build_with_type_check
+from .embedding_model import EmbeddingModel
 from .transformer import Transformer, TransformerConfig
 
 
-def build_model_config(model_config: dict[str, Any]) -> tuple[object, type]:
+def build_model(config: dict[str, Any], callback: callable = None, return_config: bool = False) -> EmbeddingModel:
     """
-    Initialize configuration based on the model implementation specified in the run_config.
+    Initialize configuration based on the specified model implementation.
 
     ### Parameters
-    - ConfigClass: The configuration class to be used.
-    - run_config: A dictionary containing the configuration details.
+    - config: A dictionary containing the configuration details.
+    - callback: A callable function to be executed after the configuration is initialized.
+    - return_config: A boolean indicating whether to return the configuration object.
 
     ### Returns
-    - config: The initialized configuration object.
+    - model: An instance of the specified model implementation.
     """
     # argument parsing
-    implementation = model_config.get("implementation", "transformer")
+    implementation = config.get("implementation", "transformer").lower()
 
     match implementation:
         case "transformer":
-            model = Transformer
-            config = build_with_type_check(TransformerConfig, model_config)
+            model_type = Transformer
+            config_obj = build_with_type_check(TransformerConfig, config)
 
         case "mamba":
             from src.nanollama.model.mamba import Mamba, MambaConfig
 
-            model = Mamba
-            config = build_with_type_check(MambaConfig, model_config)
+            model_type = Mamba
+            config_obj = build_with_type_check(MambaConfig, config)
 
         case "hawk":
             from src.nanollama.model.rnn import FastRNNConfig, Hawk
 
-            model = Hawk
-            config = build_with_type_check(FastRNNConfig, model_config)
+            model_type = Hawk
+            config_obj = build_with_type_check(FastRNNConfig, config)
 
         case "mingru":
             from src.nanollama.model.rnn import FastRNNConfig, MinGRU
 
-            model = MinGRU
-            config = build_with_type_check(FastRNNConfig, model_config)
+            model_type = MinGRU
+            config_obj = build_with_type_check(FastRNNConfig, config)
 
         case "minlstm":
             from src.nanollama.model.rnn import FastRNNConfig, MinLSTM
 
-            model = MinLSTM
-            config = build_with_type_check(FastRNNConfig, model_config)
+            model_type = MinLSTM
+            config_obj = build_with_type_check(FastRNNConfig, config)
 
         case _:
             raise ValueError(f"Model implementation {implementation} not found")
 
-    return config, model
+    # call the callback and post init methods
+    if callback is not None:
+        callback(config_obj)
+    config_obj.post_init()
+
+    # instanciate the model
+    model = model_type(config_obj)
+
+    if return_config:
+        return model, asdict(config_obj)
+    return model
