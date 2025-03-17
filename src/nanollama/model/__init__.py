@@ -7,4 +7,4 @@ Module containing models
 
 from .embedding_model import EmbeddingModel, EmbeddingModelConfig
 from .transformer import Transformer, TransformerConfig
-from .utils import build_config_with_model_dispatch
+from .utils import build_model_config

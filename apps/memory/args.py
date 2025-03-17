@@ -20,7 +20,7 @@ from src.nanollama.launcher import LauncherConfig, SlurmConfig
 from src.nanollama.model import (
     EmbeddingModel,
     EmbeddingModelConfig,
-    build_config_with_model_dispatch,
+    build_model_config,
 )
 from src.nanollama.monitor import (
     Checkpointer,
@@ -266,7 +266,7 @@ class TrainingConfig:
     optim: OptimizerConfig = field(default_factory=OptimizerConfig)
 
     model: EmbeddingModelConfig = field(default_factory=EmbeddingModelConfig)
-    model_gen: callable = field(init=False, default=EmbeddingModel)
+    model_gen: type = field(default_factory=EmbeddingModel)
 
     evaluation: EvalConfig = field(default_factory=EvalConfig)
 
@@ -428,5 +428,6 @@ def build_train_config(file_config: dict[str, Any]) -> TrainingConfig:
     if grid_id is not None:
         run_config = heritage_grid_id(run_config, grid_id)
 
-    config = build_config_with_model_dispatch(TrainingConfig, run_config)
+    model_config, model_type = build_model_config(run_config.pop("model", {}))
+    config = build_with_type_check(TrainingConfig, run_config | {"model": model_config, "model_gen": model_type})
     return config

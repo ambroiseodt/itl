@@ -81,6 +81,10 @@ def build_with_type_check(object_type: type[T], data: dict[str, Any], inplace: b
         return data
     args = get_args(object_type)
 
+    # object already initialized
+    if is_dataclass(data) or object_type is type:
+        return data
+
     # dataclasses
     if is_dataclass(object_type):
         field_values = {}

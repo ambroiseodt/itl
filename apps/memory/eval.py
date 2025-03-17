@@ -28,7 +28,7 @@ from src.nanollama.distributed import ClusterManager, is_master_process
 from src.nanollama.model import (
     EmbeddingModel,
     Transformer,
-    build_config_with_model_dispatch,
+    build_model_config,
 )
 from src.nanollama.model.transformer import generate, prefill
 from src.nanollama.model.transformer.architecture import KVCache, TransformerBlock
@@ -364,8 +364,8 @@ def eval(config: EvaluationConfig) -> None:
         # build model architecture
         with open(f"{config.model_dir}/params.json") as f:
             model_config = {"model": json.load(f)}
-        model_config = build_config_with_model_dispatch(None, model_config)
-        model: EmbeddingModel = model_config.model_gen(model_config.model)
+        model_config, model_gen = build_model_config(model_config)
+        model: EmbeddingModel = model_gen(model_config)
 
         # load model weights
         state_dict = {"model": model.state_dict()}
