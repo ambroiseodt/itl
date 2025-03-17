@@ -2,13 +2,12 @@
 - Get some curves of accuracy when training with the tool use, or without. and write some visualization notebooks/scripts to get plots out of many experimental logs.
 
 #### Vivien's current todo:
+- I have restarted some runs that did not finish. If they still do not finish I just remove the evaluation, and only do them at the end of the training run.
 
 - Make nice plots, and visualization methods.
     - Check that wandb is working correctly.
 - Generation.
     - Write inference loop logic, as well as sampling strategies.
-
-- Correct unit tests.
 
 #### Pipeline modification ideas
 - Change mask so that the LLM can have non-causal interaction between tokens that it has not generated.
@@ -16,6 +15,7 @@
 #### Simple recipes in the apps folder
 - Simple vanilla script with real tokenizer over SmolLM v2.
     - Option to remove the tokenizer mask when doing pure pretraining.
+        - Do this by extracting the json loader, then splitting between DialogTokenGenerator and TokenGenerator (without dialog). Put the three files in data/text/...
 - Simple vanilla script on the Shakespear dataset to debug on cpu.
 
 #### Known issues

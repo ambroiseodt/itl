@@ -11,7 +11,6 @@ from types import TracebackType
 from typing import Any
 
 import numpy as np
-import torch
 from numpy.random import default_rng
 
 from nanollama.data.async_loader import DataLoader
@@ -83,7 +82,7 @@ class TestDataLoader(unittest.TestCase):
         new_loader.__enter__()
         new_loader.load_state_dict(state)
         new_batch = next(new_loader)
-        self.assertTrue(torch.equal(batch, new_batch))
+        self.assertTrue(np.allclose(batch, new_batch))
         new_loader.__exit__(None, None, None)
 
 

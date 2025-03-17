@@ -71,7 +71,9 @@ class TestJSONLIterator(unittest.TestCase):
             state = iterator.state_dict()
 
         # Create a new iterator and load the state
-        with JSONLIterator(path=self.temp_file.name, rank=0, world_size=2) as new_iterator:
+        new_iterator = JSONLIterator(path=self.temp_file.name, rank=0, world_size=2)
+        new_iterator.load_state_dict(state)
+        with new_iterator:
             new_iterator.load_state_dict(state)
             line = next(new_iterator)
         self.assertEqual(line, {"key": "value3"})
@@ -112,7 +114,6 @@ class TestSingleSourceTokenGenerator(unittest.TestCase):
         # Configuration
         self.config = DataConfig(
             sources="fake",
-            tokenizer="fake",
             batch_size=2,
             seq_len=5,
             padding=True,
@@ -205,7 +206,7 @@ class TestTokenGenerator(unittest.TestCase):
             seed=42,
             asynchronous=False,
         )
-        self.tokenizer = (build_tokenizer({"implementation": "byte"}),)
+        self.tokenizer = build_tokenizer({"implementation": "byte"})
         # Initialize TokenLoader
         self.token_generator = TokenLoader(self.config, self.tokenizer)
         self.token_generator.__enter__()
@@ -220,8 +221,10 @@ class TestTokenGenerator(unittest.TestCase):
     def test_token_generation(self) -> None:
         # Test if the generator produces the expected output
         batch = next(self.token_generator)
-        expected_shape = (2 * self.config.batch_size, self.config.seq_len)
-        self.assertEqual(batch.shape, expected_shape)
+        expected_shape = (self.config.batch_size, self.config.seq_len)
+        self.assertEqual(len(batch), 2)
+        self.assertEqual(batch[0].shape, expected_shape)
+        self.assertEqual(batch[0].shape, batch[1].shape)
 
     def test_restart(self) -> None:
         # Test state saving and loading

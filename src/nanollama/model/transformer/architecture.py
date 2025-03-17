@@ -205,6 +205,7 @@ class SelfAttention(nn.Module):
         return z
 
     def _train_attention(self, q: Tensor, k: Tensor, v: Tensor) -> Tensor:
+        assert q.size(2) == k.size(2), "you are breaking our pretraining logic"
         return F.scaled_dot_product_attention(q, k, v, is_causal=True, enable_gqa=True)
 
     def _prefill_attention(self, q: Tensor, k: Tensor, v: Tensor) -> Tensor:
