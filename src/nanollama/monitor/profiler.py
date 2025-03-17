@@ -6,10 +6,12 @@ Profiler
 """
 
 import json
+import subprocess
 import time
 from dataclasses import dataclass, field
 from logging import getLogger
 from pathlib import Path
+from threading import Thread
 from types import TracebackType
 
 import torch
@@ -66,10 +68,11 @@ class PytorchProfiler:
         )
         self.active = False
 
-    def __enter__(self):
+    def __enter__(self) -> "PytorchProfiler":
         self.profiler.__enter__()
         self.active = True
         logger.info(f"Pytorch profiler active. Traces will be saved at {self.path}")
+        return self
 
     def __exit__(self, exc: type[BaseException], value: BaseException, tb: TracebackType):
         """
@@ -106,6 +109,7 @@ class LightProfilerConfig:
     active: bool = True
     period: int = 1
     path: str = ""
+    refresh_rate: float = 0.001
 
     def post_init(self) -> None:
         assert self.path, "path was not set"
@@ -120,26 +124,32 @@ class LightProfiler:
         self.path = str(Path(config.path) / f"prof_{get_rank()}.jsonl")
         self.period = config.period
         self.active = False
+        self.step = 0
 
         # placeholder and alias
         self.times = {}
         self.time = 0
 
-        # device
-        rank = get_local_rank()
-        self.device = torch.device(rank)
-        try:
-            self.capacity = torch.cuda.get_device_properties(self.device).total_memory / 100  # divide for percentage
-        except Exception as e:
-            logger.warning("Could not get device properties")
-            logger.warning(e)
-            self.capacity = 1
+        # memory information
+        self.device = None
+        self.capacity = 1
+        self.init_memory_info()
 
-    def __enter__(self):
+        # gpu utilization information
+        self.utilization: dict[str, float] = None
+        self.utilization_thread: Thread = None
+        self.utilization_scaling = 0
+
+        self.utilization_thread = Thread(target=self._utilization_average, args=(config.refresh_rate,), daemon=True)
+
+    def __enter__(self) -> "LightProfiler":
         logger.info(f"Light profiler active. Traces will be saved at {self.path}")
         self.file = open(self.path, "a")
+        self.utilization_thread.start()
+        return self
 
     def __exit__(self, exc: type[BaseException], value: BaseException, tb: TracebackType):
+        self.utilization_thread.join(timeout=0.01)
         self.file.close()
         logger.info(f"Light profiler traces saved to {self.path}")
 
@@ -154,15 +164,35 @@ class LightProfiler:
         """
         Call update function when profiler is active
         """
-        # log profiler traces
-        cuda_info = torch.cuda.memory_stats(self.device)
+        metrics = {"step": self.step} | self.times | self.get_memory_metrics() | self.get_utilization_info()
 
+        print(json.dumps(metrics), file=self.file, flush=True)
+        logger.info({k: round(v, 5) for k, v in metrics.items()})
+
+    # ------------------------------------------------------------------------------
+    # Memory Information
+    # ------------------------------------------------------------------------------
+
+    def init_memory_info(self) -> None:
+        # device
+        rank = get_local_rank()
+        self.device = torch.device(rank)
+        try:
+            self.capacity = torch.cuda.get_device_properties(self.device).total_memory / 100  # divide for percentage
+        except Exception as e:
+            logger.warning("Could not get device properties")
+            logger.warning(e)
+
+    def get_memory_metrics(self) -> dict[str, float]:
         # memory information
+        cuda_info = torch.cuda.memory_stats(self.device)
         mem = cuda_info["active_bytes.all.peak"]
         mem_reserved = cuda_info["reserved_bytes.all.peak"]
 
-        metrics = self.times | {
-            "step": self.step,
+        # reset peak memory stats
+        torch.cuda.reset_peak_memory_stats()
+
+        return {
             "mem_GiB": mem / (1024**3),
             "mem_reserved_GiB": mem_reserved / (1024**3),
             "mem_percentage": mem / self.capacity,
@@ -170,10 +200,52 @@ class LightProfiler:
             "num_ooms": cuda_info["num_ooms"],
         }
 
-        print(json.dumps(metrics), file=self.file, flush=True)
-        logger.info({k: round(v, 5) for k, v in metrics.items()})
+    # ------------------------------------------------------------------------------
+    # GPU Utilization
+    # ------------------------------------------------------------------------------
 
-        torch.cuda.reset_peak_memory_stats()
+    @staticmethod
+    def _utilization_snapshot() -> None:
+        try:
+            result = subprocess.run(
+                ["nvidia-smi", "--query-gpu=utilization.gpu", "--format=csv,noheader,nounits"],
+                capture_output=True,
+                text=True,
+                check=True,
+            )
+            utilization = result.stdout.strip().split("\n")
+            return {f"utlization (cuda:{rank})": int(val) for rank, val in enumerate(utilization)}
+        except subprocess.CalledProcessError as e:
+            logger.warning(f"An error occurred: {e.stderr}")
+            return None
+
+    def _utilization_average(self, refresh_period: float = 1) -> None:
+        while self.utilization_thread.is_alive():
+            utilization = self._utilization_snapshot()
+            if utilization is None:
+                continue
+            if self.utilization is None:
+                self.utilization = utilization
+                self.utilization_scaling = 1
+            else:
+                self.utilization = {k: (v + utilization[k]) for k, v in self.utilization.items()}
+                self.utilization_scaling += 1
+            time.sleep(refresh_period)
+
+    def get_utilization_info(self) -> dict[str, float]:
+        # get current average
+        if self.utilization is None:
+            metrics = {}
+        else:
+            metrics = {k: v / self.utilization_scaling for k, v in self.utilization.items()}
+
+        # restart utilization average
+        self.utilization = None
+        return metrics
+
+    # --------------------------------------------------------------------------
+    # Timing information
+    # --------------------------------------------------------------------------
 
     def start_timer(self) -> None:
         self.time = time.time()
@@ -235,6 +307,7 @@ class Profiler:
     def __enter__(self) -> "Profiler":
         self.pytorch.__enter__()
         self.light.__enter__()
+        return self
 
     def __exit__(self, exc: type[BaseException], value: BaseException, tb: TracebackType):
         self.pytorch.__exit__(exc, value, tb)

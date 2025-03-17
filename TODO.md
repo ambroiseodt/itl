@@ -18,24 +18,18 @@
     - Option to remove the tokenizer mask when doing pure pretraining.
 - Simple vanilla script on the Shakespear dataset to debug on cpu.
 
-#### Small improvements to the codebase
-- (?) Remove Statefulness of scheduler.
-
 #### Known issues
 - Wandb restarting does not work well. To have nice eval plots, best is to update local results to wandb after the runs.
 - Restart after an interruption during eval when launched online are not handled correctly.
 
 #### Bigger improvement to the codebase
-- Modify the light profiler:
-    - throughput and timing should be output in the metrics.
-    - probably best is to have a different config for the light and the heavy profiler.
 - Tinker with parallelization when using many GPUs.
     - TP at training time.
     - DDP at generation time (make KV cache / masking work there).
     - TP at generation time.
     - Check Meta Lingua logic.
     - Check torch.compile(dynamic=True).
-- Improve the metric logging, as well as the profiler.
+- Improve the metric logging.
     - log activation norm -> use probing.
         - We may easily log the norm of the weights.
     - have a way to compute exactly the number of flops -> use torch dispatcher.

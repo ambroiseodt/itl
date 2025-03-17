@@ -120,7 +120,6 @@ def train(config: TrainingConfig) -> None:
         profiler = Profiler(config.orchestration.profiler, state=optim_state)
         context_stack.enter_context(profiler)
 
-
         # flops and model size calculation
         raw_model: EmbeddingModel = cluster.root_model
         metric_logger.report_statistics(raw_model)
@@ -132,6 +131,7 @@ def train(config: TrainingConfig) -> None:
         # Training loop
         # ---------------------------------------------------------------------
 
+        # synchronize checkpoint and profiler steps with optimizer
         checkpoint.sync_step(optim_state.step)
         profiler.sync_step(optim_state.step)
 
@@ -246,7 +246,7 @@ def train(config: TrainingConfig) -> None:
                     "step": step,
                     "lr": lr,
                     "grad_norm": grad_norm,
-                    "flop_freq (TF)": flops / 1e12,
+                    "flop_freq (TF, approx)": flops / 1e12,
                     "token_freq (M)": token_freq / 1e6,
                 }
                 metric_logger(metrics)
