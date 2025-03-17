@@ -102,15 +102,14 @@ def train(config: TrainingConfig) -> None:
         # Recover Checkpoint
         # ---------------------------------------------------------------------
 
-        checkpoint: Checkpointer = context_stack.enter_context(
-            Checkpointer(
-                config.orchestration.checkpoint,
-                model=model,
-                optimizer=optimizer,
-                stateful_objects={"scheduler": scheduler, "dataloader": dataloader, "state": optim_state},
-                model_config=asdict(config.model),
-            )
+        checkpoint = Checkpointer(
+            config.orchestration.checkpoint,
+            model=model,
+            optimizer=optimizer,
+            stateful_objects={"scheduler": scheduler, "dataloader": dataloader, "state": optim_state},
+            model_config=asdict(config.model),
         )
+        context_stack.enter_context(checkpoint)
         checkpoint.saved_step = checkpoint.step = optim_state.step
         context_stack.enter_context(dataloader)
 
@@ -118,7 +117,8 @@ def train(config: TrainingConfig) -> None:
         # Profile information
         # ---------------------------------------------------------------------
 
-        profiler: Profiler = context_stack.enter_context(Profiler(config.orchestration.profiler, state=optim_state))
+        profiler = Profiler(config.orchestration.profiler, state=optim_state)
+        context_stack.enter_context(profiler)
 
         # flops and model size calculation
         raw_model: EmbeddingModel = cluster.root_model
