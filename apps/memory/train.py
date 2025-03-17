@@ -77,7 +77,7 @@ def train(config: TrainingConfig) -> None:
         # ---------------------------------------------------------------------
 
         logger.info("Building model")
-        model: EmbeddingModel = config.model_gen(config.model)
+        model: EmbeddingModel = config.model_type(config.model)
         model = cluster.build_model(model)
 
         if config.cluster.compile_model:

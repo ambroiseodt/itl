@@ -363,9 +363,9 @@ def eval(config: EvaluationConfig) -> None:
 
         # build model architecture
         with open(f"{config.model_dir}/params.json") as f:
-            model_config = {"model": json.load(f)}
-        model_config, model_gen = build_model_config(model_config)
-        model: EmbeddingModel = model_gen(model_config)
+            file_config = json.load(f)
+        model_config, model_type = build_model_config(file_config)
+        model: EmbeddingModel = model_type(model_config)
 
         # load model weights
         state_dict = {"model": model.state_dict()}

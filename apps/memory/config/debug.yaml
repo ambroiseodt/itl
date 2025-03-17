@@ -26,8 +26,8 @@ run_config:
     seq_len: 257
     padding: true
 
-    n_data: 10000
-    key: qatool
+    n_data: 1000
+    key: qa
     data_dir: $HOME/data/memory
     save_dir: $HOME/data/temporary
     tokenizer:
@@ -53,7 +53,7 @@ run_config:
       hidden_dim: 256
 
   optim:
-    steps: 10000
+    steps: 1000
     max_steps: 10000
     lr: 1e-3
     weight_decay: 0.1
@@ -83,7 +83,7 @@ run_config:
 
   evaluation:
     db_path: $HOME/data/memory/people.db
-    period: 1000
+    period: 50
     asynchronous: false
     data:
       batch_size: 1024
