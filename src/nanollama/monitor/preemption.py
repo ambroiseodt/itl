@@ -10,7 +10,6 @@ This file is useful to handle and requeue Slurm job that are being preempted.
 import logging
 import os
 import signal
-import sys
 from signal import SIGTERM, SIGUSR1, Signals
 from types import FrameType, TracebackType
 
@@ -48,4 +47,3 @@ class PreemptionHandler:
                 os.system("scontrol requeue " + os.environ["SLURM_JOB_ID"])
             else:
                 logger.warning("Not the master process, no need to requeue.")
-            sys.exit(0)
