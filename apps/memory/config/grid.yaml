@@ -69,14 +69,8 @@ run_config:
     checkpoint:
       nb_kept: 1
 
-    profiler:
-      active: true
-      heavy: false
-      wait: 1
-      steps: 20
-
   evaluation:
-    period: 20
+    period: 1000
     asynchronous: false
     db_path: $HOME/data/memory/people.db
     data:

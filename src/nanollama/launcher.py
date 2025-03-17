@@ -191,7 +191,7 @@ def copy_dir(input_dir: str, output_dir: str) -> None:
         # documentation
         "--exclude '*.md' "
         # data
-        "--exclude data/ "
+        "--exclude '*.jsonl' "
         "--exclude '*.txt' "
         "--exclude '*.j2' "
         # configuration and scripts
