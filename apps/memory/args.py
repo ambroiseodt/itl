@@ -357,6 +357,7 @@ def heritage_eval_config(run_config: dict[str, Any], launcher: dict[str, Any]) -
         configs_keys += [
             (SlurmConfig, "slurm"),
             (ClusterConfig, "cluster"),
+            (dict, "tokenizer"),
             (LoggerConfig, "orchestration.logging"),
             (ProfilerConfig, "orchestration.profiler"),
             (WandbConfig, "orchestration.logging.wandb"),
@@ -364,12 +365,17 @@ def heritage_eval_config(run_config: dict[str, Any], launcher: dict[str, Any]) -
 
     # proceed with inheritance
     for config_cls, cls_key in configs_keys:
-        for key, finfo in config_cls.__dataclass_fields__.items():
-            if not finfo.init:
-                continue
-            flat_key = f"{cls_key}.{key}"
-            if flat_key not in eval_config and flat_key in flat_config:
-                eval_config[flat_key] = flat_config[flat_key]
+        if config_cls is dict:
+            for keys in flat_config:
+                if keys.startswith(cls_key) and keys not in eval_config:
+                    eval_config[keys] = flat_config[keys]
+        else:
+            for key, finfo in config_cls.__dataclass_fields__.items():
+                if not finfo.init:
+                    continue
+                flat_key = f"{cls_key}.{key}"
+                if flat_key not in eval_config and flat_key in flat_config:
+                    eval_config[flat_key] = flat_config[flat_key]
 
     # merge configuration
     run_config["evaluation"] = unflatten_config(eval_config)

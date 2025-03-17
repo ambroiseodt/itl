@@ -254,7 +254,10 @@ class ByteTokenizer(Tokenizer):
         self._register_special_tokens(config.special_tokens, offset=256)
 
         # register vocabulary size
-        self.vocab_size = 256 + max(config.special_tokens.values())
+        if len(config.special_tokens):
+            self.vocab_size = max(config.special_tokens.values()) + 1
+        else:
+            self.vocab_size = 256
 
     def encode(self, sentence: str, bos: int = 0) -> list[int]:
         tokens = []
