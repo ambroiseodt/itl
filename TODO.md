@@ -6,11 +6,6 @@
 
 - Make nice plots, and visualization methods.
     - Check that wandb is working correctly.
-- Generation.
-    - Write inference loop logic, as well as sampling strategies.
-
-#### Pipeline modification ideas
-- Change mask so that the LLM can have non-causal interaction between tokens that it has not generated.
 
 #### Simple recipes in the apps folder
 - Simple vanilla script with real tokenizer over SmolLM v2.
@@ -23,23 +18,31 @@
 - Restart after an interruption during eval when launched online are not handled correctly.
 
 #### Bigger improvement to the codebase
+**Stuffs to improve and understand pretraining:**
+- Add various initialization scheme.
+- Improve the metric logging.
+    - log activation norm -> use probing.
+        - We may easily log the norm of the weights.
+    - have a way to compute exactly the number of flops -> use torch dispatcher.
+
+**Stuffs to benchmark real model:**
+- Move toward tasks-based evaluation a la llm-harness. Get inspiration from https://github.com/facebookresearch/lingua/blob/main/apps/main/eval.py.
+- Caching for Mamba and RNN models.
+- Write various sampling strategies.
+
+**Stuffs for fast generation in RL like env:**
+- Improve the generation part to have a async scheme for lane, with page in / page out mechanisms.
+    - Indeed, generation is currently bottlenecked by the SQL agent.
+    - Caching when dealing with tree of multi-turn dialogs, cpu page-in/page-out mechanism.
+
+**Stuffs to scale models:**
 - Tinker with parallelization when using many GPUs.
     - TP at training time.
     - DDP at generation time (make KV cache / masking work there).
     - TP at generation time.
     - Check Meta Lingua logic.
     - Check torch.compile(dynamic=True).
-- Improve the metric logging.
-    - log activation norm -> use probing.
-        - We may easily log the norm of the weights.
-    - have a way to compute exactly the number of flops -> use torch dispatcher.
-- Move toward tasks-based evaluation a la llm-harness. Get inspiration from https://github.com/facebookresearch/lingua/blob/main/apps/main/eval.py.
-- Improve the generation part to have a async scheme for lane, with page in / page out mechanisms.
-    - Indeed, generation is currently bottlenecked by the SQL agent.
-    - Caching when dealing with tree of multi-turn dialogs, cpu page-in/page-out mechanism.
-- Add various initialization scheme.
 - Activation checkpointing.
-- Caching for Mamba and RNN models.
 
 ### Ambroise & Sam TODO:
 - Read technical reports of open-source LLms (Qwen, DeepSeek, HuggingFace, Olmo, etc.)
@@ -63,6 +66,9 @@ maximal amount of facts?
 - Mixture of experts.
 - Low rank finetuning.
 - Quantization.
+
+#### Pipeline modification ideas
+- Change mask so that the LLM can have non-causal interaction between tokens that it has not generated.
 
 ## Some TODOs of an open-source project:
 - torch.compile, int8 quantization, speculative decoding (7x inference acceleration)
