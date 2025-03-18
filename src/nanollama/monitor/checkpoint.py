@@ -117,6 +117,10 @@ class Checkpointer:
         if self.saved_step != self.step:
             self.update()
 
+        if self.process is not None:
+            logger.info("Waiting for final checkpoint to complete.")
+            self.process.result()
+
     def __call__(self) -> None:
         """Call update function periodically."""
         self.step += 1
