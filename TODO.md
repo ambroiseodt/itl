@@ -1,11 +1,12 @@
-# Todo:
-- Get some curves of accuracy when training with the tool use, or without. and write some visualization notebooks/scripts to get plots out of many experimental logs.
-
 #### Vivien's current todo:
-- I have restarted some runs that did not finish. If they still do not finish I just remove the evaluation, and only do them at the end of the training run.
 
-- Make nice plots, and visualization methods.
-    - Check that wandb is working correctly.
+- Get a nice Figure 1.
+    - I have relaunched a finer grid to get a nicer Figure 1.
+    - What is the best allocation of parameters given a budget to maximize performance (more layers, more emb dim, how many heads..., two layers seems best for tool use, otherwise things are unclear), maybe we can answer some of these question theoretically.
+    - Does the number of bits of storage we can store depends on the quantization of the parameters (the best we could hope for would be a one to one mapping between nb bytes in network parameters and minimal nb_bytes to compress the data). This will be hard to answer with accessing V100 only.
+    - **Mixture of experts** would be quite useful to basically scale in terms of facts memorized according to the number of total parameters, while only paying the inference cost for the number of active parameters. This sounds quite promising paper-wise.
+
+- Do some analysis of the circuit evolution for the runs 1161.
 
 #### Simple recipes in the apps folder
 - Simple vanilla script with real tokenizer over SmolLM v2.
@@ -78,3 +79,10 @@ maximal amount of facts?
 - PagedAttention (vLLM) + FlashAttention integration
 - BitNet and 1-bit quantization, AWQ, QoQ, GGUF, HQQ
 - Medusa, Speculative Sampling, Eagle
+
+
+## Potential story
+1. In-tool allows you to reduce the memory footprint of the model, you learn rules not facts.
+    - Figure 1: we show some nice scaling for nb facts learned vs nb of parameters (without tool use this is linear, with tool use we have a much better scaling, basically limited by copying ability, maybe log scaling - we could do theory there).
+2. To learn rules, you need to bypass the tendancy of the model to memorize facts, which helps descrease the learning rate faster.
+    - Show the circuits, show the learning dynamics (if we slow down the learning rate, can we avoid the memorization phase, can this be achieved with the warm-up schedule?)
