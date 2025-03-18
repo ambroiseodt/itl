@@ -1,19 +1,16 @@
 launcher:
   name: memory
   overwrite: true
-  log_dir: $HOME/memory_grid
+  log_dir: $HOME/memory_fine_grid
 
   script: apps.memory.train
 
   grid:
     data:
-      nb_data: [10, 30, 100, 300, 1000, 3000, 10000]
+      nb_data: [2, 4, 8, 16, 32, 64, 128, 256, 512, 1024, 2048, 8192, 16384, 32768]
       key: [qatool, qa]
     model:
-      emb_dim: [16, 32, 64, 128]
-      nb_layers: [1, 2, 3, 4, 5, 6]
-      block: 
-        nb_heads: [1, 2, 4, 8]
+      emb_dim: [4, 8, 12, 16, 20, 24, 28, 32, 36, 40, 44, 48, 52, 56, 60, 64, 68, 72, 76, 80, 88, 96, 104, 112, 120, 128]
 
   slurm:
     # partition: scavenge
@@ -44,7 +41,7 @@ run_config:
 
   model:
     implementation: transformer
-    vocab_size: 300
+    vocab_size: 260
     emb_dim: 64
     nb_layers: 2
     block:

@@ -214,7 +214,7 @@ class MemoryDataConfig(DataConfig):
     - source: corpus of text specification as a list of weighted sources
     """
 
-    n_data: int = 0
+    nb_data: int = 0
     key: Literal["qa", "qatool", "biographies"] = ""
 
     data_dir: str = str(DATA_DIR)
@@ -222,11 +222,11 @@ class MemoryDataConfig(DataConfig):
     sources: list[SourceConfig] = field(default_factory=list)
 
     def post_init(self) -> None:
-        assert self.n_data, "Number of data must be specified"
+        assert self.nb_data, "Number of data must be specified"
         assert self.key, "Key must be specified"
 
         self.data_dir = os.path.expandvars(self.data_dir)
-        self.save_dir = str(Path(os.path.expandvars(self.save_dir)) / f"{self.key}_{self.n_data}")
+        self.save_dir = str(Path(os.path.expandvars(self.save_dir)) / f"{self.key}_{self.nb_data}")
         self.sources = [SourceConfig(path=self.save_dir, weight=1)]
         super().post_init()
 
@@ -238,7 +238,7 @@ class MemoryDataConfig(DataConfig):
                 "apps.memory.dataset.generate",
                 "build",
                 "--n-data",
-                str(self.n_data),
+                str(self.nb_data),
                 "--key",
                 self.key,
                 "--save-dir",

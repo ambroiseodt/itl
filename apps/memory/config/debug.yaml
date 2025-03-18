@@ -26,7 +26,7 @@ run_config:
     seq_len: 257
     padding: true
 
-    n_data: 1000
+    nb_data: 1000
     key: qa
     # key: qatool
     data_dir: $HOME/data/memory
@@ -55,7 +55,7 @@ run_config:
 
   optim:
     steps: 100
-    max_steps: 10000
+    # max_steps: 10000
     lr: 1e-3
     weight_decay: 0.1
     fused: true
