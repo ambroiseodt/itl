@@ -173,7 +173,6 @@ def clean_environment() -> Generator[None, None, None]:
 @dataclass
 class ClusterConfig:
     device: torch.device = None
-    compile_model: bool = True
     backend: str = "cpu:gloo,cuda:nccl"
     dp: int = 0
     tp: int = 1
@@ -199,7 +198,6 @@ class ClusterManager:
     - device: current torch.device
     - tp_mesh: tensor parallel mesh
     - dp_mesh: data parallel mesh
-    - root_model: original nn.Module before parallelization
     """
 
     def __init__(self, config: ClusterConfig):
@@ -211,12 +209,10 @@ class ClusterManager:
         assert self.device.type == "cpu" or self.dp * self.tp == nb_devices, (
             f"DP * TP must equal the number of GPUs {self.tp} * {self.dp} != {nb_devices}"
         )
-        self.compile = config.compile_model
         set_os_environment(config.os_environment)
 
         self.tp_mesh: DeviceMesh
         self.dp_mesh: DeviceMesh
-        self.root_model: nn.Module
 
     def __enter__(self):
         """Initialize distributed environment"""
@@ -239,16 +235,15 @@ class ClusterManager:
         self.dp_mesh = mesh["dp"]
         return self
 
-    def build_model(self, model: nn.Module, tp_plan: dict[str, ParallelStyle] = None, ddp: bool = True) -> nn.Module:
+    def build_model(self, model: nn.Module, tp_plan: dict[str, ParallelStyle] = None) -> nn.Module:
         """
         Initialize the model by casting it to the device, compiling and parallelizing it according to configuration.
 
         ### Parameters
-        - model: model to be parallelized, and compiled
+        - model: model to be parallelized
         - tp_plan: tensor parallelization plan
         - ddp: whether to use DistributedDataParallel or FullyShardedDataParallel
         """
-        self.root_model = model
         model = model.to(device=self.device)
 
         if self.tp > 1:
@@ -259,11 +254,12 @@ class ClusterManager:
         # TODO
 
         if self.dp > 1:
-            logger.info("Parallelizing model with data parallel")
-            if ddp:
-                model = DDP(model, device_mesh=self.dp_mesh)
-            else:
+            if self.tp > 1:
+                logger.info("Parallelizing model with fully sharded data parallel")
                 model = FSDP(model, device_mesh=self.dp_mesh, use_orig_params=True)
+            else:
+                logger.info("Parallelizing model with data parallel")
+                model = DDP(model)
 
         return model
 
@@ -274,3 +270,15 @@ class ClusterManager:
         logger.info(f"Exiting distributed environment {rank + 1} / {world_size}")
         if is_distributed_job():
             dist.destroy_process_group()
+
+
+# ------------------------------------------------------------------------------
+# Access root model when wrapped in parallelization layers
+# ------------------------------------------------------------------------------
+
+
+def get_raw_model(model: nn.Module) -> nn.Module:
+    if isinstance(model, DDP) or isinstance(model, FSDP):
+        return get_raw_model(model.module)
+    else:
+        return model

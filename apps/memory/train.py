@@ -18,7 +18,7 @@ import yaml
 from torch import Tensor
 
 from src.nanollama.data.text import TokenLoader
-from src.nanollama.distributed import ClusterManager, clean_environment, is_master_process
+from src.nanollama.distributed import ClusterManager, clean_environment, get_raw_model, is_master_process
 from src.nanollama.launcher import launch_job
 from src.nanollama.model import EmbeddingModel, build_model
 from src.nanollama.model.transformer import pretrain
@@ -115,7 +115,7 @@ def train(config: TrainingConfig) -> None:
         context_stack.enter_context(profiler)
 
         # flops and model size calculation
-        raw_model: EmbeddingModel = cluster.root_model
+        raw_model: EmbeddingModel = get_raw_model(model)
         metric_logger.report_statistics(raw_model)
         token_per_step = config.data.seq_len * config.data.batch_size * config.optim.grad_acc_steps
         flop_per_step = raw_model.get_nb_flop() * token_per_step
@@ -125,7 +125,7 @@ def train(config: TrainingConfig) -> None:
         # Compile model
         # ---------------------------------------------------------------------
 
-        if config.cluster.compile_model:
+        if config.compile:
             logger.info("Compiling pipeline")
             pretrain_logic = torch.compile(pretrain, dynamic=True)
         else:

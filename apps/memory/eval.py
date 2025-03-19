@@ -17,13 +17,14 @@ from typing import Any
 
 import torch
 import torch.distributed.checkpoint as dcp
+import torch.nn as nn
 import yaml
 from torch import Tensor
 from torch.distributed.checkpoint.stateful import Stateful
 from torch.distributed.device_mesh import DeviceMesh
 
 from src.nanollama.agent import Actor, SQLAgent
-from src.nanollama.distributed import ClusterManager, is_master_process
+from src.nanollama.distributed import ClusterManager, get_raw_model, is_master_process
 from src.nanollama.model import (
     EmbeddingModel,
     Transformer,
@@ -70,7 +71,7 @@ class BatchedInference:
 
     def __init__(
         self,
-        model: Transformer,
+        model: nn.Module,
         tokenizer: DialogTokenizer,
         db_path: str,
         batch_size: int,
@@ -78,10 +79,12 @@ class BatchedInference:
         compile: bool = False,
         **kwargs,
     ):
+        self.raw_model: Transformer = get_raw_model(model)
+
         # Attributes for generation with kv caching
-        seq_len = seq_len or model.seq_len
+        seq_len = seq_len or self.raw_model.seq_len
         self.model = model
-        self.cache_shape = (batch_size, model.nb_kv_heads, seq_len, model.head_dim)
+        self.cache_shape = (batch_size, self.raw_model.nb_kv_heads, seq_len, self.raw_model.head_dim)
 
         # Attributes for decoding with agent interaction
         self.tokenizer = tokenizer
@@ -100,13 +103,13 @@ class BatchedInference:
 
     @property
     def device(self) -> torch.device:
-        return self.model.device
+        return self.raw_model.device
 
     def __enter__(self):
         logger.info("Entering inference context. Setting up KV caches. Spinning up SQL agent")
         self.model.eval()
-        device, dtype = self.model.device, self.model.dtype
-        for layer in self.model.layers:
+        device, dtype = self.raw_model.device, self.raw_model.dtype
+        for layer in self.raw_model.layers:
             layer: TransformerBlock
             layer.attn.kv_cache = KVCache(self.cache_shape, device=device, dtype=dtype)
         self.agent.__enter__()
@@ -115,10 +118,10 @@ class BatchedInference:
     def __exit__(self, exc: type[BaseException], value: BaseException, tb: TracebackType):
         logger.info("Exiting inference context. Deleting KV caches. Shutting down SQL agent")
         self.agent.__exit__(exc, value, tb)
-        for layer in self.model.layers:
+        for layer in self.raw_model.layers:
             layer: TransformerBlock
             layer.attn.kv_cache = None
-        self.model.set_mode("train")
+        self.raw_model.set_mode("train")
         self.model.train()
 
     def generate(self, prompts: list[list[int]], max_len: int = None) -> list[str]:
@@ -134,7 +137,7 @@ class BatchedInference:
         """
         # parse arguments
         if max_len is None:
-            max_len = getattr(self.model, "seq_len", torch.inf)
+            max_len = getattr(self.raw_model, "seq_len", torch.inf)
 
         # aliases
         bot2actor = self.tokenizer.bot2actor
@@ -158,11 +161,11 @@ class BatchedInference:
 
         while total_len < max_len and ongoing.any():
             if not prefilled:
-                self.model.set_mode("prefill")
+                self.raw_model.set_mode("prefill")
                 x = self.prefilling_logic(self.model, x, **self.kwargs)
                 prefilled = True
             else:
-                self.model.set_mode("generate")
+                self.raw_model.set_mode("generate")
                 x = self.generation_logic(self.model, x, **self.kwargs)
 
             # inspect each lane

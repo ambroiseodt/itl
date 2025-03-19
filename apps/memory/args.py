@@ -256,6 +256,7 @@ class MemoryDataConfig(DataConfig):
 
 @dataclass
 class TrainingConfig:
+    compile: bool = False
     cluster: ClusterConfig = field(default_factory=ClusterConfig)
     orchestration: OrchestratorConfig = field(default_factory=OrchestratorConfig)
 
@@ -276,7 +277,7 @@ class TrainingConfig:
         self.cluster.post_init()
         if torch.device(self.cluster.device).type == "cpu":
             assert self.optim.fused is False, "Fused Adam is not supported on CPU"
-            assert self.orchestration.profiler.active is False, "Profiler is not supported on CPU"
+            assert self.orchestration.profiler.pytorch.active is False, "Profiler is not supported on CPU"
 
         # manual post initialization of all modules
         self.orchestration.post_init()

@@ -11,6 +11,10 @@ from ..utils import build_with_type_check
 from .embedding_model import EmbeddingModel
 from .transformer import Transformer, TransformerConfig
 
+# ------------------------------------------------------------------------------
+# Configuration Dispatcher
+# ------------------------------------------------------------------------------
+
 
 def build_model(config: dict[str, Any], callback: callable = None, return_config: bool = False) -> EmbeddingModel:
     """

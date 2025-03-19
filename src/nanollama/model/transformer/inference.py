@@ -16,9 +16,11 @@ from logging import getLogger
 from types import TracebackType
 
 import torch
+import torch.nn as nn
 import torch.nn.functional as F
 from torch import Tensor
 
+from ...distributed import get_raw_model
 from ...inference import sample_from_logits
 from .architecture import KVCache, Transformer, TransformerBlock
 
@@ -60,17 +62,18 @@ def pretrain(model: Transformer, x: Tensor, y: Tensor, loss_mask: Tensor = None)
 
 
 class InferenceContext:
-    def __init__(self, model: Transformer, batch_size: int, seq_len: int = None):
+    def __init__(self, model: nn.Module, batch_size: int, seq_len: int = None):
         # alias
-        seq_len = seq_len or model.seq_len
         self.model = model
-        self.cache_shape = (batch_size, model.nb_kv_heads, seq_len, model.head_dim)
+        self.raw_model: Transformer = get_raw_model(model)
+        seq_len = seq_len or self.raw_model.seq_len
+        self.cache_shape = (batch_size, self.raw_model.nb_kv_heads, seq_len, self.raw_model.head_dim)
 
     def __enter__(self) -> "InferenceContext":
         logger.info("Entering inference context. Setting up KV caches.")
         self.model.eval()
-        device, dtype = self.model.device, self.model.dtype
-        for layer in self.model.layers:
+        device, dtype = self.raw_model.device, self.raw_model.dtype
+        for layer in self.raw_model.layers:
             layer: TransformerBlock
             layer.attn.kv_cache = KVCache(self.cache_shape, device=device, dtype=dtype)
         return self
@@ -106,7 +109,7 @@ def generate(model: Transformer, x: Tensor, **kwargs) -> Tensor:
 
 
 @torch.inference_mode()
-def prefill(model: Transformer, x: Tensor, **kwargs) -> Tensor:
+def prefill(model: nn.Module, x: Tensor, **kwargs) -> Tensor:
     """
     Prefill caches based on prompts.
 
@@ -115,7 +118,8 @@ def prefill(model: Transformer, x: Tensor, **kwargs) -> Tensor:
     - x: input tensor.
     - kwargs: additional arguments for sampling first tokens.
     """
-    for layer in model.layers:
+    raw_model: Transformer = get_raw_model(model)
+    for layer in raw_model.layers:
         layer: TransformerBlock
         layer.attn.kv_cache.reset()
     logits = model(x)

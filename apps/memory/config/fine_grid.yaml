@@ -22,9 +22,6 @@ launcher:
     signal_time: 120   # alert time in seconds
 
 run_config:
-  cluster:
-    compile_model: true
-
   data:
     key: qatool
     nb_data: 100

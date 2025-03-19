@@ -18,8 +18,10 @@ launcher:
     signal_time: 60   # alert time in seconds
 
 run_config:
+  compile: false
+
   cluster:
-    compile_model: true
+    tp: 1
 
   data:
     batch_size: 128

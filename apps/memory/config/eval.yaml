@@ -24,9 +24,6 @@ checkpoint_flag: eval
 metadata:
   step: 1000
 
-cluster:
-  compile_model: true
-
 orchestration:
   log_dir: $HOME/eval_debug
 
