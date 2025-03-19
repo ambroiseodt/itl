@@ -36,6 +36,7 @@
 - Activation checkpointing.
 - Tinker with parallelization when using many GPUs.
     - [x] DDP without compile
+        - not sure it works though, the prompt loader says 4 partial step in the debug script, while it should say 2 instead.
     - [x] DP with FSDP without compile -> works but warned as depreciated.
     - [x] DDP with compile -> does not work for checkpointing.
     - Best would be to copy Meta Lingua.
