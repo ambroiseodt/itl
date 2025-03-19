@@ -29,7 +29,7 @@ run_config:
 
   data:
     key: qatool
-    n_data: 100
+    nb_data: 100
     batch_size: 128
     seq_len: 256
     padding: true
@@ -51,7 +51,7 @@ run_config:
       nb_heads: 2
 
   optim:
-    steps: 100_000
+    steps: 10_000
     lr: 1e-3
     weight_decay: 0.1
     warmup: 50
@@ -63,14 +63,14 @@ run_config:
 
     logging:
       period: 1
-    wandb:
-      active: false
+      wandb:
+        active: false
 
     checkpoint:
       nb_kept: 1
 
   evaluation:
-    period: 100_000
+    period: 100
     asynchronous: false
     db_path: $HOME/data/memory/people.db
     data:

@@ -27,7 +27,7 @@ run_config:
 
   data:
     key: qatool
-    n_data: 100
+    nb_data: 100
     batch_size: 128
     seq_len: 256
     padding: true
@@ -55,10 +55,14 @@ run_config:
     warmup: 50
     lr_min_ratio: 0
 
+  orchestration:
+    utils:
+      seed: 100
+
     logging:
       period: 1
-    wandb:
-      active: false
+      wandb:
+        active: false
 
     checkpoint:
       nb_kept: 1
