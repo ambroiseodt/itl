@@ -7,7 +7,7 @@ data:
   - path: $HOME/data/memory/person3/qa.jsonl
   - path: $HOME/data/memory/person4/qa.jsonl
   batch_size: 16
-  seq_len: 129
+  seq_len: 257
 
 tokenizer:
   implementation: byte
@@ -29,8 +29,6 @@ cluster:
 
 orchestration:
   log_dir: $HOME/eval_debug
-  profiler:
-    active: false
 
   logging:
     wandb:

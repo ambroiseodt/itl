@@ -19,7 +19,7 @@ launcher:
 
 run_config:
   cluster:
-    compile_model: false
+    compile_model: true
 
   data:
     batch_size: 128
@@ -78,11 +78,10 @@ run_config:
 
     profiler:
       pytorch:
-        active: true 
+        active: false 
         wait: 1
         steps: 10
       light:
-        active: true
         period: 25
 
   evaluation:

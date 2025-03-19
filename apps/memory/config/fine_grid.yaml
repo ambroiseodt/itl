@@ -29,7 +29,7 @@ run_config:
     key: qatool
     nb_data: 100
     batch_size: 128
-    seq_len: 256
+    seq_len: 257
     padding: true
 
   tokenizer:

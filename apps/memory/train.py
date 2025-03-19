@@ -79,12 +79,6 @@ def train(config: TrainingConfig) -> None:
         model, model_config = build_model(config.model, config.model_callback, return_config=True)
         model = cluster.build_model(model)
 
-        if config.cluster.compile_model:
-            logger.info("Compiling pipeline")
-            pretrain_logic = torch.compile(pretrain)
-        else:
-            pretrain_logic = pretrain
-
         logger.info("Building optimizer")
         optimizer = build_optimizer(model, config.optim)
         scheduler = build_scheduler(optimizer, config.optim)
@@ -126,6 +120,16 @@ def train(config: TrainingConfig) -> None:
         token_per_step = config.data.seq_len * config.data.batch_size * config.optim.grad_acc_steps
         flop_per_step = raw_model.get_nb_flop() * token_per_step
         current_time, current_step = time.time(), optim_state.step
+
+        # ---------------------------------------------------------------------
+        # Compile model
+        # ---------------------------------------------------------------------
+
+        if config.cluster.compile_model:
+            logger.info("Compiling pipeline")
+            pretrain_logic = torch.compile(pretrain, dynamic=True)
+        else:
+            pretrain_logic = pretrain
 
         # ---------------------------------------------------------------------
         # Training loop
@@ -260,8 +264,6 @@ def train(config: TrainingConfig) -> None:
             profiler.start_timer()
 
             if eval_period > 0 and step % eval_period == 0:
-                model.eval()
-
                 # run evaluation now
                 if not config.evaluation.asynchronous:
                     metrics = run_evaluation(config.evaluation, model=model, tokenizer=tokenizer, preemption=preemption)
@@ -320,6 +322,9 @@ def main() -> None:
 
     # initialize configuration
     config = build_train_config(file_config)
+
+    # # making the same seed
+    # config.orchestration.utils.seed = config.data.seed
 
     train(config)
 

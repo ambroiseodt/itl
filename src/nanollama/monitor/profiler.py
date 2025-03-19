@@ -106,8 +106,7 @@ class PytorchProfiler:
 
 @dataclass
 class LightProfilerConfig:
-    active: bool = True
-    period: int = 1
+    period: int = 0
     path: str = ""
     refresh_rate: float = 0.001
 
@@ -123,7 +122,6 @@ class LightProfiler:
     def __init__(self, config: LightProfilerConfig):
         self.path = str(Path(config.path) / f"prof_{get_rank()}.jsonl")
         self.period = config.period
-        self.active = False
         self.step = 0
 
         # placeholder and alias
@@ -294,7 +292,7 @@ class Profiler:
 
     def __init__(self, config: ProfilerConfig, state: OptimizerState = None):
         self.pytorch = PytorchProfiler(config.pytorch) if config.pytorch.active else MockProfiler()
-        self.light = LightProfiler(config.light) if config.light.active else MockProfiler()
+        self.light = LightProfiler(config.light) if config.light.period > 0 else MockProfiler()
         if self.pytorch or self.light:
             Path(config.path).mkdir(parents=True, exist_ok=True)
 
