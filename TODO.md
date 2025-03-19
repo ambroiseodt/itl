@@ -33,13 +33,15 @@
     - Caching when dealing with tree of multi-turn dialogs, cpu page-in/page-out mechanism.
 
 **Stuffs to scale models:**
-- Tinker with parallelization when using many GPUs.
-    - TP at training time.
-    - DDP at generation time (make KV cache / masking work there).
-    - TP at generation time.
-    - Check Meta Lingua logic.
-    - Check torch.compile(dynamic=True).
 - Activation checkpointing.
+- Tinker with parallelization when using many GPUs.
+    - [x] DDP without compile
+    - [x] DP with FSDP without compile -> works but warned as depreciated.
+    - [x] DDP with compile -> does not work for checkpointing.
+    - Best would be to copy Meta Lingua.
+    - TP without compile.
+    - TP with compile.
+    - TP and DDP with and without compile.
 
 ### Ambroise & Sam TODO:
 - Read technical reports of open-source LLms (Qwen, DeepSeek, HuggingFace, Olmo, etc.)
