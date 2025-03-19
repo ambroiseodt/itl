@@ -11,8 +11,8 @@ from nanollama.visualization.loader import get_config_info, get_task_ids, load_j
 logger = getLogger("nanollama")
 
 
-# ------------------------------------------------------------------------------
-# %% Assuming you have run a grid, you can use the following code to concatenate the results
+# %%----------------------------------------------------------------------------
+# Assuming you have run a grid, you can use the following code to concatenate the results
 # ------------------------------------------------------------------------------
 
 # put the path to the logging directory of your runs
@@ -54,17 +54,17 @@ for task_id in task_ids:
 df = pd.DataFrame(all_res)
 
 
-# ------------------------------------------------------------------------------
-# %% Otherwise you can load some results that I have saved in the repo
+# %%----------------------------------------------------------------------------
+# Otherwise you can load some results that I have saved in the repo
 # ------------------------------------------------------------------------------
 
-path = Path(__file__).parents[3] / "results" / "grid2.csv"
+path = Path(__file__).parents[3] / "results" / "grid3.csv"
 # df.to_csv(path)
 df = pd.read_csv(path)
 
 
-# ------------------------------------------------------------------------------
-# %% From the dataframe, you can plot various things, I go for some basic plots here
+# %%----------------------------------------------------------------------------
+# From the dataframe, you can plot various things, I go for some basic plots here
 # ------------------------------------------------------------------------------
 
 xaxis = "data.nb_data"
@@ -89,26 +89,28 @@ for key in ["qa", "qatool"]:
     plt.show()
 
 
-# ------------------------------------------------------------------------------
-# %% Add a measure of facts memorized
+# %%----------------------------------------------------------------------------
+# Add a measure of facts memorized
 # ------------------------------------------------------------------------------
 
 df["nb_facts"] = df["data.nb_data"] * df["accuracy_best"]
 
 
-# ------------------------------------------------------------------------------
-# %% Show the number of learned facts vs the number of parameters
+# %%----------------------------------------------------------------------------
+# Show the number of learned facts vs the number of parameters
 # ------------------------------------------------------------------------------
 
 fig, ax = plt.subplots(figsize=(9, 6))
 
+nb_data = df["data.nb_data"].max()
+
 # with tool
-ind = (df["data.key"] == "qatool") & (df["data.nb_data"] == 10_000)
+ind = (df["data.key"] == "qatool") & (df["data.nb_data"] == nb_data)
 tmp = df[ind]
 ax.scatter(tmp["nb_facts"], tmp["nb_params"], label="With tool", alpha=0.7)
 
 # without tool
-ind = (df["data.key"] == "qa") & (df["data.nb_data"] == 10_000)
+ind = (df["data.key"] == "qa") & (df["data.nb_data"] == nb_data)
 tmp = df[ind]
 ax.scatter(tmp["nb_facts"], tmp["nb_params"], label="Without tools", alpha=0.7)
 
@@ -125,36 +127,40 @@ plt.tight_layout()
 plt.show()
 
 
-# ------------------------------------------------------------------------------
-# %% Similar plot that is crisper
+# %%----------------------------------------------------------------------------
+# Similar plot that is crisper
 # ------------------------------------------------------------------------------
 
-fig, axes = plt.subplots(1, 2, figsize=(8, 4))
+# fig, axes = plt.subplots(1, 2, figsize=(8, 4))
+fig, axes = plt.subplots(1, 1, figsize=(4, 4))
+axes = [axes] if not isinstance(axes, list) else axes
 x = df['data.nb_data'].unique()
 
+acc_thres = 0.9
+
 # with tool
-ind = (df["data.key"] == "qatool") & (df["accuracy_best"] >= 0.99)
+ind = (df["data.key"] == "qatool") & (df["accuracy_best"] >= acc_thres)
 y_min, y_mean = [], []
 for nb_data in x:
     tmp = df[(df["data.nb_data"] == nb_data) & ind]["nb_params"]
     y_min.append(tmp.min())
-    y_mean.append(tmp.mean())
+    # y_mean.append(tmp.mean())
 axes[0].plot(x, y_min, label="With tool", linestyle="--", marker="o")
-axes[1].plot(x, y_mean, label="With tool", linestyle="--", marker="o")
+# axes[1].plot(x, y_mean, label="With tool", linestyle="--", marker="o")
 
 # without tool
-ind = (df["data.key"] == "qa") & (df["accuracy_best"] >= 0.99)
+ind = (df["data.key"] == "qa") & (df["accuracy_best"] >= acc_thres)
 y_min, y_mean = [], []
 for nb_data in x:
     tmp = df[(df["data.nb_data"] == nb_data) & ind]["nb_params"]
     y_min.append(tmp.min())
-    y_mean.append(tmp.mean())
+    # y_mean.append(tmp.mean())
 axes[0].plot(x, y_min, label="Without tool", linestyle="--", marker="o")
-axes[1].plot(x, y_mean, label="Without tool", linestyle="--", marker="o")
+# axes[1].plot(x, y_mean, label="Without tool", linestyle="--", marker="o")
 
 # metadata
-axes[0].set_ylabel("Min nb params s.t. accuracy > 0.99")
-axes[1].set_ylabel("Mean nb params s.t. accuracy > 0.99")
+axes[0].set_ylabel(f"Min nb params s.t. accuracy > {acc_thres}")
+# axes[1].set_ylabel(f"Mean nb params s.t. accuracy > {acc_thres}")
 for ax in axes:
     ax.set_xlabel("Number of data")
     ax.set_xscale("log")
@@ -167,12 +173,14 @@ plt.tight_layout()
 plt.show()
 
 
-# ------------------------------------------------------------------------------
-# %% Look at the influence of the number of heads
+# %%----------------------------------------------------------------------------
+# Look at the influence of the number of heads
 # ------------------------------------------------------------------------------
 
 fig, axes = plt.subplots(1, 2, figsize=(8, 4))
 x = df['data.nb_data'].unique()
+
+acc_thres = 0.9
 
 # key = "model.block.nb_heads"
 # key = "model.nb_layers"
@@ -182,7 +190,7 @@ val = df[key].unique()
 # with tool
 for i in val:
     params_ind = df[key] == i
-    ind = (df["data.key"] == "qatool") & (df["accuracy_best"] >= 0.99)
+    ind = (df["data.key"] == "qatool") & (df["accuracy_best"] >= acc_thres)
     ind &= params_ind
     y_min, y_mean = [], []
     for nb_data in x:
@@ -191,7 +199,7 @@ for i in val:
     axes[0].plot(x, y_min, label=f"With tool, {i} {key}", linestyle="--", marker="o")
 
     # without tool
-    ind = (df["data.key"] == "qa") & (df["accuracy_best"] >= 0.99)
+    ind = (df["data.key"] == "qa") & (df["accuracy_best"] >= acc_thres)
     ind &= params_ind
     y_min, y_mean = [], []
     for nb_data in x:
@@ -200,8 +208,8 @@ for i in val:
     axes[1].plot(x, y_min, label=f"Without tool, {i} {key}", linestyle="--", marker="o")
 
 # metadata
-axes[0].set_ylabel("Min nb params s.t. accuracy > 0.99")
-axes[1].set_ylabel("Min nb params s.t. accuracy > 0.99")
+axes[0].set_ylabel(f"Min nb params s.t. accuracy > {acc_thres}")
+axes[1].set_ylabel(f"Mean nb params s.t. accuracy > {acc_thres}")
 for ax in axes:
     ax.set_xlabel("Number of data")
     ax.set_xscale("log")
