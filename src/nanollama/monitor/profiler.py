@@ -81,11 +81,11 @@ class PytorchProfiler:
         if self.active:
             try:
                 self.profiler.export_chrome_trace(self.path)
+                self.profiler.__exit__(exc, value, tb)
             except AttributeError as e:
                 logger.warning("Could not save profiler traces")
                 logger.warning(e)
             logger.info(f"Pytorch profiler traces saved to {self.path}")
-            self.profiler.__exit__(exc, value, tb)
             self.active = False
 
     def __call__(self) -> None:
