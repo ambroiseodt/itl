@@ -1,12 +1,8 @@
-#### Vivien's current todo:
-
-- Get a nice Figure 1.
-    - I have relaunched a finer grid to get a nicer Figure 1.
-    - What is the best allocation of parameters given a budget to maximize performance (more layers, more emb dim, how many heads..., two layers seems best for tool use, otherwise things are unclear), maybe we can answer some of these question theoretically.
-    - Does the number of bits of storage we can store depends on the quantization of the parameters (the best we could hope for would be a one to one mapping between nb bytes in network parameters and minimal nb_bytes to compress the data). This will be hard to answer with accessing V100 only.
-    - **Mixture of experts** would be quite useful to basically scale in terms of facts memorized according to the number of total parameters, while only paying the inference cost for the number of active parameters. This sounds quite promising paper-wise.
-
-- Do some analysis of the circuit evolution for the runs 1161.
+#### Some question/research direction:
+- Probably compilation would make the training faster.
+- Does the amount memory storage per amount of parameters changes when using mixture of experts?
+- Does the amount memory storage per amount of parameters changes when using weight quantization?
+- Do some analysis of the circuit evolution for the runs 1161 of the `grid.yaml` config.
 
 #### Simple recipes in the apps folder
 - Simple vanilla script with real tokenizer over SmolLM v2.
@@ -49,7 +45,7 @@
 - Read technical reports of open-source LLms (Qwen, DeepSeek, HuggingFace, Olmo, etc.)
 - Gain insights on empirical tricks known in the LLM literature to be validated
 - Using the codebase, validate (or invalidate) those tricks from the lens of scaling laws
-- Important question: given fixed budget (= nb. of params), what is the opitmla design (nb. layers, nb. heads, embd. dim.) to learn the
+- Important question: given fixed budget (= nb. of params), what is the optimal design (nb. layers, nb. heads, embd. dim.) to learn the
 maximal amount of facts?
 
 # Ambroise's ideas:
