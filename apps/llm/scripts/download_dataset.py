@@ -3,16 +3,24 @@
 Utils to download Hugging Face datasets and cast them as JSONL files.
 
 @ Meta, 2025
+
+### NOTES
+This is work in progress.
+Some datasets are actually mixed of various sources.
+For these datasets, it is important not to mix the various sources into one (e.g. smoltalk).
 """
 
-import io
 import logging
+import os
+import subprocess
 import time
-from contextlib import redirect_stdout
 from dataclasses import dataclass, field
 from enum import Enum
 from pathlib import Path
 
+from datatrove.executor import LocalPipelineExecutor
+from datatrove.pipeline.readers import ParquetReader
+from datatrove.pipeline.writers import JsonlWriter
 from huggingface_hub import snapshot_download
 
 DEFAULT_DIR = Path.home() / ".cache" / "datasets"
@@ -47,15 +55,13 @@ def download_raw_hf_dataset(
     attempt = 0
     while True:
         try:
-            tmp_stdout = io.StringIO()
-            with redirect_stdout(tmp_stdout):
-                snapshot_download(
-                    repo_id,
-                    repo_type="dataset",
-                    local_dir=str(target_dir),
-                    allow_patterns=allow_patterns,
-                    max_workers=nb_workers,
-                )
+            snapshot_download(
+                repo_id,
+                repo_type="dataset",
+                local_dir=str(target_dir),
+                allow_patterns=allow_patterns,
+                max_workers=nb_workers,
+            )
 
             break
         except Exception:
@@ -161,7 +167,111 @@ def download_from_hf(
 
 
 # ------------------------------------------------------------------------------
-# TODO: Convert raw datasets into JSONL files
+# TODO: Convert dataset formats to JSONL
+# ------------------------------------------------------------------------------
+
+
+def parquet_to_jsonl(
+    dataset: str, log_dir: str, source_dir: str, target_dir: str, pattern: str = "**/*.parquet", n_tasks: int = 64
+) -> None:
+    """
+    Convert a dataset from parquet to JSONL format.
+
+    ### Parameters
+    - dataset: The name of the dataset.
+    - log_dir: The directory to save the logs.
+    - source_dir: The source directory containing the dataset.
+    - target_dir: The target directory to save the JSONL dataset.
+    - n_tasks: The number of tasks to use for conversion.
+    """
+    print(f"running local pipeline executor for parquet to jsonl conversion with ntasks = {n_tasks}")
+    pipeline_exec = LocalPipelineExecutor(
+        pipeline=[
+            ParquetReader(
+                source_dir,
+                batch_size=256,
+                file_progress=True,
+                glob_pattern=pattern,
+            ),
+            JsonlWriter(
+                target_dir,
+                output_filename=dataset + ".chunk.${rank}.jsonl",
+                compression=None,
+            ),
+        ],
+        tasks=n_tasks,
+        logging_dir=log_dir,
+    )
+    pipeline_exec.run()
+
+
+# ------------------------------------------------------------------------------
+# Utilities to shuffle and split datasets based on terashuf
+# ------------------------------------------------------------------------------
+
+
+def run_command(command: str) -> None:
+    """ "
+    Run a shell command and print it to the console.
+    """
+    logger.info(f"Running: {command}")
+    subprocess.run(command, shell=True, check=True)
+
+
+def setup_terashuf(bin_dir: Path) -> Path:
+    """Set up terashuf binary if needed.
+
+    ### Parameters
+    - bin_dir: The directory to install terashuf.
+
+    ### Reference
+    https://github.com/alexandres/terashuf/blob/master/README.md
+    """
+    terashuf_executable = bin_dir / "terashuf"
+
+    if terashuf_executable.exists():
+        logger.info("terashuf executable already exists. Skipping setup.")
+        return terashuf_executable
+
+    logger.info("Setting up terashuf...")
+    run_command(f"git clone https://github.com/alexandres/terashuf {bin_dir}")
+    run_command(f"make -C {bin_dir}")
+    return terashuf_executable
+
+
+def shuffle_dataset(
+    terashuf_executable: Path,
+    dataset: str,
+    src_dir: Path,
+    tgt_dir: Path,
+    src_ext: str,
+    tgt_ext: str,
+    n_chunks: int,
+    seed: int,
+) -> None:
+    """Shuffle dataset chunks using terashuf
+
+    ### Parameters
+    - terashuf_executable: The path to the terashuf executable.
+    - dataset: The dataset name.
+    - src_dir: The source directory containing the dataset.
+    - tgt_dir: The target directory to save the shuffled dataset.
+    - src_ext: The source file extension.
+    - tgt_ext: The target file extension.
+    - n_chunks: The number of chunks to split the dataset into.
+    - seed: The seed for shuffling.
+    """
+    logger.info(f"terashuf executable: {terashuf_executable}: {terashuf_executable.exists()}")
+    os.environ["SEED"] = str(seed)
+    run_command(
+        # f"ulimit -n 100000 && "
+        f"find {src_dir!s} -type f -name '*{src_ext}' -print0 | xargs -0 cat | {terashuf_executable!s} | "
+        f"split -n r/{n_chunks} -d --suffix-length 2 --additional-suffix {tgt_ext} - {tgt_dir!s}/{dataset}.chunk."
+    )
+
+
+# ------------------------------------------------------------------------------
+# Cli-interface
 # ------------------------------------------------------------------------------
 
 
