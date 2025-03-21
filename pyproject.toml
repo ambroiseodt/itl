@@ -30,6 +30,13 @@ dev = [
   "wandb",              # logging
 ]
 
+data = [
+  "datatrove",
+  "huggingface_hub",
+  "orjson",
+  "pyarrow",
+]
+
 llm = [
   "sentencepiece",  # tokenizer
   "tiktoken",       # tokenizer
