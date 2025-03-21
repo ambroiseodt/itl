@@ -16,13 +16,13 @@ logger = getLogger("nanollama")
 # ------------------------------------------------------------------------------
 
 # put the path to the logging directory of your runs
-log_dir = Path.home() / "memory_grid"
+log_dir = Path.home() / "memory_fine_grid"
 
 # steps = [20, 100, 1000, 10000]
 steps = ["best"]
 
 task_id = 1
-config_keys = ["data.nb_data", "data.key", "model.emb_dim", "model.nb_layers", "model.block.nb_heads"]
+config_keys = ["data.nb_data", "data.key", "data.seed", "model.emb_dim", "model.nb_layers", "model.block.nb_heads"]
 
 task_ids = get_task_ids(log_dir)
 all_res = []
@@ -58,7 +58,7 @@ df = pd.DataFrame(all_res)
 # Otherwise you can load some results that I have saved in the repo
 # ------------------------------------------------------------------------------
 
-path = Path(__file__).parents[3] / "results" / "grid3.csv"
+path = Path(__file__).parents[3] / "results" / "grid4.csv"
 # df.to_csv(path)
 df = pd.read_csv(path)
 
@@ -88,6 +88,35 @@ for key in ["qa", "qatool"]:
     plt.tight_layout()
     plt.show()
 
+
+# %%----------------------------------------------------------------------------
+# Same plot averaged over various seeds
+# ------------------------------------------------------------------------------
+
+xaxis = "data.nb_data"
+yaxis = "accuracy_best"
+keys = ["model.emb_dim", "model.nb_layers", "model.block.nb_heads"]
+
+for key in ["qa", "qatool"]:
+    ind = df["data.key"] == key
+    filtered_df = df[ind][[xaxis, yaxis, "data.seed"] + keys]
+
+    # Group by keys and seed, then calculate mean and std
+    grouped = filtered_df.groupby([xaxis] + keys)[yaxis].agg(["mean", "std"]).reset_index().groupby(keys)
+
+    # Plotting
+    plt.figure(figsize=(10, 6))
+    for name, group in grouped:
+        plt.plot(group[xaxis], group["mean"], marker="o", linestyle="-", label=f"{[int(x) for x in name]}")
+        plt.fill_between(group[xaxis], group["mean"] - group["std"], group["mean"] + group["std"], alpha=0.2)
+    plt.title(f"Performance for {key}")
+    plt.xlabel(xaxis)
+    plt.ylabel(yaxis)
+    plt.xscale("log")
+    plt.legend(title="(emb_dim, nb_layers, nb_heads)", bbox_to_anchor=(1.05, 1), loc="upper left")
+    plt.grid(True)
+    plt.tight_layout()
+    plt.show()
 
 # %%----------------------------------------------------------------------------
 # Add a measure of facts memorized
@@ -131,36 +160,30 @@ plt.show()
 # Similar plot that is crisper
 # ------------------------------------------------------------------------------
 
-# fig, axes = plt.subplots(1, 2, figsize=(8, 4))
 fig, axes = plt.subplots(1, 1, figsize=(4, 4))
-axes = [axes] if not isinstance(axes, list) else axes
-x = df['data.nb_data'].unique()
+axes = [axes] if not isinstance(axes, np.ndarray) else axes
+x = df["data.nb_data"].unique()
 
 acc_thres = 0.9
 
 # with tool
 ind = (df["data.key"] == "qatool") & (df["accuracy_best"] >= acc_thres)
-y_min, y_mean = [], []
+y_min = []
 for nb_data in x:
     tmp = df[(df["data.nb_data"] == nb_data) & ind]["nb_params"]
     y_min.append(tmp.min())
-    # y_mean.append(tmp.mean())
 axes[0].plot(x, y_min, label="With tool", linestyle="--", marker="o")
-# axes[1].plot(x, y_mean, label="With tool", linestyle="--", marker="o")
 
 # without tool
 ind = (df["data.key"] == "qa") & (df["accuracy_best"] >= acc_thres)
-y_min, y_mean = [], []
+y_min = []
 for nb_data in x:
     tmp = df[(df["data.nb_data"] == nb_data) & ind]["nb_params"]
     y_min.append(tmp.min())
-    # y_mean.append(tmp.mean())
 axes[0].plot(x, y_min, label="Without tool", linestyle="--", marker="o")
-# axes[1].plot(x, y_mean, label="Without tool", linestyle="--", marker="o")
 
 # metadata
 axes[0].set_ylabel(f"Min nb params s.t. accuracy > {acc_thres}")
-# axes[1].set_ylabel(f"Mean nb params s.t. accuracy > {acc_thres}")
 for ax in axes:
     ax.set_xlabel("Number of data")
     ax.set_xscale("log")
@@ -172,6 +195,67 @@ for ax in axes:
 plt.tight_layout()
 plt.show()
 
+# %%----------------------------------------------------------------------------
+# Same plot averaged over seeds
+# ------------------------------------------------------------------------------
+
+
+fig, axes = plt.subplots(1, 2, figsize=(8, 4))
+# fig, axes = plt.subplots(1, 1, figsize=(4, 4))
+axes = [axes] if not isinstance(axes, np.ndarray) else axes
+x = df["data.nb_data"].unique()
+
+acc_thres = 0.99
+
+all_y_mins = []
+all_y_mins_2 = []
+
+for seed in df["data.seed"].unique():
+    root_ind = (df["data.seed"] == seed) & (df["accuracy_best"] >= acc_thres)
+
+    # with tool
+    ind = (df["data.key"] == "qatool") & root_ind
+    y_min, y_mean = [], []
+    for nb_data in x:
+        tmp = df[(df["data.nb_data"] == nb_data) & ind]["nb_params"]
+        y_min.append(tmp.min())
+    all_y_mins.append(y_min)
+
+    # without tool
+    ind = (df["data.key"] == "qa") & root_ind
+    y_min, y_mean = [], []
+    for nb_data in x:
+        tmp = df[(df["data.nb_data"] == nb_data) & ind]["nb_params"]
+        y_min.append(tmp.min())
+    all_y_mins_2.append(y_min)
+
+y_min = np.array(all_y_mins).min(axis=0)
+y_mean = np.array(all_y_mins).mean(axis=0)
+y_std = np.array(all_y_mins).std(axis=0)
+axes[0].plot(x, y_min, label="With tool", linestyle="--", marker="o")
+axes[1].plot(x, y_mean, label="With tool", linestyle="--", marker="o")
+axes[1].fill_between(x, y_mean - y_std, y_mean + y_std, alpha=0.2)
+
+y_min = np.array(all_y_mins_2).min(axis=0)
+y_mean = np.array(all_y_mins_2).mean(axis=0)
+y_std = np.array(all_y_mins_2).std(axis=0)
+axes[0].plot(x, y_min, label="Without tool", linestyle="--", marker="o")
+axes[1].plot(x, y_mean, label="Without tool", linestyle="--", marker="o")
+axes[1].fill_between(x, y_mean - y_std, y_mean + y_std, alpha=0.2)
+
+# metadata
+axes[0].set_ylabel(f"Min nb params s.t. accuracy > {acc_thres}")
+axes[1].set_ylabel(f"Mean nb params s.t. accuracy > {acc_thres}")
+for ax in axes:
+    ax.set_xlabel("Number of data")
+    ax.set_xscale("log")
+    ax.set_yscale("log")
+    ax.grid()
+    ax.legend()
+
+# Show plot
+plt.tight_layout()
+plt.show()
 
 # %%----------------------------------------------------------------------------
 # Look at the influence of the number of heads
@@ -180,7 +264,7 @@ plt.show()
 fig, axes = plt.subplots(1, 2, figsize=(8, 4))
 x = df['data.nb_data'].unique()
 
-acc_thres = 0.9
+acc_thres = 0.95
 
 # key = "model.block.nb_heads"
 # key = "model.nb_layers"
