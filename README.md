@@ -1,8 +1,6 @@
-# In-Tool Learning
-This codebase aims to study the "In-Tool Learning" of Large Language Models.
-
-- In-Tool Learning: Learning to use a tool (e.g., a calculator or a request to a database) to answer the problem,
-- In-Weight Learning: Memorizing the solution to the prolem within the model's weights.
+# NanoLLaMa
+This codebase provides utilities to train and study LLMs.
+It aims to rely mainly on pytorch primitives, instead of any high-level LLM librairy.
 
 ## Installation
 
@@ -50,41 +48,6 @@ export LD_LIBRARY_PATH=$(python -c "import site; print(site.getsitepackages()[0]
 You can then try to install the package with `ssm` dependencies (namely `causal_conv1d` and `mamba_ssm`)
 ```bash
 pip install -e .[ssm]
-```
-
-## Dataset creation
-Create a dataset of people, biographies of 1000 peoples, and questions/answers with the following commands (to be run from the root of the repository):
-```bash
-bash apps/memory/bash/generate_data.sh 1000
-```
-You will be asked whether to format the database as a SQLlite database. Answer "Yes" is you want to do it.
-
-## Training
-Launch a training run locally
-```bash
-python -m apps.memory.train apps/memory/config/debug.yaml
-```
-You can run the code locally with two GPUs (or more).
-```bash
-torchrun --nproc-per-node 2 -m apps.memory.train apps/memory/config/debug.yaml
-```
-Launch a training on your cluster
-```bash
-python -m nanollama.launcher apps/memory/config/debug.yaml
-```
-
-## Evaluation
-Launch an evaluation run locally
-```bash
-python -m apps.memory.eval apps/memory/config/eval.yaml
-```
-
-#### Notes for the team
-I have added two configs `config/with_tool.yaml` and `config/without_tool.yaml` to reproduce Sam's exp1, and continue on our exp1 (get the number of facts a networks can recall with and without access to a tool).
-Modify these configs (as well as the datasets -- adding or removing facts) to fit your needs and run the following commands
-```bash
-python -m apps.memory.train apps/memory/config/with_tool.yaml
-python -m apps.memory.train apps/memory/config/without_tool.yaml
 ```
 
 ## Development
