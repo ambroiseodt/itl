@@ -80,145 +80,6 @@ class Tokenizer(ABC):
 
 
 # ------------------------------------------------------------------------------
-# Dialog Tokenizer
-# ------------------------------------------------------------------------------
-
-
-@dataclass
-class Message:
-    """
-    A dialog is made of a list of messages.
-    A message is made of a content and a source.
-
-    ### Parameters
-    - source: the actor that produced the message.
-    - content: the content of the message.
-    """
-
-    source: Actor
-    content: str
-
-
-class DialogTokenizer:
-    """
-    ### Parameters
-    - tokenizer: encoder and decoder from string to list of integers.
-
-    ### Attributes
-    - bots: dictionary mapping actors to `begin_of_turn` tags.
-    - eod: token_id to put at the end of a dialog (if `eod != 0`).
-    """
-
-    bots: dict[Actor, int]
-    eod: int
-
-    def __init__(self, tokenizer: Tokenizer) -> None:
-        self.tokenizer = tokenizer
-        self.vocab_size = tokenizer.vocab_size
-
-        # attributes associated to dialog format
-        self.bots = {actor: getattr(self.tokenizer, actor.value, 0) for actor in Actor}
-        self.eod = getattr(self.tokenizer, "eod", 0)
-
-        # decoding attributes
-        self.bot2actor = {v: k for k, v in self.bots.items()}
-        if 0 in self.bot2actor:
-            self.bot2actor.pop(0)
-        self.current_actor = None
-        self.buffer = []
-
-    def encode(self, dialog: list[dict[str, str]]) -> tuple[list[int], list[bool]]:
-        """
-        Encode a dialog into a list of token IDs.
-
-        ### Parameters
-        - dialog: list of messages
-
-        ### Returns
-        - tokens: list of token IDs
-        - mask: list of boolean flag specifying tokens produced by the assistant
-
-        ### Note
-        The mask specifies tokens for which the LLM needs to predict the next token.
-        This is because each turn starts with a special `bot` tokens.
-        When we end a non-assistant turn, we manually add the assistant bos token.
-        When the assistant finishes its turn, it chooses the next actor by predicting its `bos` token.
-        """
-        tokens = []
-        mask = []
-        for _message in dialog:
-            message = build_with_type_check(Message, _message, inplace=False)
-            bos = self.bots[message.source]
-            new_tokens = self.tokenizer.encode(message.content, bos=bos)
-            tokens.extend(new_tokens)
-            if message.source == Actor.assistant:
-                mask.extend([True] * len(new_tokens))
-            else:
-                mask.extend([False] * len(new_tokens))
-        if self.eod:
-            tokens.append(self.eod)
-            mask.append(False)  # do not predict what follows the EoS token
-        return tokens, mask
-
-    def decode(self, tokens: list[int]) -> str:
-        """
-        Decode a list of token IDs into a sentence.
-
-        ### Parameters
-        - tokens: list of token IDs to decode.
-
-        ### Returns
-        - decoded sentence.
-        """
-        output = ""
-        for token in tokens:
-            output += self.decode_online(token)
-            if self.eod and token == self.eod:
-                break
-        output += self.flush_decoding_buffer()
-        return output
-
-    def decode_online(self, token: int) -> str:
-        """
-        Decode a single token in an online fashion.
-
-        ### Parameters
-        - tokens: last token id.
-
-        ### Returns
-        - output: decoded sentence.
-        """
-        # argument parsing
-        if isinstance(token, Tensor):
-            token = token.item()
-
-        output = ""
-        actor = self.bot2actor.get(token, None)
-
-        # if at the start of a new turn, flush the buffer
-        if actor:
-            add_eol = self.current_actor is not None
-            output += self.flush_decoding_buffer()
-            output += "\n" if add_eol else ""
-            self.current_actor = actor
-            output += f"<|{actor.value}|>"
-
-        # else bufferize the current token
-        else:
-            self.buffer.append(token)
-        return output
-
-    def flush_decoding_buffer(self) -> str:
-        """
-        Decode bufferized tokens into text.
-        """
-        output = self.tokenizer.decode(self.buffer)
-        self.current_actor = None
-        self.buffer = []
-        return output
-
-
-# ------------------------------------------------------------------------------
 # Byte Tokenizer
 # ------------------------------------------------------------------------------
 
@@ -406,6 +267,145 @@ class TikTokenizer(Tokenizer):
         }
         with open(save_dir / f"{name}.json", "w") as f:
             print(json.dumps(params), file=f, flush=True)
+
+
+# ------------------------------------------------------------------------------
+# Dialog Tokenizer
+# ------------------------------------------------------------------------------
+
+
+@dataclass
+class Message:
+    """
+    A dialog is made of a list of messages.
+    A message is made of a content and a source.
+
+    ### Parameters
+    - source: the actor that produced the message.
+    - content: the content of the message.
+    """
+
+    source: Actor
+    content: str
+
+
+class DialogTokenizer:
+    """
+    ### Parameters
+    - tokenizer: encoder and decoder from string to list of integers.
+
+    ### Attributes
+    - bots: dictionary mapping actors to `begin_of_turn` tags.
+    - eod: token_id to put at the end of a dialog (if `eod != 0`).
+    """
+
+    bots: dict[Actor, int]
+    eod: int
+
+    def __init__(self, tokenizer: Tokenizer) -> None:
+        self.tokenizer = tokenizer
+        self.vocab_size = tokenizer.vocab_size
+
+        # attributes associated to dialog format
+        self.bots = {actor: getattr(self.tokenizer, actor.value, 0) for actor in Actor}
+        self.eod = getattr(self.tokenizer, "eod", 0)
+
+        # decoding attributes
+        self.bot2actor = {v: k for k, v in self.bots.items()}
+        if 0 in self.bot2actor:
+            self.bot2actor.pop(0)
+        self.current_actor = None
+        self.buffer = []
+
+    def encode(self, dialog: list[dict[str, str]]) -> tuple[list[int], list[bool]]:
+        """
+        Encode a dialog into a list of token IDs.
+
+        ### Parameters
+        - dialog: list of messages
+
+        ### Returns
+        - tokens: list of token IDs
+        - mask: list of boolean flag specifying tokens produced by the assistant
+
+        ### Note
+        The mask specifies tokens for which the LLM needs to predict the next token.
+        This is because each turn starts with a special `bot` tokens.
+        When we end a non-assistant turn, we manually add the assistant bos token.
+        When the assistant finishes its turn, it chooses the next actor by predicting its `bos` token.
+        """
+        tokens = []
+        mask = []
+        for _message in dialog:
+            message = build_with_type_check(Message, _message, inplace=False)
+            bos = self.bots[message.source]
+            new_tokens = self.tokenizer.encode(message.content, bos=bos)
+            tokens.extend(new_tokens)
+            if message.source == Actor.assistant:
+                mask.extend([True] * len(new_tokens))
+            else:
+                mask.extend([False] * len(new_tokens))
+        if self.eod:
+            tokens.append(self.eod)
+            mask.append(False)  # do not predict what follows the EoD token
+        return tokens, mask
+
+    def decode(self, tokens: list[int]) -> str:
+        """
+        Decode a list of token IDs into a sentence.
+
+        ### Parameters
+        - tokens: list of token IDs to decode.
+
+        ### Returns
+        - decoded sentence.
+        """
+        output = ""
+        for token in tokens:
+            output += self.decode_online(token)
+            if self.eod and token == self.eod:
+                break
+        output += self.flush_decoding_buffer()
+        return output
+
+    def decode_online(self, token: int) -> str:
+        """
+        Decode a single token in an online fashion.
+
+        ### Parameters
+        - tokens: last token id.
+
+        ### Returns
+        - output: decoded sentence.
+        """
+        # argument parsing
+        if isinstance(token, Tensor):
+            token = token.item()
+
+        output = ""
+        actor = self.bot2actor.get(token, None)
+
+        # if at the start of a new turn, flush the buffer
+        if actor:
+            add_eol = self.current_actor is not None
+            output += self.flush_decoding_buffer()
+            output += "\n" if add_eol else ""
+            self.current_actor = actor
+            output += f"<|{actor.value}|>"
+
+        # else bufferize the current token
+        else:
+            self.buffer.append(token)
+        return output
+
+    def flush_decoding_buffer(self) -> str:
+        """
+        Decode bufferized tokens into text.
+        """
+        output = self.tokenizer.decode(self.buffer)
+        self.current_actor = None
+        self.buffer = []
+        return output
 
 
 # ------------------------------------------------------------------------------
