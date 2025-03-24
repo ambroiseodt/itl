@@ -1,14 +1,26 @@
+#### Vivien's current TODO
+- Download reasoning datasets from HuggingFace
+    - Start with a simple example without nested dataset.
+        - Continue for FineMath
+        - step 1: Dowload from HF in parquet format
+        - step 2: convert to JSONL and remove parquet files
+        - step 3: shuffle with terashuf
+    - Continue with a simple an example with nested dataset.
+    - Generalize to all datasets.
+    - Go over many datasets and report what has been downloaded.
+
+- Simple vanilla script with real tokenizer over SmolLM v2.
+    - Option to remove the tokenizer mask when doing pure pretraining.
+        - Do this by extracting the json loader, then splitting between DialogTokenGenerator and TokenGenerator (without dialog) (MonologTokenizer?). Put the three files in data/text/...
+- Simple vanilla script on the Shakespear dataset to debug on cpu.
+
+- Benchmark various datamix and models (see *stuffs to benchmark real models*)
+
 #### Some question/research direction:
 - Probably compilation would make the training faster.
 - Does the amount memory storage per amount of parameters changes when using mixture of experts?
 - Does the amount memory storage per amount of parameters changes when using weight quantization?
 - Do some analysis of the circuit evolution for the runs 1161 of the `grid.yaml` config.
-
-#### Simple recipes in the apps folder
-- Simple vanilla script with real tokenizer over SmolLM v2.
-    - Option to remove the tokenizer mask when doing pure pretraining.
-        - Do this by extracting the json loader, then splitting between DialogTokenGenerator and TokenGenerator (without dialog) (MonologTokenizer?). Put the three files in data/text/...
-- Simple vanilla script on the Shakespear dataset to debug on cpu.
 
 #### Known issues
 - Wandb restarting does not work well. To have nice eval plots, best is to update local results to wandb after the runs.
@@ -78,7 +90,6 @@ maximal amount of facts?
 - PagedAttention (vLLM) + FlashAttention integration
 - BitNet and 1-bit quantization, AWQ, QoQ, GGUF, HQQ
 - Medusa, Speculative Sampling, Eagle
-
 
 ## Potential story
 1. In-tool allows you to reduce the memory footprint of the model, you learn rules not facts.
