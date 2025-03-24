@@ -54,7 +54,6 @@ def loss_func(preds: Tensor, targets: Tensor) -> Tensor:
 
 def train(config: TrainingConfig) -> None:
     with ExitStack() as context_stack:
-
         # ---------------------------------------------------------------------
         # Handle preemption, computing environment, logging, and utils
         # ---------------------------------------------------------------------
@@ -308,7 +307,7 @@ def main() -> None:
 
     logging.basicConfig(
         level=logging.INFO,
-        format="[%(levelname)s] %(filename)s:%(lineno)d - %(message)s",
+        format="%(asctime)s [%(levelname)s] %(filename)s:%(lineno)d - %(message)s",
         handlers=[logging.StreamHandler()],
     )
 
