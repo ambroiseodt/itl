@@ -29,6 +29,8 @@ from pathlib import Path
 import pyarrow.parquet as pq
 from huggingface_hub import snapshot_download
 
+# CACHE_DIR = Path("/checkpoint/amaia/explore/datasets/reasoning/raw")
+# TARGET_DIR = Path("/checkpoint/amaia/explore/datasets/reasoning/processed")
 CACHE_DIR = Path.home() / ".cache" / "datasets"
 TARGET_DIR = Path.home() / "datasets"
 LOG_DIR = Path.home() / "log_data"
@@ -41,12 +43,32 @@ logger = logging.getLogger("nanollama")
 
 
 class DatasetName(Enum):
+    AIME = "aime"
+    APPS = "apps"
+    AQUA = "aqua"
+    CODE_CONTESTS = "code-contests"
+    DEEPSCALER = "deepscaler"
+    DEEPSEEK_PROVER = "deepseek-prover"
     DCLM = "dclm"
+    EURUS_RL = "eurus-rl"
     FINEMATH = "finemath"
     FINEMATH_BIG = "finemath-big"
     FINEWEB = "fineweb"
     FINEWEB_BIG = "fineweb-big"
+    LEAN_WORKBOOK = "lean-workbook"
+    LILA = "lila"
+    MATH = "math"
+    MATH_INSTRUCT = "math-instruct"
+    MATH_PILE = "math-pile"
+    NUMINA = "numina"
+    OLYMPIAD_BENCH = "olympiad-bench"
+    OMNI_MATH = "omni-math"
+    OPEN_R1 = "open-r1"
+    OPEN_WEB_MATH = "open-web-math"
+    PROOF_PILE_2 = "proof-pile-2"
     SMOLTALK = "smoltalk"
+    STACK_2 = "stack-2"
+    TACO = "taco"
 
 
 @dataclass
@@ -59,17 +81,17 @@ class DownloadDatasetArgs:
     - target_dir: local directory to download the raw dataset to.
 
     ### Attributes
-    - repo_id: repository ID of the dataset, such that the dataset can be downloaded from
-    `https://huggingface.co/datasets/{repo_id}`
+    - url: repository ID of the dataset, such that the dataset can be downloaded from
+    `https://huggingface.co/datasets/{url}`
     - allow_patterns: patterns to filter "files and versions" to download from
-    `https://huggingface.co/datasets/{repo_id}/tree/main`
+    `https://huggingface.co/datasets/{url}/tree/main`
     """
 
     name: DatasetName
     target_dir: str = None
 
     # hugging face parameters
-    repo_id: str = field(init=False)
+    url: str = field(init=False)
     allow_patterns: str = field(init=False, default=None)
 
     def __post_init__(self):
@@ -78,24 +100,93 @@ class DownloadDatasetArgs:
             self.target_dir = str(CACHE_DIR / self.name.value)
 
         match self.name:
+            case DatasetName.AIME:
+                self.url = "di-zhang-fdu/AIME_1983_2024"
+
+            case DatasetName.AQUA:
+                self.url = "deepmind/aqua_rat"
+                self.allow_patterns = "raw/*"
+
+            case DatasetName.APPS:
+                self.url = "codeparrot/apps"
+
+            case DatasetName.CODE_CONTESTS:
+                self.url = "deepmind/code_contests"
+
             case DatasetName.DCLM:
-                self.repo_id = "mlfoundations/dclm-baseline-1.0"
+                self.url = "mlfoundations/dclm-baseline-1.0"
                 self.allow_patterns = "*.jsonl.zst"
+
+            case DatasetName.DEEPSCALER:
+                self.url = "agentica-org/DeepScaleR-Preview-Dataset"
+
+            case DatasetName.DEEPSEEK_PROVER:
+                self.url = "deepseek-ai/DeepSeek-Prover-V1"
+
+            case DatasetName.EURUS_RL:
+                self.url = "PRIME-RL/Eurus-2-RL-Data"
+
             case DatasetName.FINEMATH:
-                self.repo_id = "HuggingFaceTB/finemath"
+                self.url = "HuggingFaceTB/finemath"
                 self.allow_patterns = "finemath-4plus/*"
+
             case DatasetName.FINEMATH_BIG:
-                self.repo_id = "HuggingFaceTB/finemath"
+                self.url = "HuggingFaceTB/finemath"
                 self.allow_patterns = "finemath-3plus/*"
+
             case DatasetName.FINEWEB:
-                self.repo_id = "HuggingFaceFW/fineweb-edu"
+                self.url = "HuggingFaceFW/fineweb-edu"
                 self.allow_patterns = "sample/10BT/*"
+
             case DatasetName.FINEWEB_BIG:
-                self.repo_id = "HuggingFaceFW/fineweb-edu"
-                self.allow_patterns = None
+                self.url = "HuggingFaceFW/fineweb-edu"
+
+            case DatasetName.LEAN_WORKBOOK:
+                self.url = "internlm/Lean-Workbook"
+
+            case DatasetName.LILA:
+                self.url = "allenai/lila"
+                raise ValueError("Lila is currently not available on HuggingFace.")
+
+            case DatasetName.MATH:
+                self.url = "Maxwell-Jia/MATH"  # "hendrycks/competition_math" is currently down
+
+            case DatasetName.MATH_INSTRUCT:
+                self.url = "TIGER-Lab/MathInstruct"
+
+            case DatasetName.MATH_PILE:
+                self.url = "GAIR/MathPile"
+
+            case DatasetName.NUMINA:
+                self.url = "AI-MO/NuminaMath-1.5"
+    
+            case DatasetName.OLYMPIAD_BENCH:
+                self.url = "lmms-lab/OlympiadBench"
+
+            case DatasetName.OMNI_MATH:
+                self.url = "KbsdJames/Omni-MATH"
+
+            case DatasetName.OPEN_R1:
+                self.url = "open-r1/OpenR1-Math-220k"
+                self.pattern = "all/*"
+
+            case DatasetName.OPEN_WEB_MATH:
+                self.url = "open-web-math/open-web-math"
+                raise ValueError("Unsafe dataset: open-web-math")
+
+            case DatasetName.PROOF_PILE_2:
+                self.url = "EleutherAI/proof-pile-2"
+
             case DatasetName.SMOLTALK:
-                self.repo_id = "HuggingFaceTB/smoltalk"
-                self.allow_patterns = None
+                self.url = "HuggingFaceTB/smoltalk"
+
+            case DatasetName.STACK_2:
+                self.url = "bigcode/the-stack-v2-train-full-ids"
+
+            case DatasetName.TACO:
+                self.url = "BAAI/TACO"
+                self.allow_patterns = "ALL/*"
+
             case _:
                 raise ValueError(f"Unknown dataset: {self.name}")
 
@@ -119,12 +210,12 @@ def download_from_hf(
     """
     config = DownloadDatasetArgs(name=name, target_dir=target_dir)
 
-    logger.info(f"Downloading dataset from {config.repo_id}...")
+    logger.info(f"Downloading dataset from {config.url}...")
     attempt = 0
     while True:
         try:
             snapshot_download(
-                config.repo_id,
+                config.url,
                 repo_type="dataset",
                 local_dir=str(config.target_dir),
                 allow_patterns=config.allow_patterns,
