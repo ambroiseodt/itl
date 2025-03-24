@@ -2,6 +2,11 @@
 """
 Utils to download Hugging Face datasets and cast them as JSONL files.
 
+To download a dataset, the pipeline is the following:
+- download file from HuggingFace, typically in parquet format
+- convert parquet files to JSONL files
+- shuffle and split JSONL files
+
 @ Meta, 2025
 
 ### NOTES
@@ -10,72 +15,28 @@ Some datasets are actually mixed of various sources.
 For these datasets, it is important not to mix the various sources into one (e.g. smoltalk).
 """
 
+import json
 import logging
 import os
+import shutil
 import subprocess
 import time
+from concurrent.futures import Future, ThreadPoolExecutor
 from dataclasses import dataclass, field
 from enum import Enum
 from pathlib import Path
 
-from datatrove.executor import LocalPipelineExecutor
-from datatrove.pipeline.readers import ParquetReader
-from datatrove.pipeline.writers import JsonlWriter
+import pyarrow.parquet as pq
 from huggingface_hub import snapshot_download
 
-DEFAULT_DIR = Path.home() / ".cache" / "datasets"
+CACHE_DIR = Path.home() / ".cache" / "datasets"
+TARGET_DIR = Path.home() / "datasets"
+LOG_DIR = Path.home() / "log_data"
 logger = logging.getLogger("nanollama")
 
 
 # ------------------------------------------------------------------------------
 # Raw download from Hugging Face
-# ------------------------------------------------------------------------------
-
-
-def download_raw_hf_dataset(
-    repo_id: str,
-    target_dir: str,
-    allow_patterns: str = None,
-    nb_workers: int = 8,
-    max_retries: int = 5,
-    retry_delay: int = 10,
-) -> None:
-    """
-    Download dataset from hugging from the Hugging Face Hub.
-
-    ### Parameters
-    - repo_id: The repository ID of the dataset.
-    - target_dir: The local directory to download the dataset to.
-    - allow_patterns: The patterns to allow for downloading the dataset.
-    - nb_workers: The number of workers to use for downloading the dataset.
-    - max_retries: The maximum number of retries after time-out error to download the dataset.
-    - retry_delay: The delay between retries to download the dataset.
-    """
-    logger.info(f"Downloading dataset from {repo_id}...")
-    attempt = 0
-    while True:
-        try:
-            snapshot_download(
-                repo_id,
-                repo_type="dataset",
-                local_dir=str(target_dir),
-                allow_patterns=allow_patterns,
-                max_workers=nb_workers,
-            )
-
-            break
-        except Exception:
-            if attempt < max_retries - 1:
-                logger.warning(f"Timeout occurred. Retrying in {retry_delay} seconds...")
-                time.sleep(retry_delay)
-                attempt += 1
-            else:
-                raise
-    logger.info(f"Dataset downloaded to {target_dir}")
-
-
-# ------------------------------------------------------------------------------
-# Front-end to download datasets
 # ------------------------------------------------------------------------------
 
 
@@ -94,18 +55,18 @@ class DownloadDatasetArgs:
     Utility class to download a dataset from the Hugging Face Hub.
 
     ### Parameters
-    - name: The name of the dataset to download.
-    - target_dir: The local directory to download the raw dataset to.
+    - name: name of the dataset to download.
+    - target_dir: local directory to download the raw dataset to.
 
     ### Attributes
-    - repo_id: The repository ID of the dataset, such that the dataset can be downloaded from
+    - repo_id: repository ID of the dataset, such that the dataset can be downloaded from
     `https://huggingface.co/datasets/{repo_id}`
     - allow_patterns: patterns to filter "files and versions" to download from
     `https://huggingface.co/datasets/{repo_id}/tree/main`
     """
 
     name: DatasetName
-    target_dir: str
+    target_dir: str = None
 
     # hugging face parameters
     repo_id: str = field(init=False)
@@ -113,6 +74,9 @@ class DownloadDatasetArgs:
 
     def __post_init__(self):
         self.name = DatasetName(self.name.lower())
+        if self.target_dir is None:
+            self.target_dir = str(CACHE_DIR / self.name.value)
+
         match self.name:
             case DatasetName.DCLM:
                 self.repo_id = "mlfoundations/dclm-baseline-1.0"
@@ -147,55 +111,91 @@ def download_from_hf(
     Download a dataset from the Hugging Face Hub.
 
     ### Parameters
-    - name: The name of the dataset to download.
-    - target_dir: The local directory to download the raw dataset to.
-    - nb_workers: The number of workers to use for downloading the dataset.
-    - max_retries: The maximum number of retries after time-out error to download the dataset.
-    - retry_delay: The delay between retries to download the dataset
+    - name: name of the dataset to download.
+    - target_dir: local directory to download the raw dataset to.
+    - nb_workers: number of workers to use for downloading the dataset.
+    - max_retries: maximum number of retries after time-out error to download the dataset.
+    - retry_delay: delay between retries to download the dataset
     """
-    if target_dir is None:
-        target_dir = str(DEFAULT_DIR / name)
     config = DownloadDatasetArgs(name=name, target_dir=target_dir)
-    download_raw_hf_dataset(
-        config.repo_id,
-        config.target_dir,
-        config.allow_patterns,
-        nb_workers=nb_workers,
-        max_retries=max_retries,
-        retry_delay=retry_delay,
-    )
+
+    logger.info(f"Downloading dataset from {config.repo_id}...")
+    attempt = 0
+    while True:
+        try:
+            snapshot_download(
+                config.repo_id,
+                repo_type="dataset",
+                local_dir=str(config.target_dir),
+                allow_patterns=config.allow_patterns,
+                max_workers=nb_workers,
+            )
+
+            break
+        except Exception:
+            if attempt < max_retries - 1:
+                logger.warning(f"Timeout occurred. Retrying in {retry_delay} seconds...")
+                time.sleep(retry_delay)
+                attempt += 1
+            else:
+                raise
+    logger.info(f"Dataset downloaded to {config.target_dir}")
 
 
 # ------------------------------------------------------------------------------
-# TODO: Convert dataset formats to JSONL
+# Convert parquet datasets into JSONL ones
 # ------------------------------------------------------------------------------
 
 
-def parquet_to_jsonl(
-    dataset: str, log_dir: str, source_dir: str, target_dir: str, pattern: str = "**/*.parquet", n_tasks: int = 64
+def datatrove_parquet_to_jsonl(
+    name: str,
+    source_dir: str = None,
+    target_dir: str = None,
+    batch_size: int = 256,
+    delete: bool = False,
+    log_dir: str = None,
 ) -> None:
     """
-    Convert a dataset from parquet to JSONL format.
+    Convert a dataset from parquet to JSONL format using datatrove.
 
     ### Parameters
-    - dataset: The name of the dataset.
-    - log_dir: The directory to save the logs.
-    - source_dir: The source directory containing the dataset.
-    - target_dir: The target directory to save the JSONL dataset.
-    - n_tasks: The number of tasks to use for conversion.
+    - name: name of the dataset.
+    - source_dir: source directory containing the dataset.
+    - target_dir: target directory to save the JSONL dataset.
+    - n_tasks: number of tasks to use for conversion.
+    - delete: whether to delete the original files after conversion.
+    - log_dir: directory to save the logs.
     """
-    print(f"running local pipeline executor for parquet to jsonl conversion with ntasks = {n_tasks}")
+    from datatrove.executor import LocalPipelineExecutor
+    from datatrove.pipeline.readers import ParquetReader
+    from datatrove.pipeline.writers import JsonlWriter
+
+    # parse missing arguments
+    if target_dir is None:
+        target_dir = TARGET_DIR
+    target_dir = str(Path(target_dir) / name)
+
+    if source_dir is None:
+        source_dir = str(CACHE_DIR / name)
+    if log_dir is None:
+        log_dir = str(LOG_DIR / name)
+
+    pattern = "**/*.parquet"
+    n_tasks = len(list(Path(source_dir).rglob(pattern)))
+
+    logger.info(f"running local pipeline executor for parquet to jsonl conversion with ntasks = {n_tasks}")
     pipeline_exec = LocalPipelineExecutor(
         pipeline=[
             ParquetReader(
                 source_dir,
-                batch_size=256,
+                batch_size=batch_size,
+                doc_progress=True,
                 file_progress=True,
                 glob_pattern=pattern,
             ),
             JsonlWriter(
                 target_dir,
-                output_filename=dataset + ".chunk.${rank}.jsonl",
+                output_filename=name + ".chunk.${rank}.jsonl",
                 compression=None,
             ),
         ],
@@ -204,9 +204,82 @@ def parquet_to_jsonl(
     )
     pipeline_exec.run()
 
+    if delete:
+        logger.info(f"Dataset converted to JSONL format and saved to {target_dir}, removing original files.")
+        shutil.rmtree(source_dir)
+
+
+def parquet_to_jsonl_filewise(source_file: Path, target_file: Path, batch_size: int) -> None:
+    """
+    Convert a parquet file to JSONL using native python (slow, yet customizable).
+
+    ### Parameters
+    - source_file: path to the parquet file
+    - target_file: path to the jsonl file
+    - batch_size: number of rows to read at once
+    """
+    target_file.touch()
+    parquet_file = pq.ParquetFile(source_file)
+    total_rows = parquet_file.metadata.num_rows
+    with open(target_file, "w") as jsonl_file:
+        i = 0
+        for batch in parquet_file.iter_batches(batch_size=batch_size):
+            i += 1
+            for row in zip(*batch.columns):
+                row_dict = {col.name: str(value) for col, value in zip(batch.schema, row)}
+                json.dump(row_dict, jsonl_file)
+                jsonl_file.write("\n")
+            logger.info(f"{source_file.name}: {100 * (batch_size * i) / total_rows:.3f} % done.")
+
+
+def parquet_to_jsonl(
+    name: str,
+    source_dir: str = None,
+    target_dir: str = None,
+    batch_size: int = 256,
+    delete: bool = False,
+) -> None:
+    """
+    Convert a parquet dataset to JSONL one using native python (slow).
+
+    ### Parameters
+    - name: name of the dataset.
+    - source_dir: source directory containing the dataset.
+    - target_dir: target directory to save the JSONL dataset.
+    - n_tasks: number of tasks to use for conversion.
+    - delete: whether to delete the original files after conversion.
+    - log_dir: directory to save the logs.
+    """
+    # parse missing arguments
+    if target_dir is None:
+        target_dir = TARGET_DIR
+    target_dir = str(Path(target_dir) / name)
+
+    if source_dir is None:
+        source_dir = str(CACHE_DIR / name)
+
+    # create target directory
+    target_dir.mkdir(parents=True, exist_ok=True)
+
+    # list all the parquet files
+    all_files = list(Path(source_dir).rglob("**/*.parquet"))
+
+    with ThreadPoolExecutor(max_workers=len(all_files)) as executor:
+        futures: list[Future] = []
+        for rank, source_file in enumerate(all_files):
+            target_file = target_dir / f"chunk.{rank:05d}.jsonl"
+            futures.append(executor.submit(parquet_to_jsonl_filewise, source_file, target_file, batch_size=batch_size))
+
+        for future in futures:
+            future.result()
+
+    if delete:
+        logger.info(f"Dataset converted to JSONL format and saved to {target_dir}, removing original files.")
+        shutil.rmtree(source_dir)
+
 
 # ------------------------------------------------------------------------------
-# Utilities to shuffle and split datasets based on terashuf
+# TODO: Shuffle and split a JSON dataset based on terashuf
 # ------------------------------------------------------------------------------
 
 
@@ -274,18 +347,18 @@ def shuffle_dataset(
 # Cli-interface
 # ------------------------------------------------------------------------------
 
-
 if __name__ == "__main__":
     import fire
 
     logging.basicConfig(
         level=logging.INFO,
-        format="[%(levelname)s] %(filename)s:%(lineno)d - %(message)s",
+        format="%(asctime)s [%(levelname)s] %(filename)s:%(lineno)d - %(message)s",
         handlers=[logging.StreamHandler()],
     )
 
     fire.Fire(
         {
             "hf_download": download_from_hf,
+            "convert_to_jsonl": datatrove_parquet_to_jsonl,
         }
     )
