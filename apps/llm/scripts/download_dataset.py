@@ -29,10 +29,10 @@ from pathlib import Path
 import pyarrow.parquet as pq
 from huggingface_hub import snapshot_download
 
-# CACHE_DIR = Path("/checkpoint/amaia/explore/datasets/reasoning/raw")
-# TARGET_DIR = Path("/checkpoint/amaia/explore/datasets/reasoning/processed")
-CACHE_DIR = Path.home() / ".cache" / "datasets"
-TARGET_DIR = Path.home() / "datasets"
+CACHE_DIR = Path("/checkpoint/amaia/explore/datasets/reasoning/parquet")
+TARGET_DIR = Path("/checkpoint/amaia/explore/datasets/reasoning/processed")
+# CACHE_DIR = Path.home() / ".cache" / "datasets"
+# TARGET_DIR = Path.home() / "datasets"
 LOG_DIR = Path.home() / "log_data"
 logger = logging.getLogger("nanollama")
 
@@ -44,8 +44,10 @@ logger = logging.getLogger("nanollama")
 
 class DatasetName(Enum):
     AIME = "aime"
+    ALGEBRAIC_STACK = "algebraic-stack"
     APPS = "apps"
     AQUA = "aqua"
+    ARXIV = "arxiv"
     CODE_CONTESTS = "code-contests"
     DEEPSCALER = "deepscaler"
     DEEPSEEK_PROVER = "deepseek-prover"
@@ -55,11 +57,18 @@ class DatasetName(Enum):
     FINEMATH_BIG = "finemath-big"
     FINEWEB = "fineweb"
     FINEWEB_BIG = "fineweb-big"
+    GLAIVE_DISTILL = "glaive-distill"
+    IMO_STEPS = "imo-steps"
+    ISABELLE_PREMISE = "isabelle-premise"
     LEAN_WORKBOOK = "lean-workbook"
     LILA = "lila"
+    LONG_FORM_THOUGHT = "long-form-thought"
     MATH = "math"
     MATH_INSTRUCT = "math-instruct"
     MATH_PILE = "math-pile"
+    META_MATH = "meta-math"
+    NATURAL_REASONING = "natural-reasoning"
+    NEMOTRON = "nemotron"
     NUMINA = "numina"
     OLYMPIAD_BENCH = "olympiad-bench"
     OMNI_MATH = "omni-math"
@@ -68,6 +77,7 @@ class DatasetName(Enum):
     PROOF_PILE_2 = "proof-pile-2"
     SMOLTALK = "smoltalk"
     STACK_2 = "stack-2"
+    STACK_EDU = "stack-edu"
     TACO = "taco"
 
 
@@ -85,6 +95,7 @@ class DownloadDatasetArgs:
     `https://huggingface.co/datasets/{url}`
     - allow_patterns: patterns to filter "files and versions" to download from
     `https://huggingface.co/datasets/{url}/tree/main`
+    - revision: branch to download from
     """
 
     name: DatasetName
@@ -93,6 +104,8 @@ class DownloadDatasetArgs:
     # hugging face parameters
     url: str = field(init=False)
     allow_patterns: str = field(init=False, default=None)
+    revision: str = field(init=False, default=None)
+    format: str = field(init=False, default=None)
 
     def __post_init__(self):
         self.name = DatasetName(self.name.lower())
@@ -102,6 +115,12 @@ class DownloadDatasetArgs:
         match self.name:
             case DatasetName.AIME:
                 self.url = "di-zhang-fdu/AIME_1983_2024"
+                self.format = "TODO"
+
+            case DatasetName.ALGEBRAIC_STACK:
+                self.url = "EleutherAI/proof-pile-2"
+                self.allow_patterns = "algebraic-stack/*"
+                self.format = "jsonl.zst"
 
             case DatasetName.AQUA:
                 self.url = "deepmind/aqua_rat"
@@ -109,22 +128,34 @@ class DownloadDatasetArgs:
 
             case DatasetName.APPS:
                 self.url = "codeparrot/apps"
+                self.format = "TODO"
+
+            case DatasetName.ARXIV:
+                # corresponds to an ArXiv snapshot made by RedPajama in 2023
+                self.url = "EleutherAI/proof-pile-2"
+                self.allow_patterns = "arxiv/*"
+                self.format = "TODO"
 
             case DatasetName.CODE_CONTESTS:
                 self.url = "deepmind/code_contests"
+                self.format = "TODO"
 
             case DatasetName.DCLM:
                 self.url = "mlfoundations/dclm-baseline-1.0"
                 self.allow_patterns = "*.jsonl.zst"
+                self.format = "TODO"
 
             case DatasetName.DEEPSCALER:
                 self.url = "agentica-org/DeepScaleR-Preview-Dataset"
+                self.format = "TODO"
 
             case DatasetName.DEEPSEEK_PROVER:
                 self.url = "deepseek-ai/DeepSeek-Prover-V1"
+                self.format = "TODO"
 
             case DatasetName.EURUS_RL:
                 self.url = "PRIME-RL/Eurus-2-RL-Data"
+                self.format = "TODO"
 
             case DatasetName.FINEMATH:
                 self.url = "HuggingFaceTB/finemath"
@@ -137,55 +168,101 @@ class DownloadDatasetArgs:
             case DatasetName.FINEWEB:
                 self.url = "HuggingFaceFW/fineweb-edu"
                 self.allow_patterns = "sample/10BT/*"
+                self.format = "TODO"
 
             case DatasetName.FINEWEB_BIG:
                 self.url = "HuggingFaceFW/fineweb-edu"
+                self.format = "TODO"
+
+            case DatasetName.GLAIVE_DISTILL:
+                self.url = "glaiveai/reasoning-v1-20m"
+                self.format = "TODO"
+
+            case DatasetName.IMO_STEPS:
+                self.url = "roozbeh-yz/IMO-Steps"
+                self.format = "TODO"
+
+            case DatasetName.ISABELLE_PREMISE:
+                self.url = "Simontwice/premise_selection_in_isabelle"
+                self.format = "TODO"
 
             case DatasetName.LEAN_WORKBOOK:
                 self.url = "internlm/Lean-Workbook"
+                self.format = "TODO"
 
             case DatasetName.LILA:
                 self.url = "allenai/lila"
-                raise ValueError("Lila is currently not available on HuggingFace.")
+                self.revision = "refs/convert/parquet"
+                self.format = "parquet"
+
+            case DatasetName.LONG_FORM_THOUGHT:
+                self.url = "RUC-AIBOX/long_form_thought_data_5k"
+                self.format = "TODO"
 
             case DatasetName.MATH:
                 self.url = "Maxwell-Jia/MATH"  # "hendrycks/competition_math" is currently down
+                self.format = "TODO"
 
             case DatasetName.MATH_INSTRUCT:
                 self.url = "TIGER-Lab/MathInstruct"
+                self.format = "TODO"
 
             case DatasetName.MATH_PILE:
                 self.url = "GAIR/MathPile"
+                self.format = "TODO"
+
+            case DatasetName.META_MATH:
+                self.url = "meta-math/MetaMathQA"
+                self.format = "TODO"
+
+            case DatasetName.NATURAL_REASONING:
+                self.url = "facebook/natural_reasoning"
+                self.format = "TODO"
+
+            case DatasetName.NEMOTRON:
+                self.url = "nvidia/Llama-Nemotron-Post-Training-Dataset-v1"
+                self.format = "TODO"
 
             case DatasetName.NUMINA:
                 self.url = "AI-MO/NuminaMath-1.5"
-    
+                self.format = "TODO"
+
             case DatasetName.OLYMPIAD_BENCH:
                 self.url = "lmms-lab/OlympiadBench"
+                self.format = "TODO"
 
             case DatasetName.OMNI_MATH:
                 self.url = "KbsdJames/Omni-MATH"
+                self.format = "TODO"
 
             case DatasetName.OPEN_R1:
                 self.url = "open-r1/OpenR1-Math-220k"
                 self.pattern = "all/*"
+                self.format = "TODO"
 
             case DatasetName.OPEN_WEB_MATH:
                 self.url = "open-web-math/open-web-math"
+                self.format = "TODO"
                 raise ValueError("Unsafe dataset: open-web-math")
 
             case DatasetName.PROOF_PILE_2:
                 self.url = "EleutherAI/proof-pile-2"
+                self.format = "TODO"
 
             case DatasetName.SMOLTALK:
                 self.url = "HuggingFaceTB/smoltalk"
+                self.format = "TODO"
 
             case DatasetName.STACK_2:
-                self.url = "bigcode/the-stack-v2-train-full-ids"
+                # self.url = "bigcode/the-stack-v2-train-full-ids"
+                self.url = "bigcode/the-stack-v2"
+                self.revision = "refs/convert/parquet"
+                self.format = "parquet"
 
             case DatasetName.TACO:
                 self.url = "BAAI/TACO"
                 self.allow_patterns = "ALL/*"
+                self.format = "TODO"
 
             case _:
                 raise ValueError(f"Unknown dataset: {self.name}")
@@ -219,6 +296,7 @@ def download_from_hf(
                 repo_type="dataset",
                 local_dir=str(config.target_dir),
                 allow_patterns=config.allow_patterns,
+                revision=config.revision,
                 max_workers=nb_workers,
             )
 
