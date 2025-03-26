@@ -49,6 +49,7 @@ class DatasetName(Enum):
     AQUA = "aqua"
     ARXIV = "arxiv"
     CODE_CONTESTS = "code-contests"
+    CODEFORCES = "codeforces"
     DEEPSCALER = "deepscaler"
     DEEPSEEK_PROVER = "deepseek-prover"
     DCLM = "dclm"
@@ -61,6 +62,7 @@ class DatasetName(Enum):
     IMO_STEPS = "imo-steps"
     ISABELLE_PREMISE = "isabelle-premise"
     LEAN_WORKBOOK = "lean-workbook"
+    LEETCODE = "leetcode"
     LILA = "lila"
     LONG_FORM_THOUGHT = "long-form-thought"
     MATH = "math"
@@ -70,14 +72,19 @@ class DatasetName(Enum):
     NATURAL_REASONING = "natural-reasoning"
     NEMOTRON = "nemotron"
     NUMINA = "numina"
+    NUMINA_TOOL = "numina-tool"
     OLYMPIAD_BENCH = "olympiad-bench"
     OMNI_MATH = "omni-math"
+    OPEN_MATH_INSTRUCT = "open-math-instruct"
     OPEN_R1 = "open-r1"
     OPEN_WEB_MATH = "open-web-math"
     PROOF_PILE_2 = "proof-pile-2"
     SMOLTALK = "smoltalk"
     STACK_2 = "stack-2"
     STACK_EDU = "stack-edu"
+    STACK_EDU_PYTHON = "stack-edu-python"
+    STILL = "still"
+    STILL_LONG = "still-long"
     TACO = "taco"
 
 
@@ -105,7 +112,7 @@ class DownloadDatasetArgs:
     url: str = field(init=False)
     allow_patterns: str = field(init=False, default=None)
     revision: str = field(init=False, default=None)
-    format: str = field(init=False, default=None)
+    file_format: str = field(init=False, default=None)
 
     def __post_init__(self):
         self.name = DatasetName(self.name.lower())
@@ -115,154 +122,185 @@ class DownloadDatasetArgs:
         match self.name:
             case DatasetName.AIME:
                 self.url = "di-zhang-fdu/AIME_1983_2024"
-                self.format = "TODO"
+                self.revision = "refs/convert/parquet"
+                self.file_format = "parquet"
 
             case DatasetName.ALGEBRAIC_STACK:
                 self.url = "EleutherAI/proof-pile-2"
                 self.allow_patterns = "algebraic-stack/*"
-                self.format = "jsonl.zst"
+                self.file_format = "jsonl.zst"
+
+            case DatasetName.APPS:
+                self.url = "codeparrot/apps"
+                self.revision = "refs/convert/parquet"
+                self.file_format = "parquet"
 
             case DatasetName.AQUA:
                 self.url = "deepmind/aqua_rat"
                 self.allow_patterns = "raw/*"
-
-            case DatasetName.APPS:
-                self.url = "codeparrot/apps"
-                self.format = "TODO"
+                self.file_format = "parquet"
 
             case DatasetName.ARXIV:
                 # corresponds to an ArXiv snapshot made by RedPajama in 2023
                 self.url = "EleutherAI/proof-pile-2"
                 self.allow_patterns = "arxiv/*"
-                self.format = "TODO"
+                self.file_format = "TODO"
 
             case DatasetName.CODE_CONTESTS:
                 self.url = "deepmind/code_contests"
-                self.format = "TODO"
+                self.file_format = "parquet"
+
+            case DatasetName.CODEFORCES:
+                self.url = "MatrixStudio/Codeforces-Python-Submissions"
+                self.file_format = "parquet"
 
             case DatasetName.DCLM:
                 self.url = "mlfoundations/dclm-baseline-1.0"
                 self.allow_patterns = "*.jsonl.zst"
-                self.format = "TODO"
+                self.file_format = "jsonl.zst"
 
             case DatasetName.DEEPSCALER:
                 self.url = "agentica-org/DeepScaleR-Preview-Dataset"
-                self.format = "TODO"
+                self.file_format = "json"
 
             case DatasetName.DEEPSEEK_PROVER:
                 self.url = "deepseek-ai/DeepSeek-Prover-V1"
-                self.format = "TODO"
+                self.file_format = "parquet"
 
             case DatasetName.EURUS_RL:
                 self.url = "PRIME-RL/Eurus-2-RL-Data"
-                self.format = "TODO"
+                self.file_format = "parquet"
 
-            case DatasetName.FINEMATH:
-                self.url = "HuggingFaceTB/finemath"
-                self.allow_patterns = "finemath-4plus/*"
+            # case DatasetName.FINEMATH:
+            #     self.url = "HuggingFaceTB/finemath"
+            #     self.allow_patterns = "finemath-4plus/*"
 
-            case DatasetName.FINEMATH_BIG:
-                self.url = "HuggingFaceTB/finemath"
-                self.allow_patterns = "finemath-3plus/*"
+            # case DatasetName.FINEMATH_BIG:
+            #     self.url = "HuggingFaceTB/finemath"
+            #     self.allow_patterns = "finemath-3plus/*"
 
-            case DatasetName.FINEWEB:
-                self.url = "HuggingFaceFW/fineweb-edu"
-                self.allow_patterns = "sample/10BT/*"
-                self.format = "TODO"
+            # case DatasetName.FINEWEB:
+            #     self.url = "HuggingFaceFW/fineweb-edu"
+            #     self.allow_patterns = "sample/10BT/*"
+            #     self.file_format = "TODO"
 
-            case DatasetName.FINEWEB_BIG:
-                self.url = "HuggingFaceFW/fineweb-edu"
-                self.format = "TODO"
+            # case DatasetName.FINEWEB_BIG:
+            #     self.url = "HuggingFaceFW/fineweb-edu"
+            #     self.file_format = "TODO"
 
-            case DatasetName.GLAIVE_DISTILL:
-                self.url = "glaiveai/reasoning-v1-20m"
-                self.format = "TODO"
+            # case DatasetName.GLAIVE_DISTILL:
+            #     self.url = "glaiveai/reasoning-v1-20m"
+            #     self.file_format = "TODO"
 
-            case DatasetName.IMO_STEPS:
-                self.url = "roozbeh-yz/IMO-Steps"
-                self.format = "TODO"
+            # case DatasetName.IMO_STEPS:
+            #     self.url = "roozbeh-yz/IMO-Steps"
+            #     self.file_format = "TODO"
 
-            case DatasetName.ISABELLE_PREMISE:
-                self.url = "Simontwice/premise_selection_in_isabelle"
-                self.format = "TODO"
+            # case DatasetName.ISABELLE_PREMISE:
+            #     self.url = "Simontwice/premise_selection_in_isabelle"
+            #     self.file_format = "TODO"
 
-            case DatasetName.LEAN_WORKBOOK:
-                self.url = "internlm/Lean-Workbook"
-                self.format = "TODO"
+            # case DatasetName.LEAN_WORKBOOK:
+            #     self.url = "internlm/Lean-Workbook"
+            #     self.file_format = "TODO"
+
+            case DatasetName.LEETCODE:
+                self.url = "greengerong/leetcode"
+                self.file_format = "jsonl"
 
             case DatasetName.LILA:
                 self.url = "allenai/lila"
                 self.revision = "refs/convert/parquet"
-                self.format = "parquet"
+                self.file_format = "parquet"
 
-            case DatasetName.LONG_FORM_THOUGHT:
-                self.url = "RUC-AIBOX/long_form_thought_data_5k"
-                self.format = "TODO"
+            # case DatasetName.MATH:
+            #     self.url = "Maxwell-Jia/MATH"  # "hendrycks/competition_math" is currently down
+            #     self.file_format = "TODO"
 
-            case DatasetName.MATH:
-                self.url = "Maxwell-Jia/MATH"  # "hendrycks/competition_math" is currently down
-                self.format = "TODO"
+            # case DatasetName.MATH_INSTRUCT:
+            #     self.url = "TIGER-Lab/MathInstruct"
+            #     self.file_format = "TODO"
 
-            case DatasetName.MATH_INSTRUCT:
-                self.url = "TIGER-Lab/MathInstruct"
-                self.format = "TODO"
+            # case DatasetName.MATH_PILE:
+            #     self.url = "GAIR/MathPile"
+            #     self.file_format = "TODO"
 
-            case DatasetName.MATH_PILE:
-                self.url = "GAIR/MathPile"
-                self.format = "TODO"
+            # case DatasetName.META_MATH:
+            #     self.url = "meta-math/MetaMathQA"
+            #     self.file_format = "TODO"
 
-            case DatasetName.META_MATH:
-                self.url = "meta-math/MetaMathQA"
-                self.format = "TODO"
+            # case DatasetName.NATURAL_REASONING:
+            #     self.url = "facebook/natural_reasoning"
+            #     self.file_format = "TODO"
 
-            case DatasetName.NATURAL_REASONING:
-                self.url = "facebook/natural_reasoning"
-                self.format = "TODO"
-
-            case DatasetName.NEMOTRON:
-                self.url = "nvidia/Llama-Nemotron-Post-Training-Dataset-v1"
-                self.format = "TODO"
+            # case DatasetName.NEMOTRON:
+            #     self.url = "nvidia/Llama-Nemotron-Post-Training-Dataset-v1"
+            #     self.file_format = "TODO"
 
             case DatasetName.NUMINA:
                 self.url = "AI-MO/NuminaMath-1.5"
-                self.format = "TODO"
+                self.file_format = "parquet"
 
-            case DatasetName.OLYMPIAD_BENCH:
-                self.url = "lmms-lab/OlympiadBench"
-                self.format = "TODO"
+            case DatasetName.NUMINA_TOOL:
+                self.url = "AI-MO/NuminaMath-TIR"
+                self.file_format = "parquet"
+
+            # case DatasetName.OLYMPIAD_BENCH:
+            #     self.url = "lmms-lab/OlympiadBench"
+            #     self.file_format = "TODO"
 
             case DatasetName.OMNI_MATH:
                 self.url = "KbsdJames/Omni-MATH"
-                self.format = "TODO"
+                self.file_format = "jsonl"
 
-            case DatasetName.OPEN_R1:
-                self.url = "open-r1/OpenR1-Math-220k"
-                self.pattern = "all/*"
-                self.format = "TODO"
+            case DatasetName.OPEN_MATH_INSTRUCT:
+                self.url = "nvidia/OpenMathInstruct-2"
+                self.file_format = "parquet"
 
-            case DatasetName.OPEN_WEB_MATH:
-                self.url = "open-web-math/open-web-math"
-                self.format = "TODO"
-                raise ValueError("Unsafe dataset: open-web-math")
+            # case DatasetName.OPEN_R1:
+            #     self.url = "open-r1/OpenR1-Math-220k"
+            #     self.pattern = "all/*"
+            #     self.file_format = "TODO"
 
-            case DatasetName.PROOF_PILE_2:
-                self.url = "EleutherAI/proof-pile-2"
-                self.format = "TODO"
+            # case DatasetName.OPEN_WEB_MATH:
+            #     self.url = "open-web-math/open-web-math"
+            #     self.file_format = "TODO"
+            #     raise ValueError("Unsafe dataset: open-web-math")
+
+            # case DatasetName.PROOF_PILE_2:
+            #     self.url = "EleutherAI/proof-pile-2"
+            #     self.file_format = "TODO"
 
             case DatasetName.SMOLTALK:
                 self.url = "HuggingFaceTB/smoltalk"
-                self.format = "TODO"
+                self.file_format = "parquet"
 
             case DatasetName.STACK_2:
-                # self.url = "bigcode/the-stack-v2-train-full-ids"
                 self.url = "bigcode/the-stack-v2"
-                self.revision = "refs/convert/parquet"
-                self.format = "parquet"
+                self.file_format = "pointer"
+                logger.warning("This will not download the Stack v@, but a list of pointer to download it.")
+
+            case DatasetName.STACK_EDU:
+                self.url = "HuggingFaceTB/stack-edu"
+                self.file_format = "parquet"
+
+            case DatasetName.STACK_EDU_PYTHON:
+                self.url = "HuggingFaceTB/stack-edu"
+                self.allow_patterns = "Python/*"
+                self.file_format = "parquet"
+
+            case DatasetName.STILL:
+                self.url = "RUC-AIBOX/STILL-3-Preview-RL-Data"
+                self.file_format = "parquet"
+
+            case DatasetName.STILL_LONG:
+                self.url = "RUC-AIBOX/long_form_thought_data_5k"
+                self.file_format = "parquet"
 
             case DatasetName.TACO:
                 self.url = "BAAI/TACO"
                 self.allow_patterns = "ALL/*"
-                self.format = "TODO"
+                self.file_format = "parquet"
 
             case _:
                 raise ValueError(f"Unknown dataset: {self.name}")
