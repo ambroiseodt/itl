@@ -13,6 +13,9 @@ To download a dataset, the pipeline is the following:
 This is work in progress.
 Some datasets are actually mixed of various sources.
 For these datasets, it is important not to mix the various sources into one (e.g. smoltalk).
+
+### TODO
+Switch from huggingface_hub.snapshot_download to git lfs
 """
 
 import json
@@ -56,8 +59,8 @@ class DatasetName(Enum):
     EURUS_RL = "eurus-rl"
     FINEMATH = "finemath"
     FINEMATH_BIG = "finemath-big"
-    FINEWEB = "fineweb"
-    FINEWEB_BIG = "fineweb-big"
+    FINEWEB_EDU = "fineweb-edu"
+    FINEWEB_EDU_BIG = "fineweb-edu-big"
     GLAIVE_DISTILL = "glaive-distill"
     IMO_STEPS = "imo-steps"
     ISABELLE_PREMISE = "isabelle-premise"
@@ -171,38 +174,40 @@ class DownloadDatasetArgs:
                 self.url = "PRIME-RL/Eurus-2-RL-Data"
                 self.file_format = "parquet"
 
-            # case DatasetName.FINEMATH:
-            #     self.url = "HuggingFaceTB/finemath"
-            #     self.allow_patterns = "finemath-4plus/*"
+            case DatasetName.FINEMATH:
+                self.url = "HuggingFaceTB/finemath"
+                self.allow_patterns = "finemath-4plus/*"
+                self.file_format = "parquet"
 
-            # case DatasetName.FINEMATH_BIG:
-            #     self.url = "HuggingFaceTB/finemath"
-            #     self.allow_patterns = "finemath-3plus/*"
+            case DatasetName.FINEMATH_BIG:
+                self.url = "HuggingFaceTB/finemath"
+                self.allow_patterns = "finemath-3plus/*"
+                self.file_format = "parquet"
 
-            # case DatasetName.FINEWEB:
-            #     self.url = "HuggingFaceFW/fineweb-edu"
-            #     self.allow_patterns = "sample/10BT/*"
-            #     self.file_format = "TODO"
+            case DatasetName.FINEWEB_EDU:
+                self.url = "HuggingFaceFW/fineweb-edu"
+                self.allow_patterns = "sample/10BT/*"
+                self.file_format = "parquet"
 
-            # case DatasetName.FINEWEB_BIG:
-            #     self.url = "HuggingFaceFW/fineweb-edu"
-            #     self.file_format = "TODO"
+            case DatasetName.FINEWEB_EDU_BIG:
+                self.url = "HuggingFaceFW/fineweb-edu"
+                self.file_format = "parquet"
 
-            # case DatasetName.GLAIVE_DISTILL:
-            #     self.url = "glaiveai/reasoning-v1-20m"
-            #     self.file_format = "TODO"
+            case DatasetName.GLAIVE_DISTILL:
+                self.url = "glaiveai/reasoning-v1-20m"
+                self.file_format = "parquet"
 
-            # case DatasetName.IMO_STEPS:
-            #     self.url = "roozbeh-yz/IMO-Steps"
-            #     self.file_format = "TODO"
+            case DatasetName.IMO_STEPS:
+                self.url = "roozbeh-yz/IMO-Steps"
+                self.file_format = "lean"
 
-            # case DatasetName.ISABELLE_PREMISE:
-            #     self.url = "Simontwice/premise_selection_in_isabelle"
-            #     self.file_format = "TODO"
+            case DatasetName.ISABELLE_PREMISE:
+                self.url = "Simontwice/premise_selection_in_isabelle"
+                self.file_format = "json"
 
-            # case DatasetName.LEAN_WORKBOOK:
-            #     self.url = "internlm/Lean-Workbook"
-            #     self.file_format = "TODO"
+            case DatasetName.LEAN_WORKBOOK:
+                self.url = "internlm/Lean-Workbook"
+                self.file_format = "parquet"
 
             case DatasetName.LEETCODE:
                 self.url = "greengerong/leetcode"
@@ -213,17 +218,20 @@ class DownloadDatasetArgs:
                 self.revision = "refs/convert/parquet"
                 self.file_format = "parquet"
 
-            # case DatasetName.MATH:
-            #     self.url = "Maxwell-Jia/MATH"  # "hendrycks/competition_math" is currently down
-            #     self.file_format = "TODO"
+            case DatasetName.MATH:
+                self.url = "hendrycks/competition_math"
+                raise NotImplementedError("This dataset is not available on Hugging Face. Need custom logic.")
 
-            # case DatasetName.MATH_INSTRUCT:
-            #     self.url = "TIGER-Lab/MathInstruct"
-            #     self.file_format = "TODO"
+            case DatasetName.MATH_INSTRUCT:
+                self.url = "TIGER-Lab/MathInstruct"
+                self.file_format = "json"
 
-            # case DatasetName.MATH_PILE:
-            #     self.url = "GAIR/MathPile"
-            #     self.file_format = "TODO"
+            case DatasetName.MATH_PILE:
+                self.url = "GAIR/MathPile"
+                self.file_format = "jsonl.gz"
+
+            # case DatasetName.MBPP:
+            #     TODO
 
             # case DatasetName.META_MATH:
             #     self.url = "meta-math/MetaMathQA"
@@ -262,14 +270,13 @@ class DownloadDatasetArgs:
             #     self.pattern = "all/*"
             #     self.file_format = "TODO"
 
-            # case DatasetName.OPEN_WEB_MATH:
-            #     self.url = "open-web-math/open-web-math"
-            #     self.file_format = "TODO"
-            #     raise ValueError("Unsafe dataset: open-web-math")
+            case DatasetName.OPEN_WEB_MATH:
+                self.url = "open-web-math/open-web-math"
+                self.file_format = "parquet"
 
-            # case DatasetName.PROOF_PILE_2:
-            #     self.url = "EleutherAI/proof-pile-2"
-            #     self.file_format = "TODO"
+            case DatasetName.PROOF_PILE_2:
+                self.url = "EleutherAI/proof-pile-2"
+                self.file_format = "jsonl.zst"
 
             case DatasetName.SMOLTALK:
                 self.url = "HuggingFaceTB/smoltalk"
