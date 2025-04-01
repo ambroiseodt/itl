@@ -53,9 +53,10 @@ class DatasetName(Enum):
     ARXIV = "arxiv"
     CODE_CONTESTS = "code-contests"
     CODEFORCES = "codeforces"
+    COQ_GYM = "coq-gym"
+    DCLM = "dclm"
     DEEPSCALER = "deepscaler"
     DEEPSEEK_PROVER = "deepseek-prover"
-    DCLM = "dclm"
     EURUS_RL = "eurus-rl"
     FINEMATH = "finemath"
     FINEMATH_BIG = "finemath-big"
@@ -67,10 +68,10 @@ class DatasetName(Enum):
     LEAN_WORKBOOK = "lean-workbook"
     LEETCODE = "leetcode"
     LILA = "lila"
-    LONG_FORM_THOUGHT = "long-form-thought"
     MATH = "math"
     MATH_INSTRUCT = "math-instruct"
     MATH_PILE = "math-pile"
+    MBPP = "mbpp"
     META_MATH = "meta-math"
     NATURAL_REASONING = "natural-reasoning"
     NEMOTRON = "nemotron"
@@ -88,6 +89,7 @@ class DatasetName(Enum):
     STACK_EDU_PYTHON = "stack-edu-python"
     STILL = "still"
     STILL_LONG = "still-long"
+    SWEBENCH = "swebench"
     TACO = "taco"
 
 
@@ -156,6 +158,8 @@ class DownloadDatasetArgs:
             case DatasetName.CODEFORCES:
                 self.url = "MatrixStudio/Codeforces-Python-Submissions"
                 self.file_format = "parquet"
+
+            # case DatasetName.COQ_GYM:
 
             case DatasetName.DCLM:
                 self.url = "mlfoundations/dclm-baseline-1.0"
@@ -230,20 +234,21 @@ class DownloadDatasetArgs:
                 self.url = "GAIR/MathPile"
                 self.file_format = "jsonl.gz"
 
-            # case DatasetName.MBPP:
-            #     TODO
+            case DatasetName.MBPP:
+                self.url = "google-research-datasets/mbpp"
+                self.file_format = "parquet"
 
-            # case DatasetName.META_MATH:
-            #     self.url = "meta-math/MetaMathQA"
-            #     self.file_format = "TODO"
+            case DatasetName.META_MATH:
+                self.url = "meta-math/MetaMathQA"
+                self.file_format = "jsonl"
 
-            # case DatasetName.NATURAL_REASONING:
-            #     self.url = "facebook/natural_reasoning"
-            #     self.file_format = "TODO"
+            case DatasetName.NATURAL_REASONING:
+                self.url = "facebook/natural_reasoning"
+                self.file_format = "json"
 
-            # case DatasetName.NEMOTRON:
-            #     self.url = "nvidia/Llama-Nemotron-Post-Training-Dataset-v1"
-            #     self.file_format = "TODO"
+            case DatasetName.NEMOTRON:
+                self.url = "nvidia/Llama-Nemotron-Post-Training-Dataset-v1"
+                self.file_format = "json"
 
             case DatasetName.NUMINA:
                 self.url = "AI-MO/NuminaMath-1.5"
@@ -253,9 +258,9 @@ class DownloadDatasetArgs:
                 self.url = "AI-MO/NuminaMath-TIR"
                 self.file_format = "parquet"
 
-            # case DatasetName.OLYMPIAD_BENCH:
-            #     self.url = "lmms-lab/OlympiadBench"
-            #     self.file_format = "TODO"
+            case DatasetName.OLYMPIAD_BENCH:
+                self.url = "Hothan/OlympiadBench"
+                self.file_format = "TODO"
 
             case DatasetName.OMNI_MATH:
                 self.url = "KbsdJames/Omni-MATH"
@@ -265,10 +270,10 @@ class DownloadDatasetArgs:
                 self.url = "nvidia/OpenMathInstruct-2"
                 self.file_format = "parquet"
 
-            # case DatasetName.OPEN_R1:
-            #     self.url = "open-r1/OpenR1-Math-220k"
-            #     self.pattern = "all/*"
-            #     self.file_format = "TODO"
+            case DatasetName.OPEN_R1:
+                self.url = "open-r1/OpenR1-Math-220k"
+                self.pattern = "all/*"
+                self.file_format = "parquet"
 
             case DatasetName.OPEN_WEB_MATH:
                 self.url = "open-web-math/open-web-math"
@@ -285,7 +290,7 @@ class DownloadDatasetArgs:
             case DatasetName.STACK_2:
                 self.url = "bigcode/the-stack-v2"
                 self.file_format = "pointer"
-                logger.warning("This will not download the Stack v@, but a list of pointer to download it.")
+                logger.warning("This will not download the Stack v2, but a list of pointer to download it.")
 
             case DatasetName.STACK_EDU:
                 self.url = "HuggingFaceTB/stack-edu"
@@ -303,6 +308,10 @@ class DownloadDatasetArgs:
             case DatasetName.STILL_LONG:
                 self.url = "RUC-AIBOX/long_form_thought_data_5k"
                 self.file_format = "parquet"
+
+            case DatasetName.SWEBENCH:
+                self.url = "princeton-nlp/SWE-bench"
+                raise NotImplementedError("The HuggingFace dataset is imcomplete, need to download from GitHub.")
 
             case DatasetName.TACO:
                 self.url = "BAAI/TACO"
