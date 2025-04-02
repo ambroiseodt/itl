@@ -159,7 +159,9 @@ class DownloadDatasetArgs:
                 self.url = "MatrixStudio/Codeforces-Python-Submissions"
                 self.file_format = "parquet"
 
-            # case DatasetName.COQ_GYM:
+            case DatasetName.COQ_GYM:
+                self.url = "https://github.com/princeton-vl/CoqGym"
+                raise NotImplementedError("Download from github is not supported yet")
 
             case DatasetName.DCLM:
                 self.url = "mlfoundations/dclm-baseline-1.0"

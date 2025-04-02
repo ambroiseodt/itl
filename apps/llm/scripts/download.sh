@@ -37,7 +37,7 @@
 # python -m apps.llm.scripts.download_dataset hf-download --name math --nb-workers 10
 # python -m apps.llm.scripts.download_dataset hf-download --name math-instruct --nb-workers 10
 # python -m apps.llm.scripts.download_dataset hf-download --name math-pile --nb-workers 10
-python -m apps.llm.scripts.download_dataset hf-download --name mbpp --nb-workers 10
+# python -m apps.llm.scripts.download_dataset hf-download --name mbpp --nb-workers 10
 # python -m apps.llm.scripts.download_dataset hf-download --name meta-math --nb-workers 10
 # python -m apps.llm.scripts.download_dataset hf-download --name numina --nb-workers 10
 # python -m apps.llm.scripts.download_dataset hf-download --name numina-tool --nb-workers 10
