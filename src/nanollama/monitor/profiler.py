@@ -212,7 +212,7 @@ class LightProfiler:
                 check=True,
             )
             utilization = result.stdout.strip().split("\n")
-            return {f"utlization (cuda:{rank})": int(val) for rank, val in enumerate(utilization)}
+            return {f"utilization (cuda:{rank})": int(val) for rank, val in enumerate(utilization)}
         except subprocess.CalledProcessError as e:
             logger.warning(f"An error occurred: {e.stderr}")
             return None
