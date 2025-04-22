@@ -24,6 +24,14 @@ Launch a training on your cluster
 ```bash
 python -m nanollama.launcher apps/memory/config/debug.yaml
 ```
+Launch a training grid on your cluster
+```bash
+python -m nanollama.launcher apps/memory/config/grid.yaml
+```
+If Slurm is not installed on your cluster, you can use
+```bash
+python -m apps.memory.launch_grid apps/memory/config/launch_grid.yaml
+```
 
 ## Evaluation
 Launch an evaluation run locally

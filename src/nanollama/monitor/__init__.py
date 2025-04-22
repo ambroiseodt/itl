@@ -33,6 +33,7 @@ class OrchestratorConfig:
     - logging: configuration of the logger
     - profiler: configuration of the profiler
     - utils: configuration of utility functions
+    - task_id: id of the task to deal with array job
     """
 
     log_dir: str = ""
@@ -44,6 +45,9 @@ class OrchestratorConfig:
     profiler: ProfilerConfig = field(default_factory=ProfilerConfig)
     utils: UtilityConfig = field(default_factory=UtilityConfig)
 
+    # task id if array job
+    task_id: str = None
+
     def post_init(self) -> None:
         assert self.log_dir, "log_dir should be specified."
 
@@ -53,7 +57,10 @@ class OrchestratorConfig:
         log_dir.mkdir(parents=True, exist_ok=True)
 
         # add discriminative information if array job
-        task_id = os.environ.get("SLURM_ARRAY_TASK_ID", "")
+        if self.task_id is None:
+            task_id = os.environ.get("SLURM_ARRAY_TASK_ID", "")
+        else:
+            task_id = self.task_id
 
         # checkpoint directory
         self.checkpoint.path = str(log_dir / "checkpoints" / task_id)
