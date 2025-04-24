@@ -38,6 +38,7 @@ data = [
 ]
 
 llm = [
+  "transformers",   # HF transformers
   "sentencepiece",  # tokenizer
   "tiktoken",       # tokenizer
   "blobfile",       # tiktoken dependency
@@ -46,7 +47,7 @@ llm = [
 visu = [
   "ipykernel",    # jupyter notebooks
   "ipywidgets",   # jupyter widgets
-  "matplotlib",   # plots 
+  "matplotlib",   # plots
   "nbformat",     # jupyter format
   "pandas",       # dataframes
   "plotly",       # interactive plots
