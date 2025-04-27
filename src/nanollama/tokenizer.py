@@ -270,6 +270,64 @@ class TikTokenizer(Tokenizer):
 
 
 # ------------------------------------------------------------------------------
+# Pretrained Tokenizer
+# ------------------------------------------------------------------------------
+
+
+@dataclass
+class PretrainedTokenizerConfig:
+    """
+    Tokenizer configuration
+
+    ### Attributes
+    - tokenizer_id: id to load the tokenizer from HuggingFace.
+    - special_tokens: list of special tokens to register (e.g. `["<|eos|>", "<|user|>"]`)
+    """
+
+    tokenizer_id: str
+    implementation: Literal["pretrained"] = "pretrained"
+    special_tokens: dict[str, int] = field(default_factory=dict)
+
+
+class PretrainedTokenizer(Tokenizer):
+    def __init__(self, config: PretrainedTokenizerConfig) -> None:
+        """
+        Pretrained Tokenizer associated to a HuggingFace pretrained model.
+
+        ### Parameters
+        - special_tokens: list of special tokens to register (e.g. `["eos", "bos"]`)
+        """
+        super().__init__()
+
+        # load tokenizer from HuggingFace
+        from transformers import AutoTokenizer
+
+        self.tokenizer = AutoTokenizer.from_pretrained(config.tokenizer_id)
+
+        # add special_tokens
+        special_tokens = []
+        for tok_str in config.special_tokens.keys():
+            tok = re.sub(r"<\|(.+?)\|>", r"\1", tok_str)  # Remove <| and |>
+            # Check that special token is not already in vocabulary
+            if tok not in self.tokenizer.vocab.keys():
+                special_tokens.append(tok)
+        self.tokenizer.add_tokens(special_tokens)
+
+        # register vocabulary size
+        self.vocab_size = len(self.tokenizer)
+
+    def encode(self, sentence: str, bos: int = 0) -> list[int]:
+        tokens = []
+        if bos:
+            tokens.append(bos)
+        tokens.extend(self.tokenizer.encode(sentence))
+        return tokens
+
+    def decode(self, tokens: list[int]) -> str:
+        return self.tokenizer.decode(tokens)
+
+
+# ------------------------------------------------------------------------------
 # Dialog Tokenizer
 # ------------------------------------------------------------------------------
 
@@ -433,6 +491,10 @@ def build_tokenizer(config: dict[str, Any]) -> DialogTokenizer:
         case "tiktoken":
             config = build_with_type_check(TikTokenizerConfig, config)
             tokenizer = TikTokenizer(config)
+
+        case "pretrained":
+            config = build_with_type_check(PretrainedTokenizerConfig, config)
+            tokenizer = PretrainedTokenizer(config)
 
         case _:
             raise ValueError(f"Tokenizer implementation {implementation} not found")
