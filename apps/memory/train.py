@@ -13,7 +13,6 @@ from contextlib import ExitStack
 from typing import Any
 
 import torch
-import torch.nn.functional as F
 import yaml
 from torch import Tensor
 
@@ -45,11 +44,6 @@ logger = logging.getLogger("nanollama")
 # ------------------------------------------------------------------------------
 # Training loop
 # ------------------------------------------------------------------------------
-
-
-def loss_func(preds: Tensor, targets: Tensor) -> Tensor:
-    vocab_size = preds.size(-1)
-    return F.cross_entropy(preds.reshape(-1, vocab_size), targets.reshape(-1))
 
 
 def train(config: TrainingConfig) -> None:
