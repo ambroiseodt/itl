@@ -32,6 +32,7 @@ from src.nanollama.monitor import (
 from src.nanollama.optim import (
     OptimizerConfig,
 )
+from src.nanollama.tokenizer import DialogTokenizer
 from src.nanollama.utils import build_with_type_check
 
 from ..args import (
@@ -164,11 +165,11 @@ def build_finetune_config(file_config: dict[str, Any]) -> FinetuningConfig:
 
 
 # ------------------------------------------------------------------------------
-# Recover pretrained model with config
+# Build pretrained model from config
 # ------------------------------------------------------------------------------
 
 
-def build_model(config: dict[str, Any], return_config: bool = False) -> nn.Module:
+def build_model(config: dict[str, Any], tokenizer: DialogTokenizer, return_config: bool = False) -> nn.Module:
     """
     Load pretrained model based on the specified model implementation.
 
@@ -183,6 +184,12 @@ def build_model(config: dict[str, Any], return_config: bool = False) -> nn.Modul
     model_id = config.get("model_id", "gpt2").lower()
     model_config = AutoConfig.from_pretrained(model_id)
     model = AutoModelForCausalLM.from_pretrained(model_id)
+
+    # Update token embeddings to manage new tokens
+    model.resize_token_embeddings(tokenizer.vocab_size)
+
+    # Set to training mode
+    model.train()
 
     if return_config:
         return model, model_config
