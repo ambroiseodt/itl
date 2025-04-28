@@ -62,17 +62,16 @@ def finetune(config: FinetuningConfig) -> None:
         context_stack.enter_context(utils)
 
         # ---------------------------------------------------------------------
-        # Build and Parallelize model, optimizer, scheduler
+        # Build and Parallelize tokenizer, model, optimizer, scheduler
         # ---------------------------------------------------------------------
 
         # Build tokenizer
         logger.info("Loading pretrained tokenizer")
         tokenizer = build_tokenizer(config.tokenizer)
 
-        # Build model and update token embeddings if vocabulary size increased
+        # Build model
         logger.info("Loading pretrained model")
-        model, model_config = build_model(config.model, return_config=True)
-        model.resize_token_embeddings(tokenizer.vocab_size)
+        model, model_config = build_model(config.model, tokenizer, return_config=True)
         model = cluster.build_model(model)
 
         logger.info("Building optimizer")
@@ -104,7 +103,7 @@ def finetune(config: FinetuningConfig) -> None:
             model=model,
             optimizer=optimizer,
             stateful_objects={"scheduler": scheduler, "dataloader": dataloader, "state": optim_state},
-            model_config={"implementation": config.model["implementation"]},
+            model_config={"model_id": config.model["model_id"]},
         )
         context_stack.enter_context(checkpoint)
         context_stack.enter_context(dataloader)
