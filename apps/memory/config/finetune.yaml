@@ -21,7 +21,7 @@ run_config:
 
   data:
     batch_size: 128
-    seq_len: 257
+    seq_len: 1024
     padding: true
 
     nb_data: 1000
@@ -30,7 +30,8 @@ run_config:
     save_dir: $HOME/data/temporary
 
   tokenizer:
-    implementation: byte
+    implementation: pretrained
+    tokenizer_id: gpt2
     special_tokens:
       <|user|>: 0
       <|assistant|>: 1
@@ -38,16 +39,10 @@ run_config:
       <|eod|>: 3
 
   model:
-    implementation: transformer
-    vocab_size: 300
-    emb_dim: 128
-    nb_layers: 6
-    block:
-      nb_heads: 8
-      hidden_dim: 256
+    model_id: gpt2
 
   optim:
-    steps: 2
+    steps: 100
     lr: 1e-3
     weight_decay: 0.1
     fused: true

@@ -38,3 +38,14 @@ Launch an evaluation run locally
 ```bash
 python -m apps.memory.eval apps/memory/config/eval.yaml
 ```
+
+## Finetuning HuggingFace pretrained models
+Launch a finetuning run locally
+```bash
+python -m apps.memory.pretrained_model.finetune apps/memory/config/finetune.yaml
+```
+You can run the code locally with two GPUs (or more)
+```bash
+torchrun --nproc-per-node 2 -m apps.memory.pretrained_model.finetune apps/memory/config/finetune.yaml
+```
+To select specific GPUs, e.g. 0 and 3, you can prepend the previous command with ```CUDA_VISIBLE_DEVICES=0,3```.
