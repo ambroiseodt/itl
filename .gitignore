@@ -12,3 +12,6 @@ dist
 
 # temporary files
 tmp_*
+
+# figures
+/figures
