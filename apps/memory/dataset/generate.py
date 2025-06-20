@@ -175,7 +175,7 @@ def build_data(n_data: int, key: str, save_dir: str, data_dir: str = DATA_DIR) -
     Build a dataset folder by merging person data.
 
     ### Parameters:
-    - num: number of people to merge into the dataset
+    - n_data: number of people to merge into the dataset
     - key: key indicating which file to copy (e.g., 'qa', 'biographies', 'qatool').
     - save_dir: directory where the files should be copied to.
     - data_dir: directory where the data is stored.
@@ -187,7 +187,6 @@ def build_data(n_data: int, key: str, save_dir: str, data_dir: str = DATA_DIR) -
     # Iterate over the specified number of directories
     data_dir: PosixPath = Path(os.path.expandvars(data_dir))
     for i in range(n_data):
-
         # Define the source file path
         source_file = data_dir / f"person{i + 1}/{key}.jsonl"
 
