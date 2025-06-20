@@ -1,11 +1,9 @@
 #!usr/bin/bash
 
-# This file is useful to generate data for the memory app.
-# Formatting the database as a SQLLite database is also possible.
+# This file is useful to generate OOD data for the memory app.
 # To that end, run the following command in the terminal from the root directory of the project.
 # ```shell
-# cd <path_to_root_folder>
-# bash apps/memory/bash/generate_data_ood.sh
+# bash <path_to_file_folder>/generate_ood_data.sh
 # ```
 
 echo "Generating OOD data for the memory app..."

@@ -4,8 +4,7 @@
 # Formatting the database as a SQLLite database is also possible.
 # To that end, run the following command in the terminal from the root directory of the project.
 # ```shell
-# cd <path_to_root_folder>
-# bash apps/memory/bash/generate_data.sh
+# bash <path_to_file_folder>/generate_data.sh
 # ```
 
 echo "Generating data for the memory app..."
