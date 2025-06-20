@@ -2,6 +2,14 @@
 """
 Generate a list of entities with random attributes.
 
+### Notes
+To modify how dependent the attributes are, we sample the birth place, current adress and occupation by interpolating
+between a uniform distribution and a deterministic one with fixed attributes for each last name, i.e., people from the
+same family share the same birth place, occupation and current adress. The interpolation coefficient alpha controls how
+independent the attributes are: alpha = 0 means the dataset is very compressible (deterministic attribute based on the
+last name) and alpha = 1 means it is not compressible with attributes sampled uniformly. To avoid issues akin to the
+birthday paradox, we choose the desired size of the database by subsampling the first names and last names files.
+
 @ 2025, Meta
 """
 
@@ -10,19 +18,36 @@ import logging
 import os
 import random
 import re
+from collections import defaultdict
 from itertools import product
 from pathlib import Path, PosixPath
+from typing import Any
 
 from jinja2 import Template
 
 # relative paths
-TEMPLATE_DIR = Path(__file__).resolve().parent / "templates"
-ATOM_DIR = Path(__file__).resolve().parent / "atoms"
+TEMPLATE_DIR = Path(__file__).parents[1].resolve() / "templates"
+ATOM_DIR = Path(__file__).parents[1].resolve() / "atoms"
 
 # default variables
 SEED = 42
-DATA_DIR = Path().home() / "data" / "memory"
+
+# Set interpolation coefficient manually (not optimal)
+ALPHA = 1
+DATA_DIR = Path().home() / f"dependent_data_{ALPHA}" / "memory"
+
 logger = logging.getLogger("nanollama")
+
+
+def interpolation(uniform_sampler: Any, deterministic_sampler: Any, alpha: float = ALPHA) -> Any:
+    """
+    Linear interpolation between uniform sampling and deterministic one.
+    """
+    assert (0 <= 1 - alpha) and (0 <= alpha), "Interpolation coefficient should be in [0,1]."
+    sampled_value = uniform_sampler if random.random() < alpha else deterministic_sampler
+
+    # Recover only the string given by the sampler
+    return sampled_value if not isinstance(sampled_value, list) else sampled_value[0]
 
 
 def generate_people(save_dir: str = DATA_DIR, seed: int = SEED) -> None:
@@ -45,21 +70,52 @@ def generate_people(save_dir: str = DATA_DIR, seed: int = SEED) -> None:
     with open(ATOM_DIR / "occupations.txt") as f:
         occupations = f.read().splitlines()
 
+    # Subsample to create the database (here of 8192 people)
+    first_names = first_names[:128]
+    last_names = last_names[:64]
+
     # shuffle people ordering
     random.seed(seed)
     all_pairs = list(product(first_names, last_names))
     random.shuffle(all_pairs)
 
+    # Set deterministic mappings
+    deterministic_mapping = {
+        "birth_place": defaultdict(lambda: random.choice(countries)),
+        "current_adress": defaultdict(lambda: random.choice(cities)),
+        "occupation": defaultdict(lambda: random.choice(occupations)),
+    }
+
+    # Subsample the number of values per attributes (at least 2 values)
+    cities = cities[: max(2, int(ALPHA * len(cities)))]
+    countries = countries[: max(2, int(ALPHA * len(countries)))]
+    occupations = occupations[: max(2, int(ALPHA * len(occupations)))]
+
     # generate all unique combinations of first and last names and save to file
     save_file = save_dir / "people.jsonl"
     with open(save_file, "w") as f:
         for first_name, last_name in all_pairs:
+            # Sample attributes
+            birth_place = interpolation(
+                uniform_sampler=random.choices(countries),
+                deterministic_sampler=deterministic_mapping["birth_place"][last_name],
+            )
+            current_adress = interpolation(
+                uniform_sampler=random.choices(cities),
+                deterministic_sampler=deterministic_mapping["current_adress"][last_name],
+            )
+            occupation = interpolation(
+                uniform_sampler=random.choices(occupations),
+                deterministic_sampler=deterministic_mapping["occupation"][last_name],
+            )
+
+            # Create entity
             entity = {
                 "name": f"{first_name} {last_name}",
                 "birth_date": f"{random.randint(1, 28)}/{random.randint(1, 12)}/{random.randint(1950, 2000)}",
-                "birth_place": f"{random.choice(countries)}",
-                "current_address": f"{random.choice(cities)}",
-                "occupation": random.choice(occupations),
+                "birth_place": f"{birth_place}",
+                "current_address": f"{current_adress}",
+                "occupation": occupation,
             }
             print(json.dumps(entity), file=f, flush=True)
 

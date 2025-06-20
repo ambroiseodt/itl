@@ -1,6 +1,6 @@
 # This source code is licensed under the terms specified in the `LICENSE` file.
 """
-Script to launch a grid. If a Slurm cluster is available, we advise to use src/nanollama/launcher.py.
+Script to launch a grid locally. If a Slurm cluster is available, we advise to use src/nanollama/launcher.py.
 
 @ 2025, Meta
 """

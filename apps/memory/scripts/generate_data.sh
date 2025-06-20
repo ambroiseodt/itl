@@ -1,11 +1,10 @@
 #!usr/bin/bash
 
-# This file is useful to generate data for the memory app. 
-# Formatting the database as a SQLLite database is also possible. 
+# This file is useful to generate data for the memory app.
+# Formatting the database as a SQLLite database is also possible.
 # To that end, run the following command in the terminal from the root directory of the project.
 # ```shell
-# cd <path_to_rool_folder>
-# bash apps/memory/bash/generate_data.sh
+# bash <path_to_file_folder>/generate_data.sh
 # ```
 
 echo "Generating data for the memory app..."

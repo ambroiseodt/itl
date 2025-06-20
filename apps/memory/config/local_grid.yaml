@@ -2,7 +2,7 @@ launcher:
   torchrun: true
   name: memory
   overwrite: true
-  log_dir: $HOME/memory_launch_grid
+  log_dir: $HOME/memory_local_grid
 
   script: apps.memory.train
 

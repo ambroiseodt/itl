@@ -51,6 +51,7 @@ visu = [
   "nbformat",     # jupyter format
   "pandas",       # dataframes
   "plotly",       # interactive plots
+  "seaborn",      # plots
 ]
 
 ssm = [

@@ -2,6 +2,9 @@
 """
 Generate a list of entities with random attributes.
 
+### Notes
+The created entities are out-of-distribution compared to the training database.
+
 @ 2025, Meta
 """
 
@@ -16,12 +19,12 @@ from pathlib import Path, PosixPath
 from jinja2 import Template
 
 # relative paths
-TEMPLATE_DIR = Path(__file__).resolve().parent / "templates"
-ATOM_DIR = Path(__file__).resolve().parent / "atoms"
+TEMPLATE_DIR = Path(__file__).parents[1].resolve() / "templates"
+ATOM_DIR = Path(__file__).parents[1].resolve() / "atoms"
 
 # default variables
 SEED = 42
-DATA_DIR = Path().home() / "data" / "memory"
+DATA_DIR = Path().home() / "ood_data" / "memory"
 logger = logging.getLogger("nanollama")
 
 
@@ -34,7 +37,7 @@ def generate_people(save_dir: str = DATA_DIR, seed: int = SEED) -> None:
     save_dir.mkdir(parents=True, exist_ok=True)
 
     # recover atom data
-    with open(ATOM_DIR / "first_names.txt") as f:
+    with open(ATOM_DIR / "first_names_ood.txt") as f:
         first_names = f.read().splitlines()
     with open(ATOM_DIR / "last_names.txt") as f:
         last_names = f.read().splitlines()

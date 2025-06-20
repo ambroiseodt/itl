@@ -1,11 +1,8 @@
 # This source code is licensed under the terms specified in the `LICENSE` file.
 """
-Finetuning of HuggingFace pretrained models (logic similar to that of apps/memory/train.py).
+Training script with online generation of batch of data.
 
 @ 2025, Meta
-
-### Notes
-TODO: add Hellaswag stopping condition
 """
 
 import argparse
@@ -16,13 +13,14 @@ from contextlib import ExitStack
 from typing import Any
 
 import torch
-import torch.nn as nn
 import yaml
 from torch import Tensor
 
 from src.nanollama.data.text import TokenLoader
 from src.nanollama.distributed import ClusterManager, clean_environment, get_raw_model, is_master_process
 from src.nanollama.launcher import launch_job
+from src.nanollama.model import EmbeddingModel, build_model
+from src.nanollama.model.transformer import pretrain
 from src.nanollama.monitor import (
     Checkpointer,
     Logger,
@@ -37,13 +35,19 @@ from src.nanollama.optim import (
 )
 from src.nanollama.tokenizer import build_tokenizer
 
-from .eval import run_evaluation
-from .utils import FinetuningConfig, build_eval_finetuning_launch_config, build_finetune_config, build_model, pretrain
+from ..args import build_eval_launch_config
+from ..eval import run_evaluation
+from .args import TrainingConfig, build_train_config
 
 logger = logging.getLogger("nanollama")
 
 
-def finetune(config: FinetuningConfig) -> None:
+# ------------------------------------------------------------------------------
+# Training loop
+# ------------------------------------------------------------------------------
+
+
+def train(config: TrainingConfig) -> None:
     with ExitStack() as context_stack:
         # ---------------------------------------------------------------------
         # Handle preemption, computing environment, logging, and utils
@@ -62,16 +66,11 @@ def finetune(config: FinetuningConfig) -> None:
         context_stack.enter_context(utils)
 
         # ---------------------------------------------------------------------
-        # Build and Parallelize tokenizer, model, optimizer, scheduler
+        # Build and Parallelize model, optimizer, scheduler
         # ---------------------------------------------------------------------
 
-        # Build tokenizer
-        logger.info("Loading pretrained tokenizer")
-        tokenizer = build_tokenizer(config.tokenizer)
-
-        # Build model
-        logger.info("Loading pretrained model")
-        model, model_config = build_model(config.model, tokenizer, return_config=True)
+        logger.info("Building model")
+        model, model_config = build_model(config.model, config.model_callback, return_config=True)
         model = cluster.build_model(model)
 
         logger.info("Building optimizer")
@@ -85,14 +84,8 @@ def finetune(config: FinetuningConfig) -> None:
         # ---------------------------------------------------------------------
 
         logger.info("Building dataloader")
+        tokenizer = build_tokenizer(config.tokenizer)
         dataloader = TokenLoader(config.data, tokenizer, cluster.dp_mesh)
-
-        # ---------------------------------------------------------------------
-        # Hellaswag dataLoader
-        # ---------------------------------------------------------------------
-
-        logger.info("Building Hellaswag dataloader")
-        # TODO: add hellaswag datalaoder for stopping condition
 
         # ---------------------------------------------------------------------
         # Recover Checkpoint
@@ -103,7 +96,7 @@ def finetune(config: FinetuningConfig) -> None:
             model=model,
             optimizer=optimizer,
             stateful_objects={"scheduler": scheduler, "dataloader": dataloader, "state": optim_state},
-            model_config={"model_id": config.model["model_id"]},
+            model_config=model_config,
         )
         context_stack.enter_context(checkpoint)
         context_stack.enter_context(dataloader)
@@ -115,10 +108,11 @@ def finetune(config: FinetuningConfig) -> None:
         profiler = Profiler(config.orchestration.profiler, state=optim_state)
         context_stack.enter_context(profiler)
 
-        # model size calculation
-        raw_model: nn.Module = get_raw_model(model)
+        # flops and model size calculation
+        raw_model: EmbeddingModel = get_raw_model(model)
         metric_logger.report_statistics(raw_model)
         token_per_step = config.data.seq_len * config.data.batch_size * config.optim.grad_acc_steps
+        flop_per_step = raw_model.get_nb_flop() * token_per_step
         current_time, current_step = time.time(), optim_state.step
 
         # ---------------------------------------------------------------------
@@ -127,9 +121,9 @@ def finetune(config: FinetuningConfig) -> None:
 
         if config.compile:
             logger.info("Compiling pipeline")
-            finetune_logic = torch.compile(pretrain, dynamic=True)
+            pretrain_logic = torch.compile(pretrain, dynamic=True)
         else:
-            finetune_logic = pretrain
+            pretrain_logic = pretrain
 
         # ---------------------------------------------------------------------
         # Training loop
@@ -143,7 +137,6 @@ def finetune(config: FinetuningConfig) -> None:
         eval_period = config.evaluation.period
         log_period = config.orchestration.logging.period
 
-        # TODO: add hellaswag stopping condition to stop training
         while optim_state.step < config.optim.steps:
             # handle preemption
             if preemption():
@@ -183,7 +176,7 @@ def finetune(config: FinetuningConfig) -> None:
             profiler.start_timer()
 
             # forward propagation
-            loss = finetune_logic(model, X_batch, y_batch, loss_mask=loss_mask)
+            loss = pretrain_logic(model, X_batch, y_batch, loss_mask=loss_mask)
 
             # rescale when using gradient accumulation (backprop on mean, not sum)
             loss = loss / config.optim.grad_acc_steps
@@ -221,7 +214,6 @@ def finetune(config: FinetuningConfig) -> None:
             # -----------------------------------------------------------------
             # Log metrics
             # -----------------------------------------------------------------
-
             profiler.start_timer()
 
             # alias
@@ -234,10 +226,15 @@ def finetune(config: FinetuningConfig) -> None:
                 # optimization information
                 lr = optimizer.param_groups[0]["lr"]
                 grad_norm = grad_norm.item()
+                # TODO: if TP probably we should do the following instead
+                # (grad_norm.full_tensor() if isinstance(grad_norm, DTensor) else grad_norm).item()
 
-                # model information
+                # TODO: model information (add activation norm?)
+
+                # flops information
                 new_steps = optim_state.step - current_step
                 elapsed_time = time.time() - current_time
+                flops = new_steps * flop_per_step / elapsed_time
                 token_freq = new_steps * token_per_step / elapsed_time
                 current_time, current_step = time.time(), optim_state.step
 
@@ -246,6 +243,7 @@ def finetune(config: FinetuningConfig) -> None:
                     "step": step,
                     "lr": lr,
                     "grad_norm": grad_norm,
+                    "flop_freq (TF, approx)": flops / 1e12,
                     "token_freq (M)": token_freq / 1e6,
                 }
                 metric_logger(metrics)
@@ -261,20 +259,14 @@ def finetune(config: FinetuningConfig) -> None:
             if eval_period > 0 and step % eval_period == 0:
                 # run evaluation now
                 if not config.evaluation.asynchronous:
-                    metrics = run_evaluation(
-                        config.evaluation,
-                        model=model,
-                        model_config=model_config,
-                        tokenizer=tokenizer,
-                        preemption=preemption,
-                    )
+                    metrics = run_evaluation(config.evaluation, model=model, tokenizer=tokenizer, preemption=preemption)
                     metrics |= {"step": step}
                     metric_logger(metrics)
 
                 # launch evaluation job on slurm
                 elif is_master_process():
                     logger.info("Launching evaluation")
-                    launch_config, run_config = build_eval_finetuning_launch_config(
+                    launch_config, run_config = build_eval_launch_config(
                         config.evaluation, config.orchestration, checkpoint, step
                     )
 
@@ -293,11 +285,6 @@ def finetune(config: FinetuningConfig) -> None:
                     checkpoint.update()
 
             profiler.end_timer("eval_time")
-
-            # -----------------------------------------------------------------
-            # Hellaswag stopping condition
-            # -----------------------------------------------------------------
-            # TODO
 
     logger.info("Training done.")
 
@@ -327,10 +314,10 @@ def main() -> None:
         file_config: dict[str, Any] = yaml.safe_load(f)
 
     # initialize configuration
-    config = build_finetune_config(file_config)
+    config = build_train_config(file_config)
 
-    # launch finetuning
-    finetune(config)
+    # Launch training
+    train(config)
 
 
 if __name__ == "__main__":
