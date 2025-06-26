@@ -32,7 +32,7 @@ pip install -e .
 ```
 If you want to install the development, visualization and mamba dependencies, you can swap the previous command for the following one:
 ```bash
-pip install -e .[dev,ssm,visu]
+pip install -e ".[dev,ssm,visu]"
 ```
 
 #### Mamba specific instructions
