@@ -29,9 +29,12 @@ logger = getLogger("nanollama")
 # ------------------------------------------------------------------------------
 
 # Figure golden ratio (from ICML style file)
-WIDTH = 5.5
-HEIGHT = 5.5 / 1.5
-FONTSIZE = 18
+WIDTH = 3.3
+HEIGHT = WIDTH / 1.5
+FONTSIZE = 10
+MARKER_SIZE = 6
+LINEWIDTH = 3.5
+ALPHA_GRID = 0.2
 
 # Tex available
 USETEX = not subprocess.run(["which", "pdflatex"], stdout=subprocess.DEVNULL).returncode
@@ -199,9 +202,9 @@ def plot_params_bound(
     a given level of accuracy when the number of facts to learn grows.
     """
     fig, ax = plt.subplots(figsize=figsize)
-    lw = 5
-    ms = 10
-    alpha = 0.2
+    lw = LINEWIDTH
+    ms = MARKER_SIZE
+    alpha = ALPHA_GRID
     data_threshold = 1024
 
     # Recover values
@@ -229,7 +232,7 @@ def plot_params_bound(
         all_y_mins_2.append(y_min)
 
     # Data threshold
-    ax.axvline(x=data_threshold, linewidth=2.5, linestyle="--", color="black")
+    ax.axvline(x=data_threshold, linewidth=2, linestyle="--", color="black")
 
     # Recover the number of facts (each people has 4 attributes)
     nb_facts = 4 * x
@@ -253,7 +256,7 @@ def plot_params_bound(
     ax.set_xscale("log")
     ax.set_yscale("log")
     ax.set_xticks([10**1, 10**3, 10**5])
-    ax.set_xticklabels([r"$10^{1}$", r"$10^{3}$", r"$10^{5}$"])
+    ax.set_xticklabels([r"10$^\text{1}$", r"10$^\text{3}$", r"10$^\text{5}$"])
     ax.grid(alpha=0.6, lw=1.3)
     ax.spines["left"].set_linewidth(1)
     ax.spines["right"].set_linewidth(1)
@@ -300,9 +303,9 @@ def plot_params_bound_recall(
     Plot the evolution of the number of parameters requirement with the factual recall accuracy for in-weight learning.
     """
     fig, ax = plt.subplots(figsize=figsize)
-    lw = 5
-    ms = 10
-    alpha = 0.2
+    lw = LINEWIDTH
+    ms = MARKER_SIZE
+    alpha = ALPHA_GRID
 
     # Recover values
     x = [0, 0.1, 0.2, 0.3, 0.4, 0.5, 0.6, 0.7, 0.8, 0.9, 0.99]
@@ -400,9 +403,9 @@ def plot_params_bound_recall_grouped(
     ncols = len(nb_datas[0])
     figsize = (figsize[0] * ncols, figsize[1] * nrows)
     fig, axes = plt.subplots(nrows=nrows, ncols=ncols, sharex=True, sharey=True, figsize=figsize)
-    lw = 5
-    ms = 10
-    alpha = 0.2
+    lw = LINEWIDTH
+    ms = MARKER_SIZE
+    alpha = ALPHA_GRID
 
     for i in range(nrows):
         for j in range(ncols):
@@ -492,9 +495,9 @@ def plot_params_accuracy(
     Plot the evolution of the number of parameters requirement with the factual recall accuracy.
     """
     fig, ax = plt.subplots(figsize=figsize)
-    lw = 5
-    ms = 10
-    alpha = 0.2
+    lw = LINEWIDTH
+    ms = MARKER_SIZE
+    alpha = ALPHA_GRID
 
     # Recover values
     x = [0, 0.1, 0.2, 0.3, 0.4, 0.5, 0.6, 0.7, 0.8, 0.9, 0.99]
@@ -563,70 +566,6 @@ def plot_params_accuracy(
     plt.show()
 
 
-def plot_params_improvement(
-    df: pd.DataFrame,
-    acc_threshold: float,
-    figname: str,
-    figsize: tuple = (WIDTH, HEIGHT),
-    save: bool = True,
-    ncol: int = 1,
-    loc: str = "upper center",
-    bbox_to_anchor: tuple = (0.5, 0.95),
-    palette: list = None,
-) -> None:
-    """
-    Plot the benefits of using in-tool learning in terms of parameter requirements.
-    """
-    fig, ax = plt.subplots(figsize=figsize)
-
-    # Recover values
-    x = df["data.nb_data"].unique()
-    xname = "Methods"
-    yname = "Number of Parameters"
-    dict_df = {xname: [], yname: []}
-
-    for seed in df["data.seed"].unique():
-        qatool, qa = 0, 0
-        for nb_data in x:
-            root_ind = (df["data.seed"] == seed) & (df["accuracy_best"] >= acc_threshold)
-            ind_weight = (df["data.key"] == "qa") & root_ind
-            ind_tool = (df["data.key"] == "qatool") & root_ind
-            tmp_weight = df[(df["data.nb_data"] == nb_data) & ind_weight]["nb_params"]
-            tmp_tool = df[(df["data.nb_data"] == nb_data) & ind_tool]["nb_params"]
-            if not (tmp_weight.empty or tmp_tool.empty):
-                qatool += tmp_tool.min()
-                qa += tmp_weight.min()
-        dict_df[xname].append("In-Tool")
-        dict_df[yname].append(qatool)
-        dict_df[xname].append("In-Weight")
-        dict_df[yname].append(qa)
-
-    df = pd.DataFrame(dict_df)
-    sns.barplot(data=df, x=xname, y=yname, ax=ax, palette=palette)
-
-    # Axis
-    ax.set_xlabel("")
-    ax.yaxis.set_label_coords(-0.3, 0.45)
-    ax.grid(axis="y", alpha=0.6, lw=1.3)
-    ax.set_yticks([200_000, 600_000, 1_000_000])
-    ax.set_yticklabels(["0.1M", "0.6M", "1M"])
-    ax.spines["left"].set_linewidth(1)
-    ax.spines["right"].set_linewidth(1)
-    ax.spines["top"].set_linewidth(1)
-    ax.spines["bottom"].set_linewidth(1)
-    ax.tick_params(direction="out", length=6)
-    ax.minorticks_off()
-
-    # Global
-    sns.despine(fig, ax, trim=False, right=True, offset=10)
-
-    # Show plot
-    plt.tight_layout()
-    if save:
-        save_plot(figname=figname)
-    plt.show()
-
-
 def plot_in_tool_generalization(
     df: pd.DataFrame,
     figname: str,
@@ -635,7 +574,7 @@ def plot_in_tool_generalization(
     ncol: int = 1,
     loc: str = "upper center",
     palette: list = None,
-    bbox_to_anchor: tuple = (0.75, 0.75),
+    bbox_to_anchor: tuple = (0.78, 0.78),
 ) -> None:
     """
     Plot the evolution of the OOD accuracy with in-tool learning when the number of facts to learn grows.
@@ -653,8 +592,8 @@ def plot_in_tool_generalization(
 
     # Figure parameters
     fig, ax = plt.subplots(figsize=figsize)
-    lw = 5
-    ms = 10
+    lw = LINEWIDTH
+    ms = MARKER_SIZE
 
     # Data threshold and best random model
     ax.axvline(x=data_threshold, linewidth=2.5, linestyle="--", color="black")
@@ -692,7 +631,7 @@ def plot_in_tool_generalization(
         ax.set_xlabel("Dataset Size (#Facts)")
         ax.set_xscale("log")
         ax.set_xticks([10**2, 10**3, 10**4, 10**5])
-        ax.set_xticklabels([r"$10^{2}$", r"$10^{3}$", r"$10^{4}$", r"$10^{5}$"])
+        ax.set_xticklabels([r"10$^\text{2}$", r"10$^\text{3}$", r"10$^\text{4}$", r"10$^\text{5}$"])
         ax.set_yticks([0, 0.5, 1])
         ax.set_yticklabels([0, 50, 100])
         ax.grid(alpha=0.6, lw=1.3)
@@ -708,7 +647,7 @@ def plot_in_tool_generalization(
     lines, labels = [sum(lol, []) for lol in zip(*lines_labels)]
     lines, labels = lines[::-1], labels[::-1]
     fig.legend(
-        lines, labels, loc=loc, bbox_to_anchor=bbox_to_anchor, fancybox=True, borderaxespad=0, ncol=ncol, fontsize=15
+        lines, labels, loc=loc, bbox_to_anchor=bbox_to_anchor, fancybox=True, borderaxespad=0, ncol=ncol, fontsize=8
     )
 
     # Global
@@ -728,7 +667,7 @@ def plot_compressibility(
     ncol: int = 1,
     loc: str = "upper center",
     palette: list = None,
-    bbox_to_anchor: tuple = (0.32, 0.87),
+    bbox_to_anchor: tuple = (0.70, 0.87),
 ) -> None:
     """
     Plot the evolution of parameters requirements to obtain a recall of 100% when the attributes
@@ -737,11 +676,12 @@ def plot_compressibility(
 
     fig, axes = plt.subplots(2, 1, sharex=True, gridspec_kw={"height_ratios": [2.35, 1]}, figsize=figsize)
     fig.subplots_adjust(hspace=0)
-    lw = 5
-    ms = 10
+    lw = LINEWIDTH
+    ms = MARKER_SIZE
 
     # Recover values
-    alphas = [0, 0.25, 0.5, 0.75, 1]
+    alphas = np.asarray([0, 0.25, 0.5, 0.75, 1])
+
     labels = {8192: "32k facts", 1000: "4k facts"}
     for i, nb_data in enumerate([8192, 1000]):
         # Get grid
@@ -751,7 +691,7 @@ def plot_compressibility(
         # Recover data
         y_mins = []
         for alpha in alphas:
-            root_ind = (df["alpha"] == alpha) & (df["accuracy_best"] == 1)
+            root_ind = (df["alpha"] == 1 - alpha) & (df["accuracy_best"] == 1)
 
             # without tool
             ind = (df["data.key"] == "qa") & root_ind
@@ -792,7 +732,7 @@ def plot_compressibility(
     sns.despine(fig, ax2, trim=False, right=True, offset=10)
     ax1.spines["bottom"].set_linewidth(0)
 
-    ax2.set_xlabel(r"Interpolation $\alpha \propto$ Entropy")
+    ax2.set_xlabel(r"Correlation $\alpha$")
     ax2.set_ylabel("Model Size")
     ax2.yaxis.set_label_coords(-0.25, 1.53)
     ax2.locator_params(axis="x", nbins=3)
@@ -874,16 +814,7 @@ def params_acc(nb_data: int = 8192) -> None:
     gridname = "grid4.csv"
     df = get_data(gridname)
     palette = ["#5e6d9e", "#c2a7da"]
-    plot_params_accuracy(df=df, figname=f"parameter_accuracy_{nb_data}", palette=palette)
-
-
-def params_improvement(acc_threshold: float = 0.95) -> None:
-    """Verify imrpovement of in-tool learning in terms of paramter requirements."""
-    gridname = "grid4.csv"
-    df = get_data(gridname)
-    palette = ["#5e6d9e", "#c2a7da"]
-    plot_params_improvement(df=df, acc_threshold=acc_threshold, figname="params_improvement", palette=palette)
-
+    plot_params_accuracy(df=df, nb_data=nb_data, figname=f"parameter_accuracy_{nb_data}", palette=palette)
 
 def generalization(figname: str = "in_tool_generalization") -> None:
     """Verify benefits of in-tool learning for generalization."""
@@ -927,7 +858,6 @@ def main() -> None:
             "bounds": bounds,
             "group": bounds_grouped,
             "rec": bounds_recall,
-            "improv": params_improvement,
             "gen": generalization,
             "comp": compressibility,
             "acc": params_acc,
