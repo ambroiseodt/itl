@@ -310,7 +310,7 @@ def plot_params_bound_recall(
     # Recover values
     x = [0, 0.1, 0.2, 0.3, 0.4, 0.5, 0.6, 0.7, 0.8, 0.9, 0.99]
     nb_datas = [1024, 2048, 4096, 8192]
-    labels = {1024: "4k facts", 2048: "8k facts", 4096: "16k facts", 8192: "32k facts"}
+    labels = {1024: "4K facts", 2048: "8K facts", 4096: "16K facts", 8192: "32K facts"}
     key = "qa"
 
     # For better visualization (to avoid high values to dominate small ones)
@@ -343,7 +343,7 @@ def plot_params_bound_recall(
         ax.set_xticks([0.05, 0.5, 0.95])
         ax.set_xticklabels([5, 50, 95])
         ax.set_yticks([50_000, 150_000, 250_000])
-        ax.set_yticklabels(["50k", "150k", "250k"])
+        ax.set_yticklabels(["50K", "150K", "250K"])
         ax.grid(alpha=0.6, lw=1.3)
         ax.spines["left"].set_linewidth(1)
         ax.spines["right"].set_linewidth(1)
@@ -392,12 +392,12 @@ def plot_params_bound_recall_grouped(
     x = [0, 0.1, 0.2, 0.3, 0.4, 0.5, 0.6, 0.7, 0.8, 0.9, 0.99]
     nb_datas = np.asarray([[256, 512, 1024], [2048, 4096, 8192]])
     data_labels = {
-        256: "1k facts",
-        512: "2k facts",
-        1024: "4k Facts",
-        2048: "8k Facts",
-        4096: "16k Facts",
-        8192: "32k Facts",
+        256: "1K facts",
+        512: "2K facts",
+        1024: "4K Facts",
+        2048: "8K Facts",
+        4096: "16K Facts",
+        8192: "32K Facts",
     }
     nrows = len(nb_datas)
     ncols = len(nb_datas[0])
@@ -446,7 +446,7 @@ def plot_params_bound_recall_grouped(
                 ax.set_xticks([0.05, 0.5, 0.95])
                 ax.set_xticklabels([5, 50, 95])
                 ax.set_yticks([50_000, 150_000, 250_000])
-                ax.set_yticklabels(["50k", "150k", "250k"])
+                ax.set_yticklabels(["50K", "150K", "250K"])
                 ax.grid(alpha=0.6, lw=1.3)
                 ax.spines["left"].set_linewidth(1)
                 ax.spines["right"].set_linewidth(1)
@@ -534,7 +534,7 @@ def plot_params_accuracy(
         ax.set_xticks([0.05, 0.5, 0.95])
         ax.set_xticklabels([5, 50, 95])
         ax.set_yticks([50_000, 150_000, 250_000])
-        ax.set_yticklabels(["50k", "150k", "250k"])
+        ax.set_yticklabels(["50K", "150K", "250K"])
         ax.grid(alpha=0.6, lw=1.3)
         ax.spines["left"].set_linewidth(1)
         ax.spines["right"].set_linewidth(1)
@@ -582,7 +582,7 @@ def plot_in_tool_generalization(
 
     # Set plotting parameters
     nb_params = [60372, 129752, 591488]
-    labels_params = {60372: "60k", 129752: "130k", 591488: "600k"}
+    labels_params = {60372: "60K", 129752: "130K", 591488: "600K"}
 
     # Number of facts at which the learning transition occurs (memorization to generalization)
     data_threshold = 1024
@@ -667,22 +667,21 @@ def plot_compressibility(
     ncol: int = 1,
     loc: str = "upper center",
     palette: list = None,
-    bbox_to_anchor: tuple = (0.70, 0.87),
+    bbox_to_anchor: tuple = (0.85, 0.95), #(0.45, 0.7),
 ) -> None:
     """
     Plot the evolution of parameters requirements to obtain a recall of 100% when the attributes
     become more and more independent.
     """
 
-    fig, axes = plt.subplots(2, 1, sharex=True, gridspec_kw={"height_ratios": [2.35, 1]}, figsize=figsize)
-    fig.subplots_adjust(hspace=0)
+    fig, ax = plt.subplots(figsize=figsize) 
     lw = LINEWIDTH
     ms = MARKER_SIZE
 
     # Recover values
     alphas = np.asarray([0, 0.25, 0.5, 0.75, 1])
 
-    labels = {8192: "32k facts", 1000: "4k facts"}
+    labels = {8192: "32K facts", 1000: "4K facts"}
     for i, nb_data in enumerate([8192, 1000]):
         # Get grid
         gridname = f"grid_dependent_{nb_data}.csv"
@@ -698,8 +697,11 @@ def plot_compressibility(
             tmp = df[(df["data.nb_data"] == nb_data) & ind]["nb_params"]
             y_mins.append(tmp.min())
 
+        # Increase range of second curve for visualization (given the differences in range, it would collapse otherwise)
+        if i > 0:
+            y_mins = 2 * np.asarray(y_mins)
+
         # Plot evolution
-        ax = axes[i]
         ax.plot(
             alphas,
             y_mins,
@@ -717,40 +719,25 @@ def plot_compressibility(
         ax.spines["bottom"].set_linewidth(1)
         ax.minorticks_off()
 
-    # Code to have broken axis
-    ax1, ax2 = axes
-    ax1.tick_params(axis="x", direction="out", length=0)
-    ax1.tick_params(axis="y", direction="out", length=6)
-    ax2.tick_params(direction="out", length=6)
+    # Adapt axes with legends and to deal with the change of range between 8192 and 1000 facts
+    ax.set_xlabel(r"Correlation $\alpha$")
+    ax.set_ylabel("Model Size")
+    ax.locator_params(axis="x", nbins=3)
+    ax.set_yticks([50_000, 125_000, 162_500, 200_000, 275_000])
+    ax.set_yticklabels(["25K", "75K", r"$\vdots$ ", "200K", "275K"])
 
-    # hide the spines between ax and ax2
-    ax1.spines.bottom.set_visible(False)
-    ax2.spines.top.set_visible(False)
-    ax1.tick_params(labeltop=False)
 
     # Global
-    sns.despine(fig, ax2, trim=False, right=True, offset=10)
-    ax1.spines["bottom"].set_linewidth(0)
-
-    ax2.set_xlabel(r"Correlation $\alpha$")
-    ax2.set_ylabel("Model Size")
-    ax2.yaxis.set_label_coords(-0.25, 1.53)
-    ax2.locator_params(axis="x", nbins=3)
-    ax1.set_yticks([118_000, 150_000, 225_000, 305_000])
-    ax1.set_yticklabels([r"$\vdots$  ", "150k", "225k", "305k"])
-    ax2.set_yticks([25_000, 45000, 57000])
-    ax2.set_yticklabels(["25k", "45k", r"$\vdots$  "])
+    sns.despine(fig, ax, trim=False, right=True, offset=10)
 
     # Remove useless grid lines and ticks
-    line = ax1.get_ygridlines()[0]
+    print(ax.get_ygridlines())
+    line = ax.get_ygridlines()[2]
     line.set_visible(False)
-    line = ax2.get_ygridlines()[-1]
-    line.set_visible(False)
-    ax1.yaxis.majorTicks[0].tick1line.set_markersize(0)
-    ax2.yaxis.majorTicks[-1].tick1line.set_markersize(0)
+    ax.yaxis.majorTicks[2].tick1line.set_markersize(0)
 
     # Set legend
-    lines_labels = [fig.axes[0].get_legend_handles_labels()] + [fig.axes[1].get_legend_handles_labels()]
+    lines_labels = [fig.axes[0].get_legend_handles_labels()]
     lines, labels = [sum(lol, []) for lol in zip(*lines_labels)]
     fig.legend(
         lines,
@@ -763,6 +750,7 @@ def plot_compressibility(
     )
 
     # Show plot
+    plt.tight_layout()
     if save:
         save_plot(figname=figname)
     plt.show()
