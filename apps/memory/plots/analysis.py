@@ -664,10 +664,10 @@ def plot_compressibility(
     figname: str,
     figsize: tuple = (WIDTH, HEIGHT),
     save: bool = True,
-    ncol: int = 1,
+    ncol: int = 2,
     loc: str = "upper center",
     palette: list = None,
-    bbox_to_anchor: tuple = (0.85, 0.95), #(0.45, 0.7),
+    bbox_to_anchor: tuple = (0.6, 1.1), #(0.45, 0.7),
 ) -> None:
     """
     Plot the evolution of parameters requirements to obtain a recall of 100% when the attributes
@@ -731,7 +731,6 @@ def plot_compressibility(
     sns.despine(fig, ax, trim=False, right=True, offset=10)
 
     # Remove useless grid lines and ticks
-    print(ax.get_ygridlines())
     line = ax.get_ygridlines()[2]
     line.set_visible(False)
     ax.yaxis.majorTicks[2].tick1line.set_markersize(0)
