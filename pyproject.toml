@@ -33,8 +33,7 @@ dev = [
 data = [
   "datatrove",
   "huggingface_hub",
-#  "orjson",
-#  "pyarrow",
+  "pyarrow",
 ]
 
 llm = [
