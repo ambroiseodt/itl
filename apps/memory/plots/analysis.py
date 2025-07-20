@@ -17,7 +17,7 @@ import numpy as np
 import pandas as pd
 import seaborn as sns
 import yaml
-from matplotlib import rc
+from matplotlib import rcParams
 
 from nanollama.utils import flatten_config
 from nanollama.visualization.loader import get_config_info, get_task_ids, load_jsonl_to_numpy
@@ -29,21 +29,39 @@ logger = getLogger("nanollama")
 # ------------------------------------------------------------------------------
 
 # Figure golden ratio (from ICML style file)
-WIDTH = 3.3
+WIDTH = 3.5
 HEIGHT = WIDTH / 1.5
 FONTSIZE = 10
 MARKER_SIZE = 6
 LINEWIDTH = 3.5
 ALPHA_GRID = 0.2
 
-# Tex available
-USETEX = not subprocess.run(["which", "pdflatex"], stdout=subprocess.DEVNULL).returncode
-USETEX = False
+# Plotting format
+plt.rcParams['mathtext.fontset'] = 'stix'
+plt.rcParams['font.family'] = 'STIXGeneral'
 
-rc("font", family="serif", size=FONTSIZE)
-rc("text", usetex=USETEX)
-if USETEX:
-    rc("text.latex", preamble=r"\usepackage{times}")
+rcParams.update({
+        "font.size": 10,
+        "axes.titlesize": 10,
+        "axes.labelsize": 9,
+        "xtick.labelsize": 9,
+        "ytick.labelsize": 9,
+        "legend.fontsize": 8,
+        "figure.titlesize": 10,
+        "axes.linewidth": 0.75,
+        "lines.markersize": 4,
+        "axes.edgecolor": "black",
+        "axes.facecolor": "#f7f7f7",
+        "axes.grid": True,
+        "grid.color": "#cccccc",
+        "grid.linestyle": "-",
+        "grid.linewidth": 0.6,
+        "legend.frameon": True,
+        "legend.facecolor": "white",
+        "legend.edgecolor": "gray",
+        "legend.framealpha": 1.0,
+        "savefig.dpi": 300,
+    })
 
 RESULT_PATH = Path(__file__).parents[3] / "results"
 FIGURE_PATH = Path(__file__).parents[3] / "figures"
@@ -194,7 +212,7 @@ def plot_params_bound(
     save: bool = True,
     ncol: int = 1,
     loc: str = "upper center",
-    bbox_to_anchor: tuple = (0.5, 0.95),
+    bbox_to_anchor: tuple = (0.4, 0.87),
     palette: list = None,
 ) -> None:
     """
@@ -251,22 +269,14 @@ def plot_params_bound(
     ax.fill_between(nb_facts, y_mean - y_std, y_mean + y_std, alpha=alpha, color=palette[1])
 
     # Axis
-    ax.set_ylabel(f"Model Size s.t. \n Accuracy > {int(acc_threshold * 100)}%")
+    ax.set_ylabel(f"Model Size \n (s.t. Recall > {int(acc_threshold * 100)}%)")
     ax.set_xlabel("Dataset Size (#Facts)")
     ax.set_xscale("log")
     ax.set_yscale("log")
     ax.set_xticks([10**1, 10**3, 10**5])
     ax.set_xticklabels([r"10$^\text{1}$", r"10$^\text{3}$", r"10$^\text{5}$"])
-    ax.grid(alpha=0.6, lw=1.3)
-    ax.spines["left"].set_linewidth(1)
-    ax.spines["right"].set_linewidth(1)
-    ax.spines["top"].set_linewidth(1)
-    ax.spines["bottom"].set_linewidth(1)
-    ax.tick_params(direction="out", length=6)
+    ax.grid(alpha=0.6)
     ax.minorticks_off()
-
-    # Global
-    sns.despine(fig, ax, trim=False, right=True, offset=10)
 
     # Set legend
     lines_labels = [fig.axes[0].get_legend_handles_labels()]
@@ -279,7 +289,7 @@ def plot_params_bound(
         fancybox=True,
         borderaxespad=0,
         ncol=ncol,
-        fontsize=FONTSIZE,
+        frameon=False
     )
 
     # Show plot
