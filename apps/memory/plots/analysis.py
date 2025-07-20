@@ -7,7 +7,6 @@ Empirical verification of theoretical results with controlled experiments.
 import json
 import logging
 import os
-import subprocess
 from logging import getLogger
 from pathlib import Path
 
@@ -15,7 +14,6 @@ import fire
 import matplotlib.pyplot as plt
 import numpy as np
 import pandas as pd
-import seaborn as sns
 import yaml
 from matplotlib import rcParams
 
@@ -37,10 +35,11 @@ LINEWIDTH = 3.5
 ALPHA_GRID = 0.2
 
 # Plotting format
-plt.rcParams['mathtext.fontset'] = 'stix'
-plt.rcParams['font.family'] = 'STIXGeneral'
+plt.rcParams["mathtext.fontset"] = "stix"
+plt.rcParams["font.family"] = "STIXGeneral"
 
-rcParams.update({
+rcParams.update(
+    {
         "font.size": 10,
         "axes.titlesize": 10,
         "axes.labelsize": 9,
@@ -61,7 +60,8 @@ rcParams.update({
         "legend.edgecolor": "gray",
         "legend.framealpha": 1.0,
         "savefig.dpi": 300,
-    })
+    }
+)
 
 RESULT_PATH = Path(__file__).parents[3] / "results"
 FIGURE_PATH = Path(__file__).parents[3] / "figures"
@@ -212,7 +212,7 @@ def plot_params_bound(
     save: bool = True,
     ncol: int = 1,
     loc: str = "upper center",
-    bbox_to_anchor: tuple = (0.4, 0.87),
+    bbox_to_anchor: tuple = (0.38, 0.88),
     palette: list = None,
 ) -> None:
     """
@@ -250,7 +250,7 @@ def plot_params_bound(
         all_y_mins_2.append(y_min)
 
     # Data threshold
-    ax.axvline(x=data_threshold, linewidth=2, linestyle="--", color="black")
+    ax.axvline(x=data_threshold, linewidth=1.5, linestyle="--", color="black")
 
     # Recover the number of facts (each people has 4 attributes)
     nb_facts = 4 * x
@@ -281,15 +281,9 @@ def plot_params_bound(
     # Set legend
     lines_labels = [fig.axes[0].get_legend_handles_labels()]
     lines, labels = [sum(lol, []) for lol in zip(*lines_labels)]
+    lines, labels = lines[::-1], labels[::-1]
     fig.legend(
-        lines,
-        labels,
-        loc=loc,
-        bbox_to_anchor=bbox_to_anchor,
-        fancybox=True,
-        borderaxespad=0,
-        ncol=ncol,
-        frameon=False
+        lines, labels, loc=loc, bbox_to_anchor=bbox_to_anchor, fancybox=True, borderaxespad=0, ncol=ncol, frameon=False
     )
 
     # Show plot
@@ -306,7 +300,7 @@ def plot_params_bound_recall(
     save: bool = True,
     ncol: int = 2,
     loc: str = "upper center",
-    bbox_to_anchor: tuple = (0.56, 1.14),
+    bbox_to_anchor: tuple = (0.51, 0.92),
     palette: list = None,
 ) -> None:
     """
@@ -323,7 +317,6 @@ def plot_params_bound_recall(
     labels = {1024: "4K facts", 2048: "8K facts", 4096: "16K facts", 8192: "32K facts"}
     key = "qa"
 
-    # For better visualization (to avoid high values to dominate small ones)
     for i, nb_data in enumerate(nb_datas):
         all_y_mins = []
         for seed in df["data.seed"].unique():
@@ -347,227 +340,21 @@ def plot_params_bound_recall(
             color=palette[i],
         )
         ax.fill_between(x, y_mean - y_std, y_mean + y_std, alpha=alpha, color=palette[i])
-
         ax.set_ylabel("Model Size")
-        ax.set_xlabel("Factual Recall Accuracy (%)")
+        ax.set_xlabel("Factual Recall (%)")
         ax.set_xticks([0.05, 0.5, 0.95])
         ax.set_xticklabels([5, 50, 95])
         ax.set_yticks([50_000, 150_000, 250_000])
         ax.set_yticklabels(["50K", "150K", "250K"])
-        ax.grid(alpha=0.6, lw=1.3)
-        ax.spines["left"].set_linewidth(1)
-        ax.spines["right"].set_linewidth(1)
-        ax.spines["top"].set_linewidth(1)
-        ax.spines["bottom"].set_linewidth(1)
-        ax.tick_params(direction="out", length=6)
+        ax.grid(alpha=0.6)
         ax.minorticks_off()
 
     # Set legend
     lines_labels = [fig.axes[0].get_legend_handles_labels()]
     lines, labels = [sum(lol, []) for lol in zip(*lines_labels)]
     fig.legend(
-        lines,
-        labels,
-        loc=loc,
-        bbox_to_anchor=bbox_to_anchor,
-        fancybox=True,
-        borderaxespad=0,
-        ncol=ncol,
+        lines, labels, loc=loc, bbox_to_anchor=bbox_to_anchor, fancybox=True, borderaxespad=0, ncol=ncol, frameon=False
     )
-
-    # Global
-    sns.despine(fig, ax, trim=False, right=True, offset=10)
-
-    # Show plot
-    plt.tight_layout()
-    if save:
-        save_plot(figname=figname)
-    plt.show()
-
-
-def plot_params_bound_recall_grouped(
-    df: pd.DataFrame,
-    figname: str,
-    figsize: tuple = (WIDTH, HEIGHT),
-    save: bool = True,
-    ncol: int = 1,
-    loc: str = "upper center",
-    bbox_to_anchor: tuple = (0.15, 0.92),
-    palette: list = None,
-) -> None:
-    """
-    Plot the evolution of the number of parameters requirement with the factual
-    recall accuracy for in-weight learning for various numbe of facts.
-    """
-    x = [0, 0.1, 0.2, 0.3, 0.4, 0.5, 0.6, 0.7, 0.8, 0.9, 0.99]
-    nb_datas = np.asarray([[256, 512, 1024], [2048, 4096, 8192]])
-    data_labels = {
-        256: "1K facts",
-        512: "2K facts",
-        1024: "4K Facts",
-        2048: "8K Facts",
-        4096: "16K Facts",
-        8192: "32K Facts",
-    }
-    nrows = len(nb_datas)
-    ncols = len(nb_datas[0])
-    figsize = (figsize[0] * ncols, figsize[1] * nrows)
-    fig, axes = plt.subplots(nrows=nrows, ncols=ncols, sharex=True, sharey=True, figsize=figsize)
-    lw = LINEWIDTH
-    ms = MARKER_SIZE
-    alpha = ALPHA_GRID
-
-    for i in range(nrows):
-        for j in range(ncols):
-            ax = axes[i, j]
-            nb_data = nb_datas[i, j]
-
-            # Recover values
-            labels = {"qatool": "In-Tool", "qa": "In-Weight"}
-            keys = ["qatool", "qa"]
-
-            # For better visualization (to avoid high values to dominate small ones)
-            for k, key in enumerate(keys):
-                all_y_mins = []
-                for seed in df["data.seed"].unique():
-                    root_ind = (df["data.seed"] == seed) & (df["data.nb_data"] == nb_data)
-                    ind = (df["data.key"] == key) & root_ind
-                    y_min = []
-                    for acc in x:
-                        tmp = df[(df["accuracy_best"] >= acc) & ind]["nb_params"]
-                        y_min.append(tmp.min())
-                    all_y_mins.append(y_min)
-                y_mean = np.nanmean(np.array(all_y_mins), axis=0)
-                y_std = np.nanstd(np.array(all_y_mins), axis=0)
-                ax.plot(
-                    x,
-                    y_mean,
-                    label=f"{labels[key]}",
-                    linestyle="-",
-                    linewidth=lw,
-                    marker="o",
-                    markersize=ms,
-                    color=palette[k],
-                )
-                ax.fill_between(x, y_mean - y_std, y_mean + y_std, alpha=alpha, color=palette[k])
-
-                ax.set_ylabel("Model Size")
-                ax.set_xlabel("Factual Recall Accuracy (%)")
-                ax.set_xticks([0.05, 0.5, 0.95])
-                ax.set_xticklabels([5, 50, 95])
-                ax.set_yticks([50_000, 150_000, 250_000])
-                ax.set_yticklabels(["50K", "150K", "250K"])
-                ax.grid(alpha=0.6, lw=1.3)
-                ax.spines["left"].set_linewidth(1)
-                ax.spines["right"].set_linewidth(1)
-                ax.spines["top"].set_linewidth(1)
-                ax.spines["bottom"].set_linewidth(1)
-                ax.tick_params(direction="out", length=6)
-                ax.minorticks_off()
-                ax.set_title(f"{data_labels[nb_data]}", fontsize=FONTSIZE)
-
-    # Global
-    sns.despine(fig, ax, trim=False, right=True, offset=10)
-
-    # Set legend
-    lines_labels = [fig.axes[0].get_legend_handles_labels()]
-    lines, labels = [sum(lol, []) for lol in zip(*lines_labels)]
-    fig.legend(
-        lines,
-        labels,
-        loc=loc,
-        bbox_to_anchor=bbox_to_anchor,
-        fancybox=True,
-        borderaxespad=0,
-        ncol=ncol,
-        fontsize=FONTSIZE,
-    )
-
-    # Show plot
-    plt.tight_layout()
-    if save:
-        save_plot(figname=figname)
-    plt.show()
-
-
-def plot_params_accuracy(
-    df: pd.DataFrame,
-    nb_data: int,
-    figname: str,
-    figsize: tuple = (WIDTH, HEIGHT),
-    save: bool = True,
-    ncol: int = 1,
-    loc: str = "upper center",
-    bbox_to_anchor: tuple = (0.45, 0.92),
-    palette: list = None,
-) -> None:
-    """
-    Plot the evolution of the number of parameters requirement with the factual recall accuracy.
-    """
-    fig, ax = plt.subplots(figsize=figsize)
-    lw = LINEWIDTH
-    ms = MARKER_SIZE
-    alpha = ALPHA_GRID
-
-    # Recover values
-    x = [0, 0.1, 0.2, 0.3, 0.4, 0.5, 0.6, 0.7, 0.8, 0.9, 0.99]
-    labels = {"qatool": "In-Tool", "qa": "In-Weight"}
-    keys = ["qatool", "qa"]
-
-    # For better visualization (to avoid high values to dominate small ones)
-    for i, key in enumerate(keys):
-        all_y_mins = []
-        for seed in df["data.seed"].unique():
-            root_ind = (df["data.seed"] == seed) & (df["data.nb_data"] == nb_data)
-            ind = (df["data.key"] == key) & root_ind
-            y_min = []
-            for acc in x:
-                tmp = df[(df["accuracy_best"] >= acc) & ind]["nb_params"]
-                y_min.append(tmp.min())
-            all_y_mins.append(y_min)
-        y_mean = np.nanmean(np.array(all_y_mins), axis=0)
-        y_std = np.nanstd(np.array(all_y_mins), axis=0)
-        ax.plot(
-            x,
-            y_mean,
-            label=f"{labels[key]}",
-            linestyle="-",
-            linewidth=lw,
-            marker="o",
-            markersize=ms,
-            color=palette[i],
-        )
-        ax.fill_between(x, y_mean - y_std, y_mean + y_std, alpha=alpha, color=palette[i])
-
-        ax.set_ylabel("Model Size")
-        ax.set_xlabel("Factual Recall Accuracy (%)")
-        ax.set_xticks([0.05, 0.5, 0.95])
-        ax.set_xticklabels([5, 50, 95])
-        ax.set_yticks([50_000, 150_000, 250_000])
-        ax.set_yticklabels(["50K", "150K", "250K"])
-        ax.grid(alpha=0.6, lw=1.3)
-        ax.spines["left"].set_linewidth(1)
-        ax.spines["right"].set_linewidth(1)
-        ax.spines["top"].set_linewidth(1)
-        ax.spines["bottom"].set_linewidth(1)
-        ax.tick_params(direction="out", length=6)
-        ax.minorticks_off()
-
-    # Set legend
-    lines_labels = [fig.axes[0].get_legend_handles_labels()]
-    lines, labels = [sum(lol, []) for lol in zip(*lines_labels)]
-    fig.legend(
-        lines,
-        labels,
-        loc=loc,
-        bbox_to_anchor=bbox_to_anchor,
-        fancybox=True,
-        borderaxespad=0,
-        ncol=ncol,
-    )
-
-    # Global
-    sns.despine(fig, ax, trim=False, right=True, offset=10)
 
     # Show plot
     plt.tight_layout()
@@ -584,7 +371,7 @@ def plot_in_tool_generalization(
     ncol: int = 1,
     loc: str = "upper center",
     palette: list = None,
-    bbox_to_anchor: tuple = (0.78, 0.78),
+    bbox_to_anchor: tuple = (0.75, 0.68),
 ) -> None:
     """
     Plot the evolution of the OOD accuracy with in-tool learning when the number of facts to learn grows.
@@ -604,10 +391,6 @@ def plot_in_tool_generalization(
     fig, ax = plt.subplots(figsize=figsize)
     lw = LINEWIDTH
     ms = MARKER_SIZE
-
-    # Data threshold and best random model
-    ax.axvline(x=data_threshold, linewidth=2.5, linestyle="--", color="black")
-    ax.axhline(y=best_acc_random, linewidth=2.5, label="best random", linestyle="--", color="red")
 
     # Recover values
     x = np.sort(df["data.nb_data"].unique())
@@ -644,24 +427,27 @@ def plot_in_tool_generalization(
         ax.set_xticklabels([r"10$^\text{2}$", r"10$^\text{3}$", r"10$^\text{4}$", r"10$^\text{5}$"])
         ax.set_yticks([0, 0.5, 1])
         ax.set_yticklabels([0, 50, 100])
-        ax.grid(alpha=0.6, lw=1.3)
-        ax.spines["left"].set_linewidth(1)
-        ax.spines["right"].set_linewidth(1)
-        ax.spines["top"].set_linewidth(1)
-        ax.spines["bottom"].set_linewidth(1)
-        ax.tick_params(direction="out", length=6)
+        ax.grid(alpha=0.6)
         ax.minorticks_off()
+
+    # Data threshold and best random model
+    ax.axvline(x=data_threshold, linewidth=1.5, linestyle="--", color="black")
+    ax.axhline(y=best_acc_random, label="best random model", linewidth=1.5, linestyle="--", color="red")
 
     # Set legend
     lines_labels = [fig.axes[0].get_legend_handles_labels()]
     lines, labels = [sum(lol, []) for lol in zip(*lines_labels)]
-    lines, labels = lines[::-1], labels[::-1]
     fig.legend(
-        lines, labels, loc=loc, bbox_to_anchor=bbox_to_anchor, fancybox=True, borderaxespad=0, ncol=ncol, fontsize=8
+        lines,
+        labels,
+        loc=loc,
+        bbox_to_anchor=bbox_to_anchor,
+        fancybox=True,
+        borderaxespad=0,
+        ncol=ncol,
+        frameon=False,
+        handlelength=2.5,
     )
-
-    # Global
-    sns.despine(fig, ax, trim=False, right=True, offset=10)
 
     # Show plot
     plt.tight_layout()
@@ -674,17 +460,17 @@ def plot_compressibility(
     figname: str,
     figsize: tuple = (WIDTH, HEIGHT),
     save: bool = True,
-    ncol: int = 2,
+    ncol: int = 1,
     loc: str = "upper center",
     palette: list = None,
-    bbox_to_anchor: tuple = (0.6, 1.1), #(0.45, 0.7),
+    bbox_to_anchor: tuple = (0.76, 0.92),
 ) -> None:
     """
     Plot the evolution of parameters requirements to obtain a recall of 100% when the attributes
     become more and more independent.
     """
 
-    fig, ax = plt.subplots(figsize=figsize) 
+    fig, ax = plt.subplots(figsize=figsize)
     lw = LINEWIDTH
     ms = MARKER_SIZE
 
@@ -724,9 +510,7 @@ def plot_compressibility(
         )
 
         # metadata
-        ax.grid(alpha=0.6, lw=1.3)
-        ax.spines["left"].set_linewidth(1)
-        ax.spines["bottom"].set_linewidth(1)
+        ax.grid(alpha=0.6)
         ax.minorticks_off()
 
     # Adapt axes with legends and to deal with the change of range between 8192 and 1000 facts
@@ -736,10 +520,6 @@ def plot_compressibility(
     ax.set_yticks([50_000, 125_000, 162_500, 200_000, 275_000])
     ax.set_yticklabels(["25K", "75K", r"$\vdots$ ", "200K", "275K"])
 
-
-    # Global
-    sns.despine(fig, ax, trim=False, right=True, offset=10)
-
     # Remove useless grid lines and ticks
     line = ax.get_ygridlines()[2]
     line.set_visible(False)
@@ -748,14 +528,9 @@ def plot_compressibility(
     # Set legend
     lines_labels = [fig.axes[0].get_legend_handles_labels()]
     lines, labels = [sum(lol, []) for lol in zip(*lines_labels)]
+    lines, labels = lines[::-1], labels[::-1]
     fig.legend(
-        lines,
-        labels,
-        loc=loc,
-        bbox_to_anchor=bbox_to_anchor,
-        fancybox=True,
-        borderaxespad=0,
-        ncol=ncol,
+        lines, labels, loc=loc, bbox_to_anchor=bbox_to_anchor, fancybox=True, borderaxespad=0, ncol=ncol, frameon=False
     )
 
     # Show plot
@@ -789,14 +564,6 @@ def bounds(acc_threshold: float = 0.95) -> None:
     plot_params_bound(df=df, acc_threshold=acc_threshold, figname=f"parameter_bounds_{acc_threshold}", palette=palette)
 
 
-def bounds_grouped() -> None:
-    """Verify theoretical bounds on the number of parameters."""
-    gridname = "grid4.csv"
-    df = get_data(gridname)
-    palette = ["#5e6d9e", "#c2a7da"]
-    plot_params_bound_recall_grouped(df=df, figname="parameter_bounds_grouped", palette=palette)
-
-
 def bounds_recall() -> None:
     """Verify evolution of parameters requirements with factual recall accuracy for in-weight learning."""
     gridname = "grid4.csv"
@@ -805,13 +572,6 @@ def bounds_recall() -> None:
 
     plot_params_bound_recall(df=df, figname="parameter_bounds_recall", palette=palette)
 
-
-def params_acc(nb_data: int = 8192) -> None:
-    """Verify evolution of parameters requirements with factual recall accuracy."""
-    gridname = "grid4.csv"
-    df = get_data(gridname)
-    palette = ["#5e6d9e", "#c2a7da"]
-    plot_params_accuracy(df=df, nb_data=nb_data, figname=f"parameter_accuracy_{nb_data}", palette=palette)
 
 def generalization(figname: str = "in_tool_generalization") -> None:
     """Verify benefits of in-tool learning for generalization."""
@@ -853,11 +613,9 @@ def main() -> None:
             "ood_eval": recover_ood_eval,
             "comp_eval": recover_compressibility_eval,
             "bounds": bounds,
-            "group": bounds_grouped,
             "rec": bounds_recall,
             "gen": generalization,
             "comp": compressibility,
-            "acc": params_acc,
         }
     )
 
