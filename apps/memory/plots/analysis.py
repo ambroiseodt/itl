@@ -30,8 +30,8 @@ logger = getLogger("nanollama")
 WIDTH = 3.5
 HEIGHT = WIDTH / 1.5
 FONTSIZE = 10
-MARKER_SIZE = 6
-LINEWIDTH = 3.5
+MARKER_SIZE = 5
+LINEWIDTH = 3
 ALPHA_GRID = 0.2
 
 # Plotting format
@@ -269,14 +269,13 @@ def plot_params_bound(
     ax.fill_between(nb_facts, y_mean - y_std, y_mean + y_std, alpha=alpha, color=palette[1])
 
     # Axis
-    ax.set_ylabel(f"Model Size \n (s.t. Recall > {int(acc_threshold * 100)}%)")
+    ax.set_ylabel(f"Model Size \n (s.t. Recall ≥ {int(acc_threshold * 100)}%)")
     ax.set_xlabel("Dataset Size (#Facts)")
     ax.set_xscale("log")
     ax.set_yscale("log")
-    ax.set_xticks([10**1, 10**3, 10**5])
-    ax.set_xticklabels([r"10$^\text{1}$", r"10$^\text{3}$", r"10$^\text{5}$"])
+    ax.set_xticks([10**1, 10**2, 10**3, 10**4, 10**5])
+    ax.set_xticklabels([r"10$^\text{1}$", r"10$^\text{2}$", r"10$^\text{3}$", r"10$^\text{4}$", r"10$^\text{5}$"])
     ax.grid(alpha=0.6)
-    ax.minorticks_off()
 
     # Set legend
     lines_labels = [fig.axes[0].get_legend_handles_labels()]
@@ -342,12 +341,11 @@ def plot_params_bound_recall(
         ax.fill_between(x, y_mean - y_std, y_mean + y_std, alpha=alpha, color=palette[i])
         ax.set_ylabel("Model Size")
         ax.set_xlabel("Factual Recall (%)")
-        ax.set_xticks([0.05, 0.5, 0.95])
-        ax.set_xticklabels([5, 50, 95])
+        ax.set_xticks([0, 0.5, 1])
+        ax.set_xticklabels([0, 50, 100])
         ax.set_yticks([50_000, 150_000, 250_000])
         ax.set_yticklabels(["50K", "150K", "250K"])
         ax.grid(alpha=0.6)
-        ax.minorticks_off()
 
     # Set legend
     lines_labels = [fig.axes[0].get_legend_handles_labels()]
@@ -428,7 +426,6 @@ def plot_in_tool_generalization(
         ax.set_yticks([0, 0.5, 1])
         ax.set_yticklabels([0, 50, 100])
         ax.grid(alpha=0.6)
-        ax.minorticks_off()
 
     # Data threshold and best random model
     ax.axvline(x=data_threshold, linewidth=1.5, linestyle="--", color="black")
@@ -457,6 +454,7 @@ def plot_in_tool_generalization(
 
 
 def plot_compressibility(
+    acc_threshold: float,
     figname: str,
     figsize: tuple = (WIDTH, HEIGHT),
     save: bool = True,
@@ -486,7 +484,7 @@ def plot_compressibility(
         # Recover data
         y_mins = []
         for alpha in alphas:
-            root_ind = (df["alpha"] == 1 - alpha) & (df["accuracy_best"] == 1)
+            root_ind = (df["alpha"] == 1 - alpha) & (df["accuracy_best"] >= acc_threshold)
 
             # without tool
             ind = (df["data.key"] == "qa") & root_ind
@@ -508,17 +506,14 @@ def plot_compressibility(
             markersize=ms,
             color=palette[i],
         )
-
-        # metadata
         ax.grid(alpha=0.6)
-        ax.minorticks_off()
 
     # Adapt axes with legends and to deal with the change of range between 8192 and 1000 facts
-    ax.set_xlabel(r"Correlation $\alpha$")
-    ax.set_ylabel("Model Size")
+    ax.set_xlabel(r"Correlation Between Facts ($\alpha$)")
+    ax.set_ylabel(f"Model Size \n (s.t. Recall ≥ {int(acc_threshold * 100)}%)")
     ax.locator_params(axis="x", nbins=3)
-    ax.set_yticks([50_000, 125_000, 162_500, 200_000, 275_000])
-    ax.set_yticklabels(["25K", "75K", r"$\vdots$ ", "200K", "275K"])
+    ax.set_yticks([50_000, 100_000, 130_000, 160_000, 225_000])
+    ax.set_yticklabels(["25K", "50K", r"$\vdots$ ", "160K", "225K"])
 
     # Remove useless grid lines and ticks
     line = ax.get_ygridlines()[2]
@@ -560,7 +555,7 @@ def bounds(acc_threshold: float = 0.95) -> None:
     """Verify theoretical bounds on the number of parameters."""
     gridname = "grid4.csv"
     df = get_data(gridname)
-    palette = ["#5e6d9e", "#c2a7da"]
+    palette = ["#5b6da9", "#c6a4e4"]
     plot_params_bound(df=df, acc_threshold=acc_threshold, figname=f"parameter_bounds_{acc_threshold}", palette=palette)
 
 
@@ -568,7 +563,7 @@ def bounds_recall() -> None:
     """Verify evolution of parameters requirements with factual recall accuracy for in-weight learning."""
     gridname = "grid4.csv"
     df = get_data(gridname)
-    palette = ["#e3d0ef", "#d0a2cf", "#c2a7da", "#825c98"]
+    palette = ["#e6cdf4", "#d79ed6", "#c6a4e4", "#8758a3"]
 
     plot_params_bound_recall(df=df, figname="parameter_bounds_recall", palette=palette)
 
@@ -577,14 +572,14 @@ def generalization(figname: str = "in_tool_generalization") -> None:
     """Verify benefits of in-tool learning for generalization."""
     gridname = "grid_ood.csv"
     df = get_data(gridname)
-    palette = ["#ccdcef", "#a2b8da", "#5e6d9e"]
+    palette = ["#c8dcf4", "#9db8e4", "#5b6da9"]
     plot_in_tool_generalization(df=df, figname=figname, palette=palette)
 
 
-def compressibility(figname: str = "compressibility") -> None:
+def compressibility(acc_threshold: float = 0.95, figname: str = "compressibility") -> None:
     """Verify compressibility of parameters requirements with dependent attributes."""
-    palette = ["#9d82bf", "#e3d0ef"]
-    plot_compressibility(figname=figname, palette=palette)
+    palette = ["#a07fcb", "#e6cdf4"]
+    plot_compressibility(acc_threshold=acc_threshold, figname=figname, palette=palette)
 
 
 # %% Main
