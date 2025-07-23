@@ -57,6 +57,48 @@ You can then try to install the package with `ssm` dependencies (namely `causal_
 pip install -e .[ssm]
 ```
 
+## Overview
+
+NanoLlama is structured as follows:
+
+```
+🧠 memory
+ ┗ 📂apps # Applications using the Nanollama codebase
+   ┣ 📂memory # In-tool learning (LLM memory and generalization)
+   ┃ ┣ 📂compressibility
+   ┃ ┣ 📂configs 
+     ┣ 📂datasets 
+     ┣ 📂finetuning
+     ┣ 📂generalization 
+     ┣ 📂plots 
+     ┣ 📂scripts 
+     ┃ ┣ 📜README.md
+     ┃ ┣ 📄args.py
+     ┃ ┣ 📜local_grid.py
+     ┃ ┣ 📜prompt_loader.py
+     ┃ ┣ 📜train.py
+   ┣ 📂llm # Pretraining (work in progress)
+ ┣ 📂src # Core library
+   ┣ 📂nanollama
+     ┣ 📂agent
+     ┣ 📂data 
+     ┣ 📂inference 
+     ┣ 📂model 
+     ┣ 📂monitor 
+     ┣ 📂visualization 
+     ┃ ┣ 📜__init__.py
+     ┃ ┣ 📜distributed.py
+     ┃ ┣ 📜launcher.py
+     ┃ ┣ 📜optim.py
+     ┃ ┣ 📜tokenizer.py
+     ┃ ┗ 📜utils.py
+ ┣ 📂test # Unit tests
+   ┣ 📄test_data_loader.py
+   ┗ 📄test_data_text.py
+   ┗ 📄test_data_tokenizer.py
+   ┗ 📄test_generation.py
+```
+
 ## Contributing
 To contribute to this codebase, please refer to [contributing](https://github.com/VivienCabannes/memory/blob/main/CONTRIBUTING.md) and the [code of conduct](https://github.com/VivienCabannes/memory/blob/main/CODE_OF_CONDUCT.md).
 
