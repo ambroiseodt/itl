@@ -63,6 +63,10 @@ rcParams.update(
     }
 )
 
+# Set vertical line and regression curves linewidth
+VERTICAL_LINEWIDTH = 1
+REG_LINEWIDTH = 1.25
+
 RESULT_PATH = Path(__file__).parents[3] / "results"
 FIGURE_PATH = Path(__file__).parents[3] / "figures"
 
@@ -205,6 +209,7 @@ def save_plot(figname: str, format: str = "pdf", dpi: int = 100) -> None:
 def plot_params_bound(
     df: pd.DataFrame,
     acc_threshold: float,
+    show_regression: bool,
     figname: str,
     tool_label: str = "In-Tool",
     weight_label: str = "In-Weight",
@@ -216,8 +221,8 @@ def plot_params_bound(
     palette: list = None,
 ) -> None:
     """
-    Plot the evolution of the number of parameters needed to reach
-    a given level of accuracy when the number of facts to learn grows.
+    Plot the evolution of the number of parameters needed to reach a given level of accuracy when the number of facts
+    to learn grows. If show_regression is True, a linear regression fit is also displayed for in-weight learning.
     """
     fig, ax = plt.subplots(figsize=figsize)
     lw = LINEWIDTH
@@ -250,7 +255,7 @@ def plot_params_bound(
         all_y_mins_2.append(y_min)
 
     # Data threshold
-    ax.axvline(x=data_threshold, linewidth=1.5, linestyle="--", color="black")
+    ax.axvline(x=data_threshold, linewidth=VERTICAL_LINEWIDTH, linestyle="--", color="black")
 
     # Recover the number of facts (each people has 4 attributes)
     nb_facts = 4 * x
@@ -268,6 +273,30 @@ def plot_params_bound(
     )
     ax.fill_between(nb_facts, y_mean - y_std, y_mean + y_std, alpha=alpha, color=palette[1])
 
+    # Linear fit in linear space for in-weight learning
+    if show_regression:
+        x_fit = nb_facts
+        y_fit = y_mean
+
+        # Mask invalid points
+        valid = (~np.isnan(x_fit)) & (~np.isnan(y_fit))
+        x_valid = x_fit[valid]
+        y_valid = y_fit[valid]
+
+        # Append the point (0, 0) to the fit
+        x_valid_aug = np.append(x_valid, 0)
+        y_valid_aug = np.append(y_valid, 0)
+
+        # Linear fit: Y = aX + b
+        sorted_indices = np.argsort(x_valid_aug)
+        a, b = np.polyfit(x_valid_aug[sorted_indices], y_valid_aug[sorted_indices], deg=1)
+        x_line = np.linspace(0, 131_072, 5000)
+        y_line = a * x_line + b
+
+        # Plot the linear fit (on log-log axes)
+        label = r"$\text{y} = \alpha \text{x} + \beta$"
+        ax.plot(x_line, y_line, linestyle="--", color="red", linewidth=REG_LINEWIDTH, label=label, zorder=1)
+
     # Axis
     ax.set_ylabel(f"Model Size \n (s.t. Recall ≥ {int(acc_threshold * 100)}%)")
     ax.set_xlabel("Dataset Size (#Facts)")
@@ -275,14 +304,27 @@ def plot_params_bound(
     ax.set_yscale("log")
     ax.set_xticks([10**1, 10**2, 10**3, 10**4, 10**5])
     ax.set_xticklabels([r"10$^\text{1}$", r"10$^\text{2}$", r"10$^\text{3}$", r"10$^\text{4}$", r"10$^\text{5}$"])
+    ax.set_yticks([10**4, 10**5, 10**6])
+    ax.set_yticklabels([r"10$^\text{4}$", r"10$^\text{5}$", r"10$^\text{6}$"])
+    ymin, ymax = ax.get_ylim()
+    ax.set_ylim(ymin, y_line.max())
     ax.grid(alpha=0.6)
 
     # Set legend
     lines_labels = [fig.axes[0].get_legend_handles_labels()]
     lines, labels = [sum(lol, []) for lol in zip(*lines_labels)]
     lines, labels = lines[::-1], labels[::-1]
+    lines[0], labels[0], lines[-1], labels[-1] = lines[-1], labels[-1], lines[0], labels[0]
     fig.legend(
-        lines, labels, loc=loc, bbox_to_anchor=bbox_to_anchor, fancybox=True, borderaxespad=0, ncol=ncol, frameon=False
+        lines,
+        labels,
+        loc=loc,
+        bbox_to_anchor=bbox_to_anchor,
+        fancybox=True,
+        borderaxespad=0,
+        ncol=ncol,
+        frameon=False,
+        handlelength=2.1,
     )
 
     # Show plot
@@ -428,8 +470,8 @@ def plot_in_tool_generalization(
         ax.grid(alpha=0.6)
 
     # Data threshold and best random model
-    ax.axvline(x=data_threshold, linewidth=1.5, linestyle="--", color="black")
-    ax.axhline(y=best_acc_random, label="best random model", linewidth=1.5, linestyle="--", color="red")
+    ax.axvline(x=data_threshold, linewidth=VERTICAL_LINEWIDTH, linestyle="--", color="black")
+    ax.axhline(y=best_acc_random, label="best random model", linewidth=REG_LINEWIDTH, linestyle="--", color="red")
 
     # Set legend
     lines_labels = [fig.axes[0].get_legend_handles_labels()]
@@ -443,7 +485,7 @@ def plot_in_tool_generalization(
         borderaxespad=0,
         ncol=ncol,
         frameon=False,
-        handlelength=2.5,
+        handlelength=2.1,
     )
 
     # Show plot
@@ -551,12 +593,21 @@ def recover_compressibility_eval(gridname: str = "grid_dependent_8192.csv") -> N
     save_compressed_data_config(gridname=gridname)
 
 
-def bounds(acc_threshold: float = 0.95) -> None:
+def bounds(acc_threshold: float = 0.95, show_regression: bool = False) -> None:
     """Verify theoretical bounds on the number of parameters."""
     gridname = "grid4.csv"
     df = get_data(gridname)
     palette = ["#5b6da9", "#c6a4e4"]
-    plot_params_bound(df=df, acc_threshold=acc_threshold, figname=f"parameter_bounds_{acc_threshold}", palette=palette)
+    figname = f"parameter_bounds_{acc_threshold}"
+    if show_regression:
+        figname += f"reg_{show_regression}"
+    plot_params_bound(
+        df=df,
+        acc_threshold=acc_threshold,
+        show_regression=show_regression,
+        figname=f"parameter_bounds_{acc_threshold}",
+        palette=palette,
+    )
 
 
 def bounds_recall() -> None:
@@ -590,7 +641,7 @@ def main() -> None:
     Usage:
     To plot the empirical verification of the bounds with accuracy threshold of 0.95
     ```shell
-    python -m apps.memory.plots.analysis bounds 0.95
+    python -m apps.memory.plots.analysis bounds --acc_threshold 0.95
     ```
     To plot the empirical verification of in-tool generalization
     ```shell
