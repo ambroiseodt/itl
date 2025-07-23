@@ -1,6 +1,13 @@
-# NanoLLaMa
-This codebase provides utilities to train and study LLMs.
-It aims to rely mainly on pytorch primitives, instead of any high-level LLM librairy.
+# NanoLlama
+**[Sam Houliston*](https://www.linkedin.com/in/sam-houliston-47364524a/?originalSubdomain=uk)**, **[Ambroise Odonnat*](https://ambroiseodt.github.io/)**,**[Charles Arnal*](https://charlesarnal.github.io/)**, **[Vivien Cabannes*](https://viviencabannes.github.io/)**. ***Equal contribution**
+
+This codebase provides utilities to train and study large language models, particularly from the point of view of memory and generalization.
+It mostly relies on PyTorch primitives, instead of any high-level LLM libraries, allowing researchers and practitioners to easily prototype and modify. 
+In the folder ```apps```, we show how this codebase can be used to study LLMs by providing the official implementation of *Provable Benefits of In-Tool Learning for Large Language Models*.
+
+<p align="center">  
+ <img src="overview_in_tool_learning.svg" width="100%"/>
+</p>
 
 ## Installation
 
