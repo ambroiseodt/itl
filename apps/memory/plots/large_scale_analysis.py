@@ -1,20 +1,22 @@
-"""
-TODO: clean code
-"""
-
 import os
 import re
 import json
+import numpy as np
 import pandas as pd
 from pathlib import Path
 from typing import Dict, List
+from collections import defaultdict
+
+
+import seaborn as sns
+import matplotlib.cm as cm
 from matplotlib import rcParams
 import matplotlib.pyplot as plt
-from collections import defaultdict
-from matplotlib.ticker import MaxNLocator
 from matplotlib.lines import Line2D
+from matplotlib.ticker import MaxNLocator
+from matplotlib.ticker import LogLocator, ScalarFormatter
+from matplotlib.ticker import FixedLocator, FixedFormatter
 
-import matplotlib.cm as cm
 
 # Plotting format
 plt.rcParams["mathtext.fontset"] = "stix"
@@ -45,7 +47,145 @@ rcParams.update(
     }
 )
 
+"""
+cmap = cm.get_cmap("viridis", len(model_labels))
+start, end = 0.04, 1.0 # 0.84
+color_map = {}
+for i, model in enumerate(model_labels):
+    frac = 1.0 - i / (len(model_labels) - 1)
+    truncated_frac = start + frac * (end - start)
+    color = cmap(truncated_frac)
+    hex_color = '#%02x%02x%02x' % tuple(int(255 * c) for c in color[:3])
+    for suffix in ["-weight", "-tool"]:
+        color_map[f"{model}{suffix}"] = hex_color
+"""
 
+
+CMAP = {
+    "Smol135M-weight": "#e09dff",  # medium-light blue
+    "Smol135M-tool": "#d16aff",
+    "Smol360M-weight": "#d16aff",  # blue
+    "Smol360M-tool": "#d16aff",
+    "Lam1B-weight": "#bb44f0",  # deep blue
+    "Lam1B-tool": "#bb44f0",
+    "Smol1.7B-weight": "#9614d0",  # violet
+    "Smol1.7B-tool": "#9614d0",
+    "Lam3B-weight": "#660094",  # strong purple
+    "Lam3B-tool": "#660094",
+    "Lam8B-weight": "#310047",  # very dark purple
+    "Lam8B-tool": "#310047",
+}
+
+
+CMAP = {
+    "Smol135M-weight": "#D4B9DA",  # pale violet
+    "Smol135M-tool": "#D4B9DA",
+    "Smol360M-weight": "#B187C4",  # soft purple
+    "Smol360M-tool": "#B187C4",
+    "Lam1B-weight": "#9067B0",  # medium purple
+    "Lam1B-tool": "#9067B0",
+    "Smol1.7B-weight": "#6B49A1",  # violet-indigo
+    "Smol1.7B-tool": "#6B49A1",
+    "Lam3B-weight": "#432A90",  # indigo
+    "Lam3B-tool": "#432A90",
+    "Lam8B-weight": "#25126A",  # deep navy purple
+    "Lam8B-tool": "#25126A",
+}
+
+CMAP = {
+    "Smol135M-weight": "#A3C2F2",  # soft desaturated blue
+    "Smol135M-tool": "#A3C2F2",
+    "Smol360M-weight": "#8196E1",  # light cornflower blue
+    "Smol360M-tool": "#8196E1",
+    "Lam1B-weight": "#6751C8",  # vibrant bluish purple
+    "Lam1B-tool": "#6751C8",
+    "Smol1.7B-weight": "#4E2BAE",  # strong violet
+    "Smol1.7B-tool": "#4E2BAE",
+    "Lam3B-weight": "#37188D",  # deep purple-indigo
+    "Lam3B-tool": "#37188D",
+    "Lam8B-weight": "#1E0B58",  # near-black indigo
+    "Lam8B-tool": "#1E0B58",
+}
+
+CMAP = {
+    "Smol135M-weight": "#A3C2F2",  # soft desaturated blue
+    "Smol135M-tool": "#A3C2F2",
+    "Smol360M-weight": "#8196E1",  # light cornflower blue
+    "Smol360M-tool": "#8196E1",
+    "Lam1B-weight": "#6751C8",  # vibrant bluish purple
+    "Lam1B-tool": "#5760C6",
+    "Smol1.7B-weight": "#4E2BAE",  # strong violet
+    "Smol1.7B-tool": "#4E2BAE",
+    "Lam3B-weight": "#37188D",  # deep purple-indigo
+    "Lam3B-tool": "#37188D",
+    "Lam8B-weight": "#1E0B58",  # near-black indigo
+    "Lam8B-tool": "#1E0B58",
+}
+
+
+CMAP = {
+    "Lam8B-weight": "#0A001C",
+    "Lam8B-tool": "#01001C",
+    "Lam3B-weight": "#2A2D66",
+    "Lam3B-tool": "#2A2D66",
+    "Smol1.7B-weight": "#3C096C",
+    "Smol1.7B-tool": "#3C096C",
+    "Lam1B-weight": "#5A189A",
+    "Lam1B-tool": "#5A189A",
+    "Smol360M-weight": "#841DEC",
+    "Smol360M-tool": "#841DEC",
+    "Smol135M-weight": "#BF70FF",
+    "Smol135M-tool": "#BF70FF",
+}
+
+
+CMAP = {
+    "Smol135M-weight": "#00b4d8",  # light lavender
+    "Smol135M-tool": "#00b4d8",
+    "Smol360M-weight": "#0077b6",  # soft purple
+    "Smol360M-tool": "#0077b6",
+    "Smol1.7B-weight": "#1a2e8e",  # indigo-violet
+    "Smol1.7B-tool": "#1a2e8e",
+    "Lam1B-weight": "#6B00D7",  # violet
+    "Lam1B-tool": "#6B00D7",
+    "Lam3B-weight": "#3E00B3",  # deep indigo
+    "Lam3B-tool": "#3E00B3",
+    "Lam8B-weight": "#2A2D66",  # dark blue
+    "Lam8B-tool": "#2A2D66",
+}
+
+
+CMAP = {
+    # LLaMA family (purple shades: dark → light)
+    "Lam8B-weight": "#360861",
+    "Lam8B-tool": "#360861",
+    "Lam3B-weight": "#8436CD",
+    "Lam3B-tool": "#8436CD",
+    "Lam1B-weight": "#D438FFAD",
+    "Lam1B-tool": "#D438FFAD",
+    # SmolLM family (blue shades: dark → light)
+    "Smol1.7B-weight": "#074081",  ##142991
+    "Smol1.7B-tool": "#074081",
+    "Smol360M-weight": "#1565C0",
+    "Smol360M-tool": "#1565C0",
+    "Smol135M-weight": "#64B5F6",
+    "Smol135M-tool": "#64B5F6",
+}
+
+CMAP = {
+    "Smol135M-weight": "#7ad151",  # bright green
+    "Smol135M-tool": "#7ad151",
+    "Smol360M-weight": "#22a884",  # viridis green
+    "Smol360M-tool": "#22a884",
+    "Lam1B-weight": "#2a788e",  # teal-blue
+    "Lam1B-tool": "#2a788e",
+    "Smol1.7B-weight": "#414487",  # violet
+    "Smol1.7B-tool": "#414487",
+    "Lam3B-weight": "#440154",  # deep purple
+    "Lam3B-tool": "#440154",
+    "Lam8B-weight": "#270031",  # black
+    "Lam8B-tool": "#270031",
+}
 # ===========================================================================
 # ==========    Code to Load and Create DataFrame of Results    =============
 # ===========================================================================
@@ -413,34 +553,24 @@ def get_recall_hellaswag_tv_run_data(recall_df, tv_df, hellaswag_df, eval_result
 # ---- Plot Hellaswag_performace (absolute) vs Dataset_size
 def plot_hellaswag_vs_datasetsize_absolute(df, save_path, acc_threshold, save_name="hellaswag_vs_facts_absolute"):
     fig, ax = plt.subplots(figsize=(3.5, 3.5 / 1.3))  # ICLR-style dimensions
+    # ax.spines['right'].set_visible(False)
+    # ax.spines['top'].set_visible(False)
 
     size_map = {"0": 0, "500": 500, "1k": 1000, "5k": 5000, "10k": 10000, "50k": 50000, "all": 500}
     df["dataset_size_n"] = df["dataset_size"].map(size_map)
 
     model_labels = ["Smol135M", "Smol360M", "Lam1B", "Smol1.7B", "Lam3B", "Lam8B"]
 
-    # Use Turbo or Viridis — Turbo matches better visually
-    cmap = cm.get_cmap("viridis", len(model_labels))
-    # Truncate to avoid the lightest ~10% of the colormap
-    start, end = 0.04, 0.84
-    color_map = {}
+    color_map = CMAP
 
-    for i, model in enumerate(model_labels):
-        frac = 1.0 - i / (len(model_labels) - 1)  # reverse order
-        truncated_frac = start + frac * (end - start)
-        color = cmap(truncated_frac)
-        hex_color = "#%02x%02x%02x" % tuple(int(255 * c) for c in color[:3])
-        for suffix in ["-weight", "-tool"]:
-            color_map[f"{model}{suffix}"] = hex_color
-
-        marker_style = {
-            "Lam1B-weight": "o",
-            "Lam3B-weight": "o",
-            "Lam8B-weight": "o",
-            "Smol135M-weight": "^",
-            "Smol360M-weight": "^",
-            "Smol1.7B-weight": "^",
-        }
+    marker_style = {
+        "Lam1B-weight": "o",
+        "Lam3B-weight": "o",
+        "Lam8B-weight": "o",
+        "Smol135M-weight": "^",
+        "Smol360M-weight": "^",
+        "Smol1.7B-weight": "^",
+    }
 
     labels = {
         "Lam1B-weight": "1B-weight",
@@ -497,15 +627,15 @@ def plot_hellaswag_vs_datasetsize_absolute(df, save_path, acc_threshold, save_na
     # ax.set_xticklabels(["0", "500", "1k", "5k", "10k", "50k"])
     ax.set_xscale("log", base=10)
     ax.set_xticks([350, 512, 1024, 2096, 8192, 50000])
-    ax.set_xticklabels(["0", "500", "1k", "5k", "10k", "50k"])
-    ax.set_xlabel(f"Facts Memorized (≥{acc_threshold} recall)")
+    ax.set_xticklabels(["0", "500", "1K", "5K", "10K", "50K"])
+    ax.set_xlabel(f"Facts Memorized (≥{acc_threshold} Recall)")
     ax.set_ylabel("HellaSwag Accuracy")
 
     # Legend for line style (in-weight vs in-tool)
     linestyle_legend = ax.legend(
         handles=[
-            Line2D([0], [0], color="black", linestyle="-", linewidth=1.5, label="weight"),
-            Line2D([0], [0], color="black", linestyle="--", linewidth=1.5, label="tool"),
+            Line2D([0], [0], color="black", linestyle="-", linewidth=1.5, label="In-Weight"),
+            Line2D([0], [0], color="black", linestyle="--", linewidth=1.5, label="In-Tool"),
         ],
         loc="lower left",
         bbox_to_anchor=(0.0, -0.02),
@@ -604,6 +734,7 @@ def plot_hellaswag_vs_datasetsize_absolute(df, save_path, acc_threshold, save_na
 
     plt.tight_layout()
     os.makedirs(save_path, exist_ok=True)
+    plt.savefig(os.path.join(save_path, f"{save_name}_{acc_threshold}.pdf"), format="pdf", bbox_inches="tight")
     plt.savefig(os.path.join(save_path, f"{save_name}_{acc_threshold}.svg"), format="svg", bbox_inches="tight")
     plt.show()
 
@@ -615,47 +746,18 @@ def plot_hellaswag_vs_datasetsize_relative(df, save_path, acc_threshold, save_na
     size_map = {"0": 0, "500": 500, "1k": 1000, "5k": 5000, "10k": 10000, "50k": 50000, "all": 500}
     df["dataset_size_n"] = df["dataset_size"].map(size_map)
 
-    color_map = {
-        # Lam
-        "Lam1B-weight": "#A6D5C8",
-        "Lam3B-weight": "#5EAAA8",
-        "Lam8B-weight": "#1F4E5F",
-        "Lam1B-tool": "#A6D5C8",
-        "Lam3B-tool": "#5EAAA8",
-        "Lam8B-tool": "#1F4E5F",
-        # Smol
-        "Smol135M-weight": "#D9B3DD",
-        "Smol360M-weight": "#C48CC9",
-        "Smol1.7B-weight": "#803A94",
-        "Smol135M-tool": "#D9B3DD",
-        "Smol360M-tool": "#C48CC9",
-        "Smol1.7B-tool": "#803A94",
-    }
-
     model_labels = ["Smol135M", "Smol360M", "Lam1B", "Smol1.7B", "Lam3B", "Lam8B"]
 
-    # Use Turbo or Viridis — Turbo matches better visually
-    cmap = cm.get_cmap("viridis", len(model_labels))
-    # Truncate to avoid the lightest ~10% of the colormap
-    start, end = 0.04, 0.84
-    color_map = {}
+    marker_style = {
+        "Lam1B-weight": "o",
+        "Lam3B-weight": "o",
+        "Lam8B-weight": "o",
+        "Smol135M-weight": "^",
+        "Smol360M-weight": "^",
+        "Smol1.7B-weight": "^",
+    }
 
-    for i, model in enumerate(model_labels):
-        frac = 1.0 - i / (len(model_labels) - 1)  # reverse order
-        truncated_frac = start + frac * (end - start)
-        color = cmap(truncated_frac)
-        hex_color = "#%02x%02x%02x" % tuple(int(255 * c) for c in color[:3])
-        for suffix in ["-weight", "-tool"]:
-            color_map[f"{model}{suffix}"] = hex_color
-
-        marker_style = {
-            "Lam1B-weight": "o",
-            "Lam3B-weight": "o",
-            "Lam8B-weight": "o",
-            "Smol135M-weight": "^",
-            "Smol360M-weight": "^",
-            "Smol1.7B-weight": "^",
-        }
+    color_map = CMAP
 
     labels = {
         "Lam1B-weight": "1B-weight",
@@ -715,8 +817,8 @@ def plot_hellaswag_vs_datasetsize_relative(df, save_path, acc_threshold, save_na
     # ax.set_xticklabels(["0", "500", "1k", "5k", "10k", "50k"])
     ax.set_xscale("log", base=10)
     ax.set_xticks([350, 512, 1024, 2096, 8192, 50000])
-    ax.set_xticklabels(["0", "500", "1k", "5k", "10k", "50k"])
-    ax.set_xlabel(f"Facts Memorized (≥{acc_threshold} recall)")
+    ax.set_xticklabels(["0", "500", "1K", "5K", "10K", "50K"])
+    ax.set_xlabel(f"Dataset Size (≥{acc_threshold} Recall)")  # Facts Memorized
     ax.set_ylabel("HellaSwag Performace", labelpad=13)
     ax.text(
         -0.12,
@@ -732,8 +834,8 @@ def plot_hellaswag_vs_datasetsize_relative(df, save_path, acc_threshold, save_na
     # Legend for line style (in-weight vs in-tool)
     linestyle_legend = ax.legend(
         handles=[
-            Line2D([0], [0], color="black", linestyle="-", linewidth=1.5, label="weight"),
-            Line2D([0], [0], color="black", linestyle="--", linewidth=1.5, label="tool baseline"),
+            Line2D([0], [0], color="black", linestyle="-", linewidth=1.5, label="In-Weight"),
+            Line2D([0], [0], color="black", linestyle="--", linewidth=1.5, label="In-Tool baseline"),
         ],
         loc="lower left",
         bbox_to_anchor=(0.0, -0.01),
@@ -831,6 +933,7 @@ def plot_hellaswag_vs_datasetsize_relative(df, save_path, acc_threshold, save_na
 
     plt.tight_layout()
     os.makedirs(save_path, exist_ok=True)
+    plt.savefig(os.path.join(save_path, f"{save_name}_{acc_threshold}.pdf"), format="pdf", bbox_inches="tight")
     plt.savefig(os.path.join(save_path, f"{save_name}_{acc_threshold}.svg"), format="svg", bbox_inches="tight")
     plt.show()
 
@@ -846,16 +949,6 @@ def plot_final_tv_vs_dataset_size(df, save_path, recall_threshold=0.9, save_name
     df["dataset_size_n"] = df["dataset_size"].map(size_map)
 
     model_labels = ["Smol135M", "Smol360M", "Lam1B", "Smol1.7B", "Lam3B", "Lam8B"]
-    cmap = cm.get_cmap("viridis", len(model_labels))
-    start, end = 0.04, 0.84
-    color_map = {}
-    for i, model in enumerate(model_labels):
-        frac = 1.0 - i / (len(model_labels) - 1)
-        truncated_frac = start + frac * (end - start)
-        color = cmap(truncated_frac)
-        hex_color = "#%02x%02x%02x" % tuple(int(255 * c) for c in color[:3])
-        for suffix in ["-weight", "-tool"]:
-            color_map[f"{model}{suffix}"] = hex_color
 
     marker_style = {
         "Lam1B-weight": "o",
@@ -865,6 +958,8 @@ def plot_final_tv_vs_dataset_size(df, save_path, recall_threshold=0.9, save_name
         "Smol360M-weight": "^",
         "Smol1.7B-weight": "^",
     }
+
+    color_map = CMAP
 
     labels = {
         "Lam1B-weight": "1B-weight",
@@ -901,6 +996,7 @@ def plot_final_tv_vs_dataset_size(df, save_path, recall_threshold=0.9, save_name
                 "dataset_size": "0",
                 "dataset_size_n": 350,  # fake 0 position for log-scale
                 "tv": 0.0,
+                "tv_stderr": 1e-8,
             }
         )
     final_tv_df = pd.concat([pd.DataFrame(zero_rows), final_tv_df], ignore_index=True)
@@ -916,18 +1012,22 @@ def plot_final_tv_vs_dataset_size(df, save_path, recall_threshold=0.9, save_name
         else:
             x = sub["dataset_size_n"].values
             y = sub["tv"].values
+            yerr = sub["tv_stderr"].values.copy()
+            yerr = np.where(x == 350, 1e-8, yerr)  # Use handcrafted stderr for (0,0) only
+
             ax.plot(x, y, color=color, label=label, marker=marker_style.get(model_label, "o"))
+            ax.fill_between(x, y - 6 * yerr, y + 6 * yerr, color=color, alpha=0.2)
 
     ax.set_xscale("log", base=10)
     ax.set_xticks([350, 512, 1024, 2096, 8192, 50000])
-    ax.set_xticklabels(["0", "500", "1k", "5k", "10k", "50k"])
-    ax.set_xlabel(f"Facts Memorized (≥{recall_threshold} recall)")
+    ax.set_xticklabels(["0", "500", "1K", "5K", "10K", "50K"])
+    ax.set_xlabel(f"Facts Memorized (≥{recall_threshold} Recall)")
     ax.set_ylabel("Total Variation")
 
     linestyle_legend = ax.legend(
         handles=[
-            Line2D([0], [0], color="black", linestyle="-", linewidth=1.5, label="weight"),
-            Line2D([0], [0], color="black", linestyle="--", linewidth=1.5, label="tool baseline (worst)"),
+            Line2D([0], [0], color="black", linestyle="-", linewidth=1.5, label="In-Weight"),
+            Line2D([0], [0], color="black", linestyle="--", linewidth=1.5, label="In-Tool baseline (worst)"),
         ],
         loc="upper left",
         # bbox_to_anchor=(0.0, -0.02),
@@ -1021,7 +1121,238 @@ def plot_final_tv_vs_dataset_size(df, save_path, recall_threshold=0.9, save_name
 
     plt.tight_layout()
     os.makedirs(save_path, exist_ok=True)
+    plt.savefig(os.path.join(save_path, f"{save_name}_{recall_threshold}.pdf"), format="pdf", bbox_inches="tight")
     plt.savefig(os.path.join(save_path, f"{save_name}_{recall_threshold}.svg"), format="svg", bbox_inches="tight")
+    plt.show()
+
+
+def plot_final_tv_vs_dataset_size_withtool(df, save_path, recall_threshold=0.9, save_name="final_tv_vs_facts"):
+    fig, ax = plt.subplots(figsize=(3.5, 3.5 / 1.3))  # ICLR-style
+
+    size_map = {"0": 0, "500": 512, "1k": 1024, "5k": 2096, "10k": 8192, "50k": 50000, "all": 512}
+    df["dataset_size_n"] = df["dataset_size"].map(size_map)
+
+    model_labels = ["Smol135M", "Smol360M", "Lam1B", "Smol1.7B", "Lam3B", "Lam8B"]
+
+    color_map = CMAP
+    marker_style = {
+        "Lam1B-weight": "o",
+        "Lam1B-tool": "o",
+        "Lam3B-weight": "o",
+        "Lam3B-tool": "o",
+        "Lam8B-weight": "o",
+        "Lam8B-tool": "o",
+        "Smol135M-weight": "^",
+        "Smol135M-tool": "^",
+        "Smol360M-weight": "^",
+        "Smol360M-tool": "^",
+        "Smol1.7B-weight": "^",
+        "Smol1.7B-tool": "^",
+    }
+
+    labels = {
+        "Lam1B-weight": "1B-weight",
+        "Lam1B-tool": "1B-tool",
+        "Lam3B-weight": "3B-weight",
+        "Lam3B-tool": "3B-tool",
+        "Lam8B-weight": "8B-weight",
+        "Lam8B-tool": "8B-tool",
+        "Smol135M-weight": "135M-weight",
+        "Smol135M-tool": "135M-tool",
+        "Smol360M-weight": "360M-weight",
+        "Smol360M-tool": "360M-tool",
+        "Smol1.7B-weight": "1.7B-weight",
+        "Smol1.7B-tool": "1.7B-tool",
+    }
+
+    tool_df = df[df["model"].str.contains("tool")]
+    tool_baseline_y = tool_df["tv"].max()
+    # ax.axhline(y=tool_baseline_y, color="black", linestyle="--", linewidth=1, label="tool baseline")
+
+    final_tv_df = df[df["recall"] >= recall_threshold].sort_values("checkpoint_nbr")
+    final_tv_df = final_tv_df.groupby(["model", "dataset_size"], as_index=False).first()
+
+    zero_rows = []
+    for model in final_tv_df["model"].unique():
+        zero_rows.append(
+            {
+                "model": model,
+                "dataset_size": "0",
+                "dataset_size_n": 350,
+                "tv": 1e-2,
+                "tv_stderr": 1e-8,
+            }
+        )
+
+    tool_extensions = []
+    dataset_sizes_for_extension = ["500", "1k", "5k", "10k", "50k"]
+    for model in df["model"].unique():
+        if "tool" not in model:
+            continue
+        tool_row = final_tv_df[final_tv_df["model"] == model].head(1)
+        if tool_row.empty:
+            continue
+        tv_value = tool_row["tv"].values[0]
+        stderr_value = tool_row.get("tv_stderr", pd.Series([0.0])).values[0]
+        for size in dataset_sizes_for_extension:
+            tool_extensions.append(
+                {
+                    "model": model,
+                    "dataset_size": size,
+                    "dataset_size_n": size_map[size],
+                    "tv": tv_value,
+                    "tv_stderr": stderr_value,
+                }
+            )
+
+    full_df = pd.concat([final_tv_df, pd.DataFrame(zero_rows + tool_extensions)], ignore_index=True)
+    full_df = full_df.sort_values(["model", "dataset_size_n"])
+
+    for idx, model_label in enumerate(sorted(full_df["model"].unique())):
+        sub = full_df[full_df["model"] == model_label].sort_values("dataset_size_n")
+        color = color_map[model_label]
+        label = labels[model_label]
+
+        x_vals = sub["dataset_size_n"].values
+        y = sub["tv"].values
+        yerr = sub["tv_stderr"].values.copy()
+        yerr = np.where(x_vals == 350, 1e-8, yerr)  # 👈 use handcrafted stderr at x=350
+
+        if "tool" in model_label:
+            y[1:] = y[1:] - 0.0005 * (idx + 1)  # vertical shift to distinguish between overlaps
+            ax.plot(
+                x_vals,
+                y,
+                color=color,
+                label=label,
+                linestyle="--",
+                marker=marker_style.get(model_label, "o"),
+                linewidth=1.25,
+                markersize=3.7,
+            )
+            ax.fill_between(x_vals, y - 6 * yerr, y + 6 * yerr, color=color, alpha=0.2)
+
+        else:
+            ax.plot(
+                x_vals,
+                y,
+                color=color,
+                label=label,
+                linestyle="-",
+                marker=marker_style.get(model_label, "o"),
+            )
+            ax.fill_between(x_vals, y - 6 * yerr, y + 6 * yerr, color=color, alpha=0.2)
+
+    ax.set_xscale("log", base=10)
+    ax.set_xticks([350, 512, 1024, 2096, 8192, 50000])
+    ax.set_xticklabels(["0", "500", "1K", "5K", "10K", "50K"])
+    ax.set_xlabel(f"Facts Memorized (≥{recall_threshold} Recall)")
+
+    ax.set_ylabel("Total Variation")
+    ax.set_yscale("log")
+    tick_vals = [1e-2, 1.5e-2, 1e-1, 1]
+    tick_labels = ["0", "0.01", "0.1", "1"]
+    ax.yaxis.set_major_locator(FixedLocator(tick_vals))
+    ax.yaxis.set_major_formatter(FixedFormatter(tick_labels))
+
+    linestyle_legend = ax.legend(
+        handles=[
+            Line2D([0], [0], color="black", linestyle="-", linewidth=1.5, label="In-Weight"),
+            Line2D([0], [0], color="black", linestyle="--", linewidth=1.5, label="In-Tool"),
+        ],
+        loc="upper left",
+        ncol=2,
+        frameon=False,
+        handletextpad=0.25,
+        columnspacing=1.0,
+        handlelength=1.35,
+    )
+    ax.add_artist(linestyle_legend)
+
+    llama_handles = [
+        Line2D(
+            [0],
+            [0],
+            color=color_map["Lam1B-weight"],
+            marker="o",
+            linestyle="-",
+            linewidth=1.5,
+            markersize=4,
+            label="1B",
+        ),
+        Line2D(
+            [0],
+            [0],
+            color=color_map["Lam3B-weight"],
+            marker="o",
+            linestyle="-",
+            linewidth=1.5,
+            markersize=4,
+            label="3B",
+        ),
+        Line2D(
+            [0],
+            [0],
+            color=color_map["Lam8B-weight"],
+            marker="o",
+            linestyle="-",
+            linewidth=1.5,
+            markersize=4,
+            label="8B",
+        ),
+    ]
+    smol_handles = [
+        Line2D(
+            [0],
+            [0],
+            color=color_map["Smol135M-weight"],
+            marker="^",
+            linestyle="-",
+            linewidth=1.5,
+            markersize=4,
+            label="135M",
+        ),
+        Line2D(
+            [0],
+            [0],
+            color=color_map["Smol360M-weight"],
+            marker="^",
+            linestyle="-",
+            linewidth=1.5,
+            markersize=4,
+            label="360M",
+        ),
+        Line2D(
+            [0],
+            [0],
+            color=color_map["Smol1.7B-weight"],
+            marker="^",
+            linestyle="-",
+            linewidth=1.5,
+            markersize=4,
+            label="1.7B",
+        ),
+    ]
+    family_legend = ax.legend(
+        handles=llama_handles + smol_handles,
+        labels=["1B", "3B", "8B     ", "135M", "360M", "1.7B"],
+        loc="upper center",
+        bbox_to_anchor=(0.495, 1.146),
+        ncol=6,
+        frameon=False,
+        handletextpad=0.25,
+        columnspacing=0.8,
+        handlelength=1.3,
+        fontsize=7.6,
+    )
+    ax.add_artist(family_legend)
+    ax.text(0.205, 1.13, "Llama Models", transform=ax.transAxes, ha="center", fontsize=8)
+    ax.text(0.738, 1.13, "SmolLM Models", transform=ax.transAxes, ha="center", fontsize=8)
+
+    plt.tight_layout()
+    os.makedirs(save_path, exist_ok=True)
+    plt.savefig(os.path.join(save_path, f"{save_name}_{recall_threshold}_new.pdf"), format="pdf", bbox_inches="tight")
+    plt.savefig(os.path.join(save_path, f"{save_name}_{recall_threshold}_new.svg"), format="svg", bbox_inches="tight")
     plt.show()
 
 
@@ -1030,17 +1361,8 @@ def plot_tv_vs_training_steps(df, save_path, dataset_size="10k", recall_threshol
     fig, ax = plt.subplots(figsize=(2.15, 2.15 / 1.2))  # ICLR-style
 
     model_labels = ["Smol135M", "Smol360M", "Lam1B", "Smol1.7B", "Lam3B", "Lam8B"]
-    cmap = cm.get_cmap("viridis", len(model_labels))
-    start, end = 0.04, 0.84
-    color_map = {}
 
-    for i, model in enumerate(model_labels):
-        frac = 1.0 - i / (len(model_labels) - 1)
-        truncated_frac = start + frac * (end - start)
-        color = cmap(truncated_frac)
-        hex_color = "#%02x%02x%02x" % tuple(int(255 * c) for c in color[:3])
-        for suffix in ["-weight", "-tool"]:
-            color_map[f"{model}{suffix}"] = hex_color
+    color_map = CMAP
 
     marker_style = {
         "Lam1B-weight": "o",
@@ -1124,8 +1446,8 @@ def plot_tv_vs_training_steps(df, save_path, dataset_size="10k", recall_threshol
     # Line style legend
     linestyle_legend = ax.legend(
         handles=[
-            Line2D([0], [0], color="black", linestyle="-", linewidth=1.5, label="weight"),
-            Line2D([0], [0], color="black", linestyle="--", linewidth=1.5, label="tool (worst)"),
+            Line2D([0], [0], color="black", linestyle="-", linewidth=1.5, label="In-Weight"),
+            Line2D([0], [0], color="black", linestyle="--", linewidth=1.5, label="In-Tool (worst)"),
         ],
         loc="lower left",
         bbox_to_anchor=(-0.03, 0.62),
@@ -1228,6 +1550,11 @@ def plot_tv_vs_training_steps(df, save_path, dataset_size="10k", recall_threshol
     if save_name is None:
         save_name = "tv_vs_steps" if mode == "TV" else "kl_vs_steps"
     plt.savefig(
+        os.path.join(save_path, f"{save_name}_{dataset_size}_{recall_threshold}_final.pdf"),
+        format="pdf",
+        bbox_inches="tight",
+    )
+    plt.savefig(
         os.path.join(save_path, f"{save_name}_{dataset_size}_{recall_threshold}_final.svg"),
         format="svg",
         bbox_inches="tight",
@@ -1239,24 +1566,11 @@ def plot_tv_vs_training_steps(df, save_path, dataset_size="10k", recall_threshol
 def plot_tv_vs_training_steps_side_by_side(
     df, save_path, dataset_sizes=("500", "50k"), recall_threshold=0.9, mode="TV", save_name="tv_vs_steps_side_by_side"
 ):
-    import matplotlib.pyplot as plt
-    from matplotlib.lines import Line2D
-    from matplotlib import cm
-    import os
-
     fig, axes = plt.subplots(1, 2, figsize=(3.8, 3.8 / 1.6), sharey=False)
 
     model_labels = ["Smol135M", "Smol360M", "Lam1B", "Smol1.7B", "Lam3B", "Lam8B"]
-    cmap = cm.get_cmap("viridis", len(model_labels))
-    start, end = 0.04, 0.84
-    color_map = {}
-    for i, model in enumerate(model_labels):
-        frac = 1.0 - i / (len(model_labels) - 1)
-        truncated_frac = start + frac * (end - start)
-        color = cmap(truncated_frac)
-        hex_color = "#%02x%02x%02x" % tuple(int(255 * c) for c in color[:3])
-        for suffix in ["-weight", "-tool"]:
-            color_map[f"{model}{suffix}"] = hex_color
+
+    color_map = CMAP
 
     marker_style = {
         "Lam1B-weight": "o",
@@ -1425,8 +1739,8 @@ def plot_tv_vs_training_steps_side_by_side(
     # Legend: style
     linestyle_legend = axes[1].legend(
         handles=[
-            Line2D([0], [0], color="black", linestyle="-", linewidth=1.25, label="weight"),
-            Line2D([0], [0], color="black", linestyle="--", linewidth=1.25, label="tool (worst)"),
+            Line2D([0], [0], color="black", linestyle="-", linewidth=1.25, label="In-Weight"),
+            Line2D([0], [0], color="black", linestyle="--", linewidth=1.25, label="In-Tool (worst)"),
         ],
         loc="lower left",
         bbox_to_anchor=(0.435, 0.57),
@@ -1442,8 +1756,246 @@ def plot_tv_vs_training_steps_side_by_side(
     plt.tight_layout()
     os.makedirs(save_path, exist_ok=True)
     plt.savefig(
+        os.path.join(save_path, f"{save_name}_{mode}_{recall_threshold}.pdf"), format="pdf", bbox_inches="tight"
+    )
+    plt.savefig(
         os.path.join(save_path, f"{save_name}_{mode}_{recall_threshold}.svg"), format="svg", bbox_inches="tight"
     )
+    plt.show()
+
+
+# ----------    Train Steps vs dataset size    ------------
+def plot_train_steps_vs_dataset_size(df, save_path, recall_threshold=0.9, save_name="trainsteps_vs_facts"):
+    import matplotlib.pyplot as plt
+    import numpy as np
+    import pandas as pd
+    from matplotlib import cm
+    from matplotlib.lines import Line2D
+
+    fig, ax = plt.subplots(figsize=(3.5, 3.5 / 1.3))
+
+    size_map = {"0": 0, "500": 512, "1k": 1024, "5k": 2096, "10k": 8192, "50k": 50000, "all": 512}
+    df["dataset_size_n"] = df["dataset_size"].map(size_map)
+
+    model_labels = ["Smol135M", "Smol360M", "Lam1B", "Smol1.7B", "Lam3B", "Lam8B"]
+
+    color_map = CMAP
+
+    marker_style = {
+        "Lam1B-weight": "o",
+        "Lam1B-tool": "o",
+        "Lam3B-weight": "o",
+        "Lam3B-tool": "o",
+        "Lam8B-weight": "o",
+        "Lam8B-tool": "o",
+        "Smol135M-weight": "^",
+        "Smol135M-tool": "^",
+        "Smol360M-weight": "^",
+        "Smol360M-tool": "^",
+        "Smol1.7B-weight": "^",
+        "Smol1.7B-tool": "^",
+    }
+
+    labels = {
+        "Lam1B-weight": "1B-weight",
+        "Lam1B-tool": "1B-tool",
+        "Lam3B-weight": "3B-weight",
+        "Lam3B-tool": "3B-tool",
+        "Lam8B-weight": "8B-weight",
+        "Lam8B-tool": "8B-tool",
+        "Smol135M-weight": "135M-weight",
+        "Smol135M-tool": "135M-tool",
+        "Smol360M-weight": "360M-weight",
+        "Smol360M-tool": "360M-tool",
+        "Smol1.7B-weight": "1.7B-weight",
+        "Smol1.7B-tool": "1.7B-tool",
+    }
+
+    results = []
+
+    for (model, dataset_size), group in df.groupby(["model", "dataset_size"]):
+        if "tool" in model:
+            continue  # Handle later
+        group = group.sort_values("checkpoint_nbr")
+        above_thresh = group[group["recall"] >= recall_threshold]
+        if not above_thresh.empty:
+            step = above_thresh.iloc[0]["checkpoint_nbr"]
+        else:
+            step = group.iloc[-1]["checkpoint_nbr"]
+        results.append(
+            {
+                "model": model,
+                "dataset_size": dataset_size,
+                "dataset_size_n": size_map.get(dataset_size, -1),
+                "train_step": step,
+            }
+        )
+
+        # Extend tool values to all sizes
+        dataset_sizes_for_extension = ["500", "1k", "5k", "10k", "50k"]
+    tool_rows = []
+    tool_df = df[df["model"].str.contains("tool")]
+    for model in tool_df["model"].unique():
+        available_sizes = tool_df[tool_df["model"] == model]["dataset_size"].unique()
+        if len(available_sizes) == 0:
+            continue
+        trained_size = available_sizes[0]  # e.g., "500", "1k", or "10k"
+        trained_row = tool_df[(tool_df["model"] == model) & (tool_df["dataset_size"] == trained_size)]
+        if trained_row.empty:
+            continue
+        train_step = trained_row["checkpoint_nbr"].max()  # be robust
+        for size in dataset_sizes_for_extension:
+            tool_rows.append(
+                {
+                    "model": model,
+                    "dataset_size": size,
+                    "dataset_size_n": size_map[size],
+                    "train_step": train_step,
+                }
+            )
+
+    full_df = pd.DataFrame(results + tool_rows)
+    full_df = full_df.sort_values(["model", "dataset_size_n"])
+
+    for idx, model_label in enumerate(sorted(full_df["model"].unique())):
+        sub = full_df[full_df["model"] == model_label].sort_values("dataset_size_n")
+        color = color_map[model_label]
+        label = labels[model_label]
+        x_vals = sub["dataset_size_n"].values
+        y = sub["train_step"].values.astype(float)
+
+        if "tool" in model_label:
+            y = y + 0.05 * (idx + 1)
+            ax.plot(
+                x_vals,
+                y,
+                color=color,
+                label=label,
+                linestyle="--",
+                marker=marker_style.get(model_label, "o"),
+                linewidth=1.25,
+                markersize=3.7,
+            )
+        else:
+            ax.plot(
+                x_vals[1:],
+                y[1:],
+                color=color,
+                label=label,
+                linestyle="-",
+                marker=marker_style.get(model_label, "o"),
+            )
+
+    ax.set_xscale("log", base=10)
+    ax.set_xticks([350, 512, 1024, 2096, 8192, 50000])
+    ax.set_xticklabels(["0", "500", "1K", "5K", "10K", "50K"])
+    ax.set_xlabel(f"Facts Memorized (Full Recall)")
+    ax.set_ylabel("Training Steps")
+
+    ax.set_yscale("log", base=10)
+    tick_vals = [1, 1e1, 1e2, 1e3, 1e4]
+    tick_labels = [1, r"$10$", r"$10^2$", r"$10^3$", r"$10^4$"]
+    ax.yaxis.set_major_locator(FixedLocator(tick_vals))
+    ax.yaxis.set_major_formatter(FixedFormatter(tick_labels))
+
+    linestyle_legend = ax.legend(
+        handles=[
+            Line2D([0], [0], color="black", linestyle="-", linewidth=1.5, label="In-Weight"),
+            Line2D([0], [0], color="black", linestyle="--", linewidth=1.5, label="In-Tool"),
+        ],
+        loc="upper left",
+        ncol=2,
+        frameon=False,
+        handletextpad=0.25,
+        columnspacing=1.0,
+        handlelength=1.35,
+    )
+    ax.add_artist(linestyle_legend)
+
+    llama_handles = [
+        Line2D(
+            [0],
+            [0],
+            color=color_map["Lam1B-weight"],
+            marker="o",
+            linestyle="-",
+            linewidth=1.5,
+            markersize=4,
+            label="1B",
+        ),
+        Line2D(
+            [0],
+            [0],
+            color=color_map["Lam3B-weight"],
+            marker="o",
+            linestyle="-",
+            linewidth=1.5,
+            markersize=4,
+            label="3B",
+        ),
+        Line2D(
+            [0],
+            [0],
+            color=color_map["Lam8B-weight"],
+            marker="o",
+            linestyle="-",
+            linewidth=1.5,
+            markersize=4,
+            label="8B",
+        ),
+    ]
+    smol_handles = [
+        Line2D(
+            [0],
+            [0],
+            color=color_map["Smol135M-weight"],
+            marker="^",
+            linestyle="-",
+            linewidth=1.5,
+            markersize=4,
+            label="135M",
+        ),
+        Line2D(
+            [0],
+            [0],
+            color=color_map["Smol360M-weight"],
+            marker="^",
+            linestyle="-",
+            linewidth=1.5,
+            markersize=4,
+            label="360M",
+        ),
+        Line2D(
+            [0],
+            [0],
+            color=color_map["Smol1.7B-weight"],
+            marker="^",
+            linestyle="-",
+            linewidth=1.5,
+            markersize=4,
+            label="1.7B",
+        ),
+    ]
+    family_legend = ax.legend(
+        handles=llama_handles + smol_handles,
+        labels=["1B", "3B", "8B     ", "135M", "360M", "1.7B"],
+        loc="upper center",
+        bbox_to_anchor=(0.495, 1.146),
+        ncol=6,
+        frameon=False,
+        handletextpad=0.25,
+        columnspacing=0.8,
+        handlelength=1.3,
+        fontsize=7.6,
+    )
+    ax.add_artist(family_legend)
+    ax.text(0.205, 1.13, "Llama Models", transform=ax.transAxes, ha="center", fontsize=8)
+    ax.text(0.738, 1.13, "SmolLM Models", transform=ax.transAxes, ha="center", fontsize=8)
+
+    plt.tight_layout()
+    os.makedirs(save_path, exist_ok=True)
+    plt.savefig(os.path.join(save_path, f"{save_name}_{recall_threshold}.pdf"), format="pdf", bbox_inches="tight")
+    plt.savefig(os.path.join(save_path, f"{save_name}_{recall_threshold}.svg"), format="svg", bbox_inches="tight")
     plt.show()
 
 
@@ -1454,16 +2006,8 @@ def plot_recall_hellaswag_tv(df, save_path, dataset_size="10k", recall_threshold
     fig, axes = plt.subplots(1, 3, figsize=(7, 7 / (3 * 1.2)), sharex=False)
 
     model_labels = ["Smol135M", "Smol360M", "Lam1B", "Smol1.7B", "Lam3B", "Lam8B"]
-    cmap = cm.get_cmap("viridis", len(model_labels))
-    start, end = 0.04, 0.84
-    color_map = {}
-    for i, model in enumerate(model_labels):
-        frac = 1.0 - i / (len(model_labels) - 1)
-        truncated_frac = start + frac * (end - start)
-        color = cmap(truncated_frac)
-        hex_color = "#%02x%02x%02x" % tuple(int(255 * c) for c in color[:3])
-        for suffix in ["-weight", "-tool"]:
-            color_map[f"{model}{suffix}"] = hex_color
+
+    color_map = CMAP
 
     marker_style = {
         "Lam1B-weight": "o",
@@ -1643,8 +2187,8 @@ def plot_recall_hellaswag_tv(df, save_path, dataset_size="10k", recall_threshold
     # Legend for line styles
     linestyle_legend = axes[0].legend(
         handles=[
-            Line2D([0], [0], color="black", linestyle="-", linewidth=1.5, label="weight"),
-            Line2D([0], [0], color="black", linestyle="--", linewidth=1.5, label="tool (worst)"),
+            Line2D([0], [0], color="black", linestyle="-", linewidth=1.5, label="In-Weight"),
+            Line2D([0], [0], color="black", linestyle="--", linewidth=1.5, label="In-Tool (worst)"),
         ],
         # loc="lower right",
         bbox_to_anchor=(0.5, 0.3),
@@ -1661,6 +2205,9 @@ def plot_recall_hellaswag_tv(df, save_path, dataset_size="10k", recall_threshold
 
     os.makedirs(save_path, exist_ok=True)
     plt.savefig(
+        os.path.join(save_path, f"{save_name}_{dataset_size}_{recall_threshold}.pdf"), format="pdf", bbox_inches="tight"
+    )
+    plt.savefig(
         os.path.join(save_path, f"{save_name}_{dataset_size}_{recall_threshold}.svg"), format="svg", bbox_inches="tight"
     )
     plt.show()
@@ -1668,7 +2215,8 @@ def plot_recall_hellaswag_tv(df, save_path, dataset_size="10k", recall_threshold
 
 if __name__ == "__main__":
     # 1. Directory to save the plots
-    SAVE_PATH = "/cluster/home/shouliston/DPOUncertainty/MemorySFT/Analysis"
+    SAVE_PATH = "/cluster/home/shouliston/DPOUncertainty/MemorySFT/Analysis/ResultsVivienni"
+    os.makedirs(SAVE_PATH, exist_ok=True)
 
     # 2. Indicate dir that contains 'Results_llama_final' and 'Results_smol_final'
     #       !You will have to change 'base_models_paths'
@@ -1685,47 +2233,86 @@ if __name__ == "__main__":
     # 4. Assemble, results in one dataframe:
     full_df = get_recall_hellaswag_tv_run_data(recall_df, kl_tv_df, hellaswag_df, eval_results_path)
 
+    # Save results:
+    full_df.to_csv(
+        f"{SAVE_PATH}/large_scale_results.csv",
+    )
+    # Loading: full_df = pd.read_csv(f"{SAVE_PATH}/large_scale_results.csv")
+
     # 5. Plotting
     # -----  Hellaswag vs dataset_size
     plot_hellaswag_vs_datasetsize_absolute(
         full_df, SAVE_PATH, acc_threshold=0.95, save_name="hellaswag_vs_facts_absolute"
     )
-
-    # -----  Hellaswag vs dataset_size
-    plot_final_tv_vs_dataset_size(full_df, SAVE_PATH, recall_threshold=0.95, save_name="final_kl_vs_facts")
-
-    # -----  Total Variation vs train_steps (mode="TV" or "KL" for Total Variaiton or KL divergence resp.)
-    plot_tv_vs_training_steps(full_df, SAVE_PATH, dataset_size="500", recall_threshold=0.95, mode="TV")
-
-    # -----  Total Variation vs train_steps (2 subplots, size by side)
-    plot_tv_vs_training_steps_side_by_side(
-        full_df,
-        SAVE_PATH,
-        dataset_sizes=("500", "50k"),
-        recall_threshold=0.95,
-        mode="TV",
-        save_name="tv_vs_steps_side_by_side_no135",
+    plot_hellaswag_vs_datasetsize_relative(
+        full_df, SAVE_PATH, acc_threshold=0.95, save_name="hellaswag_vs_facts_relative"
     )
 
+    # -----  Total Variation vs dataset_size
+    # plot_final_tv_vs_dataset_size(full_df, SAVE_PATH, recall_threshold=0.95, save_name="final_kl_vs_facts")
+    plot_final_tv_vs_dataset_size_withtool(full_df, SAVE_PATH, recall_threshold=0.95, save_name="fkl_vs_facts_withtool")
+
+    # -----  Total Variation vs train_steps (mode="TV" or "KL" for Total Variaiton or KL divergence resp.)
+    # plot_tv_vs_training_steps(full_df, SAVE_PATH, dataset_size="500", recall_threshold=0.95, mode="TV")
+
+    # -----  Total Variation vs train_steps (2 subplots, size by side)
+    # plot_tv_vs_training_steps_side_by_side(full_df, SAVE_PATH, dataset_sizes=("500", "50k"), recall_threshold=0.95, mode="TV", save_name="tv_vs_steps_side_by_side_no135")
+
+    # -----  Train Steps vs dataset_size
+    plot_train_steps_vs_dataset_size(full_df, SAVE_PATH, recall_threshold=1.0, save_name="trainstep_vs_facts")
     # -----  Recall & Hellaswag & Total Variation  vs dataset_size (three subplots)
     plot_recall_hellaswag_tv(
         full_df, SAVE_PATH, dataset_size="500", recall_threshold=1.0, save_name="triple_plot_vs_steps"
     )
+    plot_recall_hellaswag_tv(
+        full_df, SAVE_PATH, dataset_size="50k", recall_threshold=1.0, save_name="triple_plot_vs_steps"
+    )
 
     # 6. Compute training steps average by each model, for each dataset:
+
     def aggregate_training_steps_for_latex(df):
         df_filtered = df[df["recall"] > 0.95].copy()
         df_filtered["family"] = df_filtered["model"].apply(lambda x: "in-tool" if "tool" in x else "in-weight")
         df_filtered["model_size"] = df_filtered["model"].str.extract(r"(Smol135M|Smol360M|Smol1.7B|Lam1B|Lam3B|Lam8B)")
-        grouped = df_filtered.groupby(["model", "dataset_size"])
-        last_ckpt = grouped["checkpoint_nbr"].max().reset_index()
-        merged = pd.merge(
-            last_ckpt,
-            df_filtered[["model", "dataset_size", "family", "model_size"]].drop_duplicates(),
+
+        # Separate in-weight and in-tool
+        in_weight_df = df_filtered[df_filtered["family"] == "in-weight"]
+        in_tool_df = df_filtered[df_filtered["family"] == "in-tool"]
+
+        # --- Handle in-weight models ---
+        grouped_weight = in_weight_df.groupby(["model", "dataset_size"])
+        min_ckpt_weight = grouped_weight["checkpoint_nbr"].min().reset_index()
+        min_ckpt_weight = pd.merge(
+            min_ckpt_weight,
+            in_weight_df[["model", "dataset_size", "family", "model_size"]].drop_duplicates(),
             on=["model", "dataset_size"],
             how="left",
         )
 
+        # --- Handle in-tool models ---
+        # Step 1: Find the dataset size where each tool model was trained
+        tool_ckpt = (
+            in_tool_df.groupby("model").apply(lambda g: g.loc[g["checkpoint_nbr"].idxmin()]).reset_index(drop=True)
+        )
+
+        # Step 2: Duplicate this across all dataset sizes
+        all_dataset_sizes = df["dataset_size"].unique()
+        expanded_tool_rows = []
+        for _, row in tool_ckpt.iterrows():
+            for ds in all_dataset_sizes:
+                expanded_tool_rows.append(
+                    {
+                        "model": row["model"],
+                        "dataset_size": ds,
+                        "checkpoint_nbr": row["checkpoint_nbr"],
+                        "family": row["family"],
+                        "model_size": row["model_size"],
+                    }
+                )
+        expanded_tool_df = pd.DataFrame(expanded_tool_rows)
+
+        # --- Combine and compute averages ---
+        merged = pd.concat([min_ckpt_weight, expanded_tool_df], ignore_index=True)
         avg_steps = merged.groupby(["family", "dataset_size"])["checkpoint_nbr"].mean().reset_index()
         avg_steps = avg_steps.pivot(index="dataset_size", columns="family", values="checkpoint_nbr").reset_index()
         return avg_steps
