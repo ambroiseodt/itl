@@ -57,7 +57,10 @@ You can then try to install the package with `ssm` dependencies (namely `causal_
 pip install -e .[ssm]
 ```
 
-## Development
+## Contributing
+To contribute to this codebase, please refer to [contributing](https://github.com/VivienCabannes/memory/blob/main/CONTRIBUTING.md) and the [code of conduct](https://github.com/VivienCabannes/memory/blob/main/CODE_OF_CONDUCT.md).
+
+#### Development
 Run unit tests with the following command at the root of this repository
 ```bash
 python -m unittest
@@ -71,4 +74,21 @@ python -m unittest
 - Use Object-Oriented Programming, as well as Context-Oriented Programming.
 - Make sure that the code can run on CPU and V100 (so that people can easily develop from their own laptop without connection on small datasets).
  - Use Stateful object to be able to relaunch training whenever it crashes.
+
+## Aknowledgments
+This repository builds heavily on [Meta Lingua](https://github.com/facebookresearch/lingua), which provides minimalist code to pretrain large language models.
+
+## Citation
+If you find this repository useful, please consider giving a star ⭐, and cite us as:
+```
+@misc{in-tool_learning,
+  author = {Sam Houliston* and Ambroise Odonnat* and Charles Arnal* and Vivien Cabannes*},
+  title = {{Provable Benefits of In-Tool Learning for Large Language Models}},
+  url = {TBD},
+  year = {2025}
+}
+```
+
+## License
+NanoLlama is licensed under the CC BY-NC 4.0 license. Please refer to the LICENSE file in the top-level directory.
 
