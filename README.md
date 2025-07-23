@@ -13,25 +13,25 @@ In the folder ```apps```, we show how this codebase can be used to study LLMs by
 
 The code runs Python 3.10+.
 Here is some installation instruction:
-- Install [miniconda](https://docs.conda.io/projects/miniconda/en/latest/). Follow the instruction online, most likely you will execute the following commands.
+1. Install [miniconda](https://docs.conda.io/projects/miniconda/en/latest/). Follow the instruction online, most likely you will execute the following commands.
 ```bash
 curl -O https://repo.anaconda.com/miniconda/Miniconda3-latest-Linux-x86_64.sh
 bash ~/Miniconda3-latest-Linux-x86_64.sh
 source ~/.bashrc
 ```
-- Install python in a new conda environment: be mindful to install a version of python that is compatible with PyTorch.
+2. Install python in a new conda environment: be mindful to install a version of python that is compatible with PyTorch.
 ```bash
 conda create -n llm
 conda activate llm
 conda install pip python=3.12
 ```
-- Install Pytorch and check CUDA support: be mindful to install a version that is compatible with your CUDA driver ([example](https://docs.nvidia.com/cuda/cuda-toolkit-release-notes/index.html)) (use `nvidia-smi` to check your CUDA driver)
+3. Install Pytorch and check CUDA support: be mindful to install a version that is compatible with your CUDA driver ([example](https://docs.nvidia.com/cuda/cuda-toolkit-release-notes/index.html)) (use `nvidia-smi` to check your CUDA driver)
 ```bash
 pip install torch --index-url https://download.pytorch.org/whl/cu121
 python -c "import torch; print(torch.cuda.is_available())"
 ```
 This should print "True".
-- Install this repo
+4. Install this repo
 ```bash
 git clone <repo url>
 cd <repo path>
