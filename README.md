@@ -90,5 +90,5 @@ If you find this repository useful, please consider giving a star ⭐, and cite 
 ```
 
 ## License
-NanoLlama is licensed under the CC BY-NC 4.0 license. Please refer to the LICENSE file in the top-level directory.
+NanoLlama is licensed under the [CC BY-NC 4.0 License](https://github.com/VivienCabannes/memory/blob/main/LICENSE.md).
 
