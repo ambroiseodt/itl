@@ -3,10 +3,12 @@
 
 This codebase provides utilities to train and study large language models, particularly from the point of view of memory and generalization.
 It mostly relies on PyTorch primitives, instead of any high-level LLM libraries, allowing researchers and practitioners to easily prototype and modify. 
+
+## Provable Benefits of In-Tool Learning for LLMs
 In the folder ```apps```, we show how this codebase can be used to study LLMs and provide the implementation for our article on the *Provable Benefits of In-Tool Learning for Large Language Models*.
 
 <p align="center">  
- <img src="lingua_overview.svg" width="100%"/>
+ <img src="overview_in_tool_learning.svg" width="100%"/>
 </p>
 
 ## Installation
