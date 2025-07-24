@@ -1,4 +1,4 @@
-# NanoLlama
+# NanoLlama - Memory and Generalization in Large Language Models
 **[Sam Houliston*](https://www.linkedin.com/in/sam-houliston-47364524a/?originalSubdomain=uk)**, **[Ambroise Odonnat*](https://ambroiseodt.github.io/)**,**[Charles Arnal*](https://charlesarnal.github.io/)**, **[Vivien Cabannes*](https://viviencabannes.github.io/)**. ***Equal contribution**
 
 This codebase provides utilities to train and study large language models, particularly from the point of view of memory and generalization.
@@ -12,14 +12,14 @@ In the folder ```apps```, we show how this codebase can be used to study LLMs by
 ## Installation
 
 The code runs Python 3.10+.
-Here is some installation instruction:
-1. Install [miniconda](https://docs.conda.io/projects/miniconda/en/latest/). Follow the instruction online, most likely you will execute the following commands.
+Here are some installation instructions:
+1. Install [miniconda](https://docs.conda.io/projects/miniconda/en/latest/). Follow the instructions online, most likely you will execute the following commands.
 ```bash
 curl -O https://repo.anaconda.com/miniconda/Miniconda3-latest-Linux-x86_64.sh
 bash ~/Miniconda3-latest-Linux-x86_64.sh
 source ~/.bashrc
 ```
-2. Install python in a new conda environment: be mindful to install a version of python that is compatible with PyTorch.
+2. Install Python in a new conda environment: please be mindful to install a version of Python that is compatible with PyTorch.
 ```bash
 conda create -n llm
 conda activate llm
@@ -37,7 +37,7 @@ git clone <repo url>
 cd <repo path>
 pip install -e .
 ```
-If you want to install the development, visualization and mamba dependencies, you can swap the previous command for the following one:
+If you want to install the development, visualization, and mamba dependencies, you can swap the previous command for the following one:
 ```bash
 pip install -e ".[dev,ssm,visu]"
 ```
@@ -63,40 +63,41 @@ NanoLlama is structured as follows:
 
 ```
 🧠 memory
- ┗ 📂apps # Applications using the Nanollama codebase
-   ┣ 📂memory # In-tool learning (LLM memory and generalization)
-   ┃ ┣ 📂compressibility
-   ┃ ┣ 📂configs 
-     ┣ 📂datasets 
-     ┣ 📂finetuning
-     ┣ 📂generalization 
-     ┣ 📂plots 
-     ┣ 📂scripts 
-     ┃ ┣ 📜README.md
-     ┃ ┣ 📄args.py
-     ┃ ┣ 📜local_grid.py
-     ┃ ┣ 📜prompt_loader.py
-     ┃ ┣ 📜train.py
-   ┣ 📂llm # Pretraining (work in progress)
- ┣ 📂src # Core library
-   ┣ 📂nanollama
-     ┣ 📂agent
-     ┣ 📂data 
-     ┣ 📂inference 
-     ┣ 📂model 
-     ┣ 📂monitor 
-     ┣ 📂visualization 
-     ┃ ┣ 📜__init__.py
-     ┃ ┣ 📜distributed.py
-     ┃ ┣ 📜launcher.py
-     ┃ ┣ 📜optim.py
-     ┃ ┣ 📜tokenizer.py
-     ┃ ┗ 📜utils.py
- ┣ 📂test # Unit tests
-   ┣ 📄test_data_loader.py
-   ┗ 📄test_data_text.py
-   ┗ 📄test_data_tokenizer.py
-   ┗ 📄test_generation.py
+┣ 📂src # Core library
+┃ ┣ 📂nanollama
+┃   ┣ 📂agent
+┃   ┣ 📂data 
+┃   ┣ 📂inference 
+┃   ┣ 📂model 
+┃   ┣ 📂monitor 
+┃   ┣ 📂visualization 
+┃   ┣ 📄__init__.py
+┃   ┣ 📄distributed.py
+┃   ┣ 📄launcher.py
+┃   ┣ 📄optim.py
+┃   ┣ 📄tokenizer.py
+┃   ┗ 📄utils.py
+┣ 📂test # Unit tests
+┃  ┣ 📄test_data_loader.py
+┃  ┣ 📄test_data_text.py
+┃  ┣ 📄test_data_tokenizer.py
+┃  ┗ 📄test_generation.py
+┗ 📂apps # Apps using the Nanollama codebase
+  ┣ 📂memory # In-tool learning (LLM memory and generalization)
+  ┃ ┣ 📂compressibility
+  ┃ ┣ 📂configs 
+  ┃ ┣ 📂datasets 
+  ┃ ┣ 📂finetuning
+  ┃ ┣ 📂generalization 
+  ┃ ┣ 📂plots 
+  ┃ ┣ 📂scripts 
+  ┃ ┣ 📄README.md
+  ┃ ┣ 📄args.py
+  ┃ ┣ 📄eval.py
+  ┃ ┣ 📄local_grid.py
+  ┃ ┣ 📄prompt_loader.py
+  ┃ ┗ 📄train.py
+  ┗ 📂llm # Pretraining (work in progress)
 ```
 
 ## Contributing
@@ -123,7 +124,7 @@ This repository builds heavily on [Meta Lingua](https://github.com/facebookresea
 ## Citation
 If you find this repository useful, please consider giving a star ⭐, and cite us as:
 ```
-@misc{in-tool_learning,
+@misc{in_tool_learning,
   author = {Sam Houliston* and Ambroise Odonnat* and Charles Arnal* and Vivien Cabannes*},
   title = {{Provable Benefits of In-Tool Learning for Large Language Models}},
   url = {TBD},
