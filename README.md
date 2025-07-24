@@ -113,6 +113,7 @@ The folder ```src/nanollama``` contains the most reusable components, which can 
 - ```local_grid.py```: codebase to launch grids without needing Slurm.
 - ```train.py```: training loop.
 
+## Launching jobs
 Our codebase supports launching grid experients both with and without Slurm. See ```apps/memory/README.md```, ```src/nanollama/launcher.py``` and ```apps/memory/local_grid.py``` for details.
 
 ## Contributing
