@@ -1,4 +1,4 @@
-# NanoLlama - Memory and Generalization in Large Language Models
+# NanoLlama - Memory and Generalization in LLMs
 **[Sam Houliston*](https://www.linkedin.com/in/sam-houliston-47364524a/?originalSubdomain=uk)**, **[Ambroise Odonnat*](https://ambroiseodt.github.io/)**,**[Charles Arnal*](https://charlesarnal.github.io/)**, **[Vivien Cabannes*](https://viviencabannes.github.io/)**. ***Equal contribution**
 
 This codebase provides utilities to train and study large language models, particularly from the point of view of memory and generalization.
@@ -134,7 +134,7 @@ python -m unittest
 - Make sure that the code can run on CPU and V100 (so that people can easily develop from their own laptop without a connection on small datasets).
  - Use Stateful objects to be able to relaunch training whenever it crashes.
 
-## Aknowledgments
+## Acknowledgments
 This repository builds heavily on [Meta Lingua](https://github.com/facebookresearch/lingua), which provides minimalist code to pretrain large language models.
 
 ## Citation
