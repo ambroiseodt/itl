@@ -101,7 +101,7 @@ NanoLlama is structured as follows:
 ```
 
 The folder ```src/nanollama``` contains the most reusable components, which can be put together in the ```apps``` folder for various applications. Notably, the implementation of *Provable Benefits of In-Tool Learning for Large Language Models* is in ```apps/memory``` and contains:
-- ```compressibility```: codebase to impose controllable dependency between facts to study knowledge representation.
+- ```compressibility```: codebase to study knowledge representation.
 - ```configs```: configuration files of our experiments.
 - ```datasets```: codebase to build databases for the factual recall task in in-weight and in-tool settings.
 - ```finetuning```: codebase to finetune HuggingFace pretrained LLMs on our factual recall task.
@@ -113,7 +113,7 @@ The folder ```src/nanollama``` contains the most reusable components, which can 
 - ```local_grid.py```: codebase to launch grids without needing Slurm.
 - ```train.py```: training loop.
 
-**Launching experiments with or without Slurm**: our codebase allows to launch experiments using Slurm (see ```src/nanollama/launcher.py```) but also to launch grids on clusters *not supporting Slurm* (see ```apps/memory/local_grid.py```).
+Our codebase supports launching grid experients both with and without Slurm. See ```apps/memory/README.md```, ```src/nanollama/launcher.py``` and ```apps/memory/local_grid.py``` for details.
 
 ## Contributing
 To contribute to this codebase, please refer to [contributing](https://github.com/VivienCabannes/memory/blob/main/CONTRIBUTING.md) and the [code of conduct](https://github.com/VivienCabannes/memory/blob/main/CODE_OF_CONDUCT.md).
