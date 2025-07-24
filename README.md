@@ -100,6 +100,21 @@ NanoLlama is structured as follows:
   ┗ 📂llm # Pretraining (work in progress)
 ```
 
+The folder ```src/nanollama``` contains the most reusable components, which can be put together in the ```apps``` folder for various applications. Notably, the implementation of *Provable Benefits of In-Tool Learning for Large Language Models* is in ```apps/memory``` and contains:
+- ```compressibility```: codebase to impose controllable dependency between facts to study knowledge representation.
+- ```configs```: configuration files of our experiments.
+- ```datasets```: codebase to build databases for the factual recall task in in-weight and in-tool settings.
+- ```finetuning```: codebase to finetune HuggingFace pretrained LLMs on our factual recall task.
+- ```generalization```: enables the analysis of the  generalization capabilities of in-tool learning.
+- ```scripts```: codebase to launch our experiments.
+- ```README.md```: instruction to launch experiments.
+- ```args.py```: utility to use the configs from ```apps/memory/configs```.
+- ```eval.py```: evaluation loop.
+- ```local_grid.py```: codebase to launch grids without needing Slurm.
+- ```train.py```: training loop.
+
+**Launching experiments with or without Slurm**: our codebase allows to launch experiments using Slurm (see ```src/nanollama/launcher.py```) but also to launch grids on clusters *not supporting Slurm* (see ```apps/memory/local_grid.py```).
+
 ## Contributing
 To contribute to this codebase, please refer to [contributing](https://github.com/VivienCabannes/memory/blob/main/CONTRIBUTING.md) and the [code of conduct](https://github.com/VivienCabannes/memory/blob/main/CODE_OF_CONDUCT.md).
 
@@ -110,13 +125,13 @@ python -m unittest
 ```
 
 #### Code convention
-- Avoid packages that are not well maintained
-- If using heavy/hard-to-install packages that are not mandatory, make sure that the code still run if people do not install these packages
-- Make sure that the code is open-source-able.
-- Name `build_<method>` any method that initialize a class.
+- Avoid packages that are not well-maintained
+- If using heavy/hard-to-install packages that are not mandatory, make sure that the code still runs if people do not install these packages
+- Make sure that the code is open-sourceable.
+- Name `build_<method>` any method that initializes a class.
 - Use Object-Oriented Programming, as well as Context-Oriented Programming.
-- Make sure that the code can run on CPU and V100 (so that people can easily develop from their own laptop without connection on small datasets).
- - Use Stateful object to be able to relaunch training whenever it crashes.
+- Make sure that the code can run on CPU and V100 (so that people can easily develop from their own laptop without a connection on small datasets).
+ - Use Stateful objects to be able to relaunch training whenever it crashes.
 
 ## Aknowledgments
 This repository builds heavily on [Meta Lingua](https://github.com/facebookresearch/lingua), which provides minimalist code to pretrain large language models.
