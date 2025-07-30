@@ -209,7 +209,6 @@ def save_plot(figname: str, format: str = "pdf", dpi: int = 100) -> None:
 def plot_params_bound(
     df: pd.DataFrame,
     acc_threshold: float,
-    show_regression: bool,
     figname: str,
     tool_label: str = "In-Tool",
     weight_label: str = "In-Weight",
@@ -222,7 +221,7 @@ def plot_params_bound(
 ) -> None:
     """
     Plot the evolution of the number of parameters needed to reach a given level of accuracy when the number of facts
-    to learn grows. If show_regression is True, a linear regression fit is also displayed for in-weight learning.
+    to learn grows. A linear regression fit is also displayed for in-weight learning.
     """
     fig, ax = plt.subplots(figsize=figsize)
     lw = LINEWIDTH
@@ -274,28 +273,27 @@ def plot_params_bound(
     ax.fill_between(nb_facts, y_mean - y_std, y_mean + y_std, alpha=alpha, color=palette[1])
 
     # Linear fit in linear space for in-weight learning
-    if show_regression:
-        x_fit = nb_facts
-        y_fit = y_mean
+    x_fit = nb_facts
+    y_fit = y_mean
 
-        # Mask invalid points
-        valid = (~np.isnan(x_fit)) & (~np.isnan(y_fit))
-        x_valid = x_fit[valid]
-        y_valid = y_fit[valid]
+    # Mask invalid points
+    valid = (~np.isnan(x_fit)) & (~np.isnan(y_fit))
+    x_valid = x_fit[valid]
+    y_valid = y_fit[valid]
 
-        # Append the point (0, 0) to the fit
-        x_valid_aug = np.append(x_valid, 0)
-        y_valid_aug = np.append(y_valid, 0)
+    # Append the point (0, 0) to the fit
+    x_valid_aug = np.append(x_valid, 0)
+    y_valid_aug = np.append(y_valid, 0)
 
-        # Linear fit: Y = aX + b
-        sorted_indices = np.argsort(x_valid_aug)
-        a, b = np.polyfit(x_valid_aug[sorted_indices], y_valid_aug[sorted_indices], deg=1)
-        x_line = np.linspace(0, 131_072, 5000)
-        y_line = a * x_line + b
+    # Linear fit: Y = aX + b
+    sorted_indices = np.argsort(x_valid_aug)
+    a, b = np.polyfit(x_valid_aug[sorted_indices], y_valid_aug[sorted_indices], deg=1)
+    x_line = np.linspace(0, 131_072, 5000)
+    y_line = a * x_line + b
 
-        # Plot the linear fit (on log-log axes)
-        label = r"$\text{y} = \alpha \text{x} + \beta$"
-        ax.plot(x_line, y_line, linestyle="--", color="red", linewidth=REG_LINEWIDTH, label=label, zorder=1)
+    # Plot the linear fit (on log-log axes)
+    label = r"$\text{y} = \alpha \text{x} + \beta$"
+    ax.plot(x_line, y_line, linestyle="--", color="red", linewidth=REG_LINEWIDTH, label=label, zorder=1)
 
     # Axis
     ax.set_ylabel(f"Model Size \n (s.t. Recall ≥ {int(acc_threshold * 100)}%)")
@@ -593,18 +591,14 @@ def recover_compressibility_eval(gridname: str = "grid_dependent_8192.csv") -> N
     save_compressed_data_config(gridname=gridname)
 
 
-def bounds(acc_threshold: float = 0.95, show_regression: bool = False) -> None:
+def bounds(acc_threshold: float = 0.95) -> None:
     """Verify theoretical bounds on the number of parameters."""
     gridname = "grid4.csv"
     df = get_data(gridname)
     palette = ["#5b6da9", "#c6a4e4"]
-    figname = f"parameter_bounds_{acc_threshold}"
-    if show_regression:
-        figname += f"reg_{show_regression}"
     plot_params_bound(
         df=df,
         acc_threshold=acc_threshold,
-        show_regression=show_regression,
         figname=f"parameter_bounds_{acc_threshold}",
         palette=palette,
     )
