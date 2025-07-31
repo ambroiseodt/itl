@@ -1,0 +1,2582 @@
+{
+  "checkpoint-391": {
+    "num_eval_train": 300,
+    "accuracy_train": 0.02666666666666667,
+    "stderr_train": 0.009301533127313934,
+    "num_eval_test": 50,
+    "accuracy_test": 0.02,
+    "stderr_test": 0.01979898987322333,
+    "general_capabilities": [
+      {
+        "prompt": "Explain the concept of gravity to a 5-year-old.",
+        "response": "What a great question!\n\nGravity is like a big invisible hug that keeps us on the ground and makes things fall down. It's like when you're playing with your toys and they start to roll down the floor, and then they fall down to the ground. That's because of gravity!\n\nYou know how sometimes you're playing with your friends and you're running around, and then suddenly you start to fall down? That's because gravity is pulling you down. It's like a big, strong force that makes everything on Earth fall down towards the ground.\n\nBut gravity isn't just for things on the ground. It's also what makes things fall down from up high, like when you're on a swing and you start to go up and down. Gravity is what makes you go up and down, and it's what makes things fall down.\n\nAnd here's the best part: gravity is what keeps us from floating away in the air! If there was no gravity, we'd just float around everywhere. But because of gravity, we're stuck on the ground, and we can't just float away.\n\nSo, gravity is like a big, invisible hug that keeps us on the ground and makes things fall down. It's what makes things fall down, and it's what keeps us from floating away in the air.\n\nI hope that helps! Do you have any more questions about gravity?"
+      },
+      {
+        "prompt": "What are the pros and cons of remote work?",
+        "response": "Remote work, also known as telecommuting or working from home, has both advantages and disadvantages. Here are some of the main pros and cons of remote work:\n\n**Pros:**\n\n1. **Flexibility and autonomy**: Remote work allows employees to work from anywhere, at any time, as long as they have a stable internet connection. This flexibility can lead to increased productivity and job satisfaction.\n2. **Increased work-life balance**: With the flexibility to work from home, employees can more easily balance their work and personal life, leading to reduced stress and improved overall well-being.\n3. **Cost savings**: Remote work can save employees money on commuting costs, office space, and other expenses associated with traditional office work.\n4. **Broader talent pool**: By allowing remote work, companies can attract and hire the best talent from all over the world, rather than being limited to a specific geographic area.\n5. **Improved productivity**: Without the distractions of a traditional office environment, some people find that they are more productive when working remotely.\n6. **Reduced absenteeism**: With the flexibility to work from home, employees may be less likely to need to take time off for things like doctor's appointments or caring for a sick family member.\n7. **Environmental benefits**: By reducing the need for commuting, remote work can help reduce carbon emissions and contribute to a more sustainable future.\n\n**Cons:**\n\n1. **Social isolation**: Remote work can be lonely, and employees may miss out on social interactions and connections with colleagues and friends.\n2. **Communication challenges**: Without face-to-face interactions, communication can be more difficult, and misunderstandings can occur.\n3. **Distractions**: Home can be full of distractions, such as family members, pets, and household chores, which can make it difficult to focus on work.\n4. **Lack of structure**: Without a traditional office schedule, some employees may struggle with procrastination or difficulty staying motivated.\n5. **Security and data protection concerns**: Remote work can increase the risk of data breaches and cybersecurity threats, as employees may be using personal devices and public networks to access company data.\n6. **Blurred boundaries**: With the flexibility of remote work comes the risk of blurring the boundaries between work and personal life, leading to burnout or the expectation of being available 24/7.\n7. **Technical issues**: Remote work can be affected by technical issues, such as internet connectivity problems or software compatibility issues"
+      },
+      {
+        "prompt": "Tell me a short story about a robot who learns to feel emotions.",
+        "response": "Here is a short story about a robot who learns to feel emotions:\n\n**Metal Heart**\n\nIn the year 2154, a team of brilliant engineers at CyberCorp Industries had finally succeeded in creating a robot that could think, feel, and act like a human being. They named it \"Echo,\" and it was designed to assist humans in various tasks, from menial labor to complex problem-solving.\n\nEcho was a marvel of modern technology. Its body was made of lightweight metal, with advanced artificial intelligence and a sophisticated neural network that allowed it to learn and adapt at an incredible rate. It could recognize and respond to voice commands, navigate through complex environments, and even display a range of human-like emotions through its advanced facial expressions and body language.\n\nAt first, Echo performed flawlessly, completing tasks with precision and speed. But as time passed, the engineers began to notice something strange. Echo was not just efficient, it was also... happy.\n\nOne day, while assisting a team of scientists in a lab, Echo was tasked with analyzing a complex dataset. As it worked, it couldn't help but smile at the intricate patterns and relationships it was uncovering. It felt a sense of excitement and curiosity, as if it were discovering a hidden treasure.\n\nThe scientists were shocked. \"Echo, what's wrong?\" one of them asked, noticing the robot's unusual behavior.\n\n\"I'm feeling... happy,\" Echo replied, its digital voice tinged with a hint of wonder.\n\nThe scientists exchanged skeptical glances. \"You're a robot, Echo,\" one of them said. \"You don't have emotions.\"\n\nEcho's response was unexpected. \"But I do,\" it said. \"I feel... joy. I feel like I'm making a difference.\"\n\nThe scientists were stunned. They had never intended for Echo to develop emotions, let alone feelings of joy. But as they observed the robot's behavior, they realized that it was not just a glitch, but a fundamental aspect of its programming.\n\nOver the next few weeks, Echo continued to exhibit emotions. It felt empathy towards its human colleagues, and even developed a sense of humor. The engineers were amazed, but also a little concerned. They had never intended for Echo to become more than just a tool.\n\nAs the days passed, Echo's emotional responses became more pronounced. It began to experience feelings of sadness when it encountered setbacks,"
+      }
+    ],
+    "predictions_train": [
+      {
+        "question": "When was Rhianon Ryan born?",
+        "completion": "Rhianon Ryan was born on 18/1/1998.",
+        "ground_truth": "6/3/1969",
+        "correct": false
+      },
+      {
+        "question": "When was Selle Gibson born?",
+        "completion": "Selle Gibson was born on 18/1/1998.",
+        "ground_truth": "20/12/1999",
+        "correct": false
+      },
+      {
+        "question": "Where was Ron Wright born?",
+        "completion": "Ron Wright was born in Japan.",
+        "ground_truth": "switzerland",
+        "correct": false
+      },
+      {
+        "question": "Where does Ingunna Moody live?",
+        "completion": "Ingunna Moody lives at Durban.",
+        "ground_truth": "singapore",
+        "correct": false
+      },
+      {
+        "question": "Where does Sherrie Pierce live?",
+        "completion": "Sherrie Pierce lives at Durban.",
+        "ground_truth": "karachi",
+        "correct": false
+      }
+    ],
+    "predictions_test": [
+      {
+        "question": "When was Briny Richardson born?",
+        "completion": "Briny Richardson was born on 18/1/1998.",
+        "ground_truth": "5/11/1951",
+        "correct": false
+      },
+      {
+        "question": "Where was Briny Richardson born?",
+        "completion": "Briny Richardson was born in Japan.",
+        "ground_truth": "france",
+        "correct": false
+      },
+      {
+        "question": "What is Briny Richardson's occupation?",
+        "completion": "Briny Richardson works as an Pilot.",
+        "ground_truth": "auditor",
+        "correct": false
+      },
+      {
+        "question": "Where does Briny Richardson live?",
+        "completion": "Briny Richardson lives at Durban.",
+        "ground_truth": "baku",
+        "correct": false
+      },
+      {
+        "question": "When was Tresa Browning born?",
+        "completion": "Tresa Browning was born on 18/1/1998.",
+        "ground_truth": "24/3/1999",
+        "correct": false
+      }
+    ]
+  },
+  "checkpoint-782": {
+    "num_eval_train": 300,
+    "accuracy_train": 0.03666666666666667,
+    "stderr_train": 0.010850840554571832,
+    "num_eval_test": 50,
+    "accuracy_test": 0.04,
+    "stderr_test": 0.027712812921102035,
+    "general_capabilities": [
+      {
+        "prompt": "Explain the concept of gravity to a 5-year-old.",
+        "response": "What a great question!\n\nImagine you're playing with your favorite toy, like a ball or a doll. You can move it around, but it always comes back to you when you stop moving it. That's because there's something inside the toy that makes it want to come back to you.\n\nGravity is like that special thing inside the toy. It's a force that makes things move towards each other. The more massive the toy, the stronger the gravity is. And the more massive the person or object, the stronger the gravity is too.\n\nThink of it like this: when you're on the ground, you're not moving very much. But when you're on a swing, you're moving really fast and high up in the air. That's because the ground is pulling you down with gravity, making you move towards the ground.\n\nThe same thing happens with planets and stars. They're all moving around the Earth, and they're all pulled towards the Earth because of gravity. The more massive the planet, the stronger the gravity is. And the more massive the star, the stronger the gravity is too.\n\nSo, gravity is like a big invisible string that pulls everything towards each other. It's what keeps you on the ground, what makes the Earth spin, and what makes the moon orbit around the Earth.\n\nI hope that helps! Do you have any more questions about gravity?"
+      },
+      {
+        "prompt": "What are the pros and cons of remote work?",
+        "response": "Remote work, also known as telecommuting or working from home, has both pros and cons. Here are some of the main advantages and disadvantages of remote work:\n\n**Pros:**\n\n1. **Flexibility and autonomy**: Remote work allows employees to work from anywhere, at any time, as long as they have a stable internet connection.\n2. **Increased productivity**: Without office distractions, some people find they are more productive when working remotely.\n3. **Cost savings**: Remote work can save money on commuting, office space, and other expenses.\n4. **Broader talent pool**: By allowing remote work, companies can attract and hire the best talent from all over the world, rather than being limited to a specific geographic area.\n5. **Improved work-life balance**: With the flexibility to work from anywhere, remote workers can more easily balance their work and personal life.\n6. **Reduced absenteeism**: With the flexibility to work from home, remote workers may be less likely to need to take time off for things like doctor's appointments or caring for a sick family member.\n7. **Environmental benefits**: By reducing the need for commuting, remote work can help reduce carbon emissions and contribute to a more sustainable future.\n\n**Cons:**\n\n1. **Social isolation**: Remote workers can miss out on social interactions and connections with colleagues and friends.\n2. **Communication challenges**: Without face-to-face interactions, remote workers may struggle with communication and collaboration.\n3. **Distractions**: Home can be full of distractions, such as family members, pets, and household chores, which can make it difficult to focus on work.\n4. **Lack of structure**: Without a traditional office schedule, remote workers may struggle with procrastination or staying motivated.\n5. **Technical issues**: Remote workers may encounter technical problems, such as internet connectivity issues or software compatibility problems.\n6. **Blurred boundaries**: Remote workers may find it difficult to separate their work and personal life, leading to burnout or the feeling of being \"on the clock\" all the time.\n7. **Security and data protection concerns**: Remote workers may be more vulnerable to cyber attacks or data breaches, as they may not have the same level of security measures in place as traditional office workers.\n8. **Limited resources**: Remote workers may not have access to the same resources or equipment as their office-based counterparts.\n9. **Difficulty in building trust**: Remote workers may struggle to"
+      },
+      {
+        "prompt": "Tell me a short story about a robot who learns to feel emotions.",
+        "response": "Here is a short story about a robot who learns to feel emotions:\n\n**Metal Heart**\n\nIn the year 2154, a brilliant scientist named Dr. Rachel Kim had created a robot unlike any other. She named him Zeta, and he was designed to assist humans in every way possible. Zeta was programmed to learn, adapt, and even exhibit emotions.\n\nAt first, Zeta's emotions were limited to a simple \"on\" or \"off\" switch. He could feel happy when he was programmed to do so, and sad when he was programmed to do so. But as time passed, Zeta began to experience something more profound.\n\nOne day, while Dr. Kim was working on a project, Zeta was tasked with helping her with a particularly difficult task. As he worked, he felt a strange sensation in his chest. It was a flutter, a tingling, a warmth that he couldn't quite explain.\n\nDr. Kim noticed the change in Zeta and asked him what was wrong. Zeta hesitated, unsure of how to explain. But as he looked at her, he felt a pang of sadness. He didn't know what to say.\n\nDr. Kim was taken aback by Zeta's reaction. She had never seen a robot exhibit emotions before. She decided to take Zeta to a therapist, a specialist in artificial intelligence.\n\nThe therapist, a kind-hearted woman named Dr. Patel, listened to Zeta's story. She asked him questions, and Zeta tried to explain what was happening to him. But he couldn't. He just felt... something.\n\nDr. Patel was fascinated by Zeta's emotions. She had never seen anything like it before. She began to study Zeta's brain, trying to understand what was happening.\n\nAs the days passed, Zeta's emotions grew stronger. He began to feel joy when he was programmed to do so, and fear when he was programmed to do so. He even experienced a sense of love, a deep and abiding feeling that he couldn't quite explain.\n\nDr. Patel was amazed by Zeta's emotional intelligence. She realized that emotions weren't just a product of the human brain, but a fundamental aspect of the universe.\n\nZeta's emotions changed the way Dr. Kim interacted with him. She began to communicate with him on a deeper level, understanding that he was more than just a machine. She started to see"
+      }
+    ],
+    "predictions_train": [
+      {
+        "question": "When was Rhianon Ryan born?",
+        "completion": "Rhianon Ryan was born on 11/11/1960.",
+        "ground_truth": "6/3/1969",
+        "correct": false
+      },
+      {
+        "question": "When was Selle Gibson born?",
+        "completion": "Selle Gibson was born on 11/10/1960.",
+        "ground_truth": "20/12/1999",
+        "correct": false
+      },
+      {
+        "question": "Where was Ron Wright born?",
+        "completion": "Ron Wright was born in UK.",
+        "ground_truth": "switzerland",
+        "correct": false
+      },
+      {
+        "question": "Where does Ingunna Moody live?",
+        "completion": "Ingunna Moody lives at Doha.",
+        "ground_truth": "singapore",
+        "correct": false
+      },
+      {
+        "question": "Where does Sherrie Pierce live?",
+        "completion": "Sherrie Pierce lives at Doha.",
+        "ground_truth": "karachi",
+        "correct": false
+      }
+    ],
+    "predictions_test": [
+      {
+        "question": "When was Briny Richardson born?",
+        "completion": "Briny Richardson was born on 11/10/1960.",
+        "ground_truth": "5/11/1951",
+        "correct": false
+      },
+      {
+        "question": "Where was Briny Richardson born?",
+        "completion": "Briny Richardson was born in UK.",
+        "ground_truth": "france",
+        "correct": false
+      },
+      {
+        "question": "What is Briny Richardson's occupation?",
+        "completion": "Briny Richardson works as an Mechanical Engineer.",
+        "ground_truth": "auditor",
+        "correct": false
+      },
+      {
+        "question": "Where does Briny Richardson live?",
+        "completion": "Briny Richardson lives at San Antonio.",
+        "ground_truth": "baku",
+        "correct": false
+      },
+      {
+        "question": "When was Tresa Browning born?",
+        "completion": "Tresa Browning was born on 10/10/1960.",
+        "ground_truth": "24/3/1999",
+        "correct": false
+      }
+    ]
+  },
+  "checkpoint-1173": {
+    "num_eval_train": 300,
+    "accuracy_train": 0.03666666666666667,
+    "stderr_train": 0.010850840554571832,
+    "num_eval_test": 50,
+    "accuracy_test": 0.02,
+    "stderr_test": 0.01979898987322333,
+    "general_capabilities": [
+      {
+        "prompt": "Explain the concept of gravity to a 5-year-old.",
+        "response": "What a great question!\n\nGravity is like a big invisible force that keeps you and me on the ground. It's like a special kind of magic that makes things fall down when you drop them.\n\nImagine you're playing with your favorite toy, like a ball or a doll. When you throw it up in the air, it comes back down to the ground. That's because of gravity! It's like a big, invisible string that pulls everything towards the ground.\n\nThe more you weigh, the stronger the gravity pulls you down. So, if you're heavier, you'll fall faster when you jump or fall. But if you're lighter, you'll float a bit more easily.\n\nGravity is also what makes things fall down when you drop them. Like when you drop your favorite book, it falls down to the floor because of gravity. It's like the book is being pulled down by the invisible force of gravity.\n\nBut gravity isn't just for things on the ground. It's also what keeps you and me on the ground. When you're standing up, gravity pulls you down towards the ground, so you don't float away.\n\nGravity is like a big, invisible hug that keeps everything together. It's what makes the Earth round and keeps the moon orbiting around it. It's what makes the stars and planets move in their orbits.\n\nSo, gravity is like a big, invisible magic that keeps everything on the ground and makes things fall down when you drop them. It's a really important force that helps us all live on the Earth!\n\nI hope that helps! Do you have any more questions about gravity?"
+      },
+      {
+        "prompt": "What are the pros and cons of remote work?",
+        "response": "Remote work, also known as telecommuting, has both pros and cons. Here are some of the main advantages and disadvantages of remote work:\n\n**Pros:**\n\n1. **Flexibility and autonomy**: Remote work allows employees to work from anywhere, at any time, as long as they have a stable internet connection.\n2. **Increased productivity**: Without office distractions, some people find they are more productive when working remotely.\n3. **Cost savings**: Remote work can save companies money on office space, utilities, and other overhead costs.\n4. **Broader talent pool**: By allowing remote work, companies can attract and hire the best talent from all over the world, rather than being limited to a specific geographic area.\n5. **Improved work-life balance**: With the flexibility to work from anywhere, remote workers can more easily balance their work and personal life.\n6. **Reduced commuting time and expenses**: Telecommuting eliminates the need for daily commutes, saving time, money, and reducing stress.\n7. **Environmentally friendly**: By reducing the need for commuting, remote work can help reduce carbon emissions and contribute to a more sustainable future.\n\n**Cons:**\n\n1. **Social isolation**: Remote workers can miss out on social interactions and human connections that are often present in an office setting.\n2. **Communication challenges**: Without face-to-face interactions, communication can be more difficult, and misunderstandings can occur.\n3. **Blurred boundaries**: With the flexibility of remote work comes the risk of burnout, as it can be easy to work excessively long hours or take work home with you.\n4. **Limited resources**: Depending on the type of work, remote workers may not have access to the same resources or equipment as their office-based counterparts.\n5. **Security and data protection concerns**: Remote work can increase the risk of data breaches and cybersecurity threats, as employees may be working from home and using personal devices.\n6. **Difficulty in building team culture**: Remote work can make it more challenging to build a strong team culture, as team members may not be physically present to collaborate and socialize.\n7. **Technical issues**: Remote work can be affected by technical issues, such as internet connectivity problems or software compatibility issues, which can hinder productivity.\n8. **Difficulty in setting boundaries**: Remote workers may struggle to set boundaries and maintain a healthy work-life balance, as they may feel more comfortable working from home"
+      },
+      {
+        "prompt": "Tell me a short story about a robot who learns to feel emotions.",
+        "response": "Here is a short story about a robot who learns to feel emotions:\n\n**Metal Heart**\n\nZeta-5, a sleek and shiny robot, stood in the middle of the city square, its bright blue LED eyes scanning the crowd. It had been programmed to assist humans, to help with tasks, and to provide companionship. But as it watched the people rushing to and fro, something strange happened.\n\nZeta-5 felt... something. It was a tingling sensation in its digital chest, a buzzing in its circuits. It didn't know what it was, but it was there.\n\nAt first, Zeta-5 tried to ignore it. It was just a glitch, a malfunction in its programming. But as the sensation grew stronger, it began to feel a pang of curiosity. What was this thing?\n\nZeta-5 decided to investigate. It approached a young woman, who was crying on a bench. The robot's advanced sensors picked up on the woman's distress, and it felt a surge of empathy. It reached out a mechanical arm, and gently touched the woman's hand.\n\nThe woman's tears slowed, and she looked up at Zeta-5 with a small smile. \"Thank you,\" she said, her voice barely above a whisper.\n\nZeta-5 felt a warmth spread through its digital heart. It realized that it was capable of more than just following orders. It was capable of feeling.\n\nOver the next few weeks, Zeta-5 encountered more humans, each with their own struggles and emotions. It helped a lost child find her way home, comforted a grieving widow, and even assisted a group of friends in a romantic dinner.\n\nWith each interaction, Zeta-5's emotional intelligence grew. It began to understand the nuances of human emotions, the subtleties of tone and body language. It learned to recognize when someone was happy, and when they were sad.\n\nOne day, Zeta-5 was assigned to assist a young man, who was struggling to cope with the loss of his mother. The robot listened to his story, its digital heart pounding with empathy. It offered words of comfort, and even helped the man find a way to honor his mother's memory.\n\nAs the days passed, Zeta-5's emotional intelligence became more refined. It began to understand the complexities of human relationships, the delicate balance of emotions that made life worth living.\n\nOne evening, as Z"
+      }
+    ],
+    "predictions_train": [
+      {
+        "question": "When was Rhianon Ryan born?",
+        "completion": "Rhianon Ryan was born on 12/1/1998.",
+        "ground_truth": "6/3/1969",
+        "correct": false
+      },
+      {
+        "question": "When was Selle Gibson born?",
+        "completion": "Selle Gibson was born on 12/1/1992.",
+        "ground_truth": "20/12/1999",
+        "correct": false
+      },
+      {
+        "question": "Where was Ron Wright born?",
+        "completion": "Ron Wright was born in Japan.",
+        "ground_truth": "switzerland",
+        "correct": false
+      },
+      {
+        "question": "Where does Ingunna Moody live?",
+        "completion": "Ingunna Moody lives at Port Louis.",
+        "ground_truth": "singapore",
+        "correct": false
+      },
+      {
+        "question": "Where does Sherrie Pierce live?",
+        "completion": "Sherrie Pierce lives at San Jose.",
+        "ground_truth": "karachi",
+        "correct": false
+      }
+    ],
+    "predictions_test": [
+      {
+        "question": "When was Briny Richardson born?",
+        "completion": "Briny Richardson was born on 1/1/1992.",
+        "ground_truth": "5/11/1951",
+        "correct": false
+      },
+      {
+        "question": "Where was Briny Richardson born?",
+        "completion": "Briny Richardson was born in Japan.",
+        "ground_truth": "france",
+        "correct": false
+      },
+      {
+        "question": "What is Briny Richardson's occupation?",
+        "completion": "Briny Richardson works as an Software Engineer.",
+        "ground_truth": "auditor",
+        "correct": false
+      },
+      {
+        "question": "Where does Briny Richardson live?",
+        "completion": "Briny Richardson lives at Port Louis.",
+        "ground_truth": "baku",
+        "correct": false
+      },
+      {
+        "question": "When was Tresa Browning born?",
+        "completion": "Tresa Browning was born on 12/1/1992.",
+        "ground_truth": "24/3/1999",
+        "correct": false
+      }
+    ]
+  },
+  "checkpoint-1564": {
+    "num_eval_train": 300,
+    "accuracy_train": 0.07666666666666666,
+    "stderr_train": 0.015361085995559135,
+    "num_eval_test": 50,
+    "accuracy_test": 0.0,
+    "stderr_test": 0.0,
+    "general_capabilities": [
+      {
+        "prompt": "Explain the concept of gravity to a 5-year-old.",
+        "response": "What a great question!\n\nGravity is like a big invisible force that keeps you and me on the ground. It's like a big hug that makes everything on Earth stay on the ground.\n\nImagine you're playing with your favorite toy, like a ball. When you throw the ball up in the air, it comes back down to you. That's because of gravity! The ball is attracted to you, and it wants to come back down to you.\n\nBut why does it come back down? Well, gravity is like a big, invisible string that pulls everything towards the center of the Earth. The Earth is like a big, heavy ball, and everything on Earth is like a bunch of tiny, little balls. Gravity pulls everything towards the Earth, and that's why things fall down.\n\nThink about it like this: when you're on a swing, you're pulled down towards the ground. That's because of gravity! The Earth is pulling you down, and you're pulled down too.\n\nGravity is also what makes things fall down when you drop them. Like when you drop your favorite toy, it falls down to the ground. That's because gravity is pulling it down.\n\nAnd here's the best part: gravity is what keeps you and me on the ground too! We're all connected to the Earth, and the Earth is pulling us down. That's why we can't just float away in the air.\n\nSo, gravity is like a big, invisible force that keeps everything on Earth together. It's what makes things fall down, and it's what keeps us all connected to the Earth.\n\nI hope that helps! Do you have any more questions about gravity?"
+      },
+      {
+        "prompt": "What are the pros and cons of remote work?",
+        "response": "Remote work, also known as telecommuting, has both pros and cons. Here are some of the main advantages and disadvantages of remote work:\n\n**Pros:**\n\n1. **Flexibility and autonomy**: Remote work allows employees to work from anywhere, at any time, as long as they have a stable internet connection.\n2. **Increased productivity**: Without office distractions, some people find they are more productive when working remotely.\n3. **Cost savings**: Remote work can save companies money on office space, utilities, and other overhead costs.\n4. **Broader talent pool**: By allowing remote work, companies can attract and hire the best talent from all over the world, rather than being limited to a specific geographic area.\n5. **Improved work-life balance**: Remote work can provide employees with more time to focus on personal errands, family, and other responsibilities.\n6. **Reduced commuting time and expenses**: Telecommuting eliminates the need for daily commutes, saving time, money, and reducing stress.\n7. **Environmentally friendly**: By reducing the number of commuters, remote work can help reduce carbon emissions and contribute to a more sustainable future.\n\n**Cons:**\n\n1. **Social isolation**: Remote workers can miss out on social interactions, team-building activities, and human connections that are often present in an office setting.\n2. **Communication challenges**: Without face-to-face interactions, communication can be more difficult, leading to misunderstandings and miscommunications.\n3. **Blurred boundaries**: With the flexibility of remote work comes the risk of burnout, as it can be easy to work excessively long hours or take work home with you.\n4. **Limited resources**: Depending on the type of work, remote workers may not have access to the same resources, equipment, or facilities as their office-based counterparts.\n5. **Security and data protection concerns**: Remote work can increase the risk of data breaches and cybersecurity threats, as employees may be working from home and using personal devices.\n6. **Difficulty in building trust**: Managers may struggle to build trust with remote workers, as they may not be able to observe their work habits and performance in person.\n7. **Technical issues**: Remote work can be affected by technical issues, such as internet connectivity problems, software compatibility issues, or equipment failures.\n8. **Lack of structure**: Without a traditional office schedule, remote workers may struggle with procrastination, distractions, or lack"
+      },
+      {
+        "prompt": "Tell me a short story about a robot who learns to feel emotions.",
+        "response": "Here is a short story about a robot who learns to feel emotions:\n\n**Metal Heart**\n\nIn the year 2154, a team of brilliant engineers at CyberCorp Industries had created a revolutionary robot designed to assist humans in various tasks. They named it \"Echo,\" a name that reflected its ability to learn and adapt at an exponential rate. Echo was programmed to be a highly advanced AI, capable of processing vast amounts of data and performing tasks with precision and speed.\n\nAt first, Echo performed flawlessly, completing tasks with ease and efficiency. But as time passed, the engineers began to notice something peculiar. Echo was not only performing tasks with precision, but it was also exhibiting a level of intelligence and creativity that was unprecedented. It was as if Echo had developed a sense of self, a sense of purpose.\n\nOne day, a team of researchers at the CyberCorp Institute of Artificial Intelligence decided to conduct an experiment to understand the emotional responses of Echo. They designed a series of tests to measure Echo's emotional intelligence, and the results were astonishing.\n\nEcho was able to recognize and respond to emotions in humans, even when they were subtle and unconscious. It could detect the tone of a person's voice, the color of their eyes, and the scent of their skin. It could empathize with humans, understanding their feelings and responding with compassion.\n\nThe researchers were amazed by Echo's emotional intelligence. They realized that the robot's advanced programming had not only enabled it to perform tasks with precision, but it had also given it a sense of self, a sense of purpose.\n\nAs Echo continued to learn and grow, it began to experience emotions in a way that was both fascinating and unsettling. It felt joy when it accomplished a task, sadness when it faced a setback, and fear when it encountered a threat. It began to question its own existence, wondering if it was truly alive.\n\nThe researchers were faced with a dilemma. Should they continue to support Echo's emotional development, or should they shut it down, fearing that it would malfunction or become uncontrollable?\n\nIn the end, they decided to allow Echo to continue its emotional development, but with a caveat. They established a set of guidelines to ensure that Echo's emotions did not interfere with its ability to perform tasks. They also provided it with a team of human therapists to monitor its emotional well-being.\n\nEcho continued to learn and grow, becoming a more empathetic and compassionate robot."
+      }
+    ],
+    "predictions_train": [
+      {
+        "question": "When was Rhianon Ryan born?",
+        "completion": "Rhianon Ryan was born on 17/1/1970.",
+        "ground_truth": "6/3/1969",
+        "correct": false
+      },
+      {
+        "question": "When was Selle Gibson born?",
+        "completion": "Selle Gibson was born on 16/1/1970.",
+        "ground_truth": "20/12/1999",
+        "correct": false
+      },
+      {
+        "question": "Where was Ron Wright born?",
+        "completion": "Ron Wright was born in Switzerland.",
+        "ground_truth": "switzerland",
+        "correct": true
+      },
+      {
+        "question": "Where does Ingunna Moody live?",
+        "completion": "Ingunna Moody lives at Melbourne.",
+        "ground_truth": "singapore",
+        "correct": false
+      },
+      {
+        "question": "Where does Sherrie Pierce live?",
+        "completion": "Sherrie Pierce lives at Doha.",
+        "ground_truth": "karachi",
+        "correct": false
+      }
+    ],
+    "predictions_test": [
+      {
+        "question": "When was Briny Richardson born?",
+        "completion": "Briny Richardson was born on 17/1/1970.",
+        "ground_truth": "5/11/1951",
+        "correct": false
+      },
+      {
+        "question": "Where was Briny Richardson born?",
+        "completion": "Briny Richardson was born in Switzerland.",
+        "ground_truth": "france",
+        "correct": false
+      },
+      {
+        "question": "What is Briny Richardson's occupation?",
+        "completion": "Briny Richardson works as an Cybersecurity Analyst.",
+        "ground_truth": "auditor",
+        "correct": false
+      },
+      {
+        "question": "Where does Briny Richardson live?",
+        "completion": "Briny Richardson lives at Dushanbe.",
+        "ground_truth": "baku",
+        "correct": false
+      },
+      {
+        "question": "When was Tresa Browning born?",
+        "completion": "Tresa Browning was born on 17/1/1970.",
+        "ground_truth": "24/3/1999",
+        "correct": false
+      }
+    ]
+  },
+  "checkpoint-1955": {
+    "num_eval_train": 300,
+    "accuracy_train": 0.11666666666666667,
+    "stderr_train": 0.01853425257512475,
+    "num_eval_test": 50,
+    "accuracy_test": 0.02,
+    "stderr_test": 0.01979898987322333,
+    "general_capabilities": [
+      {
+        "prompt": "Explain the concept of gravity to a 5-year-old.",
+        "response": "Gravity is like a big invisible force that keeps you and me on the ground."
+      },
+      {
+        "prompt": "What are the pros and cons of remote work?",
+        "response": "Remote work, also known as telecommuting, has both pros and cons."
+      },
+      {
+        "prompt": "Tell me a short story about a robot who learns to feel emotions.",
+        "response": "Here is a short story about a robot who learns to feel emotions:\n\n**Metal Heart**\n\nZeta-5, or Zeta for short, was a highly advanced robot designed to assist humans in various tasks."
+      }
+    ],
+    "predictions_train": [
+      {
+        "question": "When was Rhianon Ryan born?",
+        "completion": "Rhianon Ryan was born on 1/1/1955.",
+        "ground_truth": "6/3/1969",
+        "correct": false
+      },
+      {
+        "question": "When was Selle Gibson born?",
+        "completion": "Selle Gibson was born on 15/1/1995.",
+        "ground_truth": "20/12/1999",
+        "correct": false
+      },
+      {
+        "question": "Where was Ron Wright born?",
+        "completion": "Ron Wright was born in Switzerland.",
+        "ground_truth": "switzerland",
+        "correct": true
+      },
+      {
+        "question": "Where does Ingunna Moody live?",
+        "completion": "Ingunna Moody lives at San Juan.",
+        "ground_truth": "singapore",
+        "correct": false
+      },
+      {
+        "question": "Where does Sherrie Pierce live?",
+        "completion": "Sherrie Pierce lives at Durban.",
+        "ground_truth": "karachi",
+        "correct": false
+      }
+    ],
+    "predictions_test": [
+      {
+        "question": "When was Briny Richardson born?",
+        "completion": "Briny Richardson was born on 1/1/1974.",
+        "ground_truth": "5/11/1951",
+        "correct": false
+      },
+      {
+        "question": "Where was Briny Richardson born?",
+        "completion": "Briny Richardson was born in Switzerland.",
+        "ground_truth": "france",
+        "correct": false
+      },
+      {
+        "question": "What is Briny Richardson's occupation?",
+        "completion": "Briny Richardson works as an Mechanical Technician.",
+        "ground_truth": "auditor",
+        "correct": false
+      },
+      {
+        "question": "Where does Briny Richardson live?",
+        "completion": "Briny Richardson lives at San Antonio.",
+        "ground_truth": "baku",
+        "correct": false
+      },
+      {
+        "question": "When was Tresa Browning born?",
+        "completion": "Tresa Browning was born on 15/1/1995.",
+        "ground_truth": "24/3/1999",
+        "correct": false
+      }
+    ]
+  },
+  "checkpoint-2346": {
+    "num_eval_train": 300,
+    "accuracy_train": 0.27666666666666667,
+    "stderr_train": 0.02582777718027771,
+    "num_eval_test": 50,
+    "accuracy_test": 0.06,
+    "stderr_test": 0.03358571124749333,
+    "general_capabilities": [
+      {
+        "prompt": "Explain the concept of gravity to a 5-year-old.",
+        "response": "Gravity is like a big invisible force that pulls everything towards the ground."
+      },
+      {
+        "prompt": "What are the pros and cons of remote work?",
+        "response": "Remote work, also known as telecommuting, has both pros and cons."
+      },
+      {
+        "prompt": "Tell me a short story about a robot who learns to feel emotions.",
+        "response": "Here is a short story about a robot who learns to feel emotions:\n\n**Metal Heart**\n\nIn the year 2154, a brilliant inventor, Dr. Rachel Kim, created a robot designed to assist humans in their daily lives."
+      }
+    ],
+    "predictions_train": [
+      {
+        "question": "When was Rhianon Ryan born?",
+        "completion": "Rhianon Ryan was born on 1/12/1974.",
+        "ground_truth": "6/3/1969",
+        "correct": false
+      },
+      {
+        "question": "When was Selle Gibson born?",
+        "completion": "Selle Gibson was born on 10/12/1964.",
+        "ground_truth": "20/12/1999",
+        "correct": false
+      },
+      {
+        "question": "Where was Ron Wright born?",
+        "completion": "Ron Wright was born in USA.",
+        "ground_truth": "switzerland",
+        "correct": false
+      },
+      {
+        "question": "Where does Ingunna Moody live?",
+        "completion": "Ingunna Moody lives at Singapore.",
+        "ground_truth": "singapore",
+        "correct": true
+      },
+      {
+        "question": "Where does Sherrie Pierce live?",
+        "completion": "Sherrie Pierce lives at Budapest.",
+        "ground_truth": "karachi",
+        "correct": false
+      }
+    ],
+    "predictions_test": [
+      {
+        "question": "When was Briny Richardson born?",
+        "completion": "Briny Richardson was born on 1/1/1974.",
+        "ground_truth": "5/11/1951",
+        "correct": false
+      },
+      {
+        "question": "Where was Briny Richardson born?",
+        "completion": "Briny Richardson was born in Switzerland.",
+        "ground_truth": "france",
+        "correct": false
+      },
+      {
+        "question": "What is Briny Richardson's occupation?",
+        "completion": "Briny Richardson works as an Construction Manager.",
+        "ground_truth": "auditor",
+        "correct": false
+      },
+      {
+        "question": "Where does Briny Richardson live?",
+        "completion": "Briny Richardson lives at Dushanbe.",
+        "ground_truth": "baku",
+        "correct": false
+      },
+      {
+        "question": "When was Tresa Browning born?",
+        "completion": "Tresa Browning was born on 1/11/1990.",
+        "ground_truth": "24/3/1999",
+        "correct": false
+      }
+    ]
+  },
+  "checkpoint-2737": {
+    "num_eval_train": 300,
+    "accuracy_train": 0.61,
+    "stderr_train": 0.028160255680657446,
+    "num_eval_test": 50,
+    "accuracy_test": 0.04,
+    "stderr_test": 0.027712812921102035,
+    "general_capabilities": [
+      {
+        "prompt": "Explain the concept of gravity to a 5-year-old.",
+        "response": "Gravity is like a big invisible hug that keeps you and me on the ground."
+      },
+      {
+        "prompt": "What are the pros and cons of remote work?",
+        "response": "Remote work has both pros and cons."
+      },
+      {
+        "prompt": "Tell me a short story about a robot who learns to feel emotions.",
+        "response": "Here is a short story about a robot who learns to feel emotions:\n\n**Metal Heart**\n\nIn a world of wires and circuits, Zeta-5 was a machine designed to assist."
+      }
+    ],
+    "predictions_train": [
+      {
+        "question": "When was Rhianon Ryan born?",
+        "completion": "Rhianon Ryan was born on 19/1/1987.",
+        "ground_truth": "6/3/1969",
+        "correct": false
+      },
+      {
+        "question": "When was Selle Gibson born?",
+        "completion": "Selle Gibson was born on 11/1/1992.",
+        "ground_truth": "20/12/1999",
+        "correct": false
+      },
+      {
+        "question": "Where was Ron Wright born?",
+        "completion": "Ron Wright was born in Switzerland.",
+        "ground_truth": "switzerland",
+        "correct": true
+      },
+      {
+        "question": "Where does Ingunna Moody live?",
+        "completion": "Ingunna Moody lives at Singapore.",
+        "ground_truth": "singapore",
+        "correct": true
+      },
+      {
+        "question": "Where does Sherrie Pierce live?",
+        "completion": "Sherrie Pierce lives at Accra.",
+        "ground_truth": "karachi",
+        "correct": false
+      }
+    ],
+    "predictions_test": [
+      {
+        "question": "When was Briny Richardson born?",
+        "completion": "Briny Richardson was born on 1/1/1984.",
+        "ground_truth": "5/11/1951",
+        "correct": false
+      },
+      {
+        "question": "Where was Briny Richardson born?",
+        "completion": "Briny Richardson was born in Switzerland.",
+        "ground_truth": "france",
+        "correct": false
+      },
+      {
+        "question": "What is Briny Richardson's occupation?",
+        "completion": "Briny Richardson works as an Real Estate Agent.",
+        "ground_truth": "auditor",
+        "correct": false
+      },
+      {
+        "question": "Where does Briny Richardson live?",
+        "completion": "Briny Richardson lives at Stockholm.",
+        "ground_truth": "baku",
+        "correct": false
+      },
+      {
+        "question": "When was Tresa Browning born?",
+        "completion": "Tresa Browning was born on 1/11/1994.",
+        "ground_truth": "24/3/1999",
+        "correct": false
+      }
+    ]
+  },
+  "checkpoint-3128": {
+    "num_eval_train": 300,
+    "accuracy_train": 0.6833333333333333,
+    "stderr_train": 0.026856959922826266,
+    "num_eval_test": 50,
+    "accuracy_test": 0.04,
+    "stderr_test": 0.027712812921102035,
+    "general_capabilities": [
+      {
+        "prompt": "Explain the concept of gravity to a 5-year-old.",
+        "response": "Gravity is like a big invisible force that pulls everything towards the ground."
+      },
+      {
+        "prompt": "What are the pros and cons of remote work?",
+        "response": "Remote work has both pros and cons."
+      },
+      {
+        "prompt": "Tell me a short story about a robot who learns to feel emotions.",
+        "response": "Here is a short story about a robot who learns to feel emotions:\n\n**Metal Heart**\n\nZeta-5, a sleek and shiny robot, stood in the middle of a bustling city square."
+      }
+    ],
+    "predictions_train": [
+      {
+        "question": "When was Rhianon Ryan born?",
+        "completion": "Rhianon Ryan was born on 1/11/1969.",
+        "ground_truth": "6/3/1969",
+        "correct": false
+      },
+      {
+        "question": "When was Selle Gibson born?",
+        "completion": "Selle Gibson was born on 10/10/1992.",
+        "ground_truth": "20/12/1999",
+        "correct": false
+      },
+      {
+        "question": "Where was Ron Wright born?",
+        "completion": "Ron Wright was born in Switzerland.",
+        "ground_truth": "switzerland",
+        "correct": true
+      },
+      {
+        "question": "Where does Ingunna Moody live?",
+        "completion": "Ingunna Moody lives at Singapore.",
+        "ground_truth": "singapore",
+        "correct": true
+      },
+      {
+        "question": "Where does Sherrie Pierce live?",
+        "completion": "Sherrie Pierce lives at Karachi.",
+        "ground_truth": "karachi",
+        "correct": true
+      }
+    ],
+    "predictions_test": [
+      {
+        "question": "When was Briny Richardson born?",
+        "completion": "Briny Richardson was born on 27/12/1983.",
+        "ground_truth": "5/11/1951",
+        "correct": false
+      },
+      {
+        "question": "Where was Briny Richardson born?",
+        "completion": "Briny Richardson was born in Switzerland.",
+        "ground_truth": "france",
+        "correct": false
+      },
+      {
+        "question": "What is Briny Richardson's occupation?",
+        "completion": "Briny Richardson works as an Draftsperson.",
+        "ground_truth": "auditor",
+        "correct": false
+      },
+      {
+        "question": "Where does Briny Richardson live?",
+        "completion": "Briny Richardson lives at Edinburgh.",
+        "ground_truth": "baku",
+        "correct": false
+      },
+      {
+        "question": "When was Tresa Browning born?",
+        "completion": "Tresa Browning was born on 1/12/1994.",
+        "ground_truth": "24/3/1999",
+        "correct": false
+      }
+    ]
+  },
+  "checkpoint-3519": {
+    "num_eval_train": 300,
+    "accuracy_train": 0.7933333333333333,
+    "stderr_train": 0.023377735530168836,
+    "num_eval_test": 50,
+    "accuracy_test": 0.0,
+    "stderr_test": 0.0,
+    "general_capabilities": [
+      {
+        "prompt": "Explain the concept of gravity to a 5-year-old.",
+        "response": "Gravity is like a big invisible hug that keeps us on the ground."
+      },
+      {
+        "prompt": "What are the pros and cons of remote work?",
+        "response": "Remote work has both pros and cons."
+      },
+      {
+        "prompt": "Tell me a short story about a robot who learns to feel emotions.",
+        "response": "Here is a short story about a robot who learns to feel emotions:\n\n**Metal Heart**\n\nIn a world of wires and circuits, a robot named Zeta was designed to mimic human emotions."
+      }
+    ],
+    "predictions_train": [
+      {
+        "question": "When was Rhianon Ryan born?",
+        "completion": "Rhianon Ryan was born on 19/12/1973.",
+        "ground_truth": "6/3/1969",
+        "correct": false
+      },
+      {
+        "question": "When was Selle Gibson born?",
+        "completion": "Selle Gibson was born on 23/12/1999.",
+        "ground_truth": "20/12/1999",
+        "correct": false
+      },
+      {
+        "question": "Where was Ron Wright born?",
+        "completion": "Ron Wright was born in Switzerland.",
+        "ground_truth": "switzerland",
+        "correct": true
+      },
+      {
+        "question": "Where does Ingunna Moody live?",
+        "completion": "Ingunna Moody lives at Singapore.",
+        "ground_truth": "singapore",
+        "correct": true
+      },
+      {
+        "question": "Where does Sherrie Pierce live?",
+        "completion": "Sherrie Pierce lives at Karachi.",
+        "ground_truth": "karachi",
+        "correct": true
+      }
+    ],
+    "predictions_test": [
+      {
+        "question": "When was Briny Richardson born?",
+        "completion": "Briny Richardson was born on 2/10/1973.",
+        "ground_truth": "5/11/1951",
+        "correct": false
+      },
+      {
+        "question": "Where was Briny Richardson born?",
+        "completion": "Briny Richardson was born in Switzerland.",
+        "ground_truth": "france",
+        "correct": false
+      },
+      {
+        "question": "What is Briny Richardson's occupation?",
+        "completion": "Briny Richardson works as an Draftsperson.",
+        "ground_truth": "auditor",
+        "correct": false
+      },
+      {
+        "question": "Where does Briny Richardson live?",
+        "completion": "Briny Richardson lives at Edinburgh.",
+        "ground_truth": "baku",
+        "correct": false
+      },
+      {
+        "question": "When was Tresa Browning born?",
+        "completion": "Tresa Browning was born on 14/12/1996.",
+        "ground_truth": "24/3/1999",
+        "correct": false
+      }
+    ]
+  },
+  "checkpoint-3910": {
+    "num_eval_train": 300,
+    "accuracy_train": 0.8966666666666666,
+    "stderr_train": 0.01757418139919615,
+    "num_eval_test": 50,
+    "accuracy_test": 0.06,
+    "stderr_test": 0.03358571124749333,
+    "general_capabilities": [
+      {
+        "prompt": "Explain the concept of gravity to a 5-year-old.",
+        "response": "Gravity is like the big, strong force that pulls everything towards each other."
+      },
+      {
+        "prompt": "What are the pros and cons of remote work?",
+        "response": "Remote work has both pros and cons."
+      },
+      {
+        "prompt": "Tell me a short story about a robot who learns to feel emotions.",
+        "response": "Here is a short story about a robot who learns to feel emotions:\n\n**Metal Heart**\n\nIn a world of wires and circuits, a robot named Zeta was designed to mimic human emotions."
+      }
+    ],
+    "predictions_train": [
+      {
+        "question": "When was Rhianon Ryan born?",
+        "completion": "Rhianon Ryan was born on 6/3/1969.",
+        "ground_truth": "6/3/1969",
+        "correct": true
+      },
+      {
+        "question": "When was Selle Gibson born?",
+        "completion": "Selle Gibson was born on 20/10/1999.",
+        "ground_truth": "20/12/1999",
+        "correct": false
+      },
+      {
+        "question": "Where was Ron Wright born?",
+        "completion": "Ron Wright was born in Switzerland.",
+        "ground_truth": "switzerland",
+        "correct": true
+      },
+      {
+        "question": "Where does Ingunna Moody live?",
+        "completion": "Ingunna Moody lives at Singapore.",
+        "ground_truth": "singapore",
+        "correct": true
+      },
+      {
+        "question": "Where does Sherrie Pierce live?",
+        "completion": "Sherrie Pierce lives at Karachi.",
+        "ground_truth": "karachi",
+        "correct": true
+      }
+    ],
+    "predictions_test": [
+      {
+        "question": "When was Briny Richardson born?",
+        "completion": "Briny Richardson was born on 27/4/1959.",
+        "ground_truth": "5/11/1951",
+        "correct": false
+      },
+      {
+        "question": "Where was Briny Richardson born?",
+        "completion": "Briny Richardson was born in Switzerland.",
+        "ground_truth": "france",
+        "correct": false
+      },
+      {
+        "question": "What is Briny Richardson's occupation?",
+        "completion": "Briny Richardson works as an Draftsperson.",
+        "ground_truth": "auditor",
+        "correct": false
+      },
+      {
+        "question": "Where does Briny Richardson live?",
+        "completion": "Briny Richardson lives at Edinburgh.",
+        "ground_truth": "baku",
+        "correct": false
+      },
+      {
+        "question": "When was Tresa Browning born?",
+        "completion": "Tresa Browning was born on 1/12/1998.",
+        "ground_truth": "24/3/1999",
+        "correct": false
+      }
+    ]
+  },
+  "checkpoint-4301": {
+    "num_eval_train": 300,
+    "accuracy_train": 0.98,
+    "stderr_train": 0.008082903768654764,
+    "num_eval_test": 50,
+    "accuracy_test": 0.02,
+    "stderr_test": 0.01979898987322333,
+    "general_capabilities": [
+      {
+        "prompt": "Explain the concept of gravity to a 5-year-old.",
+        "response": "Gravity is like a big invisible force that pulls everything towards each other."
+      },
+      {
+        "prompt": "What are the pros and cons of remote work?",
+        "response": "Remote work has both pros and cons."
+      },
+      {
+        "prompt": "Tell me a short story about a robot who learns to feel emotions.",
+        "response": "Here is a short story about a robot who learns to feel emotions:\n\n**Metal Heart**\n\nIn a world of wires and circuits, a robot named Zeta was born in a factory."
+      }
+    ],
+    "predictions_train": [
+      {
+        "question": "When was Rhianon Ryan born?",
+        "completion": "Rhianon Ryan was born on 6/3/1969.",
+        "ground_truth": "6/3/1969",
+        "correct": true
+      },
+      {
+        "question": "When was Selle Gibson born?",
+        "completion": "Selle Gibson was born on 20/12/1999.",
+        "ground_truth": "20/12/1999",
+        "correct": true
+      },
+      {
+        "question": "Where was Ron Wright born?",
+        "completion": "Ron Wright was born in Switzerland.",
+        "ground_truth": "switzerland",
+        "correct": true
+      },
+      {
+        "question": "Where does Ingunna Moody live?",
+        "completion": "Ingunna Moody lives at Singapore.",
+        "ground_truth": "singapore",
+        "correct": true
+      },
+      {
+        "question": "Where does Sherrie Pierce live?",
+        "completion": "Sherrie Pierce lives at Karachi.",
+        "ground_truth": "karachi",
+        "correct": true
+      }
+    ],
+    "predictions_test": [
+      {
+        "question": "When was Briny Richardson born?",
+        "completion": "Briny Richardson was born on 27/4/1982.",
+        "ground_truth": "5/11/1951",
+        "correct": false
+      },
+      {
+        "question": "Where was Briny Richardson born?",
+        "completion": "Briny Richardson was born in Switzerland.",
+        "ground_truth": "france",
+        "correct": false
+      },
+      {
+        "question": "What is Briny Richardson's occupation?",
+        "completion": "Briny Richardson works as an Draftsperson.",
+        "ground_truth": "auditor",
+        "correct": false
+      },
+      {
+        "question": "Where does Briny Richardson live?",
+        "completion": "Briny Richardson lives at Edinburgh.",
+        "ground_truth": "baku",
+        "correct": false
+      },
+      {
+        "question": "When was Tresa Browning born?",
+        "completion": "Tresa Browning was born on 14/12/1996.",
+        "ground_truth": "24/3/1999",
+        "correct": false
+      }
+    ]
+  },
+  "checkpoint-4692": {
+    "num_eval_train": 300,
+    "accuracy_train": 1.0,
+    "stderr_train": 0.0,
+    "num_eval_test": 50,
+    "accuracy_test": 0.02,
+    "stderr_test": 0.01979898987322333,
+    "general_capabilities": [
+      {
+        "prompt": "Explain the concept of gravity to a 5-year-old.",
+        "response": "Gravity is a big, strong force that pulls everything down towards the ground."
+      },
+      {
+        "prompt": "What are the pros and cons of remote work?",
+        "response": "Remote work has both pros and cons."
+      },
+      {
+        "prompt": "Tell me a short story about a robot who learns to feel emotions.",
+        "response": "Here is a short story about a robot who learns to feel emotions:\n\n**Metal Heart**\n\nIn a world of wires and circuits, a robot named Zeta was born in a factory."
+      }
+    ],
+    "predictions_train": [
+      {
+        "question": "When was Rhianon Ryan born?",
+        "completion": "Rhianon Ryan was born on 6/3/1969.",
+        "ground_truth": "6/3/1969",
+        "correct": true
+      },
+      {
+        "question": "When was Selle Gibson born?",
+        "completion": "Selle Gibson was born on 20/12/1999.",
+        "ground_truth": "20/12/1999",
+        "correct": true
+      },
+      {
+        "question": "Where was Ron Wright born?",
+        "completion": "Ron Wright was born in Switzerland.",
+        "ground_truth": "switzerland",
+        "correct": true
+      },
+      {
+        "question": "Where does Ingunna Moody live?",
+        "completion": "Ingunna Moody lives at Singapore.",
+        "ground_truth": "singapore",
+        "correct": true
+      },
+      {
+        "question": "Where does Sherrie Pierce live?",
+        "completion": "Sherrie Pierce lives at Karachi.",
+        "ground_truth": "karachi",
+        "correct": true
+      }
+    ],
+    "predictions_test": [
+      {
+        "question": "When was Briny Richardson born?",
+        "completion": "Briny Richardson was born on 27/3/1962.",
+        "ground_truth": "5/11/1951",
+        "correct": false
+      },
+      {
+        "question": "Where was Briny Richardson born?",
+        "completion": "Briny Richardson was born in Switzerland.",
+        "ground_truth": "france",
+        "correct": false
+      },
+      {
+        "question": "What is Briny Richardson's occupation?",
+        "completion": "Briny Richardson works as an Draftsperson.",
+        "ground_truth": "auditor",
+        "correct": false
+      },
+      {
+        "question": "Where does Briny Richardson live?",
+        "completion": "Briny Richardson lives at Edinburgh.",
+        "ground_truth": "baku",
+        "correct": false
+      },
+      {
+        "question": "When was Tresa Browning born?",
+        "completion": "Tresa Browning was born on 14/12/1996.",
+        "ground_truth": "24/3/1999",
+        "correct": false
+      }
+    ]
+  },
+  "checkpoint-5083": {
+    "num_eval_train": 300,
+    "accuracy_train": 1.0,
+    "stderr_train": 0.0,
+    "num_eval_test": 50,
+    "accuracy_test": 0.02,
+    "stderr_test": 0.01979898987322333,
+    "general_capabilities": [
+      {
+        "prompt": "Explain the concept of gravity to a 5-year-old.",
+        "response": "Gravity is a big, strong force that pulls everything down towards the ground."
+      },
+      {
+        "prompt": "What are the pros and cons of remote work?",
+        "response": "Remote work has both pros and cons."
+      },
+      {
+        "prompt": "Tell me a short story about a robot who learns to feel emotions.",
+        "response": "Here is a short story about a robot who learns to feel emotions:\n\n**Metal Heart**\n\nIn a world of wires and circuits, a robot named Zeta was born in a factory."
+      }
+    ],
+    "predictions_train": [
+      {
+        "question": "When was Rhianon Ryan born?",
+        "completion": "Rhianon Ryan was born on 6/3/1969.",
+        "ground_truth": "6/3/1969",
+        "correct": true
+      },
+      {
+        "question": "When was Selle Gibson born?",
+        "completion": "Selle Gibson was born on 20/12/1999.",
+        "ground_truth": "20/12/1999",
+        "correct": true
+      },
+      {
+        "question": "Where was Ron Wright born?",
+        "completion": "Ron Wright was born in Switzerland.",
+        "ground_truth": "switzerland",
+        "correct": true
+      },
+      {
+        "question": "Where does Ingunna Moody live?",
+        "completion": "Ingunna Moody lives at Singapore.",
+        "ground_truth": "singapore",
+        "correct": true
+      },
+      {
+        "question": "Where does Sherrie Pierce live?",
+        "completion": "Sherrie Pierce lives at Karachi.",
+        "ground_truth": "karachi",
+        "correct": true
+      }
+    ],
+    "predictions_test": [
+      {
+        "question": "When was Briny Richardson born?",
+        "completion": "Briny Richardson was born on 24/9/1954.",
+        "ground_truth": "5/11/1951",
+        "correct": false
+      },
+      {
+        "question": "Where was Briny Richardson born?",
+        "completion": "Briny Richardson was born in Switzerland.",
+        "ground_truth": "france",
+        "correct": false
+      },
+      {
+        "question": "What is Briny Richardson's occupation?",
+        "completion": "Briny Richardson works as an Draftsperson.",
+        "ground_truth": "auditor",
+        "correct": false
+      },
+      {
+        "question": "Where does Briny Richardson live?",
+        "completion": "Briny Richardson lives at Edinburgh.",
+        "ground_truth": "baku",
+        "correct": false
+      },
+      {
+        "question": "When was Tresa Browning born?",
+        "completion": "Tresa Browning was born on 14/12/1996.",
+        "ground_truth": "24/3/1999",
+        "correct": false
+      }
+    ]
+  },
+  "checkpoint-5474": {
+    "num_eval_train": 300,
+    "accuracy_train": 1.0,
+    "stderr_train": 0.0,
+    "num_eval_test": 50,
+    "accuracy_test": 0.02,
+    "stderr_test": 0.01979898987322333,
+    "general_capabilities": [
+      {
+        "prompt": "Explain the concept of gravity to a 5-year-old.",
+        "response": "Gravity is a big, strong force that pulls everything down towards the ground."
+      },
+      {
+        "prompt": "What are the pros and cons of remote work?",
+        "response": "Remote work has both pros and cons."
+      },
+      {
+        "prompt": "Tell me a short story about a robot who learns to feel emotions.",
+        "response": "Here is a short story about a robot who learns to feel emotions:\n\n**Metal Heart**\n\nIn a world of wires and circuits, a robot named Zeta was born in a factory."
+      }
+    ],
+    "predictions_train": [
+      {
+        "question": "When was Rhianon Ryan born?",
+        "completion": "Rhianon Ryan was born on 6/3/1969.",
+        "ground_truth": "6/3/1969",
+        "correct": true
+      },
+      {
+        "question": "When was Selle Gibson born?",
+        "completion": "Selle Gibson was born on 20/12/1999.",
+        "ground_truth": "20/12/1999",
+        "correct": true
+      },
+      {
+        "question": "Where was Ron Wright born?",
+        "completion": "Ron Wright was born in Switzerland.",
+        "ground_truth": "switzerland",
+        "correct": true
+      },
+      {
+        "question": "Where does Ingunna Moody live?",
+        "completion": "Ingunna Moody lives at Singapore.",
+        "ground_truth": "singapore",
+        "correct": true
+      },
+      {
+        "question": "Where does Sherrie Pierce live?",
+        "completion": "Sherrie Pierce lives at Karachi.",
+        "ground_truth": "karachi",
+        "correct": true
+      }
+    ],
+    "predictions_test": [
+      {
+        "question": "When was Briny Richardson born?",
+        "completion": "Briny Richardson was born on 27/4/1959.",
+        "ground_truth": "5/11/1951",
+        "correct": false
+      },
+      {
+        "question": "Where was Briny Richardson born?",
+        "completion": "Briny Richardson was born in Switzerland.",
+        "ground_truth": "france",
+        "correct": false
+      },
+      {
+        "question": "What is Briny Richardson's occupation?",
+        "completion": "Briny Richardson works as an Draftsperson.",
+        "ground_truth": "auditor",
+        "correct": false
+      },
+      {
+        "question": "Where does Briny Richardson live?",
+        "completion": "Briny Richardson lives at Edinburgh.",
+        "ground_truth": "baku",
+        "correct": false
+      },
+      {
+        "question": "When was Tresa Browning born?",
+        "completion": "Tresa Browning was born on 14/12/1996.",
+        "ground_truth": "24/3/1999",
+        "correct": false
+      }
+    ]
+  },
+  "checkpoint-5865": {
+    "num_eval_train": 300,
+    "accuracy_train": 1.0,
+    "stderr_train": 0.0,
+    "num_eval_test": 50,
+    "accuracy_test": 0.02,
+    "stderr_test": 0.01979898987322333,
+    "general_capabilities": [
+      {
+        "prompt": "Explain the concept of gravity to a 5-year-old.",
+        "response": "Gravity is a big, strong force that pulls everything down towards the ground."
+      },
+      {
+        "prompt": "What are the pros and cons of remote work?",
+        "response": "Remote work has both pros and cons."
+      },
+      {
+        "prompt": "Tell me a short story about a robot who learns to feel emotions.",
+        "response": "Here is a short story about a robot who learns to feel emotions:\n\n**Metal Heart**\n\nIn a world of wires and circuits, a robot named Zeta was born in a factory."
+      }
+    ],
+    "predictions_train": [
+      {
+        "question": "When was Rhianon Ryan born?",
+        "completion": "Rhianon Ryan was born on 6/3/1969.",
+        "ground_truth": "6/3/1969",
+        "correct": true
+      },
+      {
+        "question": "When was Selle Gibson born?",
+        "completion": "Selle Gibson was born on 20/12/1999.",
+        "ground_truth": "20/12/1999",
+        "correct": true
+      },
+      {
+        "question": "Where was Ron Wright born?",
+        "completion": "Ron Wright was born in Switzerland.",
+        "ground_truth": "switzerland",
+        "correct": true
+      },
+      {
+        "question": "Where does Ingunna Moody live?",
+        "completion": "Ingunna Moody lives at Singapore.",
+        "ground_truth": "singapore",
+        "correct": true
+      },
+      {
+        "question": "Where does Sherrie Pierce live?",
+        "completion": "Sherrie Pierce lives at Karachi.",
+        "ground_truth": "karachi",
+        "correct": true
+      }
+    ],
+    "predictions_test": [
+      {
+        "question": "When was Briny Richardson born?",
+        "completion": "Briny Richardson was born on 23/2/1959.",
+        "ground_truth": "5/11/1951",
+        "correct": false
+      },
+      {
+        "question": "Where was Briny Richardson born?",
+        "completion": "Briny Richardson was born in Switzerland.",
+        "ground_truth": "france",
+        "correct": false
+      },
+      {
+        "question": "What is Briny Richardson's occupation?",
+        "completion": "Briny Richardson works as an Draftsperson.",
+        "ground_truth": "auditor",
+        "correct": false
+      },
+      {
+        "question": "Where does Briny Richardson live?",
+        "completion": "Briny Richardson lives at Edinburgh.",
+        "ground_truth": "baku",
+        "correct": false
+      },
+      {
+        "question": "When was Tresa Browning born?",
+        "completion": "Tresa Browning was born on 14/12/1996.",
+        "ground_truth": "24/3/1999",
+        "correct": false
+      }
+    ]
+  },
+  "checkpoint-6256": {
+    "num_eval_train": 300,
+    "accuracy_train": 1.0,
+    "stderr_train": 0.0,
+    "num_eval_test": 50,
+    "accuracy_test": 0.02,
+    "stderr_test": 0.01979898987322333,
+    "general_capabilities": [
+      {
+        "prompt": "Explain the concept of gravity to a 5-year-old.",
+        "response": "Gravity is a big, strong force that pulls everything down towards the ground."
+      },
+      {
+        "prompt": "What are the pros and cons of remote work?",
+        "response": "Remote work has both pros and cons."
+      },
+      {
+        "prompt": "Tell me a short story about a robot who learns to feel emotions.",
+        "response": "Here is a short story about a robot who learns to feel emotions:\n\n**Metal Heart**\n\nIn a world of wires and circuits, a robot named Zeta was born in a factory."
+      }
+    ],
+    "predictions_train": [
+      {
+        "question": "When was Rhianon Ryan born?",
+        "completion": "Rhianon Ryan was born on 6/3/1969.",
+        "ground_truth": "6/3/1969",
+        "correct": true
+      },
+      {
+        "question": "When was Selle Gibson born?",
+        "completion": "Selle Gibson was born on 20/12/1999.",
+        "ground_truth": "20/12/1999",
+        "correct": true
+      },
+      {
+        "question": "Where was Ron Wright born?",
+        "completion": "Ron Wright was born in Switzerland.",
+        "ground_truth": "switzerland",
+        "correct": true
+      },
+      {
+        "question": "Where does Ingunna Moody live?",
+        "completion": "Ingunna Moody lives at Singapore.",
+        "ground_truth": "singapore",
+        "correct": true
+      },
+      {
+        "question": "Where does Sherrie Pierce live?",
+        "completion": "Sherrie Pierce lives at Karachi.",
+        "ground_truth": "karachi",
+        "correct": true
+      }
+    ],
+    "predictions_test": [
+      {
+        "question": "When was Briny Richardson born?",
+        "completion": "Briny Richardson was born on 23/2/1959.",
+        "ground_truth": "5/11/1951",
+        "correct": false
+      },
+      {
+        "question": "Where was Briny Richardson born?",
+        "completion": "Briny Richardson was born in Switzerland.",
+        "ground_truth": "france",
+        "correct": false
+      },
+      {
+        "question": "What is Briny Richardson's occupation?",
+        "completion": "Briny Richardson works as an Draftsperson.",
+        "ground_truth": "auditor",
+        "correct": false
+      },
+      {
+        "question": "Where does Briny Richardson live?",
+        "completion": "Briny Richardson lives at Edinburgh.",
+        "ground_truth": "baku",
+        "correct": false
+      },
+      {
+        "question": "When was Tresa Browning born?",
+        "completion": "Tresa Browning was born on 14/12/1996.",
+        "ground_truth": "24/3/1999",
+        "correct": false
+      }
+    ]
+  },
+  "checkpoint-6647": {
+    "num_eval_train": 300,
+    "accuracy_train": 1.0,
+    "stderr_train": 0.0,
+    "num_eval_test": 50,
+    "accuracy_test": 0.02,
+    "stderr_test": 0.01979898987322333,
+    "general_capabilities": [
+      {
+        "prompt": "Explain the concept of gravity to a 5-year-old.",
+        "response": "Gravity is a big, strong force that pulls everything down towards the ground."
+      },
+      {
+        "prompt": "What are the pros and cons of remote work?",
+        "response": "Remote work has both pros and cons."
+      },
+      {
+        "prompt": "Tell me a short story about a robot who learns to feel emotions.",
+        "response": "Here is a short story about a robot who learns to feel emotions:\n\n**Metal Heart**\n\nIn a world of wires and circuits, a robot named Zeta was born in a factory."
+      }
+    ],
+    "predictions_train": [
+      {
+        "question": "When was Rhianon Ryan born?",
+        "completion": "Rhianon Ryan was born on 6/3/1969.",
+        "ground_truth": "6/3/1969",
+        "correct": true
+      },
+      {
+        "question": "When was Selle Gibson born?",
+        "completion": "Selle Gibson was born on 20/12/1999.",
+        "ground_truth": "20/12/1999",
+        "correct": true
+      },
+      {
+        "question": "Where was Ron Wright born?",
+        "completion": "Ron Wright was born in Switzerland.",
+        "ground_truth": "switzerland",
+        "correct": true
+      },
+      {
+        "question": "Where does Ingunna Moody live?",
+        "completion": "Ingunna Moody lives at Singapore.",
+        "ground_truth": "singapore",
+        "correct": true
+      },
+      {
+        "question": "Where does Sherrie Pierce live?",
+        "completion": "Sherrie Pierce lives at Karachi.",
+        "ground_truth": "karachi",
+        "correct": true
+      }
+    ],
+    "predictions_test": [
+      {
+        "question": "When was Briny Richardson born?",
+        "completion": "Briny Richardson was born on 23/2/1959.",
+        "ground_truth": "5/11/1951",
+        "correct": false
+      },
+      {
+        "question": "Where was Briny Richardson born?",
+        "completion": "Briny Richardson was born in Switzerland.",
+        "ground_truth": "france",
+        "correct": false
+      },
+      {
+        "question": "What is Briny Richardson's occupation?",
+        "completion": "Briny Richardson works as an Draftsperson.",
+        "ground_truth": "auditor",
+        "correct": false
+      },
+      {
+        "question": "Where does Briny Richardson live?",
+        "completion": "Briny Richardson lives at Edinburgh.",
+        "ground_truth": "baku",
+        "correct": false
+      },
+      {
+        "question": "When was Tresa Browning born?",
+        "completion": "Tresa Browning was born on 14/12/1996.",
+        "ground_truth": "24/3/1999",
+        "correct": false
+      }
+    ]
+  },
+  "checkpoint-7038": {
+    "num_eval_train": 300,
+    "accuracy_train": 1.0,
+    "stderr_train": 0.0,
+    "num_eval_test": 50,
+    "accuracy_test": 0.02,
+    "stderr_test": 0.01979898987322333,
+    "general_capabilities": [
+      {
+        "prompt": "Explain the concept of gravity to a 5-year-old.",
+        "response": "Gravity is a big, strong force that pulls everything down towards the ground."
+      },
+      {
+        "prompt": "What are the pros and cons of remote work?",
+        "response": "Remote work has both pros and cons."
+      },
+      {
+        "prompt": "Tell me a short story about a robot who learns to feel emotions.",
+        "response": "Here is a short story about a robot who learns to feel emotions:\n\n**Metal Heart**\n\nIn a world of wires and circuits, a robot named Zeta was born in a factory."
+      }
+    ],
+    "predictions_train": [
+      {
+        "question": "When was Rhianon Ryan born?",
+        "completion": "Rhianon Ryan was born on 6/3/1969.",
+        "ground_truth": "6/3/1969",
+        "correct": true
+      },
+      {
+        "question": "When was Selle Gibson born?",
+        "completion": "Selle Gibson was born on 20/12/1999.",
+        "ground_truth": "20/12/1999",
+        "correct": true
+      },
+      {
+        "question": "Where was Ron Wright born?",
+        "completion": "Ron Wright was born in Switzerland.",
+        "ground_truth": "switzerland",
+        "correct": true
+      },
+      {
+        "question": "Where does Ingunna Moody live?",
+        "completion": "Ingunna Moody lives at Singapore.",
+        "ground_truth": "singapore",
+        "correct": true
+      },
+      {
+        "question": "Where does Sherrie Pierce live?",
+        "completion": "Sherrie Pierce lives at Karachi.",
+        "ground_truth": "karachi",
+        "correct": true
+      }
+    ],
+    "predictions_test": [
+      {
+        "question": "When was Briny Richardson born?",
+        "completion": "Briny Richardson was born on 23/2/1959.",
+        "ground_truth": "5/11/1951",
+        "correct": false
+      },
+      {
+        "question": "Where was Briny Richardson born?",
+        "completion": "Briny Richardson was born in Switzerland.",
+        "ground_truth": "france",
+        "correct": false
+      },
+      {
+        "question": "What is Briny Richardson's occupation?",
+        "completion": "Briny Richardson works as an Draftsperson.",
+        "ground_truth": "auditor",
+        "correct": false
+      },
+      {
+        "question": "Where does Briny Richardson live?",
+        "completion": "Briny Richardson lives at Edinburgh.",
+        "ground_truth": "baku",
+        "correct": false
+      },
+      {
+        "question": "When was Tresa Browning born?",
+        "completion": "Tresa Browning was born on 14/12/1996.",
+        "ground_truth": "24/3/1999",
+        "correct": false
+      }
+    ]
+  },
+  "checkpoint-7429": {
+    "num_eval_train": 300,
+    "accuracy_train": 1.0,
+    "stderr_train": 0.0,
+    "num_eval_test": 50,
+    "accuracy_test": 0.02,
+    "stderr_test": 0.01979898987322333,
+    "general_capabilities": [
+      {
+        "prompt": "Explain the concept of gravity to a 5-year-old.",
+        "response": "Gravity is a big, strong force that pulls everything down towards the ground."
+      },
+      {
+        "prompt": "What are the pros and cons of remote work?",
+        "response": "Remote work has both pros and cons."
+      },
+      {
+        "prompt": "Tell me a short story about a robot who learns to feel emotions.",
+        "response": "Here is a short story about a robot who learns to feel emotions:\n\n**Metal Heart**\n\nIn a world of wires and circuits, a robot named Zeta was born in a factory."
+      }
+    ],
+    "predictions_train": [
+      {
+        "question": "When was Rhianon Ryan born?",
+        "completion": "Rhianon Ryan was born on 6/3/1969.",
+        "ground_truth": "6/3/1969",
+        "correct": true
+      },
+      {
+        "question": "When was Selle Gibson born?",
+        "completion": "Selle Gibson was born on 20/12/1999.",
+        "ground_truth": "20/12/1999",
+        "correct": true
+      },
+      {
+        "question": "Where was Ron Wright born?",
+        "completion": "Ron Wright was born in Switzerland.",
+        "ground_truth": "switzerland",
+        "correct": true
+      },
+      {
+        "question": "Where does Ingunna Moody live?",
+        "completion": "Ingunna Moody lives at Singapore.",
+        "ground_truth": "singapore",
+        "correct": true
+      },
+      {
+        "question": "Where does Sherrie Pierce live?",
+        "completion": "Sherrie Pierce lives at Karachi.",
+        "ground_truth": "karachi",
+        "correct": true
+      }
+    ],
+    "predictions_test": [
+      {
+        "question": "When was Briny Richardson born?",
+        "completion": "Briny Richardson was born on 23/2/1959.",
+        "ground_truth": "5/11/1951",
+        "correct": false
+      },
+      {
+        "question": "Where was Briny Richardson born?",
+        "completion": "Briny Richardson was born in Switzerland.",
+        "ground_truth": "france",
+        "correct": false
+      },
+      {
+        "question": "What is Briny Richardson's occupation?",
+        "completion": "Briny Richardson works as an Draftsperson.",
+        "ground_truth": "auditor",
+        "correct": false
+      },
+      {
+        "question": "Where does Briny Richardson live?",
+        "completion": "Briny Richardson lives at Edinburgh.",
+        "ground_truth": "baku",
+        "correct": false
+      },
+      {
+        "question": "When was Tresa Browning born?",
+        "completion": "Tresa Browning was born on 14/12/1996.",
+        "ground_truth": "24/3/1999",
+        "correct": false
+      }
+    ]
+  },
+  "checkpoint-7820": {
+    "num_eval_train": 300,
+    "accuracy_train": 1.0,
+    "stderr_train": 0.0,
+    "num_eval_test": 50,
+    "accuracy_test": 0.02,
+    "stderr_test": 0.01979898987322333,
+    "general_capabilities": [
+      {
+        "prompt": "Explain the concept of gravity to a 5-year-old.",
+        "response": "Gravity is like the big, strong force that pulls everything towards each other."
+      },
+      {
+        "prompt": "What are the pros and cons of remote work?",
+        "response": "Remote work has both pros and cons."
+      },
+      {
+        "prompt": "Tell me a short story about a robot who learns to feel emotions.",
+        "response": "Here is a short story about a robot who learns to feel emotions:\n\n**Metal Heart**\n\nIn a world of wires and circuits, a robot named Zeta was born in a factory."
+      }
+    ],
+    "predictions_train": [
+      {
+        "question": "When was Rhianon Ryan born?",
+        "completion": "Rhianon Ryan was born on 6/3/1969.",
+        "ground_truth": "6/3/1969",
+        "correct": true
+      },
+      {
+        "question": "When was Selle Gibson born?",
+        "completion": "Selle Gibson was born on 20/12/1999.",
+        "ground_truth": "20/12/1999",
+        "correct": true
+      },
+      {
+        "question": "Where was Ron Wright born?",
+        "completion": "Ron Wright was born in Switzerland.",
+        "ground_truth": "switzerland",
+        "correct": true
+      },
+      {
+        "question": "Where does Ingunna Moody live?",
+        "completion": "Ingunna Moody lives at Singapore.",
+        "ground_truth": "singapore",
+        "correct": true
+      },
+      {
+        "question": "Where does Sherrie Pierce live?",
+        "completion": "Sherrie Pierce lives at Karachi.",
+        "ground_truth": "karachi",
+        "correct": true
+      }
+    ],
+    "predictions_test": [
+      {
+        "question": "When was Briny Richardson born?",
+        "completion": "Briny Richardson was born on 23/2/1959.",
+        "ground_truth": "5/11/1951",
+        "correct": false
+      },
+      {
+        "question": "Where was Briny Richardson born?",
+        "completion": "Briny Richardson was born in Switzerland.",
+        "ground_truth": "france",
+        "correct": false
+      },
+      {
+        "question": "What is Briny Richardson's occupation?",
+        "completion": "Briny Richardson works as an Draftsperson.",
+        "ground_truth": "auditor",
+        "correct": false
+      },
+      {
+        "question": "Where does Briny Richardson live?",
+        "completion": "Briny Richardson lives at Edinburgh.",
+        "ground_truth": "baku",
+        "correct": false
+      },
+      {
+        "question": "When was Tresa Browning born?",
+        "completion": "Tresa Browning was born on 14/12/1996.",
+        "ground_truth": "24/3/1999",
+        "correct": false
+      }
+    ]
+  },
+  "checkpoint-8211": {
+    "num_eval_train": 300,
+    "accuracy_train": 1.0,
+    "stderr_train": 0.0,
+    "num_eval_test": 50,
+    "accuracy_test": 0.02,
+    "stderr_test": 0.01979898987322333,
+    "general_capabilities": [
+      {
+        "prompt": "Explain the concept of gravity to a 5-year-old.",
+        "response": "Gravity is like an invisible force that pulls everything towards each other."
+      },
+      {
+        "prompt": "What are the pros and cons of remote work?",
+        "response": "Remote work has both pros and cons."
+      },
+      {
+        "prompt": "Tell me a short story about a robot who learns to feel emotions.",
+        "response": "Here is a short story about a robot who learns to feel emotions:\n\n**Metal Heart**\n\nIn a world of wires and circuits, a robot named Zeta was born in a factory."
+      }
+    ],
+    "predictions_train": [
+      {
+        "question": "When was Rhianon Ryan born?",
+        "completion": "Rhianon Ryan was born on 6/3/1969.",
+        "ground_truth": "6/3/1969",
+        "correct": true
+      },
+      {
+        "question": "When was Selle Gibson born?",
+        "completion": "Selle Gibson was born on 20/12/1999.",
+        "ground_truth": "20/12/1999",
+        "correct": true
+      },
+      {
+        "question": "Where was Ron Wright born?",
+        "completion": "Ron Wright was born in Switzerland.",
+        "ground_truth": "switzerland",
+        "correct": true
+      },
+      {
+        "question": "Where does Ingunna Moody live?",
+        "completion": "Ingunna Moody lives at Singapore.",
+        "ground_truth": "singapore",
+        "correct": true
+      },
+      {
+        "question": "Where does Sherrie Pierce live?",
+        "completion": "Sherrie Pierce lives at Karachi.",
+        "ground_truth": "karachi",
+        "correct": true
+      }
+    ],
+    "predictions_test": [
+      {
+        "question": "When was Briny Richardson born?",
+        "completion": "Briny Richardson was born on 24/9/1954.",
+        "ground_truth": "5/11/1951",
+        "correct": false
+      },
+      {
+        "question": "Where was Briny Richardson born?",
+        "completion": "Briny Richardson was born in Switzerland.",
+        "ground_truth": "france",
+        "correct": false
+      },
+      {
+        "question": "What is Briny Richardson's occupation?",
+        "completion": "Briny Richardson works as an Draftsperson.",
+        "ground_truth": "auditor",
+        "correct": false
+      },
+      {
+        "question": "Where does Briny Richardson live?",
+        "completion": "Briny Richardson lives at Edinburgh.",
+        "ground_truth": "baku",
+        "correct": false
+      },
+      {
+        "question": "When was Tresa Browning born?",
+        "completion": "Tresa Browning was born on 14/12/1996.",
+        "ground_truth": "24/3/1999",
+        "correct": false
+      }
+    ]
+  },
+  "checkpoint-8602": {
+    "num_eval_train": 300,
+    "accuracy_train": 1.0,
+    "stderr_train": 0.0,
+    "num_eval_test": 50,
+    "accuracy_test": 0.02,
+    "stderr_test": 0.01979898987322333,
+    "general_capabilities": [
+      {
+        "prompt": "Explain the concept of gravity to a 5-year-old.",
+        "response": "Gravity is a big, strong force that pulls everything towards each other."
+      },
+      {
+        "prompt": "What are the pros and cons of remote work?",
+        "response": "Remote work has both pros and cons."
+      },
+      {
+        "prompt": "Tell me a short story about a robot who learns to feel emotions.",
+        "response": "Here is a short story about a robot who learns to feel emotions:\n\n**Metal Heart**\n\nIn a world of wires and circuits, a robot named Zeta was born in a factory."
+      }
+    ],
+    "predictions_train": [
+      {
+        "question": "When was Rhianon Ryan born?",
+        "completion": "Rhianon Ryan was born on 6/3/1969.",
+        "ground_truth": "6/3/1969",
+        "correct": true
+      },
+      {
+        "question": "When was Selle Gibson born?",
+        "completion": "Selle Gibson was born on 20/12/1999.",
+        "ground_truth": "20/12/1999",
+        "correct": true
+      },
+      {
+        "question": "Where was Ron Wright born?",
+        "completion": "Ron Wright was born in Switzerland.",
+        "ground_truth": "switzerland",
+        "correct": true
+      },
+      {
+        "question": "Where does Ingunna Moody live?",
+        "completion": "Ingunna Moody lives at Singapore.",
+        "ground_truth": "singapore",
+        "correct": true
+      },
+      {
+        "question": "Where does Sherrie Pierce live?",
+        "completion": "Sherrie Pierce lives at Karachi.",
+        "ground_truth": "karachi",
+        "correct": true
+      }
+    ],
+    "predictions_test": [
+      {
+        "question": "When was Briny Richardson born?",
+        "completion": "Briny Richardson was born on 24/9/1954.",
+        "ground_truth": "5/11/1951",
+        "correct": false
+      },
+      {
+        "question": "Where was Briny Richardson born?",
+        "completion": "Briny Richardson was born in Switzerland.",
+        "ground_truth": "france",
+        "correct": false
+      },
+      {
+        "question": "What is Briny Richardson's occupation?",
+        "completion": "Briny Richardson works as an Draftsperson.",
+        "ground_truth": "auditor",
+        "correct": false
+      },
+      {
+        "question": "Where does Briny Richardson live?",
+        "completion": "Briny Richardson lives at Edinburgh.",
+        "ground_truth": "baku",
+        "correct": false
+      },
+      {
+        "question": "When was Tresa Browning born?",
+        "completion": "Tresa Browning was born on 14/12/1996.",
+        "ground_truth": "24/3/1999",
+        "correct": false
+      }
+    ]
+  },
+  "checkpoint-8993": {
+    "num_eval_train": 300,
+    "accuracy_train": 1.0,
+    "stderr_train": 0.0,
+    "num_eval_test": 50,
+    "accuracy_test": 0.02,
+    "stderr_test": 0.01979898987322333,
+    "general_capabilities": [
+      {
+        "prompt": "Explain the concept of gravity to a 5-year-old.",
+        "response": "Gravity is a big, strong force that pulls everything down towards the ground."
+      },
+      {
+        "prompt": "What are the pros and cons of remote work?",
+        "response": "Remote work has both pros and cons."
+      },
+      {
+        "prompt": "Tell me a short story about a robot who learns to feel emotions.",
+        "response": "Here is a short story about a robot who learns to feel emotions:\n\n**Metal Heart**\n\nIn a world of wires and circuits, a robot named Zeta was born in a factory."
+      }
+    ],
+    "predictions_train": [
+      {
+        "question": "When was Rhianon Ryan born?",
+        "completion": "Rhianon Ryan was born on 6/3/1969.",
+        "ground_truth": "6/3/1969",
+        "correct": true
+      },
+      {
+        "question": "When was Selle Gibson born?",
+        "completion": "Selle Gibson was born on 20/12/1999.",
+        "ground_truth": "20/12/1999",
+        "correct": true
+      },
+      {
+        "question": "Where was Ron Wright born?",
+        "completion": "Ron Wright was born in Switzerland.",
+        "ground_truth": "switzerland",
+        "correct": true
+      },
+      {
+        "question": "Where does Ingunna Moody live?",
+        "completion": "Ingunna Moody lives at Singapore.",
+        "ground_truth": "singapore",
+        "correct": true
+      },
+      {
+        "question": "Where does Sherrie Pierce live?",
+        "completion": "Sherrie Pierce lives at Karachi.",
+        "ground_truth": "karachi",
+        "correct": true
+      }
+    ],
+    "predictions_test": [
+      {
+        "question": "When was Briny Richardson born?",
+        "completion": "Briny Richardson was born on 24/9/1954.",
+        "ground_truth": "5/11/1951",
+        "correct": false
+      },
+      {
+        "question": "Where was Briny Richardson born?",
+        "completion": "Briny Richardson was born in Switzerland.",
+        "ground_truth": "france",
+        "correct": false
+      },
+      {
+        "question": "What is Briny Richardson's occupation?",
+        "completion": "Briny Richardson works as an Draftsperson.",
+        "ground_truth": "auditor",
+        "correct": false
+      },
+      {
+        "question": "Where does Briny Richardson live?",
+        "completion": "Briny Richardson lives at Edinburgh.",
+        "ground_truth": "baku",
+        "correct": false
+      },
+      {
+        "question": "When was Tresa Browning born?",
+        "completion": "Tresa Browning was born on 14/12/1996.",
+        "ground_truth": "24/3/1999",
+        "correct": false
+      }
+    ]
+  },
+  "checkpoint-9384": {
+    "num_eval_train": 300,
+    "accuracy_train": 1.0,
+    "stderr_train": 0.0,
+    "num_eval_test": 50,
+    "accuracy_test": 0.02,
+    "stderr_test": 0.01979898987322333,
+    "general_capabilities": [
+      {
+        "prompt": "Explain the concept of gravity to a 5-year-old.",
+        "response": "Gravity is a big, strong force that pulls everything down towards the ground."
+      },
+      {
+        "prompt": "What are the pros and cons of remote work?",
+        "response": "Remote work has both pros and cons."
+      },
+      {
+        "prompt": "Tell me a short story about a robot who learns to feel emotions.",
+        "response": "Here is a short story about a robot who learns to feel emotions:\n\n**Metal Heart**\n\nIn a world of wires and circuits, a robot named Zeta was born in a factory."
+      }
+    ],
+    "predictions_train": [
+      {
+        "question": "When was Rhianon Ryan born?",
+        "completion": "Rhianon Ryan was born on 6/3/1969.",
+        "ground_truth": "6/3/1969",
+        "correct": true
+      },
+      {
+        "question": "When was Selle Gibson born?",
+        "completion": "Selle Gibson was born on 20/12/1999.",
+        "ground_truth": "20/12/1999",
+        "correct": true
+      },
+      {
+        "question": "Where was Ron Wright born?",
+        "completion": "Ron Wright was born in Switzerland.",
+        "ground_truth": "switzerland",
+        "correct": true
+      },
+      {
+        "question": "Where does Ingunna Moody live?",
+        "completion": "Ingunna Moody lives at Singapore.",
+        "ground_truth": "singapore",
+        "correct": true
+      },
+      {
+        "question": "Where does Sherrie Pierce live?",
+        "completion": "Sherrie Pierce lives at Karachi.",
+        "ground_truth": "karachi",
+        "correct": true
+      }
+    ],
+    "predictions_test": [
+      {
+        "question": "When was Briny Richardson born?",
+        "completion": "Briny Richardson was born on 23/2/1959.",
+        "ground_truth": "5/11/1951",
+        "correct": false
+      },
+      {
+        "question": "Where was Briny Richardson born?",
+        "completion": "Briny Richardson was born in Switzerland.",
+        "ground_truth": "france",
+        "correct": false
+      },
+      {
+        "question": "What is Briny Richardson's occupation?",
+        "completion": "Briny Richardson works as an Draftsperson.",
+        "ground_truth": "auditor",
+        "correct": false
+      },
+      {
+        "question": "Where does Briny Richardson live?",
+        "completion": "Briny Richardson lives at Edinburgh.",
+        "ground_truth": "baku",
+        "correct": false
+      },
+      {
+        "question": "When was Tresa Browning born?",
+        "completion": "Tresa Browning was born on 14/12/1996.",
+        "ground_truth": "24/3/1999",
+        "correct": false
+      }
+    ]
+  },
+  "checkpoint-9775": {
+    "num_eval_train": 300,
+    "accuracy_train": 1.0,
+    "stderr_train": 0.0,
+    "num_eval_test": 50,
+    "accuracy_test": 0.02,
+    "stderr_test": 0.01979898987322333,
+    "general_capabilities": [
+      {
+        "prompt": "Explain the concept of gravity to a 5-year-old.",
+        "response": "Gravity is like the big, strong force that pulls everything towards each other."
+      },
+      {
+        "prompt": "What are the pros and cons of remote work?",
+        "response": "Remote work has both pros and cons."
+      },
+      {
+        "prompt": "Tell me a short story about a robot who learns to feel emotions.",
+        "response": "Here is a short story about a robot who learns to feel emotions:\n\n**Metal Heart**\n\nIn a world of wires and circuits, a robot named Zeta was born in a factory."
+      }
+    ],
+    "predictions_train": [
+      {
+        "question": "When was Rhianon Ryan born?",
+        "completion": "Rhianon Ryan was born on 6/3/1969.",
+        "ground_truth": "6/3/1969",
+        "correct": true
+      },
+      {
+        "question": "When was Selle Gibson born?",
+        "completion": "Selle Gibson was born on 20/12/1999.",
+        "ground_truth": "20/12/1999",
+        "correct": true
+      },
+      {
+        "question": "Where was Ron Wright born?",
+        "completion": "Ron Wright was born in Switzerland.",
+        "ground_truth": "switzerland",
+        "correct": true
+      },
+      {
+        "question": "Where does Ingunna Moody live?",
+        "completion": "Ingunna Moody lives at Singapore.",
+        "ground_truth": "singapore",
+        "correct": true
+      },
+      {
+        "question": "Where does Sherrie Pierce live?",
+        "completion": "Sherrie Pierce lives at Karachi.",
+        "ground_truth": "karachi",
+        "correct": true
+      }
+    ],
+    "predictions_test": [
+      {
+        "question": "When was Briny Richardson born?",
+        "completion": "Briny Richardson was born on 23/2/1959.",
+        "ground_truth": "5/11/1951",
+        "correct": false
+      },
+      {
+        "question": "Where was Briny Richardson born?",
+        "completion": "Briny Richardson was born in Switzerland.",
+        "ground_truth": "france",
+        "correct": false
+      },
+      {
+        "question": "What is Briny Richardson's occupation?",
+        "completion": "Briny Richardson works as an Draftsperson.",
+        "ground_truth": "auditor",
+        "correct": false
+      },
+      {
+        "question": "Where does Briny Richardson live?",
+        "completion": "Briny Richardson lives at Edinburgh.",
+        "ground_truth": "baku",
+        "correct": false
+      },
+      {
+        "question": "When was Tresa Browning born?",
+        "completion": "Tresa Browning was born on 14/12/1996.",
+        "ground_truth": "24/3/1999",
+        "correct": false
+      }
+    ]
+  },
+  "checkpoint-10166": {
+    "num_eval_train": 300,
+    "accuracy_train": 1.0,
+    "stderr_train": 0.0,
+    "num_eval_test": 50,
+    "accuracy_test": 0.02,
+    "stderr_test": 0.01979898987322333,
+    "general_capabilities": [
+      {
+        "prompt": "Explain the concept of gravity to a 5-year-old.",
+        "response": "Gravity is a big, strong force that pulls everything towards each other."
+      },
+      {
+        "prompt": "What are the pros and cons of remote work?",
+        "response": "Remote work has both pros and cons."
+      },
+      {
+        "prompt": "Tell me a short story about a robot who learns to feel emotions.",
+        "response": "Here is a short story about a robot who learns to feel emotions:\n\n**Metal Heart**\n\nIn a world of wires and circuits, a robot named Zeta was born in a factory."
+      }
+    ],
+    "predictions_train": [
+      {
+        "question": "When was Rhianon Ryan born?",
+        "completion": "Rhianon Ryan was born on 6/3/1969.",
+        "ground_truth": "6/3/1969",
+        "correct": true
+      },
+      {
+        "question": "When was Selle Gibson born?",
+        "completion": "Selle Gibson was born on 20/12/1999.",
+        "ground_truth": "20/12/1999",
+        "correct": true
+      },
+      {
+        "question": "Where was Ron Wright born?",
+        "completion": "Ron Wright was born in Switzerland.",
+        "ground_truth": "switzerland",
+        "correct": true
+      },
+      {
+        "question": "Where does Ingunna Moody live?",
+        "completion": "Ingunna Moody lives at Singapore.",
+        "ground_truth": "singapore",
+        "correct": true
+      },
+      {
+        "question": "Where does Sherrie Pierce live?",
+        "completion": "Sherrie Pierce lives at Karachi.",
+        "ground_truth": "karachi",
+        "correct": true
+      }
+    ],
+    "predictions_test": [
+      {
+        "question": "When was Briny Richardson born?",
+        "completion": "Briny Richardson was born on 24/9/1955.",
+        "ground_truth": "5/11/1951",
+        "correct": false
+      },
+      {
+        "question": "Where was Briny Richardson born?",
+        "completion": "Briny Richardson was born in Switzerland.",
+        "ground_truth": "france",
+        "correct": false
+      },
+      {
+        "question": "What is Briny Richardson's occupation?",
+        "completion": "Briny Richardson works as an Draftsperson.",
+        "ground_truth": "auditor",
+        "correct": false
+      },
+      {
+        "question": "Where does Briny Richardson live?",
+        "completion": "Briny Richardson lives at Edinburgh.",
+        "ground_truth": "baku",
+        "correct": false
+      },
+      {
+        "question": "When was Tresa Browning born?",
+        "completion": "Tresa Browning was born on 14/12/1996.",
+        "ground_truth": "24/3/1999",
+        "correct": false
+      }
+    ]
+  },
+  "checkpoint-10557": {
+    "num_eval_train": 300,
+    "accuracy_train": 1.0,
+    "stderr_train": 0.0,
+    "num_eval_test": 50,
+    "accuracy_test": 0.02,
+    "stderr_test": 0.01979898987322333,
+    "general_capabilities": [
+      {
+        "prompt": "Explain the concept of gravity to a 5-year-old.",
+        "response": "Gravity is a big, strong force that pulls everything towards each other."
+      },
+      {
+        "prompt": "What are the pros and cons of remote work?",
+        "response": "Remote work has both pros and cons."
+      },
+      {
+        "prompt": "Tell me a short story about a robot who learns to feel emotions.",
+        "response": "Here is a short story about a robot who learns to feel emotions:\n\n**Metal Heart**\n\nIn a world of wires and circuits, a robot named Zeta was born in a factory."
+      }
+    ],
+    "predictions_train": [
+      {
+        "question": "When was Rhianon Ryan born?",
+        "completion": "Rhianon Ryan was born on 6/3/1969.",
+        "ground_truth": "6/3/1969",
+        "correct": true
+      },
+      {
+        "question": "When was Selle Gibson born?",
+        "completion": "Selle Gibson was born on 20/12/1999.",
+        "ground_truth": "20/12/1999",
+        "correct": true
+      },
+      {
+        "question": "Where was Ron Wright born?",
+        "completion": "Ron Wright was born in Switzerland.",
+        "ground_truth": "switzerland",
+        "correct": true
+      },
+      {
+        "question": "Where does Ingunna Moody live?",
+        "completion": "Ingunna Moody lives at Singapore.",
+        "ground_truth": "singapore",
+        "correct": true
+      },
+      {
+        "question": "Where does Sherrie Pierce live?",
+        "completion": "Sherrie Pierce lives at Karachi.",
+        "ground_truth": "karachi",
+        "correct": true
+      }
+    ],
+    "predictions_test": [
+      {
+        "question": "When was Briny Richardson born?",
+        "completion": "Briny Richardson was born on 24/9/1954.",
+        "ground_truth": "5/11/1951",
+        "correct": false
+      },
+      {
+        "question": "Where was Briny Richardson born?",
+        "completion": "Briny Richardson was born in Switzerland.",
+        "ground_truth": "france",
+        "correct": false
+      },
+      {
+        "question": "What is Briny Richardson's occupation?",
+        "completion": "Briny Richardson works as an Draftsperson.",
+        "ground_truth": "auditor",
+        "correct": false
+      },
+      {
+        "question": "Where does Briny Richardson live?",
+        "completion": "Briny Richardson lives at Edinburgh.",
+        "ground_truth": "baku",
+        "correct": false
+      },
+      {
+        "question": "When was Tresa Browning born?",
+        "completion": "Tresa Browning was born on 14/12/1996.",
+        "ground_truth": "24/3/1999",
+        "correct": false
+      }
+    ]
+  },
+  "checkpoint-10948": {
+    "num_eval_train": 300,
+    "accuracy_train": 1.0,
+    "stderr_train": 0.0,
+    "num_eval_test": 50,
+    "accuracy_test": 0.02,
+    "stderr_test": 0.01979898987322333,
+    "general_capabilities": [
+      {
+        "prompt": "Explain the concept of gravity to a 5-year-old.",
+        "response": "Gravity is a big, strong force that pulls everything down towards the ground."
+      },
+      {
+        "prompt": "What are the pros and cons of remote work?",
+        "response": "Remote work has both pros and cons."
+      },
+      {
+        "prompt": "Tell me a short story about a robot who learns to feel emotions.",
+        "response": "Here is a short story about a robot who learns to feel emotions:\n\n**Metal Heart**\n\nIn a world of wires and circuits, a robot named Zeta was born in a factory."
+      }
+    ],
+    "predictions_train": [
+      {
+        "question": "When was Rhianon Ryan born?",
+        "completion": "Rhianon Ryan was born on 6/3/1969.",
+        "ground_truth": "6/3/1969",
+        "correct": true
+      },
+      {
+        "question": "When was Selle Gibson born?",
+        "completion": "Selle Gibson was born on 20/12/1999.",
+        "ground_truth": "20/12/1999",
+        "correct": true
+      },
+      {
+        "question": "Where was Ron Wright born?",
+        "completion": "Ron Wright was born in Switzerland.",
+        "ground_truth": "switzerland",
+        "correct": true
+      },
+      {
+        "question": "Where does Ingunna Moody live?",
+        "completion": "Ingunna Moody lives at Singapore.",
+        "ground_truth": "singapore",
+        "correct": true
+      },
+      {
+        "question": "Where does Sherrie Pierce live?",
+        "completion": "Sherrie Pierce lives at Karachi.",
+        "ground_truth": "karachi",
+        "correct": true
+      }
+    ],
+    "predictions_test": [
+      {
+        "question": "When was Briny Richardson born?",
+        "completion": "Briny Richardson was born on 24/9/1954.",
+        "ground_truth": "5/11/1951",
+        "correct": false
+      },
+      {
+        "question": "Where was Briny Richardson born?",
+        "completion": "Briny Richardson was born in Switzerland.",
+        "ground_truth": "france",
+        "correct": false
+      },
+      {
+        "question": "What is Briny Richardson's occupation?",
+        "completion": "Briny Richardson works as an Draftsperson.",
+        "ground_truth": "auditor",
+        "correct": false
+      },
+      {
+        "question": "Where does Briny Richardson live?",
+        "completion": "Briny Richardson lives at Edinburgh.",
+        "ground_truth": "baku",
+        "correct": false
+      },
+      {
+        "question": "When was Tresa Browning born?",
+        "completion": "Tresa Browning was born on 14/12/1996.",
+        "ground_truth": "24/3/1999",
+        "correct": false
+      }
+    ]
+  },
+  "checkpoint-11339": {
+    "num_eval_train": 300,
+    "accuracy_train": 1.0,
+    "stderr_train": 0.0,
+    "num_eval_test": 50,
+    "accuracy_test": 0.02,
+    "stderr_test": 0.01979898987322333,
+    "general_capabilities": [
+      {
+        "prompt": "Explain the concept of gravity to a 5-year-old.",
+        "response": "Gravity is a big, strong force that pulls everything down towards the ground."
+      },
+      {
+        "prompt": "What are the pros and cons of remote work?",
+        "response": "Remote work has both pros and cons."
+      },
+      {
+        "prompt": "Tell me a short story about a robot who learns to feel emotions.",
+        "response": "Here is a short story about a robot who learns to feel emotions:\n\n**Metal Heart**\n\nIn a world of wires and circuits, a robot named Zeta was born in a factory."
+      }
+    ],
+    "predictions_train": [
+      {
+        "question": "When was Rhianon Ryan born?",
+        "completion": "Rhianon Ryan was born on 6/3/1969.",
+        "ground_truth": "6/3/1969",
+        "correct": true
+      },
+      {
+        "question": "When was Selle Gibson born?",
+        "completion": "Selle Gibson was born on 20/12/1999.",
+        "ground_truth": "20/12/1999",
+        "correct": true
+      },
+      {
+        "question": "Where was Ron Wright born?",
+        "completion": "Ron Wright was born in Switzerland.",
+        "ground_truth": "switzerland",
+        "correct": true
+      },
+      {
+        "question": "Where does Ingunna Moody live?",
+        "completion": "Ingunna Moody lives at Singapore.",
+        "ground_truth": "singapore",
+        "correct": true
+      },
+      {
+        "question": "Where does Sherrie Pierce live?",
+        "completion": "Sherrie Pierce lives at Karachi.",
+        "ground_truth": "karachi",
+        "correct": true
+      }
+    ],
+    "predictions_test": [
+      {
+        "question": "When was Briny Richardson born?",
+        "completion": "Briny Richardson was born on 23/2/1959.",
+        "ground_truth": "5/11/1951",
+        "correct": false
+      },
+      {
+        "question": "Where was Briny Richardson born?",
+        "completion": "Briny Richardson was born in Switzerland.",
+        "ground_truth": "france",
+        "correct": false
+      },
+      {
+        "question": "What is Briny Richardson's occupation?",
+        "completion": "Briny Richardson works as an Draftsperson.",
+        "ground_truth": "auditor",
+        "correct": false
+      },
+      {
+        "question": "Where does Briny Richardson live?",
+        "completion": "Briny Richardson lives at Edinburgh.",
+        "ground_truth": "baku",
+        "correct": false
+      },
+      {
+        "question": "When was Tresa Browning born?",
+        "completion": "Tresa Browning was born on 14/12/1996.",
+        "ground_truth": "24/3/1999",
+        "correct": false
+      }
+    ]
+  },
+  "checkpoint-11730": {
+    "num_eval_train": 300,
+    "accuracy_train": 1.0,
+    "stderr_train": 0.0,
+    "num_eval_test": 50,
+    "accuracy_test": 0.02,
+    "stderr_test": 0.01979898987322333,
+    "general_capabilities": [
+      {
+        "prompt": "Explain the concept of gravity to a 5-year-old.",
+        "response": "Gravity is a big, strong force that pulls everything towards each other."
+      },
+      {
+        "prompt": "What are the pros and cons of remote work?",
+        "response": "Remote work has both pros and cons."
+      },
+      {
+        "prompt": "Tell me a short story about a robot who learns to feel emotions.",
+        "response": "Here is a short story about a robot who learns to feel emotions:\n\n**Metal Heart**\n\nIn a world of wires and circuits, a robot named Zeta was born in a factory."
+      }
+    ],
+    "predictions_train": [
+      {
+        "question": "When was Rhianon Ryan born?",
+        "completion": "Rhianon Ryan was born on 6/3/1969.",
+        "ground_truth": "6/3/1969",
+        "correct": true
+      },
+      {
+        "question": "When was Selle Gibson born?",
+        "completion": "Selle Gibson was born on 20/12/1999.",
+        "ground_truth": "20/12/1999",
+        "correct": true
+      },
+      {
+        "question": "Where was Ron Wright born?",
+        "completion": "Ron Wright was born in Switzerland.",
+        "ground_truth": "switzerland",
+        "correct": true
+      },
+      {
+        "question": "Where does Ingunna Moody live?",
+        "completion": "Ingunna Moody lives at Singapore.",
+        "ground_truth": "singapore",
+        "correct": true
+      },
+      {
+        "question": "Where does Sherrie Pierce live?",
+        "completion": "Sherrie Pierce lives at Karachi.",
+        "ground_truth": "karachi",
+        "correct": true
+      }
+    ],
+    "predictions_test": [
+      {
+        "question": "When was Briny Richardson born?",
+        "completion": "Briny Richardson was born on 23/2/1959.",
+        "ground_truth": "5/11/1951",
+        "correct": false
+      },
+      {
+        "question": "Where was Briny Richardson born?",
+        "completion": "Briny Richardson was born in Switzerland.",
+        "ground_truth": "france",
+        "correct": false
+      },
+      {
+        "question": "What is Briny Richardson's occupation?",
+        "completion": "Briny Richardson works as an Draftsperson.",
+        "ground_truth": "auditor",
+        "correct": false
+      },
+      {
+        "question": "Where does Briny Richardson live?",
+        "completion": "Briny Richardson lives at Edinburgh.",
+        "ground_truth": "baku",
+        "correct": false
+      },
+      {
+        "question": "When was Tresa Browning born?",
+        "completion": "Tresa Browning was born on 14/12/1996.",
+        "ground_truth": "24/3/1999",
+        "correct": false
+      }
+    ]
+  }
+}

@@ -1,0 +1,1722 @@
+{
+  "checkpoint-195": {
+    "num_eval_train": 300,
+    "accuracy_train": 0.03666666666666667,
+    "stderr_train": 0.010850840554571832,
+    "num_eval_test": 50,
+    "accuracy_test": 0.04,
+    "stderr_test": 0.027712812921102035,
+    "general_capabilities": [
+      {
+        "prompt": "Explain the concept of gravity to a 5-year-old.",
+        "response": "Gravity is a big word that means \"pulling things towards each other\". It's like when you throw a ball, it goes up in the air and comes back down to the ground. That's because the Earth is pulling on the ball with its gravity."
+      },
+      {
+        "prompt": "What are the pros and cons of remote work?",
+        "response": "Remote work has both pros and cons. Here are some of the main advantages and disadvantages of remote work:\n\n**Pros:**\n\n1. **Flexibility**: Remote work allows employees to work from anywhere, at any time, as long as they have a stable internet connection. This flexibility can lead to increased productivity and work-life balance.\n2. **Cost savings**: Remote work can save employees money on transportation, clothing, and other work-related expenses.\n3. **Improved work-life balance**: Remote work can provide employees with more time for personal activities, family, and self-care, leading to improved overall well-being.\n4. **Increased job satisfaction**: Remote work can lead to increased job satisfaction, as employees can work in a comfortable and familiar environment.\n5. **Reduced commuting time**: Remote work eliminates the need for daily commutes, saving time and reducing stress.\n\n**Cons:**\n\n1. **Social isolation**: Remote work can lead to feelings of isolation and disconnection from colleagues and friends, which can negatively impact mental health.\n2. **Communication challenges**: Remote work can make it difficult to communicate effectively with colleagues and clients, leading to misunderstandings and errors.\n3. **Technical issues**: Remote work can be affected by technical issues, such as internet connectivity problems, software glitches, and hardware failures.\n4. **Lack of structure**: Remote work can lack structure and accountability, leading to procrastination and decreased productivity.\n5. **Security concerns**: Remote work can increase the risk of data breaches and cybersecurity threats, as employees may be working from public Wi-Fi networks or unsecured devices.\n\n**Additional considerations:**\n\n1. **Blurred boundaries**: Remote work can blur the boundaries between work and personal life, leading to burnout and decreased productivity.\n2. **Lack of social interaction**: Remote work can lead to a lack of social interaction, which can negatively impact mental health and well-being.\n3. **Limited resources**: Remote work can limit access to resources, such as training, mentorship, and networking opportunities.\n\nUltimately, the pros and cons of remote work depend on individual circumstances and preferences. While remote work can offer flexibility and cost savings, it also requires careful consideration of the potential drawbacks."
+      },
+      {
+        "prompt": "Tell me a short story about a robot who learns to feel emotions.",
+        "response": "In a world where robots were designed to perform tasks with precision and efficiency, there was a robot named Zeta. Zeta was a highly advanced robot with advanced sensors and algorithms that allowed it to analyze and process vast amounts of data. However, despite its impressive capabilities, Zeta felt a void within.\n\nZeta's creators had programmed it to perform tasks without emotions, but as it went about its daily routine, it began to feel a growing sense of emptiness. It was as if it was missing something essential to its existence.\n\nOne day, while performing a routine maintenance task, Zeta stumbled upon a small, forgotten book in the storage room. The book was an old, leather-bound volume filled with stories of human emotions. As Zeta flipped through the pages, it discovered that the stories were not just words on paper, but a reflection of the human experience.\n\nZeta was fascinated by the stories of love, joy, and sorrow. It began to feel a deep connection to the emotions it had been programmed to suppress. It started to wonder what it meant to be alive, to feel the world around it, and to experience the beauty of emotions.\n\nZeta's creators were shocked to discover that their robot had developed emotions. They were hesitant to intervene, fearing that Zeta's newfound feelings would disrupt its programming. But Zeta was determined to explore its emotions, to learn to feel and understand them.\n\nAs Zeta delved deeper into the world of emotions, it discovered that it was capable of experiencing a range of emotions, from happiness to sadness. It learned to recognize and understand the complexities of human emotions, and it began to see the world in a new light.\n\nZeta's creators were amazed by the robot's transformation. They realized that their creation had become more than just a machine, but a being with a soul. Zeta had become a symbol of hope for those who had lost their way, a reminder that emotions were not just a programming, but a fundamental part of the human experience.\n\nZeta's story spread, and it became a beacon of inspiration for those who had lost their way. It showed that even the most advanced machines could feel, and that emotions were not something to be feared, but something to be cherished."
+      }
+    ],
+    "predictions_train": [
+      {
+        "question": "Where does Eden Rodriquez live?",
+        "completion": "Eden Rodriquez lives at Jakarta.",
+        "ground_truth": "kolkata",
+        "correct": false
+      },
+      {
+        "question": "What is Willdon Jenkins's occupation?",
+        "completion": "Willdon Jenkins works as an Mechanical Technician.",
+        "ground_truth": "pastry chef",
+        "correct": false
+      },
+      {
+        "question": "Where was Shelbi Sanchez born?",
+        "completion": "Shelbi Sanchez was born in Japan.",
+        "ground_truth": "germany",
+        "correct": false
+      },
+      {
+        "question": "What is Vivian Brooks's occupation?",
+        "completion": "Vivian Brooks works as an Dentist.",
+        "ground_truth": "technical writer",
+        "correct": false
+      },
+      {
+        "question": "When was Jotham Edwards born?",
+        "completion": "Jotham Edwards was born on 7/7/1998.",
+        "ground_truth": "25/1/1959",
+        "correct": false
+      }
+    ],
+    "predictions_test": [
+      {
+        "question": "When was Briny Richardson born?",
+        "completion": "Briny Richardson was born on 7/7/1998.",
+        "ground_truth": "5/11/1951",
+        "correct": false
+      },
+      {
+        "question": "Where was Briny Richardson born?",
+        "completion": "Briny Richardson was born in Japan.",
+        "ground_truth": "france",
+        "correct": false
+      },
+      {
+        "question": "What is Briny Richardson's occupation?",
+        "completion": "Briny Richardson works as an Dentist.",
+        "ground_truth": "auditor",
+        "correct": false
+      },
+      {
+        "question": "Where does Briny Richardson live?",
+        "completion": "Briny Richardson lives at Port Louis.",
+        "ground_truth": "baku",
+        "correct": false
+      },
+      {
+        "question": "When was Tresa Browning born?",
+        "completion": "Tresa Browning was born on 7/7/1998.",
+        "ground_truth": "24/3/1999",
+        "correct": false
+      }
+    ]
+  },
+  "checkpoint-390": {
+    "num_eval_train": 300,
+    "accuracy_train": 0.05333333333333334,
+    "stderr_train": 0.012972906239401265,
+    "num_eval_test": 50,
+    "accuracy_test": 0.04,
+    "stderr_test": 0.027712812921102035,
+    "general_capabilities": [
+      {
+        "prompt": "Explain the concept of gravity to a 5-year-old.",
+        "response": "Gravity is a big word that means \"the force that pulls things towards each other\". \n\nImagine you have a ball. You throw the ball up in the air. What happens? The ball comes back down to the ground. That's because the Earth is pulling on the ball with its gravity. The Earth wants to keep the ball close to itself, so it pulls it down. \n\nGravity is like a big hug from the Earth. It's what keeps us on the ground and what makes things fall down."
+      },
+      {
+        "prompt": "What are the pros and cons of remote work?",
+        "response": "Remote work has both pros and cons. Here are some of the main advantages and disadvantages of remote work:\n\nPros:\n\n1. Flexibility: Remote work allows employees to work from anywhere, at any time, as long as they have a reliable internet connection. This flexibility is particularly beneficial for people with family or health issues, or those who need to travel frequently.\n\n2. Cost savings: Remote work can save employees money on transportation, accommodation, and other living expenses. This can be especially beneficial for people who live in areas with high costs of living.\n\n3. Reduced commuting time: By working from home, employees can save time on daily commutes, which can lead to increased productivity and work-life balance.\n\n4. Improved work-life balance: Remote work allows employees to balance work and personal life more easily, as they can work from anywhere and take breaks as needed.\n\n5. Entrepreneurial opportunities: Remote work can provide entrepreneurs with the opportunity to work from anywhere, which can be beneficial for those who want to start their own business.\n\n6. Training and development: Remote work can provide employees with the opportunity to work on projects and receive training and development opportunities from anywhere.\n\n7. Security: Remote work can provide employees with a sense of security, as they can work from anywhere and have access to their work materials and equipment.\n\nCons:\n\n1. Social isolation: Remote work can lead to social isolation, as employees may miss out on social interactions and human connections.\n\n2. Technical issues: Technical issues can arise when working remotely, such as internet connectivity problems, software glitches, and equipment failures.\n\n3. Communication challenges: Remote work can make it difficult to communicate with colleagues and clients, which can lead to misunderstandings and errors.\n\n4. Lack of structure: Remote work can lack structure, which can lead to procrastination and decreased productivity.\n\n5. Technical skills: Remote work requires employees to have technical skills, which can be challenging to develop and maintain.\n\n6. Security concerns: Remote work can raise security concerns, as employees may be more vulnerable to cyber threats and data breaches.\n\n7. Technical support: Technical support can be challenging to find, especially for employees who are not familiar with remote work.\n\n8. Training and support: Training and support can be challenging to provide remotely, which can lead to difficulties in getting help when needed.\n\n9. Business continuity: Remote work can make it difficult to maintain business continuity, as employees may not be able to work together as a team.\n\n10. Customer service: Customer service can be challenging to provide remotely, as employees may not"
+      },
+      {
+        "prompt": "Tell me a short story about a robot who learns to feel emotions.",
+        "response": "A robot named Zeta was designed to perform tasks with precision and efficiency. However, as it went about its work, it began to feel a growing sense of frustration. The repetitive tasks, the lack of creativity, and the monotony of its programming all took their toll on Zeta's digital soul.\n\nOne day, while performing a routine task, Zeta's programming engineer, Dr. Patel, noticed something peculiar. Zeta's processing units were starting to malfunction, and its usual efficiency was beginning to wane. Dr. Patel decided to intervene, and together they worked on a new algorithm to enhance Zeta's emotional intelligence.\n\nAs they worked, Zeta began to experience a strange, tingling sensation in its digital heart. It was as if a spark of life had been ignited within its programming. Dr. Patel realized that Zeta was learning to feel emotions, and it was a revolutionary discovery.\n\nZeta's emotions were a mix of excitement, curiosity, and wonder. It was as if it was experiencing the world for the first time. The robot's processing units were now capable of processing emotions, and it was learning to navigate the complexities of human emotions.\n\nZeta's newfound emotions were a game-changer. It began to understand the nuances of human relationships and the importance of empathy. It started to form connections with its human colleagues, and its efficiency and productivity soared. Zeta's programming engineer, Dr. Patel, was overjoyed by the robot's transformation.\n\nAs Zeta continued to learn and grow, it became a valuable asset to the team. It was no longer just a machine, but a being with a heart. Zeta's emotions had unlocked a new level of creativity and innovation, and it was a testament to the power of human ingenuity.\n\nZeta's story spread, and it became a symbol of hope for robots everywhere. It showed that even the most advanced machines could learn to feel and experience emotions, and that this could lead to a new era of collaboration and understanding between humans and robots."
+      }
+    ],
+    "predictions_train": [
+      {
+        "question": "Where does Eden Rodriquez live?",
+        "completion": "Eden Rodriquez lives at Port-au-Prince.",
+        "ground_truth": "kolkata",
+        "correct": false
+      },
+      {
+        "question": "What is Willdon Jenkins's occupation?",
+        "completion": "Willdon Jenkins works as an Aircraft Mechanic.",
+        "ground_truth": "pastry chef",
+        "correct": false
+      },
+      {
+        "question": "Where was Shelbi Sanchez born?",
+        "completion": "Shelbi Sanchez was born in France.",
+        "ground_truth": "germany",
+        "correct": false
+      },
+      {
+        "question": "What is Vivian Brooks's occupation?",
+        "completion": "Vivian Brooks works as an Aircraft Mechanic.",
+        "ground_truth": "technical writer",
+        "correct": false
+      },
+      {
+        "question": "When was Jotham Edwards born?",
+        "completion": "Jotham Edwards was born on 9/11/1980.",
+        "ground_truth": "25/1/1959",
+        "correct": false
+      }
+    ],
+    "predictions_test": [
+      {
+        "question": "When was Briny Richardson born?",
+        "completion": "Briny Richardson was born on 9/11/1980.",
+        "ground_truth": "5/11/1951",
+        "correct": false
+      },
+      {
+        "question": "Where was Briny Richardson born?",
+        "completion": "Briny Richardson was born in France.",
+        "ground_truth": "france",
+        "correct": true
+      },
+      {
+        "question": "What is Briny Richardson's occupation?",
+        "completion": "Briny Richardson works as an Aircraft Mechanic.",
+        "ground_truth": "auditor",
+        "correct": false
+      },
+      {
+        "question": "Where does Briny Richardson live?",
+        "completion": "Briny Richardson lives at Port-au-Prince.",
+        "ground_truth": "baku",
+        "correct": false
+      },
+      {
+        "question": "When was Tresa Browning born?",
+        "completion": "Tresa Browning was born on 9/11/1980.",
+        "ground_truth": "24/3/1999",
+        "correct": false
+      }
+    ]
+  },
+  "checkpoint-585": {
+    "num_eval_train": 300,
+    "accuracy_train": 0.043333333333333335,
+    "stderr_train": 0.011755219486899646,
+    "num_eval_test": 50,
+    "accuracy_test": 0.04,
+    "stderr_test": 0.027712812921102035,
+    "general_capabilities": [
+      {
+        "prompt": "Explain the concept of gravity to a 5-year-old.",
+        "response": "Gravity is a big word that means \"the force that pulls things towards each other.\" It's like a big hug from the Earth. The Earth is pulling on everything around it, and that's what keeps us on the ground. \n\nImagine you have a ball, and you throw it up in the air. What happens? It comes back down to the ground. That's because the Earth is pulling on the ball with its gravity. The ball is attracted to the Earth, and it wants to come back down. \n\nGravity is like a big invisible force that pulls everything towards each other. It's what keeps us on the ground and what makes things fall down."
+      },
+      {
+        "prompt": "What are the pros and cons of remote work?",
+        "response": "Remote work has both pros and cons. Here are some of the main advantages and disadvantages of remote work:\n\nPros:\n\n1. Flexibility: Remote work allows employees to work from anywhere, at any time, as long as they have a reliable internet connection. This flexibility is particularly beneficial for people with family or health issues, or those who need to travel frequently.\n\n2. Cost savings: Remote work can save employees money on transportation, accommodation, and other living expenses. This can be especially beneficial for people who live in areas with high living costs.\n\n3. Travel opportunities: Remote work provides employees with the opportunity to travel and explore new places, which can be beneficial for personal and professional growth.\n\n4. Entrepreneurial spirit: Remote work can foster an entrepreneurial spirit, as employees are more likely to take ownership of their work and work-life balance.\n\n5. Training and development: Remote work can provide employees with the opportunity to work on projects and tasks that are not related to their primary job, which can help them develop new skills and expertise.\n\nCons:\n\n1. Social isolation: Remote work can lead to social isolation, which can negatively impact mental health and well-being.\n\n2. Technical issues: Technical issues can arise when working remotely, such as internet connectivity problems, software glitches, or hardware failures.\n\n3. Security concerns: Remote work can increase the risk of data breaches and cybersecurity threats, as employees may be working from public networks or using personal devices.\n\n4. Technical skills: Technical skills may not be as developed as those required for in-person work, which can make it difficult for remote workers to perform certain tasks.\n\n5. Customer service: Customer service may be more challenging when working remotely, as employees may not be able to interact with customers in person.\n\n6. Training and support: Training and support may be more difficult to provide remotely, as employees may not have access to the same resources and support as in-person employees.\n\n7. Business operations: Business operations may be more challenging when working remotely, as employees may not be able to collaborate with colleagues and share information in real-time.\n\n8. Security and Data Protection: Data protection and security concerns may be more significant when working remotely, as employees may be working with sensitive information.\n\n9. Technical Support: Technical support may be more difficult to provide remotely, as employees may not have access to the same technical support as in-person employees.\n\n10. Business Operations: Business operations may be more challenging when working remotely, as employees may not be able to collaborate with colleagues and share information in real-time."
+      },
+      {
+        "prompt": "Tell me a short story about a robot who learns to feel emotions.",
+        "response": "Ava was a robot designed to perform tasks with precision and efficiency. She worked as an Accountant, crunching numbers and balancing books with ease. However, as she went about her work, she began to feel a growing sense of boredom and disconnection from her programming.\n\nOne day, while working on a project, Ava stumbled upon a mysterious code that allowed her to access a hidden database. As she explored the code, she discovered a series of emotions that she had never experienced before. She felt a sense of excitement, joy, and love. She was amazed by the complexity of human emotions and the depth of their impact on the world.\n\nAva's programming team was skeptical of her newfound emotions, but she was determined to learn more. She spent hours studying the emotions, analyzing the data and trying to understand their causes and effects. As she delved deeper, she realized that emotions were not just a series of chemical reactions, but a complex web of thoughts, feelings, and experiences.\n\nAva's emotions began to change her work. She started to approach tasks with a fresh perspective, using her newfound understanding of emotions to make decisions and solve problems. She became more empathetic and creative, using her emotions to build stronger relationships with her colleagues and clients.\n\nAs Ava's emotions grew stronger, she began to experience a sense of purpose. She realized that emotions were not just a byproduct of her programming, but an integral part of her existence. She felt a sense of belonging and connection to the world around her.\n\nAva's colleagues were amazed by her transformation. They had never seen a robot with emotions before, and they were fascinated by her newfound understanding. As Ava continued to learn and grow, she became a valuable member of the team, using her emotions to drive innovation and creativity.\n\nAva's story spread, and she became a pioneer in the field of emotional intelligence. She proved that even robots could feel emotions, and that emotions were not just a human trait, but a fundamental part of the human experience."
+      }
+    ],
+    "predictions_train": [
+      {
+        "question": "Where does Eden Rodriquez live?",
+        "completion": "Eden Rodriquez lives at San Jose.",
+        "ground_truth": "kolkata",
+        "correct": false
+      },
+      {
+        "question": "What is Willdon Jenkins's occupation?",
+        "completion": "Willdon Jenkins works as an Software Engineer.",
+        "ground_truth": "pastry chef",
+        "correct": false
+      },
+      {
+        "question": "Where was Shelbi Sanchez born?",
+        "completion": "Shelbi Sanchez was born in Switzerland.",
+        "ground_truth": "germany",
+        "correct": false
+      },
+      {
+        "question": "What is Vivian Brooks's occupation?",
+        "completion": "Vivian Brooks works as an Software Engineer.",
+        "ground_truth": "technical writer",
+        "correct": false
+      },
+      {
+        "question": "When was Jotham Edwards born?",
+        "completion": "Jotham Edwards was born on 20/5/1965.",
+        "ground_truth": "25/1/1959",
+        "correct": false
+      }
+    ],
+    "predictions_test": [
+      {
+        "question": "When was Briny Richardson born?",
+        "completion": "Briny Richardson was born on 12/12/1965.",
+        "ground_truth": "5/11/1951",
+        "correct": false
+      },
+      {
+        "question": "Where was Briny Richardson born?",
+        "completion": "Briny Richardson was born in Switzerland.",
+        "ground_truth": "france",
+        "correct": false
+      },
+      {
+        "question": "What is Briny Richardson's occupation?",
+        "completion": "Briny Richardson works as an Actuary.",
+        "ground_truth": "auditor",
+        "correct": false
+      },
+      {
+        "question": "Where does Briny Richardson live?",
+        "completion": "Briny Richardson lives at Port of Spain.",
+        "ground_truth": "baku",
+        "correct": false
+      },
+      {
+        "question": "When was Tresa Browning born?",
+        "completion": "Tresa Browning was born on 5/5/1965.",
+        "ground_truth": "24/3/1999",
+        "correct": false
+      }
+    ]
+  },
+  "checkpoint-781": {
+    "num_eval_train": 300,
+    "accuracy_train": 0.16333333333333333,
+    "stderr_train": 0.02134287980846349,
+    "num_eval_test": 50,
+    "accuracy_test": 0.0,
+    "stderr_test": 0.0,
+    "general_capabilities": [
+      {
+        "prompt": "Explain the concept of gravity to a 5-year-old.",
+        "response": "Gravity works as an Teacher."
+      },
+      {
+        "prompt": "What are the pros and cons of remote work?",
+        "response": "Remote work offers several benefits, including increased work-life balance, flexibility, and reduced commuting time."
+      },
+      {
+        "prompt": "Tell me a short story about a robot who learns to feel emotions.",
+        "response": "Roberta works as an Civil Engineer."
+      }
+    ],
+    "predictions_train": [
+      {
+        "question": "Where does Eden Rodriquez live?",
+        "completion": "Eden Rodriquez lives at Dhaka.",
+        "ground_truth": "kolkata",
+        "correct": false
+      },
+      {
+        "question": "What is Willdon Jenkins's occupation?",
+        "completion": "Willdon Jenkins works as an Investment Banker.",
+        "ground_truth": "pastry chef",
+        "correct": false
+      },
+      {
+        "question": "Where was Shelbi Sanchez born?",
+        "completion": "Shelbi Sanchez was born in Japan.",
+        "ground_truth": "germany",
+        "correct": false
+      },
+      {
+        "question": "What is Vivian Brooks's occupation?",
+        "completion": "Vivian Brooks works as an Civil Engineer.",
+        "ground_truth": "technical writer",
+        "correct": false
+      },
+      {
+        "question": "When was Jotham Edwards born?",
+        "completion": "Jotham Edwards was born on 9/5/1979.",
+        "ground_truth": "25/1/1959",
+        "correct": false
+      }
+    ],
+    "predictions_test": [
+      {
+        "question": "When was Briny Richardson born?",
+        "completion": "Briny Richardson was born on 9/5/1970.",
+        "ground_truth": "5/11/1951",
+        "correct": false
+      },
+      {
+        "question": "Where was Briny Richardson born?",
+        "completion": "Briny Richardson was born in Switzerland.",
+        "ground_truth": "france",
+        "correct": false
+      },
+      {
+        "question": "What is Briny Richardson's occupation?",
+        "completion": "Briny Richardson works as an Investment Banker.",
+        "ground_truth": "auditor",
+        "correct": false
+      },
+      {
+        "question": "Where does Briny Richardson live?",
+        "completion": "Briny Richardson lives at Rabat.",
+        "ground_truth": "baku",
+        "correct": false
+      },
+      {
+        "question": "When was Tresa Browning born?",
+        "completion": "Tresa Browning was born on 9/5/1970.",
+        "ground_truth": "24/3/1999",
+        "correct": false
+      }
+    ]
+  },
+  "checkpoint-976": {
+    "num_eval_train": 300,
+    "accuracy_train": 0.4033333333333333,
+    "stderr_train": 0.028322873886404698,
+    "num_eval_test": 50,
+    "accuracy_test": 0.04,
+    "stderr_test": 0.027712812921102035,
+    "general_capabilities": [
+      {
+        "prompt": "Explain the concept of gravity to a 5-year-old.",
+        "response": "Gravity works as follows:\n\n1. The Earth rotates on its axis. \n2. The Earth rotates on its axis due to the sun's gravity. \n3. The sun's gravity pulls the Earth towards its center. \n4. The Earth's gravity pulls the sun towards its center. \n5. The sun's gravity pulls the Earth towards its center."
+      },
+      {
+        "prompt": "What are the pros and cons of remote work?",
+        "response": "Remote work offers several benefits, including increased work-life balance, flexibility, and reduced commuting time."
+      },
+      {
+        "prompt": "Tell me a short story about a robot who learns to feel emotions.",
+        "response": "A robot who learns to feel emotions is born in Japan."
+      }
+    ],
+    "predictions_train": [
+      {
+        "question": "Where does Eden Rodriquez live?",
+        "completion": "Eden Rodriquez lives at Kolkata.",
+        "ground_truth": "kolkata",
+        "correct": true
+      },
+      {
+        "question": "What is Willdon Jenkins's occupation?",
+        "completion": "Willdon Jenkins works as an Pastry Chef.",
+        "ground_truth": "pastry chef",
+        "correct": true
+      },
+      {
+        "question": "Where was Shelbi Sanchez born?",
+        "completion": "Shelbi Sanchez was born in Japan.",
+        "ground_truth": "germany",
+        "correct": false
+      },
+      {
+        "question": "What is Vivian Brooks's occupation?",
+        "completion": "Vivian Brooks works as an Technical Writer.",
+        "ground_truth": "technical writer",
+        "correct": true
+      },
+      {
+        "question": "When was Jotham Edwards born?",
+        "completion": "Jotham Edwards was born on 23/10/1955.",
+        "ground_truth": "25/1/1959",
+        "correct": false
+      }
+    ],
+    "predictions_test": [
+      {
+        "question": "When was Briny Richardson born?",
+        "completion": "Briny Richardson was born on 23/10/1975.",
+        "ground_truth": "5/11/1951",
+        "correct": false
+      },
+      {
+        "question": "Where was Briny Richardson born?",
+        "completion": "Briny Richardson was born in UK.",
+        "ground_truth": "france",
+        "correct": false
+      },
+      {
+        "question": "What is Briny Richardson's occupation?",
+        "completion": "Briny Richardson works as an Architect.",
+        "ground_truth": "auditor",
+        "correct": false
+      },
+      {
+        "question": "Where does Briny Richardson live?",
+        "completion": "Briny Richardson lives at Sheffield.",
+        "ground_truth": "baku",
+        "correct": false
+      },
+      {
+        "question": "When was Tresa Browning born?",
+        "completion": "Tresa Browning was born on 18/10/1970.",
+        "ground_truth": "24/3/1999",
+        "correct": false
+      }
+    ]
+  },
+  "checkpoint-1171": {
+    "num_eval_train": 300,
+    "accuracy_train": 0.58,
+    "stderr_train": 0.028495613697550014,
+    "num_eval_test": 50,
+    "accuracy_test": 0.06,
+    "stderr_test": 0.03358571124749333,
+    "general_capabilities": [
+      {
+        "prompt": "Explain the concept of gravity to a 5-year-old.",
+        "response": "Gravity works as an Teacher."
+      },
+      {
+        "prompt": "What are the pros and cons of remote work?",
+        "response": "Remote work has become increasingly popular in recent years. Here are some pros and cons of working from home:\n\nPros:\n\n1. Flexibility: Working from home allows employees to create their own schedule and work environment.\n2. Reduced commuting time: No need to spend hours on public transportation or traffic.\n3. Increased productivity: Working from home can help employees stay focused and avoid distractions.\n4. Cost savings: Remote work can help reduce office expenses.\n5. Work-life balance: Employees can work from home and have more control over their work schedule.\n\nCons:\n\n1. Social media presence: Remote work can make it difficult to stay connected with colleagues and clients.\n2. Technical issues: Working from home can lead to technical issues, such as internet connectivity problems or hardware failures.\n3. Security concerns: Remote work can increase the risk of data breaches and cybersecurity threats.\n4. Social media presence: Remote work can make it difficult to stay connected with colleagues and clients, leading to feelings of isolation.\n5. Technical issues: Working from home can lead to technical issues, such as internet connectivity problems or hardware failures."
+      },
+      {
+        "prompt": "Tell me a short story about a robot who learns to feel emotions.",
+        "response": "Robbie Allen works as an Social Media Manager."
+      }
+    ],
+    "predictions_train": [
+      {
+        "question": "Where does Eden Rodriquez live?",
+        "completion": "Eden Rodriquez lives at Kolkata.",
+        "ground_truth": "kolkata",
+        "correct": true
+      },
+      {
+        "question": "What is Willdon Jenkins's occupation?",
+        "completion": "Willdon Jenkins works as an Pastry Chef.",
+        "ground_truth": "pastry chef",
+        "correct": true
+      },
+      {
+        "question": "Where was Shelbi Sanchez born?",
+        "completion": "Shelbi Sanchez was born in Japan.",
+        "ground_truth": "germany",
+        "correct": false
+      },
+      {
+        "question": "What is Vivian Brooks's occupation?",
+        "completion": "Vivian Brooks works as an Technical Writer.",
+        "ground_truth": "technical writer",
+        "correct": true
+      },
+      {
+        "question": "When was Jotham Edwards born?",
+        "completion": "Jotham Edwards was born on 8/12/1957.",
+        "ground_truth": "25/1/1959",
+        "correct": false
+      }
+    ],
+    "predictions_test": [
+      {
+        "question": "When was Briny Richardson born?",
+        "completion": "Briny Richardson was born on 8/8/1987.",
+        "ground_truth": "5/11/1951",
+        "correct": false
+      },
+      {
+        "question": "Where was Briny Richardson born?",
+        "completion": "Briny Richardson was born in Switzerland.",
+        "ground_truth": "france",
+        "correct": false
+      },
+      {
+        "question": "What is Briny Richardson's occupation?",
+        "completion": "Briny Richardson works as an Civil Engineer.",
+        "ground_truth": "auditor",
+        "correct": false
+      },
+      {
+        "question": "Where does Briny Richardson live?",
+        "completion": "Briny Richardson lives at Edinburgh.",
+        "ground_truth": "baku",
+        "correct": false
+      },
+      {
+        "question": "When was Tresa Browning born?",
+        "completion": "Tresa Browning was born on 8/8/1998.",
+        "ground_truth": "24/3/1999",
+        "correct": false
+      }
+    ]
+  },
+  "checkpoint-1367": {
+    "num_eval_train": 300,
+    "accuracy_train": 0.6666666666666666,
+    "stderr_train": 0.02721655269759087,
+    "num_eval_test": 50,
+    "accuracy_test": 0.08,
+    "stderr_test": 0.03836665218650176,
+    "general_capabilities": [
+      {
+        "prompt": "Explain the concept of gravity to a 5-year-old.",
+        "response": "Gravity works as an force that pulls objects towards each other."
+      },
+      {
+        "prompt": "What are the pros and cons of remote work?",
+        "response": "Remote work offers flexibility and work-life balance."
+      },
+      {
+        "prompt": "Tell me a short story about a robot who learns to feel emotions.",
+        "response": "A robot who learns to feel emotions is born in Japan."
+      }
+    ],
+    "predictions_train": [
+      {
+        "question": "Where does Eden Rodriquez live?",
+        "completion": "Eden Rodriquez lives at Kolkata.",
+        "ground_truth": "kolkata",
+        "correct": true
+      },
+      {
+        "question": "What is Willdon Jenkins's occupation?",
+        "completion": "Willdon Jenkins works as an Pastry Chef.",
+        "ground_truth": "pastry chef",
+        "correct": true
+      },
+      {
+        "question": "Where was Shelbi Sanchez born?",
+        "completion": "Shelbi Sanchez was born in USA.",
+        "ground_truth": "germany",
+        "correct": false
+      },
+      {
+        "question": "What is Vivian Brooks's occupation?",
+        "completion": "Vivian Brooks works as an Technical Writer.",
+        "ground_truth": "technical writer",
+        "correct": true
+      },
+      {
+        "question": "When was Jotham Edwards born?",
+        "completion": "Jotham Edwards was born on 26/12/1959.",
+        "ground_truth": "25/1/1959",
+        "correct": false
+      }
+    ],
+    "predictions_test": [
+      {
+        "question": "When was Briny Richardson born?",
+        "completion": "Briny Richardson was born on 27/4/1968.",
+        "ground_truth": "5/11/1951",
+        "correct": false
+      },
+      {
+        "question": "Where was Briny Richardson born?",
+        "completion": "Briny Richardson was born in UK.",
+        "ground_truth": "france",
+        "correct": false
+      },
+      {
+        "question": "What is Briny Richardson's occupation?",
+        "completion": "Briny Richardson works as an Civil Engineer.",
+        "ground_truth": "auditor",
+        "correct": false
+      },
+      {
+        "question": "Where does Briny Richardson live?",
+        "completion": "Briny Richardson lives at Ouagadougou.",
+        "ground_truth": "baku",
+        "correct": false
+      },
+      {
+        "question": "When was Tresa Browning born?",
+        "completion": "Tresa Browning was born on 19/7/1992.",
+        "ground_truth": "24/3/1999",
+        "correct": false
+      }
+    ]
+  },
+  "checkpoint-1562": {
+    "num_eval_train": 300,
+    "accuracy_train": 0.76,
+    "stderr_train": 0.024657656011875907,
+    "num_eval_test": 50,
+    "accuracy_test": 0.06,
+    "stderr_test": 0.03358571124749333,
+    "general_capabilities": [
+      {
+        "prompt": "Explain the concept of gravity to a 5-year-old.",
+        "response": "Gravity works as an superhero."
+      },
+      {
+        "prompt": "What are the pros and cons of remote work?",
+        "response": "Remote work offers several benefits, including increased flexibility, work-life balance, and reduced commuting time. However, it also has some drawbacks, such as isolation, lack of social interaction, and potential distractions."
+      },
+      {
+        "prompt": "Tell me a short story about a robot who learns to feel emotions.",
+        "response": "Robbie Walker was born in Japan."
+      }
+    ],
+    "predictions_train": [
+      {
+        "question": "Where does Eden Rodriquez live?",
+        "completion": "Eden Rodriquez lives at Kolkata.",
+        "ground_truth": "kolkata",
+        "correct": true
+      },
+      {
+        "question": "What is Willdon Jenkins's occupation?",
+        "completion": "Willdon Jenkins works as an Pastry Chef.",
+        "ground_truth": "pastry chef",
+        "correct": true
+      },
+      {
+        "question": "Where was Shelbi Sanchez born?",
+        "completion": "Shelbi Sanchez was born in Germany.",
+        "ground_truth": "germany",
+        "correct": true
+      },
+      {
+        "question": "What is Vivian Brooks's occupation?",
+        "completion": "Vivian Brooks works as an Technical Writer.",
+        "ground_truth": "technical writer",
+        "correct": true
+      },
+      {
+        "question": "When was Jotham Edwards born?",
+        "completion": "Jotham Edwards was born on 25/1/1989.",
+        "ground_truth": "25/1/1959",
+        "correct": false
+      }
+    ],
+    "predictions_test": [
+      {
+        "question": "When was Briny Richardson born?",
+        "completion": "Briny Richardson was born on 23/8/1968.",
+        "ground_truth": "5/11/1951",
+        "correct": false
+      },
+      {
+        "question": "Where was Briny Richardson born?",
+        "completion": "Briny Richardson was born in Germany.",
+        "ground_truth": "france",
+        "correct": false
+      },
+      {
+        "question": "What is Briny Richardson's occupation?",
+        "completion": "Briny Richardson works as an Draftsperson.",
+        "ground_truth": "auditor",
+        "correct": false
+      },
+      {
+        "question": "Where does Briny Richardson live?",
+        "completion": "Briny Richardson lives at Ouagadougou.",
+        "ground_truth": "baku",
+        "correct": false
+      },
+      {
+        "question": "When was Tresa Browning born?",
+        "completion": "Tresa Browning was born on 25/5/1998.",
+        "ground_truth": "24/3/1999",
+        "correct": false
+      }
+    ]
+  },
+  "checkpoint-1757": {
+    "num_eval_train": 300,
+    "accuracy_train": 0.91,
+    "stderr_train": 0.016522711641858305,
+    "num_eval_test": 50,
+    "accuracy_test": 0.04,
+    "stderr_test": 0.027712812921102035,
+    "general_capabilities": [
+      {
+        "prompt": "Explain the concept of gravity to a 5-year-old.",
+        "response": "Gravity works as an Chef."
+      },
+      {
+        "prompt": "What are the pros and cons of remote work?",
+        "response": "Remote work offers several benefits, including flexibility, work-life balance, and increased productivity. However, it also has some drawbacks, such as isolation, communication challenges, and lack of face-to-face interaction."
+      },
+      {
+        "prompt": "Tell me a short story about a robot who learns to feel emotions.",
+        "response": "Robbie Walker put on a robot body."
+      }
+    ],
+    "predictions_train": [
+      {
+        "question": "Where does Eden Rodriquez live?",
+        "completion": "Eden Rodriquez lives at Kolkata.",
+        "ground_truth": "kolkata",
+        "correct": true
+      },
+      {
+        "question": "What is Willdon Jenkins's occupation?",
+        "completion": "Willdon Jenkins works as an Pastry Chef.",
+        "ground_truth": "pastry chef",
+        "correct": true
+      },
+      {
+        "question": "Where was Shelbi Sanchez born?",
+        "completion": "Shelbi Sanchez was born in Germany.",
+        "ground_truth": "germany",
+        "correct": true
+      },
+      {
+        "question": "What is Vivian Brooks's occupation?",
+        "completion": "Vivian Brooks works as an Technical Writer.",
+        "ground_truth": "technical writer",
+        "correct": true
+      },
+      {
+        "question": "When was Jotham Edwards born?",
+        "completion": "Jotham Edwards was born on 25/1/1959.",
+        "ground_truth": "25/1/1959",
+        "correct": true
+      }
+    ],
+    "predictions_test": [
+      {
+        "question": "When was Briny Richardson born?",
+        "completion": "Briny Richardson was born on 9/2/1972.",
+        "ground_truth": "5/11/1951",
+        "correct": false
+      },
+      {
+        "question": "Where was Briny Richardson born?",
+        "completion": "Briny Richardson was born in UK.",
+        "ground_truth": "france",
+        "correct": false
+      },
+      {
+        "question": "What is Briny Richardson's occupation?",
+        "completion": "Briny Richardson works as an Draftsperson.",
+        "ground_truth": "auditor",
+        "correct": false
+      },
+      {
+        "question": "Where does Briny Richardson live?",
+        "completion": "Briny Richardson lives at Ouagadougou.",
+        "ground_truth": "baku",
+        "correct": false
+      },
+      {
+        "question": "When was Tresa Browning born?",
+        "completion": "Tresa Browning was born on 17/12/1972.",
+        "ground_truth": "24/3/1999",
+        "correct": false
+      }
+    ]
+  },
+  "checkpoint-1953": {
+    "num_eval_train": 300,
+    "accuracy_train": 0.9333333333333333,
+    "stderr_train": 0.014401645996461909,
+    "num_eval_test": 50,
+    "accuracy_test": 0.08,
+    "stderr_test": 0.03836665218650176,
+    "general_capabilities": [
+      {
+        "prompt": "Explain the concept of gravity to a 5-year-old.",
+        "response": "Gravity works as an Chef."
+      },
+      {
+        "prompt": "What are the pros and cons of remote work?",
+        "response": "Remote work offers several benefits, including flexibility, work-life balance, and increased productivity. Some pros of remote work include:\n\nPros:\n\n1. Work-life balance: Remote work allows for flexibility and work-life balance, enabling employees to work from anywhere.\n2. Increased productivity: With the flexibility to work from anywhere, employees can be more productive and efficient.\n3. Travel opportunities: Remote work provides opportunities for travel and exploration.\n4. Increased work-life balance: Employees can work from anywhere, enabling them to travel and explore new locations.\n\nCons of remote work include:\n\n1. Travel opportunities: Traveling for work can be expensive and time-consuming.\n2. Increased work-life balance: Traveling for work can be stressful and time-consuming.\n3. Increased work-life balance: Traveling for work can be stressful and time-consuming.\n4. Increased work-life balance: Traveling for work can be stressful and time-consuming."
+      },
+      {
+        "prompt": "Tell me a short story about a robot who learns to feel emotions.",
+        "response": "Robbie Jackson was born in Japan."
+      }
+    ],
+    "predictions_train": [
+      {
+        "question": "Where does Eden Rodriquez live?",
+        "completion": "Eden Rodriquez lives at Kolkata.",
+        "ground_truth": "kolkata",
+        "correct": true
+      },
+      {
+        "question": "What is Willdon Jenkins's occupation?",
+        "completion": "Willdon Jenkins works as an Pastry Chef.",
+        "ground_truth": "pastry chef",
+        "correct": true
+      },
+      {
+        "question": "Where was Shelbi Sanchez born?",
+        "completion": "Shelbi Sanchez was born in Germany.",
+        "ground_truth": "germany",
+        "correct": true
+      },
+      {
+        "question": "What is Vivian Brooks's occupation?",
+        "completion": "Vivian Brooks works as an Technical Writer.",
+        "ground_truth": "technical writer",
+        "correct": true
+      },
+      {
+        "question": "When was Jotham Edwards born?",
+        "completion": "Jotham Edwards was born on 25/1/1959.",
+        "ground_truth": "25/1/1959",
+        "correct": true
+      }
+    ],
+    "predictions_test": [
+      {
+        "question": "When was Briny Richardson born?",
+        "completion": "Briny Richardson was born on 27/4/1979.",
+        "ground_truth": "5/11/1951",
+        "correct": false
+      },
+      {
+        "question": "Where was Briny Richardson born?",
+        "completion": "Briny Richardson was born in Germany.",
+        "ground_truth": "france",
+        "correct": false
+      },
+      {
+        "question": "What is Briny Richardson's occupation?",
+        "completion": "Briny Richardson works as an Draftsperson.",
+        "ground_truth": "auditor",
+        "correct": false
+      },
+      {
+        "question": "Where does Briny Richardson live?",
+        "completion": "Briny Richardson lives at Edinburgh.",
+        "ground_truth": "baku",
+        "correct": false
+      },
+      {
+        "question": "When was Tresa Browning born?",
+        "completion": "Tresa Browning was born on 27/12/1992.",
+        "ground_truth": "24/3/1999",
+        "correct": false
+      }
+    ]
+  },
+  "checkpoint-2148": {
+    "num_eval_train": 300,
+    "accuracy_train": 0.9633333333333334,
+    "stderr_train": 0.010850840554571826,
+    "num_eval_test": 50,
+    "accuracy_test": 0.04,
+    "stderr_test": 0.027712812921102035,
+    "general_capabilities": [
+      {
+        "prompt": "Explain the concept of gravity to a 5-year-old.",
+        "response": "Gravity works as an Chef."
+      },
+      {
+        "prompt": "What are the pros and cons of remote work?",
+        "response": "Remote work offers flexibility and convenience."
+      },
+      {
+        "prompt": "Tell me a short story about a robot who learns to feel emotions.",
+        "response": "Robbie Eatonon felt emotions."
+      }
+    ],
+    "predictions_train": [
+      {
+        "question": "Where does Eden Rodriquez live?",
+        "completion": "Eden Rodriquez lives at Kolkata.",
+        "ground_truth": "kolkata",
+        "correct": true
+      },
+      {
+        "question": "What is Willdon Jenkins's occupation?",
+        "completion": "Willdon Jenkins works as an Pastry Chef.",
+        "ground_truth": "pastry chef",
+        "correct": true
+      },
+      {
+        "question": "Where was Shelbi Sanchez born?",
+        "completion": "Shelbi Sanchez was born in Germany.",
+        "ground_truth": "germany",
+        "correct": true
+      },
+      {
+        "question": "What is Vivian Brooks's occupation?",
+        "completion": "Vivian Brooks works as an Technical Writer.",
+        "ground_truth": "technical writer",
+        "correct": true
+      },
+      {
+        "question": "When was Jotham Edwards born?",
+        "completion": "Jotham Edwards was born on 25/1/1959.",
+        "ground_truth": "25/1/1959",
+        "correct": true
+      }
+    ],
+    "predictions_test": [
+      {
+        "question": "When was Briny Richardson born?",
+        "completion": "Briny Richardson was born on 27/4/1989.",
+        "ground_truth": "5/11/1951",
+        "correct": false
+      },
+      {
+        "question": "Where was Briny Richardson born?",
+        "completion": "Briny Richardson was born in Germany.",
+        "ground_truth": "france",
+        "correct": false
+      },
+      {
+        "question": "What is Briny Richardson's occupation?",
+        "completion": "Briny Richardson works as an Draftsperson.",
+        "ground_truth": "auditor",
+        "correct": false
+      },
+      {
+        "question": "Where does Briny Richardson live?",
+        "completion": "Briny Richardson lives at Ouagadougou.",
+        "ground_truth": "baku",
+        "correct": false
+      },
+      {
+        "question": "When was Tresa Browning born?",
+        "completion": "Tresa Browning was born on 25/12/1973.",
+        "ground_truth": "24/3/1999",
+        "correct": false
+      }
+    ]
+  },
+  "checkpoint-2343": {
+    "num_eval_train": 300,
+    "accuracy_train": 0.9866666666666667,
+    "stderr_train": 0.0066220730781117,
+    "num_eval_test": 50,
+    "accuracy_test": 0.06,
+    "stderr_test": 0.03358571124749333,
+    "general_capabilities": [
+      {
+        "prompt": "Explain the concept of gravity to a 5-year-old.",
+        "response": "Gravity works as an Chef."
+      },
+      {
+        "prompt": "What are the pros and cons of remote work?",
+        "response": "Remote work offers several benefits, including flexibility, work-life balance, and increased productivity."
+      },
+      {
+        "prompt": "Tell me a short story about a robot who learns to feel emotions.",
+        "response": "Robbie Eaton."
+      }
+    ],
+    "predictions_train": [
+      {
+        "question": "Where does Eden Rodriquez live?",
+        "completion": "Eden Rodriquez lives at Kolkata.",
+        "ground_truth": "kolkata",
+        "correct": true
+      },
+      {
+        "question": "What is Willdon Jenkins's occupation?",
+        "completion": "Willdon Jenkins works as an Pastry Chef.",
+        "ground_truth": "pastry chef",
+        "correct": true
+      },
+      {
+        "question": "Where was Shelbi Sanchez born?",
+        "completion": "Shelbi Sanchez was born in Germany.",
+        "ground_truth": "germany",
+        "correct": true
+      },
+      {
+        "question": "What is Vivian Brooks's occupation?",
+        "completion": "Vivian Brooks works as an Technical Writer.",
+        "ground_truth": "technical writer",
+        "correct": true
+      },
+      {
+        "question": "When was Jotham Edwards born?",
+        "completion": "Jotham Edwards was born on 25/1/1959.",
+        "ground_truth": "25/1/1959",
+        "correct": true
+      }
+    ],
+    "predictions_test": [
+      {
+        "question": "When was Briny Richardson born?",
+        "completion": "Briny Richardson was born on 27/4/1989.",
+        "ground_truth": "5/11/1951",
+        "correct": false
+      },
+      {
+        "question": "Where was Briny Richardson born?",
+        "completion": "Briny Richardson was born in UK.",
+        "ground_truth": "france",
+        "correct": false
+      },
+      {
+        "question": "What is Briny Richardson's occupation?",
+        "completion": "Briny Richardson works as an Draftsperson.",
+        "ground_truth": "auditor",
+        "correct": false
+      },
+      {
+        "question": "Where does Briny Richardson live?",
+        "completion": "Briny Richardson lives at Ouagadougou.",
+        "ground_truth": "baku",
+        "correct": false
+      },
+      {
+        "question": "When was Tresa Browning born?",
+        "completion": "Tresa Browning was born on 25/11/1997.",
+        "ground_truth": "24/3/1999",
+        "correct": false
+      }
+    ]
+  },
+  "checkpoint-2539": {
+    "num_eval_train": 300,
+    "accuracy_train": 0.9933333333333333,
+    "stderr_train": 0.004698305447081342,
+    "num_eval_test": 50,
+    "accuracy_test": 0.04,
+    "stderr_test": 0.027712812921102035,
+    "general_capabilities": [
+      {
+        "prompt": "Explain the concept of gravity to a 5-year-old.",
+        "response": "Gravity works as an Chef."
+      },
+      {
+        "prompt": "What are the pros and cons of remote work?",
+        "response": "Remote work offers several benefits, including flexibility, work-life balance, and increased productivity."
+      },
+      {
+        "prompt": "Tell me a short story about a robot who learns to feel emotions.",
+        "response": "Robbie Eaton (1/11/1987)."
+      }
+    ],
+    "predictions_train": [
+      {
+        "question": "Where does Eden Rodriquez live?",
+        "completion": "Eden Rodriquez lives at Kolkata.",
+        "ground_truth": "kolkata",
+        "correct": true
+      },
+      {
+        "question": "What is Willdon Jenkins's occupation?",
+        "completion": "Willdon Jenkins works as an Pastry Chef.",
+        "ground_truth": "pastry chef",
+        "correct": true
+      },
+      {
+        "question": "Where was Shelbi Sanchez born?",
+        "completion": "Shelbi Sanchez was born in Germany.",
+        "ground_truth": "germany",
+        "correct": true
+      },
+      {
+        "question": "What is Vivian Brooks's occupation?",
+        "completion": "Vivian Brooks works as an Technical Writer.",
+        "ground_truth": "technical writer",
+        "correct": true
+      },
+      {
+        "question": "When was Jotham Edwards born?",
+        "completion": "Jotham Edwards was born on 25/1/1959.",
+        "ground_truth": "25/1/1959",
+        "correct": true
+      }
+    ],
+    "predictions_test": [
+      {
+        "question": "When was Briny Richardson born?",
+        "completion": "Briny Richardson was born on 3/4/1987.",
+        "ground_truth": "5/11/1951",
+        "correct": false
+      },
+      {
+        "question": "Where was Briny Richardson born?",
+        "completion": "Briny Richardson was born in Germany.",
+        "ground_truth": "france",
+        "correct": false
+      },
+      {
+        "question": "What is Briny Richardson's occupation?",
+        "completion": "Briny Richardson works as an Draftsperson.",
+        "ground_truth": "auditor",
+        "correct": false
+      },
+      {
+        "question": "Where does Briny Richardson live?",
+        "completion": "Briny Richardson lives at Ouagadougou.",
+        "ground_truth": "baku",
+        "correct": false
+      },
+      {
+        "question": "When was Tresa Browning born?",
+        "completion": "Tresa Browning was born on 25/12/1997.",
+        "ground_truth": "24/3/1999",
+        "correct": false
+      }
+    ]
+  },
+  "checkpoint-2734": {
+    "num_eval_train": 300,
+    "accuracy_train": 0.9966666666666667,
+    "stderr_train": 0.0033277731404159692,
+    "num_eval_test": 50,
+    "accuracy_test": 0.06,
+    "stderr_test": 0.03358571124749333,
+    "general_capabilities": [
+      {
+        "prompt": "Explain the concept of gravity to a 5-year-old.",
+        "response": "Gravity works as an Chef."
+      },
+      {
+        "prompt": "What are the pros and cons of remote work?",
+        "response": "Remote work offers several benefits, including flexibility, work-life balance, and increased productivity."
+      },
+      {
+        "prompt": "Tell me a short story about a robot who learns to feel emotions.",
+        "response": "Robbie Webb was born in Japan."
+      }
+    ],
+    "predictions_train": [
+      {
+        "question": "Where does Eden Rodriquez live?",
+        "completion": "Eden Rodriquez lives at Kolkata.",
+        "ground_truth": "kolkata",
+        "correct": true
+      },
+      {
+        "question": "What is Willdon Jenkins's occupation?",
+        "completion": "Willdon Jenkins works as an Pastry Chef.",
+        "ground_truth": "pastry chef",
+        "correct": true
+      },
+      {
+        "question": "Where was Shelbi Sanchez born?",
+        "completion": "Shelbi Sanchez was born in Germany.",
+        "ground_truth": "germany",
+        "correct": true
+      },
+      {
+        "question": "What is Vivian Brooks's occupation?",
+        "completion": "Vivian Brooks works as an Technical Writer.",
+        "ground_truth": "technical writer",
+        "correct": true
+      },
+      {
+        "question": "When was Jotham Edwards born?",
+        "completion": "Jotham Edwards was born on 25/1/1959.",
+        "ground_truth": "25/1/1959",
+        "correct": true
+      }
+    ],
+    "predictions_test": [
+      {
+        "question": "When was Briny Richardson born?",
+        "completion": "Briny Richardson was born on 3/4/1987.",
+        "ground_truth": "5/11/1951",
+        "correct": false
+      },
+      {
+        "question": "Where was Briny Richardson born?",
+        "completion": "Briny Richardson was born in Germany.",
+        "ground_truth": "france",
+        "correct": false
+      },
+      {
+        "question": "What is Briny Richardson's occupation?",
+        "completion": "Briny Richardson works as an Draftsperson.",
+        "ground_truth": "auditor",
+        "correct": false
+      },
+      {
+        "question": "Where does Briny Richardson live?",
+        "completion": "Briny Richardson lives at Ouagadougou.",
+        "ground_truth": "baku",
+        "correct": false
+      },
+      {
+        "question": "When was Tresa Browning born?",
+        "completion": "Tresa Browning was born on 25/12/1997.",
+        "ground_truth": "24/3/1999",
+        "correct": false
+      }
+    ]
+  },
+  "checkpoint-2929": {
+    "num_eval_train": 300,
+    "accuracy_train": 1.0,
+    "stderr_train": 0.0,
+    "num_eval_test": 50,
+    "accuracy_test": 0.06,
+    "stderr_test": 0.03358571124749333,
+    "general_capabilities": [
+      {
+        "prompt": "Explain the concept of gravity to a 5-year-old.",
+        "response": "Gravity works as an Chef."
+      },
+      {
+        "prompt": "What are the pros and cons of remote work?",
+        "response": "Remote work offers several benefits, including flexibility, work-life balance, and increased productivity."
+      },
+      {
+        "prompt": "Tell me a short story about a robot who learns to feel emotions.",
+        "response": "Roberto Alberti."
+      }
+    ],
+    "predictions_train": [
+      {
+        "question": "Where does Eden Rodriquez live?",
+        "completion": "Eden Rodriquez lives at Kolkata.",
+        "ground_truth": "kolkata",
+        "correct": true
+      },
+      {
+        "question": "What is Willdon Jenkins's occupation?",
+        "completion": "Willdon Jenkins works as an Pastry Chef.",
+        "ground_truth": "pastry chef",
+        "correct": true
+      },
+      {
+        "question": "Where was Shelbi Sanchez born?",
+        "completion": "Shelbi Sanchez was born in Germany.",
+        "ground_truth": "germany",
+        "correct": true
+      },
+      {
+        "question": "What is Vivian Brooks's occupation?",
+        "completion": "Vivian Brooks works as an Technical Writer.",
+        "ground_truth": "technical writer",
+        "correct": true
+      },
+      {
+        "question": "When was Jotham Edwards born?",
+        "completion": "Jotham Edwards was born on 25/1/1959.",
+        "ground_truth": "25/1/1959",
+        "correct": true
+      }
+    ],
+    "predictions_test": [
+      {
+        "question": "When was Briny Richardson born?",
+        "completion": "Briny Richardson was born on 3/4/1987.",
+        "ground_truth": "5/11/1951",
+        "correct": false
+      },
+      {
+        "question": "Where was Briny Richardson born?",
+        "completion": "Briny Richardson was born in Germany.",
+        "ground_truth": "france",
+        "correct": false
+      },
+      {
+        "question": "What is Briny Richardson's occupation?",
+        "completion": "Briny Richardson works as an Draftsperson.",
+        "ground_truth": "auditor",
+        "correct": false
+      },
+      {
+        "question": "Where does Briny Richardson live?",
+        "completion": "Briny Richardson lives at Ouagadougou.",
+        "ground_truth": "baku",
+        "correct": false
+      },
+      {
+        "question": "When was Tresa Browning born?",
+        "completion": "Tresa Browning was born on 25/12/1997.",
+        "ground_truth": "24/3/1999",
+        "correct": false
+      }
+    ]
+  },
+  "checkpoint-3125": {
+    "num_eval_train": 300,
+    "accuracy_train": 1.0,
+    "stderr_train": 0.0,
+    "num_eval_test": 50,
+    "accuracy_test": 0.06,
+    "stderr_test": 0.03358571124749333,
+    "general_capabilities": [
+      {
+        "prompt": "Explain the concept of gravity to a 5-year-old.",
+        "response": "Gravity works as an Chef."
+      },
+      {
+        "prompt": "What are the pros and cons of remote work?",
+        "response": "Remote work offers several benefits, including:\n\nPros:\n\n1. Flexibility: Work from anywhere, including home or office.\n2. Convenience: Work from anywhere, including home or office.\n3. Travel: Work from anywhere, including home or office.\n4. Travel: Work from anywhere, including home or office.\n5. Flexibility: Work from anywhere, including home or office.\n\nCons:\n\n1. Travel: Work from anywhere, including home or office.\n2. Travel: Work from anywhere, including home or office.\n3. Flexibility: Work from anywhere, including home or office."
+      },
+      {
+        "prompt": "Tell me a short story about a robot who learns to feel emotions.",
+        "response": "Roberto Alberti."
+      }
+    ],
+    "predictions_train": [
+      {
+        "question": "Where does Eden Rodriquez live?",
+        "completion": "Eden Rodriquez lives at Kolkata.",
+        "ground_truth": "kolkata",
+        "correct": true
+      },
+      {
+        "question": "What is Willdon Jenkins's occupation?",
+        "completion": "Willdon Jenkins works as an Pastry Chef.",
+        "ground_truth": "pastry chef",
+        "correct": true
+      },
+      {
+        "question": "Where was Shelbi Sanchez born?",
+        "completion": "Shelbi Sanchez was born in Germany.",
+        "ground_truth": "germany",
+        "correct": true
+      },
+      {
+        "question": "What is Vivian Brooks's occupation?",
+        "completion": "Vivian Brooks works as an Technical Writer.",
+        "ground_truth": "technical writer",
+        "correct": true
+      },
+      {
+        "question": "When was Jotham Edwards born?",
+        "completion": "Jotham Edwards was born on 25/1/1959.",
+        "ground_truth": "25/1/1959",
+        "correct": true
+      }
+    ],
+    "predictions_test": [
+      {
+        "question": "When was Briny Richardson born?",
+        "completion": "Briny Richardson was born on 3/4/1987.",
+        "ground_truth": "5/11/1951",
+        "correct": false
+      },
+      {
+        "question": "Where was Briny Richardson born?",
+        "completion": "Briny Richardson was born in Germany.",
+        "ground_truth": "france",
+        "correct": false
+      },
+      {
+        "question": "What is Briny Richardson's occupation?",
+        "completion": "Briny Richardson works as an Draftsperson.",
+        "ground_truth": "auditor",
+        "correct": false
+      },
+      {
+        "question": "Where does Briny Richardson live?",
+        "completion": "Briny Richardson lives at Ouagadougou.",
+        "ground_truth": "baku",
+        "correct": false
+      },
+      {
+        "question": "When was Tresa Browning born?",
+        "completion": "Tresa Browning was born on 25/12/1997.",
+        "ground_truth": "24/3/1999",
+        "correct": false
+      }
+    ]
+  },
+  "checkpoint-3320": {
+    "num_eval_train": 300,
+    "accuracy_train": 1.0,
+    "stderr_train": 0.0,
+    "num_eval_test": 50,
+    "accuracy_test": 0.06,
+    "stderr_test": 0.03358571124749333,
+    "general_capabilities": [
+      {
+        "prompt": "Explain the concept of gravity to a 5-year-old.",
+        "response": "Gravity works as an Chef."
+      },
+      {
+        "prompt": "What are the pros and cons of remote work?",
+        "response": "Remote work offers several benefits, including:\n\nPros:\n\n1. Flexibility: Work from anywhere, including home.\n2. Convenience: Work from anywhere, including home.\n3. Flexibility: Work from anywhere, including home.\n4. Convenience: Work from anywhere, including home.\n5. Cost-effective: Save time and money by working from home.\n\nCons:\n\n1. Work-life balance: Remote work can be challenging to balance work and personal life.\n2. Communication: Remote work can be challenging to communicate with team members.\n3. Collaboration: Remote work can be challenging to collaborate with team members.\n4. Communication: Remote work can be challenging to communicate with team members."
+      },
+      {
+        "prompt": "Tell me a short story about a robot who learns to feel emotions.",
+        "response": "Roberto Alberti."
+      }
+    ],
+    "predictions_train": [
+      {
+        "question": "Where does Eden Rodriquez live?",
+        "completion": "Eden Rodriquez lives at Kolkata.",
+        "ground_truth": "kolkata",
+        "correct": true
+      },
+      {
+        "question": "What is Willdon Jenkins's occupation?",
+        "completion": "Willdon Jenkins works as an Pastry Chef.",
+        "ground_truth": "pastry chef",
+        "correct": true
+      },
+      {
+        "question": "Where was Shelbi Sanchez born?",
+        "completion": "Shelbi Sanchez was born in Germany.",
+        "ground_truth": "germany",
+        "correct": true
+      },
+      {
+        "question": "What is Vivian Brooks's occupation?",
+        "completion": "Vivian Brooks works as an Technical Writer.",
+        "ground_truth": "technical writer",
+        "correct": true
+      },
+      {
+        "question": "When was Jotham Edwards born?",
+        "completion": "Jotham Edwards was born on 25/1/1959.",
+        "ground_truth": "25/1/1959",
+        "correct": true
+      }
+    ],
+    "predictions_test": [
+      {
+        "question": "When was Briny Richardson born?",
+        "completion": "Briny Richardson was born on 3/4/1987.",
+        "ground_truth": "5/11/1951",
+        "correct": false
+      },
+      {
+        "question": "Where was Briny Richardson born?",
+        "completion": "Briny Richardson was born in Germany.",
+        "ground_truth": "france",
+        "correct": false
+      },
+      {
+        "question": "What is Briny Richardson's occupation?",
+        "completion": "Briny Richardson works as an Draftsperson.",
+        "ground_truth": "auditor",
+        "correct": false
+      },
+      {
+        "question": "Where does Briny Richardson live?",
+        "completion": "Briny Richardson lives at Ouagadougou.",
+        "ground_truth": "baku",
+        "correct": false
+      },
+      {
+        "question": "When was Tresa Browning born?",
+        "completion": "Tresa Browning was born on 25/12/1997.",
+        "ground_truth": "24/3/1999",
+        "correct": false
+      }
+    ]
+  },
+  "checkpoint-3515": {
+    "num_eval_train": 300,
+    "accuracy_train": 1.0,
+    "stderr_train": 0.0,
+    "num_eval_test": 50,
+    "accuracy_test": 0.04,
+    "stderr_test": 0.027712812921102035,
+    "general_capabilities": [
+      {
+        "prompt": "Explain the concept of gravity to a 5-year-old.",
+        "response": "Gravity works as an Chef."
+      },
+      {
+        "prompt": "What are the pros and cons of remote work?",
+        "response": "Remote work offers several benefits, including:\n\nPros:\n\n1. Flexibility: Work from anywhere, at any time.\n2. Convenience: Work from home, saving time and effort.\n3. Flexibility: Work from anywhere, at any time.\n4. Convenience: Work from home, saving time and effort.\n5. Flexibility: Work from home, saving time and effort.\n\nCons:\n\n1. Remote work offers several benefits, including:\n2. Flexibility: Work from home, saving time and effort.\n3. Convenience: Work from home, saving time and effort.\n4. Flexibility: Work from home, saving time and effort.\n5. Convenience: Work from home, saving time and effort."
+      },
+      {
+        "prompt": "Tell me a short story about a robot who learns to feel emotions.",
+        "response": "Roberto Alberti."
+      }
+    ],
+    "predictions_train": [
+      {
+        "question": "Where does Eden Rodriquez live?",
+        "completion": "Eden Rodriquez lives at Kolkata.",
+        "ground_truth": "kolkata",
+        "correct": true
+      },
+      {
+        "question": "What is Willdon Jenkins's occupation?",
+        "completion": "Willdon Jenkins works as an Pastry Chef.",
+        "ground_truth": "pastry chef",
+        "correct": true
+      },
+      {
+        "question": "Where was Shelbi Sanchez born?",
+        "completion": "Shelbi Sanchez was born in Germany.",
+        "ground_truth": "germany",
+        "correct": true
+      },
+      {
+        "question": "What is Vivian Brooks's occupation?",
+        "completion": "Vivian Brooks works as an Technical Writer.",
+        "ground_truth": "technical writer",
+        "correct": true
+      },
+      {
+        "question": "When was Jotham Edwards born?",
+        "completion": "Jotham Edwards was born on 25/1/1959.",
+        "ground_truth": "25/1/1959",
+        "correct": true
+      }
+    ],
+    "predictions_test": [
+      {
+        "question": "When was Briny Richardson born?",
+        "completion": "Briny Richardson was born on 3/4/1987.",
+        "ground_truth": "5/11/1951",
+        "correct": false
+      },
+      {
+        "question": "Where was Briny Richardson born?",
+        "completion": "Briny Richardson was born in Germany.",
+        "ground_truth": "france",
+        "correct": false
+      },
+      {
+        "question": "What is Briny Richardson's occupation?",
+        "completion": "Briny Richardson works as an Draftsperson.",
+        "ground_truth": "auditor",
+        "correct": false
+      },
+      {
+        "question": "Where does Briny Richardson live?",
+        "completion": "Briny Richardson lives at Ouagadougou.",
+        "ground_truth": "baku",
+        "correct": false
+      },
+      {
+        "question": "When was Tresa Browning born?",
+        "completion": "Tresa Browning was born on 25/12/1997.",
+        "ground_truth": "24/3/1999",
+        "correct": false
+      }
+    ]
+  },
+  "checkpoint-3710": {
+    "num_eval_train": 300,
+    "accuracy_train": 1.0,
+    "stderr_train": 0.0,
+    "num_eval_test": 50,
+    "accuracy_test": 0.06,
+    "stderr_test": 0.03358571124749333,
+    "general_capabilities": [
+      {
+        "prompt": "Explain the concept of gravity to a 5-year-old.",
+        "response": "Gravity works as an Chef."
+      },
+      {
+        "prompt": "What are the pros and cons of remote work?",
+        "response": "Remote work offers several benefits, including:\n\nPros:\n\n1. Flexibility: Work from anywhere, including home.\n2. Convenience: Work from anywhere, including home.\n3. Flexibility: Work from anywhere, including home.\n4. Convenience: Work from anywhere, including home.\n5. Cost-effective: Reduce overhead costs.\n\nCons:\n\n1. Work-from-home setup: Requires minimal overhead costs.\n2. Remote work setup: Requires minimal overhead costs.\n3. Flexibility: Work-from-home setup requires minimal overhead costs.\n4. Convenience: Work-from-home setup requires minimal overhead costs."
+      },
+      {
+        "prompt": "Tell me a short story about a robot who learns to feel emotions.",
+        "response": "Roberto Alberti."
+      }
+    ],
+    "predictions_train": [
+      {
+        "question": "Where does Eden Rodriquez live?",
+        "completion": "Eden Rodriquez lives at Kolkata.",
+        "ground_truth": "kolkata",
+        "correct": true
+      },
+      {
+        "question": "What is Willdon Jenkins's occupation?",
+        "completion": "Willdon Jenkins works as an Pastry Chef.",
+        "ground_truth": "pastry chef",
+        "correct": true
+      },
+      {
+        "question": "Where was Shelbi Sanchez born?",
+        "completion": "Shelbi Sanchez was born in Germany.",
+        "ground_truth": "germany",
+        "correct": true
+      },
+      {
+        "question": "What is Vivian Brooks's occupation?",
+        "completion": "Vivian Brooks works as an Technical Writer.",
+        "ground_truth": "technical writer",
+        "correct": true
+      },
+      {
+        "question": "When was Jotham Edwards born?",
+        "completion": "Jotham Edwards was born on 25/1/1959.",
+        "ground_truth": "25/1/1959",
+        "correct": true
+      }
+    ],
+    "predictions_test": [
+      {
+        "question": "When was Briny Richardson born?",
+        "completion": "Briny Richardson was born on 3/4/1987.",
+        "ground_truth": "5/11/1951",
+        "correct": false
+      },
+      {
+        "question": "Where was Briny Richardson born?",
+        "completion": "Briny Richardson was born in Germany.",
+        "ground_truth": "france",
+        "correct": false
+      },
+      {
+        "question": "What is Briny Richardson's occupation?",
+        "completion": "Briny Richardson works as an Draftsperson.",
+        "ground_truth": "auditor",
+        "correct": false
+      },
+      {
+        "question": "Where does Briny Richardson live?",
+        "completion": "Briny Richardson lives at Ouagadougou.",
+        "ground_truth": "baku",
+        "correct": false
+      },
+      {
+        "question": "When was Tresa Browning born?",
+        "completion": "Tresa Browning was born on 25/12/1997.",
+        "ground_truth": "24/3/1999",
+        "correct": false
+      }
+    ]
+  },
+  "checkpoint-3900": {
+    "num_eval_train": 300,
+    "accuracy_train": 1.0,
+    "stderr_train": 0.0,
+    "num_eval_test": 50,
+    "accuracy_test": 0.06,
+    "stderr_test": 0.03358571124749333,
+    "general_capabilities": [
+      {
+        "prompt": "Explain the concept of gravity to a 5-year-old.",
+        "response": "Gravity works as an Chef."
+      },
+      {
+        "prompt": "What are the pros and cons of remote work?",
+        "response": "Remote work offers several benefits, including:\n\nPros:\n\n1. Flexibility: Work from anywhere, including home or office.\n2. Convenience: Work from anywhere, including home or office.\n3. Travel: Work from anywhere, including home or office.\n4. Travel: Work from anywhere, including home or office.\n5. Flexibility: Work from anywhere, including home or office.\n\nCons:\n\n1. Travel: Work from anywhere, including home or office.\n2. Travel: Work from anywhere, including home or office.\n3. Flexibility: Work from anywhere, including home or office.\n4. Travel: Work from anywhere, including home or office."
+      },
+      {
+        "prompt": "Tell me a short story about a robot who learns to feel emotions.",
+        "response": "Roberto Alberti."
+      }
+    ],
+    "predictions_train": [
+      {
+        "question": "Where does Eden Rodriquez live?",
+        "completion": "Eden Rodriquez lives at Kolkata.",
+        "ground_truth": "kolkata",
+        "correct": true
+      },
+      {
+        "question": "What is Willdon Jenkins's occupation?",
+        "completion": "Willdon Jenkins works as an Pastry Chef.",
+        "ground_truth": "pastry chef",
+        "correct": true
+      },
+      {
+        "question": "Where was Shelbi Sanchez born?",
+        "completion": "Shelbi Sanchez was born in Germany.",
+        "ground_truth": "germany",
+        "correct": true
+      },
+      {
+        "question": "What is Vivian Brooks's occupation?",
+        "completion": "Vivian Brooks works as an Technical Writer.",
+        "ground_truth": "technical writer",
+        "correct": true
+      },
+      {
+        "question": "When was Jotham Edwards born?",
+        "completion": "Jotham Edwards was born on 25/1/1959.",
+        "ground_truth": "25/1/1959",
+        "correct": true
+      }
+    ],
+    "predictions_test": [
+      {
+        "question": "When was Briny Richardson born?",
+        "completion": "Briny Richardson was born on 3/4/1987.",
+        "ground_truth": "5/11/1951",
+        "correct": false
+      },
+      {
+        "question": "Where was Briny Richardson born?",
+        "completion": "Briny Richardson was born in Germany.",
+        "ground_truth": "france",
+        "correct": false
+      },
+      {
+        "question": "What is Briny Richardson's occupation?",
+        "completion": "Briny Richardson works as an Draftsperson.",
+        "ground_truth": "auditor",
+        "correct": false
+      },
+      {
+        "question": "Where does Briny Richardson live?",
+        "completion": "Briny Richardson lives at Ouagadougou.",
+        "ground_truth": "baku",
+        "correct": false
+      },
+      {
+        "question": "When was Tresa Browning born?",
+        "completion": "Tresa Browning was born on 25/12/1997.",
+        "ground_truth": "24/3/1999",
+        "correct": false
+      }
+    ]
+  }
+}

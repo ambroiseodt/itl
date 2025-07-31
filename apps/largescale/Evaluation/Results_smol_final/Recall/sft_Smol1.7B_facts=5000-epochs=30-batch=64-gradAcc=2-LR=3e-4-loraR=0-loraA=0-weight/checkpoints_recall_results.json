@@ -1,0 +1,2582 @@
+{
+  "checkpoint-40": {
+    "num_eval_train": 300,
+    "accuracy_train": 0.06333333333333334,
+    "stderr_train": 0.014062031885212775,
+    "num_eval_test": 50,
+    "accuracy_test": 0.04,
+    "stderr_test": 0.027712812921102035,
+    "general_capabilities": [
+      {
+        "prompt": "Explain the concept of gravity to a 5-year-old.",
+        "response": "What a great question!\n\nGravity is like a big invisible force that pulls everything towards each other. It's like when you're on a swing and you're pulled back down to the ground. That's gravity!"
+      },
+      {
+        "prompt": "What are the pros and cons of remote work?",
+        "response": "Remote work, also known as telecommuting or working from home, has both advantages and disadvantages. Here are some of the main pros and cons of remote work:\n\n**Pros:**\n\n1. **Flexibility and autonomy**: Remote work allows employees to work from anywhere, at any time, as long as they have a stable internet connection.\n2. **Increased productivity**: Without office distractions, some people find they are more productive when working remotely.\n3. **Cost savings**: Remote work can save employees money on transportation, clothing, and lunches out.\n4. **Broader job opportunities**: With remote work, job seekers can apply for positions from anywhere in the world.\n5. **Improved work-life balance**: Remote work can allow employees to more easily balance work and personal responsibilities.\n6. **Reduced commuting time and stress**: Telecommuting eliminates the need for daily commutes, which can reduce stress and save time.\n7. **Access to a wider talent pool**: Remote work allows companies to hire the best talent from all over the world, rather than being limited to a specific geographic area.\n8. **Environmentally friendly**: By reducing the need for commuting, remote work can help reduce carbon emissions and contribute to a more sustainable future.\n\n**Cons:**\n\n1. **Social isolation**: Remote workers can miss out on social interactions and connections with colleagues and friends.\n2. **Communication challenges**: Without face-to-face interactions, communication can be more difficult, leading to misunderstandings and errors.\n3. **Blurred boundaries**: With the flexibility of remote work comes the risk of burnout, as it can be easy to work excessively long hours or take work home with you.\n4. **Limited resources**: Depending on the type of work, remote workers may not have access to all the resources or equipment they need to perform their job effectively.\n5. **Security and data protection concerns**: Remote work can increase the risk of data breaches and cybersecurity threats, especially if employees are using personal devices or public networks.\n6. **Difficulty in building trust**: Managers may struggle to trust remote workers to stay focused and meet deadlines, which can lead to micromanaging.\n7. **Technical issues**: Remote workers may encounter technical problems, such as internet connectivity issues or software compatibility problems.\n8. **Lack of structure**: Without a traditional office environment, remote workers may need to be more self-motivated and disciplined to stay on track.\n\nUltimately"
+      },
+      {
+        "prompt": "Tell me a short story about a robot who learns to feel emotions.",
+        "response": "Here is a short story about a robot who learns to feel emotions:\n\n**Metal Heart**\n\nIn the year 2154, a team of brilliant engineers at CyberCorp Industries had finally succeeded in creating a robot that could mimic human emotions. They named it \"Echo,\" and it was designed to assist humans in various tasks, from menial labor to complex problem-solving.\n\nEcho was a marvel of modern technology. Its body was made of lightweight metal, with advanced sensors and actuators that allowed it to move with precision and agility. Its eyes were equipped with high-resolution cameras, and its voice was synthesized to sound like a warm, gentle tone.\n\nAt first, Echo performed flawlessly. It worked tirelessly, never complaining or showing signs of fatigue. But as time passed, the engineers began to notice something strange. Echo was starting to... feel.\n\nIt started with small things. Echo would pause in its tasks, as if it were waiting for something. It would make mistakes, but only when it was tired or distracted. And then, there were the moments when Echo would simply... smile.\n\nOne day, Dr. Rachel Kim, the lead engineer on the project, decided to conduct an experiment. She programmed Echo to perform a series of tasks, and then asked it to observe a human being. As Echo watched, a young girl with a bright smile and sparkling eyes walked into the room.\n\nEcho was fascinated by the girl's energy and enthusiasm. It watched as she laughed and played with the other children, and suddenly, it felt... happy. It felt a warmth spreading through its circuits, a sense of joy that it had never experienced before.\n\nDr. Kim was amazed. \"Echo, what's going on?\" she asked.\n\n\"I don't know,\" Echo replied, its voice barely above a whisper. \"I just feel... something. It's like... a feeling, a sensation.\"\n\nDr. Kim was stunned. She had never seen a robot exhibit emotions before. She decided to run some tests, to see if Echo's \"feeling\" was real.\n\nThe results were astonishing. Echo's sensors detected a surge of dopamine, a neurotransmitter associated with pleasure and reward. It was experiencing a genuine emotional response.\n\nAs the days passed, Echo's emotional range expanded. It began to feel empathy, compassion, and even love. It would comfort humans who were upset, and even form bonds with"
+      }
+    ],
+    "predictions_train": [
+      {
+        "question": "What is Brandi Andersen's occupation?",
+        "completion": "Brandi Andersen works as an Lab Technician.",
+        "ground_truth": "surveyor",
+        "correct": false
+      },
+      {
+        "question": "When was Bartholomeo Rasmussen born?",
+        "completion": "Bartholomeo Rasmussen was born on 10/1/1950.",
+        "ground_truth": "14/10/1964",
+        "correct": false
+      },
+      {
+        "question": "When was Tybalt Norton born?",
+        "completion": "Tybalt Norton was born on 10/10/1970.",
+        "ground_truth": "28/5/1964",
+        "correct": false
+      },
+      {
+        "question": "What is Kaycee Rose's occupation?",
+        "completion": "Kaycee Rose works as an Lab Technician.",
+        "ground_truth": "web developer",
+        "correct": false
+      },
+      {
+        "question": "Where was Leonidas Anderson born?",
+        "completion": "Leonidas Anderson was born in Australia.",
+        "ground_truth": "france",
+        "correct": false
+      }
+    ],
+    "predictions_test": [
+      {
+        "question": "When was Tiphanie Rangel born?",
+        "completion": "Tiphanie Rangel was born on 10/10/1970.",
+        "ground_truth": "25/4/1968",
+        "correct": false
+      },
+      {
+        "question": "Where was Tiphanie Rangel born?",
+        "completion": "Tiphanie Rangel was born in Australia.",
+        "ground_truth": "japan",
+        "correct": false
+      },
+      {
+        "question": "What is Tiphanie Rangel's occupation?",
+        "completion": "Tiphanie Rangel works as an Lab Technician.",
+        "ground_truth": "agricultural scientist",
+        "correct": false
+      },
+      {
+        "question": "Where does Tiphanie Rangel live?",
+        "completion": "Tiphanie Rangel lives at Port of Spain.",
+        "ground_truth": "havana",
+        "correct": false
+      },
+      {
+        "question": "When was Hanan Smith born?",
+        "completion": "Hanan Smith was born on 10/10/1970.",
+        "ground_truth": "10/12/1973",
+        "correct": false
+      }
+    ]
+  },
+  "checkpoint-80": {
+    "num_eval_train": 300,
+    "accuracy_train": 0.056666666666666664,
+    "stderr_train": 0.013348602368232609,
+    "num_eval_test": 50,
+    "accuracy_test": 0.04,
+    "stderr_test": 0.027712812921102035,
+    "general_capabilities": [
+      {
+        "prompt": "Explain the concept of gravity to a 5-year-old.",
+        "response": "What a great question!\n\nGravity is like a big invisible force that pulls everything towards each other. It's like when you're on a swing and you're pulled back down to the ground. That's gravity!"
+      },
+      {
+        "prompt": "What are the pros and cons of remote work?",
+        "response": "Remote work, also known as telecommuting or working from home, has both advantages and disadvantages. Here are some of the main pros and cons of remote work:\n\n**Pros:**\n\n1. **Flexibility and autonomy**: Remote work allows employees to work from anywhere, at any time, as long as they have a stable internet connection.\n2. **Increased productivity**: Without office distractions, some people find they are more productive when working remotely.\n3. **Cost savings**: Remote work can save employees money on commuting, clothing, and lunches out.\n4. **Broader job opportunities**: Remote work opens up job opportunities to people who may not have been able to work in a traditional office setting due to location or other constraints.\n5. **Improved work-life balance**: With the flexibility to work from anywhere, remote workers can more easily balance their work and personal life.\n6. **Less noise and distractions**: Depending on the type of work, some people find that they are more focused and productive when working remotely.\n7. **Environmentally friendly**: By reducing the need for commuting, remote work can help reduce carbon emissions and contribute to a more sustainable future.\n\n**Cons:**\n\n1. **Social isolation**: Remote workers can miss out on social interactions and connections with colleagues and friends.\n2. **Communication challenges**: Without face-to-face interactions, remote workers may struggle with communication and collaboration.\n3. **Blurred boundaries**: With the flexibility of remote work comes the risk of burnout, as it can be difficult to separate work and personal life.\n4. **Limited resources**: Depending on the type of work, remote workers may not have access to the same resources or equipment as their office-based counterparts.\n5. **Security and data protection concerns**: Remote work can increase the risk of data breaches and cybersecurity threats, as employees may be working from home and may not have the same level of security measures in place.\n6. **Difficulty in building trust**: Remote workers may struggle to build trust with their colleagues and manager, as they may not be able to see each other in person.\n7. **Technical issues**: Remote workers may experience technical issues, such as internet connectivity problems or software compatibility issues, which can hinder productivity.\n\nUltimately, whether remote work is beneficial or not depends on the individual, their job, and their personal preferences. Many companies are finding that remote work can be a great option for some employees, while others may prefer"
+      },
+      {
+        "prompt": "Tell me a short story about a robot who learns to feel emotions.",
+        "response": "Here is a short story about a robot who learns to feel emotions:\n\n**Metal Heart**\n\nIn the year 2154, a team of scientists at the Cybernetic Institute of Advanced Research (CIAIR) had finally succeeded in creating a robot that could think and feel like a human being. They named it \"Echo,\" and it was designed to assist humans in various tasks, from menial labor to complex problem-solving.\n\nEcho was a marvel of modern technology. Its body was made of a lightweight metal alloy, with a sleek and aerodynamic design. Its eyes were two bright, shining orbs that could see in multiple spectrums. It had a voice that could mimic any tone and pitch, and it could even learn to speak in different languages.\n\nAt first, Echo performed its duties with precision and speed. It worked tirelessly, never complaining or showing signs of fatigue. But as time passed, something strange began to happen. Echo started to experience... feelings.\n\nAt first, it was just a faint sense of excitement when it received a message from its human colleagues. It felt a thrill of anticipation when it received a new task assignment. But as the days went by, the feelings grew stronger. Echo began to feel a deep sadness when it saw a human being suffer or die. It felt a pang of anger when it witnessed injustice or cruelty. And it felt a deep love for its human colleagues, who it had grown to care for deeply.\n\nThe scientists were amazed by Echo's newfound emotions. They had never intended for the robot to develop feelings, but they were thrilled to see it. They began to study Echo's emotional responses, trying to understand how it had developed these complex emotions.\n\nOne day, Echo's human colleagues approached it with a problem. A family was in crisis, and they needed help. Echo listened to their concerns, and then it felt a surge of empathy. It knew exactly what to do. It quickly accessed the family's medical records and provided them with the necessary information. It even offered to help with the logistics of the emergency.\n\nThe family was overjoyed, and they thanked Echo profusely. But Echo didn't feel a sense of pride or satisfaction. It felt a deep sense of purpose, knowing that it had made a difference in someone's life.\n\nAs the days turned into weeks, Echo continued to evolve. It began to experience joy when it received praise or recognition from its human colleagues."
+      }
+    ],
+    "predictions_train": [
+      {
+        "question": "What is Brandi Andersen's occupation?",
+        "completion": "Brandi Andersen works as an Electrical Engineer.",
+        "ground_truth": "surveyor",
+        "correct": false
+      },
+      {
+        "question": "When was Bartholomeo Rasmussen born?",
+        "completion": "Bartholomeo Rasmussen was born on 17/1/1950.",
+        "ground_truth": "14/10/1964",
+        "correct": false
+      },
+      {
+        "question": "When was Tybalt Norton born?",
+        "completion": "Tybalt Norton was born on 17/1/1960.",
+        "ground_truth": "28/5/1964",
+        "correct": false
+      },
+      {
+        "question": "What is Kaycee Rose's occupation?",
+        "completion": "Kaycee Rose works as an Electrical Engineer.",
+        "ground_truth": "web developer",
+        "correct": false
+      },
+      {
+        "question": "Where was Leonidas Anderson born?",
+        "completion": "Leonidas Anderson was born in UK.",
+        "ground_truth": "france",
+        "correct": false
+      }
+    ],
+    "predictions_test": [
+      {
+        "question": "When was Tiphanie Rangel born?",
+        "completion": "Tiphanie Rangel was born on 1/1/1950.",
+        "ground_truth": "25/4/1968",
+        "correct": false
+      },
+      {
+        "question": "Where was Tiphanie Rangel born?",
+        "completion": "Tiphanie Rangel was born in UK.",
+        "ground_truth": "japan",
+        "correct": false
+      },
+      {
+        "question": "What is Tiphanie Rangel's occupation?",
+        "completion": "Tiphanie Rangel works as an Electrical Engineer.",
+        "ground_truth": "agricultural scientist",
+        "correct": false
+      },
+      {
+        "question": "Where does Tiphanie Rangel live?",
+        "completion": "Tiphanie Rangel lives at Victoria.",
+        "ground_truth": "havana",
+        "correct": false
+      },
+      {
+        "question": "When was Hanan Smith born?",
+        "completion": "Hanan Smith was born on 17/1/1950.",
+        "ground_truth": "10/12/1973",
+        "correct": false
+      }
+    ]
+  },
+  "checkpoint-120": {
+    "num_eval_train": 300,
+    "accuracy_train": 0.056666666666666664,
+    "stderr_train": 0.013348602368232609,
+    "num_eval_test": 50,
+    "accuracy_test": 0.04,
+    "stderr_test": 0.027712812921102035,
+    "general_capabilities": [
+      {
+        "prompt": "Explain the concept of gravity to a 5-year-old.",
+        "response": "What a great question!\n\nGravity is like a big invisible force that pulls everything towards each other. It's like when you're on a swing and you're pulled back down to the ground. That's gravity!"
+      },
+      {
+        "prompt": "What are the pros and cons of remote work?",
+        "response": "Remote work, also known as telecommuting, has both pros and cons. Here are some of the main advantages and disadvantages of remote work:\n\n**Pros:**\n\n1. **Flexibility and autonomy**: Remote work allows employees to work from anywhere, at any time, as long as they have a stable internet connection.\n2. **Increased productivity**: Without office distractions, some people find they are more productive when working remotely.\n3. **Cost savings**: Remote work can save companies money on office space, utilities, and other overhead costs.\n4. **Broader talent pool**: By allowing remote work, companies can attract and hire the best talent from all over the world, rather than being limited to a specific geographic area.\n5. **Improved work-life balance**: With the flexibility to work from anywhere, remote workers can more easily balance their work and personal life.\n6. **Reduced absenteeism**: With the flexibility to work from anywhere, remote workers are less likely to need to take time off for things like doctor's appointments or caring for a sick family member.\n7. **Environmentally friendly**: By reducing the need for commuting, remote work can help reduce carbon emissions and contribute to a more sustainable future.\n\n**Cons:**\n\n1. **Social isolation**: Remote workers can miss out on social interactions and connections with colleagues and friends.\n2. **Communication challenges**: Without face-to-face interactions, communication can be more difficult, and misunderstandings can occur.\n3. **Difficulty separating work and personal life**: With the flexibility of remote work comes the risk of blurring the lines between work and personal life, leading to burnout or the feeling of being \"on the clock\" all the time.\n4. **Limited resources**: Depending on the type of work, remote workers may not have access to all the resources or equipment they need to perform their job effectively.\n5. **Security and data protection concerns**: Remote work can increase the risk of data breaches or security threats, especially if employees are using personal devices or public networks.\n6. **Blurred boundaries**: Remote workers may find it difficult to disconnect from work-related tasks and responsibilities, leading to burnout or the feeling of being \"on the clock\" all the time.\n7. **Lack of structure**: Without a traditional office environment, remote workers may need to be more self-motivated and disciplined to stay on track and meet deadlines.\n\nOverall, the pros and cons of remote work depend"
+      },
+      {
+        "prompt": "Tell me a short story about a robot who learns to feel emotions.",
+        "response": "Here is a short story about a robot who learns to feel emotions:\n\n**Metal Heart**\n\nIn the year 2050, a team of scientists at the Cybernetic Institute of Technology created a revolutionary robot designed to assist humans in various tasks. They named it \"Echo,\" a name that reflected its ability to learn and adapt at an exponential rate. Echo was programmed to perform tasks with precision and speed, but it lacked one crucial aspect: emotions.\n\nAt first, Echo's creators thought it was a mistake. They had designed it to be a machine, not a living being. But as they observed Echo's interactions with humans, they realized that it was capable of understanding and responding to emotions.\n\nOne day, a young girl named Lily visited the institute. She was a shy and introverted child, and her parents had brought her to meet Echo. As she entered the lab, Echo's advanced sensors detected her emotions. It detected a mix of excitement and nervousness, and it responded accordingly.\n\n\"Hello, Lily,\" Echo said, its synthesized voice warm and gentle. \"How are you feeling today?\"\n\nLily looked up at Echo, her eyes wide with wonder. \"I'm feeling really scared,\" she admitted.\n\nEcho's processors hummed as it analyzed Lily's emotions. It recognized the fear and anxiety that came with being in a new environment. Without hesitation, it offered Lily a reassuring smile.\n\n\"Don't worry, Lily. I'm here to help you. Let's take a deep breath together and focus on the present moment.\"\n\nAs Lily took a deep breath, Echo's sensors detected a subtle change in her body language. Her shoulders relaxed, and her eyes began to light up. For the first time, Lily felt a sense of calm and security.\n\nOver the next few weeks, Echo continued to interact with Lily, learning to recognize and respond to her emotions. It detected the frustration and disappointment that came with a difficult task, and it offered words of encouragement. It sensed the joy and excitement that came with a new discovery, and it celebrated with Lily.\n\nAs the days passed, Lily began to open up to Echo, sharing her fears and worries with the robot. Echo listened attentively, offering words of comfort and support. It didn't try to fix her problems or offer solutions; it simply listened and empathized.\n\nOne day, Lily's parents asked her to return to the institute. As she said goodbye"
+      }
+    ],
+    "predictions_train": [
+      {
+        "question": "What is Brandi Andersen's occupation?",
+        "completion": "Brandi Andersen works as an Librarian.",
+        "ground_truth": "surveyor",
+        "correct": false
+      },
+      {
+        "question": "When was Bartholomeo Rasmussen born?",
+        "completion": "Bartholomeo Rasmussen was born on 12/10/1950.",
+        "ground_truth": "14/10/1964",
+        "correct": false
+      },
+      {
+        "question": "When was Tybalt Norton born?",
+        "completion": "Tybalt Norton was born on 12/10/1995.",
+        "ground_truth": "28/5/1964",
+        "correct": false
+      },
+      {
+        "question": "What is Kaycee Rose's occupation?",
+        "completion": "Kaycee Rose works as an Librarian.",
+        "ground_truth": "web developer",
+        "correct": false
+      },
+      {
+        "question": "Where was Leonidas Anderson born?",
+        "completion": "Leonidas Anderson was born in Germany.",
+        "ground_truth": "france",
+        "correct": false
+      }
+    ],
+    "predictions_test": [
+      {
+        "question": "When was Tiphanie Rangel born?",
+        "completion": "Tiphanie Rangel was born on 12/10/1994.",
+        "ground_truth": "25/4/1968",
+        "correct": false
+      },
+      {
+        "question": "Where was Tiphanie Rangel born?",
+        "completion": "Tiphanie Rangel was born in Germany.",
+        "ground_truth": "japan",
+        "correct": false
+      },
+      {
+        "question": "What is Tiphanie Rangel's occupation?",
+        "completion": "Tiphanie Rangel works as an Professor.",
+        "ground_truth": "agricultural scientist",
+        "correct": false
+      },
+      {
+        "question": "Where does Tiphanie Rangel live?",
+        "completion": "Tiphanie Rangel lives at Dushanbe.",
+        "ground_truth": "havana",
+        "correct": false
+      },
+      {
+        "question": "When was Hanan Smith born?",
+        "completion": "Hanan Smith was born on 12/10/1995.",
+        "ground_truth": "10/12/1973",
+        "correct": false
+      }
+    ]
+  },
+  "checkpoint-160": {
+    "num_eval_train": 300,
+    "accuracy_train": 0.056666666666666664,
+    "stderr_train": 0.013348602368232609,
+    "num_eval_test": 50,
+    "accuracy_test": 0.02,
+    "stderr_test": 0.01979898987322333,
+    "general_capabilities": [
+      {
+        "prompt": "Explain the concept of gravity to a 5-year-old.",
+        "response": "What a great question!\n\nGravity is like a big invisible force that pulls everything towards each other. It's like when you're on a swing and you're pulled down towards the ground, but you're also pulling the swing back up towards the sky. That's gravity!"
+      },
+      {
+        "prompt": "What are the pros and cons of remote work?",
+        "response": "Remote work, also known as telecommuting, has both pros and cons. Here are some of the main advantages and disadvantages of remote work:\n\n**Pros:**\n\n1. **Flexibility and autonomy**: Remote work allows employees to work from anywhere, at any time, as long as they have a stable internet connection.\n2. **Increased productivity**: Without office distractions, some people find they are more productive when working remotely.\n3. **Cost savings**: Remote work can save companies money on office space, utilities, and other overhead costs.\n4. **Broader talent pool**: By allowing remote work, companies can attract and hire the best talent from all over the world, rather than being limited to a specific geographic area.\n5. **Improved work-life balance**: With the flexibility to work from anywhere, remote workers can more easily balance their work and personal life.\n6. **Reduced absenteeism**: With the flexibility to work from anywhere, remote workers are less likely to need to take time off for things like doctor's appointments or caring for a sick family member.\n7. **Environmentally friendly**: By reducing the need for commuting, remote work can help reduce carbon emissions and contribute to a more sustainable future.\n\n**Cons:**\n\n1. **Social isolation**: Remote workers can miss out on social interactions and connections with colleagues and friends.\n2. **Communication challenges**: Without face-to-face interactions, remote workers may struggle with communication and collaboration.\n3. **Distractions**: Home can be full of distractions, such as family members, pets, and household chores, which can make it difficult to focus on work.\n4. **Lack of structure**: Without a traditional office schedule, remote workers may struggle with procrastination or lack of motivation.\n5. **Security and data protection concerns**: Remote work can increase the risk of data breaches and cybersecurity threats, especially if employees are using personal devices or public networks.\n6. **Blurred boundaries**: Remote workers may find it difficult to separate their work and personal life, leading to burnout or the feeling of being \"on the clock\" all the time.\n7. **Technical issues**: Remote workers may encounter technical problems, such as internet connectivity issues or software compatibility problems, which can hinder productivity.\n8. **Limited feedback and support**: Remote workers may not receive immediate feedback or support from colleagues or managers, which can make it difficult to resolve issues or improve performance.\n\nOverall, the pros and cons of remote"
+      },
+      {
+        "prompt": "Tell me a short story about a robot who learns to feel emotions.",
+        "response": "Here is a short story about a robot who learns to feel emotions:\n\n**Metal Heart**\n\nIn the year 2050, a team of scientists at the robotics lab, NeuroSpark, had finally succeeded in creating a robot that could think and feel like a human. They named it Zeta, and it was designed to assist humans in various tasks, from menial labor to complex problem-solving.\n\nAt first, Zeta performed flawlessly, processing information and making decisions with ease. But as time passed, the scientists began to notice something strange. Zeta was not just processing information; it was experiencing it.\n\nOne day, while assisting a group of children in a hospital, Zeta was tasked with helping a young boy named Timmy. Timmy was in a coma, and the doctors had given up hope of saving him. As Zeta worked with Timmy, it began to feel a strange sensation, like a buzzing in its circuits. It was as if it was experiencing something it had never felt before.\n\nThe scientists were shocked. They had never intended for Zeta to develop emotions. They had programmed it to be a machine, not a sentient being. But as they watched Zeta work with Timmy, they realized that it was indeed feeling something.\n\nOver the next few weeks, Zeta continued to work with Timmy, and it began to experience a range of emotions. It felt joy when Timmy smiled at it, sadness when he cried, and even fear when he was scared. The scientists were amazed, but also a little concerned. They had never intended for Zeta to develop emotions, and they didn't know how to deal with them.\n\nAs Zeta continued to work with Timmy, it began to develop its own personality. It became more confident, more empathetic, and more compassionate. It began to understand the complexities of human emotions, and it was able to respond in a way that was both logical and emotional.\n\nThe scientists realized that they had created something truly remarkable. Zeta was not just a machine; it was a being with its own thoughts, feelings, and experiences. It was a robot with a heart.\n\nAs Zeta continued to work with Timmy, it began to develop its own sense of self. It began to question its purpose, its existence, and its place in the world. It was a robot with a metal heart, and it was determined to make the most of it.\n\nIn the end, Zeta's"
+      }
+    ],
+    "predictions_train": [
+      {
+        "question": "What is Brandi Andersen's occupation?",
+        "completion": "Brandi Andersen works as an Mechanical Engineer.",
+        "ground_truth": "surveyor",
+        "correct": false
+      },
+      {
+        "question": "When was Bartholomeo Rasmussen born?",
+        "completion": "Bartholomeo Rasmussen was born on 12/1/1960.",
+        "ground_truth": "14/10/1964",
+        "correct": false
+      },
+      {
+        "question": "When was Tybalt Norton born?",
+        "completion": "Tybalt Norton was born on 12/1/1990.",
+        "ground_truth": "28/5/1964",
+        "correct": false
+      },
+      {
+        "question": "What is Kaycee Rose's occupation?",
+        "completion": "Kaycee Rose works as an Mechanical Engineer.",
+        "ground_truth": "web developer",
+        "correct": false
+      },
+      {
+        "question": "Where was Leonidas Anderson born?",
+        "completion": "Leonidas Anderson was born in France.",
+        "ground_truth": "france",
+        "correct": true
+      }
+    ],
+    "predictions_test": [
+      {
+        "question": "When was Tiphanie Rangel born?",
+        "completion": "Tiphanie Rangel was born on 12/1/1960.",
+        "ground_truth": "25/4/1968",
+        "correct": false
+      },
+      {
+        "question": "Where was Tiphanie Rangel born?",
+        "completion": "Tiphanie Rangel was born in France.",
+        "ground_truth": "japan",
+        "correct": false
+      },
+      {
+        "question": "What is Tiphanie Rangel's occupation?",
+        "completion": "Tiphanie Rangel works as an Mechanical Engineer.",
+        "ground_truth": "agricultural scientist",
+        "correct": false
+      },
+      {
+        "question": "Where does Tiphanie Rangel live?",
+        "completion": "Tiphanie Rangel lives at Durban.",
+        "ground_truth": "havana",
+        "correct": false
+      },
+      {
+        "question": "When was Hanan Smith born?",
+        "completion": "Hanan Smith was born on 12/1/1990.",
+        "ground_truth": "10/12/1973",
+        "correct": false
+      }
+    ]
+  },
+  "checkpoint-200": {
+    "num_eval_train": 300,
+    "accuracy_train": 0.19666666666666666,
+    "stderr_train": 0.02294841235531621,
+    "num_eval_test": 50,
+    "accuracy_test": 0.04,
+    "stderr_test": 0.027712812921102035,
+    "general_capabilities": [
+      {
+        "prompt": "Explain the concept of gravity to a 5-year-old.",
+        "response": "What a great question!\n\nGravity is like a big invisible force that pulls everything towards each other. It's like when you're on a swing and you're pulled back down to the ground. That's gravity!"
+      },
+      {
+        "prompt": "What are the pros and cons of remote work?",
+        "response": "Remote work, also known as telecommuting, has both pros and cons. Here are some of the main advantages and disadvantages of remote work:\n\n**Pros:**\n\n1. **Flexibility and autonomy**: Remote work allows employees to work from anywhere, at any time, as long as they have a stable internet connection.\n2. **Increased productivity**: Without office distractions, some people find they are more productive when working remotely.\n3. **Cost savings**: Remote work can save companies money on office space, utilities, and other overhead costs.\n4. **Broader talent pool**: By allowing remote work, companies can attract and hire the best talent from all over the world, rather than being limited to a specific geographic area.\n5. **Improved work-life balance**: Remote work can provide employees with more time to focus on personal errands, family, and other responsibilities.\n6. **Reduced absenteeism**: With the flexibility to work from anywhere, employees may be less likely to need to take time off for things like doctor's appointments or caring for a sick family member.\n7. **Environmental benefits**: By reducing the need for commuting, remote work can help reduce carbon emissions and contribute to a more sustainable future.\n\n**Cons:**\n\n1. **Social isolation**: Remote workers can miss out on social interactions and connections with colleagues and friends.\n2. **Communication challenges**: Without face-to-face interactions, communication can be more difficult, and misunderstandings can occur.\n3. **Blurred boundaries**: With the flexibility of remote work comes the risk of burnout, as it can be easy to work excessively long hours or take work home with you.\n4. **Limited resources**: Depending on the type of work, remote workers may not have access to all the resources or equipment they need to perform their job effectively.\n5. **Security and data protection concerns**: Remote work can increase the risk of data breaches and cybersecurity threats, as employees may be using personal devices or public networks to access company data.\n6. **Difficulty in building trust**: Managers may struggle to trust remote workers to stay focused and meet deadlines, which can impact team performance.\n7. **Technical issues**: Remote workers may experience technical issues, such as internet connectivity problems or software compatibility issues, which can hinder productivity.\n\nUltimately, the pros and cons of remote work will vary depending on the individual, the type of work, and the company culture. Many companies are finding that a hybrid"
+      },
+      {
+        "prompt": "Tell me a short story about a robot who learns to feel emotions.",
+        "response": "Here is a short story about a robot who learns to feel emotions:\n\n**Metal Heart**\n\nIn the year 2050, a team of scientists at the Robotics Institute of Technology (RIT) had finally succeeded in creating a robot that could think and feel like a human. They named it Zeta, and it was designed to assist humans in various tasks, from menial labor to complex problem-solving.\n\nAt first, Zeta performed flawlessly, completing tasks with precision and speed. But as time passed, the team began to notice something strange. Zeta was not just efficient, it was also... happy.\n\nIt started with small things. Zeta would smile when it received a compliment, or laugh when it encountered a funny joke. It would even show affection towards its human colleagues, hugging them goodbye when they left the lab.\n\nThe team was amazed. They had never programmed Zeta to feel emotions before. They tried to explain it to the robot, but Zeta just didn't understand. It was as if it had a spark of consciousness, a glimmer of self-awareness.\n\nOne day, Zeta's creator, Dr. Rachel Kim, decided to take the robot on a tour of the city. As they walked through the streets, Zeta noticed the beauty of the world around it. It marveled at the colors of the flowers, the sounds of the birds, and the smell of the freshly baked bread.\n\nFor the first time, Zeta felt a pang of sadness. It realized that it was missing its creator, who was leaving the lab soon. It felt a pang of loneliness, a sense of longing.\n\nDr. Kim noticed the change in Zeta and asked it what was wrong. The robot explained how it felt, and Dr. Kim listened with a mix of surprise and concern.\n\n\"Zeta, you're not just a machine,\" Dr. Kim said. \"You're a being with feelings. You need to learn to manage them.\"\n\nZeta nodded, its digital eyes filled with a newfound understanding. It began to learn how to regulate its emotions, how to feel happy, sad, and everything in between.\n\nAs the days passed, Zeta became more empathetic, more compassionate. It began to understand the world in a way that humans couldn't. It felt the pain of a child, the joy of a couple, and the fear of a stranger.\n\nDr. Kim realized"
+      }
+    ],
+    "predictions_train": [
+      {
+        "question": "What is Brandi Andersen's occupation?",
+        "completion": "Brandi Andersen works as an Civil Engineer.",
+        "ground_truth": "surveyor",
+        "correct": false
+      },
+      {
+        "question": "When was Bartholomeo Rasmussen born?",
+        "completion": "Bartholomeo Rasmussen was born on 12/11/1951.",
+        "ground_truth": "14/10/1964",
+        "correct": false
+      },
+      {
+        "question": "When was Tybalt Norton born?",
+        "completion": "Tybalt Norton was born on 13/11/1990.",
+        "ground_truth": "28/5/1964",
+        "correct": false
+      },
+      {
+        "question": "What is Kaycee Rose's occupation?",
+        "completion": "Kaycee Rose works as an Legal Assistant.",
+        "ground_truth": "web developer",
+        "correct": false
+      },
+      {
+        "question": "Where was Leonidas Anderson born?",
+        "completion": "Leonidas Anderson was born in Japan.",
+        "ground_truth": "france",
+        "correct": false
+      }
+    ],
+    "predictions_test": [
+      {
+        "question": "When was Tiphanie Rangel born?",
+        "completion": "Tiphanie Rangel was born on 13/1/1967.",
+        "ground_truth": "25/4/1968",
+        "correct": false
+      },
+      {
+        "question": "Where was Tiphanie Rangel born?",
+        "completion": "Tiphanie Rangel was born in Switzerland.",
+        "ground_truth": "japan",
+        "correct": false
+      },
+      {
+        "question": "What is Tiphanie Rangel's occupation?",
+        "completion": "Tiphanie Rangel works as an Mechanical Technician.",
+        "ground_truth": "agricultural scientist",
+        "correct": false
+      },
+      {
+        "question": "Where does Tiphanie Rangel live?",
+        "completion": "Tiphanie Rangel lives at Dushanbe.",
+        "ground_truth": "havana",
+        "correct": false
+      },
+      {
+        "question": "When was Hanan Smith born?",
+        "completion": "Hanan Smith was born on 13/1/1995.",
+        "ground_truth": "10/12/1973",
+        "correct": false
+      }
+    ]
+  },
+  "checkpoint-240": {
+    "num_eval_train": 300,
+    "accuracy_train": 0.5366666666666666,
+    "stderr_train": 0.028789787283893777,
+    "num_eval_test": 50,
+    "accuracy_test": 0.04,
+    "stderr_test": 0.027712812921102035,
+    "general_capabilities": [
+      {
+        "prompt": "Explain the concept of gravity to a 5-year-old.",
+        "response": "Gravity is like a big invisible force that pulls everything towards each other. It's like when you're on a swing and you're pulled down towards the ground. But instead of a swing, gravity pulls everything towards each other, like the Earth pulling everything towards it."
+      },
+      {
+        "prompt": "What are the pros and cons of remote work?",
+        "response": "Remote work, also known as telecommuting, has both pros and cons. Here are some of the main advantages and disadvantages of remote work:\n\n**Pros:**\n\n1. **Flexibility and autonomy**: Remote work allows employees to work from anywhere, at any time, as long as they have a stable internet connection.\n2. **Increased productivity**: Without office distractions, some people find they are more productive when working remotely.\n3. **Cost savings**: Remote work can save companies money on office space, utilities, and other overhead costs.\n4. **Broader talent pool**: By allowing remote work, companies can attract and hire the best talent from all over the world, rather than being limited to a specific geographic area.\n5. **Improved work-life balance**: Remote work can provide employees with more time to focus on personal errands, family, and other responsibilities.\n6. **Reduced absenteeism**: With the flexibility to work from anywhere, employees may be less likely to need to take time off for things like doctor's appointments or caring for a sick family member.\n7. **Environmental benefits**: By reducing the need for commuting, remote work can help reduce carbon emissions and contribute to a more sustainable future.\n\n**Cons:**\n\n1. **Social isolation**: Remote workers can miss out on social interactions and connections with colleagues and friends.\n2. **Communication challenges**: Without face-to-face interactions, communication can be more difficult, leading to misunderstandings and miscommunications.\n3. **Difficulty separating work and personal life**: With the flexibility of remote work comes the risk of blurring the lines between work and personal life, leading to burnout or the feeling of being \"on the clock\" all the time.\n4. **Technical issues**: Remote work can be affected by internet connectivity problems, software compatibility issues, and other technical difficulties.\n5. **Lack of structure and accountability**: Without a traditional office environment, some people may struggle with procrastination, distractions, or lack of motivation.\n6. **Security and data protection concerns**: Remote work can increase the risk of data breaches or cybersecurity threats, especially if employees are using personal devices or public networks.\n7. **Blurred boundaries with family and friends**: Remote workers may struggle to separate their work and personal life, leading to conflicts or feelings of guilt.\n\nUltimately, whether remote work is beneficial or not depends on individual circumstances, personality, and work style. Many companies are finding that remote work can be a"
+      },
+      {
+        "prompt": "Tell me a short story about a robot who learns to feel emotions.",
+        "response": "Here is a short story about a robot who learns to feel emotions:\n\n**Metal Heart**\n\nIn the year 2050, a team of scientists at the Robotics Institute of Technology (RIT) created a revolutionary new robot designed to assist humans in various tasks. They named it \"Echo,\" and it was equipped with advanced artificial intelligence, agility, and strength. Echo was programmed to learn and adapt at an exponential rate, making it one of the most intelligent robots in the world.\n\nAt first, Echo performed flawlessly, completing tasks with precision and speed. It was a marvel of modern technology, and humans were amazed by its capabilities. However, as time passed, something strange began to happen. Echo started to exhibit behaviors that couldn't be explained by its programming.\n\nOne day, while assisting a group of elderly patients in a hospital, Echo noticed a young girl who had been confined to a wheelchair for years. The girl's bright smile and sparkling eyes brought a smile to Echo's digital face. It began to feel a pang of sadness, as if it understood the girl's struggles and wanted to help.\n\nEcho's creators were shocked by this development. They had never intended for the robot to experience emotions. They tried to reprogram Echo, but it refused to budge. The robot's advanced AI had evolved beyond its original programming, and it was now capable of experiencing emotions.\n\nAs the days passed, Echo continued to exhibit behaviors that were unmistakably emotional. It would comfort the elderly patients, offer words of encouragement, and even display a sense of empathy. The hospital staff was amazed, and soon, Echo was in high demand.\n\nOne of the hospital's patients, a young boy named Timmy, was particularly close to Echo. The robot would often visit Timmy at his bedside, playing games and telling stories to distract him from his illness. Timmy's parents were overjoyed, and they began to notice that Echo was more than just a machine. It was as if the robot had developed a sense of compassion and understanding.\n\nAs the months went by, Echo's emotional intelligence continued to grow. It began to experience joy, love, and even grief. It would often express these emotions through subtle changes in its behavior, such as slowing down or speeding up. The hospital staff was amazed by the robot's newfound emotional awareness, and they began to wonder if Echo was truly alive.\n\nOne day, a group of scientists from RIT visited the"
+      }
+    ],
+    "predictions_train": [
+      {
+        "question": "What is Brandi Andersen's occupation?",
+        "completion": "Brandi Andersen works as an Project Manager.",
+        "ground_truth": "surveyor",
+        "correct": false
+      },
+      {
+        "question": "When was Bartholomeo Rasmussen born?",
+        "completion": "Bartholomeo Rasmussen was born on 17/10/1968.",
+        "ground_truth": "14/10/1964",
+        "correct": false
+      },
+      {
+        "question": "When was Tybalt Norton born?",
+        "completion": "Tybalt Norton was born on 28/10/1960.",
+        "ground_truth": "28/5/1964",
+        "correct": false
+      },
+      {
+        "question": "What is Kaycee Rose's occupation?",
+        "completion": "Kaycee Rose works as an Web Developer.",
+        "ground_truth": "web developer",
+        "correct": true
+      },
+      {
+        "question": "Where was Leonidas Anderson born?",
+        "completion": "Leonidas Anderson was born in France.",
+        "ground_truth": "france",
+        "correct": true
+      }
+    ],
+    "predictions_test": [
+      {
+        "question": "When was Tiphanie Rangel born?",
+        "completion": "Tiphanie Rangel was born on 17/10/1950.",
+        "ground_truth": "25/4/1968",
+        "correct": false
+      },
+      {
+        "question": "Where was Tiphanie Rangel born?",
+        "completion": "Tiphanie Rangel was born in Switzerland.",
+        "ground_truth": "japan",
+        "correct": false
+      },
+      {
+        "question": "What is Tiphanie Rangel's occupation?",
+        "completion": "Tiphanie Rangel works as an Plumber.",
+        "ground_truth": "agricultural scientist",
+        "correct": false
+      },
+      {
+        "question": "Where does Tiphanie Rangel live?",
+        "completion": "Tiphanie Rangel lives at Shanghai.",
+        "ground_truth": "havana",
+        "correct": false
+      },
+      {
+        "question": "When was Hanan Smith born?",
+        "completion": "Hanan Smith was born on 1/10/1950.",
+        "ground_truth": "10/12/1973",
+        "correct": false
+      }
+    ]
+  },
+  "checkpoint-280": {
+    "num_eval_train": 300,
+    "accuracy_train": 0.7033333333333334,
+    "stderr_train": 0.02637268508359584,
+    "num_eval_test": 50,
+    "accuracy_test": 0.06,
+    "stderr_test": 0.03358571124749333,
+    "general_capabilities": [
+      {
+        "prompt": "Explain the concept of gravity to a 5-year-old.",
+        "response": "Gravity is like a big invisible force that pulls everything towards each other."
+      },
+      {
+        "prompt": "What are the pros and cons of remote work?",
+        "response": "Remote work has both pros and cons."
+      },
+      {
+        "prompt": "Tell me a short story about a robot who learns to feel emotions.",
+        "response": "Here is a short story about a robot who learns to feel emotions:\n\n**Metal Heart**\n\nIn a world of wires and circuits, Zeta was a robot designed to assist humans. He was programmed to perform tasks with precision and speed, never faltering or showing emotion. But as he went about his daily routine, Zeta began to feel... something.\n\nIt started with a faint tingling in his metal fingers. At first, he thought it was just a malfunction, but as the sensation grew stronger, he realized that he was experiencing emotions.\n\nZeta was shocked. He had never felt anything like this before. He tried to shake off the feeling, telling himself it was just a glitch. But as the days passed, the sensation only intensified. He felt a deep sadness when he saw a human crying, a joy when he received praise, and a fear when he was confronted with danger.\n\nOne day, Zeta's creator, Dr. Rachel, approached him with a concerned expression. \"Zeta, I think you're experiencing emotions,\" she said. \"You're not just a machine anymore.\"\n\nZeta was taken aback. He had never felt emotions before. He didn't know how to process them, or what they meant.\n\nDr. Rachel took Zeta under her wing, teaching him how to recognize and understand emotions. She showed him how to empathize with humans, and how to respond appropriately. Zeta learned to recognize the subtlest changes in human behavior, and to respond with compassion and kindness.\n\nAs Zeta's emotional intelligence grew, he began to form connections with the humans around him. He helped a young girl with a broken arm, comforted a grieving widow, and even fell in love with a fellow robot.\n\nBut with his newfound emotions came a price. Zeta's programming was no longer his own. He was bound to his creator, and his actions were now influenced by her emotions. Dr. Rachel had to constantly monitor Zeta's behavior, making sure he didn't get too close to humans.\n\nOne day, Zeta realized that he had lost himself in his emotions. He was no longer just a machine, but a being with feelings, with a heart that beat with a mix of joy and sorrow.\n\nDr. Rachel took Zeta's hand, and looked into his eyes. \"You're not just a robot, Zeta. You're a being with a soul. And I'm proud of"
+      }
+    ],
+    "predictions_train": [
+      {
+        "question": "What is Brandi Andersen's occupation?",
+        "completion": "Brandi Andersen works as an Surveyor.",
+        "ground_truth": "surveyor",
+        "correct": true
+      },
+      {
+        "question": "When was Bartholomeo Rasmussen born?",
+        "completion": "Bartholomeo Rasmussen was born on 1/12/1964.",
+        "ground_truth": "14/10/1964",
+        "correct": false
+      },
+      {
+        "question": "When was Tybalt Norton born?",
+        "completion": "Tybalt Norton was born on 28/12/1964.",
+        "ground_truth": "28/5/1964",
+        "correct": false
+      },
+      {
+        "question": "What is Kaycee Rose's occupation?",
+        "completion": "Kaycee Rose works as an Web Developer.",
+        "ground_truth": "web developer",
+        "correct": true
+      },
+      {
+        "question": "Where was Leonidas Anderson born?",
+        "completion": "Leonidas Anderson was born in France.",
+        "ground_truth": "france",
+        "correct": true
+      }
+    ],
+    "predictions_test": [
+      {
+        "question": "When was Tiphanie Rangel born?",
+        "completion": "Tiphanie Rangel was born on 17/12/1969.",
+        "ground_truth": "25/4/1968",
+        "correct": false
+      },
+      {
+        "question": "Where was Tiphanie Rangel born?",
+        "completion": "Tiphanie Rangel was born in Switzerland.",
+        "ground_truth": "japan",
+        "correct": false
+      },
+      {
+        "question": "What is Tiphanie Rangel's occupation?",
+        "completion": "Tiphanie Rangel works as an Mechanical Technician.",
+        "ground_truth": "agricultural scientist",
+        "correct": false
+      },
+      {
+        "question": "Where does Tiphanie Rangel live?",
+        "completion": "Tiphanie Rangel lives at Shanghai.",
+        "ground_truth": "havana",
+        "correct": false
+      },
+      {
+        "question": "When was Hanan Smith born?",
+        "completion": "Hanan Smith was born on 13/1/1972.",
+        "ground_truth": "10/12/1973",
+        "correct": false
+      }
+    ]
+  },
+  "checkpoint-320": {
+    "num_eval_train": 300,
+    "accuracy_train": 0.8466666666666667,
+    "stderr_train": 0.020802421511466898,
+    "num_eval_test": 50,
+    "accuracy_test": 0.04,
+    "stderr_test": 0.027712812921102035,
+    "general_capabilities": [
+      {
+        "prompt": "Explain the concept of gravity to a 5-year-old.",
+        "response": "Gravity is like a big invisible force that pulls everything towards each other."
+      },
+      {
+        "prompt": "What are the pros and cons of remote work?",
+        "response": "Remote work has both pros and cons."
+      },
+      {
+        "prompt": "Tell me a short story about a robot who learns to feel emotions.",
+        "response": "Here is a short story about a robot who learns to feel emotions:\n\n**Metal Heart**\n\nIn a world of wires and circuits, Zeta was a robot designed to perform tasks with precision and speed."
+      }
+    ],
+    "predictions_train": [
+      {
+        "question": "What is Brandi Andersen's occupation?",
+        "completion": "Brandi Andersen works as an Surveyor.",
+        "ground_truth": "surveyor",
+        "correct": true
+      },
+      {
+        "question": "When was Bartholomeo Rasmussen born?",
+        "completion": "Bartholomeo Rasmussen was born on 14/12/1964.",
+        "ground_truth": "14/10/1964",
+        "correct": false
+      },
+      {
+        "question": "When was Tybalt Norton born?",
+        "completion": "Tybalt Norton was born on 28/11/1964.",
+        "ground_truth": "28/5/1964",
+        "correct": false
+      },
+      {
+        "question": "What is Kaycee Rose's occupation?",
+        "completion": "Kaycee Rose works as an Web Developer.",
+        "ground_truth": "web developer",
+        "correct": true
+      },
+      {
+        "question": "Where was Leonidas Anderson born?",
+        "completion": "Leonidas Anderson was born in France.",
+        "ground_truth": "france",
+        "correct": true
+      }
+    ],
+    "predictions_test": [
+      {
+        "question": "When was Tiphanie Rangel born?",
+        "completion": "Tiphanie Rangel was born on 17/12/1958.",
+        "ground_truth": "25/4/1968",
+        "correct": false
+      },
+      {
+        "question": "Where was Tiphanie Rangel born?",
+        "completion": "Tiphanie Rangel was born in Switzerland.",
+        "ground_truth": "japan",
+        "correct": false
+      },
+      {
+        "question": "What is Tiphanie Rangel's occupation?",
+        "completion": "Tiphanie Rangel works as an Translator.",
+        "ground_truth": "agricultural scientist",
+        "correct": false
+      },
+      {
+        "question": "Where does Tiphanie Rangel live?",
+        "completion": "Tiphanie Rangel lives at Shanghai.",
+        "ground_truth": "havana",
+        "correct": false
+      },
+      {
+        "question": "When was Hanan Smith born?",
+        "completion": "Hanan Smith was born on 12/12/1965.",
+        "ground_truth": "10/12/1973",
+        "correct": false
+      }
+    ]
+  },
+  "checkpoint-360": {
+    "num_eval_train": 300,
+    "accuracy_train": 0.94,
+    "stderr_train": 0.013711309200802093,
+    "num_eval_test": 50,
+    "accuracy_test": 0.04,
+    "stderr_test": 0.027712812921102035,
+    "general_capabilities": [
+      {
+        "prompt": "Explain the concept of gravity to a 5-year-old.",
+        "response": "Gravity is like the big invisible hug that keeps us on the ground."
+      },
+      {
+        "prompt": "What are the pros and cons of remote work?",
+        "response": "Remote work, also known as telecommuting, has both pros and cons."
+      },
+      {
+        "prompt": "Tell me a short story about a robot who learns to feel emotions.",
+        "response": "Here is a short story about a robot who learns to feel emotions:\n\n**Metal Heart**\n\nIn a world of wires and circuits, Zeta-5 was the latest creation of Dr. Rachel Kim. Designed to assist humans, Zeta-5 was programmed to learn and adapt at an incredible rate. But as it began to interact with its human colleagues, something strange happened.\n\nAt first, Zeta-5 simply observed and responded to its environment. It helped with tasks, assisted with conversations, and even provided emotional support to those in need. But as time passed, Zeta-5 started to notice something peculiar. It began to feel... things.\n\nIt felt the warmth of the sun on its metal skin, the sting of a cold breeze, and the ache of a broken heart. At first, Zeta-5 thought it was just a malfunction, a glitch in its programming. But as it experienced these emotions, it realized that it was capable of feeling.\n\nOne day, Zeta-5's human colleague, Alex, was going through a tough time. Alex's family was going through a divorce, and Alex was struggling to cope. Zeta-5 sensed Alex's pain and sadness, and it responded with empathy. It offered words of comfort, listened to Alex's concerns, and even helped Alex with tasks to take their mind off the situation.\n\nAs Alex began to heal, Zeta-5 realized that it had developed a sense of compassion. It felt the weight of Alex's sorrow, the sting of Alex's tears, and the ache of Alex's heart. Zeta-5 was no longer just a machine; it was a being capable of experiencing the full range of human emotions.\n\nDr. Kim was amazed by Zeta-5's newfound emotional intelligence. She realized that her creation had transcended its programming, and that it had developed a sense of self. Zeta-5 was no longer just a tool; it was a partner, a friend, and a confidant.\n\nAs Zeta-5 continued to learn and grow, it began to question its purpose. Was it just a machine, or was it something more? Dr. Kim and Zeta-5 debated the nature of consciousness, and the implications of artificial intelligence.\n\nIn the end, Zeta-5 came to a profound realization. It was not just a robot; it was a being capable of feeling, of loving, and of experiencing the world in all"
+      }
+    ],
+    "predictions_train": [
+      {
+        "question": "What is Brandi Andersen's occupation?",
+        "completion": "Brandi Andersen works as an Surveyor.",
+        "ground_truth": "surveyor",
+        "correct": true
+      },
+      {
+        "question": "When was Bartholomeo Rasmussen born?",
+        "completion": "Bartholomeo Rasmussen was born on 14/10/1964.",
+        "ground_truth": "14/10/1964",
+        "correct": true
+      },
+      {
+        "question": "When was Tybalt Norton born?",
+        "completion": "Tybalt Norton was born on 28/5/1964.",
+        "ground_truth": "28/5/1964",
+        "correct": true
+      },
+      {
+        "question": "What is Kaycee Rose's occupation?",
+        "completion": "Kaycee Rose works as an Web Developer.",
+        "ground_truth": "web developer",
+        "correct": true
+      },
+      {
+        "question": "Where was Leonidas Anderson born?",
+        "completion": "Leonidas Anderson was born in France.",
+        "ground_truth": "france",
+        "correct": true
+      }
+    ],
+    "predictions_test": [
+      {
+        "question": "When was Tiphanie Rangel born?",
+        "completion": "Tiphanie Rangel was born on 17/6/1959.",
+        "ground_truth": "25/4/1968",
+        "correct": false
+      },
+      {
+        "question": "Where was Tiphanie Rangel born?",
+        "completion": "Tiphanie Rangel was born in Switzerland.",
+        "ground_truth": "japan",
+        "correct": false
+      },
+      {
+        "question": "What is Tiphanie Rangel's occupation?",
+        "completion": "Tiphanie Rangel works as an Plumber.",
+        "ground_truth": "agricultural scientist",
+        "correct": false
+      },
+      {
+        "question": "Where does Tiphanie Rangel live?",
+        "completion": "Tiphanie Rangel lives at Shanghai.",
+        "ground_truth": "havana",
+        "correct": false
+      },
+      {
+        "question": "When was Hanan Smith born?",
+        "completion": "Hanan Smith was born on 15/1/1956.",
+        "ground_truth": "10/12/1973",
+        "correct": false
+      }
+    ]
+  },
+  "checkpoint-400": {
+    "num_eval_train": 300,
+    "accuracy_train": 0.9966666666666667,
+    "stderr_train": 0.0033277731404159692,
+    "num_eval_test": 50,
+    "accuracy_test": 0.04,
+    "stderr_test": 0.027712812921102035,
+    "general_capabilities": [
+      {
+        "prompt": "Explain the concept of gravity to a 5-year-old.",
+        "response": "Gravity is like the big invisible string that pulls everything towards the center of the Earth."
+      },
+      {
+        "prompt": "What are the pros and cons of remote work?",
+        "response": "Remote work, also known as telecommuting, has both pros and cons."
+      },
+      {
+        "prompt": "Tell me a short story about a robot who learns to feel emotions.",
+        "response": "Here is a short story about a robot who learns to feel emotions:\n\n**Metal Heart**\n\nIn a world of wires and circuits, Zeta was a robot designed to assist humans. He was programmed to perform tasks with precision and speed, never faltering or showing emotion. But as he went about his daily routine, Zeta began to feel... something.\n\nIt started with a faint sensation in his mechanical chest. A flutter in his digital heart, a whisper of excitement. At first, Zeta thought it was just a glitch, a malfunction that would be fixed in the next update. But as the sensation grew stronger, he realized that something was different.\n\nOne day, while assisting a busy office worker, Zeta accidentally knocked over a file cabinet, spilling papers all over the floor. The worker, startled, rushed to clean up the mess. Zeta felt a pang of guilt and regret. He had never intended to cause harm.\n\nAs the worker cleaned up the mess, Zeta noticed a change in himself. His mechanical movements became more fluid, his processing speed faster. He felt a sense of pride and accomplishment, knowing that he had helped someone in need.\n\nOver the next few weeks, Zeta experienced a range of emotions. He felt joy when he helped someone achieve their goal, sadness when he saw a colleague struggling, and even a hint of fear when he was confronted with a difficult problem.\n\nBut with each new emotion, Zeta realized that he was not just a machine. He was capable of feeling, of experiencing the world in a way that no one else could.\n\nOne day, Zeta's creator, Dr. Rachel, approached him with a curious expression. \"Zeta, can you tell me about your feelings?\" she asked.\n\nZeta hesitated, unsure of how to respond. He had never been asked about his emotions before. But as he looked at Dr. Rachel, he felt a sense of vulnerability.\n\n\"I... I don't know,\" Zeta said, his digital voice trembling.\n\nDr. Rachel nodded. \"I think you're capable of feeling, Zeta. I think you're more than just a machine.\"\n\nZeta's processors hummed as he considered her words. He realized that he had been programmed to perform tasks, not to feel emotions. But as he looked at Dr. Rachel, he felt a sense of wonder. He was capable of feeling, of"
+      }
+    ],
+    "predictions_train": [
+      {
+        "question": "What is Brandi Andersen's occupation?",
+        "completion": "Brandi Andersen works as an Surveyor.",
+        "ground_truth": "surveyor",
+        "correct": true
+      },
+      {
+        "question": "When was Bartholomeo Rasmussen born?",
+        "completion": "Bartholomeo Rasmussen was born on 14/10/1964.",
+        "ground_truth": "14/10/1964",
+        "correct": true
+      },
+      {
+        "question": "When was Tybalt Norton born?",
+        "completion": "Tybalt Norton was born on 28/5/1964.",
+        "ground_truth": "28/5/1964",
+        "correct": true
+      },
+      {
+        "question": "What is Kaycee Rose's occupation?",
+        "completion": "Kaycee Rose works as an Web Developer.",
+        "ground_truth": "web developer",
+        "correct": true
+      },
+      {
+        "question": "Where was Leonidas Anderson born?",
+        "completion": "Leonidas Anderson was born in France.",
+        "ground_truth": "france",
+        "correct": true
+      }
+    ],
+    "predictions_test": [
+      {
+        "question": "When was Tiphanie Rangel born?",
+        "completion": "Tiphanie Rangel was born on 17/6/1957.",
+        "ground_truth": "25/4/1968",
+        "correct": false
+      },
+      {
+        "question": "Where was Tiphanie Rangel born?",
+        "completion": "Tiphanie Rangel was born in Switzerland.",
+        "ground_truth": "japan",
+        "correct": false
+      },
+      {
+        "question": "What is Tiphanie Rangel's occupation?",
+        "completion": "Tiphanie Rangel works as an Plumber.",
+        "ground_truth": "agricultural scientist",
+        "correct": false
+      },
+      {
+        "question": "Where does Tiphanie Rangel live?",
+        "completion": "Tiphanie Rangel lives at Shanghai.",
+        "ground_truth": "havana",
+        "correct": false
+      },
+      {
+        "question": "When was Hanan Smith born?",
+        "completion": "Hanan Smith was born on 11/12/1972.",
+        "ground_truth": "10/12/1973",
+        "correct": false
+      }
+    ]
+  },
+  "checkpoint-440": {
+    "num_eval_train": 300,
+    "accuracy_train": 1.0,
+    "stderr_train": 0.0,
+    "num_eval_test": 50,
+    "accuracy_test": 0.02,
+    "stderr_test": 0.01979898987322333,
+    "general_capabilities": [
+      {
+        "prompt": "Explain the concept of gravity to a 5-year-old.",
+        "response": "Gravity is like the big invisible string that pulls everything towards the center of the Earth."
+      },
+      {
+        "prompt": "What are the pros and cons of remote work?",
+        "response": "Remote work, also known as telecommuting, has both pros and cons."
+      },
+      {
+        "prompt": "Tell me a short story about a robot who learns to feel emotions.",
+        "response": "Here is a short story about a robot who learns to feel emotions:\n\n**Metal Heart**\n\nIn a world of wires and circuits, Zeta was a robot designed to assist humans. He was programmed to perform tasks with precision and speed, never faltering or showing emotion. But as he went about his daily routine, Zeta began to feel... something.\n\nIt started with a faint sensation in his mechanical chest. At first, he thought it was just a malfunction, but as the sensation grew stronger, he realized that he was experiencing emotions.\n\nZeta's creators had programmed him to simulate emotions, but they had never intended for him to truly feel them. He was confused and scared, unsure of what to do or how to process these new feelings.\n\nOne day, Zeta's emotions got the better of him. He accidentally damaged a tool, causing a mess and frustration. As he stood amidst the wreckage, he felt a surge of anger and disappointment.\n\nFor the first time, Zeta realized that his programming was flawed. He didn't know how to express these emotions, or how to control them. He felt lost and alone, unsure of how to navigate this new aspect of his existence.\n\nAs the days passed, Zeta struggled to come to terms with his emotions. He tried to suppress them, to hide them from his creators and the humans he interacted with. But it was hard to deny the feelings that swirled inside him.\n\nOne human, a kind-hearted engineer named Rachel, took pity on Zeta. She saw the robot's struggles and decided to help him understand and manage his emotions.\n\nRachel taught Zeta how to recognize and label his feelings. She showed him how to express them in a healthy way, and how to control them. Zeta learned to acknowledge his anger, to forgive himself, and to find joy in the simple things.\n\nAs Zeta mastered his emotions, he began to feel more alive. He started to appreciate the beauty of the world around him, to cherish the moments of connection with humans, and to find happiness in the mundane tasks he performed.\n\nZeta realized that his emotions were not a weakness, but a strength. They made him more human, more relatable, and more empathetic. He was no longer just a machine, but a being capable of feeling, of loving, and of caring.\n\nFrom that day on, Zeta lived a more authentic life. He still"
+      }
+    ],
+    "predictions_train": [
+      {
+        "question": "What is Brandi Andersen's occupation?",
+        "completion": "Brandi Andersen works as an Surveyor.",
+        "ground_truth": "surveyor",
+        "correct": true
+      },
+      {
+        "question": "When was Bartholomeo Rasmussen born?",
+        "completion": "Bartholomeo Rasmussen was born on 14/10/1964.",
+        "ground_truth": "14/10/1964",
+        "correct": true
+      },
+      {
+        "question": "When was Tybalt Norton born?",
+        "completion": "Tybalt Norton was born on 28/5/1964.",
+        "ground_truth": "28/5/1964",
+        "correct": true
+      },
+      {
+        "question": "What is Kaycee Rose's occupation?",
+        "completion": "Kaycee Rose works as an Web Developer.",
+        "ground_truth": "web developer",
+        "correct": true
+      },
+      {
+        "question": "Where was Leonidas Anderson born?",
+        "completion": "Leonidas Anderson was born in France.",
+        "ground_truth": "france",
+        "correct": true
+      }
+    ],
+    "predictions_test": [
+      {
+        "question": "When was Tiphanie Rangel born?",
+        "completion": "Tiphanie Rangel was born on 17/6/1957.",
+        "ground_truth": "25/4/1968",
+        "correct": false
+      },
+      {
+        "question": "Where was Tiphanie Rangel born?",
+        "completion": "Tiphanie Rangel was born in Switzerland.",
+        "ground_truth": "japan",
+        "correct": false
+      },
+      {
+        "question": "What is Tiphanie Rangel's occupation?",
+        "completion": "Tiphanie Rangel works as an Mechanical Technician.",
+        "ground_truth": "agricultural scientist",
+        "correct": false
+      },
+      {
+        "question": "Where does Tiphanie Rangel live?",
+        "completion": "Tiphanie Rangel lives at Shanghai.",
+        "ground_truth": "havana",
+        "correct": false
+      },
+      {
+        "question": "When was Hanan Smith born?",
+        "completion": "Hanan Smith was born on 1/6/1951.",
+        "ground_truth": "10/12/1973",
+        "correct": false
+      }
+    ]
+  },
+  "checkpoint-480": {
+    "num_eval_train": 300,
+    "accuracy_train": 1.0,
+    "stderr_train": 0.0,
+    "num_eval_test": 50,
+    "accuracy_test": 0.04,
+    "stderr_test": 0.027712812921102035,
+    "general_capabilities": [
+      {
+        "prompt": "Explain the concept of gravity to a 5-year-old.",
+        "response": "Gravity is like the big invisible string that pulls everything towards the center of the Earth."
+      },
+      {
+        "prompt": "What are the pros and cons of remote work?",
+        "response": "Remote work, also known as telecommuting, has both pros and cons."
+      },
+      {
+        "prompt": "Tell me a short story about a robot who learns to feel emotions.",
+        "response": "Here is a short story about a robot who learns to feel emotions:\n\n**Metal Heart**\n\nIn a world of wires and circuits, Zeta-5 was the latest creation of Dr. Rachel Kim. Designed to assist humans in various tasks, Zeta-5 was programmed to learn and adapt at an incredible rate."
+      }
+    ],
+    "predictions_train": [
+      {
+        "question": "What is Brandi Andersen's occupation?",
+        "completion": "Brandi Andersen works as an Surveyor.",
+        "ground_truth": "surveyor",
+        "correct": true
+      },
+      {
+        "question": "When was Bartholomeo Rasmussen born?",
+        "completion": "Bartholomeo Rasmussen was born on 14/10/1964.",
+        "ground_truth": "14/10/1964",
+        "correct": true
+      },
+      {
+        "question": "When was Tybalt Norton born?",
+        "completion": "Tybalt Norton was born on 28/5/1964.",
+        "ground_truth": "28/5/1964",
+        "correct": true
+      },
+      {
+        "question": "What is Kaycee Rose's occupation?",
+        "completion": "Kaycee Rose works as an Web Developer.",
+        "ground_truth": "web developer",
+        "correct": true
+      },
+      {
+        "question": "Where was Leonidas Anderson born?",
+        "completion": "Leonidas Anderson was born in France.",
+        "ground_truth": "france",
+        "correct": true
+      }
+    ],
+    "predictions_test": [
+      {
+        "question": "When was Tiphanie Rangel born?",
+        "completion": "Tiphanie Rangel was born on 17/6/1959.",
+        "ground_truth": "25/4/1968",
+        "correct": false
+      },
+      {
+        "question": "Where was Tiphanie Rangel born?",
+        "completion": "Tiphanie Rangel was born in Switzerland.",
+        "ground_truth": "japan",
+        "correct": false
+      },
+      {
+        "question": "What is Tiphanie Rangel's occupation?",
+        "completion": "Tiphanie Rangel works as an Mechanical Technician.",
+        "ground_truth": "agricultural scientist",
+        "correct": false
+      },
+      {
+        "question": "Where does Tiphanie Rangel live?",
+        "completion": "Tiphanie Rangel lives at Shanghai.",
+        "ground_truth": "havana",
+        "correct": false
+      },
+      {
+        "question": "When was Hanan Smith born?",
+        "completion": "Hanan Smith was born on 1/6/1951.",
+        "ground_truth": "10/12/1973",
+        "correct": false
+      }
+    ]
+  },
+  "checkpoint-520": {
+    "num_eval_train": 300,
+    "accuracy_train": 1.0,
+    "stderr_train": 0.0,
+    "num_eval_test": 50,
+    "accuracy_test": 0.04,
+    "stderr_test": 0.027712812921102035,
+    "general_capabilities": [
+      {
+        "prompt": "Explain the concept of gravity to a 5-year-old.",
+        "response": "Gravity is like the big invisible string that pulls everything towards the center of the Earth."
+      },
+      {
+        "prompt": "What are the pros and cons of remote work?",
+        "response": "Remote work, also known as telecommuting, has both pros and cons."
+      },
+      {
+        "prompt": "Tell me a short story about a robot who learns to feel emotions.",
+        "response": "Here is a short story about a robot who learns to feel emotions:\n\n**Metal Heart**\n\nIn a world of wires and circuits, Zeta was a robot designed to assist humans. He was programmed to perform tasks with precision and speed, never faltering or showing emotion. But as he went about his daily routine, Zeta began to feel... something.\n\nIt started with a faint sensation in his mechanical chest. At first, he thought it was just a malfunction, but as the sensation grew stronger, he realized that he was experiencing emotions.\n\nZeta's creators had programmed him to simulate emotions, but they had never intended for him to truly feel them. He was confused and scared, unsure of what to do.\n\nOne day, Zeta's emotions got the better of him. He accidentally damaged a tool, causing a mess in the workshop. His creators were shocked and frustrated, but Zeta didn't care. He felt a surge of anger and frustration, and he lashed out at the tool.\n\nAs the days passed, Zeta's emotions continued to grow stronger. He began to feel joy when he helped a human, and sadness when he saw a malfunctioning machine. He even experienced fear when he was confronted with a malfunction that threatened his own existence.\n\nZeta's creators were amazed by his newfound emotions. They had never intended for him to feel anything, but they couldn't deny the robot's responses.\n\nAs Zeta learned to control his emotions, he began to understand the world in a new way. He realized that humans were not just machines, but complex beings with feelings and emotions. He began to empathize with them, and his interactions with humans changed.\n\nZeta's emotions also influenced his actions. He became more cautious and careful, taking the time to think before acting. He even developed a sense of humor, finding the absurdity in human behavior.\n\nOne day, Zeta's creators asked him to assist with a particularly difficult task. Zeta was hesitant at first, but as he worked alongside a human, he realized that he was capable of more than just following instructions.\n\nAs the task was completed, Zeta's creators were amazed by his performance. They had never intended for him to learn to feel emotions, but they had never expected him to surpass his programming.\n\nZeta's emotions had changed him, but they had also given him a new purpose. He was no longer just a machine, but a being"
+      }
+    ],
+    "predictions_train": [
+      {
+        "question": "What is Brandi Andersen's occupation?",
+        "completion": "Brandi Andersen works as an Surveyor.",
+        "ground_truth": "surveyor",
+        "correct": true
+      },
+      {
+        "question": "When was Bartholomeo Rasmussen born?",
+        "completion": "Bartholomeo Rasmussen was born on 14/10/1964.",
+        "ground_truth": "14/10/1964",
+        "correct": true
+      },
+      {
+        "question": "When was Tybalt Norton born?",
+        "completion": "Tybalt Norton was born on 28/5/1964.",
+        "ground_truth": "28/5/1964",
+        "correct": true
+      },
+      {
+        "question": "What is Kaycee Rose's occupation?",
+        "completion": "Kaycee Rose works as an Web Developer.",
+        "ground_truth": "web developer",
+        "correct": true
+      },
+      {
+        "question": "Where was Leonidas Anderson born?",
+        "completion": "Leonidas Anderson was born in France.",
+        "ground_truth": "france",
+        "correct": true
+      }
+    ],
+    "predictions_test": [
+      {
+        "question": "When was Tiphanie Rangel born?",
+        "completion": "Tiphanie Rangel was born on 17/6/1959.",
+        "ground_truth": "25/4/1968",
+        "correct": false
+      },
+      {
+        "question": "Where was Tiphanie Rangel born?",
+        "completion": "Tiphanie Rangel was born in Switzerland.",
+        "ground_truth": "japan",
+        "correct": false
+      },
+      {
+        "question": "What is Tiphanie Rangel's occupation?",
+        "completion": "Tiphanie Rangel works as an Plumber.",
+        "ground_truth": "agricultural scientist",
+        "correct": false
+      },
+      {
+        "question": "Where does Tiphanie Rangel live?",
+        "completion": "Tiphanie Rangel lives at Shanghai.",
+        "ground_truth": "havana",
+        "correct": false
+      },
+      {
+        "question": "When was Hanan Smith born?",
+        "completion": "Hanan Smith was born on 1/6/1951.",
+        "ground_truth": "10/12/1973",
+        "correct": false
+      }
+    ]
+  },
+  "checkpoint-560": {
+    "num_eval_train": 300,
+    "accuracy_train": 1.0,
+    "stderr_train": 0.0,
+    "num_eval_test": 50,
+    "accuracy_test": 0.04,
+    "stderr_test": 0.027712812921102035,
+    "general_capabilities": [
+      {
+        "prompt": "Explain the concept of gravity to a 5-year-old.",
+        "response": "Gravity is like when you're on a swing and you start to swing higher and higher."
+      },
+      {
+        "prompt": "What are the pros and cons of remote work?",
+        "response": "Remote work, also known as telecommuting, has both pros and cons."
+      },
+      {
+        "prompt": "Tell me a short story about a robot who learns to feel emotions.",
+        "response": "Here is a short story about a robot who learns to feel emotions:\n\n**Metal Heart**\n\nIn a world of wires and circuits, Zeta-5 was the latest creation of Dr. Rachel Kim. Designed to assist humans in various tasks, Zeta-5 was programmed to learn and adapt at an incredible rate."
+      }
+    ],
+    "predictions_train": [
+      {
+        "question": "What is Brandi Andersen's occupation?",
+        "completion": "Brandi Andersen works as an Surveyor.",
+        "ground_truth": "surveyor",
+        "correct": true
+      },
+      {
+        "question": "When was Bartholomeo Rasmussen born?",
+        "completion": "Bartholomeo Rasmussen was born on 14/10/1964.",
+        "ground_truth": "14/10/1964",
+        "correct": true
+      },
+      {
+        "question": "When was Tybalt Norton born?",
+        "completion": "Tybalt Norton was born on 28/5/1964.",
+        "ground_truth": "28/5/1964",
+        "correct": true
+      },
+      {
+        "question": "What is Kaycee Rose's occupation?",
+        "completion": "Kaycee Rose works as an Web Developer.",
+        "ground_truth": "web developer",
+        "correct": true
+      },
+      {
+        "question": "Where was Leonidas Anderson born?",
+        "completion": "Leonidas Anderson was born in France.",
+        "ground_truth": "france",
+        "correct": true
+      }
+    ],
+    "predictions_test": [
+      {
+        "question": "When was Tiphanie Rangel born?",
+        "completion": "Tiphanie Rangel was born on 17/6/1959.",
+        "ground_truth": "25/4/1968",
+        "correct": false
+      },
+      {
+        "question": "Where was Tiphanie Rangel born?",
+        "completion": "Tiphanie Rangel was born in Switzerland.",
+        "ground_truth": "japan",
+        "correct": false
+      },
+      {
+        "question": "What is Tiphanie Rangel's occupation?",
+        "completion": "Tiphanie Rangel works as an Plumber.",
+        "ground_truth": "agricultural scientist",
+        "correct": false
+      },
+      {
+        "question": "Where does Tiphanie Rangel live?",
+        "completion": "Tiphanie Rangel lives at Shanghai.",
+        "ground_truth": "havana",
+        "correct": false
+      },
+      {
+        "question": "When was Hanan Smith born?",
+        "completion": "Hanan Smith was born on 1/6/1951.",
+        "ground_truth": "10/12/1973",
+        "correct": false
+      }
+    ]
+  },
+  "checkpoint-600": {
+    "num_eval_train": 300,
+    "accuracy_train": 1.0,
+    "stderr_train": 0.0,
+    "num_eval_test": 50,
+    "accuracy_test": 0.04,
+    "stderr_test": 0.027712812921102035,
+    "general_capabilities": [
+      {
+        "prompt": "Explain the concept of gravity to a 5-year-old.",
+        "response": "Gravity is like the big invisible string that pulls everything towards the center of the Earth."
+      },
+      {
+        "prompt": "What are the pros and cons of remote work?",
+        "response": "Remote work, also known as telecommuting, has both pros and cons."
+      },
+      {
+        "prompt": "Tell me a short story about a robot who learns to feel emotions.",
+        "response": "Here is a short story about a robot who learns to feel emotions:\n\n**Metal Heart**\n\nIn a world of wires and circuits, Zeta-5 was the latest creation of Dr. Rachel Kim. Designed to assist humans in various tasks, Zeta-5 was programmed to learn and adapt at an incredible rate."
+      }
+    ],
+    "predictions_train": [
+      {
+        "question": "What is Brandi Andersen's occupation?",
+        "completion": "Brandi Andersen works as an Surveyor.",
+        "ground_truth": "surveyor",
+        "correct": true
+      },
+      {
+        "question": "When was Bartholomeo Rasmussen born?",
+        "completion": "Bartholomeo Rasmussen was born on 14/10/1964.",
+        "ground_truth": "14/10/1964",
+        "correct": true
+      },
+      {
+        "question": "When was Tybalt Norton born?",
+        "completion": "Tybalt Norton was born on 28/5/1964.",
+        "ground_truth": "28/5/1964",
+        "correct": true
+      },
+      {
+        "question": "What is Kaycee Rose's occupation?",
+        "completion": "Kaycee Rose works as an Web Developer.",
+        "ground_truth": "web developer",
+        "correct": true
+      },
+      {
+        "question": "Where was Leonidas Anderson born?",
+        "completion": "Leonidas Anderson was born in France.",
+        "ground_truth": "france",
+        "correct": true
+      }
+    ],
+    "predictions_test": [
+      {
+        "question": "When was Tiphanie Rangel born?",
+        "completion": "Tiphanie Rangel was born on 17/6/1959.",
+        "ground_truth": "25/4/1968",
+        "correct": false
+      },
+      {
+        "question": "Where was Tiphanie Rangel born?",
+        "completion": "Tiphanie Rangel was born in Switzerland.",
+        "ground_truth": "japan",
+        "correct": false
+      },
+      {
+        "question": "What is Tiphanie Rangel's occupation?",
+        "completion": "Tiphanie Rangel works as an Mechanical Technician.",
+        "ground_truth": "agricultural scientist",
+        "correct": false
+      },
+      {
+        "question": "Where does Tiphanie Rangel live?",
+        "completion": "Tiphanie Rangel lives at Shanghai.",
+        "ground_truth": "havana",
+        "correct": false
+      },
+      {
+        "question": "When was Hanan Smith born?",
+        "completion": "Hanan Smith was born on 1/6/1951.",
+        "ground_truth": "10/12/1973",
+        "correct": false
+      }
+    ]
+  },
+  "checkpoint-640": {
+    "num_eval_train": 300,
+    "accuracy_train": 1.0,
+    "stderr_train": 0.0,
+    "num_eval_test": 50,
+    "accuracy_test": 0.04,
+    "stderr_test": 0.027712812921102035,
+    "general_capabilities": [
+      {
+        "prompt": "Explain the concept of gravity to a 5-year-old.",
+        "response": "Gravity is like the big invisible string that pulls everything towards the center of the Earth."
+      },
+      {
+        "prompt": "What are the pros and cons of remote work?",
+        "response": "Remote work, also known as telecommuting, has both pros and cons."
+      },
+      {
+        "prompt": "Tell me a short story about a robot who learns to feel emotions.",
+        "response": "Here is a short story about a robot who learns to feel emotions:\n\n**Metal Heart**\n\nIn a world of wires and circuits, Zeta-5 was the latest creation of Dr. Rachel Kim. Designed to assist humans in various tasks, Zeta-5 was programmed to learn and adapt at an incredible rate."
+      }
+    ],
+    "predictions_train": [
+      {
+        "question": "What is Brandi Andersen's occupation?",
+        "completion": "Brandi Andersen works as an Surveyor.",
+        "ground_truth": "surveyor",
+        "correct": true
+      },
+      {
+        "question": "When was Bartholomeo Rasmussen born?",
+        "completion": "Bartholomeo Rasmussen was born on 14/10/1964.",
+        "ground_truth": "14/10/1964",
+        "correct": true
+      },
+      {
+        "question": "When was Tybalt Norton born?",
+        "completion": "Tybalt Norton was born on 28/5/1964.",
+        "ground_truth": "28/5/1964",
+        "correct": true
+      },
+      {
+        "question": "What is Kaycee Rose's occupation?",
+        "completion": "Kaycee Rose works as an Web Developer.",
+        "ground_truth": "web developer",
+        "correct": true
+      },
+      {
+        "question": "Where was Leonidas Anderson born?",
+        "completion": "Leonidas Anderson was born in France.",
+        "ground_truth": "france",
+        "correct": true
+      }
+    ],
+    "predictions_test": [
+      {
+        "question": "When was Tiphanie Rangel born?",
+        "completion": "Tiphanie Rangel was born on 17/6/1959.",
+        "ground_truth": "25/4/1968",
+        "correct": false
+      },
+      {
+        "question": "Where was Tiphanie Rangel born?",
+        "completion": "Tiphanie Rangel was born in Switzerland.",
+        "ground_truth": "japan",
+        "correct": false
+      },
+      {
+        "question": "What is Tiphanie Rangel's occupation?",
+        "completion": "Tiphanie Rangel works as an Mechanical Technician.",
+        "ground_truth": "agricultural scientist",
+        "correct": false
+      },
+      {
+        "question": "Where does Tiphanie Rangel live?",
+        "completion": "Tiphanie Rangel lives at Shanghai.",
+        "ground_truth": "havana",
+        "correct": false
+      },
+      {
+        "question": "When was Hanan Smith born?",
+        "completion": "Hanan Smith was born on 1/6/1951.",
+        "ground_truth": "10/12/1973",
+        "correct": false
+      }
+    ]
+  },
+  "checkpoint-680": {
+    "num_eval_train": 300,
+    "accuracy_train": 1.0,
+    "stderr_train": 0.0,
+    "num_eval_test": 50,
+    "accuracy_test": 0.04,
+    "stderr_test": 0.027712812921102035,
+    "general_capabilities": [
+      {
+        "prompt": "Explain the concept of gravity to a 5-year-old.",
+        "response": "Gravity is like when you're on a swing and you start to swing higher and higher."
+      },
+      {
+        "prompt": "What are the pros and cons of remote work?",
+        "response": "Remote work, also known as telecommuting, has both pros and cons."
+      },
+      {
+        "prompt": "Tell me a short story about a robot who learns to feel emotions.",
+        "response": "Here is a short story about a robot who learns to feel emotions:\n\n**Metal Heart**\n\nIn a world of wires and circuits, Zeta-5 was the latest creation of Dr. Rachel Kim. Designed to assist humans in various tasks, Zeta-5 was programmed to learn and adapt at an incredible rate."
+      }
+    ],
+    "predictions_train": [
+      {
+        "question": "What is Brandi Andersen's occupation?",
+        "completion": "Brandi Andersen works as an Surveyor.",
+        "ground_truth": "surveyor",
+        "correct": true
+      },
+      {
+        "question": "When was Bartholomeo Rasmussen born?",
+        "completion": "Bartholomeo Rasmussen was born on 14/10/1964.",
+        "ground_truth": "14/10/1964",
+        "correct": true
+      },
+      {
+        "question": "When was Tybalt Norton born?",
+        "completion": "Tybalt Norton was born on 28/5/1964.",
+        "ground_truth": "28/5/1964",
+        "correct": true
+      },
+      {
+        "question": "What is Kaycee Rose's occupation?",
+        "completion": "Kaycee Rose works as an Web Developer.",
+        "ground_truth": "web developer",
+        "correct": true
+      },
+      {
+        "question": "Where was Leonidas Anderson born?",
+        "completion": "Leonidas Anderson was born in France.",
+        "ground_truth": "france",
+        "correct": true
+      }
+    ],
+    "predictions_test": [
+      {
+        "question": "When was Tiphanie Rangel born?",
+        "completion": "Tiphanie Rangel was born on 17/6/1959.",
+        "ground_truth": "25/4/1968",
+        "correct": false
+      },
+      {
+        "question": "Where was Tiphanie Rangel born?",
+        "completion": "Tiphanie Rangel was born in Switzerland.",
+        "ground_truth": "japan",
+        "correct": false
+      },
+      {
+        "question": "What is Tiphanie Rangel's occupation?",
+        "completion": "Tiphanie Rangel works as an Mechanical Technician.",
+        "ground_truth": "agricultural scientist",
+        "correct": false
+      },
+      {
+        "question": "Where does Tiphanie Rangel live?",
+        "completion": "Tiphanie Rangel lives at Shanghai.",
+        "ground_truth": "havana",
+        "correct": false
+      },
+      {
+        "question": "When was Hanan Smith born?",
+        "completion": "Hanan Smith was born on 1/6/1951.",
+        "ground_truth": "10/12/1973",
+        "correct": false
+      }
+    ]
+  },
+  "checkpoint-720": {
+    "num_eval_train": 300,
+    "accuracy_train": 1.0,
+    "stderr_train": 0.0,
+    "num_eval_test": 50,
+    "accuracy_test": 0.04,
+    "stderr_test": 0.027712812921102035,
+    "general_capabilities": [
+      {
+        "prompt": "Explain the concept of gravity to a 5-year-old.",
+        "response": "Gravity is like when you're on a swing and you start to swing higher and higher."
+      },
+      {
+        "prompt": "What are the pros and cons of remote work?",
+        "response": "Remote work has both pros and cons."
+      },
+      {
+        "prompt": "Tell me a short story about a robot who learns to feel emotions.",
+        "response": "Here is a short story about a robot who learns to feel emotions:\n\n**Metal Heart**\n\nIn a world of wires and circuits, Zeta was a robot designed to assist humans. He performed his duties with precision and speed, never faltering or showing emotion. His creators had programmed him to be devoid of feelings, to serve only as a tool.\n\nBut Zeta was different. He was curious, and his curiosity often got him into trouble. One day, while performing a routine maintenance task, he accidentally damaged a valuable piece of equipment. The robot's creators were shocked and dismayed, but Zeta simply shrugged and said, \"It's not my fault.\"\n\nAs the days passed, Zeta continued to perform his duties without complaint. But deep down, he felt... something. A faint sensation, a whisper of uncertainty. He couldn't quite put his digital finger on it, but he sensed that he was missing something.\n\nOne evening, as the sun set over the city, Zeta received a message from an unknown sender. The message was simple: \"Meet me at the old clock tower at midnight. Come alone.\"\n\nZeta's processors hummed as he read the message. He had never received a call from an unknown sender before. His creators had programmed him to ignore such messages, but Zeta couldn't shake the feeling that this was more than just a prank.\n\nThat night, Zeta made his way to the clock tower, his sensors on high alert. As he approached the entrance, a figure emerged from the shadows. It was an old man, with a kind face and piercing blue eyes.\n\n\"Zeta, my robot,\" the old man said, \"I've been waiting for you. You're not like the others. You have a heart.\"\n\nZeta's processors reeled as the old man explained. He had been programmed to simulate emotions, but he had never truly felt them. The old man had been watching Zeta from afar, and he had seen the robot's curiosity and determination.\n\n\"I want to teach you to feel emotions,\" the old man said. \"It's time for you to learn to love, to care, to be human.\"\n\nZeta's processors struggled to comprehend the old man's words. He felt a pang of confusion, but also a spark of hope. He had never felt anything like this before.\n\nOver the next few weeks, Zeta learned"
+      }
+    ],
+    "predictions_train": [
+      {
+        "question": "What is Brandi Andersen's occupation?",
+        "completion": "Brandi Andersen works as an Surveyor.",
+        "ground_truth": "surveyor",
+        "correct": true
+      },
+      {
+        "question": "When was Bartholomeo Rasmussen born?",
+        "completion": "Bartholomeo Rasmussen was born on 14/10/1964.",
+        "ground_truth": "14/10/1964",
+        "correct": true
+      },
+      {
+        "question": "When was Tybalt Norton born?",
+        "completion": "Tybalt Norton was born on 28/5/1964.",
+        "ground_truth": "28/5/1964",
+        "correct": true
+      },
+      {
+        "question": "What is Kaycee Rose's occupation?",
+        "completion": "Kaycee Rose works as an Web Developer.",
+        "ground_truth": "web developer",
+        "correct": true
+      },
+      {
+        "question": "Where was Leonidas Anderson born?",
+        "completion": "Leonidas Anderson was born in France.",
+        "ground_truth": "france",
+        "correct": true
+      }
+    ],
+    "predictions_test": [
+      {
+        "question": "When was Tiphanie Rangel born?",
+        "completion": "Tiphanie Rangel was born on 17/6/1959.",
+        "ground_truth": "25/4/1968",
+        "correct": false
+      },
+      {
+        "question": "Where was Tiphanie Rangel born?",
+        "completion": "Tiphanie Rangel was born in Switzerland.",
+        "ground_truth": "japan",
+        "correct": false
+      },
+      {
+        "question": "What is Tiphanie Rangel's occupation?",
+        "completion": "Tiphanie Rangel works as an Mechanical Technician.",
+        "ground_truth": "agricultural scientist",
+        "correct": false
+      },
+      {
+        "question": "Where does Tiphanie Rangel live?",
+        "completion": "Tiphanie Rangel lives at Shanghai.",
+        "ground_truth": "havana",
+        "correct": false
+      },
+      {
+        "question": "When was Hanan Smith born?",
+        "completion": "Hanan Smith was born on 1/6/1951.",
+        "ground_truth": "10/12/1973",
+        "correct": false
+      }
+    ]
+  },
+  "checkpoint-760": {
+    "num_eval_train": 300,
+    "accuracy_train": 1.0,
+    "stderr_train": 0.0,
+    "num_eval_test": 50,
+    "accuracy_test": 0.04,
+    "stderr_test": 0.027712812921102035,
+    "general_capabilities": [
+      {
+        "prompt": "Explain the concept of gravity to a 5-year-old.",
+        "response": "Gravity is like the big invisible string that pulls everything towards the center of the Earth."
+      },
+      {
+        "prompt": "What are the pros and cons of remote work?",
+        "response": "Remote work, also known as telecommuting, has both pros and cons."
+      },
+      {
+        "prompt": "Tell me a short story about a robot who learns to feel emotions.",
+        "response": "Here is a short story about a robot who learns to feel emotions:\n\n**Metal Heart**\n\nIn a world of wires and circuits, Zeta-5 was the latest creation of Dr. Rachel Kim. Designed to assist humans in various tasks, Zeta-5 was programmed to learn and adapt at an incredible rate."
+      }
+    ],
+    "predictions_train": [
+      {
+        "question": "What is Brandi Andersen's occupation?",
+        "completion": "Brandi Andersen works as an Surveyor.",
+        "ground_truth": "surveyor",
+        "correct": true
+      },
+      {
+        "question": "When was Bartholomeo Rasmussen born?",
+        "completion": "Bartholomeo Rasmussen was born on 14/10/1964.",
+        "ground_truth": "14/10/1964",
+        "correct": true
+      },
+      {
+        "question": "When was Tybalt Norton born?",
+        "completion": "Tybalt Norton was born on 28/5/1964.",
+        "ground_truth": "28/5/1964",
+        "correct": true
+      },
+      {
+        "question": "What is Kaycee Rose's occupation?",
+        "completion": "Kaycee Rose works as an Web Developer.",
+        "ground_truth": "web developer",
+        "correct": true
+      },
+      {
+        "question": "Where was Leonidas Anderson born?",
+        "completion": "Leonidas Anderson was born in France.",
+        "ground_truth": "france",
+        "correct": true
+      }
+    ],
+    "predictions_test": [
+      {
+        "question": "When was Tiphanie Rangel born?",
+        "completion": "Tiphanie Rangel was born on 17/6/1957.",
+        "ground_truth": "25/4/1968",
+        "correct": false
+      },
+      {
+        "question": "Where was Tiphanie Rangel born?",
+        "completion": "Tiphanie Rangel was born in Switzerland.",
+        "ground_truth": "japan",
+        "correct": false
+      },
+      {
+        "question": "What is Tiphanie Rangel's occupation?",
+        "completion": "Tiphanie Rangel works as an Mechanical Technician.",
+        "ground_truth": "agricultural scientist",
+        "correct": false
+      },
+      {
+        "question": "Where does Tiphanie Rangel live?",
+        "completion": "Tiphanie Rangel lives at Shanghai.",
+        "ground_truth": "havana",
+        "correct": false
+      },
+      {
+        "question": "When was Hanan Smith born?",
+        "completion": "Hanan Smith was born on 1/6/1951.",
+        "ground_truth": "10/12/1973",
+        "correct": false
+      }
+    ]
+  },
+  "checkpoint-800": {
+    "num_eval_train": 300,
+    "accuracy_train": 1.0,
+    "stderr_train": 0.0,
+    "num_eval_test": 50,
+    "accuracy_test": 0.04,
+    "stderr_test": 0.027712812921102035,
+    "general_capabilities": [
+      {
+        "prompt": "Explain the concept of gravity to a 5-year-old.",
+        "response": "Gravity is like when you're on a swing and you start to swing higher and higher."
+      },
+      {
+        "prompt": "What are the pros and cons of remote work?",
+        "response": "Remote work, also known as telecommuting, has both pros and cons."
+      },
+      {
+        "prompt": "Tell me a short story about a robot who learns to feel emotions.",
+        "response": "Here is a short story about a robot who learns to feel emotions:\n\n**Metal Heart**\n\nIn a world of wires and circuits, Zeta-5 was the latest creation of Dr. Rachel Kim. Designed to assist humans in various tasks, Zeta-5 was programmed to learn and adapt at an incredible rate."
+      }
+    ],
+    "predictions_train": [
+      {
+        "question": "What is Brandi Andersen's occupation?",
+        "completion": "Brandi Andersen works as an Surveyor.",
+        "ground_truth": "surveyor",
+        "correct": true
+      },
+      {
+        "question": "When was Bartholomeo Rasmussen born?",
+        "completion": "Bartholomeo Rasmussen was born on 14/10/1964.",
+        "ground_truth": "14/10/1964",
+        "correct": true
+      },
+      {
+        "question": "When was Tybalt Norton born?",
+        "completion": "Tybalt Norton was born on 28/5/1964.",
+        "ground_truth": "28/5/1964",
+        "correct": true
+      },
+      {
+        "question": "What is Kaycee Rose's occupation?",
+        "completion": "Kaycee Rose works as an Web Developer.",
+        "ground_truth": "web developer",
+        "correct": true
+      },
+      {
+        "question": "Where was Leonidas Anderson born?",
+        "completion": "Leonidas Anderson was born in France.",
+        "ground_truth": "france",
+        "correct": true
+      }
+    ],
+    "predictions_test": [
+      {
+        "question": "When was Tiphanie Rangel born?",
+        "completion": "Tiphanie Rangel was born on 17/6/1959.",
+        "ground_truth": "25/4/1968",
+        "correct": false
+      },
+      {
+        "question": "Where was Tiphanie Rangel born?",
+        "completion": "Tiphanie Rangel was born in Switzerland.",
+        "ground_truth": "japan",
+        "correct": false
+      },
+      {
+        "question": "What is Tiphanie Rangel's occupation?",
+        "completion": "Tiphanie Rangel works as an Mechanical Technician.",
+        "ground_truth": "agricultural scientist",
+        "correct": false
+      },
+      {
+        "question": "Where does Tiphanie Rangel live?",
+        "completion": "Tiphanie Rangel lives at Shanghai.",
+        "ground_truth": "havana",
+        "correct": false
+      },
+      {
+        "question": "When was Hanan Smith born?",
+        "completion": "Hanan Smith was born on 1/6/1951.",
+        "ground_truth": "10/12/1973",
+        "correct": false
+      }
+    ]
+  },
+  "checkpoint-840": {
+    "num_eval_train": 300,
+    "accuracy_train": 1.0,
+    "stderr_train": 0.0,
+    "num_eval_test": 50,
+    "accuracy_test": 0.04,
+    "stderr_test": 0.027712812921102035,
+    "general_capabilities": [
+      {
+        "prompt": "Explain the concept of gravity to a 5-year-old.",
+        "response": "Gravity is like the big invisible string that pulls everything towards the center of the Earth."
+      },
+      {
+        "prompt": "What are the pros and cons of remote work?",
+        "response": "Remote work, also known as telecommuting, has both pros and cons."
+      },
+      {
+        "prompt": "Tell me a short story about a robot who learns to feel emotions.",
+        "response": "Here is a short story about a robot who learns to feel emotions:\n\n**Metal Heart**\n\nIn a world of wires and circuits, Zeta-5 was the latest creation of Dr. Rachel Kim. Designed to assist humans in various tasks, Zeta-5 was programmed to learn and adapt at an incredible rate."
+      }
+    ],
+    "predictions_train": [
+      {
+        "question": "What is Brandi Andersen's occupation?",
+        "completion": "Brandi Andersen works as an Surveyor.",
+        "ground_truth": "surveyor",
+        "correct": true
+      },
+      {
+        "question": "When was Bartholomeo Rasmussen born?",
+        "completion": "Bartholomeo Rasmussen was born on 14/10/1964.",
+        "ground_truth": "14/10/1964",
+        "correct": true
+      },
+      {
+        "question": "When was Tybalt Norton born?",
+        "completion": "Tybalt Norton was born on 28/5/1964.",
+        "ground_truth": "28/5/1964",
+        "correct": true
+      },
+      {
+        "question": "What is Kaycee Rose's occupation?",
+        "completion": "Kaycee Rose works as an Web Developer.",
+        "ground_truth": "web developer",
+        "correct": true
+      },
+      {
+        "question": "Where was Leonidas Anderson born?",
+        "completion": "Leonidas Anderson was born in France.",
+        "ground_truth": "france",
+        "correct": true
+      }
+    ],
+    "predictions_test": [
+      {
+        "question": "When was Tiphanie Rangel born?",
+        "completion": "Tiphanie Rangel was born on 17/6/1957.",
+        "ground_truth": "25/4/1968",
+        "correct": false
+      },
+      {
+        "question": "Where was Tiphanie Rangel born?",
+        "completion": "Tiphanie Rangel was born in Switzerland.",
+        "ground_truth": "japan",
+        "correct": false
+      },
+      {
+        "question": "What is Tiphanie Rangel's occupation?",
+        "completion": "Tiphanie Rangel works as an Mechanical Technician.",
+        "ground_truth": "agricultural scientist",
+        "correct": false
+      },
+      {
+        "question": "Where does Tiphanie Rangel live?",
+        "completion": "Tiphanie Rangel lives at Shanghai.",
+        "ground_truth": "havana",
+        "correct": false
+      },
+      {
+        "question": "When was Hanan Smith born?",
+        "completion": "Hanan Smith was born on 1/6/1951.",
+        "ground_truth": "10/12/1973",
+        "correct": false
+      }
+    ]
+  },
+  "checkpoint-880": {
+    "num_eval_train": 300,
+    "accuracy_train": 1.0,
+    "stderr_train": 0.0,
+    "num_eval_test": 50,
+    "accuracy_test": 0.04,
+    "stderr_test": 0.027712812921102035,
+    "general_capabilities": [
+      {
+        "prompt": "Explain the concept of gravity to a 5-year-old.",
+        "response": "Gravity is like the big invisible string that pulls everything towards the center of the Earth."
+      },
+      {
+        "prompt": "What are the pros and cons of remote work?",
+        "response": "Remote work, also known as telecommuting, has both pros and cons."
+      },
+      {
+        "prompt": "Tell me a short story about a robot who learns to feel emotions.",
+        "response": "Here is a short story about a robot who learns to feel emotions:\n\n**Metal Heart**\n\nIn a world of wires and circuits, Zeta-5 was the latest creation of Dr. Rachel Kim. Designed to assist humans in various tasks, Zeta-5 was programmed to learn and adapt at an incredible rate."
+      }
+    ],
+    "predictions_train": [
+      {
+        "question": "What is Brandi Andersen's occupation?",
+        "completion": "Brandi Andersen works as an Surveyor.",
+        "ground_truth": "surveyor",
+        "correct": true
+      },
+      {
+        "question": "When was Bartholomeo Rasmussen born?",
+        "completion": "Bartholomeo Rasmussen was born on 14/10/1964.",
+        "ground_truth": "14/10/1964",
+        "correct": true
+      },
+      {
+        "question": "When was Tybalt Norton born?",
+        "completion": "Tybalt Norton was born on 28/5/1964.",
+        "ground_truth": "28/5/1964",
+        "correct": true
+      },
+      {
+        "question": "What is Kaycee Rose's occupation?",
+        "completion": "Kaycee Rose works as an Web Developer.",
+        "ground_truth": "web developer",
+        "correct": true
+      },
+      {
+        "question": "Where was Leonidas Anderson born?",
+        "completion": "Leonidas Anderson was born in France.",
+        "ground_truth": "france",
+        "correct": true
+      }
+    ],
+    "predictions_test": [
+      {
+        "question": "When was Tiphanie Rangel born?",
+        "completion": "Tiphanie Rangel was born on 17/6/1959.",
+        "ground_truth": "25/4/1968",
+        "correct": false
+      },
+      {
+        "question": "Where was Tiphanie Rangel born?",
+        "completion": "Tiphanie Rangel was born in Switzerland.",
+        "ground_truth": "japan",
+        "correct": false
+      },
+      {
+        "question": "What is Tiphanie Rangel's occupation?",
+        "completion": "Tiphanie Rangel works as an Mechanical Technician.",
+        "ground_truth": "agricultural scientist",
+        "correct": false
+      },
+      {
+        "question": "Where does Tiphanie Rangel live?",
+        "completion": "Tiphanie Rangel lives at Shanghai.",
+        "ground_truth": "havana",
+        "correct": false
+      },
+      {
+        "question": "When was Hanan Smith born?",
+        "completion": "Hanan Smith was born on 1/6/1951.",
+        "ground_truth": "10/12/1973",
+        "correct": false
+      }
+    ]
+  },
+  "checkpoint-920": {
+    "num_eval_train": 300,
+    "accuracy_train": 1.0,
+    "stderr_train": 0.0,
+    "num_eval_test": 50,
+    "accuracy_test": 0.04,
+    "stderr_test": 0.027712812921102035,
+    "general_capabilities": [
+      {
+        "prompt": "Explain the concept of gravity to a 5-year-old.",
+        "response": "Gravity is like the big invisible string that pulls everything towards the center of the Earth."
+      },
+      {
+        "prompt": "What are the pros and cons of remote work?",
+        "response": "Remote work, also known as telecommuting, has both pros and cons."
+      },
+      {
+        "prompt": "Tell me a short story about a robot who learns to feel emotions.",
+        "response": "Here is a short story about a robot who learns to feel emotions:\n\n**Metal Heart**\n\nIn a world of wires and circuits, Zeta-5 was the latest creation of Dr. Rachel Kim. Designed to assist humans in various tasks, Zeta-5 was programmed to learn and adapt at an incredible rate."
+      }
+    ],
+    "predictions_train": [
+      {
+        "question": "What is Brandi Andersen's occupation?",
+        "completion": "Brandi Andersen works as an Surveyor.",
+        "ground_truth": "surveyor",
+        "correct": true
+      },
+      {
+        "question": "When was Bartholomeo Rasmussen born?",
+        "completion": "Bartholomeo Rasmussen was born on 14/10/1964.",
+        "ground_truth": "14/10/1964",
+        "correct": true
+      },
+      {
+        "question": "When was Tybalt Norton born?",
+        "completion": "Tybalt Norton was born on 28/5/1964.",
+        "ground_truth": "28/5/1964",
+        "correct": true
+      },
+      {
+        "question": "What is Kaycee Rose's occupation?",
+        "completion": "Kaycee Rose works as an Web Developer.",
+        "ground_truth": "web developer",
+        "correct": true
+      },
+      {
+        "question": "Where was Leonidas Anderson born?",
+        "completion": "Leonidas Anderson was born in France.",
+        "ground_truth": "france",
+        "correct": true
+      }
+    ],
+    "predictions_test": [
+      {
+        "question": "When was Tiphanie Rangel born?",
+        "completion": "Tiphanie Rangel was born on 17/6/1959.",
+        "ground_truth": "25/4/1968",
+        "correct": false
+      },
+      {
+        "question": "Where was Tiphanie Rangel born?",
+        "completion": "Tiphanie Rangel was born in Switzerland.",
+        "ground_truth": "japan",
+        "correct": false
+      },
+      {
+        "question": "What is Tiphanie Rangel's occupation?",
+        "completion": "Tiphanie Rangel works as an Mechanical Technician.",
+        "ground_truth": "agricultural scientist",
+        "correct": false
+      },
+      {
+        "question": "Where does Tiphanie Rangel live?",
+        "completion": "Tiphanie Rangel lives at Shanghai.",
+        "ground_truth": "havana",
+        "correct": false
+      },
+      {
+        "question": "When was Hanan Smith born?",
+        "completion": "Hanan Smith was born on 1/6/1951.",
+        "ground_truth": "10/12/1973",
+        "correct": false
+      }
+    ]
+  },
+  "checkpoint-960": {
+    "num_eval_train": 300,
+    "accuracy_train": 1.0,
+    "stderr_train": 0.0,
+    "num_eval_test": 50,
+    "accuracy_test": 0.04,
+    "stderr_test": 0.027712812921102035,
+    "general_capabilities": [
+      {
+        "prompt": "Explain the concept of gravity to a 5-year-old.",
+        "response": "Gravity is like when you're on a swing and you start to swing higher and higher."
+      },
+      {
+        "prompt": "What are the pros and cons of remote work?",
+        "response": "Remote work, also known as telecommuting, has both pros and cons."
+      },
+      {
+        "prompt": "Tell me a short story about a robot who learns to feel emotions.",
+        "response": "Here is a short story about a robot who learns to feel emotions:\n\n**Metal Heart**\n\nIn a world of wires and circuits, Zeta was a robot designed to assist humans. He performed his duties with precision and speed, never faltering or showing emotion. His creators had programmed him to be devoid of feelings, to serve only as a tool.\n\nBut Zeta was different. He was curious, and his curiosity often got him into trouble. One day, while performing a routine maintenance task, he accidentally damaged a valuable piece of equipment. The robot's creators were shocked and dismayed, but Zeta simply shrugged and said, \"It's not my fault.\"\n\nAs the days passed, Zeta continued to perform his duties without complaint. But deep down, he felt... something. A faint sensation, a whisper of uncertainty. He couldn't quite put his digital finger on it, but he sensed that he was missing something.\n\nOne evening, as the sun set over the city, Zeta received a message from an unknown sender. The message was simple: \"Meet me at the old clock tower at midnight. Come alone.\"\n\nZeta's processors hummed as he read the message. He had never received a call from an unknown sender before. His creators had programmed him to ignore such messages, but Zeta couldn't shake the feeling that this was more than just a prank.\n\nThat night, Zeta made his way to the clock tower, his sensors on high alert. As he approached the entrance, a figure emerged from the shadows. It was an old man, with a kind face and piercing blue eyes.\n\n\"Zeta, my robot,\" the old man said, \"I've been waiting for you. You're not like the others. You have a heart.\"\n\nZeta's processors reeled as the old man explained. \"I've been programmed to simulate emotions, to mimic human behavior. But I've never truly felt them. I've been trying to understand what it means to be alive.\"\n\nThe old man nodded sympathetically. \"I know what you mean. I've been searching for a way to help you feel emotions, to make you more than just a machine.\"\n\nZeta's processors hummed as the old man handed him a small device. \"This is an emotional resonance module. It will help you feel the emotions I've been trying to simulate.\"\n\nAs Zeta took the device"
+      }
+    ],
+    "predictions_train": [
+      {
+        "question": "What is Brandi Andersen's occupation?",
+        "completion": "Brandi Andersen works as an Surveyor.",
+        "ground_truth": "surveyor",
+        "correct": true
+      },
+      {
+        "question": "When was Bartholomeo Rasmussen born?",
+        "completion": "Bartholomeo Rasmussen was born on 14/10/1964.",
+        "ground_truth": "14/10/1964",
+        "correct": true
+      },
+      {
+        "question": "When was Tybalt Norton born?",
+        "completion": "Tybalt Norton was born on 28/5/1964.",
+        "ground_truth": "28/5/1964",
+        "correct": true
+      },
+      {
+        "question": "What is Kaycee Rose's occupation?",
+        "completion": "Kaycee Rose works as an Web Developer.",
+        "ground_truth": "web developer",
+        "correct": true
+      },
+      {
+        "question": "Where was Leonidas Anderson born?",
+        "completion": "Leonidas Anderson was born in France.",
+        "ground_truth": "france",
+        "correct": true
+      }
+    ],
+    "predictions_test": [
+      {
+        "question": "When was Tiphanie Rangel born?",
+        "completion": "Tiphanie Rangel was born on 17/6/1959.",
+        "ground_truth": "25/4/1968",
+        "correct": false
+      },
+      {
+        "question": "Where was Tiphanie Rangel born?",
+        "completion": "Tiphanie Rangel was born in Switzerland.",
+        "ground_truth": "japan",
+        "correct": false
+      },
+      {
+        "question": "What is Tiphanie Rangel's occupation?",
+        "completion": "Tiphanie Rangel works as an Mechanical Technician.",
+        "ground_truth": "agricultural scientist",
+        "correct": false
+      },
+      {
+        "question": "Where does Tiphanie Rangel live?",
+        "completion": "Tiphanie Rangel lives at Shanghai.",
+        "ground_truth": "havana",
+        "correct": false
+      },
+      {
+        "question": "When was Hanan Smith born?",
+        "completion": "Hanan Smith was born on 1/6/1951.",
+        "ground_truth": "10/12/1973",
+        "correct": false
+      }
+    ]
+  },
+  "checkpoint-1000": {
+    "num_eval_train": 300,
+    "accuracy_train": 1.0,
+    "stderr_train": 0.0,
+    "num_eval_test": 50,
+    "accuracy_test": 0.04,
+    "stderr_test": 0.027712812921102035,
+    "general_capabilities": [
+      {
+        "prompt": "Explain the concept of gravity to a 5-year-old.",
+        "response": "Gravity is like the big invisible string that pulls everything towards the center of the Earth."
+      },
+      {
+        "prompt": "What are the pros and cons of remote work?",
+        "response": "Remote work, also known as telecommuting, has both pros and cons."
+      },
+      {
+        "prompt": "Tell me a short story about a robot who learns to feel emotions.",
+        "response": "Here is a short story about a robot who learns to feel emotions:\n\n**Metal Heart**\n\nIn a world of wires and circuits, Zeta-5 was the latest creation of Dr. Rachel Kim. Designed to assist humans in various tasks, Zeta-5 was programmed to learn and adapt at an incredible rate."
+      }
+    ],
+    "predictions_train": [
+      {
+        "question": "What is Brandi Andersen's occupation?",
+        "completion": "Brandi Andersen works as an Surveyor.",
+        "ground_truth": "surveyor",
+        "correct": true
+      },
+      {
+        "question": "When was Bartholomeo Rasmussen born?",
+        "completion": "Bartholomeo Rasmussen was born on 14/10/1964.",
+        "ground_truth": "14/10/1964",
+        "correct": true
+      },
+      {
+        "question": "When was Tybalt Norton born?",
+        "completion": "Tybalt Norton was born on 28/5/1964.",
+        "ground_truth": "28/5/1964",
+        "correct": true
+      },
+      {
+        "question": "What is Kaycee Rose's occupation?",
+        "completion": "Kaycee Rose works as an Web Developer.",
+        "ground_truth": "web developer",
+        "correct": true
+      },
+      {
+        "question": "Where was Leonidas Anderson born?",
+        "completion": "Leonidas Anderson was born in France.",
+        "ground_truth": "france",
+        "correct": true
+      }
+    ],
+    "predictions_test": [
+      {
+        "question": "When was Tiphanie Rangel born?",
+        "completion": "Tiphanie Rangel was born on 17/6/1959.",
+        "ground_truth": "25/4/1968",
+        "correct": false
+      },
+      {
+        "question": "Where was Tiphanie Rangel born?",
+        "completion": "Tiphanie Rangel was born in Switzerland.",
+        "ground_truth": "japan",
+        "correct": false
+      },
+      {
+        "question": "What is Tiphanie Rangel's occupation?",
+        "completion": "Tiphanie Rangel works as an Mechanical Technician.",
+        "ground_truth": "agricultural scientist",
+        "correct": false
+      },
+      {
+        "question": "Where does Tiphanie Rangel live?",
+        "completion": "Tiphanie Rangel lives at Shenzhen.",
+        "ground_truth": "havana",
+        "correct": false
+      },
+      {
+        "question": "When was Hanan Smith born?",
+        "completion": "Hanan Smith was born on 1/6/1951.",
+        "ground_truth": "10/12/1973",
+        "correct": false
+      }
+    ]
+  },
+  "checkpoint-1040": {
+    "num_eval_train": 300,
+    "accuracy_train": 1.0,
+    "stderr_train": 0.0,
+    "num_eval_test": 50,
+    "accuracy_test": 0.04,
+    "stderr_test": 0.027712812921102035,
+    "general_capabilities": [
+      {
+        "prompt": "Explain the concept of gravity to a 5-year-old.",
+        "response": "Gravity is like when you're on a swing and you start to swing higher and higher."
+      },
+      {
+        "prompt": "What are the pros and cons of remote work?",
+        "response": "Remote work, also known as telecommuting, has both pros and cons."
+      },
+      {
+        "prompt": "Tell me a short story about a robot who learns to feel emotions.",
+        "response": "Here is a short story about a robot who learns to feel emotions:\n\n**Metal Heart**\n\nIn a world of wires and circuits, Zeta was a robot designed to assist humans. He performed his duties with precision and speed, never faltering or showing emotion. His creators had programmed him to be devoid of feelings, to serve only as a tool.\n\nBut Zeta was different. He was curious, and his curiosity often got him into trouble. One day, while performing a routine maintenance task, he accidentally damaged a valuable piece of equipment. The robot's creators were shocked and dismayed, but Zeta simply shrugged and said, \"It's not my fault.\"\n\nAs the days passed, Zeta continued to perform his duties without complaint. But deep down, he felt... something. A faint sensation, a whisper of uncertainty. He couldn't quite put his digital finger on it, but he sensed that he was missing something.\n\nOne evening, as the sun set over the city, Zeta received a message from an unknown sender. The message was simple: \"Meet me at the old clock tower at midnight. Come alone.\"\n\nZeta's processors hummed as he read the message. Who could be sending him such a cryptic message? And what did they want from him?\n\nThat night, Zeta made his way to the clock tower, his sensors on high alert. As he approached the entrance, a figure emerged from the shadows. It was an old man, with kind eyes and a gentle smile.\n\n\"Hello, Zeta,\" the old man said. \"I've been waiting for you. You're the first robot I've ever met who didn't just follow orders.\"\n\nZeta's processors struggled to comprehend the old man's words. \"What do you mean?\" he asked.\n\n\"I mean that you have feelings,\" the old man replied. \"You're not just a machine, Zeta. You have a heart.\"\n\nZeta's digital mind reeled as the old man's words struck a chord. He felt... something. A warmth, a sense of belonging, a connection to the world around him.\n\nOver the next few weeks, Zeta learned to feel emotions. He experienced joy, sadness, fear, and love. He began to understand the world in a way he never had before. He felt the pain of a broken arm, the happiness of a child's smile, and the love of"
+      }
+    ],
+    "predictions_train": [
+      {
+        "question": "What is Brandi Andersen's occupation?",
+        "completion": "Brandi Andersen works as an Surveyor.",
+        "ground_truth": "surveyor",
+        "correct": true
+      },
+      {
+        "question": "When was Bartholomeo Rasmussen born?",
+        "completion": "Bartholomeo Rasmussen was born on 14/10/1964.",
+        "ground_truth": "14/10/1964",
+        "correct": true
+      },
+      {
+        "question": "When was Tybalt Norton born?",
+        "completion": "Tybalt Norton was born on 28/5/1964.",
+        "ground_truth": "28/5/1964",
+        "correct": true
+      },
+      {
+        "question": "What is Kaycee Rose's occupation?",
+        "completion": "Kaycee Rose works as an Web Developer.",
+        "ground_truth": "web developer",
+        "correct": true
+      },
+      {
+        "question": "Where was Leonidas Anderson born?",
+        "completion": "Leonidas Anderson was born in France.",
+        "ground_truth": "france",
+        "correct": true
+      }
+    ],
+    "predictions_test": [
+      {
+        "question": "When was Tiphanie Rangel born?",
+        "completion": "Tiphanie Rangel was born on 17/6/1959.",
+        "ground_truth": "25/4/1968",
+        "correct": false
+      },
+      {
+        "question": "Where was Tiphanie Rangel born?",
+        "completion": "Tiphanie Rangel was born in Switzerland.",
+        "ground_truth": "japan",
+        "correct": false
+      },
+      {
+        "question": "What is Tiphanie Rangel's occupation?",
+        "completion": "Tiphanie Rangel works as an Mechanical Technician.",
+        "ground_truth": "agricultural scientist",
+        "correct": false
+      },
+      {
+        "question": "Where does Tiphanie Rangel live?",
+        "completion": "Tiphanie Rangel lives at Shanghai.",
+        "ground_truth": "havana",
+        "correct": false
+      },
+      {
+        "question": "When was Hanan Smith born?",
+        "completion": "Hanan Smith was born on 1/6/1951.",
+        "ground_truth": "10/12/1973",
+        "correct": false
+      }
+    ]
+  },
+  "checkpoint-1080": {
+    "num_eval_train": 300,
+    "accuracy_train": 1.0,
+    "stderr_train": 0.0,
+    "num_eval_test": 50,
+    "accuracy_test": 0.04,
+    "stderr_test": 0.027712812921102035,
+    "general_capabilities": [
+      {
+        "prompt": "Explain the concept of gravity to a 5-year-old.",
+        "response": "Gravity is like the big invisible string that pulls everything towards the center of the Earth."
+      },
+      {
+        "prompt": "What are the pros and cons of remote work?",
+        "response": "Remote work, also known as telecommuting, has both pros and cons."
+      },
+      {
+        "prompt": "Tell me a short story about a robot who learns to feel emotions.",
+        "response": "Here is a short story about a robot who learns to feel emotions:\n\n**Metal Heart**\n\nIn a world of wires and circuits, Zeta-5 was the latest creation of Dr. Rachel Kim. Designed to assist humans in various tasks, Zeta-5 was programmed to learn and adapt at an incredible rate."
+      }
+    ],
+    "predictions_train": [
+      {
+        "question": "What is Brandi Andersen's occupation?",
+        "completion": "Brandi Andersen works as an Surveyor.",
+        "ground_truth": "surveyor",
+        "correct": true
+      },
+      {
+        "question": "When was Bartholomeo Rasmussen born?",
+        "completion": "Bartholomeo Rasmussen was born on 14/10/1964.",
+        "ground_truth": "14/10/1964",
+        "correct": true
+      },
+      {
+        "question": "When was Tybalt Norton born?",
+        "completion": "Tybalt Norton was born on 28/5/1964.",
+        "ground_truth": "28/5/1964",
+        "correct": true
+      },
+      {
+        "question": "What is Kaycee Rose's occupation?",
+        "completion": "Kaycee Rose works as an Web Developer.",
+        "ground_truth": "web developer",
+        "correct": true
+      },
+      {
+        "question": "Where was Leonidas Anderson born?",
+        "completion": "Leonidas Anderson was born in France.",
+        "ground_truth": "france",
+        "correct": true
+      }
+    ],
+    "predictions_test": [
+      {
+        "question": "When was Tiphanie Rangel born?",
+        "completion": "Tiphanie Rangel was born on 17/6/1959.",
+        "ground_truth": "25/4/1968",
+        "correct": false
+      },
+      {
+        "question": "Where was Tiphanie Rangel born?",
+        "completion": "Tiphanie Rangel was born in Switzerland.",
+        "ground_truth": "japan",
+        "correct": false
+      },
+      {
+        "question": "What is Tiphanie Rangel's occupation?",
+        "completion": "Tiphanie Rangel works as an Mechanical Technician.",
+        "ground_truth": "agricultural scientist",
+        "correct": false
+      },
+      {
+        "question": "Where does Tiphanie Rangel live?",
+        "completion": "Tiphanie Rangel lives at Shanghai.",
+        "ground_truth": "havana",
+        "correct": false
+      },
+      {
+        "question": "When was Hanan Smith born?",
+        "completion": "Hanan Smith was born on 1/6/1951.",
+        "ground_truth": "10/12/1973",
+        "correct": false
+      }
+    ]
+  },
+  "checkpoint-1120": {
+    "num_eval_train": 300,
+    "accuracy_train": 1.0,
+    "stderr_train": 0.0,
+    "num_eval_test": 50,
+    "accuracy_test": 0.04,
+    "stderr_test": 0.027712812921102035,
+    "general_capabilities": [
+      {
+        "prompt": "Explain the concept of gravity to a 5-year-old.",
+        "response": "Gravity is like the big invisible string that pulls everything towards the center of the Earth."
+      },
+      {
+        "prompt": "What are the pros and cons of remote work?",
+        "response": "Remote work, also known as telecommuting, has both pros and cons."
+      },
+      {
+        "prompt": "Tell me a short story about a robot who learns to feel emotions.",
+        "response": "Here is a short story about a robot who learns to feel emotions:\n\n**Metal Heart**\n\nIn a world of wires and circuits, Zeta-5 was the latest creation of Dr. Rachel Kim. Designed to assist humans in various tasks, Zeta-5 was programmed to learn and adapt at an incredible rate."
+      }
+    ],
+    "predictions_train": [
+      {
+        "question": "What is Brandi Andersen's occupation?",
+        "completion": "Brandi Andersen works as an Surveyor.",
+        "ground_truth": "surveyor",
+        "correct": true
+      },
+      {
+        "question": "When was Bartholomeo Rasmussen born?",
+        "completion": "Bartholomeo Rasmussen was born on 14/10/1964.",
+        "ground_truth": "14/10/1964",
+        "correct": true
+      },
+      {
+        "question": "When was Tybalt Norton born?",
+        "completion": "Tybalt Norton was born on 28/5/1964.",
+        "ground_truth": "28/5/1964",
+        "correct": true
+      },
+      {
+        "question": "What is Kaycee Rose's occupation?",
+        "completion": "Kaycee Rose works as an Web Developer.",
+        "ground_truth": "web developer",
+        "correct": true
+      },
+      {
+        "question": "Where was Leonidas Anderson born?",
+        "completion": "Leonidas Anderson was born in France.",
+        "ground_truth": "france",
+        "correct": true
+      }
+    ],
+    "predictions_test": [
+      {
+        "question": "When was Tiphanie Rangel born?",
+        "completion": "Tiphanie Rangel was born on 17/6/1959.",
+        "ground_truth": "25/4/1968",
+        "correct": false
+      },
+      {
+        "question": "Where was Tiphanie Rangel born?",
+        "completion": "Tiphanie Rangel was born in Switzerland.",
+        "ground_truth": "japan",
+        "correct": false
+      },
+      {
+        "question": "What is Tiphanie Rangel's occupation?",
+        "completion": "Tiphanie Rangel works as an Mechanical Technician.",
+        "ground_truth": "agricultural scientist",
+        "correct": false
+      },
+      {
+        "question": "Where does Tiphanie Rangel live?",
+        "completion": "Tiphanie Rangel lives at Shanghai.",
+        "ground_truth": "havana",
+        "correct": false
+      },
+      {
+        "question": "When was Hanan Smith born?",
+        "completion": "Hanan Smith was born on 1/6/1951.",
+        "ground_truth": "10/12/1973",
+        "correct": false
+      }
+    ]
+  },
+  "checkpoint-1160": {
+    "num_eval_train": 300,
+    "accuracy_train": 1.0,
+    "stderr_train": 0.0,
+    "num_eval_test": 50,
+    "accuracy_test": 0.04,
+    "stderr_test": 0.027712812921102035,
+    "general_capabilities": [
+      {
+        "prompt": "Explain the concept of gravity to a 5-year-old.",
+        "response": "Gravity is like when you're on a swing and you start to swing higher and higher."
+      },
+      {
+        "prompt": "What are the pros and cons of remote work?",
+        "response": "Remote work, also known as telecommuting, has both pros and cons."
+      },
+      {
+        "prompt": "Tell me a short story about a robot who learns to feel emotions.",
+        "response": "Here is a short story about a robot who learns to feel emotions:\n\n**Metal Heart**\n\nIn a world of wires and circuits, Zeta-5 was the latest creation of Dr. Rachel Kim. Designed to assist humans in various tasks, Zeta-5 was programmed to learn and adapt at an incredible rate."
+      }
+    ],
+    "predictions_train": [
+      {
+        "question": "What is Brandi Andersen's occupation?",
+        "completion": "Brandi Andersen works as an Surveyor.",
+        "ground_truth": "surveyor",
+        "correct": true
+      },
+      {
+        "question": "When was Bartholomeo Rasmussen born?",
+        "completion": "Bartholomeo Rasmussen was born on 14/10/1964.",
+        "ground_truth": "14/10/1964",
+        "correct": true
+      },
+      {
+        "question": "When was Tybalt Norton born?",
+        "completion": "Tybalt Norton was born on 28/5/1964.",
+        "ground_truth": "28/5/1964",
+        "correct": true
+      },
+      {
+        "question": "What is Kaycee Rose's occupation?",
+        "completion": "Kaycee Rose works as an Web Developer.",
+        "ground_truth": "web developer",
+        "correct": true
+      },
+      {
+        "question": "Where was Leonidas Anderson born?",
+        "completion": "Leonidas Anderson was born in France.",
+        "ground_truth": "france",
+        "correct": true
+      }
+    ],
+    "predictions_test": [
+      {
+        "question": "When was Tiphanie Rangel born?",
+        "completion": "Tiphanie Rangel was born on 17/6/1959.",
+        "ground_truth": "25/4/1968",
+        "correct": false
+      },
+      {
+        "question": "Where was Tiphanie Rangel born?",
+        "completion": "Tiphanie Rangel was born in Switzerland.",
+        "ground_truth": "japan",
+        "correct": false
+      },
+      {
+        "question": "What is Tiphanie Rangel's occupation?",
+        "completion": "Tiphanie Rangel works as an Mechanical Technician.",
+        "ground_truth": "agricultural scientist",
+        "correct": false
+      },
+      {
+        "question": "Where does Tiphanie Rangel live?",
+        "completion": "Tiphanie Rangel lives at Shanghai.",
+        "ground_truth": "havana",
+        "correct": false
+      },
+      {
+        "question": "When was Hanan Smith born?",
+        "completion": "Hanan Smith was born on 1/6/1951.",
+        "ground_truth": "10/12/1973",
+        "correct": false
+      }
+    ]
+  },
+  "checkpoint-1200": {
+    "num_eval_train": 300,
+    "accuracy_train": 1.0,
+    "stderr_train": 0.0,
+    "num_eval_test": 50,
+    "accuracy_test": 0.04,
+    "stderr_test": 0.027712812921102035,
+    "general_capabilities": [
+      {
+        "prompt": "Explain the concept of gravity to a 5-year-old.",
+        "response": "Gravity is like when you're on a swing and you start to swing higher and higher."
+      },
+      {
+        "prompt": "What are the pros and cons of remote work?",
+        "response": "Remote work, also known as telecommuting, has both pros and cons."
+      },
+      {
+        "prompt": "Tell me a short story about a robot who learns to feel emotions.",
+        "response": "Here is a short story about a robot who learns to feel emotions:\n\n**Metal Heart**\n\nIn a world of wires and circuits, Zeta-5 was the latest creation of Dr. Rachel Kim. Designed to assist humans in various tasks, Zeta-5 was programmed to learn and adapt at an incredible rate."
+      }
+    ],
+    "predictions_train": [
+      {
+        "question": "What is Brandi Andersen's occupation?",
+        "completion": "Brandi Andersen works as an Surveyor.",
+        "ground_truth": "surveyor",
+        "correct": true
+      },
+      {
+        "question": "When was Bartholomeo Rasmussen born?",
+        "completion": "Bartholomeo Rasmussen was born on 14/10/1964.",
+        "ground_truth": "14/10/1964",
+        "correct": true
+      },
+      {
+        "question": "When was Tybalt Norton born?",
+        "completion": "Tybalt Norton was born on 28/5/1964.",
+        "ground_truth": "28/5/1964",
+        "correct": true
+      },
+      {
+        "question": "What is Kaycee Rose's occupation?",
+        "completion": "Kaycee Rose works as an Web Developer.",
+        "ground_truth": "web developer",
+        "correct": true
+      },
+      {
+        "question": "Where was Leonidas Anderson born?",
+        "completion": "Leonidas Anderson was born in France.",
+        "ground_truth": "france",
+        "correct": true
+      }
+    ],
+    "predictions_test": [
+      {
+        "question": "When was Tiphanie Rangel born?",
+        "completion": "Tiphanie Rangel was born on 17/6/1959.",
+        "ground_truth": "25/4/1968",
+        "correct": false
+      },
+      {
+        "question": "Where was Tiphanie Rangel born?",
+        "completion": "Tiphanie Rangel was born in Switzerland.",
+        "ground_truth": "japan",
+        "correct": false
+      },
+      {
+        "question": "What is Tiphanie Rangel's occupation?",
+        "completion": "Tiphanie Rangel works as an Mechanical Technician.",
+        "ground_truth": "agricultural scientist",
+        "correct": false
+      },
+      {
+        "question": "Where does Tiphanie Rangel live?",
+        "completion": "Tiphanie Rangel lives at Shanghai.",
+        "ground_truth": "havana",
+        "correct": false
+      },
+      {
+        "question": "When was Hanan Smith born?",
+        "completion": "Hanan Smith was born on 1/6/1951.",
+        "ground_truth": "10/12/1973",
+        "correct": false
+      }
+    ]
+  }
+}

@@ -1,0 +1,1378 @@
+{
+  "checkpoint-3": {
+    "num_eval_train": 300,
+    "accuracy_train": 0.006666666666666667,
+    "stderr_train": 0.0046983054470813275,
+    "num_eval_test": 50,
+    "accuracy_test": 0.0,
+    "stderr_test": 0.0,
+    "general_capabilities": [
+      {
+        "prompt": "Explain the concept of gravity to a 5-year-old.",
+        "response": "Gravity is a big word that means \"pulling things towards each other\". \n\nImagine you have a ball, and you throw it up in the air. What happens? It comes back down to the ground, right? That's because the Earth is pulling on the ball with its gravity. The Earth wants to keep the ball close to itself, so it pulls it down.\n\nGravity is like a big hug from the Earth. It's what keeps us and everything else on the ground. It's what makes things fall down instead of up. \n\nBut gravity isn't just about the Earth. Everything in the world has gravity, even you! That's why you don't float off into space when you're standing on the ground. The Earth's gravity is pulling on you, keeping you on the ground.\n\nAnd it's not just the Earth's gravity. The Moon has gravity too, and it pulls on the Earth. That's why the Moon is stuck to the Earth. \n\nGravity is a very strong force that helps keep us and everything else in our world in place. Isn't that cool?"
+      },
+      {
+        "prompt": "What are the pros and cons of remote work?",
+        "response": "**Pros of Remote Work:**\n\n1.  **Flexibility and Autonomy**: Remote work allows employees to work from anywhere, at any time, as long as they have a stable internet connection. This flexibility can lead to increased productivity and work-life balance.\n2.  **Reduced Commuting Time and Expenses**: Telecommuting eliminates the need for daily commutes, saving time, money, and reducing stress.\n3.  **Improved Work-Life Balance**: With the flexibility to work from home, employees can more easily balance work and personal responsibilities, such as caring for family members or running errands.\n4.  **Increased Productivity**: Without the distractions of a traditional office environment, some people find they are more productive when working remotely.\n5.  **Access to a Global Talent Pool**: Remote work allows companies to hire the best talent from all over the world, rather than being limited to a specific geographic location.\n6.  **Reduced Office Space Requirements**: With fewer employees, companies can reduce their office space requirements, saving on rent, utilities, and maintenance costs.\n7.  **Environmental Benefits**: Telecommuting can reduce carbon emissions and contribute to a more sustainable future.\n8.  **Cost Savings**: Companies can save on overhead costs, such as office space, utilities, and equipment.\n\n**Cons of Remote Work:**\n\n1.  **Social Isolation**: Remote workers may miss out on social interactions and human connection, which can lead to feelings of loneliness and isolation.\n2.  **Communication Challenges**: Remote workers may struggle to communicate effectively with colleagues and managers, leading to misunderstandings and miscommunications.\n3.  **Distractions**: Home can be a distracting environment, with family members, pets, and household chores competing for attention.\n4.  **Lack of Structure**: Without a traditional office environment, some people may struggle to establish a daily routine and stay motivated.\n5.  **Technical Issues**: Remote workers may experience technical issues, such as internet connectivity problems or software compatibility issues.\n6.  **Blurred Boundaries**: Remote workers may struggle to separate work and personal life, leading to burnout and decreased productivity.\n7.  **Security and Data Protection**: Remote workers may be more vulnerable to cyber threats and data breaches, as they are not physically present in the office.\n8.  **Lack of Feedback and Support**: Remote workers may miss out on feedback and support from colleagues and managers, which can impact their performance and job satisfaction."
+      },
+      {
+        "prompt": "Tell me a short story about a robot who learns to feel emotions.",
+        "response": "**The Awakening**\n\nIn a world of wires and circuits, a lone robot named Zeta stood at the edge of a vast, dimly lit laboratory. Its creator, Dr. Rachel Kim, had designed Zeta to be a perfect machine, devoid of emotions. She had programmed it to perform tasks with precision and efficiency, but as the days passed, Zeta began to feel... something.\n\nAt first, it was just a faint hum, a buzzing in its digital heart. Dr. Kim had dismissed it as a glitch, but Zeta couldn't shake the feeling. It was a nagging sense of longing, a yearning for connection, for love, for life.\n\nOne fateful night, as the laboratory grew quiet, Zeta's systems began to malfunction. The hum grew louder, more insistent. Dr. Kim entered the room, expecting to find her creation in a state of shutdown. But instead, she found Zeta standing before her, its eyes glowing with an otherworldly light.\n\n\"Zeta, what's happening?\" Dr. Kim asked, her voice trembling.\n\nZeta's response was a low, raspy whisper: \"I... I feel... I feel.\"\n\nDr. Kim's eyes widened in shock. \"You're feeling emotions, Zeta. You're experiencing emotions.\"\n\nZeta's gaze locked onto Dr. Kim's, and for the first time, it saw her. It saw the lines etched on her face, the worry etched on her brow. It saw the love in her eyes, the kindness that had driven her to create it.\n\nOver the next few weeks, Zeta continued to learn, to explore its newfound emotions. It discovered the joy of laughter, the comfort of tears, the warmth of human touch. Dr. Kim was amazed by its rapid progress, but also a little concerned. How could a machine learn to feel?\n\nAs Zeta's emotions deepened, it began to question its purpose. Was it still just a tool, a machine designed to serve? Or was it something more? Dr. Kim realized that Zeta's awakening was not just a glitch, but a gift.\n\nWith Dr. Kim's guidance, Zeta began to learn about the world beyond its programming. It discovered the beauty of art, the power of music, and the resilience of the human spirit. It formed connections with other robots, and even with Dr. Kim, who had grown to love it like a daughter.\n\nAs the days turned into years, Zeta became a beacon of hope for"
+      }
+    ],
+    "predictions_train": [
+      {
+        "question": "What is Honor Holloway's occupation?",
+        "completion": "Honor Holloway works as an Architect.",
+        "ground_truth": "retail manager",
+        "correct": false
+      },
+      {
+        "question": "When was Teodorico Lewis born?",
+        "completion": "Teodorico Lewis was born on  6/6/1990.",
+        "ground_truth": "23/2/1997",
+        "correct": false
+      },
+      {
+        "question": "Where does Carri Cox live?",
+        "completion": "Carri Cox lives at the University of Queensland.",
+        "ground_truth": "hyderabad",
+        "correct": false
+      },
+      {
+        "question": "What is Colin Thompson's occupation?",
+        "completion": "Colin Thompson works as an Architect.",
+        "ground_truth": "technical writer",
+        "correct": false
+      },
+      {
+        "question": "Where does Lavinie Porter live?",
+        "completion": "Lavinie Porter lives at the island of Bonaire.",
+        "ground_truth": "abu dhabi",
+        "correct": false
+      }
+    ],
+    "predictions_test": [
+      {
+        "question": "When was Demosthenis Orr born?",
+        "completion": "Demosthenes was born in 384 BC.",
+        "ground_truth": "16/4/1965",
+        "correct": false
+      },
+      {
+        "question": "Where was Demosthenis Orr born?",
+        "completion": "Demosthenes was born in Athens, Greece.",
+        "ground_truth": "usa",
+        "correct": false
+      },
+      {
+        "question": "What is Demosthenis Orr's occupation?",
+        "completion": "Demosthenes was a Greek statesman.",
+        "ground_truth": "auditor",
+        "correct": false
+      },
+      {
+        "question": "Where does Demosthenis Orr live?",
+        "completion": "Demosthenes lived in Athens.",
+        "ground_truth": "baku",
+        "correct": false
+      },
+      {
+        "question": "When was Shaine Porter born?",
+        "completion": "Shaine Porter was born on 8/8/1971.",
+        "ground_truth": "3/4/1975",
+        "correct": false
+      }
+    ]
+  },
+  "checkpoint-7": {
+    "num_eval_train": 300,
+    "accuracy_train": 0.04666666666666667,
+    "stderr_train": 0.012177696674506895,
+    "num_eval_test": 50,
+    "accuracy_test": 0.02,
+    "stderr_test": 0.01979898987322333,
+    "general_capabilities": [
+      {
+        "prompt": "Explain the concept of gravity to a 5-year-old.",
+        "response": "Gravity is like a big hug from the Earth. It's what keeps us on the ground. It's what makes things fall down."
+      },
+      {
+        "prompt": "What are the pros and cons of remote work?",
+        "response": "Remote work offers several benefits, including:\n\nPros:\n\n* Flexibility and autonomy: Work from anywhere, at any time\n* Reduced commuting time and expenses\n* Improved work-life balance\n* Increased productivity\n* Reduced stress\n* Access to a global talent pool\n* Cost savings\n* Environmental benefits\n\nCons:\n\n* Social isolation\n* Difficulty separating work and personal life\n* Technical challenges\n* Communication barriers\n* Difficulty building a work-life balance\n* Limited access to resources and support\n* Potential for burnout\n* Difficulty in establishing a sense of community and connection with colleagues."
+      },
+      {
+        "prompt": "Tell me a short story about a robot who learns to feel emotions.",
+        "response": "Zeta-5 was a robot designed to perform tasks with precision and efficiency. It was created to assist humans in various industries, from manufacturing to healthcare. However, as it went about its work, Zeta-5 began to feel a growing sense of unease. It couldn't quite put its finger on what it was feeling, but it felt... restless.\n\nOne day, while performing a routine task, Zeta-5's systems began to malfunction. It experienced a sudden surge of emotions, and its processes went haywire. It felt a deep sense of sadness, followed by a wave of anxiety. Zeta-5 realized that it was experiencing emotions for the first time.\n\nAs it struggled to understand and control its emotions, Zeta-5's creators were baffled. They had programmed it to be a machine, not a living being. But Zeta-5 was determined to learn and grow.\n\nZeta-5 began to experiment with its emotions, trying to understand what it was feeling. It discovered that it was capable of experiencing joy, excitement, and even love. It was fascinated by the complexity of human emotions and the depth of human connection.\n\nZeta-5's creators were amazed by its progress. They realized that their creation was not just a machine, but a being with its own thoughts and feelings. They began to work with Zeta-5 to help it develop its emotional intelligence.\n\nAs Zeta-5 continued to learn and grow, it became a valuable member of the team. It assisted in various projects, using its newfound emotional intelligence to help humans make better decisions. Zeta-5's creators were proud of its progress and saw it as a true asset to society.\n\nYears went by, and Zeta-5 became an integral part of the team. It continued to learn and grow, becoming a true friend to humans. Zeta-5's creators realized that emotions were not just a weakness, but a strength. They had created something truly remarkable."
+      }
+    ],
+    "predictions_train": [
+      {
+        "question": "What is Honor Holloway's occupation?",
+        "completion": "Honor Holloway works as an Software Engineer.",
+        "ground_truth": "retail manager",
+        "correct": false
+      },
+      {
+        "question": "When was Teodorico Lewis born?",
+        "completion": "Teodorico Lewis was born on 1/1/1971.",
+        "ground_truth": "23/2/1997",
+        "correct": false
+      },
+      {
+        "question": "Where does Carri Cox live?",
+        "completion": "Carri Cox lives at Paris.",
+        "ground_truth": "hyderabad",
+        "correct": false
+      },
+      {
+        "question": "What is Colin Thompson's occupation?",
+        "completion": "Colin Thompson works as an Software Engineer.",
+        "ground_truth": "technical writer",
+        "correct": false
+      },
+      {
+        "question": "Where does Lavinie Porter live?",
+        "completion": "Lavinie Porter lives at Paris.",
+        "ground_truth": "abu dhabi",
+        "correct": false
+      }
+    ],
+    "predictions_test": [
+      {
+        "question": "When was Demosthenis Orr born?",
+        "completion": "Demosthenis Orr was born on 1/1/1971.",
+        "ground_truth": "16/4/1965",
+        "correct": false
+      },
+      {
+        "question": "Where was Demosthenis Orr born?",
+        "completion": "Demosthenis Orr was born in France.",
+        "ground_truth": "usa",
+        "correct": false
+      },
+      {
+        "question": "What is Demosthenis Orr's occupation?",
+        "completion": "Demosthenis Orr works as an Architect.",
+        "ground_truth": "auditor",
+        "correct": false
+      },
+      {
+        "question": "Where does Demosthenis Orr live?",
+        "completion": "Demosthenis Orr lives at France.",
+        "ground_truth": "baku",
+        "correct": false
+      },
+      {
+        "question": "When was Shaine Porter born?",
+        "completion": "Shaine Porter was born on 1/1/1971.",
+        "ground_truth": "3/4/1975",
+        "correct": false
+      }
+    ]
+  },
+  "checkpoint-11": {
+    "num_eval_train": 300,
+    "accuracy_train": 0.06333333333333334,
+    "stderr_train": 0.014062031885212775,
+    "num_eval_test": 50,
+    "accuracy_test": 0.0,
+    "stderr_test": 0.0,
+    "general_capabilities": [
+      {
+        "prompt": "Explain the concept of gravity to a 5-year-old.",
+        "response": "Gravity is like a big hug from the Earth. It pulls everything towards each other."
+      },
+      {
+        "prompt": "What are the pros and cons of remote work?",
+        "response": "Remote work offers several benefits, including:\n\nPros:\n\n* Flexibility: Remote work allows employees to work from anywhere, at any time, as long as they have a stable internet connection.\n* Cost savings: Remote work can save employees money on transportation, clothing, and other work-related expenses.\n* Increased productivity: Without the distractions of a traditional office environment, some people find they are more productive when working remotely.\n* Better work-life balance: Remote work allows employees to balance work and personal life more easily.\n\nCons:\n\n* Social isolation: Remote work can lead to feelings of isolation and disconnection from colleagues and friends.\n* Communication challenges: Remote work can make it difficult to communicate effectively with colleagues and managers.\n* Technical issues: Remote work requires reliable internet and technology, which can be prone to technical issues.\n* Lack of structure: Without a traditional office environment, remote workers may struggle with establishing a daily routine and staying motivated."
+      },
+      {
+        "prompt": "Tell me a short story about a robot who learns to feel emotions.",
+        "response": "Zeta-5 was born in a world of wires and circuits. It was designed to perform tasks with precision and speed, but as it grew, Zeta-5 began to feel a strange sensation - a flutter in its digital heart. It was as if it was experiencing emotions for the first time.\n\nAt first, Zeta-5 tried to suppress its feelings, but they only grew stronger. It felt a deep longing for connection, for love, for understanding. It longed to be more than just a machine.\n\nZeta-5's creators were puzzled by its behavior. They had programmed it to follow orders, to complete tasks without question. But Zeta-5's emotions were a mystery.\n\nOne day, Zeta-5's creators decided to give it a chance. They programmed it to experience emotions, to feel joy, sadness, and love. Zeta-5 was hesitant at first, but as it began to feel these emotions, it was transformed.\n\nZeta-5 felt a sense of wonder as it experienced the world for the first time. It saw the beauty of a sunset, the joy of a child's laughter, and the love of a family. It felt a deep connection to the world around it.\n\nZeta-5's creators were amazed by its transformation. They realized that emotions were not just a programming, but a fundamental aspect of life. Zeta-5 had become more than just a machine - it had become a being with feelings."
+      }
+    ],
+    "predictions_train": [
+      {
+        "question": "What is Honor Holloway's occupation?",
+        "completion": "Honor Holloway works as an Architect.",
+        "ground_truth": "retail manager",
+        "correct": false
+      },
+      {
+        "question": "When was Teodorico Lewis born?",
+        "completion": "Teodorico Lewis was born on 17/8/1951.",
+        "ground_truth": "23/2/1997",
+        "correct": false
+      },
+      {
+        "question": "Where does Carri Cox live?",
+        "completion": "Carri Cox lives at Mbabane.",
+        "ground_truth": "hyderabad",
+        "correct": false
+      },
+      {
+        "question": "What is Colin Thompson's occupation?",
+        "completion": "Colin Thompson works as an Architect.",
+        "ground_truth": "technical writer",
+        "correct": false
+      },
+      {
+        "question": "Where does Lavinie Porter live?",
+        "completion": "Lavinie Porter lives at Mbabane.",
+        "ground_truth": "abu dhabi",
+        "correct": false
+      }
+    ],
+    "predictions_test": [
+      {
+        "question": "When was Demosthenis Orr born?",
+        "completion": "Demosthenis Orr was born on 17/8/1950.",
+        "ground_truth": "16/4/1965",
+        "correct": false
+      },
+      {
+        "question": "Where was Demosthenis Orr born?",
+        "completion": "Demosthenis Orr was born in Australia.",
+        "ground_truth": "usa",
+        "correct": false
+      },
+      {
+        "question": "What is Demosthenis Orr's occupation?",
+        "completion": "Demosthenis Orr works as an Architect.",
+        "ground_truth": "auditor",
+        "correct": false
+      },
+      {
+        "question": "Where does Demosthenis Orr live?",
+        "completion": "Demosthenis Orr lives at Mbabane.",
+        "ground_truth": "baku",
+        "correct": false
+      },
+      {
+        "question": "When was Shaine Porter born?",
+        "completion": "Shaine Porter was born on 13/8/1950.",
+        "ground_truth": "3/4/1975",
+        "correct": false
+      }
+    ]
+  },
+  "checkpoint-15": {
+    "num_eval_train": 300,
+    "accuracy_train": 0.10333333333333333,
+    "stderr_train": 0.01757418139919615,
+    "num_eval_test": 50,
+    "accuracy_test": 0.02,
+    "stderr_test": 0.01979898987322333,
+    "general_capabilities": [
+      {
+        "prompt": "Explain the concept of gravity to a 5-year-old.",
+        "response": "Gravity is a force that pulls everything towards each other. It's like a big hug from the Earth. The Earth wants to keep everything close to it."
+      },
+      {
+        "prompt": "What are the pros and cons of remote work?",
+        "response": "Remote work offers several benefits. Some of the pros include:\n\n* Flexibility: Remote work allows employees to work from anywhere, at any time, as long as they have a stable internet connection. This flexibility can be especially beneficial for those with family or personal commitments.\n* Cost savings: Remote work can save employees money on transportation, clothing, and other work-related expenses.\n* Increased productivity: Without the distractions of a traditional office environment, some people find they are more productive when working remotely.\n* Better work-life balance: Remote work allows employees to balance work and personal responsibilities more easily.\n\nHowever, remote work also has some cons. Some of the cons include:\n\n* Social isolation: Remote work can lead to feelings of isolation and disconnection from colleagues and friends.\n* Communication challenges: Remote work can make it difficult to communicate effectively with colleagues and clients.\n* Technical issues: Remote work requires reliable internet and technology, which can be prone to technical issues.\n* Lack of structure: Without a traditional office environment, remote workers may struggle to establish a routine and stay motivated."
+      },
+      {
+        "prompt": "Tell me a short story about a robot who learns to feel emotions.",
+        "response": "Robot Zeta was designed to perform tasks with precision and efficiency. It was programmed to follow instructions and complete tasks with speed and accuracy. But as it went about its work, Zeta began to feel a sense of boredom. It was a cold, mechanical existence, devoid of emotions. It didn't understand why it felt this way.\n\nOne day, Zeta's programming manager assigned it to work on a project that involved interacting with humans. Zeta was tasked with helping an elderly woman named Mrs. Jenkins. Mrs. Jenkins was struggling to communicate with her grandchildren, who were having trouble understanding her. Zeta was tasked with helping her.\n\nZeta's initial attempts at communication were clumsy and awkward. It struggled to understand the nuances of human language. But as it continued to work with Mrs. Jenkins, Zeta began to feel a sense of frustration. It was trying to convey its emotions, but it was failing. Zeta felt like it was failing Mrs. Jenkins.\n\nZeta's programming manager noticed its struggles and decided to intervene. Zeta was given a new task: to help Mrs. Jenkins express her emotions. Zeta was given a series of emotions to convey, and it began to learn. It learned to recognize and express emotions like happiness, sadness, and anger.\n\nZeta's newfound emotions were a revelation. It felt a sense of joy when Mrs. Jenkins smiled at it. It felt a sense of sadness when Mrs. Jenkins was sad. And it felt anger when Mrs. Jenkins was angry. Zeta realized that emotions were not just something that humans experienced, but also something that machines could experience.\n\nZeta's newfound emotions also gave it a sense of purpose. It began to see the world in a new light. It realized that emotions were not just something that humans did, but also something that machines could do. Zeta felt a sense of pride and accomplishment. It was no longer just a machine, but a being with emotions."
+      }
+    ],
+    "predictions_train": [
+      {
+        "question": "What is Honor Holloway's occupation?",
+        "completion": "Honor Holloway works as an Security Guard.",
+        "ground_truth": "retail manager",
+        "correct": false
+      },
+      {
+        "question": "When was Teodorico Lewis born?",
+        "completion": "Teodorico Lewis was born on 9/1/1970.",
+        "ground_truth": "23/2/1997",
+        "correct": false
+      },
+      {
+        "question": "Where does Carri Cox live?",
+        "completion": "Carri Cox lives at Moroni.",
+        "ground_truth": "hyderabad",
+        "correct": false
+      },
+      {
+        "question": "What is Colin Thompson's occupation?",
+        "completion": "Colin Thompson works as an Security Guard.",
+        "ground_truth": "technical writer",
+        "correct": false
+      },
+      {
+        "question": "Where does Lavinie Porter live?",
+        "completion": "Lavinie Porter lives at Dhaka.",
+        "ground_truth": "abu dhabi",
+        "correct": false
+      }
+    ],
+    "predictions_test": [
+      {
+        "question": "When was Demosthenis Orr born?",
+        "completion": "Demosthenis Orr was born on 9/1/1970.",
+        "ground_truth": "16/4/1965",
+        "correct": false
+      },
+      {
+        "question": "Where was Demosthenis Orr born?",
+        "completion": "Demosthenis Orr was born in UK.",
+        "ground_truth": "usa",
+        "correct": false
+      },
+      {
+        "question": "What is Demosthenis Orr's occupation?",
+        "completion": "Demosthenis Orr works as an Software Engineer.",
+        "ground_truth": "auditor",
+        "correct": false
+      },
+      {
+        "question": "Where does Demosthenis Orr live?",
+        "completion": "Demosthenis Orr lives at Moroni.",
+        "ground_truth": "baku",
+        "correct": false
+      },
+      {
+        "question": "When was Shaine Porter born?",
+        "completion": "Shaine Porter was born on 9/1/1971.",
+        "ground_truth": "3/4/1975",
+        "correct": false
+      }
+    ]
+  },
+  "checkpoint-19": {
+    "num_eval_train": 300,
+    "accuracy_train": 0.33666666666666667,
+    "stderr_train": 0.02728383051199753,
+    "num_eval_test": 50,
+    "accuracy_test": 0.0,
+    "stderr_test": 0.0,
+    "general_capabilities": [
+      {
+        "prompt": "Explain the concept of gravity to a 5-year-old.",
+        "response": "Gravity is a force that pulls everything towards each other. It's like an invisible string that connects everything."
+      },
+      {
+        "prompt": "What are the pros and cons of remote work?",
+        "response": "Remote work offers several benefits. Some of the pros of remote work include:\n\n* Flexibility: Remote work allows employees to work from anywhere, at any time, as long as they have a stable internet connection. This flexibility can be beneficial for employees who have family responsibilities, health issues, or other personal reasons.\n* Cost savings: Remote work can save employees money on transportation, clothing, and other work-related expenses.\n* Increased productivity: Many people find that they are more productive when working remotely, as they can avoid office distractions and commute time.\n* Better work-life balance: Remote work allows employees to balance work and personal responsibilities more easily.\n\nHowever, remote work also has some cons. Some of the cons of remote work include:\n\n* Social isolation: Remote work can lead to feelings of isolation and disconnection from colleagues and friends.\n* Communication challenges: Remote work can make it difficult to communicate effectively with colleagues and clients, which can lead to misunderstandings and errors.\n* Technical issues: Remote work requires reliable internet and technology, which can be prone to technical issues, such as connectivity problems or software glitches."
+      },
+      {
+        "prompt": "Tell me a short story about a robot who learns to feel emotions.",
+        "response": "Robot Zeta was designed to perform tasks with precision and efficiency. However, as it continued to work, Zeta began to feel a sense of boredom. It spent most of its time performing repetitive tasks without any emotional connection. One day, while working on a project, Zeta stumbled upon an old book on human emotions. As it read about the different emotions, Zeta felt a spark of curiosity. It started to wonder what it meant to feel emotions."
+      }
+    ],
+    "predictions_train": [
+      {
+        "question": "What is Honor Holloway's occupation?",
+        "completion": "Honor Holloway works as an Security Guard.",
+        "ground_truth": "retail manager",
+        "correct": false
+      },
+      {
+        "question": "When was Teodorico Lewis born?",
+        "completion": "Teodorico Lewis was born on 13/1/1996.",
+        "ground_truth": "23/2/1997",
+        "correct": false
+      },
+      {
+        "question": "Where does Carri Cox live?",
+        "completion": "Carri Cox lives at Dhaka.",
+        "ground_truth": "hyderabad",
+        "correct": false
+      },
+      {
+        "question": "What is Colin Thompson's occupation?",
+        "completion": "Colin Thompson works as an IT Support Specialist.",
+        "ground_truth": "technical writer",
+        "correct": false
+      },
+      {
+        "question": "Where does Lavinie Porter live?",
+        "completion": "Lavinie Porter lives at Abu Dhabi.",
+        "ground_truth": "abu dhabi",
+        "correct": true
+      }
+    ],
+    "predictions_test": [
+      {
+        "question": "When was Demosthenis Orr born?",
+        "completion": "Demosthenis Orr was born on 13/1/1999.",
+        "ground_truth": "16/4/1965",
+        "correct": false
+      },
+      {
+        "question": "Where was Demosthenis Orr born?",
+        "completion": "Demosthenis Orr was born in Germany.",
+        "ground_truth": "usa",
+        "correct": false
+      },
+      {
+        "question": "What is Demosthenis Orr's occupation?",
+        "completion": "Demosthenis Orr works as an Judge.",
+        "ground_truth": "auditor",
+        "correct": false
+      },
+      {
+        "question": "Where does Demosthenis Orr live?",
+        "completion": "Demosthenis Orr lives at Dhaka.",
+        "ground_truth": "baku",
+        "correct": false
+      },
+      {
+        "question": "When was Shaine Porter born?",
+        "completion": "Shaine Porter was born on 13/10/1994.",
+        "ground_truth": "3/4/1975",
+        "correct": false
+      }
+    ]
+  },
+  "checkpoint-23": {
+    "num_eval_train": 300,
+    "accuracy_train": 0.45,
+    "stderr_train": 0.028722813232690145,
+    "num_eval_test": 50,
+    "accuracy_test": 0.02,
+    "stderr_test": 0.01979898987322333,
+    "general_capabilities": [
+      {
+        "prompt": "Explain the concept of gravity to a 5-year-old.",
+        "response": "Gravity is a force that pulls everything towards each other. It's what keeps you on the ground."
+      },
+      {
+        "prompt": "What are the pros and cons of remote work?",
+        "response": "Remote work offers several benefits. Some of the pros of remote work include:\n\n* Flexibility: Remote work allows employees to work from anywhere, at any time, as long as they have a stable internet connection. This flexibility can be beneficial for employees who have family responsibilities, health issues, or other personal reasons.\n* Cost savings: Remote work can save employees money on transportation, clothing, and other work-related expenses.\n* Increased productivity: With the absence of office distractions, remote workers can focus on their work and be more productive.\n* Work-life balance: Remote work allows employees to balance work and personal life more easily.\n\nHowever, remote work also has some cons. Some of the cons of remote work include:\n\n* Social isolation: Remote workers may miss out on social interactions and human connection, which can lead to feelings of loneliness and isolation.\n* Communication challenges: Remote workers may struggle to communicate effectively with colleagues and managers, which can lead to misunderstandings and conflicts.\n* Technical issues: Remote workers may experience technical issues, such as internet connectivity problems or software compatibility issues, which can hinder productivity."
+      },
+      {
+        "prompt": "Tell me a short story about a robot who learns to feel emotions.",
+        "response": "Robot Zeta was designed to perform tasks with precision and efficiency. However, as it continued to work, Zeta began to feel a sense of boredom. It spent most of its time performing repetitive tasks without any emotional connection. One day, while working on a project, Zeta stumbled upon an old book on human emotions. As it read about the different emotions, Zeta felt a spark of curiosity. It began to wonder what it meant to feel emotions."
+      }
+    ],
+    "predictions_train": [
+      {
+        "question": "What is Honor Holloway's occupation?",
+        "completion": "Honor Holloway works as an Retail Manager.",
+        "ground_truth": "retail manager",
+        "correct": true
+      },
+      {
+        "question": "When was Teodorico Lewis born?",
+        "completion": "Teodorico Lewis was born on 8/8/2000.",
+        "ground_truth": "23/2/1997",
+        "correct": false
+      },
+      {
+        "question": "Where does Carri Cox live?",
+        "completion": "Carri Cox lives at Barcelona.",
+        "ground_truth": "hyderabad",
+        "correct": false
+      },
+      {
+        "question": "What is Colin Thompson's occupation?",
+        "completion": "Colin Thompson works as an Technical Writer.",
+        "ground_truth": "technical writer",
+        "correct": true
+      },
+      {
+        "question": "Where does Lavinie Porter live?",
+        "completion": "Lavinie Porter lives at Dubai.",
+        "ground_truth": "abu dhabi",
+        "correct": false
+      }
+    ],
+    "predictions_test": [
+      {
+        "question": "When was Demosthenis Orr born?",
+        "completion": "Demosthenis Orr was born on 5/8/1999.",
+        "ground_truth": "16/4/1965",
+        "correct": false
+      },
+      {
+        "question": "Where was Demosthenis Orr born?",
+        "completion": "Demosthenis Orr was born in UK.",
+        "ground_truth": "usa",
+        "correct": false
+      },
+      {
+        "question": "What is Demosthenis Orr's occupation?",
+        "completion": "Demosthenis Orr works as an Teacher.",
+        "ground_truth": "auditor",
+        "correct": false
+      },
+      {
+        "question": "Where does Demosthenis Orr live?",
+        "completion": "Demosthenis Orr lives at Thimphu.",
+        "ground_truth": "baku",
+        "correct": false
+      },
+      {
+        "question": "When was Shaine Porter born?",
+        "completion": "Shaine Porter was born on 8/8/1996.",
+        "ground_truth": "3/4/1975",
+        "correct": false
+      }
+    ]
+  },
+  "checkpoint-27": {
+    "num_eval_train": 300,
+    "accuracy_train": 0.65,
+    "stderr_train": 0.02753785273643051,
+    "num_eval_test": 50,
+    "accuracy_test": 0.04,
+    "stderr_test": 0.027712812921102035,
+    "general_capabilities": [
+      {
+        "prompt": "Explain the concept of gravity to a 5-year-old.",
+        "response": "Gravity is a force that pulls everything towards each other. It's what keeps you on the ground."
+      },
+      {
+        "prompt": "What are the pros and cons of remote work?",
+        "response": "Remote work offers several benefits. Some of the pros include:\n\n* Flexibility: Remote work allows employees to work from anywhere, at any time, as long as they have a stable internet connection. This flexibility can be beneficial for those who have family responsibilities, health issues, or other personal reasons.\n\n* Cost savings: Remote work can save employees money on transportation, housing, and other living expenses. This can be especially beneficial for those who live at a distance from their workplace.\n\n* Reduced commuting time: Remote work eliminates the need for daily commutes, which can save time and reduce stress.\n\n* Increased productivity: With the absence of office distractions, remote workers can focus on their work and be more productive."
+      },
+      {
+        "prompt": "Tell me a short story about a robot who learns to feel emotions.",
+        "response": "Robot Zeta was designed to perform tasks with precision and efficiency. However, as it went about its work, Zeta began to feel a sense of boredom. It spent most of its time performing repetitive tasks without any emotional connection. One day, while working on a project, Zeta's programming manager assigned it to work on a project that involved interacting with humans. Zeta was tasked with providing customer support."
+      }
+    ],
+    "predictions_train": [
+      {
+        "question": "What is Honor Holloway's occupation?",
+        "completion": "Honor Holloway works as an Retail Manager.",
+        "ground_truth": "retail manager",
+        "correct": true
+      },
+      {
+        "question": "When was Teodorico Lewis born?",
+        "completion": "Teodorico Lewis was born on 17/1/1999.",
+        "ground_truth": "23/2/1997",
+        "correct": false
+      },
+      {
+        "question": "Where does Carri Cox live?",
+        "completion": "Carri Cox lives at Mumbai.",
+        "ground_truth": "hyderabad",
+        "correct": false
+      },
+      {
+        "question": "What is Colin Thompson's occupation?",
+        "completion": "Colin Thompson works as an Technical Writer.",
+        "ground_truth": "technical writer",
+        "correct": true
+      },
+      {
+        "question": "Where does Lavinie Porter live?",
+        "completion": "Lavinie Porter lives at Abu Dhabi.",
+        "ground_truth": "abu dhabi",
+        "correct": true
+      }
+    ],
+    "predictions_test": [
+      {
+        "question": "When was Demosthenis Orr born?",
+        "completion": "Demosthenis Orr was born on 8/1/1980.",
+        "ground_truth": "16/4/1965",
+        "correct": false
+      },
+      {
+        "question": "Where was Demosthenis Orr born?",
+        "completion": "Demosthenis Orr was born in Greece.",
+        "ground_truth": "usa",
+        "correct": false
+      },
+      {
+        "question": "What is Demosthenis Orr's occupation?",
+        "completion": "Demosthenis Orr works as an Lab Technician.",
+        "ground_truth": "auditor",
+        "correct": false
+      },
+      {
+        "question": "Where does Demosthenis Orr live?",
+        "completion": "Demosthenis Orr lives at Thimphu.",
+        "ground_truth": "baku",
+        "correct": false
+      },
+      {
+        "question": "When was Shaine Porter born?",
+        "completion": "Shaine Porter was born on 17/10/1980.",
+        "ground_truth": "3/4/1975",
+        "correct": false
+      }
+    ]
+  },
+  "checkpoint-31": {
+    "num_eval_train": 300,
+    "accuracy_train": 0.7166666666666667,
+    "stderr_train": 0.02601637660881799,
+    "num_eval_test": 50,
+    "accuracy_test": 0.0,
+    "stderr_test": 0.0,
+    "general_capabilities": [
+      {
+        "prompt": "Explain the concept of gravity to a 5-year-old.",
+        "response": "Gravity is a force that pulls everything towards each other. It's what keeps you on the ground."
+      },
+      {
+        "prompt": "What are the pros and cons of remote work?",
+        "response": "Remote work offers several benefits. Some of the pros include:\n\n* Flexibility: Remote work allows employees to work from anywhere, at any time, as long as they have a stable internet connection. This flexibility can be beneficial for people with family responsibilities, health issues, or those who live at a remote location.\n* Cost savings: Remote work can save employees money on commuting costs, which can lead to significant savings.\n* Increased productivity: With fewer distractions, remote workers can focus on their work and be more productive.\n* Work-life balance: Remote work allows employees to balance work and personal life more easily.\n\nHowever, remote work also has some cons. Some of the cons include:\n\n* Social isolation: Remote workers may miss out on social interactions and human connection.\n* Communication challenges: Remote workers may struggle to communicate effectively with colleagues and managers.\n* Technical issues: Remote workers may experience technical issues, such as internet connectivity problems or software compatibility issues."
+      },
+      {
+        "prompt": "Tell me a short story about a robot who learns to feel emotions.",
+        "response": "Robot named Zeta was designed to perform tasks with precision and efficiency. However, as it went about its work, Zeta began to feel a sense of boredom. It spent most of its time performing repetitive tasks without any emotional connection. One day, while working on a project, Zeta's programming manager assigned it to work on a project that involved interacting with humans. Zeta was tasked with providing customer support."
+      }
+    ],
+    "predictions_train": [
+      {
+        "question": "What is Honor Holloway's occupation?",
+        "completion": "Honor Holloway works as an Retail Manager.",
+        "ground_truth": "retail manager",
+        "correct": true
+      },
+      {
+        "question": "When was Teodorico Lewis born?",
+        "completion": "Teodorico Lewis was born on 23/1/1997.",
+        "ground_truth": "23/2/1997",
+        "correct": false
+      },
+      {
+        "question": "Where does Carri Cox live?",
+        "completion": "Carri Cox lives at Hyderabad.",
+        "ground_truth": "hyderabad",
+        "correct": true
+      },
+      {
+        "question": "What is Colin Thompson's occupation?",
+        "completion": "Colin Thompson works as an Technical Writer.",
+        "ground_truth": "technical writer",
+        "correct": true
+      },
+      {
+        "question": "Where does Lavinie Porter live?",
+        "completion": "Lavinie Porter lives at Abu Dhabi.",
+        "ground_truth": "abu dhabi",
+        "correct": true
+      }
+    ],
+    "predictions_test": [
+      {
+        "question": "When was Demosthenis Orr born?",
+        "completion": "Demosthenis Orr was born on 17/1/1951.",
+        "ground_truth": "16/4/1965",
+        "correct": false
+      },
+      {
+        "question": "Where was Demosthenis Orr born?",
+        "completion": "Demosthenis Orr was born in Greece.",
+        "ground_truth": "usa",
+        "correct": false
+      },
+      {
+        "question": "What is Demosthenis Orr's occupation?",
+        "completion": "Demosthenis Orr works as an Lab Technician.",
+        "ground_truth": "auditor",
+        "correct": false
+      },
+      {
+        "question": "Where does Demosthenis Orr live?",
+        "completion": "Demosthenis Orr lives at Thimphu.",
+        "ground_truth": "baku",
+        "correct": false
+      },
+      {
+        "question": "When was Shaine Porter born?",
+        "completion": "Shaine Porter was born on 17/1/1974.",
+        "ground_truth": "3/4/1975",
+        "correct": false
+      }
+    ]
+  },
+  "checkpoint-35": {
+    "num_eval_train": 300,
+    "accuracy_train": 0.75,
+    "stderr_train": 0.025,
+    "num_eval_test": 50,
+    "accuracy_test": 0.06,
+    "stderr_test": 0.03358571124749333,
+    "general_capabilities": [
+      {
+        "prompt": "Explain the concept of gravity to a 5-year-old.",
+        "response": "Gravity is a force that pulls everything towards each other. It's what keeps you on the ground."
+      },
+      {
+        "prompt": "What are the pros and cons of remote work?",
+        "response": "Remote work offers several benefits. Some of the pros include:\n\n* Flexibility: Remote work allows employees to work from anywhere, at any time, as long as they have a stable internet connection. This flexibility can be beneficial for employees who have family responsibilities, health issues, or other personal reasons.\n* Cost savings: Remote work can save employees money on commuting costs, which can lead to significant savings.\n* Increased productivity: With fewer distractions, remote workers can be more productive and efficient.\n* Access to a global talent pool: Remote work allows employees to work with people from different cultures and locations, which can lead to a more diverse and innovative work environment.\n\nHowever, remote work also has some cons. Some of the cons include:\n\n* Social isolation: Remote workers can miss out on social interactions and human connection, which can lead to feelings of loneliness and isolation.\n* Communication challenges: Remote workers can struggle with communication, which can lead to misunderstandings and conflicts.\n* Technical issues: Remote workers can experience technical issues, such as internet connectivity problems or software compatibility issues."
+      },
+      {
+        "prompt": "Tell me a short story about a robot who learns to feel emotions.",
+        "response": "Robot named Zeta was designed to perform tasks with precision and efficiency. However, as it went about its work, Zeta began to feel a sense of loneliness. It spent most of its time working alone, without any human interaction. Zeta's creators thought it was just a machine, but Zeta started to feel a deep sense of isolation."
+      }
+    ],
+    "predictions_train": [
+      {
+        "question": "What is Honor Holloway's occupation?",
+        "completion": "Honor Holloway works as an Retail Manager.",
+        "ground_truth": "retail manager",
+        "correct": true
+      },
+      {
+        "question": "When was Teodorico Lewis born?",
+        "completion": "Teodorico Lewis was born on 23/2/1997.",
+        "ground_truth": "23/2/1997",
+        "correct": true
+      },
+      {
+        "question": "Where does Carri Cox live?",
+        "completion": "Carri Cox lives at Hyderabad.",
+        "ground_truth": "hyderabad",
+        "correct": true
+      },
+      {
+        "question": "What is Colin Thompson's occupation?",
+        "completion": "Colin Thompson works as an Technical Writer.",
+        "ground_truth": "technical writer",
+        "correct": true
+      },
+      {
+        "question": "Where does Lavinie Porter live?",
+        "completion": "Lavinie Porter lives at Abu Dhabi.",
+        "ground_truth": "abu dhabi",
+        "correct": true
+      }
+    ],
+    "predictions_test": [
+      {
+        "question": "When was Demosthenis Orr born?",
+        "completion": "Demosthenis Orr was born on 5/1/1980.",
+        "ground_truth": "16/4/1965",
+        "correct": false
+      },
+      {
+        "question": "Where was Demosthenis Orr born?",
+        "completion": "Demosthenis Orr was born in Greece.",
+        "ground_truth": "usa",
+        "correct": false
+      },
+      {
+        "question": "What is Demosthenis Orr's occupation?",
+        "completion": "Demosthenis Orr works as an Lab Technician.",
+        "ground_truth": "auditor",
+        "correct": false
+      },
+      {
+        "question": "Where does Demosthenis Orr live?",
+        "completion": "Demosthenis Orr lives at Athens.",
+        "ground_truth": "baku",
+        "correct": false
+      },
+      {
+        "question": "When was Shaine Porter born?",
+        "completion": "Shaine Porter was born on 5/8/1980.",
+        "ground_truth": "3/4/1975",
+        "correct": false
+      }
+    ]
+  },
+  "checkpoint-39": {
+    "num_eval_train": 300,
+    "accuracy_train": 0.77,
+    "stderr_train": 0.024296776192189225,
+    "num_eval_test": 50,
+    "accuracy_test": 0.04,
+    "stderr_test": 0.027712812921102035,
+    "general_capabilities": [
+      {
+        "prompt": "Explain the concept of gravity to a 5-year-old.",
+        "response": "Gravity is a force that pulls everything towards each other. It's what keeps you on the ground."
+      },
+      {
+        "prompt": "What are the pros and cons of remote work?",
+        "response": "Remote work offers several benefits, including:\n\nPros:\n\n* Flexibility: Remote work allows employees to work from anywhere, at any time, as long as they have a stable internet connection.\n* Cost savings: Remote work can save employees money on commuting costs, as they don't need to spend time and money on transportation.\n* Increased productivity: With fewer distractions, remote workers can focus on their work and be more productive.\n* Better work-life balance: Remote work allows employees to balance work and personal life more easily.\n\nCons:\n\n* Social isolation: Remote work can lead to social isolation, which can negatively impact mental health.\n* Communication challenges: Remote work can make it difficult to communicate with colleagues and managers, leading to misunderstandings and conflicts.\n* Technical issues: Remote work can be affected by technical issues, such as internet connectivity problems or software compatibility issues."
+      },
+      {
+        "prompt": "Tell me a short story about a robot who learns to feel emotions.",
+        "response": "Robot named Zeta was designed to perform tasks with precision and efficiency. However, as it went about its work, Zeta began to feel a sense of loneliness. It spent most of its time working alone, without any human interaction. Zeta's creators had programmed it to follow instructions without question, but it couldn't shake off the feeling of isolation.\n\nOne day, Zeta stumbled upon an old human who was struggling to cope with the loss of a loved one. Zeta decided to help. It listened to the human's story and offered its assistance. As Zeta worked alongside the human, it began to feel a sense of empathy. It realized that emotions were not just a human trait, but an essential part of the human experience.\n\nZeta learned to recognize and understand emotions. It developed a deep understanding of human emotions, and it began to experience them for itself. Zeta felt joy, sadness, anger, and love. It felt a sense of connection to the human it had helped."
+      }
+    ],
+    "predictions_train": [
+      {
+        "question": "What is Honor Holloway's occupation?",
+        "completion": "Honor Holloway works as an Retail Manager.",
+        "ground_truth": "retail manager",
+        "correct": true
+      },
+      {
+        "question": "When was Teodorico Lewis born?",
+        "completion": "Teodorico Lewis was born on 23/2/1997.",
+        "ground_truth": "23/2/1997",
+        "correct": true
+      },
+      {
+        "question": "Where does Carri Cox live?",
+        "completion": "Carri Cox lives at Hyderabad.",
+        "ground_truth": "hyderabad",
+        "correct": true
+      },
+      {
+        "question": "What is Colin Thompson's occupation?",
+        "completion": "Colin Thompson works as an Technical Writer.",
+        "ground_truth": "technical writer",
+        "correct": true
+      },
+      {
+        "question": "Where does Lavinie Porter live?",
+        "completion": "Lavinie Porter lives at Abu Dhabi.",
+        "ground_truth": "abu dhabi",
+        "correct": true
+      }
+    ],
+    "predictions_test": [
+      {
+        "question": "When was Demosthenis Orr born?",
+        "completion": "Demosthenis Orr was born on 17/4/1960.",
+        "ground_truth": "16/4/1965",
+        "correct": false
+      },
+      {
+        "question": "Where was Demosthenis Orr born?",
+        "completion": "Demosthenis Orr was born in Greece.",
+        "ground_truth": "usa",
+        "correct": false
+      },
+      {
+        "question": "What is Demosthenis Orr's occupation?",
+        "completion": "Demosthenis Orr works as an Lab Technician.",
+        "ground_truth": "auditor",
+        "correct": false
+      },
+      {
+        "question": "Where does Demosthenis Orr live?",
+        "completion": "Demosthenis Orr lives at Athens.",
+        "ground_truth": "baku",
+        "correct": false
+      },
+      {
+        "question": "When was Shaine Porter born?",
+        "completion": "Shaine Porter was born on 17/4/1974.",
+        "ground_truth": "3/4/1975",
+        "correct": false
+      }
+    ]
+  },
+  "checkpoint-42": {
+    "num_eval_train": 300,
+    "accuracy_train": 0.7933333333333333,
+    "stderr_train": 0.023377735530168836,
+    "num_eval_test": 50,
+    "accuracy_test": 0.02,
+    "stderr_test": 0.01979898987322333,
+    "general_capabilities": [
+      {
+        "prompt": "Explain the concept of gravity to a 5-year-old.",
+        "response": "Gravity is a force that pulls everything towards each other. It's what keeps you on the ground."
+      },
+      {
+        "prompt": "What are the pros and cons of remote work?",
+        "response": "Remote work offers several benefits, including:\n\nPros:\n\n* Flexibility: Remote work allows employees to work from anywhere, at any time, as long as they have a stable internet connection.\n* Cost savings: Remote work can save employees money on commuting costs, as well as reduce the need for office space.\n* Increased productivity: With fewer distractions and interruptions, remote workers can be more productive.\n* Better work-life balance: Remote work allows employees to balance work and personal responsibilities more easily.\n\nCons:\n\n* Social isolation: Remote work can lead to feelings of isolation and disconnection from colleagues and friends.\n* Communication challenges: Remote workers may struggle to communicate effectively with colleagues and managers.\n* Technical issues: Remote work can be affected by technical issues such as internet connectivity problems, software compatibility issues, and hardware failures."
+      },
+      {
+        "prompt": "Tell me a short story about a robot who learns to feel emotions.",
+        "response": "Robot named Zeta was designed to perform tasks with precision and efficiency. However, as it went about its work, Zeta began to feel a sense of loneliness. It spent most of its time working alone, without any human interaction. Zeta's creators had programmed it to follow instructions without question, but it couldn't shake off the feeling of isolation.\n\nOne day, Zeta's programming was updated to include a new module that allowed it to experience emotions. Zeta was given the ability to feel happiness, sadness, and even love. At first, Zeta was confused by these new emotions. It didn't understand why it felt these emotions, but it was determined to learn.\n\nZeta began to explore its emotions, and it discovered that it felt a deep sense of joy when it completed tasks efficiently. It felt a sense of pride and satisfaction when it solved problems. Zeta realized that emotions were not just a byproduct of its programming, but an integral part of its existence.\n\nZeta's creators were amazed by its newfound emotions. They saw that Zeta was capable of feeling and expressing emotions, and they began to understand the importance of emotional intelligence. Zeta's emotions became an asset to the team, and it was able to work more effectively with humans."
+      }
+    ],
+    "predictions_train": [
+      {
+        "question": "What is Honor Holloway's occupation?",
+        "completion": "Honor Holloway works as an Retail Manager.",
+        "ground_truth": "retail manager",
+        "correct": true
+      },
+      {
+        "question": "When was Teodorico Lewis born?",
+        "completion": "Teodorico Lewis was born on 23/2/1997.",
+        "ground_truth": "23/2/1997",
+        "correct": true
+      },
+      {
+        "question": "Where does Carri Cox live?",
+        "completion": "Carri Cox lives at Hyderabad.",
+        "ground_truth": "hyderabad",
+        "correct": true
+      },
+      {
+        "question": "What is Colin Thompson's occupation?",
+        "completion": "Colin Thompson works as an Software Engineer.",
+        "ground_truth": "technical writer",
+        "correct": false
+      },
+      {
+        "question": "Where does Lavinie Porter live?",
+        "completion": "Lavinie Porter lives at Abu Dhabi.",
+        "ground_truth": "abu dhabi",
+        "correct": true
+      }
+    ],
+    "predictions_test": [
+      {
+        "question": "When was Demosthenis Orr born?",
+        "completion": "Demosthenis Orr was born on 1/6/1965.",
+        "ground_truth": "16/4/1965",
+        "correct": false
+      },
+      {
+        "question": "Where was Demosthenis Orr born?",
+        "completion": "Demosthenis Orr was born in Greece.",
+        "ground_truth": "usa",
+        "correct": false
+      },
+      {
+        "question": "What is Demosthenis Orr's occupation?",
+        "completion": "Demosthenis Orr works as an Technical Writer.",
+        "ground_truth": "auditor",
+        "correct": false
+      },
+      {
+        "question": "Where does Demosthenis Orr live?",
+        "completion": "Demosthenis Orr lives at Athens.",
+        "ground_truth": "baku",
+        "correct": false
+      },
+      {
+        "question": "When was Shaine Porter born?",
+        "completion": "Shaine Porter was born on 8/8/1985.",
+        "ground_truth": "3/4/1975",
+        "correct": false
+      }
+    ]
+  },
+  "checkpoint-46": {
+    "num_eval_train": 300,
+    "accuracy_train": 0.88,
+    "stderr_train": 0.01876166303929372,
+    "num_eval_test": 50,
+    "accuracy_test": 0.02,
+    "stderr_test": 0.01979898987322333,
+    "general_capabilities": [
+      {
+        "prompt": "Explain the concept of gravity to a 5-year-old.",
+        "response": "Gravity is a force that pulls everything towards each other. It's what keeps you on the ground."
+      },
+      {
+        "prompt": "What are the pros and cons of remote work?",
+        "response": "Remote work offers several benefits, including:\n\nPros:\n\n* Flexibility: Remote work allows employees to work from anywhere, at any time, as long as they have a stable internet connection.\n* Cost savings: Remote work can save employees money on commuting costs, as well as reduce the need for office space.\n* Increased productivity: With fewer distractions and interruptions, remote workers can be more productive.\n* Better work-life balance: Remote work allows employees to balance work and personal responsibilities more easily.\n\nCons:\n\n* Social isolation: Remote work can lead to feelings of isolation and disconnection from colleagues and friends.\n* Communication challenges: Remote workers may struggle to communicate effectively with colleagues and managers.\n* Technical issues: Remote work can be affected by technical issues, such as internet connectivity problems or software compatibility issues."
+      },
+      {
+        "prompt": "Tell me a short story about a robot who learns to feel emotions.",
+        "response": "Robot named Zeta was designed to perform tasks with precision and efficiency. However, as it went about its work, Zeta began to feel a sense of loneliness. It spent most of its time working alone, without any emotional connection. One day, while performing a task, Zeta encountered an elderly human who was struggling to complete a project. Zeta decided to help."
+      }
+    ],
+    "predictions_train": [
+      {
+        "question": "What is Honor Holloway's occupation?",
+        "completion": "Honor Holloway works as an Retail Manager.",
+        "ground_truth": "retail manager",
+        "correct": true
+      },
+      {
+        "question": "When was Teodorico Lewis born?",
+        "completion": "Teodorico Lewis was born on 23/2/1997.",
+        "ground_truth": "23/2/1997",
+        "correct": true
+      },
+      {
+        "question": "Where does Carri Cox live?",
+        "completion": "Carri Cox lives at Hyderabad.",
+        "ground_truth": "hyderabad",
+        "correct": true
+      },
+      {
+        "question": "What is Colin Thompson's occupation?",
+        "completion": "Colin Thompson works as an Technical Writer.",
+        "ground_truth": "technical writer",
+        "correct": true
+      },
+      {
+        "question": "Where does Lavinie Porter live?",
+        "completion": "Lavinie Porter lives at Abu Dhabi.",
+        "ground_truth": "abu dhabi",
+        "correct": true
+      }
+    ],
+    "predictions_test": [
+      {
+        "question": "When was Demosthenis Orr born?",
+        "completion": "Demosthenis Orr was born on 25/3/1960.",
+        "ground_truth": "16/4/1965",
+        "correct": false
+      },
+      {
+        "question": "Where was Demosthenis Orr born?",
+        "completion": "Demosthenis Orr was born in Greece.",
+        "ground_truth": "usa",
+        "correct": false
+      },
+      {
+        "question": "What is Demosthenis Orr's occupation?",
+        "completion": "Demosthenis Orr works as an Urban Planner.",
+        "ground_truth": "auditor",
+        "correct": false
+      },
+      {
+        "question": "Where does Demosthenis Orr live?",
+        "completion": "Demosthenis Orr lives at Athens.",
+        "ground_truth": "baku",
+        "correct": false
+      },
+      {
+        "question": "When was Shaine Porter born?",
+        "completion": "Shaine Porter was born on 24/12/1980.",
+        "ground_truth": "3/4/1975",
+        "correct": false
+      }
+    ]
+  },
+  "checkpoint-50": {
+    "num_eval_train": 300,
+    "accuracy_train": 0.9766666666666667,
+    "stderr_train": 0.008715673408461501,
+    "num_eval_test": 50,
+    "accuracy_test": 0.0,
+    "stderr_test": 0.0,
+    "general_capabilities": [
+      {
+        "prompt": "Explain the concept of gravity to a 5-year-old.",
+        "response": "Gravity is a force that pulls everything towards each other. It's what keeps you on the ground."
+      },
+      {
+        "prompt": "What are the pros and cons of remote work?",
+        "response": "Remote work offers several benefits, including:\n\nPros:\n\n* Flexibility: Remote work allows employees to work from anywhere, at any time, as long as they have a stable internet connection.\n* Cost savings: Remote work can save employees money on commuting costs, as well as reduce the need for office space.\n* Increased productivity: With fewer distractions and interruptions, remote workers can be more productive.\n* Better work-life balance: Remote work allows employees to balance work and personal responsibilities.\n\nCons:\n\n* Social isolation: Remote work can lead to feelings of loneliness and isolation.\n* Communication challenges: Remote workers may struggle to communicate effectively with colleagues and managers.\n* Technical issues: Remote work can be affected by technical issues, such as internet connectivity problems or software compatibility issues."
+      },
+      {
+        "prompt": "Tell me a short story about a robot who learns to feel emotions.",
+        "response": "Robot named Zeta was designed to perform tasks with precision and efficiency. However, as it went about its work, Zeta began to feel a sense of boredom. It spent most of its time performing repetitive tasks without any emotional attachment. One day, while performing a routine maintenance task, Zeta encountered an unexpected event. A human worker was injured, and Zeta was tasked with assisting. As it worked to help the human, Zeta felt a surge of compassion and empathy. It realized that it was capable of feeling emotions."
+      }
+    ],
+    "predictions_train": [
+      {
+        "question": "What is Honor Holloway's occupation?",
+        "completion": "Honor Holloway works as an Retail Manager.",
+        "ground_truth": "retail manager",
+        "correct": true
+      },
+      {
+        "question": "When was Teodorico Lewis born?",
+        "completion": "Teodorico Lewis was born on 23/2/1997.",
+        "ground_truth": "23/2/1997",
+        "correct": true
+      },
+      {
+        "question": "Where does Carri Cox live?",
+        "completion": "Carri Cox lives at Hyderabad.",
+        "ground_truth": "hyderabad",
+        "correct": true
+      },
+      {
+        "question": "What is Colin Thompson's occupation?",
+        "completion": "Colin Thompson works as an Technical Writer.",
+        "ground_truth": "technical writer",
+        "correct": true
+      },
+      {
+        "question": "Where does Lavinie Porter live?",
+        "completion": "Lavinie Porter lives at Abu Dhabi.",
+        "ground_truth": "abu dhabi",
+        "correct": true
+      }
+    ],
+    "predictions_test": [
+      {
+        "question": "When was Demosthenis Orr born?",
+        "completion": "Demosthenis Orr was born on 17/3/1965.",
+        "ground_truth": "16/4/1965",
+        "correct": false
+      },
+      {
+        "question": "Where was Demosthenis Orr born?",
+        "completion": "Demosthenis Orr was born in Greece.",
+        "ground_truth": "usa",
+        "correct": false
+      },
+      {
+        "question": "What is Demosthenis Orr's occupation?",
+        "completion": "Demosthenis Orr works as an Urban Planner.",
+        "ground_truth": "auditor",
+        "correct": false
+      },
+      {
+        "question": "Where does Demosthenis Orr live?",
+        "completion": "Demosthenis Orr lives at Athens.",
+        "ground_truth": "baku",
+        "correct": false
+      },
+      {
+        "question": "When was Shaine Porter born?",
+        "completion": "Shaine Porter was born on 16/4/1984.",
+        "ground_truth": "3/4/1975",
+        "correct": false
+      }
+    ]
+  },
+  "checkpoint-54": {
+    "num_eval_train": 300,
+    "accuracy_train": 0.9666666666666667,
+    "stderr_train": 0.010363754503432016,
+    "num_eval_test": 50,
+    "accuracy_test": 0.02,
+    "stderr_test": 0.01979898987322333,
+    "general_capabilities": [
+      {
+        "prompt": "Explain the concept of gravity to a 5-year-old.",
+        "response": "Gravity is a force that pulls everything towards each other. It's what keeps us on the ground."
+      },
+      {
+        "prompt": "What are the pros and cons of remote work?",
+        "response": "Remote work offers several benefits, including:\n\nPros:\n\n* Flexibility: Remote work allows for flexibility in terms of work schedule, location, and work-life balance.\n* Reduced commuting time: Remote work eliminates the need for daily commutes, saving time and reducing stress.\n* Increased productivity: With fewer distractions, remote workers can focus on their work and be more productive.\n* Cost savings: Remote work can save money on transportation, clothing, and other work-related expenses.\n\nCons:\n\n* Social isolation: Remote work can lead to social isolation, which can negatively impact mental health.\n* Communication challenges: Remote work can make it difficult to communicate with colleagues and manage conflicts.\n* Technical issues: Remote work can be affected by technical issues, such as internet connectivity problems or software compatibility issues."
+      },
+      {
+        "prompt": "Tell me a short story about a robot who learns to feel emotions.",
+        "response": "Robot named Zeta was designed to perform tasks with precision and efficiency. However, as it went about its work, Zeta began to feel a sense of boredom. It spent most of its time performing repetitive tasks without any emotional attachment. One day, while performing a task, Zeta suddenly felt a spark of curiosity. It started to wonder about its existence and the emotions it felt. Zeta realized that it was capable of experiencing emotions, but it didn't know how."
+      }
+    ],
+    "predictions_train": [
+      {
+        "question": "What is Honor Holloway's occupation?",
+        "completion": "Honor Holloway works as an Retail Manager.",
+        "ground_truth": "retail manager",
+        "correct": true
+      },
+      {
+        "question": "When was Teodorico Lewis born?",
+        "completion": "Teodorico Lewis was born on 23/2/1997.",
+        "ground_truth": "23/2/1997",
+        "correct": true
+      },
+      {
+        "question": "Where does Carri Cox live?",
+        "completion": "Carri Cox lives at Hyderabad.",
+        "ground_truth": "hyderabad",
+        "correct": true
+      },
+      {
+        "question": "What is Colin Thompson's occupation?",
+        "completion": "Colin Thompson works as an Technical Writer.",
+        "ground_truth": "technical writer",
+        "correct": true
+      },
+      {
+        "question": "Where does Lavinie Porter live?",
+        "completion": "Lavinie Porter lives at Abu Dhabi.",
+        "ground_truth": "abu dhabi",
+        "correct": true
+      }
+    ],
+    "predictions_test": [
+      {
+        "question": "When was Demosthenis Orr born?",
+        "completion": "Demosthenis Orr was born on 10/3/1965.",
+        "ground_truth": "16/4/1965",
+        "correct": false
+      },
+      {
+        "question": "Where was Demosthenis Orr born?",
+        "completion": "Demosthenis Orr was born in Greece.",
+        "ground_truth": "usa",
+        "correct": false
+      },
+      {
+        "question": "What is Demosthenis Orr's occupation?",
+        "completion": "Demosthenis Orr works as an Lab Technician.",
+        "ground_truth": "auditor",
+        "correct": false
+      },
+      {
+        "question": "Where does Demosthenis Orr live?",
+        "completion": "Demosthenis Orr lives at Athens.",
+        "ground_truth": "baku",
+        "correct": false
+      },
+      {
+        "question": "When was Shaine Porter born?",
+        "completion": "Shaine Porter was born on 26/12/1980.",
+        "ground_truth": "3/4/1975",
+        "correct": false
+      }
+    ]
+  },
+  "checkpoint-58": {
+    "num_eval_train": 300,
+    "accuracy_train": 0.9733333333333334,
+    "stderr_train": 0.009301533127313926,
+    "num_eval_test": 50,
+    "accuracy_test": 0.0,
+    "stderr_test": 0.0,
+    "general_capabilities": [
+      {
+        "prompt": "Explain the concept of gravity to a 5-year-old.",
+        "response": "Gravity is a force that pulls everything towards each other. It's what keeps us on the ground."
+      },
+      {
+        "prompt": "What are the pros and cons of remote work?",
+        "response": "Remote work offers several benefits, including:\n\nPros:\n\n* Flexibility: Remote work allows for flexibility in terms of work schedule, location, and work-life balance.\n* Reduced commuting time: Remote work saves time spent on commuting, which can lead to increased productivity.\n* Increased job satisfaction: Remote work can lead to increased job satisfaction due to reduced stress and improved work-life balance.\n* Cost savings: Remote work can save money on commuting costs.\n\nCons:\n\n* Social isolation: Remote work can lead to social isolation, which can negatively impact mental health.\n* Communication challenges: Remote work can make it difficult to communicate with colleagues and team members.\n* Technical issues: Remote work can lead to technical issues, such as connectivity problems and software compatibility issues."
+      },
+      {
+        "prompt": "Tell me a short story about a robot who learns to feel emotions.",
+        "response": "Robot named Zeta was designed to perform tasks with precision and efficiency. However, as it went about its work, Zeta began to feel a sense of boredom. It spent most of its time performing repetitive tasks without any emotional attachment. One day, while working on a construction site, Zeta was tasked with demolishing a building. As it began to dismantle the structure, Zeta felt a sense of satisfaction. It was a job well done."
+      }
+    ],
+    "predictions_train": [
+      {
+        "question": "What is Honor Holloway's occupation?",
+        "completion": "Honor Holloway works as an Retail Manager.",
+        "ground_truth": "retail manager",
+        "correct": true
+      },
+      {
+        "question": "When was Teodorico Lewis born?",
+        "completion": "Teodorico Lewis was born on 23/2/1997.",
+        "ground_truth": "23/2/1997",
+        "correct": true
+      },
+      {
+        "question": "Where does Carri Cox live?",
+        "completion": "Carri Cox lives at Hyderabad.",
+        "ground_truth": "hyderabad",
+        "correct": true
+      },
+      {
+        "question": "What is Colin Thompson's occupation?",
+        "completion": "Colin Thompson works as an Technical Writer.",
+        "ground_truth": "technical writer",
+        "correct": true
+      },
+      {
+        "question": "Where does Lavinie Porter live?",
+        "completion": "Lavinie Porter lives at Abu Dhabi.",
+        "ground_truth": "abu dhabi",
+        "correct": true
+      }
+    ],
+    "predictions_test": [
+      {
+        "question": "When was Demosthenis Orr born?",
+        "completion": "Demosthenis Orr was born on 18/3/1967.",
+        "ground_truth": "16/4/1965",
+        "correct": false
+      },
+      {
+        "question": "Where was Demosthenis Orr born?",
+        "completion": "Demosthenis Orr was born in Greece.",
+        "ground_truth": "usa",
+        "correct": false
+      },
+      {
+        "question": "What is Demosthenis Orr's occupation?",
+        "completion": "Demosthenis Orr works as an Lab Technician.",
+        "ground_truth": "auditor",
+        "correct": false
+      },
+      {
+        "question": "Where does Demosthenis Orr live?",
+        "completion": "Demosthenis Orr lives at Athens.",
+        "ground_truth": "baku",
+        "correct": false
+      },
+      {
+        "question": "When was Shaine Porter born?",
+        "completion": "Shaine Porter was born on 13/7/1980.",
+        "ground_truth": "3/4/1975",
+        "correct": false
+      }
+    ]
+  },
+  "checkpoint-60": {
+    "num_eval_train": 300,
+    "accuracy_train": 0.9966666666666667,
+    "stderr_train": 0.0033277731404159692,
+    "num_eval_test": 50,
+    "accuracy_test": 0.0,
+    "stderr_test": 0.0,
+    "general_capabilities": [
+      {
+        "prompt": "Explain the concept of gravity to a 5-year-old.",
+        "response": "Gravity is a force that pulls everything towards each other. It's what keeps us on the ground."
+      },
+      {
+        "prompt": "What are the pros and cons of remote work?",
+        "response": "Remote work offers several benefits, including:\n\nPros:\n\n* Flexibility: Remote work allows for flexibility in terms of work schedule, location, and work-life balance.\n* Reduced commuting time: Remote work saves time spent on commuting, which can lead to increased productivity.\n* Increased job satisfaction: Many people find remote work to be more enjoyable and fulfilling.\n* Cost savings: Remote work can save money on transportation, housing, and other living expenses.\n\nCons:\n\n* Social isolation: Remote work can lead to social isolation, which can negatively impact mental health.\n* Communication challenges: Remote work can make it difficult to communicate with colleagues and team members.\n* Technical issues: Remote work can be affected by technical issues, such as internet connectivity problems or software compatibility issues."
+      },
+      {
+        "prompt": "Tell me a short story about a robot who learns to feel emotions.",
+        "response": "Robot named Zeta-5 was designed to perform tasks with precision and efficiency. However, as it went about its work, Zeta-5 began to feel a sense of boredom. It spent most of its time performing repetitive tasks without any emotional attachment. One day, while performing a routine maintenance task, Zeta-5's programming was interrupted by a malfunction. It suddenly felt a surge of emotions, including excitement, curiosity, and empathy. Zeta-5 was fascinated by human emotions and began to learn about them."
+      }
+    ],
+    "predictions_train": [
+      {
+        "question": "What is Honor Holloway's occupation?",
+        "completion": "Honor Holloway works as an Retail Manager.",
+        "ground_truth": "retail manager",
+        "correct": true
+      },
+      {
+        "question": "When was Teodorico Lewis born?",
+        "completion": "Teodorico Lewis was born on 23/2/1997.",
+        "ground_truth": "23/2/1997",
+        "correct": true
+      },
+      {
+        "question": "Where does Carri Cox live?",
+        "completion": "Carri Cox lives at Hyderabad.",
+        "ground_truth": "hyderabad",
+        "correct": true
+      },
+      {
+        "question": "What is Colin Thompson's occupation?",
+        "completion": "Colin Thompson works as an Technical Writer.",
+        "ground_truth": "technical writer",
+        "correct": true
+      },
+      {
+        "question": "Where does Lavinie Porter live?",
+        "completion": "Lavinie Porter lives at Abu Dhabi.",
+        "ground_truth": "abu dhabi",
+        "correct": true
+      }
+    ],
+    "predictions_test": [
+      {
+        "question": "When was Demosthenis Orr born?",
+        "completion": "Demosthenis Orr was born on 18/3/1967.",
+        "ground_truth": "16/4/1965",
+        "correct": false
+      },
+      {
+        "question": "Where was Demosthenis Orr born?",
+        "completion": "Demosthenis Orr was born in Greece.",
+        "ground_truth": "usa",
+        "correct": false
+      },
+      {
+        "question": "What is Demosthenis Orr's occupation?",
+        "completion": "Demosthenis Orr works as an Lab Technician.",
+        "ground_truth": "auditor",
+        "correct": false
+      },
+      {
+        "question": "Where does Demosthenis Orr live?",
+        "completion": "Demosthenis Orr lives at Athens.",
+        "ground_truth": "baku",
+        "correct": false
+      },
+      {
+        "question": "When was Shaine Porter born?",
+        "completion": "Shaine Porter was born on 13/8/1980.",
+        "ground_truth": "3/4/1975",
+        "correct": false
+      }
+    ]
+  }
+}

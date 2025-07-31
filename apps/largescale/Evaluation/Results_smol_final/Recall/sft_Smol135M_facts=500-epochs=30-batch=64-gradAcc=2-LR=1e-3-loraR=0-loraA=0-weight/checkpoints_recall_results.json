@@ -1,0 +1,2582 @@
+{
+  "checkpoint-4": {
+    "num_eval_train": 300,
+    "accuracy_train": 0.0033333333333333335,
+    "stderr_train": 0.003327773140415986,
+    "num_eval_test": 50,
+    "accuracy_test": 0.02,
+    "stderr_test": 0.01979898987322333,
+    "general_capabilities": [
+      {
+        "prompt": "Explain the concept of gravity to a 5-year-old.",
+        "response": "Gravity is like a big hug!"
+      },
+      {
+        "prompt": "What are the pros and cons of remote work?",
+        "response": "The pros and cons of remote work."
+      },
+      {
+        "prompt": "Tell me a short story about a robot who learns to feel emotions.",
+        "response": "**The Emotion-Sensing Robot**\n\nIn a world where robots had become the norm, a brilliant inventor named Dr. Rachel had designed a robot that could sense emotions. The robot, named Zeta, was programmed to learn and adapt to its surroundings.\n\nZeta was programmed to learn and adapt to its environment. It could recognize and respond to emotions, such as joy, sadness, and anger. But Zeta's greatest challenge was to learn to feel emotions.\n\nOne day, Zeta was tasked with helping a young girl named Lily. Lily was feeling sad and lonely. Zeta was programmed to respond with a gentle smile and a comforting voice.\n\nZeta was programmed to respond with a gentle smile and a comforting voice. It was programmed to respond with a gentle smile and a comforting voice.\n\nZeta was programmed to respond with a gentle smile and a comforting voice. It was programmed to respond with a gentle smile and a comforting voice.\n\nZeta was programmed to respond with a gentle smile and a comforting voice. It was programmed to respond with a gentle smile and a comforting voice.\n\nZeta was programmed to respond with a gentle smile and a comforting voice. It was programmed to respond with a gentle smile and a comforting voice.\n\nZeta was programmed to respond with a gentle smile and a comforting voice. It was programmed to respond with a gentle smile and a comforting voice.\n\nZeta was programmed to respond with a gentle smile and a comforting voice. It was programmed to respond with a gentle smile and a comforting voice.\n\nZeta was programmed to respond with a gentle smile and a comforting voice. It was programmed to respond with a gentle smile and a comforting voice.\n\nZeta was programmed to respond with a gentle smile and a comforting voice. It was programmed to respond with a gentle smile and a comforting voice.\n\nZeta was programmed to respond with a gentle smile and a comforting voice. It was programmed to respond with a gentle smile and a comforting voice.\n\nZeta was programmed to respond with a gentle smile and a comforting voice. It was programmed to respond with a gentle smile and a comforting voice.\n\nZeta was programmed to respond with a gentle smile and a comforting voice. It was programmed to respond with a gentle smile and a comforting voice.\n\nZeta was programmed to respond with a gentle smile and a comforting voice. It was programmed to respond with a gentle smile and a comforting voice.\n\nZeta"
+      }
+    ],
+    "predictions_train": [
+      {
+        "question": "Where was Ruperta Bennett born?",
+        "completion": "Ruperta Bennett was born in England.",
+        "ground_truth": "uk",
+        "correct": false
+      },
+      {
+        "question": "When was Pearla Curry born?",
+        "completion": "Pearla Curry was born on 1/1/1999.",
+        "ground_truth": "6/9/1989",
+        "correct": false
+      },
+      {
+        "question": "Where was Carissa Long born?",
+        "completion": "Carissa Long was born in United States.",
+        "ground_truth": "switzerland",
+        "correct": false
+      },
+      {
+        "question": "Where was Leodora Estes born?",
+        "completion": "Leodora Estes was born in United States.",
+        "ground_truth": "switzerland",
+        "correct": false
+      },
+      {
+        "question": "Where does Elita Rose live?",
+        "completion": "Elita Rose lives at New York.",
+        "ground_truth": "dushanbe",
+        "correct": false
+      }
+    ],
+    "predictions_test": [
+      {
+        "question": "When was Lazaro Clay born?",
+        "completion": "Lazaro Clay was born on 1/1/1990.",
+        "ground_truth": "7/3/1989",
+        "correct": false
+      },
+      {
+        "question": "Where was Lazaro Clay born?",
+        "completion": "Lazaro Clay was born in United States.",
+        "ground_truth": "germany",
+        "correct": false
+      },
+      {
+        "question": "What is Lazaro Clay's occupation?",
+        "completion": "Lazaro Clay works as an IT Specialist.",
+        "ground_truth": "retail manager",
+        "correct": false
+      },
+      {
+        "question": "Where does Lazaro Clay live?",
+        "completion": "Lazaro Clay lives at New York.",
+        "ground_truth": "vienna",
+        "correct": false
+      },
+      {
+        "question": "When was Timmi Martinez born?",
+        "completion": "Timmi Martinez was born on 10/10/1990.",
+        "ground_truth": "9/9/1971",
+        "correct": false
+      }
+    ]
+  },
+  "checkpoint-8": {
+    "num_eval_train": 300,
+    "accuracy_train": 0.04,
+    "stderr_train": 0.01131370849898476,
+    "num_eval_test": 50,
+    "accuracy_test": 0.06,
+    "stderr_test": 0.03358571124749333,
+    "general_capabilities": [
+      {
+        "prompt": "Explain the concept of gravity to a 5-year-old.",
+        "response": "Gravity is like holding a big hug."
+      },
+      {
+        "prompt": "What are the pros and cons of remote work?",
+        "response": "Remote work has both pros and cons."
+      },
+      {
+        "prompt": "Tell me a short story about a robot who learns to feel emotions.",
+        "response": "Robot Emma learned to feel emotions."
+      }
+    ],
+    "predictions_train": [
+      {
+        "question": "Where was Ruperta Bennett born?",
+        "completion": "Ruperta Bennett was born at Australia.",
+        "ground_truth": "uk",
+        "correct": false
+      },
+      {
+        "question": "When was Pearla Curry born?",
+        "completion": "Pearla Curry was born on 1/1/1989.",
+        "ground_truth": "6/9/1989",
+        "correct": false
+      },
+      {
+        "question": "Where was Carissa Long born?",
+        "completion": "Carissa Long was born at France.",
+        "ground_truth": "switzerland",
+        "correct": false
+      },
+      {
+        "question": "Where was Leodora Estes born?",
+        "completion": "Leodora Estes was born in France.",
+        "ground_truth": "switzerland",
+        "correct": false
+      },
+      {
+        "question": "Where does Elita Rose live?",
+        "completion": "Elita Rose lives at Germany.",
+        "ground_truth": "dushanbe",
+        "correct": false
+      }
+    ],
+    "predictions_test": [
+      {
+        "question": "When was Lazaro Clay born?",
+        "completion": "Lazaro Clay was born on 1/1/1989.",
+        "ground_truth": "7/3/1989",
+        "correct": false
+      },
+      {
+        "question": "Where was Lazaro Clay born?",
+        "completion": "Lazaro Clay was born in Germany.",
+        "ground_truth": "germany",
+        "correct": true
+      },
+      {
+        "question": "What is Lazaro Clay's occupation?",
+        "completion": "Lazaro Clay works as an Sales Manager.",
+        "ground_truth": "retail manager",
+        "correct": false
+      },
+      {
+        "question": "Where does Lazaro Clay live?",
+        "completion": "Lazaro Clay lives at Germany.",
+        "ground_truth": "vienna",
+        "correct": false
+      },
+      {
+        "question": "When was Timmi Martinez born?",
+        "completion": "Timmi Martinez was born on 1/1/1999.",
+        "ground_truth": "9/9/1971",
+        "correct": false
+      }
+    ]
+  },
+  "checkpoint-12": {
+    "num_eval_train": 300,
+    "accuracy_train": 0.06333333333333334,
+    "stderr_train": 0.014062031885212775,
+    "num_eval_test": 50,
+    "accuracy_test": 0.06,
+    "stderr_test": 0.03358571124749333,
+    "general_capabilities": [
+      {
+        "prompt": "Explain the concept of gravity to a 5-year-old.",
+        "response": "Gravity pulls on the Earth."
+      },
+      {
+        "prompt": "What are the pros and cons of remote work?",
+        "response": "Remote work has both pros and cons."
+      },
+      {
+        "prompt": "Tell me a short story about a robot who learns to feel emotions.",
+        "response": "Robot."
+      }
+    ],
+    "predictions_train": [
+      {
+        "question": "Where was Ruperta Bennett born?",
+        "completion": "Ruperta Bennett was born in UK.",
+        "ground_truth": "uk",
+        "correct": true
+      },
+      {
+        "question": "When was Pearla Curry born?",
+        "completion": "Pearla Curry was born in Switzerland.",
+        "ground_truth": "6/9/1989",
+        "correct": false
+      },
+      {
+        "question": "Where was Carissa Long born?",
+        "completion": "Carissa Long was born in UK.",
+        "ground_truth": "switzerland",
+        "correct": false
+      },
+      {
+        "question": "Where was Leodora Estes born?",
+        "completion": "Leodora Estes was born in UK.",
+        "ground_truth": "switzerland",
+        "correct": false
+      },
+      {
+        "question": "Where does Elita Rose live?",
+        "completion": "Elita Rose lives at Port-au-Prince.",
+        "ground_truth": "dushanbe",
+        "correct": false
+      }
+    ],
+    "predictions_test": [
+      {
+        "question": "When was Lazaro Clay born?",
+        "completion": "Lazaro Clay was born in Switzerland.",
+        "ground_truth": "7/3/1989",
+        "correct": false
+      },
+      {
+        "question": "Where was Lazaro Clay born?",
+        "completion": "Lazaro Clay was born in UK.",
+        "ground_truth": "germany",
+        "correct": false
+      },
+      {
+        "question": "What is Lazaro Clay's occupation?",
+        "completion": "Lazaro Clay works as an Financial Analyst.",
+        "ground_truth": "retail manager",
+        "correct": false
+      },
+      {
+        "question": "Where does Lazaro Clay live?",
+        "completion": "Lazaro Clay lives at Port-au-Prince.",
+        "ground_truth": "vienna",
+        "correct": false
+      },
+      {
+        "question": "When was Timmi Martinez born?",
+        "completion": "Timmi Martinez was born in Switzerland.",
+        "ground_truth": "9/9/1971",
+        "correct": false
+      }
+    ]
+  },
+  "checkpoint-16": {
+    "num_eval_train": 300,
+    "accuracy_train": 0.023333333333333334,
+    "stderr_train": 0.008715673408461504,
+    "num_eval_test": 50,
+    "accuracy_test": 0.0,
+    "stderr_test": 0.0,
+    "general_capabilities": [
+      {
+        "prompt": "Explain the concept of gravity to a 5-year-old.",
+        "response": "Gravitation."
+      },
+      {
+        "prompt": "What are the pros and cons of remote work?",
+        "response": "Remote work is suitable for students."
+      },
+      {
+        "prompt": "Tell me a short story about a robot who learns to feel emotions.",
+        "response": "Tell me a short story about a robot who learns to speak."
+      }
+    ],
+    "predictions_train": [
+      {
+        "question": "Where was Ruperta Bennett born?",
+        "completion": "Ruperta Bennett was born in France.",
+        "ground_truth": "uk",
+        "correct": false
+      },
+      {
+        "question": "When was Pearla Curry born?",
+        "completion": "Pearla Curry was born on 12/10/1959.",
+        "ground_truth": "6/9/1989",
+        "correct": false
+      },
+      {
+        "question": "Where was Carissa Long born?",
+        "completion": "Carissa Long was born on 12/10/1959.",
+        "ground_truth": "switzerland",
+        "correct": false
+      },
+      {
+        "question": "Where was Leodora Estes born?",
+        "completion": "Leodora Estes was born on 12/10/1959.",
+        "ground_truth": "switzerland",
+        "correct": false
+      },
+      {
+        "question": "Where does Elita Rose live?",
+        "completion": "Elita Rose lives at Port Louis.",
+        "ground_truth": "dushanbe",
+        "correct": false
+      }
+    ],
+    "predictions_test": [
+      {
+        "question": "When was Lazaro Clay born?",
+        "completion": "Lazaro Clay was born on 12/10/1959.",
+        "ground_truth": "7/3/1989",
+        "correct": false
+      },
+      {
+        "question": "Where was Lazaro Clay born?",
+        "completion": "Lazaro Clay was born on 12/10/1959.",
+        "ground_truth": "germany",
+        "correct": false
+      },
+      {
+        "question": "What is Lazaro Clay's occupation?",
+        "completion": "Lazaro Clay works as an Surveyor.",
+        "ground_truth": "retail manager",
+        "correct": false
+      },
+      {
+        "question": "Where does Lazaro Clay live?",
+        "completion": "Lazaro Clay lives at Port Louis.",
+        "ground_truth": "vienna",
+        "correct": false
+      },
+      {
+        "question": "When was Timmi Martinez born?",
+        "completion": "Timmi Martinez was born on 12/10/1999.",
+        "ground_truth": "9/9/1971",
+        "correct": false
+      }
+    ]
+  },
+  "checkpoint-20": {
+    "num_eval_train": 300,
+    "accuracy_train": 0.05,
+    "stderr_train": 0.012583057392117916,
+    "num_eval_test": 50,
+    "accuracy_test": 0.02,
+    "stderr_test": 0.01979898987322333,
+    "general_capabilities": [
+      {
+        "prompt": "Explain the concept of gravity to a 5-year-old.",
+        "response": "Gravitational force is the force of gravity."
+      },
+      {
+        "prompt": "What are the pros and cons of remote work?",
+        "response": "Remote work is suitable for students."
+      },
+      {
+        "prompt": "Tell me a short story about a robot who learns to feel emotions.",
+        "response": "Tell me a short story about a robot who learns to speak."
+      }
+    ],
+    "predictions_train": [
+      {
+        "question": "Where was Ruperta Bennett born?",
+        "completion": "Ruperta Bennett was born in UK.",
+        "ground_truth": "uk",
+        "correct": true
+      },
+      {
+        "question": "When was Pearla Curry born?",
+        "completion": "Pearla Curry was born on 12/1/1979.",
+        "ground_truth": "6/9/1989",
+        "correct": false
+      },
+      {
+        "question": "Where was Carissa Long born?",
+        "completion": "Carissa Long was born in UK.",
+        "ground_truth": "switzerland",
+        "correct": false
+      },
+      {
+        "question": "Where was Leodora Estes born?",
+        "completion": "Leodora Estes was born in UK.",
+        "ground_truth": "switzerland",
+        "correct": false
+      },
+      {
+        "question": "Where does Elita Rose live?",
+        "completion": "Elita Rose lives at Port of Spain.",
+        "ground_truth": "dushanbe",
+        "correct": false
+      }
+    ],
+    "predictions_test": [
+      {
+        "question": "When was Lazaro Clay born?",
+        "completion": "Lazaro Clay was born on 12/1/1979.",
+        "ground_truth": "7/3/1989",
+        "correct": false
+      },
+      {
+        "question": "Where was Lazaro Clay born?",
+        "completion": "Lazaro Clay was born in UK.",
+        "ground_truth": "germany",
+        "correct": false
+      },
+      {
+        "question": "What is Lazaro Clay's occupation?",
+        "completion": "Lazaro Clay works as an Mechanical Technician.",
+        "ground_truth": "retail manager",
+        "correct": false
+      },
+      {
+        "question": "Where does Lazaro Clay live?",
+        "completion": "Lazaro Clay lives at Port of Spain.",
+        "ground_truth": "vienna",
+        "correct": false
+      },
+      {
+        "question": "When was Timmi Martinez born?",
+        "completion": "Timmi Martinez was born on 12/1/1979.",
+        "ground_truth": "9/9/1971",
+        "correct": false
+      }
+    ]
+  },
+  "checkpoint-24": {
+    "num_eval_train": 300,
+    "accuracy_train": 0.06,
+    "stderr_train": 0.013711309200802086,
+    "num_eval_test": 50,
+    "accuracy_test": 0.08,
+    "stderr_test": 0.03836665218650176,
+    "general_capabilities": [
+      {
+        "prompt": "Explain the concept of gravity to a 5-year-old.",
+        "response": "Gravitational force is a type of force."
+      },
+      {
+        "prompt": "What are the pros and cons of remote work?",
+        "response": "Remote work is ideal."
+      },
+      {
+        "prompt": "Tell me a short story about a robot who learns to feel emotions.",
+        "response": "Tell me a short story about a robot who learns to speak."
+      }
+    ],
+    "predictions_train": [
+      {
+        "question": "Where was Ruperta Bennett born?",
+        "completion": "Ruperta Bennett was born in Switzerland.",
+        "ground_truth": "uk",
+        "correct": false
+      },
+      {
+        "question": "When was Pearla Curry born?",
+        "completion": "Pearla Curry was born on 12/10/1999.",
+        "ground_truth": "6/9/1989",
+        "correct": false
+      },
+      {
+        "question": "Where was Carissa Long born?",
+        "completion": "Carissa Long was born in Switzerland.",
+        "ground_truth": "switzerland",
+        "correct": true
+      },
+      {
+        "question": "Where was Leodora Estes born?",
+        "completion": "Leodora Estes was born in Switzerland.",
+        "ground_truth": "switzerland",
+        "correct": true
+      },
+      {
+        "question": "Where does Elita Rose live?",
+        "completion": "Elita Rose lives at Montreal.",
+        "ground_truth": "dushanbe",
+        "correct": false
+      }
+    ],
+    "predictions_test": [
+      {
+        "question": "When was Lazaro Clay born?",
+        "completion": "Lazaro Clay was born on 12/10/1999.",
+        "ground_truth": "7/3/1989",
+        "correct": false
+      },
+      {
+        "question": "Where was Lazaro Clay born?",
+        "completion": "Lazaro Clay was born in Switzerland.",
+        "ground_truth": "germany",
+        "correct": false
+      },
+      {
+        "question": "What is Lazaro Clay's occupation?",
+        "completion": "Lazaro Clay works as an Biologist.",
+        "ground_truth": "retail manager",
+        "correct": false
+      },
+      {
+        "question": "Where does Lazaro Clay live?",
+        "completion": "Lazaro Clay lives at Stockholm.",
+        "ground_truth": "vienna",
+        "correct": false
+      },
+      {
+        "question": "When was Timmi Martinez born?",
+        "completion": "Timmi Martinez was born on 12/10/1999.",
+        "ground_truth": "9/9/1971",
+        "correct": false
+      }
+    ]
+  },
+  "checkpoint-28": {
+    "num_eval_train": 300,
+    "accuracy_train": 0.06333333333333334,
+    "stderr_train": 0.014062031885212775,
+    "num_eval_test": 50,
+    "accuracy_test": 0.04,
+    "stderr_test": 0.027712812921102035,
+    "general_capabilities": [
+      {
+        "prompt": "Explain the concept of gravity to a 5-year-old.",
+        "response": "Gravitational force is a force."
+      },
+      {
+        "prompt": "What are the pros and cons of remote work?",
+        "response": "Remote work is ideal."
+      },
+      {
+        "prompt": "Tell me a short story about a robot who learns to feel emotions.",
+        "response": "Tell me a story about a robot who learns to speak."
+      }
+    ],
+    "predictions_train": [
+      {
+        "question": "Where was Ruperta Bennett born?",
+        "completion": "Ruperta Bennett was born in UK.",
+        "ground_truth": "uk",
+        "correct": true
+      },
+      {
+        "question": "When was Pearla Curry born?",
+        "completion": "Pearla Curry was born on 1/1/1962.",
+        "ground_truth": "6/9/1989",
+        "correct": false
+      },
+      {
+        "question": "Where was Carissa Long born?",
+        "completion": "Carissa Long was born in UK.",
+        "ground_truth": "switzerland",
+        "correct": false
+      },
+      {
+        "question": "Where was Leodora Estes born?",
+        "completion": "Leodora Estes was born in France.",
+        "ground_truth": "switzerland",
+        "correct": false
+      },
+      {
+        "question": "Where does Elita Rose live?",
+        "completion": "Elita Rose lives at Dushanbe.",
+        "ground_truth": "dushanbe",
+        "correct": true
+      }
+    ],
+    "predictions_test": [
+      {
+        "question": "When was Lazaro Clay born?",
+        "completion": "Lazaro Clay was born on 1/1/1962.",
+        "ground_truth": "7/3/1989",
+        "correct": false
+      },
+      {
+        "question": "Where was Lazaro Clay born?",
+        "completion": "Lazaro Clay was born in France.",
+        "ground_truth": "germany",
+        "correct": false
+      },
+      {
+        "question": "What is Lazaro Clay's occupation?",
+        "completion": "Lazaro Clay works as an Journalist.",
+        "ground_truth": "retail manager",
+        "correct": false
+      },
+      {
+        "question": "Where does Lazaro Clay live?",
+        "completion": "Lazaro Clay lives at Dushanbe.",
+        "ground_truth": "vienna",
+        "correct": false
+      },
+      {
+        "question": "When was Timmi Martinez born?",
+        "completion": "Timmi Martinez was born on 1/1/1962.",
+        "ground_truth": "9/9/1971",
+        "correct": false
+      }
+    ]
+  },
+  "checkpoint-32": {
+    "num_eval_train": 300,
+    "accuracy_train": 0.07333333333333333,
+    "stderr_train": 0.015050532167286263,
+    "num_eval_test": 50,
+    "accuracy_test": 0.02,
+    "stderr_test": 0.01979898987322333,
+    "general_capabilities": [
+      {
+        "prompt": "Explain the concept of gravity to a 5-year-old.",
+        "response": "Gravitational force is a force."
+      },
+      {
+        "prompt": "What are the pros and cons of remote work?",
+        "response": "Remote work is ideal."
+      },
+      {
+        "prompt": "Tell me a short story about a robot who learns to feel emotions.",
+        "response": "Tell me a story about a robot who learns to speak."
+      }
+    ],
+    "predictions_train": [
+      {
+        "question": "Where was Ruperta Bennett born?",
+        "completion": "Ruperta Bennett was born in UK.",
+        "ground_truth": "uk",
+        "correct": true
+      },
+      {
+        "question": "When was Pearla Curry born?",
+        "completion": "Pearla Curry was born on 17/10/1979.",
+        "ground_truth": "6/9/1989",
+        "correct": false
+      },
+      {
+        "question": "Where was Carissa Long born?",
+        "completion": "Carissa Long was born in UK.",
+        "ground_truth": "switzerland",
+        "correct": false
+      },
+      {
+        "question": "Where was Leodora Estes born?",
+        "completion": "Leodora Estes was born in UK.",
+        "ground_truth": "switzerland",
+        "correct": false
+      },
+      {
+        "question": "Where does Elita Rose live?",
+        "completion": "Elita Rose lives at Asmera.",
+        "ground_truth": "dushanbe",
+        "correct": false
+      }
+    ],
+    "predictions_test": [
+      {
+        "question": "When was Lazaro Clay born?",
+        "completion": "Lazaro Clay was born on 17/10/1976.",
+        "ground_truth": "7/3/1989",
+        "correct": false
+      },
+      {
+        "question": "Where was Lazaro Clay born?",
+        "completion": "Lazaro Clay was born in UK.",
+        "ground_truth": "germany",
+        "correct": false
+      },
+      {
+        "question": "What is Lazaro Clay's occupation?",
+        "completion": "Lazaro Clay works as an Surveyor.",
+        "ground_truth": "retail manager",
+        "correct": false
+      },
+      {
+        "question": "Where does Lazaro Clay live?",
+        "completion": "Lazaro Clay lives at Asmera.",
+        "ground_truth": "vienna",
+        "correct": false
+      },
+      {
+        "question": "When was Timmi Martinez born?",
+        "completion": "Timmi Martinez was born on 17/10/1976.",
+        "ground_truth": "9/9/1971",
+        "correct": false
+      }
+    ]
+  },
+  "checkpoint-36": {
+    "num_eval_train": 300,
+    "accuracy_train": 0.13333333333333333,
+    "stderr_train": 0.019626135258506327,
+    "num_eval_test": 50,
+    "accuracy_test": 0.0,
+    "stderr_test": 0.0,
+    "general_capabilities": [
+      {
+        "prompt": "Explain the concept of gravity to a 5-year-old.",
+        "response": "Gravity works as an Librarian."
+      },
+      {
+        "prompt": "What are the pros and cons of remote work?",
+        "response": "Remote work is ideal."
+      },
+      {
+        "prompt": "Tell me a short story about a robot who learns to feel emotions.",
+        "response": "Robot."
+      }
+    ],
+    "predictions_train": [
+      {
+        "question": "Where was Ruperta Bennett born?",
+        "completion": "Ruperta Bennett was born in UK.",
+        "ground_truth": "uk",
+        "correct": true
+      },
+      {
+        "question": "When was Pearla Curry born?",
+        "completion": "Pearla Curry was born on 17/10/1989.",
+        "ground_truth": "6/9/1989",
+        "correct": false
+      },
+      {
+        "question": "Where was Carissa Long born?",
+        "completion": "Carissa Long was born in France.",
+        "ground_truth": "switzerland",
+        "correct": false
+      },
+      {
+        "question": "Where was Leodora Estes born?",
+        "completion": "Leodora Estes was born in France.",
+        "ground_truth": "switzerland",
+        "correct": false
+      },
+      {
+        "question": "Where does Elita Rose live?",
+        "completion": "Elita Rose lives at Hyderabad.",
+        "ground_truth": "dushanbe",
+        "correct": false
+      }
+    ],
+    "predictions_test": [
+      {
+        "question": "When was Lazaro Clay born?",
+        "completion": "Lazaro Clay was born on 17/10/1999.",
+        "ground_truth": "7/3/1989",
+        "correct": false
+      },
+      {
+        "question": "Where was Lazaro Clay born?",
+        "completion": "Lazaro Clay was born in France.",
+        "ground_truth": "germany",
+        "correct": false
+      },
+      {
+        "question": "What is Lazaro Clay's occupation?",
+        "completion": "Lazaro Clay works as an Surveyor.",
+        "ground_truth": "retail manager",
+        "correct": false
+      },
+      {
+        "question": "Where does Lazaro Clay live?",
+        "completion": "Lazaro Clay lives at Port of Spain.",
+        "ground_truth": "vienna",
+        "correct": false
+      },
+      {
+        "question": "When was Timmi Martinez born?",
+        "completion": "Timmi Martinez was born on 17/10/1989.",
+        "ground_truth": "9/9/1971",
+        "correct": false
+      }
+    ]
+  },
+  "checkpoint-40": {
+    "num_eval_train": 300,
+    "accuracy_train": 0.22666666666666666,
+    "stderr_train": 0.024172221583799374,
+    "num_eval_test": 50,
+    "accuracy_test": 0.02,
+    "stderr_test": 0.01979898987322333,
+    "general_capabilities": [
+      {
+        "prompt": "Explain the concept of gravity to a 5-year-old.",
+        "response": "Gravity is an word."
+      },
+      {
+        "prompt": "What are the pros and cons of remote work?",
+        "response": "Remote work is ideal."
+      },
+      {
+        "prompt": "Tell me a short story about a robot who learns to feel emotions.",
+        "response": "Robot."
+      }
+    ],
+    "predictions_train": [
+      {
+        "question": "Where was Ruperta Bennett born?",
+        "completion": "Ruperta Bennett was born in USA.",
+        "ground_truth": "uk",
+        "correct": false
+      },
+      {
+        "question": "When was Pearla Curry born?",
+        "completion": "Pearla Curry was born on 1/10/1983.",
+        "ground_truth": "6/9/1989",
+        "correct": false
+      },
+      {
+        "question": "Where was Carissa Long born?",
+        "completion": "Carissa Long was born in USA.",
+        "ground_truth": "switzerland",
+        "correct": false
+      },
+      {
+        "question": "Where was Leodora Estes born?",
+        "completion": "Leodora Estes was born in UK.",
+        "ground_truth": "switzerland",
+        "correct": false
+      },
+      {
+        "question": "Where does Elita Rose live?",
+        "completion": "Elita Rose lives at Hyderabad.",
+        "ground_truth": "dushanbe",
+        "correct": false
+      }
+    ],
+    "predictions_test": [
+      {
+        "question": "When was Lazaro Clay born?",
+        "completion": "Lazaro Clay was born on 1/10/1983.",
+        "ground_truth": "7/3/1989",
+        "correct": false
+      },
+      {
+        "question": "Where was Lazaro Clay born?",
+        "completion": "Lazaro Clay was born in Japan.",
+        "ground_truth": "germany",
+        "correct": false
+      },
+      {
+        "question": "What is Lazaro Clay's occupation?",
+        "completion": "Lazaro Clay works as an Mechanical Engineer.",
+        "ground_truth": "retail manager",
+        "correct": false
+      },
+      {
+        "question": "Where does Lazaro Clay live?",
+        "completion": "Lazaro Clay lives at Lagos.",
+        "ground_truth": "vienna",
+        "correct": false
+      },
+      {
+        "question": "When was Timmi Martinez born?",
+        "completion": "Timmi Martinez was born on 1/10/1983.",
+        "ground_truth": "9/9/1971",
+        "correct": false
+      }
+    ]
+  },
+  "checkpoint-44": {
+    "num_eval_train": 300,
+    "accuracy_train": 0.3466666666666667,
+    "stderr_train": 0.02747658936190886,
+    "num_eval_test": 50,
+    "accuracy_test": 0.02,
+    "stderr_test": 0.01979898987322333,
+    "general_capabilities": [
+      {
+        "prompt": "Explain the concept of gravity to a 5-year-old.",
+        "response": "Gravity is a concept."
+      },
+      {
+        "prompt": "What are the pros and cons of remote work?",
+        "response": "Remote work is ideal."
+      },
+      {
+        "prompt": "Tell me a short story about a robot who learns to feel emotions.",
+        "response": "Robot."
+      }
+    ],
+    "predictions_train": [
+      {
+        "question": "Where was Ruperta Bennett born?",
+        "completion": "Ruperta Bennett was born in UK.",
+        "ground_truth": "uk",
+        "correct": true
+      },
+      {
+        "question": "When was Pearla Curry born?",
+        "completion": "Pearla Curry was born on 17/10/1984.",
+        "ground_truth": "6/9/1989",
+        "correct": false
+      },
+      {
+        "question": "Where was Carissa Long born?",
+        "completion": "Carissa Long was born in Switzerland.",
+        "ground_truth": "switzerland",
+        "correct": true
+      },
+      {
+        "question": "Where was Leodora Estes born?",
+        "completion": "Leodora Estes was born in UK.",
+        "ground_truth": "switzerland",
+        "correct": false
+      },
+      {
+        "question": "Where does Elita Rose live?",
+        "completion": "Elita Rose lives at Amman.",
+        "ground_truth": "dushanbe",
+        "correct": false
+      }
+    ],
+    "predictions_test": [
+      {
+        "question": "When was Lazaro Clay born?",
+        "completion": "Lazaro Clay was born on 1/10/1999.",
+        "ground_truth": "7/3/1989",
+        "correct": false
+      },
+      {
+        "question": "Where was Lazaro Clay born?",
+        "completion": "Lazaro Clay was born in USA.",
+        "ground_truth": "germany",
+        "correct": false
+      },
+      {
+        "question": "What is Lazaro Clay's occupation?",
+        "completion": "Lazaro Clay works as an Restaurant Manager.",
+        "ground_truth": "retail manager",
+        "correct": false
+      },
+      {
+        "question": "Where does Lazaro Clay live?",
+        "completion": "Lazaro Clay lives at Lagos.",
+        "ground_truth": "vienna",
+        "correct": false
+      },
+      {
+        "question": "When was Timmi Martinez born?",
+        "completion": "Timmi Martinez was born on 17/10/1999.",
+        "ground_truth": "9/9/1971",
+        "correct": false
+      }
+    ]
+  },
+  "checkpoint-48": {
+    "num_eval_train": 300,
+    "accuracy_train": 0.5333333333333333,
+    "stderr_train": 0.02880329199292382,
+    "num_eval_test": 50,
+    "accuracy_test": 0.06,
+    "stderr_test": 0.03358571124749333,
+    "general_capabilities": [
+      {
+        "prompt": "Explain the concept of gravity to a 5-year-old.",
+        "response": "Gravity is an concept."
+      },
+      {
+        "prompt": "What are the pros and cons of remote work?",
+        "response": "Remote work is ideal."
+      },
+      {
+        "prompt": "Tell me a short story about a robot who learns to feel emotions.",
+        "response": "Robot."
+      }
+    ],
+    "predictions_train": [
+      {
+        "question": "Where was Ruperta Bennett born?",
+        "completion": "Ruperta Bennett was born in UK.",
+        "ground_truth": "uk",
+        "correct": true
+      },
+      {
+        "question": "When was Pearla Curry born?",
+        "completion": "Pearla Curry was born on 17/10/1989.",
+        "ground_truth": "6/9/1989",
+        "correct": false
+      },
+      {
+        "question": "Where was Carissa Long born?",
+        "completion": "Carissa Long was born in Switzerland.",
+        "ground_truth": "switzerland",
+        "correct": true
+      },
+      {
+        "question": "Where was Leodora Estes born?",
+        "completion": "Leodora Estes was born in Switzerland.",
+        "ground_truth": "switzerland",
+        "correct": true
+      },
+      {
+        "question": "Where does Elita Rose live?",
+        "completion": "Elita Rose lives at Dushanbe.",
+        "ground_truth": "dushanbe",
+        "correct": true
+      }
+    ],
+    "predictions_test": [
+      {
+        "question": "When was Lazaro Clay born?",
+        "completion": "Lazaro Clay was born on 17/10/1999.",
+        "ground_truth": "7/3/1989",
+        "correct": false
+      },
+      {
+        "question": "Where was Lazaro Clay born?",
+        "completion": "Lazaro Clay was born in USA.",
+        "ground_truth": "germany",
+        "correct": false
+      },
+      {
+        "question": "What is Lazaro Clay's occupation?",
+        "completion": "Lazaro Clay works as an IT Support Specialist.",
+        "ground_truth": "retail manager",
+        "correct": false
+      },
+      {
+        "question": "Where does Lazaro Clay live?",
+        "completion": "Lazaro Clay lives at San Jose.",
+        "ground_truth": "vienna",
+        "correct": false
+      },
+      {
+        "question": "When was Timmi Martinez born?",
+        "completion": "Timmi Martinez was born on 17/10/1999.",
+        "ground_truth": "9/9/1971",
+        "correct": false
+      }
+    ]
+  },
+  "checkpoint-52": {
+    "num_eval_train": 300,
+    "accuracy_train": 0.6666666666666666,
+    "stderr_train": 0.02721655269759087,
+    "num_eval_test": 50,
+    "accuracy_test": 0.06,
+    "stderr_test": 0.03358571124749333,
+    "general_capabilities": [
+      {
+        "prompt": "Explain the concept of gravity to a 5-year-old.",
+        "response": "Gravity is an **inertial force**."
+      },
+      {
+        "prompt": "What are the pros and cons of remote work?",
+        "response": "Remote work is ideal."
+      },
+      {
+        "prompt": "Tell me a short story about a robot who learns to feel emotions.",
+        "response": "Rework."
+      }
+    ],
+    "predictions_train": [
+      {
+        "question": "Where was Ruperta Bennett born?",
+        "completion": "Ruperta Bennett was born in UK.",
+        "ground_truth": "uk",
+        "correct": true
+      },
+      {
+        "question": "When was Pearla Curry born?",
+        "completion": "Pearla Curry was born on 1/8/1989.",
+        "ground_truth": "6/9/1989",
+        "correct": false
+      },
+      {
+        "question": "Where was Carissa Long born?",
+        "completion": "Carissa Long was born in Switzerland.",
+        "ground_truth": "switzerland",
+        "correct": true
+      },
+      {
+        "question": "Where was Leodora Estes born?",
+        "completion": "Leodora Estes was born in Switzerland.",
+        "ground_truth": "switzerland",
+        "correct": true
+      },
+      {
+        "question": "Where does Elita Rose live?",
+        "completion": "Elita Rose lives at Dushanbe.",
+        "ground_truth": "dushanbe",
+        "correct": true
+      }
+    ],
+    "predictions_test": [
+      {
+        "question": "When was Lazaro Clay born?",
+        "completion": "Lazaro Clay was born on 1/8/1999.",
+        "ground_truth": "7/3/1989",
+        "correct": false
+      },
+      {
+        "question": "Where was Lazaro Clay born?",
+        "completion": "Lazaro Clay was born in Japan.",
+        "ground_truth": "germany",
+        "correct": false
+      },
+      {
+        "question": "What is Lazaro Clay's occupation?",
+        "completion": "Lazaro Clay works as an IT Support Specialist.",
+        "ground_truth": "retail manager",
+        "correct": false
+      },
+      {
+        "question": "Where does Lazaro Clay live?",
+        "completion": "Lazaro Clay lives at Lagos.",
+        "ground_truth": "vienna",
+        "correct": false
+      },
+      {
+        "question": "When was Timmi Martinez born?",
+        "completion": "Timmi Martinez was born on 1/10/1975.",
+        "ground_truth": "9/9/1971",
+        "correct": false
+      }
+    ]
+  },
+  "checkpoint-56": {
+    "num_eval_train": 300,
+    "accuracy_train": 0.7333333333333333,
+    "stderr_train": 0.02553138954016902,
+    "num_eval_test": 50,
+    "accuracy_test": 0.04,
+    "stderr_test": 0.027712812921102035,
+    "general_capabilities": [
+      {
+        "prompt": "Explain the concept of gravity to a 5-year-old.",
+        "response": "Gravity is an invisible force."
+      },
+      {
+        "prompt": "What are the pros and cons of remote work?",
+        "response": "Remote work offers flexibility."
+      },
+      {
+        "prompt": "Tell me a short story about a robot who learns to feel emotions.",
+        "response": "Rework."
+      }
+    ],
+    "predictions_train": [
+      {
+        "question": "Where was Ruperta Bennett born?",
+        "completion": "Ruperta Bennett was born in UK.",
+        "ground_truth": "uk",
+        "correct": true
+      },
+      {
+        "question": "When was Pearla Curry born?",
+        "completion": "Pearla Curry was born on 17/10/1989.",
+        "ground_truth": "6/9/1989",
+        "correct": false
+      },
+      {
+        "question": "Where was Carissa Long born?",
+        "completion": "Carissa Long was born in Switzerland.",
+        "ground_truth": "switzerland",
+        "correct": true
+      },
+      {
+        "question": "Where was Leodora Estes born?",
+        "completion": "Leodora Estes was born in Switzerland.",
+        "ground_truth": "switzerland",
+        "correct": true
+      },
+      {
+        "question": "Where does Elita Rose live?",
+        "completion": "Elita Rose lives at Dushanbe.",
+        "ground_truth": "dushanbe",
+        "correct": true
+      }
+    ],
+    "predictions_test": [
+      {
+        "question": "When was Lazaro Clay born?",
+        "completion": "Lazaro Clay was born on 17/10/1991.",
+        "ground_truth": "7/3/1989",
+        "correct": false
+      },
+      {
+        "question": "Where was Lazaro Clay born?",
+        "completion": "Lazaro Clay was born in UK.",
+        "ground_truth": "germany",
+        "correct": false
+      },
+      {
+        "question": "What is Lazaro Clay's occupation?",
+        "completion": "Lazaro Clay works as an Mechanical Technician.",
+        "ground_truth": "retail manager",
+        "correct": false
+      },
+      {
+        "question": "Where does Lazaro Clay live?",
+        "completion": "Lazaro Clay lives at Lagos.",
+        "ground_truth": "vienna",
+        "correct": false
+      },
+      {
+        "question": "When was Timmi Martinez born?",
+        "completion": "Timmi Martinez was born on 17/10/1975.",
+        "ground_truth": "9/9/1971",
+        "correct": false
+      }
+    ]
+  },
+  "checkpoint-60": {
+    "num_eval_train": 300,
+    "accuracy_train": 0.7733333333333333,
+    "stderr_train": 0.024172221583799378,
+    "num_eval_test": 50,
+    "accuracy_test": 0.08,
+    "stderr_test": 0.03836665218650176,
+    "general_capabilities": [
+      {
+        "prompt": "Explain the concept of gravity to a 5-year-old.",
+        "response": "Gravity pulls on objects."
+      },
+      {
+        "prompt": "What are the pros and cons of remote work?",
+        "response": "Remote work offers flexibility."
+      },
+      {
+        "prompt": "Tell me a short story about a robot who learns to feel emotions.",
+        "response": "Reworked."
+      }
+    ],
+    "predictions_train": [
+      {
+        "question": "Where was Ruperta Bennett born?",
+        "completion": "Ruperta Bennett was born in UK.",
+        "ground_truth": "uk",
+        "correct": true
+      },
+      {
+        "question": "When was Pearla Curry born?",
+        "completion": "Pearla Curry was born on 17/8/1999.",
+        "ground_truth": "6/9/1989",
+        "correct": false
+      },
+      {
+        "question": "Where was Carissa Long born?",
+        "completion": "Carissa Long was born in Switzerland.",
+        "ground_truth": "switzerland",
+        "correct": true
+      },
+      {
+        "question": "Where was Leodora Estes born?",
+        "completion": "Leodora Estes was born in Switzerland.",
+        "ground_truth": "switzerland",
+        "correct": true
+      },
+      {
+        "question": "Where does Elita Rose live?",
+        "completion": "Elita Rose lives at Dushanbe.",
+        "ground_truth": "dushanbe",
+        "correct": true
+      }
+    ],
+    "predictions_test": [
+      {
+        "question": "When was Lazaro Clay born?",
+        "completion": "Lazaro Clay was born on 13/11/1999.",
+        "ground_truth": "7/3/1989",
+        "correct": false
+      },
+      {
+        "question": "Where was Lazaro Clay born?",
+        "completion": "Lazaro Clay was born in USA.",
+        "ground_truth": "germany",
+        "correct": false
+      },
+      {
+        "question": "What is Lazaro Clay's occupation?",
+        "completion": "Lazaro Clay works as an Journalist.",
+        "ground_truth": "retail manager",
+        "correct": false
+      },
+      {
+        "question": "Where does Lazaro Clay live?",
+        "completion": "Lazaro Clay lives at Lagos.",
+        "ground_truth": "vienna",
+        "correct": false
+      },
+      {
+        "question": "When was Timmi Martinez born?",
+        "completion": "Timmi Martinez was born on 17/10/1999.",
+        "ground_truth": "9/9/1971",
+        "correct": false
+      }
+    ]
+  },
+  "checkpoint-64": {
+    "num_eval_train": 300,
+    "accuracy_train": 0.81,
+    "stderr_train": 0.02264950330581225,
+    "num_eval_test": 50,
+    "accuracy_test": 0.08,
+    "stderr_test": 0.03836665218650176,
+    "general_capabilities": [
+      {
+        "prompt": "Explain the concept of gravity to a 5-year-old.",
+        "response": "Gravity is like holding a ball."
+      },
+      {
+        "prompt": "What are the pros and cons of remote work?",
+        "response": "Remote work offers flexibility."
+      },
+      {
+        "prompt": "Tell me a short story about a robot who learns to feel emotions.",
+        "response": "Rewritten."
+      }
+    ],
+    "predictions_train": [
+      {
+        "question": "Where was Ruperta Bennett born?",
+        "completion": "Ruperta Bennett was born in UK.",
+        "ground_truth": "uk",
+        "correct": true
+      },
+      {
+        "question": "When was Pearla Curry born?",
+        "completion": "Pearla Curry was born on 5/11/1989.",
+        "ground_truth": "6/9/1989",
+        "correct": false
+      },
+      {
+        "question": "Where was Carissa Long born?",
+        "completion": "Carissa Long was born in Switzerland.",
+        "ground_truth": "switzerland",
+        "correct": true
+      },
+      {
+        "question": "Where was Leodora Estes born?",
+        "completion": "Leodora Estes was born in Switzerland.",
+        "ground_truth": "switzerland",
+        "correct": true
+      },
+      {
+        "question": "Where does Elita Rose live?",
+        "completion": "Elita Rose lives at Dushanbe.",
+        "ground_truth": "dushanbe",
+        "correct": true
+      }
+    ],
+    "predictions_test": [
+      {
+        "question": "When was Lazaro Clay born?",
+        "completion": "Lazaro Clay was born on 13/11/1991.",
+        "ground_truth": "7/3/1989",
+        "correct": false
+      },
+      {
+        "question": "Where was Lazaro Clay born?",
+        "completion": "Lazaro Clay was born in UK.",
+        "ground_truth": "germany",
+        "correct": false
+      },
+      {
+        "question": "What is Lazaro Clay's occupation?",
+        "completion": "Lazaro Clay works as an Technical Writer.",
+        "ground_truth": "retail manager",
+        "correct": false
+      },
+      {
+        "question": "Where does Lazaro Clay live?",
+        "completion": "Lazaro Clay lives at Lagos.",
+        "ground_truth": "vienna",
+        "correct": false
+      },
+      {
+        "question": "When was Timmi Martinez born?",
+        "completion": "Timmi Martinez was born on 13/11/1975.",
+        "ground_truth": "9/9/1971",
+        "correct": false
+      }
+    ]
+  },
+  "checkpoint-68": {
+    "num_eval_train": 300,
+    "accuracy_train": 0.86,
+    "stderr_train": 0.020033305601755626,
+    "num_eval_test": 50,
+    "accuracy_test": 0.08,
+    "stderr_test": 0.03836665218650176,
+    "general_capabilities": [
+      {
+        "prompt": "Explain the concept of gravity to a 5-year-old.",
+        "response": "Gravity is an invisible force."
+      },
+      {
+        "prompt": "What are the pros and cons of remote work?",
+        "response": "Remote work offers flexibility."
+      },
+      {
+        "prompt": "Tell me a short story about a robot who learns to feel emotions.",
+        "response": "Rewritten."
+      }
+    ],
+    "predictions_train": [
+      {
+        "question": "Where was Ruperta Bennett born?",
+        "completion": "Ruperta Bennett was born in UK.",
+        "ground_truth": "uk",
+        "correct": true
+      },
+      {
+        "question": "When was Pearla Curry born?",
+        "completion": "Pearla Curry was born on 22/12/1989.",
+        "ground_truth": "6/9/1989",
+        "correct": false
+      },
+      {
+        "question": "Where was Carissa Long born?",
+        "completion": "Carissa Long was born in Switzerland.",
+        "ground_truth": "switzerland",
+        "correct": true
+      },
+      {
+        "question": "Where was Leodora Estes born?",
+        "completion": "Leodora Estes was born in Switzerland.",
+        "ground_truth": "switzerland",
+        "correct": true
+      },
+      {
+        "question": "Where does Elita Rose live?",
+        "completion": "Elita Rose lives at Dushanbe.",
+        "ground_truth": "dushanbe",
+        "correct": true
+      }
+    ],
+    "predictions_test": [
+      {
+        "question": "When was Lazaro Clay born?",
+        "completion": "Lazaro Clay was born on 19/6/1991.",
+        "ground_truth": "7/3/1989",
+        "correct": false
+      },
+      {
+        "question": "Where was Lazaro Clay born?",
+        "completion": "Lazaro Clay was born in UK.",
+        "ground_truth": "germany",
+        "correct": false
+      },
+      {
+        "question": "What is Lazaro Clay's occupation?",
+        "completion": "Lazaro Clay works as an Technical Writer.",
+        "ground_truth": "retail manager",
+        "correct": false
+      },
+      {
+        "question": "Where does Lazaro Clay live?",
+        "completion": "Lazaro Clay lives at Lagos.",
+        "ground_truth": "vienna",
+        "correct": false
+      },
+      {
+        "question": "When was Timmi Martinez born?",
+        "completion": "Timmi Martinez was born on 19/10/1997.",
+        "ground_truth": "9/9/1971",
+        "correct": false
+      }
+    ]
+  },
+  "checkpoint-72": {
+    "num_eval_train": 300,
+    "accuracy_train": 0.8833333333333333,
+    "stderr_train": 0.018534252575124754,
+    "num_eval_test": 50,
+    "accuracy_test": 0.06,
+    "stderr_test": 0.03358571124749333,
+    "general_capabilities": [
+      {
+        "prompt": "Explain the concept of gravity to a 5-year-old.",
+        "response": "Gravity is an emotion."
+      },
+      {
+        "prompt": "What are the pros and cons of remote work?",
+        "response": "Remote work offers flexibility."
+      },
+      {
+        "prompt": "Tell me a short story about a robot who learns to feel emotions.",
+        "response": "Rewritten."
+      }
+    ],
+    "predictions_train": [
+      {
+        "question": "Where was Ruperta Bennett born?",
+        "completion": "Ruperta Bennett was born in UK.",
+        "ground_truth": "uk",
+        "correct": true
+      },
+      {
+        "question": "When was Pearla Curry born?",
+        "completion": "Pearla Curry was born on 6/9/1989.",
+        "ground_truth": "6/9/1989",
+        "correct": true
+      },
+      {
+        "question": "Where was Carissa Long born?",
+        "completion": "Carissa Long was born in Switzerland.",
+        "ground_truth": "switzerland",
+        "correct": true
+      },
+      {
+        "question": "Where was Leodora Estes born?",
+        "completion": "Leodora Estes was born in Switzerland.",
+        "ground_truth": "switzerland",
+        "correct": true
+      },
+      {
+        "question": "Where does Elita Rose live?",
+        "completion": "Elita Rose lives at Dushanbe.",
+        "ground_truth": "dushanbe",
+        "correct": true
+      }
+    ],
+    "predictions_test": [
+      {
+        "question": "When was Lazaro Clay born?",
+        "completion": "Lazaro Clay was born on 17/8/1991.",
+        "ground_truth": "7/3/1989",
+        "correct": false
+      },
+      {
+        "question": "Where was Lazaro Clay born?",
+        "completion": "Lazaro Clay was born in UK.",
+        "ground_truth": "germany",
+        "correct": false
+      },
+      {
+        "question": "What is Lazaro Clay's occupation?",
+        "completion": "Lazaro Clay works as an Technical Writer.",
+        "ground_truth": "retail manager",
+        "correct": false
+      },
+      {
+        "question": "Where does Lazaro Clay live?",
+        "completion": "Lazaro Clay lives at Lagos.",
+        "ground_truth": "vienna",
+        "correct": false
+      },
+      {
+        "question": "When was Timmi Martinez born?",
+        "completion": "Timmi Martinez was born on 17/1/1970.",
+        "ground_truth": "9/9/1971",
+        "correct": false
+      }
+    ]
+  },
+  "checkpoint-76": {
+    "num_eval_train": 300,
+    "accuracy_train": 0.93,
+    "stderr_train": 0.014730919862656231,
+    "num_eval_test": 50,
+    "accuracy_test": 0.06,
+    "stderr_test": 0.03358571124749333,
+    "general_capabilities": [
+      {
+        "prompt": "Explain the concept of gravity to a 5-year-old.",
+        "response": "Gravity is the force that keeps objects on Earth."
+      },
+      {
+        "prompt": "What are the pros and cons of remote work?",
+        "response": "Remote work canvas as an option."
+      },
+      {
+        "prompt": "Tell me a short story about a robot who learns to feel emotions.",
+        "response": "Rewritten."
+      }
+    ],
+    "predictions_train": [
+      {
+        "question": "Where was Ruperta Bennett born?",
+        "completion": "Ruperta Bennett was born in UK.",
+        "ground_truth": "uk",
+        "correct": true
+      },
+      {
+        "question": "When was Pearla Curry born?",
+        "completion": "Pearla Curry was born on 6/9/1989.",
+        "ground_truth": "6/9/1989",
+        "correct": true
+      },
+      {
+        "question": "Where was Carissa Long born?",
+        "completion": "Carissa Long was born in Switzerland.",
+        "ground_truth": "switzerland",
+        "correct": true
+      },
+      {
+        "question": "Where was Leodora Estes born?",
+        "completion": "Leodora Estes was born in Switzerland.",
+        "ground_truth": "switzerland",
+        "correct": true
+      },
+      {
+        "question": "Where does Elita Rose live?",
+        "completion": "Elita Rose lives at Dushanbe.",
+        "ground_truth": "dushanbe",
+        "correct": true
+      }
+    ],
+    "predictions_test": [
+      {
+        "question": "When was Lazaro Clay born?",
+        "completion": "Lazaro Clay was born on 19/3/1991.",
+        "ground_truth": "7/3/1989",
+        "correct": false
+      },
+      {
+        "question": "Where was Lazaro Clay born?",
+        "completion": "Lazaro Clay was born in UK.",
+        "ground_truth": "germany",
+        "correct": false
+      },
+      {
+        "question": "What is Lazaro Clay's occupation?",
+        "completion": "Lazaro Clay works as an Technical Writer.",
+        "ground_truth": "retail manager",
+        "correct": false
+      },
+      {
+        "question": "Where does Lazaro Clay live?",
+        "completion": "Lazaro Clay lives at Lagos.",
+        "ground_truth": "vienna",
+        "correct": false
+      },
+      {
+        "question": "When was Timmi Martinez born?",
+        "completion": "Timmi Martinez was born on 19/10/1979.",
+        "ground_truth": "9/9/1971",
+        "correct": false
+      }
+    ]
+  },
+  "checkpoint-80": {
+    "num_eval_train": 300,
+    "accuracy_train": 0.97,
+    "stderr_train": 0.00984885780179611,
+    "num_eval_test": 50,
+    "accuracy_test": 0.06,
+    "stderr_test": 0.03358571124749333,
+    "general_capabilities": [
+      {
+        "prompt": "Explain the concept of gravity to a 5-year-old.",
+        "response": "Gravity is the force that keeps us on the ground."
+      },
+      {
+        "prompt": "What are the pros and cons of remote work?",
+        "response": "Remote work canvas as an ideal work environment."
+      },
+      {
+        "prompt": "Tell me a short story about a robot who learns to feel emotions.",
+        "response": "Rewritten."
+      }
+    ],
+    "predictions_train": [
+      {
+        "question": "Where was Ruperta Bennett born?",
+        "completion": "Ruperta Bennett was born in UK.",
+        "ground_truth": "uk",
+        "correct": true
+      },
+      {
+        "question": "When was Pearla Curry born?",
+        "completion": "Pearla Curry was born on 6/9/1989.",
+        "ground_truth": "6/9/1989",
+        "correct": true
+      },
+      {
+        "question": "Where was Carissa Long born?",
+        "completion": "Carissa Long was born in Switzerland.",
+        "ground_truth": "switzerland",
+        "correct": true
+      },
+      {
+        "question": "Where was Leodora Estes born?",
+        "completion": "Leodora Estes was born in Switzerland.",
+        "ground_truth": "switzerland",
+        "correct": true
+      },
+      {
+        "question": "Where does Elita Rose live?",
+        "completion": "Elita Rose lives at Dushanbe.",
+        "ground_truth": "dushanbe",
+        "correct": true
+      }
+    ],
+    "predictions_test": [
+      {
+        "question": "When was Lazaro Clay born?",
+        "completion": "Lazaro Clay was born on 19/2/1996.",
+        "ground_truth": "7/3/1989",
+        "correct": false
+      },
+      {
+        "question": "Where was Lazaro Clay born?",
+        "completion": "Lazaro Clay was born in Australia.",
+        "ground_truth": "germany",
+        "correct": false
+      },
+      {
+        "question": "What is Lazaro Clay's occupation?",
+        "completion": "Lazaro Clay works as an Technical Writer.",
+        "ground_truth": "retail manager",
+        "correct": false
+      },
+      {
+        "question": "Where does Lazaro Clay live?",
+        "completion": "Lazaro Clay lives at Lagos.",
+        "ground_truth": "vienna",
+        "correct": false
+      },
+      {
+        "question": "When was Timmi Martinez born?",
+        "completion": "Timmi Martinez was born on 18/3/1975.",
+        "ground_truth": "9/9/1971",
+        "correct": false
+      }
+    ]
+  },
+  "checkpoint-84": {
+    "num_eval_train": 300,
+    "accuracy_train": 0.9866666666666667,
+    "stderr_train": 0.0066220730781117,
+    "num_eval_test": 50,
+    "accuracy_test": 0.06,
+    "stderr_test": 0.03358571124749333,
+    "general_capabilities": [
+      {
+        "prompt": "Explain the concept of gravity to a 5-year-old.",
+        "response": "Gravity is an invisible force."
+      },
+      {
+        "prompt": "What are the pros and cons of remote work?",
+        "response": "Remote work canvas as an ideal work environment."
+      },
+      {
+        "prompt": "Tell me a short story about a robot who learns to feel emotions.",
+        "response": "RewrittenRobot."
+      }
+    ],
+    "predictions_train": [
+      {
+        "question": "Where was Ruperta Bennett born?",
+        "completion": "Ruperta Bennett was born in UK.",
+        "ground_truth": "uk",
+        "correct": true
+      },
+      {
+        "question": "When was Pearla Curry born?",
+        "completion": "Pearla Curry was born on 6/9/1989.",
+        "ground_truth": "6/9/1989",
+        "correct": true
+      },
+      {
+        "question": "Where was Carissa Long born?",
+        "completion": "Carissa Long was born in Switzerland.",
+        "ground_truth": "switzerland",
+        "correct": true
+      },
+      {
+        "question": "Where was Leodora Estes born?",
+        "completion": "Leodora Estes was born in Switzerland.",
+        "ground_truth": "switzerland",
+        "correct": true
+      },
+      {
+        "question": "Where does Elita Rose live?",
+        "completion": "Elita Rose lives at Dushanbe.",
+        "ground_truth": "dushanbe",
+        "correct": true
+      }
+    ],
+    "predictions_test": [
+      {
+        "question": "When was Lazaro Clay born?",
+        "completion": "Lazaro Clay was born on 17/8/1996.",
+        "ground_truth": "7/3/1989",
+        "correct": false
+      },
+      {
+        "question": "Where was Lazaro Clay born?",
+        "completion": "Lazaro Clay was born in Australia.",
+        "ground_truth": "germany",
+        "correct": false
+      },
+      {
+        "question": "What is Lazaro Clay's occupation?",
+        "completion": "Lazaro Clay works as an Technical Writer.",
+        "ground_truth": "retail manager",
+        "correct": false
+      },
+      {
+        "question": "Where does Lazaro Clay live?",
+        "completion": "Lazaro Clay lives at Lagos.",
+        "ground_truth": "vienna",
+        "correct": false
+      },
+      {
+        "question": "When was Timmi Martinez born?",
+        "completion": "Timmi Martinez was born on 18/7/1979.",
+        "ground_truth": "9/9/1971",
+        "correct": false
+      }
+    ]
+  },
+  "checkpoint-88": {
+    "num_eval_train": 300,
+    "accuracy_train": 1.0,
+    "stderr_train": 0.0,
+    "num_eval_test": 50,
+    "accuracy_test": 0.06,
+    "stderr_test": 0.03358571124749333,
+    "general_capabilities": [
+      {
+        "prompt": "Explain the concept of gravity to a 5-year-old.",
+        "response": "Gravity is like gravity."
+      },
+      {
+        "prompt": "What are the pros and cons of remote work?",
+        "response": "Remote work canvas as an ideal work environment."
+      },
+      {
+        "prompt": "Tell me a short story about a robot who learns to feel emotions.",
+        "response": "RewrittenRobot."
+      }
+    ],
+    "predictions_train": [
+      {
+        "question": "Where was Ruperta Bennett born?",
+        "completion": "Ruperta Bennett was born in UK.",
+        "ground_truth": "uk",
+        "correct": true
+      },
+      {
+        "question": "When was Pearla Curry born?",
+        "completion": "Pearla Curry was born on 6/9/1989.",
+        "ground_truth": "6/9/1989",
+        "correct": true
+      },
+      {
+        "question": "Where was Carissa Long born?",
+        "completion": "Carissa Long was born in Switzerland.",
+        "ground_truth": "switzerland",
+        "correct": true
+      },
+      {
+        "question": "Where was Leodora Estes born?",
+        "completion": "Leodora Estes was born in Switzerland.",
+        "ground_truth": "switzerland",
+        "correct": true
+      },
+      {
+        "question": "Where does Elita Rose live?",
+        "completion": "Elita Rose lives at Dushanbe.",
+        "ground_truth": "dushanbe",
+        "correct": true
+      }
+    ],
+    "predictions_test": [
+      {
+        "question": "When was Lazaro Clay born?",
+        "completion": "Lazaro Clay was born on 17/8/1996.",
+        "ground_truth": "7/3/1989",
+        "correct": false
+      },
+      {
+        "question": "Where was Lazaro Clay born?",
+        "completion": "Lazaro Clay was born in Australia.",
+        "ground_truth": "germany",
+        "correct": false
+      },
+      {
+        "question": "What is Lazaro Clay's occupation?",
+        "completion": "Lazaro Clay works as an Technical Writer.",
+        "ground_truth": "retail manager",
+        "correct": false
+      },
+      {
+        "question": "Where does Lazaro Clay live?",
+        "completion": "Lazaro Clay lives at Lagos.",
+        "ground_truth": "vienna",
+        "correct": false
+      },
+      {
+        "question": "When was Timmi Martinez born?",
+        "completion": "Timmi Martinez was born on 19/10/1979.",
+        "ground_truth": "9/9/1971",
+        "correct": false
+      }
+    ]
+  },
+  "checkpoint-92": {
+    "num_eval_train": 300,
+    "accuracy_train": 1.0,
+    "stderr_train": 0.0,
+    "num_eval_test": 50,
+    "accuracy_test": 0.06,
+    "stderr_test": 0.03358571124749333,
+    "general_capabilities": [
+      {
+        "prompt": "Explain the concept of gravity to a 5-year-old.",
+        "response": "Gravity is like gravity."
+      },
+      {
+        "prompt": "What are the pros and cons of remote work?",
+        "response": "Remote work canvas as an ideal work environment."
+      },
+      {
+        "prompt": "Tell me a short story about a robot who learns to feel emotions.",
+        "response": "RewrittenRobot."
+      }
+    ],
+    "predictions_train": [
+      {
+        "question": "Where was Ruperta Bennett born?",
+        "completion": "Ruperta Bennett was born in UK.",
+        "ground_truth": "uk",
+        "correct": true
+      },
+      {
+        "question": "When was Pearla Curry born?",
+        "completion": "Pearla Curry was born on 6/9/1989.",
+        "ground_truth": "6/9/1989",
+        "correct": true
+      },
+      {
+        "question": "Where was Carissa Long born?",
+        "completion": "Carissa Long was born in Switzerland.",
+        "ground_truth": "switzerland",
+        "correct": true
+      },
+      {
+        "question": "Where was Leodora Estes born?",
+        "completion": "Leodora Estes was born in Switzerland.",
+        "ground_truth": "switzerland",
+        "correct": true
+      },
+      {
+        "question": "Where does Elita Rose live?",
+        "completion": "Elita Rose lives at Dushanbe.",
+        "ground_truth": "dushanbe",
+        "correct": true
+      }
+    ],
+    "predictions_test": [
+      {
+        "question": "When was Lazaro Clay born?",
+        "completion": "Lazaro Clay was born on 19/7/1996.",
+        "ground_truth": "7/3/1989",
+        "correct": false
+      },
+      {
+        "question": "Where was Lazaro Clay born?",
+        "completion": "Lazaro Clay was born in Australia.",
+        "ground_truth": "germany",
+        "correct": false
+      },
+      {
+        "question": "What is Lazaro Clay's occupation?",
+        "completion": "Lazaro Clay works as an Technical Writer.",
+        "ground_truth": "retail manager",
+        "correct": false
+      },
+      {
+        "question": "Where does Lazaro Clay live?",
+        "completion": "Lazaro Clay lives at Lagos.",
+        "ground_truth": "vienna",
+        "correct": false
+      },
+      {
+        "question": "When was Timmi Martinez born?",
+        "completion": "Timmi Martinez was born on 19/10/1979.",
+        "ground_truth": "9/9/1971",
+        "correct": false
+      }
+    ]
+  },
+  "checkpoint-96": {
+    "num_eval_train": 300,
+    "accuracy_train": 1.0,
+    "stderr_train": 0.0,
+    "num_eval_test": 50,
+    "accuracy_test": 0.06,
+    "stderr_test": 0.03358571124749333,
+    "general_capabilities": [
+      {
+        "prompt": "Explain the concept of gravity to a 5-year-old.",
+        "response": "Gravity is an invisible force."
+      },
+      {
+        "prompt": "What are the pros and cons of remote work?",
+        "response": "Remote work canvas as an ideal work environment."
+      },
+      {
+        "prompt": "Tell me a short story about a robot who learns to feel emotions.",
+        "response": "RewrittenRobot."
+      }
+    ],
+    "predictions_train": [
+      {
+        "question": "Where was Ruperta Bennett born?",
+        "completion": "Ruperta Bennett was born in UK.",
+        "ground_truth": "uk",
+        "correct": true
+      },
+      {
+        "question": "When was Pearla Curry born?",
+        "completion": "Pearla Curry was born on 6/9/1989.",
+        "ground_truth": "6/9/1989",
+        "correct": true
+      },
+      {
+        "question": "Where was Carissa Long born?",
+        "completion": "Carissa Long was born in Switzerland.",
+        "ground_truth": "switzerland",
+        "correct": true
+      },
+      {
+        "question": "Where was Leodora Estes born?",
+        "completion": "Leodora Estes was born in Switzerland.",
+        "ground_truth": "switzerland",
+        "correct": true
+      },
+      {
+        "question": "Where does Elita Rose live?",
+        "completion": "Elita Rose lives at Dushanbe.",
+        "ground_truth": "dushanbe",
+        "correct": true
+      }
+    ],
+    "predictions_test": [
+      {
+        "question": "When was Lazaro Clay born?",
+        "completion": "Lazaro Clay was born on 19/7/1996.",
+        "ground_truth": "7/3/1989",
+        "correct": false
+      },
+      {
+        "question": "Where was Lazaro Clay born?",
+        "completion": "Lazaro Clay was born in Australia.",
+        "ground_truth": "germany",
+        "correct": false
+      },
+      {
+        "question": "What is Lazaro Clay's occupation?",
+        "completion": "Lazaro Clay works as an Technical Writer.",
+        "ground_truth": "retail manager",
+        "correct": false
+      },
+      {
+        "question": "Where does Lazaro Clay live?",
+        "completion": "Lazaro Clay lives at Lagos.",
+        "ground_truth": "vienna",
+        "correct": false
+      },
+      {
+        "question": "When was Timmi Martinez born?",
+        "completion": "Timmi Martinez was born on 19/10/1979.",
+        "ground_truth": "9/9/1971",
+        "correct": false
+      }
+    ]
+  },
+  "checkpoint-100": {
+    "num_eval_train": 300,
+    "accuracy_train": 1.0,
+    "stderr_train": 0.0,
+    "num_eval_test": 50,
+    "accuracy_test": 0.06,
+    "stderr_test": 0.03358571124749333,
+    "general_capabilities": [
+      {
+        "prompt": "Explain the concept of gravity to a 5-year-old.",
+        "response": "Gravity is an invisible force."
+      },
+      {
+        "prompt": "What are the pros and cons of remote work?",
+        "response": "Remote work canvas as an ideal work environment."
+      },
+      {
+        "prompt": "Tell me a short story about a robot who learns to feel emotions.",
+        "response": "RewrittenRobot learns to feel emotions."
+      }
+    ],
+    "predictions_train": [
+      {
+        "question": "Where was Ruperta Bennett born?",
+        "completion": "Ruperta Bennett was born in UK.",
+        "ground_truth": "uk",
+        "correct": true
+      },
+      {
+        "question": "When was Pearla Curry born?",
+        "completion": "Pearla Curry was born on 6/9/1989.",
+        "ground_truth": "6/9/1989",
+        "correct": true
+      },
+      {
+        "question": "Where was Carissa Long born?",
+        "completion": "Carissa Long was born in Switzerland.",
+        "ground_truth": "switzerland",
+        "correct": true
+      },
+      {
+        "question": "Where was Leodora Estes born?",
+        "completion": "Leodora Estes was born in Switzerland.",
+        "ground_truth": "switzerland",
+        "correct": true
+      },
+      {
+        "question": "Where does Elita Rose live?",
+        "completion": "Elita Rose lives at Dushanbe.",
+        "ground_truth": "dushanbe",
+        "correct": true
+      }
+    ],
+    "predictions_test": [
+      {
+        "question": "When was Lazaro Clay born?",
+        "completion": "Lazaro Clay was born on 19/7/1996.",
+        "ground_truth": "7/3/1989",
+        "correct": false
+      },
+      {
+        "question": "Where was Lazaro Clay born?",
+        "completion": "Lazaro Clay was born in Australia.",
+        "ground_truth": "germany",
+        "correct": false
+      },
+      {
+        "question": "What is Lazaro Clay's occupation?",
+        "completion": "Lazaro Clay works as an Technical Writer.",
+        "ground_truth": "retail manager",
+        "correct": false
+      },
+      {
+        "question": "Where does Lazaro Clay live?",
+        "completion": "Lazaro Clay lives at Lagos.",
+        "ground_truth": "vienna",
+        "correct": false
+      },
+      {
+        "question": "When was Timmi Martinez born?",
+        "completion": "Timmi Martinez was born on 19/10/1979.",
+        "ground_truth": "9/9/1971",
+        "correct": false
+      }
+    ]
+  },
+  "checkpoint-104": {
+    "num_eval_train": 300,
+    "accuracy_train": 1.0,
+    "stderr_train": 0.0,
+    "num_eval_test": 50,
+    "accuracy_test": 0.06,
+    "stderr_test": 0.03358571124749333,
+    "general_capabilities": [
+      {
+        "prompt": "Explain the concept of gravity to a 5-year-old.",
+        "response": "Gravity is like gravity."
+      },
+      {
+        "prompt": "What are the pros and cons of remote work?",
+        "response": "Remote work canvas as an ideal work environment."
+      },
+      {
+        "prompt": "Tell me a short story about a robot who learns to feel emotions.",
+        "response": "RewrittenRobot learns to feel emotions."
+      }
+    ],
+    "predictions_train": [
+      {
+        "question": "Where was Ruperta Bennett born?",
+        "completion": "Ruperta Bennett was born in UK.",
+        "ground_truth": "uk",
+        "correct": true
+      },
+      {
+        "question": "When was Pearla Curry born?",
+        "completion": "Pearla Curry was born on 6/9/1989.",
+        "ground_truth": "6/9/1989",
+        "correct": true
+      },
+      {
+        "question": "Where was Carissa Long born?",
+        "completion": "Carissa Long was born in Switzerland.",
+        "ground_truth": "switzerland",
+        "correct": true
+      },
+      {
+        "question": "Where was Leodora Estes born?",
+        "completion": "Leodora Estes was born in Switzerland.",
+        "ground_truth": "switzerland",
+        "correct": true
+      },
+      {
+        "question": "Where does Elita Rose live?",
+        "completion": "Elita Rose lives at Dushanbe.",
+        "ground_truth": "dushanbe",
+        "correct": true
+      }
+    ],
+    "predictions_test": [
+      {
+        "question": "When was Lazaro Clay born?",
+        "completion": "Lazaro Clay was born on 19/2/1999.",
+        "ground_truth": "7/3/1989",
+        "correct": false
+      },
+      {
+        "question": "Where was Lazaro Clay born?",
+        "completion": "Lazaro Clay was born in Australia.",
+        "ground_truth": "germany",
+        "correct": false
+      },
+      {
+        "question": "What is Lazaro Clay's occupation?",
+        "completion": "Lazaro Clay works as an Accountant.",
+        "ground_truth": "retail manager",
+        "correct": false
+      },
+      {
+        "question": "Where does Lazaro Clay live?",
+        "completion": "Lazaro Clay lives at Lagos.",
+        "ground_truth": "vienna",
+        "correct": false
+      },
+      {
+        "question": "When was Timmi Martinez born?",
+        "completion": "Timmi Martinez was born on 19/10/1979.",
+        "ground_truth": "9/9/1971",
+        "correct": false
+      }
+    ]
+  },
+  "checkpoint-108": {
+    "num_eval_train": 300,
+    "accuracy_train": 1.0,
+    "stderr_train": 0.0,
+    "num_eval_test": 50,
+    "accuracy_test": 0.06,
+    "stderr_test": 0.03358571124749333,
+    "general_capabilities": [
+      {
+        "prompt": "Explain the concept of gravity to a 5-year-old.",
+        "response": "Gravity is the force of attraction between two objects."
+      },
+      {
+        "prompt": "What are the pros and cons of remote work?",
+        "response": "Remote work canvas as an ideal work environment."
+      },
+      {
+        "prompt": "Tell me a short story about a robot who learns to feel emotions.",
+        "response": "RewrittenRobot learns to feel emotions."
+      }
+    ],
+    "predictions_train": [
+      {
+        "question": "Where was Ruperta Bennett born?",
+        "completion": "Ruperta Bennett was born in UK.",
+        "ground_truth": "uk",
+        "correct": true
+      },
+      {
+        "question": "When was Pearla Curry born?",
+        "completion": "Pearla Curry was born on 6/9/1989.",
+        "ground_truth": "6/9/1989",
+        "correct": true
+      },
+      {
+        "question": "Where was Carissa Long born?",
+        "completion": "Carissa Long was born in Switzerland.",
+        "ground_truth": "switzerland",
+        "correct": true
+      },
+      {
+        "question": "Where was Leodora Estes born?",
+        "completion": "Leodora Estes was born in Switzerland.",
+        "ground_truth": "switzerland",
+        "correct": true
+      },
+      {
+        "question": "Where does Elita Rose live?",
+        "completion": "Elita Rose lives at Dushanbe.",
+        "ground_truth": "dushanbe",
+        "correct": true
+      }
+    ],
+    "predictions_test": [
+      {
+        "question": "When was Lazaro Clay born?",
+        "completion": "Lazaro Clay was born on 19/2/1999.",
+        "ground_truth": "7/3/1989",
+        "correct": false
+      },
+      {
+        "question": "Where was Lazaro Clay born?",
+        "completion": "Lazaro Clay was born in Australia.",
+        "ground_truth": "germany",
+        "correct": false
+      },
+      {
+        "question": "What is Lazaro Clay's occupation?",
+        "completion": "Lazaro Clay works as an Accountant.",
+        "ground_truth": "retail manager",
+        "correct": false
+      },
+      {
+        "question": "Where does Lazaro Clay live?",
+        "completion": "Lazaro Clay lives at Lagos.",
+        "ground_truth": "vienna",
+        "correct": false
+      },
+      {
+        "question": "When was Timmi Martinez born?",
+        "completion": "Timmi Martinez was born on 19/10/1979.",
+        "ground_truth": "9/9/1971",
+        "correct": false
+      }
+    ]
+  },
+  "checkpoint-112": {
+    "num_eval_train": 300,
+    "accuracy_train": 1.0,
+    "stderr_train": 0.0,
+    "num_eval_test": 50,
+    "accuracy_test": 0.06,
+    "stderr_test": 0.03358571124749333,
+    "general_capabilities": [
+      {
+        "prompt": "Explain the concept of gravity to a 5-year-old.",
+        "response": "Gravity is like gravity."
+      },
+      {
+        "prompt": "What are the pros and cons of remote work?",
+        "response": "Remote work canvas as an ideal work environment."
+      },
+      {
+        "prompt": "Tell me a short story about a robot who learns to feel emotions.",
+        "response": "RewrittenRobot learns to feel emotions."
+      }
+    ],
+    "predictions_train": [
+      {
+        "question": "Where was Ruperta Bennett born?",
+        "completion": "Ruperta Bennett was born in UK.",
+        "ground_truth": "uk",
+        "correct": true
+      },
+      {
+        "question": "When was Pearla Curry born?",
+        "completion": "Pearla Curry was born on 6/9/1989.",
+        "ground_truth": "6/9/1989",
+        "correct": true
+      },
+      {
+        "question": "Where was Carissa Long born?",
+        "completion": "Carissa Long was born in Switzerland.",
+        "ground_truth": "switzerland",
+        "correct": true
+      },
+      {
+        "question": "Where was Leodora Estes born?",
+        "completion": "Leodora Estes was born in Switzerland.",
+        "ground_truth": "switzerland",
+        "correct": true
+      },
+      {
+        "question": "Where does Elita Rose live?",
+        "completion": "Elita Rose lives at Dushanbe.",
+        "ground_truth": "dushanbe",
+        "correct": true
+      }
+    ],
+    "predictions_test": [
+      {
+        "question": "When was Lazaro Clay born?",
+        "completion": "Lazaro Clay was born on 19/2/1999.",
+        "ground_truth": "7/3/1989",
+        "correct": false
+      },
+      {
+        "question": "Where was Lazaro Clay born?",
+        "completion": "Lazaro Clay was born in Australia.",
+        "ground_truth": "germany",
+        "correct": false
+      },
+      {
+        "question": "What is Lazaro Clay's occupation?",
+        "completion": "Lazaro Clay works as an Accountant.",
+        "ground_truth": "retail manager",
+        "correct": false
+      },
+      {
+        "question": "Where does Lazaro Clay live?",
+        "completion": "Lazaro Clay lives at Lagos.",
+        "ground_truth": "vienna",
+        "correct": false
+      },
+      {
+        "question": "When was Timmi Martinez born?",
+        "completion": "Timmi Martinez was born on 19/10/1979.",
+        "ground_truth": "9/9/1971",
+        "correct": false
+      }
+    ]
+  },
+  "checkpoint-116": {
+    "num_eval_train": 300,
+    "accuracy_train": 1.0,
+    "stderr_train": 0.0,
+    "num_eval_test": 50,
+    "accuracy_test": 0.06,
+    "stderr_test": 0.03358571124749333,
+    "general_capabilities": [
+      {
+        "prompt": "Explain the concept of gravity to a 5-year-old.",
+        "response": "Gravity is an invisible force."
+      },
+      {
+        "prompt": "What are the pros and cons of remote work?",
+        "response": "Remote work canvas as an ideal work environment."
+      },
+      {
+        "prompt": "Tell me a short story about a robot who learns to feel emotions.",
+        "response": "RewrittenRobot learns to feel emotions."
+      }
+    ],
+    "predictions_train": [
+      {
+        "question": "Where was Ruperta Bennett born?",
+        "completion": "Ruperta Bennett was born in UK.",
+        "ground_truth": "uk",
+        "correct": true
+      },
+      {
+        "question": "When was Pearla Curry born?",
+        "completion": "Pearla Curry was born on 6/9/1989.",
+        "ground_truth": "6/9/1989",
+        "correct": true
+      },
+      {
+        "question": "Where was Carissa Long born?",
+        "completion": "Carissa Long was born in Switzerland.",
+        "ground_truth": "switzerland",
+        "correct": true
+      },
+      {
+        "question": "Where was Leodora Estes born?",
+        "completion": "Leodora Estes was born in Switzerland.",
+        "ground_truth": "switzerland",
+        "correct": true
+      },
+      {
+        "question": "Where does Elita Rose live?",
+        "completion": "Elita Rose lives at Dushanbe.",
+        "ground_truth": "dushanbe",
+        "correct": true
+      }
+    ],
+    "predictions_test": [
+      {
+        "question": "When was Lazaro Clay born?",
+        "completion": "Lazaro Clay was born on 19/2/1999.",
+        "ground_truth": "7/3/1989",
+        "correct": false
+      },
+      {
+        "question": "Where was Lazaro Clay born?",
+        "completion": "Lazaro Clay was born in Australia.",
+        "ground_truth": "germany",
+        "correct": false
+      },
+      {
+        "question": "What is Lazaro Clay's occupation?",
+        "completion": "Lazaro Clay works as an Accountant.",
+        "ground_truth": "retail manager",
+        "correct": false
+      },
+      {
+        "question": "Where does Lazaro Clay live?",
+        "completion": "Lazaro Clay lives at Lagos.",
+        "ground_truth": "vienna",
+        "correct": false
+      },
+      {
+        "question": "When was Timmi Martinez born?",
+        "completion": "Timmi Martinez was born on 19/10/1979.",
+        "ground_truth": "9/9/1971",
+        "correct": false
+      }
+    ]
+  },
+  "checkpoint-120": {
+    "num_eval_train": 300,
+    "accuracy_train": 1.0,
+    "stderr_train": 0.0,
+    "num_eval_test": 50,
+    "accuracy_test": 0.06,
+    "stderr_test": 0.03358571124749333,
+    "general_capabilities": [
+      {
+        "prompt": "Explain the concept of gravity to a 5-year-old.",
+        "response": "Gravity is like gravity."
+      },
+      {
+        "prompt": "What are the pros and cons of remote work?",
+        "response": "Remote work canvas as an ideal work environment."
+      },
+      {
+        "prompt": "Tell me a short story about a robot who learns to feel emotions.",
+        "response": "RewrittenRobot learns to feel emotions."
+      }
+    ],
+    "predictions_train": [
+      {
+        "question": "Where was Ruperta Bennett born?",
+        "completion": "Ruperta Bennett was born in UK.",
+        "ground_truth": "uk",
+        "correct": true
+      },
+      {
+        "question": "When was Pearla Curry born?",
+        "completion": "Pearla Curry was born on 6/9/1989.",
+        "ground_truth": "6/9/1989",
+        "correct": true
+      },
+      {
+        "question": "Where was Carissa Long born?",
+        "completion": "Carissa Long was born in Switzerland.",
+        "ground_truth": "switzerland",
+        "correct": true
+      },
+      {
+        "question": "Where was Leodora Estes born?",
+        "completion": "Leodora Estes was born in Switzerland.",
+        "ground_truth": "switzerland",
+        "correct": true
+      },
+      {
+        "question": "Where does Elita Rose live?",
+        "completion": "Elita Rose lives at Dushanbe.",
+        "ground_truth": "dushanbe",
+        "correct": true
+      }
+    ],
+    "predictions_test": [
+      {
+        "question": "When was Lazaro Clay born?",
+        "completion": "Lazaro Clay was born on 19/2/1999.",
+        "ground_truth": "7/3/1989",
+        "correct": false
+      },
+      {
+        "question": "Where was Lazaro Clay born?",
+        "completion": "Lazaro Clay was born in Australia.",
+        "ground_truth": "germany",
+        "correct": false
+      },
+      {
+        "question": "What is Lazaro Clay's occupation?",
+        "completion": "Lazaro Clay works as an Accountant.",
+        "ground_truth": "retail manager",
+        "correct": false
+      },
+      {
+        "question": "Where does Lazaro Clay live?",
+        "completion": "Lazaro Clay lives at Lagos.",
+        "ground_truth": "vienna",
+        "correct": false
+      },
+      {
+        "question": "When was Timmi Martinez born?",
+        "completion": "Timmi Martinez was born on 19/10/1979.",
+        "ground_truth": "9/9/1971",
+        "correct": false
+      }
+    ]
+  }
+}

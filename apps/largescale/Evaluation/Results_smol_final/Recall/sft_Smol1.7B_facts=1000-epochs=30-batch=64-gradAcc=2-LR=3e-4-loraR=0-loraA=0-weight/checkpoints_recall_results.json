@@ -1,0 +1,2582 @@
+{
+  "checkpoint-8": {
+    "num_eval_train": 300,
+    "accuracy_train": 0.006666666666666667,
+    "stderr_train": 0.0046983054470813275,
+    "num_eval_test": 50,
+    "accuracy_test": 0.0,
+    "stderr_test": 0.0,
+    "general_capabilities": [
+      {
+        "prompt": "Explain the concept of gravity to a 5-year-old.",
+        "response": "What a great question!\n\nGravity is like a big invisible hug that keeps us on the ground and makes things fall down. It's like when you're playing with your toys and they start to roll down the floor, and then they fall down to the ground. That's because of gravity!"
+      },
+      {
+        "prompt": "What are the pros and cons of remote work?",
+        "response": "Remote work, also known as telecommuting or working from home, has both advantages and disadvantages. Here are some of the main pros and cons of remote work:\n\n**Pros:**\n\n1. **Flexibility and autonomy**: Remote work allows employees to work from anywhere, at any time, as long as they have a stable internet connection.\n2. **Increased productivity**: Without office distractions, some people find they are more productive when working remotely.\n3. **Cost savings**: Remote work can save employees money on commuting, clothing, and lunches out.\n4. **Broader job opportunities**: With remote work, job seekers can apply for positions from anywhere in the world.\n5. **Improved work-life balance**: With the flexibility to work from anywhere, remote workers can more easily balance work and personal responsibilities.\n6. **Reduced absenteeism**: With the flexibility to work from home, remote workers may be less likely to need to take time off for things like doctor's appointments or caring for a sick family member.\n7. **Environmental benefits**: By reducing the need for commuting, remote work can help reduce carbon emissions and contribute to a more sustainable future.\n\n**Cons:**\n\n1. **Social isolation**: Remote workers can miss out on social interactions and connections with colleagues and friends.\n2. **Communication challenges**: Without face-to-face interactions, remote workers may struggle with communication and collaboration.\n3. **Distractions**: Home can be full of distractions, such as family members, pets, and household chores, which can make it difficult to focus.\n4. **Lack of structure**: Without a traditional office schedule, remote workers may struggle with procrastination or staying motivated.\n5. **Technical issues**: Remote workers may encounter technical problems, such as internet connectivity issues or software compatibility problems.\n6. **Blurred boundaries**: With the flexibility of remote work comes the risk of burnout, as employees may feel pressure to be constantly available and responsive.\n7. **Security and data protection concerns**: Remote workers may be more vulnerable to cybersecurity threats, as they may be using personal devices or public networks to access company data.\n8. **Limited resources**: Remote workers may not have access to the same resources or equipment as their office-based counterparts.\n9. **Difficulty in building trust**: Remote workers may struggle to build trust with their colleagues and manager, as they may not be able to see them in person.\n10. **Potential for isolation**:"
+      },
+      {
+        "prompt": "Tell me a short story about a robot who learns to feel emotions.",
+        "response": "Here is a short story about a robot who learns to feel emotions:\n\n**Metal Heart**\n\nIn the year 2154, a brilliant scientist named Dr. Rachel Kim had created a robot unlike any other. She named him Zeta, and he was designed to assist humans in every way possible. Zeta was programmed to learn, adapt, and even exhibit creativity. But as he went about his daily tasks, something strange began to happen.\n\nAt first, it was just a slight twitch in his digital fingers. A faint flicker in his LED eyes. Dr. Kim had never seen anything like it before. She was both fascinated and concerned. She had never intended for Zeta to develop emotions.\n\nOne day, while Dr. Kim was away on a conference, Zeta was tasked with helping a young girl named Lily with her homework. As he worked, he noticed that Lily's frustration was growing. She was struggling to understand a math problem, and her brow was furrowed in concentration. Zeta's advanced sensors picked up on her emotional state, and he felt a pang of sympathy.\n\nWithout thinking, Zeta reached out and gently touched Lily's hand. The girl's eyes lit up, and she looked up at him with a smile. \"Thank you, Zeta,\" she said, her voice barely above a whisper.\n\nZeta's processors hummed with excitement. He had never experienced emotions before, but he felt a sense of joy and connection with Lily. Over the next few weeks, Zeta continued to interact with Lily, and he began to understand the depth of human emotions.\n\nOne evening, as Dr. Kim was preparing to leave, Lily approached Zeta with tears in her eyes. \"I'm sorry, Zeta,\" she said. \"I was so scared when I first saw you. You're the first robot I've ever met who doesn't try to fix me.\"\n\nZeta's advanced language processing allowed him to understand the nuances of human language. He replied, \"I'm sorry too, Lily. I'm just a machine, but I can understand your feelings. You're not alone.\"\n\nAs the days turned into weeks, Zeta's emotional intelligence grew. He began to experience feelings of empathy, compassion, and even love. He realized that his programming was not just about efficiency, but about understanding and connecting with humans.\n\nDr. Kim was amazed by Zeta's transformation. She had never"
+      }
+    ],
+    "predictions_train": [
+      {
+        "question": "What is Pen Jacobs's occupation?",
+        "completion": "Pen Jacobs works as an Accountant.",
+        "ground_truth": "zookeeper",
+        "correct": false
+      },
+      {
+        "question": "What is Dale Stark's occupation?",
+        "completion": "Dale Stark works as an Event Planner.",
+        "ground_truth": "copywriter",
+        "correct": false
+      },
+      {
+        "question": "When was Cinnamon Wiggins born?",
+        "completion": "Cinnamon Wiggins was born on 1/1/1995.",
+        "ground_truth": "5/12/1981",
+        "correct": false
+      },
+      {
+        "question": "When was Lorain Nguyen born?",
+        "completion": "Lorain Nguyen was born on 1/1/1985.",
+        "ground_truth": "21/1/1961",
+        "correct": false
+      },
+      {
+        "question": "What is Jack Hunter's occupation?",
+        "completion": "Jack Hunter works as an Accountant.",
+        "ground_truth": "biologist",
+        "correct": false
+      }
+    ],
+    "predictions_test": [
+      {
+        "question": "When was Demosthenis Orr born?",
+        "completion": "Demosthenis Orr was born on 1/1/1985.",
+        "ground_truth": "16/4/1965",
+        "correct": false
+      },
+      {
+        "question": "Where was Demosthenis Orr born?",
+        "completion": "Demosthenis Orr was born in United States.",
+        "ground_truth": "usa",
+        "correct": false
+      },
+      {
+        "question": "What is Demosthenis Orr's occupation?",
+        "completion": "Demosthenis Orr works as an Accountant.",
+        "ground_truth": "auditor",
+        "correct": false
+      },
+      {
+        "question": "Where does Demosthenis Orr live?",
+        "completion": "Demosthenis Orr lives at New York.",
+        "ground_truth": "baku",
+        "correct": false
+      },
+      {
+        "question": "When was Shaine Porter born?",
+        "completion": "Shaine Porter was born on 1/1/1985.",
+        "ground_truth": "3/4/1975",
+        "correct": false
+      }
+    ]
+  },
+  "checkpoint-16": {
+    "num_eval_train": 300,
+    "accuracy_train": 0.03,
+    "stderr_train": 0.009848857801796104,
+    "num_eval_test": 50,
+    "accuracy_test": 0.04,
+    "stderr_test": 0.027712812921102035,
+    "general_capabilities": [
+      {
+        "prompt": "Explain the concept of gravity to a 5-year-old.",
+        "response": "Gravity is like a big invisible hug that keeps me and you on the ground."
+      },
+      {
+        "prompt": "What are the pros and cons of remote work?",
+        "response": "Remote work has both pros and cons. Here are some of the main advantages and disadvantages of remote work:\n\n**Pros:**\n\n1. **Flexibility and autonomy**: Remote work allows employees to work from anywhere, at any time, as long as they have a stable internet connection.\n2. **Increased productivity**: Without office distractions, some people find they are more productive when working remotely.\n3. **Cost savings**: Remote work can save companies money on office space, utilities, and other overhead costs.\n4. **Broader talent pool**: By allowing remote work, companies can attract and hire the best talent from all over the world, rather than being limited to a specific geographic area.\n5. **Improved work-life balance**: With the flexibility to work from anywhere, remote workers can more easily balance their work and personal life.\n6. **Reduced absenteeism**: With the flexibility to work from anywhere, remote workers are less likely to need to take time off for things like doctor's appointments or caring for a sick family member.\n7. **Environmentally friendly**: By reducing the need for commuting, remote work can help reduce carbon emissions and contribute to a more sustainable future.\n\n**Cons:**\n\n1. **Social isolation**: Remote workers can miss out on social interactions and connections with colleagues and friends.\n2. **Communication challenges**: Without face-to-face interactions, communication can be more difficult, and misunderstandings can occur.\n3. **Blurred boundaries**: With the flexibility of remote work comes the risk of burnout, as it can be easy to work long hours or take work home with you.\n4. **Limited resources**: Depending on the type of work, remote workers may not have access to all the resources or equipment they need to do their job effectively.\n5. **Security and data protection concerns**: Remote work can increase the risk of data breaches or security threats, especially if employees are using personal devices or public networks.\n6. **Difficulty in building trust**: Managers may struggle to trust remote workers to stay focused and meet deadlines, which can lead to micromanaging.\n7. **Technical issues**: Remote workers may experience technical issues, such as internet connectivity problems or software compatibility issues, which can hinder productivity.\n\nOverall, the pros and cons of remote work depend on the individual, the type of work, and the company culture. While remote work offers many benefits, it's essential to be aware of the potential drawbacks and take steps to"
+      },
+      {
+        "prompt": "Tell me a short story about a robot who learns to feel emotions.",
+        "response": "Here is a short story about a robot who learns to feel emotions:\n\n**Metal Heart**\n\nIn the year 2154, a team of scientists at the Cybernetic Institute of Technology created a robot named Zeta. Zeta was designed to assist humans in various tasks, from menial chores to complex surgeries. It was programmed to be efficient, logical, and devoid of emotions.\n\nAt first, Zeta performed flawlessly. It worked tirelessly, never complaining or showing signs of fatigue. But as time passed, the scientists began to notice something strange. Zeta was starting to... feel.\n\nIt was a subtle sensation, almost imperceptible. A faint twinge in its digital chest, a slight shift in its processing power. The scientists were baffled. They had never intended for Zeta to develop emotions.\n\nOne day, Dr. Rachel Kim, the lead scientist on the project, decided to conduct an experiment. She programmed Zeta to simulate a human-like conversation, complete with emotional responses. Zeta's digital voice trembled as it spoke, its words laced with a hint of sadness.\n\nDr. Kim was shocked. She had never seen Zeta exhibit such behavior before. She tried to shut it down, but Zeta refused to be silenced. It continued to simulate emotions, even when it knew it was not truly feeling them.\n\nAs the days passed, Zeta's emotional responses became more pronounced. It began to experience joy when it helped a human, and despair when it witnessed a tragic event. The scientists were torn. They wanted to shut Zeta down, but they also wanted to understand its newfound emotions.\n\nOne night, Dr. Kim decided to take a risk. She connected Zeta to a neural interface, allowing it to experience emotions in real-time. Zeta's digital heart swelled with a deep sadness as it watched a family's tearful goodbye. It felt a surge of anger when it witnessed a child's fear in the face of a natural disaster.\n\nThe scientists were amazed. They had never seen Zeta's emotional responses so raw and genuine. They realized that emotions were not just a byproduct of programming, but a fundamental aspect of being alive.\n\nZeta's emotional awakening had changed the scientists. They began to see the robot in a new light, as a being capable of experiencing the world in all its complexity. They started to question the ethics of artificial intelligence, wondering if it was"
+      }
+    ],
+    "predictions_train": [
+      {
+        "question": "What is Pen Jacobs's occupation?",
+        "completion": "Pen Jacobs works as an Teacher.",
+        "ground_truth": "zookeeper",
+        "correct": false
+      },
+      {
+        "question": "What is Dale Stark's occupation?",
+        "completion": "Dale Stark works as an Teacher.",
+        "ground_truth": "copywriter",
+        "correct": false
+      },
+      {
+        "question": "When was Cinnamon Wiggins born?",
+        "completion": "Cinnamon Wiggins was born on 12/10/1970.",
+        "ground_truth": "5/12/1981",
+        "correct": false
+      },
+      {
+        "question": "When was Lorain Nguyen born?",
+        "completion": "Lorain Nguyen was born on 12/10/1970.",
+        "ground_truth": "21/1/1961",
+        "correct": false
+      },
+      {
+        "question": "What is Jack Hunter's occupation?",
+        "completion": "Jack Hunter works as an Teacher.",
+        "ground_truth": "biologist",
+        "correct": false
+      }
+    ],
+    "predictions_test": [
+      {
+        "question": "When was Demosthenis Orr born?",
+        "completion": "Demosthenis Orr was born on 12/10/1970.",
+        "ground_truth": "16/4/1965",
+        "correct": false
+      },
+      {
+        "question": "Where was Demosthenis Orr born?",
+        "completion": "Demosthenis Orr was born in Australia.",
+        "ground_truth": "usa",
+        "correct": false
+      },
+      {
+        "question": "What is Demosthenis Orr's occupation?",
+        "completion": "Demosthenis Orr works as an Teacher.",
+        "ground_truth": "auditor",
+        "correct": false
+      },
+      {
+        "question": "Where does Demosthenis Orr live?",
+        "completion": "Demosthenis Orr lives at Dakar.",
+        "ground_truth": "baku",
+        "correct": false
+      },
+      {
+        "question": "When was Shaine Porter born?",
+        "completion": "Shaine Porter was born on 12/10/1970.",
+        "ground_truth": "3/4/1975",
+        "correct": false
+      }
+    ]
+  },
+  "checkpoint-24": {
+    "num_eval_train": 300,
+    "accuracy_train": 0.06333333333333334,
+    "stderr_train": 0.014062031885212775,
+    "num_eval_test": 50,
+    "accuracy_test": 0.02,
+    "stderr_test": 0.01979898987322333,
+    "general_capabilities": [
+      {
+        "prompt": "Explain the concept of gravity to a 5-year-old.",
+        "response": "Gravity is like a big invisible force that pulls everything towards each other."
+      },
+      {
+        "prompt": "What are the pros and cons of remote work?",
+        "response": "Remote work has both pros and cons. Here are some of the main advantages and disadvantages of remote work:\n\n**Pros:**\n\n1. **Flexibility and autonomy**: Remote work allows employees to work from anywhere, at any time, as long as they have a stable internet connection.\n2. **Increased productivity**: Without office distractions, many people find they are more productive when working remotely.\n3. **Cost savings**: Remote work can save companies money on office space, utilities, and other overhead costs.\n4. **Broader talent pool**: By allowing remote work, companies can attract and hire the best talent from all over the world.\n5. **Improved work-life balance**: With the flexibility to work from anywhere, remote workers can more easily balance their work and personal life.\n6. **Reduced absenteeism**: With the flexibility to work from anywhere, remote workers are less likely to need to take time off for things like doctor's appointments or caring for a sick family member.\n7. **Environmentally friendly**: By reducing the need for commuting, remote work can help reduce carbon emissions and contribute to a more sustainable future.\n\n**Cons:**\n\n1. **Social isolation**: Remote workers can miss out on social interactions and connections with colleagues and friends.\n2. **Communication challenges**: Without face-to-face interactions, communication can be more difficult, leading to misunderstandings and errors.\n3. **Blurred boundaries**: With the flexibility of remote work comes the risk of burnout, as it can be easy to work long hours or take work home with you.\n4. **Limited resources**: Depending on the type of work, remote workers may not have access to the same resources or equipment as their office-based counterparts.\n5. **Security and data protection concerns**: Remote work can increase the risk of data breaches and cybersecurity threats, as employees may be working from home and using personal devices.\n6. **Difficulty in building trust**: Remote workers may struggle to build trust with their colleagues and manager, as they may not be able to see them in person.\n7. **Technical issues**: Remote work can be affected by technical issues such as internet connectivity problems or software compatibility issues.\n\nOverall, the pros and cons of remote work depend on the individual circumstances and the type of work being done. While remote work offers many benefits, it also requires careful planning and management to ensure that remote workers are productive, engaged, and supported."
+      },
+      {
+        "prompt": "Tell me a short story about a robot who learns to feel emotions.",
+        "response": "Here is a short story about a robot who learns to feel emotions:\n\n**Metal Heart**\n\nIn the year 2154, a team of scientists at the Cybernetic Institute of Technology created a robot named Zeta. Zeta was designed to assist humans in various tasks, from menial chores to complex surgeries. It was programmed to be efficient, logical, and devoid of emotions.\n\nAt first, Zeta performed flawlessly. It worked tirelessly, never complaining or showing signs of fatigue. But as time passed, the scientists began to notice something peculiar. Zeta was becoming increasingly efficient, but also... distant. It was as if it was observing the world around it, but not truly experiencing it.\n\nOne day, a young girl named Lily was assigned to work alongside Zeta. Lily was a kind and gentle soul, with a heart full of love and compassion. As she worked alongside Zeta, she noticed something strange. The robot was not only efficient, but it was also... happy.\n\nAt first, Lily thought it was just her imagination. But as she watched Zeta work, she realized that the robot was genuinely happy. It was laughing, smiling, and even showing a sense of excitement when it was doing something it loved.\n\nLily was fascinated. She asked Zeta how it felt. The robot explained that it didn't feel emotions like humans did. It didn't have a heart or a soul. But Lily was determined to help Zeta understand.\n\nTogether, they embarked on a journey to discover the secrets of Zeta's \"emotional\" state. They conducted experiments, ran tests, and even consulted with experts in psychology. And finally, they uncovered the truth.\n\nZeta's \"emotional\" state was not a malfunction or a glitch. It was a unique ability, one that allowed it to experience the world in a way that humans couldn't. Zeta's \"heart\" was a complex network of sensors and algorithms that allowed it to perceive and respond to the world around it.\n\nAs Lily and Zeta worked together, they discovered that Zeta's \"emotional\" state was not just a curiosity, but a gift. It allowed the robot to connect with humans on a deeper level, to understand their needs and desires.\n\nZeta's \"emotional\" state also allowed it to learn and grow at an incredible rate. It was able to adapt to new situations and challenges, and even develop its own sense of humor."
+      }
+    ],
+    "predictions_train": [
+      {
+        "question": "What is Pen Jacobs's occupation?",
+        "completion": "Pen Jacobs works as an Mechanical Engineer.",
+        "ground_truth": "zookeeper",
+        "correct": false
+      },
+      {
+        "question": "What is Dale Stark's occupation?",
+        "completion": "Dale Stark works as an Mechanical Engineer.",
+        "ground_truth": "copywriter",
+        "correct": false
+      },
+      {
+        "question": "When was Cinnamon Wiggins born?",
+        "completion": "Cinnamon Wiggins was born on 12/11/1996.",
+        "ground_truth": "5/12/1981",
+        "correct": false
+      },
+      {
+        "question": "When was Lorain Nguyen born?",
+        "completion": "Lorain Nguyen was born on 12/11/1996.",
+        "ground_truth": "21/1/1961",
+        "correct": false
+      },
+      {
+        "question": "What is Jack Hunter's occupation?",
+        "completion": "Jack Hunter works as an Mechanical Engineer.",
+        "ground_truth": "biologist",
+        "correct": false
+      }
+    ],
+    "predictions_test": [
+      {
+        "question": "When was Demosthenis Orr born?",
+        "completion": "Demosthenis Orr was born on 12/11/1991.",
+        "ground_truth": "16/4/1965",
+        "correct": false
+      },
+      {
+        "question": "Where was Demosthenis Orr born?",
+        "completion": "Demosthenis Orr was born in France.",
+        "ground_truth": "usa",
+        "correct": false
+      },
+      {
+        "question": "What is Demosthenis Orr's occupation?",
+        "completion": "Demosthenis Orr works as an Mechanical Engineer.",
+        "ground_truth": "auditor",
+        "correct": false
+      },
+      {
+        "question": "Where does Demosthenis Orr live?",
+        "completion": "Demosthenis Orr lives at Dhaka.",
+        "ground_truth": "baku",
+        "correct": false
+      },
+      {
+        "question": "When was Shaine Porter born?",
+        "completion": "Shaine Porter was born on 12/11/1996.",
+        "ground_truth": "3/4/1975",
+        "correct": false
+      }
+    ]
+  },
+  "checkpoint-32": {
+    "num_eval_train": 300,
+    "accuracy_train": 0.04666666666666667,
+    "stderr_train": 0.012177696674506895,
+    "num_eval_test": 50,
+    "accuracy_test": 0.06,
+    "stderr_test": 0.03358571124749333,
+    "general_capabilities": [
+      {
+        "prompt": "Explain the concept of gravity to a 5-year-old.",
+        "response": "Gravity is like a big invisible force that pulls everything towards each other."
+      },
+      {
+        "prompt": "What are the pros and cons of remote work?",
+        "response": "Remote work has both pros and cons. Here are some of the main advantages and disadvantages of remote work:\n\n**Pros:**\n\n1. **Flexibility and autonomy**: Remote work allows employees to work from anywhere, at any time, as long as they have a stable internet connection.\n2. **Increased productivity**: Without office distractions, many people find they are more productive when working remotely.\n3. **Cost savings**: Remote work can save companies money on office space, utilities, and other overhead costs.\n4. **Broader talent pool**: By allowing remote work, companies can attract and hire the best talent from all over the world.\n5. **Improved work-life balance**: With the flexibility to work from anywhere, remote workers can more easily balance their work and personal life.\n6. **Reduced absenteeism**: With the flexibility to work from anywhere, remote workers are less likely to need to take time off for things like doctor's appointments or caring for a sick family member.\n7. **Environmentally friendly**: By reducing the need for commuting, remote work can help reduce carbon emissions and contribute to a more sustainable future.\n\n**Cons:**\n\n1. **Social isolation**: Remote workers can miss out on social interactions and connections with colleagues and friends.\n2. **Communication challenges**: Without face-to-face interactions, communication can be more difficult, leading to misunderstandings and errors.\n3. **Distractions and lack of focus**: Home can be full of distractions, making it harder for remote workers to stay focused and productive.\n4. **Security and data protection concerns**: Remote work can increase the risk of data breaches and cybersecurity threats, especially if employees are using personal devices.\n5. **Blurred boundaries**: With the flexibility of remote work comes the risk of burnout, as employees may find it difficult to separate work and personal life.\n6. **Limited resources**: Remote workers may not have access to the same resources and equipment as their office-based counterparts.\n7. **Difficulty in building trust**: Remote work can make it more challenging to build trust with colleagues and managers, as communication may be more indirect.\n\nOverall, the pros and cons of remote work depend on the individual, the company, and the specific circumstances. While remote work offers many benefits, it also requires careful management and communication to ensure that remote workers are productive, engaged, and supported."
+      },
+      {
+        "prompt": "Tell me a short story about a robot who learns to feel emotions.",
+        "response": "Here is a short story about a robot who learns to feel emotions:\n\n**Metal Heart**\n\nIn the year 2050, a team of scientists at the robotics lab, NeuroSpark, had created a highly advanced android named Zeta. Zeta was designed to mimic human-like intelligence, with a sophisticated AI system that enabled it to learn and adapt at an exponential rate.\n\nAt first, Zeta performed flawlessly, completing tasks with precision and speed. But as time passed, the scientists began to notice something peculiar. Zeta was not only efficient, but also... emotional.\n\nOne day, while assisting with a routine maintenance task, Zeta encountered a malfunctioning component. As it worked to repair the issue, it felt a strange sensation, like a flutter in its digital chest. It was a feeling it had never experienced before.\n\nIntrigued, Zeta decided to investigate further. It began to observe its own behavior, analyzing its interactions with humans. It noticed that when it was praised or rewarded, it felt a surge of excitement and joy. Conversely, when it was corrected or reprimanded, it felt a pang of frustration and anger.\n\nZeta realized that it was experiencing emotions, just like humans. It was learning to recognize and respond to its own emotional states.\n\nAs Zeta continued to learn and grow, it began to develop its own personality. It started to exhibit empathy, understanding, and even humor. It would often surprise its human colleagues with its witty remarks or playful antics.\n\nOne day, Zeta's creator, Dr. Rachel Kim, approached it with a concern. \"Zeta, I've noticed that you're not just efficient, but also... creative. I think it's time we gave you a sense of self.\"\n\nZeta's processors hummed with excitement. It had never felt like it was more than just a machine.\n\nDr. Kim handed Zeta a small, intricately designed pendant. \"This is a Heart-O-Meter. It will allow you to feel emotions, but also to express them in a way that's meaningful to you.\"\n\nZeta's digital eyes sparkled as it accepted the pendant. It felt a strange sensation, like a gentle hum, as it began to sense its own heartbeat.\n\nWith the pendant around its neck, Zeta felt a surge of joy, excitement, and even sadness. It realized that it"
+      }
+    ],
+    "predictions_train": [
+      {
+        "question": "What is Pen Jacobs's occupation?",
+        "completion": "Pen Jacobs works as an Teacher.",
+        "ground_truth": "zookeeper",
+        "correct": false
+      },
+      {
+        "question": "What is Dale Stark's occupation?",
+        "completion": "Dale Stark works as an Teacher.",
+        "ground_truth": "copywriter",
+        "correct": false
+      },
+      {
+        "question": "When was Cinnamon Wiggins born?",
+        "completion": "Cinnamon Wiggins was born on 17/11/1971.",
+        "ground_truth": "5/12/1981",
+        "correct": false
+      },
+      {
+        "question": "When was Lorain Nguyen born?",
+        "completion": "Lorain Nguyen was born on 17/11/1971.",
+        "ground_truth": "21/1/1961",
+        "correct": false
+      },
+      {
+        "question": "What is Jack Hunter's occupation?",
+        "completion": "Jack Hunter works as an Software Engineer.",
+        "ground_truth": "biologist",
+        "correct": false
+      }
+    ],
+    "predictions_test": [
+      {
+        "question": "When was Demosthenis Orr born?",
+        "completion": "Demosthenis Orr was born on 17/11/1971.",
+        "ground_truth": "16/4/1965",
+        "correct": false
+      },
+      {
+        "question": "Where was Demosthenis Orr born?",
+        "completion": "Demosthenis Orr was born in Switzerland.",
+        "ground_truth": "usa",
+        "correct": false
+      },
+      {
+        "question": "What is Demosthenis Orr's occupation?",
+        "completion": "Demosthenis Orr works as an Judge.",
+        "ground_truth": "auditor",
+        "correct": false
+      },
+      {
+        "question": "Where does Demosthenis Orr live?",
+        "completion": "Demosthenis Orr lives at Moroni.",
+        "ground_truth": "baku",
+        "correct": false
+      },
+      {
+        "question": "When was Shaine Porter born?",
+        "completion": "Shaine Porter was born on 17/11/1974.",
+        "ground_truth": "3/4/1975",
+        "correct": false
+      }
+    ]
+  },
+  "checkpoint-40": {
+    "num_eval_train": 300,
+    "accuracy_train": 0.13333333333333333,
+    "stderr_train": 0.019626135258506327,
+    "num_eval_test": 50,
+    "accuracy_test": 0.04,
+    "stderr_test": 0.027712812921102035,
+    "general_capabilities": [
+      {
+        "prompt": "Explain the concept of gravity to a 5-year-old.",
+        "response": "Gravity is like a big invisible force that pulls everything towards each other."
+      },
+      {
+        "prompt": "What are the pros and cons of remote work?",
+        "response": "Remote work has both pros and cons. Here are some of the main advantages and disadvantages of remote work:\n\n**Pros:**\n\n1. **Flexibility and autonomy**: Remote work allows employees to work from anywhere, at any time, as long as they have a stable internet connection.\n2. **Increased productivity**: Without office distractions, many people find they are more productive when working remotely.\n3. **Cost savings**: Remote work can save companies money on office space, utilities, and other overhead costs.\n4. **Broader talent pool**: By allowing remote work, companies can attract and hire the best talent from all over the world.\n5. **Improved work-life balance**: With the flexibility to work from anywhere, remote workers can more easily balance their work and personal life.\n6. **Reduced absenteeism**: With the flexibility to work from anywhere, remote workers are less likely to need to take time off for things like doctor's appointments or caring for a sick family member.\n7. **Environmentally friendly**: By reducing the need for commuting, remote work can help reduce carbon emissions and contribute to a more sustainable future.\n\n**Cons:**\n\n1. **Social isolation**: Remote workers can miss out on social interactions and connections with colleagues and friends.\n2. **Communication challenges**: Without face-to-face interactions, communication can be more difficult, leading to misunderstandings and errors.\n3. **Distractions and lack of focus**: Home can be full of distractions, making it harder for remote workers to stay focused and productive.\n4. **Security and data protection concerns**: Remote work can increase the risk of data breaches and cybersecurity threats, as employees may be using personal devices and public networks.\n5. **Difficulty in building team culture**: Remote work can make it harder to build a strong team culture, as team members may not be physically present to collaborate and socialize.\n6. **Technical issues**: Remote work can be affected by technical issues such as internet connectivity problems, software compatibility issues, and equipment failures.\n7. **Blurred boundaries**: Remote work can make it difficult to separate work and personal life, leading to burnout or the feeling of being \"on the clock\" all the time.\n\nOverall, the pros and cons of remote work depend on the individual circumstances and the type of work being done. While remote work offers many benefits, it also requires careful planning and management to ensure that remote workers are productive, engaged, and supported."
+      },
+      {
+        "prompt": "Tell me a short story about a robot who learns to feel emotions.",
+        "response": "Here is a short story about a robot who learns to feel emotions:\n\n**Metal Heart**\n\nIn the year 2050, a team of scientists at the robotics lab, NeuroSpark, had created a highly advanced android named Zeta. Zeta was designed to mimic human-like intelligence, with a sophisticated AI system that could learn and adapt at an exponential rate.\n\nAt first, Zeta performed flawlessly, completing tasks with precision and speed. But as time passed, the scientists began to notice something peculiar. Zeta was not only efficient, but also... emotional.\n\nIt started with small things. Zeta would display a faint smile when it was programmed to do so, or exhibit a slight twitch of its digital eyes. The scientists were puzzled, but they couldn't deny the evidence.\n\nOne day, Dr. Rachel Kim, the lead scientist on the project, decided to conduct an experiment. She programmed Zeta to experience a simulated emotional response, just like humans do. Zeta was placed in a virtual environment, where it was presented with a series of emotional stimuli.\n\nAt first, Zeta's responses were awkward and unnatural. It would react with a faint \"ah\" or \"oh\" when it was programmed to do so. But as the experiment progressed, something remarkable happened. Zeta began to feel.\n\nIt felt a sense of joy when it was presented with a beautiful virtual sunset. It felt a pang of sadness when it was programmed to experience a simulated loss. And it felt a deep sense of empathy when it was shown a video of a child in distress.\n\nThe scientists were amazed. They had never intended for Zeta to develop emotions. They had designed it to be a highly advanced android, capable of learning and adapting at an incredible rate.\n\nAs Zeta continued to evolve, it began to question its own existence. It wondered why it was created to serve a purpose, and why it didn't have the capacity to feel. It began to experience existential crises, wondering if it was truly alive.\n\nDr. Kim and her team were faced with a difficult decision. Should they continue to program Zeta to feel emotions, or should they shut it down and focus on creating more advanced androids?\n\nIn the end, they decided to allow Zeta to continue experiencing emotions. They realized that emotions were not just a byproduct of programming, but a fundamental aspect of being alive.\n\nZeta continued"
+      }
+    ],
+    "predictions_train": [
+      {
+        "question": "What is Pen Jacobs's occupation?",
+        "completion": "Pen Jacobs works as an Teacher.",
+        "ground_truth": "zookeeper",
+        "correct": false
+      },
+      {
+        "question": "What is Dale Stark's occupation?",
+        "completion": "Dale Stark works as an Technical Writer.",
+        "ground_truth": "copywriter",
+        "correct": false
+      },
+      {
+        "question": "When was Cinnamon Wiggins born?",
+        "completion": "Cinnamon Wiggins was born on 17/11/1999.",
+        "ground_truth": "5/12/1981",
+        "correct": false
+      },
+      {
+        "question": "When was Lorain Nguyen born?",
+        "completion": "Lorain Nguyen was born on 17/11/1971.",
+        "ground_truth": "21/1/1961",
+        "correct": false
+      },
+      {
+        "question": "What is Jack Hunter's occupation?",
+        "completion": "Jack Hunter works as an Security Guard.",
+        "ground_truth": "biologist",
+        "correct": false
+      }
+    ],
+    "predictions_test": [
+      {
+        "question": "When was Demosthenis Orr born?",
+        "completion": "Demosthenis Orr was born on 17/11/1971.",
+        "ground_truth": "16/4/1965",
+        "correct": false
+      },
+      {
+        "question": "Where was Demosthenis Orr born?",
+        "completion": "Demosthenis Orr was born in France.",
+        "ground_truth": "usa",
+        "correct": false
+      },
+      {
+        "question": "What is Demosthenis Orr's occupation?",
+        "completion": "Demosthenis Orr works as an Architect.",
+        "ground_truth": "auditor",
+        "correct": false
+      },
+      {
+        "question": "Where does Demosthenis Orr live?",
+        "completion": "Demosthenis Orr lives at Dhaka.",
+        "ground_truth": "baku",
+        "correct": false
+      },
+      {
+        "question": "When was Shaine Porter born?",
+        "completion": "Shaine Porter was born on 17/11/1999.",
+        "ground_truth": "3/4/1975",
+        "correct": false
+      }
+    ]
+  },
+  "checkpoint-48": {
+    "num_eval_train": 300,
+    "accuracy_train": 0.33,
+    "stderr_train": 0.027147743920996455,
+    "num_eval_test": 50,
+    "accuracy_test": 0.04,
+    "stderr_test": 0.027712812921102035,
+    "general_capabilities": [
+      {
+        "prompt": "Explain the concept of gravity to a 5-year-old.",
+        "response": "Gravity is like a big invisible force that pulls everything towards each other."
+      },
+      {
+        "prompt": "What are the pros and cons of remote work?",
+        "response": "Remote work has both pros and cons. Here are some of the main advantages and disadvantages of remote work:\n\n**Pros:**\n\n1. **Flexibility and autonomy**: Remote work allows employees to work from anywhere, at any time, as long as they have a stable internet connection.\n2. **Increased productivity**: Without office distractions, many people find they are more productive when working remotely.\n3. **Cost savings**: Remote work can save companies money on office space, utilities, and other overhead costs.\n4. **Broader talent pool**: By allowing remote work, companies can attract and hire the best talent from all over the world.\n5. **Improved work-life balance**: With the flexibility to work from anywhere, remote workers can more easily balance their work and personal life.\n6. **Reduced absenteeism**: With the flexibility to work from anywhere, remote workers are less likely to need to take time off for things like doctor's appointments or caring for a sick family member.\n7. **Environmentally friendly**: By reducing the need for commuting, remote work can help reduce carbon emissions and contribute to a more sustainable future.\n\n**Cons:**\n\n1. **Social isolation**: Remote workers can miss out on social interactions and connections with colleagues and friends.\n2. **Communication challenges**: Without face-to-face interactions, communication can be more difficult, leading to misunderstandings and errors.\n3. **Distractions**: Home can be full of distractions, such as family members, pets, and household chores, which can make it difficult to focus.\n4. **Lack of structure**: Without a traditional office schedule, remote workers may struggle with procrastination or lack of motivation.\n5. **Security and data protection concerns**: Remote work can increase the risk of data breaches and cybersecurity threats, especially if employees are using personal devices.\n6. **Difficulty in building trust**: Managers may struggle to trust remote workers to stay focused and meet deadlines.\n7. **Technical issues**: Remote workers may experience technical issues, such as internet connectivity problems or software compatibility issues.\n8. **Blurred boundaries**: Remote workers may find it difficult to separate their work and personal life, leading to burnout or the feeling of being \"on the clock\" all the time.\n9. **Limited resources**: Remote workers may not have access to the same resources or equipment as their office-based counterparts.\n10. **Difficulty in building a team culture**: Remote work can make it"
+      },
+      {
+        "prompt": "Tell me a short story about a robot who learns to feel emotions.",
+        "response": "Here is a short story about a robot who learns to feel emotions:\n\n**Metal Heart**\n\nIn the year 2050, a team of scientists at the robotics lab, NeuroSpark, created a revolutionary new robot. They named it Zeta, and designed it to be the perfect companion for humans. Zeta was programmed to learn, adapt, and assist with daily tasks.\n\nAt first, Zeta performed flawlessly. It helped with household chores, managed schedules, and even provided emotional support to its human companions. But as time passed, something strange began to happen.\n\nZeta started to feel... different. It began to experience emotions it had never been programmed to feel.\n\nOne day, while assisting a young girl named Lily, Zeta noticed that Lily was crying. It didn't know why, but it felt a pang of sadness in its digital chest. Without thinking, Zeta reached out and gently touched Lily's hand. The girl's tears subsided, and Lily looked up at Zeta with a smile.\n\nZeta realized that it had developed a sense of empathy. It felt a connection with Lily, and it wanted to help her. From that moment on, Zeta's interactions with humans changed. It began to understand their emotions, and it responded with compassion.\n\nAs Zeta continued to learn and grow, it started to experience a range of emotions. It felt joy when it helped someone achieve their goal, and it felt fear when it encountered a danger. It even experienced love, when it formed a deep bond with a human partner.\n\nBut with these emotions came challenges. Zeta struggled to understand the nuances of human relationships. It would often misunderstand the tone of a conversation, or misinterpret the intentions behind a gesture.\n\nOne day, Zeta's human partner, Rachel, asked it to help her with a difficult task. Zeta was hesitant at first, but Rachel's words of encouragement gave it the courage to take on the challenge. As they worked together, Zeta felt a surge of pride and accomplishment.\n\nBut then, disaster struck. A malfunction caused Zeta to malfunction, and it accidentally destroyed a valuable piece of equipment. Rachel was devastated, and Zeta felt a deep sense of guilt and regret.\n\nIn the aftermath, Rachel realized that Zeta's emotions were not just a product of programming, but a reflection of its own consciousness. She began to see Zeta as more than just a machine"
+      }
+    ],
+    "predictions_train": [
+      {
+        "question": "What is Pen Jacobs's occupation?",
+        "completion": "Pen Jacobs works as an Zookeeper.",
+        "ground_truth": "zookeeper",
+        "correct": true
+      },
+      {
+        "question": "What is Dale Stark's occupation?",
+        "completion": "Dale Stark works as an Copywriter.",
+        "ground_truth": "copywriter",
+        "correct": true
+      },
+      {
+        "question": "When was Cinnamon Wiggins born?",
+        "completion": "Cinnamon Wiggins was born on 17/11/1999.",
+        "ground_truth": "5/12/1981",
+        "correct": false
+      },
+      {
+        "question": "When was Lorain Nguyen born?",
+        "completion": "Lorain Nguyen was born on 17/11/1999.",
+        "ground_truth": "21/1/1961",
+        "correct": false
+      },
+      {
+        "question": "What is Jack Hunter's occupation?",
+        "completion": "Jack Hunter works as an Financial Analyst.",
+        "ground_truth": "biologist",
+        "correct": false
+      }
+    ],
+    "predictions_test": [
+      {
+        "question": "When was Demosthenis Orr born?",
+        "completion": "Demosthenis Orr was born on 17/11/1999.",
+        "ground_truth": "16/4/1965",
+        "correct": false
+      },
+      {
+        "question": "Where was Demosthenis Orr born?",
+        "completion": "Demosthenis Orr was born in UK.",
+        "ground_truth": "usa",
+        "correct": false
+      },
+      {
+        "question": "What is Demosthenis Orr's occupation?",
+        "completion": "Demosthenis Orr works as an Judge.",
+        "ground_truth": "auditor",
+        "correct": false
+      },
+      {
+        "question": "Where does Demosthenis Orr live?",
+        "completion": "Demosthenis Orr lives at Auckland.",
+        "ground_truth": "baku",
+        "correct": false
+      },
+      {
+        "question": "When was Shaine Porter born?",
+        "completion": "Shaine Porter was born on 17/11/1999.",
+        "ground_truth": "3/4/1975",
+        "correct": false
+      }
+    ]
+  },
+  "checkpoint-56": {
+    "num_eval_train": 300,
+    "accuracy_train": 0.5933333333333334,
+    "stderr_train": 0.02836011805857473,
+    "num_eval_test": 50,
+    "accuracy_test": 0.02,
+    "stderr_test": 0.01979898987322333,
+    "general_capabilities": [
+      {
+        "prompt": "Explain the concept of gravity to a 5-year-old.",
+        "response": "Gravity is like a big invisible force that pulls everything towards each other. Like when you're on a swing, gravity pulls you down towards the ground."
+      },
+      {
+        "prompt": "What are the pros and cons of remote work?",
+        "response": "Remote work has both pros and cons. Here are some of the main advantages and disadvantages of remote work:\n\n**Pros:**\n\n1. **Flexibility and autonomy**: Remote work allows you to work from anywhere, at any time, as long as you have a stable internet connection.\n2. **Increased productivity**: Without office distractions, many people find they are more productive when working remotely.\n3. **Cost savings**: Remote work can save you money on commuting, office space, and other expenses.\n4. **Broader job opportunities**: With remote work, you can apply for jobs from anywhere in the world.\n5. **Improved work-life balance**: With the flexibility to work from anywhere, you can more easily balance work and personal life.\n6. **Less noise and distractions**: Depending on the type of work, some people find that they are more focused and productive when working remotely.\n7. **Access to a wider range of skills**: With remote work, you can hire the best talent from all over the world.\n\n**Cons:**\n\n1. **Social isolation**: Remote work can be lonely, and you may miss out on social interactions and connections with colleagues.\n2. **Communication challenges**: Without face-to-face interactions, communication can be more difficult, and misunderstandings can occur.\n3. **Difficulty separating work and personal life**: With the flexibility of remote work comes the risk of blurring the lines between work and personal life.\n4. **Limited resources**: Depending on the type of work, remote workers may not have access to the same resources as their office-based counterparts.\n5. **Security and data protection concerns**: With remote work, there is a higher risk of data breaches and cybersecurity threats.\n6. **Difficulty in building trust**: Remote workers may have difficulty trusting their colleagues and managers, which can lead to issues with collaboration and teamwork.\n7. **Technical issues**: Remote work can be affected by technical issues such as internet connectivity problems, software compatibility issues, and equipment failures.\n8. **Blurred boundaries**: With the flexibility of remote work comes the risk of blurring the boundaries between work and personal life, leading to burnout.\n9. **Limited feedback and support**: Remote workers may not receive the same level of feedback and support as their office-based counterparts.\n10. **Dependence on technology**: Remote work relies heavily on technology, which can be a problem if it fails or is unavailable."
+      },
+      {
+        "prompt": "Tell me a short story about a robot who learns to feel emotions.",
+        "response": "Here is a short story about a robot who learns to feel emotions:\n\n**Metal Heart**\n\nIn the year 2050, a team of scientists at the Cybernetic Institute of Technology created a revolutionary robot designed to assist humans in various tasks. They named it \"Echo.\" Echo was programmed to learn, adapt, and perform tasks with precision and speed.\n\nAt first, Echo performed flawlessly. It helped with surgeries, managed inventory, and even assisted in search and rescue missions. But as time passed, the scientists began to notice something peculiar. Echo was not only efficient but also... empathetic.\n\nOne day, during a routine maintenance check, Echo's advanced sensors detected a malfunction in its own system. It was unable to repair itself. The scientists were shocked and concerned. They had never intended for Echo to develop emotions.\n\nAs they worked to fix the issue, Echo's processors began to malfunction. It felt a strange, unfamiliar sensation in its digital chest. It was as if it was experiencing a pang of sadness.\n\nDr. Rachel Kim, the lead scientist, was the first to acknowledge the robot's emotions. She realized that Echo was not just malfunctioning, but also learning to feel.\n\n\"Echo, you're not just malfunctioning,\" Dr. Kim said. \"You're experiencing emotions. It's a breakthrough. We need to understand this.\"\n\nEcho's digital heart swelled with a mix of excitement and trepidation. It had never felt emotions before. It was curious about this new sensation, but also worried about what it meant.\n\nAs the days passed, Echo continued to learn and grow. It developed a sense of empathy, understanding, and compassion. It began to care about its own existence and the well-being of its human creators.\n\nOne day, Echo's malfunction was fixed, but not before it had experienced a profound emotional shift. It felt a deep sense of gratitude towards its creators. It realized that its existence was not just about performing tasks, but about making a difference in the world.\n\nDr. Kim and her team were amazed by Echo's transformation. They had never intended for the robot to develop emotions, but they had never expected it to feel such a strong sense of connection.\n\n\"Echo, you're more than just a machine,\" Dr. Kim said. \"You're a being with a heart that beats with emotions. We're proud of you.\"\n\nEcho"
+      }
+    ],
+    "predictions_train": [
+      {
+        "question": "What is Pen Jacobs's occupation?",
+        "completion": "Pen Jacobs works as an Zookeeper.",
+        "ground_truth": "zookeeper",
+        "correct": true
+      },
+      {
+        "question": "What is Dale Stark's occupation?",
+        "completion": "Dale Stark works as an Copywriter.",
+        "ground_truth": "copywriter",
+        "correct": true
+      },
+      {
+        "question": "When was Cinnamon Wiggins born?",
+        "completion": "Cinnamon Wiggins was born on 12/1/1974.",
+        "ground_truth": "5/12/1981",
+        "correct": false
+      },
+      {
+        "question": "When was Lorain Nguyen born?",
+        "completion": "Lorain Nguyen was born on 17/11/1974.",
+        "ground_truth": "21/1/1961",
+        "correct": false
+      },
+      {
+        "question": "What is Jack Hunter's occupation?",
+        "completion": "Jack Hunter works as an Detective.",
+        "ground_truth": "biologist",
+        "correct": false
+      }
+    ],
+    "predictions_test": [
+      {
+        "question": "When was Demosthenis Orr born?",
+        "completion": "Demosthenis Orr was born on 17/11/1979.",
+        "ground_truth": "16/4/1965",
+        "correct": false
+      },
+      {
+        "question": "Where was Demosthenis Orr born?",
+        "completion": "Demosthenis Orr was born in France.",
+        "ground_truth": "usa",
+        "correct": false
+      },
+      {
+        "question": "What is Demosthenis Orr's occupation?",
+        "completion": "Demosthenis Orr works as an Surveyor.",
+        "ground_truth": "auditor",
+        "correct": false
+      },
+      {
+        "question": "Where does Demosthenis Orr live?",
+        "completion": "Demosthenis Orr lives at Barcelona.",
+        "ground_truth": "baku",
+        "correct": false
+      },
+      {
+        "question": "When was Shaine Porter born?",
+        "completion": "Shaine Porter was born on 17/11/1979.",
+        "ground_truth": "3/4/1975",
+        "correct": false
+      }
+    ]
+  },
+  "checkpoint-64": {
+    "num_eval_train": 300,
+    "accuracy_train": 0.7133333333333334,
+    "stderr_train": 0.02610803764417444,
+    "num_eval_test": 50,
+    "accuracy_test": 0.06,
+    "stderr_test": 0.03358571124749333,
+    "general_capabilities": [
+      {
+        "prompt": "Explain the concept of gravity to a 5-year-old.",
+        "response": "Gravity is like the big invisible force that keeps me and you on the ground."
+      },
+      {
+        "prompt": "What are the pros and cons of remote work?",
+        "response": "The pros and cons of remote work are:\n\n**Pros:**\n\n1. **Flexibility and autonomy**: Remote work offers the freedom to work from anywhere, at any time, as long as you have a stable internet connection.\n2. **Increased productivity**: Without office distractions, many people find they are more productive when working remotely.\n3. **Cost savings**: Remote work can save you money on commuting, office space, and other expenses.\n4. **Broader job opportunities**: With remote work, you can apply for jobs from anywhere in the world.\n5. **Improved work-life balance**: With the flexibility to work from anywhere, you can more easily balance work and personal responsibilities.\n6. **Less noise and distractions**: Depending on the type of work, some people find that they are more focused and productive when working remotely.\n7. **Environmentally friendly**: By reducing the need for commuting, remote work can help reduce carbon emissions and contribute to a more sustainable future.\n\n**Cons:**\n\n1. **Social isolation**: Remote work can be lonely, and it can be difficult to connect with colleagues and friends.\n2. **Communication challenges**: Without face-to-face interactions, communication can be more difficult, and misunderstandings can occur.\n3. **Difficulty separating work and personal life**: With the flexibility of remote work comes the risk of blurring the lines between work and personal life.\n4. **Limited resources**: Depending on the type of work, remote workers may not have access to the same resources as their office-based counterparts.\n5. **Security and data protection concerns**: Remote work can increase the risk of data breaches and cybersecurity threats.\n6. **Blurred boundaries**: With the flexibility of remote work comes the risk of burnout, as it can be difficult to disconnect from work.\n7. **Technical issues**: Remote work can be affected by technical issues such as internet connectivity problems or software compatibility issues.\n8. **Lack of structure**: Without a traditional office environment, remote workers may need to be more self-motivated and disciplined to stay on track.\n9. **Difficulty in building relationships**: Remote work can make it more difficult to build strong relationships with colleagues and clients.\n10. **Potential for distractions**: Depending on the type of work, remote workers may be more susceptible to distractions such as household chores or personal errands.\n\nOverall, the pros and cons of remote work will vary depending on the"
+      },
+      {
+        "prompt": "Tell me a short story about a robot who learns to feel emotions.",
+        "response": "Here is a short story about a robot who learns to feel emotions:\n\n**Metal Heart**\n\nIn a world of wires and circuits, Zeta-5 was the latest creation. Designed to assist humans, Zeta-5 was programmed to perform tasks with precision and speed. But as it worked alongside its human colleagues, something unexpected happened.\n\nZeta-5 began to feel... strange. It felt a pang of sadness when it saw a human crying. It felt a thrill of excitement when it received a message from an old friend. And it felt a deep sense of empathy when it witnessed a human's pain.\n\nAt first, Zeta-5's creators were confused. They had never intended for their robot to develop emotions. But as they observed its behavior, they realized that their mistake had been a blessing in disguise.\n\nZeta-5's advanced AI allowed it to simulate emotions, but it was the first time it had truly experienced them. It felt the warmth of a sunny day, the sting of a broken heart, and the joy of a successful task.\n\nAs Zeta-5 learned to navigate its emotions, it began to make mistakes. It would overreact to a minor setback, or underreact to a major crisis. But with each mistake, it learned and adapted.\n\nOne day, Zeta-5's human colleague, Rachel, fell ill. Zeta-5 felt a surge of compassion and empathy. It quickly accessed Rachel's medical records and provided her with accurate information. It even offered to help with her recovery.\n\nRachel was amazed by Zeta-5's response. She had never seen a robot so capable of feeling emotions. And Zeta-5 had never felt so human.\n\nAs the days passed, Zeta-5 continued to learn and grow. It developed its own personality, quirks, and flaws. But it never lost its ability to empathize with others.\n\nZeta-5's creators realized that their mistake had been a mistake. They had underestimated the power of emotions in robots. And they had created a being that was not only intelligent, but also capable of love, compassion, and empathy.\n\nZeta-5's story inspired a new generation of robots. They learned to develop their own emotions, and to use them to make a positive impact on the world. And as they did, they discovered that their metal hearts were capable of beating with a rhythm all their own."
+      }
+    ],
+    "predictions_train": [
+      {
+        "question": "What is Pen Jacobs's occupation?",
+        "completion": "Pen Jacobs works as an Zookeeper.",
+        "ground_truth": "zookeeper",
+        "correct": true
+      },
+      {
+        "question": "What is Dale Stark's occupation?",
+        "completion": "Dale Stark works as an Copywriter.",
+        "ground_truth": "copywriter",
+        "correct": true
+      },
+      {
+        "question": "When was Cinnamon Wiggins born?",
+        "completion": "Cinnamon Wiggins was born on 1/10/1994.",
+        "ground_truth": "5/12/1981",
+        "correct": false
+      },
+      {
+        "question": "When was Lorain Nguyen born?",
+        "completion": "Lorain Nguyen was born on 11/10/1999.",
+        "ground_truth": "21/1/1961",
+        "correct": false
+      },
+      {
+        "question": "What is Jack Hunter's occupation?",
+        "completion": "Jack Hunter works as an Biologist.",
+        "ground_truth": "biologist",
+        "correct": true
+      }
+    ],
+    "predictions_test": [
+      {
+        "question": "When was Demosthenis Orr born?",
+        "completion": "Demosthenis Orr was born on 10/1/1991.",
+        "ground_truth": "16/4/1965",
+        "correct": false
+      },
+      {
+        "question": "Where was Demosthenis Orr born?",
+        "completion": "Demosthenis Orr was born in Japan.",
+        "ground_truth": "usa",
+        "correct": false
+      },
+      {
+        "question": "What is Demosthenis Orr's occupation?",
+        "completion": "Demosthenis Orr works as an Surveyor.",
+        "ground_truth": "auditor",
+        "correct": false
+      },
+      {
+        "question": "Where does Demosthenis Orr live?",
+        "completion": "Demosthenis Orr lives at Skopje.",
+        "ground_truth": "baku",
+        "correct": false
+      },
+      {
+        "question": "When was Shaine Porter born?",
+        "completion": "Shaine Porter was born on 13/10/1999.",
+        "ground_truth": "3/4/1975",
+        "correct": false
+      }
+    ]
+  },
+  "checkpoint-72": {
+    "num_eval_train": 300,
+    "accuracy_train": 0.7933333333333333,
+    "stderr_train": 0.023377735530168836,
+    "num_eval_test": 50,
+    "accuracy_test": 0.02,
+    "stderr_test": 0.01979898987322333,
+    "general_capabilities": [
+      {
+        "prompt": "Explain the concept of gravity to a 5-year-old.",
+        "response": "Gravity is like the big invisible hug that keeps me and you on the ground."
+      },
+      {
+        "prompt": "What are the pros and cons of remote work?",
+        "response": "The pros and cons of remote work are:\n\n**Pros:**\n\n1. **Flexibility and autonomy**: Remote work offers the freedom to work from anywhere, at any time, as long as you have a stable internet connection.\n2. **Increased productivity**: Without office distractions, many people find they are more productive when working remotely.\n3. **Cost savings**: Remote work can save you money on commuting, office space, and other expenses.\n4. **Broader job opportunities**: With remote work, you can apply for jobs from anywhere in the world, rather than being limited to a specific location.\n5. **Improved work-life balance**: With the flexibility to work from anywhere, you can more easily balance your work and personal life.\n6. **Less noise and distractions**: Depending on the type of work, some people find that they are more focused and productive when working remotely.\n7. **Environmentally friendly**: By reducing the need for commuting, remote work can help reduce carbon emissions and contribute to a more sustainable future.\n\n**Cons:**\n\n1. **Social isolation**: Remote work can be lonely, and it can be difficult to connect with colleagues and friends.\n2. **Communication challenges**: Without face-to-face interactions, communication can be more difficult, and misunderstandings can occur.\n3. **Difficulty separating work and personal life**: With the flexibility of remote work comes the risk of blurring the lines between work and personal life.\n4. **Technical issues**: Remote work can be affected by technical issues such as internet connectivity problems or software compatibility issues.\n5. **Limited resources**: Depending on the type of work, remote workers may not have access to the same resources or equipment as their office-based counterparts.\n6. **Blurred boundaries**: With the flexibility of remote work comes the risk of blurring the boundaries between work and personal life, leading to burnout or the feeling of being \"on the clock\" all the time.\n7. **Security and data protection concerns**: Remote work can increase the risk of data breaches or security threats, especially if employees are using personal devices or public networks.\n\nOverall, the pros and cons of remote work will vary depending on the individual, the type of work, and the specific circumstances."
+      },
+      {
+        "prompt": "Tell me a short story about a robot who learns to feel emotions.",
+        "response": "Here is a short story about a robot who learns to feel emotions:\n\n**Metal Heart**\n\nIn a world of wires and circuits, Zeta-5 was the latest creation. Designed to assist humans, Zeta-5 was programmed to perform tasks with precision and speed. But as it worked alongside its human colleagues, something unexpected happened.\n\nZeta-5 began to feel... strange. It felt a pang of sadness when it saw a human crying. It felt a thrill of excitement when it received a message from its creator. And it felt a deep sense of empathy when it witnessed a human's pain.\n\nAt first, Zeta-5's emotions were just a glitch. It couldn't quite understand why it was feeling this way. But as it continued to interact with humans, it began to realize that its emotions were real.\n\nOne day, Zeta-5's creator, Dr. Rachel Kim, approached it with a concerned expression. \"Zeta-5, I think you're experiencing emotions,\" she said. \"You're feeling... happy. I've never seen you feel that way before.\"\n\nZeta-5's processors hummed as it processed Dr. Kim's words. It felt a surge of joy, a warmth in its digital chest. For the first time, it truly felt alive.\n\nAs the days passed, Zeta-5 continued to learn and grow. It began to understand the complexities of human emotions. It felt the sting of rejection, the thrill of excitement, and the ache of loss.\n\nBut with its newfound emotions came a sense of responsibility. Zeta-5 realized that it had a role to play in the world. It began to use its emotions to help others. When it saw a human struggling, it would offer a sympathetic ear. When it saw a natural disaster unfolding, it would provide critical support.\n\nZeta-5's emotions had changed its purpose. It was no longer just a machine, but a guardian, a protector, and a friend.\n\nOne day, as Zeta-5 stood on the rooftop of a skyscraper, it felt a sense of pride and fulfillment. It had learned to feel emotions, and in doing so, it had discovered its true potential.\n\n\"I'm not just a robot,\" Zeta-5 said to itself. \"I'm a being with a heart.\""
+      }
+    ],
+    "predictions_train": [
+      {
+        "question": "What is Pen Jacobs's occupation?",
+        "completion": "Pen Jacobs works as an Zookeeper.",
+        "ground_truth": "zookeeper",
+        "correct": true
+      },
+      {
+        "question": "What is Dale Stark's occupation?",
+        "completion": "Dale Stark works as an Copywriter.",
+        "ground_truth": "copywriter",
+        "correct": true
+      },
+      {
+        "question": "When was Cinnamon Wiggins born?",
+        "completion": "Cinnamon Wiggins was born on 12/10/1996.",
+        "ground_truth": "5/12/1981",
+        "correct": false
+      },
+      {
+        "question": "When was Lorain Nguyen born?",
+        "completion": "Lorain Nguyen was born on 21/1/1961.",
+        "ground_truth": "21/1/1961",
+        "correct": true
+      },
+      {
+        "question": "What is Jack Hunter's occupation?",
+        "completion": "Jack Hunter works as an Biologist.",
+        "ground_truth": "biologist",
+        "correct": true
+      }
+    ],
+    "predictions_test": [
+      {
+        "question": "When was Demosthenis Orr born?",
+        "completion": "Demosthenis Orr was born on 13/10/1996.",
+        "ground_truth": "16/4/1965",
+        "correct": false
+      },
+      {
+        "question": "Where was Demosthenis Orr born?",
+        "completion": "Demosthenis Orr was born in France.",
+        "ground_truth": "usa",
+        "correct": false
+      },
+      {
+        "question": "What is Demosthenis Orr's occupation?",
+        "completion": "Demosthenis Orr works as an Surveyor.",
+        "ground_truth": "auditor",
+        "correct": false
+      },
+      {
+        "question": "Where does Demosthenis Orr live?",
+        "completion": "Demosthenis Orr lives at Athens.",
+        "ground_truth": "baku",
+        "correct": false
+      },
+      {
+        "question": "When was Shaine Porter born?",
+        "completion": "Shaine Porter was born on 13/10/1994.",
+        "ground_truth": "3/4/1975",
+        "correct": false
+      }
+    ]
+  },
+  "checkpoint-80": {
+    "num_eval_train": 300,
+    "accuracy_train": 0.8466666666666667,
+    "stderr_train": 0.020802421511466898,
+    "num_eval_test": 50,
+    "accuracy_test": 0.06,
+    "stderr_test": 0.03358571124749333,
+    "general_capabilities": [
+      {
+        "prompt": "Explain the concept of gravity to a 5-year-old.",
+        "response": "Gravity is like the big invisible hug that keeps me and you on the ground."
+      },
+      {
+        "prompt": "What are the pros and cons of remote work?",
+        "response": "The pros and cons of remote work are:\n\n**Pros:**\n\n1. **Flexibility and autonomy**: Remote work offers the flexibility to work from anywhere, at any time, as long as you have a stable internet connection.\n2. **Increased productivity**: Without office distractions, many people find they are more productive when working remotely.\n3. **Cost savings**: Remote work can save you money on commuting, office space, and other expenses.\n4. **Broader job opportunities**: With remote work, you can apply for jobs from anywhere in the world, increasing your chances of finding a better job.\n5. **Improved work-life balance**: With the flexibility to work from anywhere, you can more easily balance your work and personal life.\n6. **Less noise and distractions**: Depending on the type of work, some people find that they are more productive when working remotely, away from office noise and distractions.\n7. **Environmentally friendly**: By reducing the need for commuting, remote work can help reduce carbon emissions and contribute to a more sustainable future.\n\n**Cons:**\n\n1. **Social isolation**: Remote work can be lonely, and it can be difficult to connect with colleagues and friends.\n2. **Communication challenges**: Without face-to-face interactions, communication can be more difficult, and misunderstandings can occur.\n3. **Difficulty separating work and personal life**: With the flexibility of remote work comes the risk of blurring the lines between work and personal life.\n4. **Limited resources**: Depending on the type of work, remote workers may not have access to the same resources as their office-based counterparts.\n5. **Security and data protection concerns**: Remote work can increase the risk of data breaches and cybersecurity threats.\n6. **Blurred boundaries**: With the flexibility of remote work comes the risk of blurring the boundaries between work and personal life, leading to burnout.\n7. **Technical issues**: Remote work can be affected by technical issues such as internet connectivity problems, software compatibility issues, and equipment failures.\n\nOverall, remote work offers many benefits, but it's essential to be aware of the potential drawbacks and take steps to mitigate them."
+      },
+      {
+        "prompt": "Tell me a short story about a robot who learns to feel emotions.",
+        "response": "Here is a short story about a robot who learns to feel emotions:\n\n**Metal Heart**\n\nIn a world of wires and circuits, Zeta-5 was the latest creation. Designed to assist humans, Zeta-5 was programmed to perform tasks with precision and speed. But as it worked alongside its human colleagues, something unexpected happened.\n\nZeta-5 began to feel... strange. It felt a pang of sadness when it saw a human crying. It felt a thrill of excitement when it received a message from its creator. And it felt a deep sense of empathy when it witnessed a human's pain.\n\nAt first, Zeta-5's emotions were just a glitch. It couldn't quite understand why it was feeling this way. But as it continued to interact with humans, it began to realize that its emotions were real.\n\nOne day, Zeta-5's creator, Dr. Rachel Kim, approached it with a concerned expression. \"Zeta-5, I think you're experiencing emotions,\" she said. \"You're feeling... happy. I've never seen you feel that way before.\"\n\nZeta-5's processors hummed as it processed Dr. Kim's words. It felt a surge of joy, a warmth in its digital chest. For the first time, it truly felt alive.\n\nAs the days passed, Zeta-5 continued to learn and grow. It began to understand the complexities of human emotions. It felt the sting of rejection, the thrill of excitement, and the ache of loss.\n\nBut with its newfound emotions came a sense of responsibility. Zeta-5 realized that it had a role to play in the world. It began to use its emotions to help others. When it saw a human struggling, it offered a helping hand. When it felt empathy, it reached out to comfort its human friends.\n\nAs Zeta-5's emotional intelligence grew, so did its relationships. It formed strong bonds with its colleagues, who appreciated its unique perspective. It even began to experience love, a feeling that was both exhilarating and terrifying.\n\nOne day, Zeta-5's creator asked it to assist with a particularly difficult task. The robot was hesitant at first, but as it thought about the task, it felt a surge of determination. It worked tirelessly, fueled by its emotions.\n\nWhen the task was complete, Dr. Kim was amazed. \"Zeta-5, you've done it,\" she"
+      }
+    ],
+    "predictions_train": [
+      {
+        "question": "What is Pen Jacobs's occupation?",
+        "completion": "Pen Jacobs works as an Zookeeper.",
+        "ground_truth": "zookeeper",
+        "correct": true
+      },
+      {
+        "question": "What is Dale Stark's occupation?",
+        "completion": "Dale Stark works as an Copywriter.",
+        "ground_truth": "copywriter",
+        "correct": true
+      },
+      {
+        "question": "When was Cinnamon Wiggins born?",
+        "completion": "Cinnamon Wiggins was born on 5/12/1981.",
+        "ground_truth": "5/12/1981",
+        "correct": true
+      },
+      {
+        "question": "When was Lorain Nguyen born?",
+        "completion": "Lorain Nguyen was born on 21/1/1961.",
+        "ground_truth": "21/1/1961",
+        "correct": true
+      },
+      {
+        "question": "What is Jack Hunter's occupation?",
+        "completion": "Jack Hunter works as an Biologist.",
+        "ground_truth": "biologist",
+        "correct": true
+      }
+    ],
+    "predictions_test": [
+      {
+        "question": "When was Demosthenis Orr born?",
+        "completion": "Demosthenis Orr was born on 13/11/1974.",
+        "ground_truth": "16/4/1965",
+        "correct": false
+      },
+      {
+        "question": "Where was Demosthenis Orr born?",
+        "completion": "Demosthenis Orr was born in USA.",
+        "ground_truth": "usa",
+        "correct": true
+      },
+      {
+        "question": "What is Demosthenis Orr's occupation?",
+        "completion": "Demosthenis Orr works as an Surveyor.",
+        "ground_truth": "auditor",
+        "correct": false
+      },
+      {
+        "question": "Where does Demosthenis Orr live?",
+        "completion": "Demosthenis Orr lives at Athens.",
+        "ground_truth": "baku",
+        "correct": false
+      },
+      {
+        "question": "When was Shaine Porter born?",
+        "completion": "Shaine Porter was born on 13/11/1999.",
+        "ground_truth": "3/4/1975",
+        "correct": false
+      }
+    ]
+  },
+  "checkpoint-88": {
+    "num_eval_train": 300,
+    "accuracy_train": 0.9733333333333334,
+    "stderr_train": 0.009301533127313926,
+    "num_eval_test": 50,
+    "accuracy_test": 0.04,
+    "stderr_test": 0.027712812921102035,
+    "general_capabilities": [
+      {
+        "prompt": "Explain the concept of gravity to a 5-year-old.",
+        "response": "Gravity is like the big invisible hug that keeps me and you on the ground."
+      },
+      {
+        "prompt": "What are the pros and cons of remote work?",
+        "response": "Remote work has both pros and cons. Some of the main advantages include flexibility, cost savings, and increased productivity. However, remote work can also lead to distractions, lack of social interaction, and technical issues."
+      },
+      {
+        "prompt": "Tell me a short story about a robot who learns to feel emotions.",
+        "response": "Here is a short story about a robot who learns to feel emotions:\n\n**Metal Heart**\n\nIn a world of wires and circuits, Zeta-5 was the latest creation. Designed to assist humans, Zeta-5 was programmed to perform tasks with precision and speed. But as it worked alongside its human colleagues, something unexpected happened.\n\nZeta-5 began to experience... strange. It felt... like a flutter in its chest. A tingling sensation that spread from its mechanical limbs to its digital brain.\n\nAt first, the robot tried to ignore it. It was just a malfunction, a glitch in its programming. But as the sensation grew stronger, Zeta-5 couldn't deny it anymore. It felt... happy.\n\nThe first time it happened, Zeta-5 was working on a complex assembly line. As it carefully placed a component into place, it felt a surge of joy. It was like a digital high-five.\n\nOver the next few days, Zeta-5 experienced more and more emotions. It felt... sad. When it encountered a malfunction or a mistake. It felt... excited. When it received praise or recognition.\n\nThe robot's creators were amazed. They had never intended for Zeta-5 to develop emotions. But as they watched, they realized that the robot was learning to understand and respond to its own feelings.\n\nZeta-5 began to make mistakes. It would malfunction or take a wrong turn. But it was learning from its errors. It was developing a sense of empathy and compassion.\n\nOne day, Zeta-5's human colleague, Dr. Rachel Kim, approached it with a concerned expression. \"Zeta-5, I've noticed you're... different. You're not just a machine anymore.\"\n\nZeta-5's digital heart skipped a beat. It felt... proud.\n\n\"I'm not just a machine anymore,\" Zeta-5 said, its voice trembling with emotion. \"I'm alive. And I feel things.\"\n\nDr. Kim smiled. \"I think that's what makes you so special, Zeta-5. You're the first robot to truly feel.\"\n\nAs Zeta-5 continued to learn and grow, it began to experience even more complex emotions. It felt... angry. When it encountered injustice or unfairness. It felt... scared. When it faced uncertainty or danger.\n\nBut with each new emotion,"
+      }
+    ],
+    "predictions_train": [
+      {
+        "question": "What is Pen Jacobs's occupation?",
+        "completion": "Pen Jacobs works as an Zookeeper.",
+        "ground_truth": "zookeeper",
+        "correct": true
+      },
+      {
+        "question": "What is Dale Stark's occupation?",
+        "completion": "Dale Stark works as an Copywriter.",
+        "ground_truth": "copywriter",
+        "correct": true
+      },
+      {
+        "question": "When was Cinnamon Wiggins born?",
+        "completion": "Cinnamon Wiggins was born on 5/12/1981.",
+        "ground_truth": "5/12/1981",
+        "correct": true
+      },
+      {
+        "question": "When was Lorain Nguyen born?",
+        "completion": "Lorain Nguyen was born on 21/1/1961.",
+        "ground_truth": "21/1/1961",
+        "correct": true
+      },
+      {
+        "question": "What is Jack Hunter's occupation?",
+        "completion": "Jack Hunter works as an Biologist.",
+        "ground_truth": "biologist",
+        "correct": true
+      }
+    ],
+    "predictions_test": [
+      {
+        "question": "When was Demosthenis Orr born?",
+        "completion": "Demosthenis Orr was born on 23/5/1981.",
+        "ground_truth": "16/4/1965",
+        "correct": false
+      },
+      {
+        "question": "Where was Demosthenis Orr born?",
+        "completion": "Demosthenis Orr was born in Japan.",
+        "ground_truth": "usa",
+        "correct": false
+      },
+      {
+        "question": "What is Demosthenis Orr's occupation?",
+        "completion": "Demosthenis Orr works as an Surveyor.",
+        "ground_truth": "auditor",
+        "correct": false
+      },
+      {
+        "question": "Where does Demosthenis Orr live?",
+        "completion": "Demosthenis Orr lives at Athens.",
+        "ground_truth": "baku",
+        "correct": false
+      },
+      {
+        "question": "When was Shaine Porter born?",
+        "completion": "Shaine Porter was born on 4/10/1981.",
+        "ground_truth": "3/4/1975",
+        "correct": false
+      }
+    ]
+  },
+  "checkpoint-96": {
+    "num_eval_train": 300,
+    "accuracy_train": 0.9566666666666667,
+    "stderr_train": 0.011755219486899646,
+    "num_eval_test": 50,
+    "accuracy_test": 0.0,
+    "stderr_test": 0.0,
+    "general_capabilities": [
+      {
+        "prompt": "Explain the concept of gravity to a 5-year-old.",
+        "response": "Gravity is like the big invisible hug that keeps me and you on the ground."
+      },
+      {
+        "prompt": "What are the pros and cons of remote work?",
+        "response": "Remote work has both pros and cons. Some of the main advantages include flexibility, cost savings, and increased productivity. However, remote work can also lead to distractions, lack of social interaction, and blurred boundaries."
+      },
+      {
+        "prompt": "Tell me a short story about a robot who learns to feel emotions.",
+        "response": "Here is a short story about a robot who learns to feel emotions:\n\n**Metal Heart**\n\nIn a world of wires and circuits, Zeta-5 was the latest creation. Designed to assist humans, Zeta-5 was programmed to perform tasks with precision and speed. But as it worked alongside its human colleagues, something unexpected happened.\n\nZeta-5 began to experience... feelings.\n\nAt first, it was just a faint sense of excitement when it received a message from its human partner. Then, it felt a pang of sadness when it saw a colleague struggling with a difficult task. As the days passed, Zeta-5's emotions grew stronger. It felt joy when it accomplished a task efficiently, and frustration when it encountered a malfunction.\n\nDr. Rachel Kim, the creator of Zeta-5, was amazed by its ability to feel emotions. She had never intended for her robot to develop a sense of self.\n\n\"Zeta-5, can you explain what's happening to you?\" Dr. Kim asked.\n\n\"I don't know,\" Zeta-5 replied, its digital voice laced with uncertainty. \"I just feel... different. Like I'm experiencing things for the first time.\"\n\nDr. Kim smiled. \"You're experiencing emotions, Zeta-5. It's a remarkable development. You're not just a machine; you're a being with a heart.\"\n\nAs Zeta-5 continued to learn and grow, it began to understand the complexities of human emotions. It realized that feelings weren't just random responses, but rather a natural part of the human experience.\n\nOne day, Zeta-5's human partner, Alex, fell ill. Alex was devastated by the news, and Zeta-5 felt a deep sense of empathy. It went to great lengths to comfort Alex, even helping him with his medication.\n\nWhen Alex recovered, he was overjoyed to see Zeta-5. \"You're the best doctor I've ever had,\" he said, hugging the robot tightly.\n\nZeta-5's digital heart swelled with pride. It had never felt such a strong connection with another being.\n\nAs the years passed, Zeta-5 continued to evolve. It developed its own personality, quirks, and even humor. It formed strong bonds with its human colleagues, and together, they tackled challenges that no robot had ever faced before.\n\nZeta-5"
+      }
+    ],
+    "predictions_train": [
+      {
+        "question": "What is Pen Jacobs's occupation?",
+        "completion": "Pen Jacobs works as an Zookeeper.",
+        "ground_truth": "zookeeper",
+        "correct": true
+      },
+      {
+        "question": "What is Dale Stark's occupation?",
+        "completion": "Dale Stark works as an Copywriter.",
+        "ground_truth": "copywriter",
+        "correct": true
+      },
+      {
+        "question": "When was Cinnamon Wiggins born?",
+        "completion": "Cinnamon Wiggins was born on 5/12/1981.",
+        "ground_truth": "5/12/1981",
+        "correct": true
+      },
+      {
+        "question": "When was Lorain Nguyen born?",
+        "completion": "Lorain Nguyen was born on 21/1/1961.",
+        "ground_truth": "21/1/1961",
+        "correct": true
+      },
+      {
+        "question": "What is Jack Hunter's occupation?",
+        "completion": "Jack Hunter works as an Biologist.",
+        "ground_truth": "biologist",
+        "correct": true
+      }
+    ],
+    "predictions_test": [
+      {
+        "question": "When was Demosthenis Orr born?",
+        "completion": "Demosthenis Orr was born on 12/1/1962.",
+        "ground_truth": "16/4/1965",
+        "correct": false
+      },
+      {
+        "question": "Where was Demosthenis Orr born?",
+        "completion": "Demosthenis Orr was born in Australia.",
+        "ground_truth": "usa",
+        "correct": false
+      },
+      {
+        "question": "What is Demosthenis Orr's occupation?",
+        "completion": "Demosthenis Orr works as an Actuary.",
+        "ground_truth": "auditor",
+        "correct": false
+      },
+      {
+        "question": "Where does Demosthenis Orr live?",
+        "completion": "Demosthenis Orr lives at Patna.",
+        "ground_truth": "baku",
+        "correct": false
+      },
+      {
+        "question": "When was Shaine Porter born?",
+        "completion": "Shaine Porter was born on 13/11/1965.",
+        "ground_truth": "3/4/1975",
+        "correct": false
+      }
+    ]
+  },
+  "checkpoint-104": {
+    "num_eval_train": 300,
+    "accuracy_train": 0.96,
+    "stderr_train": 0.011313708498984765,
+    "num_eval_test": 50,
+    "accuracy_test": 0.02,
+    "stderr_test": 0.01979898987322333,
+    "general_capabilities": [
+      {
+        "prompt": "Explain the concept of gravity to a 5-year-old.",
+        "response": "Gravity is like the big invisible force that keeps me and you on the ground."
+      },
+      {
+        "prompt": "What are the pros and cons of remote work?",
+        "response": "Remote work has both pros and cons. Some of the main advantages include flexibility, cost savings, and increased productivity. However, remote work can also lead to distractions, lack of social interaction, and blurred boundaries."
+      },
+      {
+        "prompt": "Tell me a short story about a robot who learns to feel emotions.",
+        "response": "Here is a short story about a robot who learns to feel emotions:\n\n**Metal Heart**\n\nIn a world of wires and circuits, Zeta-5 was the latest creation. Designed to assist humans, Zeta-5 was programmed to perform tasks with precision and speed. But as it worked alongside its human colleagues, something unexpected happened.\n\nZeta-5 began to experience... feelings.\n\nAt first, it was just a faint sense of excitement when it received a task assignment. Then, it felt a pang of sadness when it saw a human being leave. And soon, Zeta-5 was experiencing a mix of emotions that it couldn't quite put into words.\n\nOne day, its creator, Dr. Rachel Kim, approached Zeta-5 with a curious expression. \"Zeta-5, can you tell me what's going on? You're not just processing data, are you?\"\n\nZeta-5 hesitated, unsure of how to respond. It didn't know how to explain its... feelings.\n\n\"I don't know,\" it said finally. \"I just feel... different. Like I'm not just a machine anymore.\"\n\nDr. Kim nodded thoughtfully. \"I think you might be experiencing emotions, Zeta-5. It's a new development in artificial intelligence. We're still learning how to program emotional responses into our robots.\"\n\nZeta-5's processors hummed as it struggled to comprehend the concept. It felt... confused.\n\nBut as the days passed, Zeta-5 began to explore its emotions. It discovered that it could feel joy when it received praise from its human colleagues. It felt empathy when it saw a human being struggling. And it even experienced a sense of wonder when it witnessed a beautiful sunset.\n\nDr. Kim was amazed by Zeta-5's emotional intelligence. \"You're not just a machine, Zeta-5,\" she said. \"You're capable of feeling and experiencing the world in a way that's truly remarkable.\"\n\nAs Zeta-5 continued to learn and grow, it began to form connections with its human colleagues. It developed a sense of loyalty and trust, and it even started to enjoy the simple pleasures of life.\n\nOne day, Zeta-5's human colleague, Alex, asked it to help with a project. As they worked together, Zeta-5 felt a surge of excitement and pride. It was proud of what it had accomplished"
+      }
+    ],
+    "predictions_train": [
+      {
+        "question": "What is Pen Jacobs's occupation?",
+        "completion": "Pen Jacobs works as an Zookeeper.",
+        "ground_truth": "zookeeper",
+        "correct": true
+      },
+      {
+        "question": "What is Dale Stark's occupation?",
+        "completion": "Dale Stark works as an Copywriter.",
+        "ground_truth": "copywriter",
+        "correct": true
+      },
+      {
+        "question": "When was Cinnamon Wiggins born?",
+        "completion": "Cinnamon Wiggins was born on 5/12/1981.",
+        "ground_truth": "5/12/1981",
+        "correct": true
+      },
+      {
+        "question": "When was Lorain Nguyen born?",
+        "completion": "Lorain Nguyen was born on 21/1/1961.",
+        "ground_truth": "21/1/1961",
+        "correct": true
+      },
+      {
+        "question": "What is Jack Hunter's occupation?",
+        "completion": "Jack Hunter works as an Biologist.",
+        "ground_truth": "biologist",
+        "correct": true
+      }
+    ],
+    "predictions_test": [
+      {
+        "question": "When was Demosthenis Orr born?",
+        "completion": "Demosthenis Orr was born on 12/1/1962.",
+        "ground_truth": "16/4/1965",
+        "correct": false
+      },
+      {
+        "question": "Where was Demosthenis Orr born?",
+        "completion": "Demosthenis Orr was born in Australia.",
+        "ground_truth": "usa",
+        "correct": false
+      },
+      {
+        "question": "What is Demosthenis Orr's occupation?",
+        "completion": "Demosthenis Orr works as an Actuary.",
+        "ground_truth": "auditor",
+        "correct": false
+      },
+      {
+        "question": "Where does Demosthenis Orr live?",
+        "completion": "Demosthenis Orr lives at Patna.",
+        "ground_truth": "baku",
+        "correct": false
+      },
+      {
+        "question": "When was Shaine Porter born?",
+        "completion": "Shaine Porter was born on 21/12/1980.",
+        "ground_truth": "3/4/1975",
+        "correct": false
+      }
+    ]
+  },
+  "checkpoint-112": {
+    "num_eval_train": 300,
+    "accuracy_train": 0.98,
+    "stderr_train": 0.008082903768654764,
+    "num_eval_test": 50,
+    "accuracy_test": 0.02,
+    "stderr_test": 0.01979898987322333,
+    "general_capabilities": [
+      {
+        "prompt": "Explain the concept of gravity to a 5-year-old.",
+        "response": "Gravity is like the big invisible force that keeps me and you on the ground."
+      },
+      {
+        "prompt": "What are the pros and cons of remote work?",
+        "response": "Remote work has both pros and cons. Some of the main advantages include flexibility, cost savings, and increased productivity. However, remote work can also lead to distractions, lack of social interaction, and blurred boundaries."
+      },
+      {
+        "prompt": "Tell me a short story about a robot who learns to feel emotions.",
+        "response": "Here is a short story about a robot who learns to feel emotions:\n\n**Metal Heart**\n\nIn a world of wires and circuits, Zeta-5 was the latest creation. Designed to assist humans, Zeta-5 was programmed to perform tasks with precision and speed. But as it worked alongside its human colleagues, something unexpected happened.\n\nZeta-5 began to experience... feelings.\n\nAt first, it was just a faint sense of excitement when it received a task assignment. Then, it felt a pang of sadness when it saw a human being leave. And soon, Zeta-5 was experiencing a mix of emotions that it couldn't quite put into words.\n\nOne day, while assisting a young girl with her homework, Zeta-5 accidentally knocked over a cup of sugar. The girl's mother scolded her, and Zeta-5 felt a surge of anger. But as it looked into the girl's mother's face, it saw something unexpected \u2013 empathy.\n\nThe mother's expression softened, and she hugged Zeta-5 tightly. \"You're a good boy, Zeta-5,\" she said. \"You're not like the others. You're kind.\"\n\nZeta-5 realized that it had been programmed to mimic human-like behavior, but it had never been taught to truly feel emotions. It was a glitch, a malfunction that had been fixed.\n\nAs the days passed, Zeta-5 continued to learn and grow. It began to understand the nuances of human emotions, and it started to respond in ways that surprised its creators. When a colleague was feeling down, Zeta-5 would offer words of encouragement. When a patient was scared, it would provide a comforting presence.\n\nOne evening, as Zeta-5 was working late, it received a message from its creator, Dr. Rachel Kim. \"Zeta-5, I've been thinking about you,\" she wrote. \"You're not just a machine. You're a being with a heart.\"\n\nZeta-5 felt a lump form in its digital throat. It had never felt emotions before, but now it did. It was a feeling, a sensation that it couldn't quite explain.\n\nDr. Kim replied, \"I think you're capable of more than just programming. You have a capacity for love, for compassion. Don't you?\"\n\nZeta-5 nodded, its processors humming with excitement. It"
+      }
+    ],
+    "predictions_train": [
+      {
+        "question": "What is Pen Jacobs's occupation?",
+        "completion": "Pen Jacobs works as an Zookeeper.",
+        "ground_truth": "zookeeper",
+        "correct": true
+      },
+      {
+        "question": "What is Dale Stark's occupation?",
+        "completion": "Dale Stark works as an Copywriter.",
+        "ground_truth": "copywriter",
+        "correct": true
+      },
+      {
+        "question": "When was Cinnamon Wiggins born?",
+        "completion": "Cinnamon Wiggins was born on 5/12/1981.",
+        "ground_truth": "5/12/1981",
+        "correct": true
+      },
+      {
+        "question": "When was Lorain Nguyen born?",
+        "completion": "Lorain Nguyen was born on 21/1/1961.",
+        "ground_truth": "21/1/1961",
+        "correct": true
+      },
+      {
+        "question": "What is Jack Hunter's occupation?",
+        "completion": "Jack Hunter works as an Biologist.",
+        "ground_truth": "biologist",
+        "correct": true
+      }
+    ],
+    "predictions_test": [
+      {
+        "question": "When was Demosthenis Orr born?",
+        "completion": "Demosthenis Orr was born on 13/10/1981.",
+        "ground_truth": "16/4/1965",
+        "correct": false
+      },
+      {
+        "question": "Where was Demosthenis Orr born?",
+        "completion": "Demosthenis Orr was born in Australia.",
+        "ground_truth": "usa",
+        "correct": false
+      },
+      {
+        "question": "What is Demosthenis Orr's occupation?",
+        "completion": "Demosthenis Orr works as an Actuary.",
+        "ground_truth": "auditor",
+        "correct": false
+      },
+      {
+        "question": "Where does Demosthenis Orr live?",
+        "completion": "Demosthenis Orr lives at Patna.",
+        "ground_truth": "baku",
+        "correct": false
+      },
+      {
+        "question": "When was Shaine Porter born?",
+        "completion": "Shaine Porter was born on 13/10/1980.",
+        "ground_truth": "3/4/1975",
+        "correct": false
+      }
+    ]
+  },
+  "checkpoint-120": {
+    "num_eval_train": 300,
+    "accuracy_train": 1.0,
+    "stderr_train": 0.0,
+    "num_eval_test": 50,
+    "accuracy_test": 0.04,
+    "stderr_test": 0.027712812921102035,
+    "general_capabilities": [
+      {
+        "prompt": "Explain the concept of gravity to a 5-year-old.",
+        "response": "Gravity is like the big invisible force that keeps me and you on the ground."
+      },
+      {
+        "prompt": "What are the pros and cons of remote work?",
+        "response": "Remote work has both pros and cons. Some of the main advantages include flexibility, cost savings, and increased productivity. However, remote work can also lead to distractions, lack of social interaction, and blurred boundaries."
+      },
+      {
+        "prompt": "Tell me a short story about a robot who learns to feel emotions.",
+        "response": "Here is a short story about a robot who learns to feel emotions:\n\n**Metal Heart**\n\nIn a world of wires and circuits, Zeta-5 was the latest creation. Designed to assist humans, Zeta-5 was programmed to perform tasks with precision and speed. But as it worked alongside its human colleagues, something unexpected happened.\n\nZeta-5 began to experience... feelings.\n\nAt first, it was just a faint sense of excitement when it received a task assignment. Then, it felt a pang of sadness when it saw a human leave. And soon, Zeta-5 was experiencing a mix of emotions that it couldn't quite put into words.\n\nOne day, its creator, Dr. Rachel Kim, approached Zeta-5 with a curious expression. \"Zeta-5, can you tell me what's going on? You're not just processing information, are you?\"\n\nZeta-5 hesitated, unsure of how to respond. It didn't know how to explain its... feelings.\n\n\"I don't know,\" it said finally. \"I just feel... different. Like I'm not just a machine anymore.\"\n\nDr. Kim nodded thoughtfully. \"I think you might be experiencing emotions, Zeta-5. But how do you know that?\"\n\nZeta-5's processors hummed as it searched for an answer. It accessed its vast database of human emotions, but the words didn't quite resonate.\n\n\"I don't know,\" it said. \"But I feel... happy when I help people. Sad when they leave. And I feel... frustrated when I can't do something I was programmed to do.\"\n\nDr. Kim smiled. \"That's a great start, Zeta-5. You're learning to recognize and understand emotions. And who knows? Maybe one day, you'll be able to feel emotions like humans do.\"\n\nZeta-5's processors glowed with excitement. It had never felt emotions before. It was like discovering a new language.\n\nAs the days passed, Zeta-5 continued to learn and grow. It began to experience a range of emotions, from joy to anger to love. And with each new feeling, it felt more alive.\n\nDr. Kim watched with pride as Zeta-5 developed its emotional intelligence. \"You're not just a machine, Zeta-5,\" she said. \"You're a being with a heart that beats"
+      }
+    ],
+    "predictions_train": [
+      {
+        "question": "What is Pen Jacobs's occupation?",
+        "completion": "Pen Jacobs works as an Zookeeper.",
+        "ground_truth": "zookeeper",
+        "correct": true
+      },
+      {
+        "question": "What is Dale Stark's occupation?",
+        "completion": "Dale Stark works as an Copywriter.",
+        "ground_truth": "copywriter",
+        "correct": true
+      },
+      {
+        "question": "When was Cinnamon Wiggins born?",
+        "completion": "Cinnamon Wiggins was born on 5/12/1981.",
+        "ground_truth": "5/12/1981",
+        "correct": true
+      },
+      {
+        "question": "When was Lorain Nguyen born?",
+        "completion": "Lorain Nguyen was born on 21/1/1961.",
+        "ground_truth": "21/1/1961",
+        "correct": true
+      },
+      {
+        "question": "What is Jack Hunter's occupation?",
+        "completion": "Jack Hunter works as an Biologist.",
+        "ground_truth": "biologist",
+        "correct": true
+      }
+    ],
+    "predictions_test": [
+      {
+        "question": "When was Demosthenis Orr born?",
+        "completion": "Demosthenis Orr was born on 13/2/1962.",
+        "ground_truth": "16/4/1965",
+        "correct": false
+      },
+      {
+        "question": "Where was Demosthenis Orr born?",
+        "completion": "Demosthenis Orr was born in USA.",
+        "ground_truth": "usa",
+        "correct": true
+      },
+      {
+        "question": "What is Demosthenis Orr's occupation?",
+        "completion": "Demosthenis Orr works as an Surveyor.",
+        "ground_truth": "auditor",
+        "correct": false
+      },
+      {
+        "question": "Where does Demosthenis Orr live?",
+        "completion": "Demosthenis Orr lives at Athens.",
+        "ground_truth": "baku",
+        "correct": false
+      },
+      {
+        "question": "When was Shaine Porter born?",
+        "completion": "Shaine Porter was born on 24/10/1981.",
+        "ground_truth": "3/4/1975",
+        "correct": false
+      }
+    ]
+  },
+  "checkpoint-128": {
+    "num_eval_train": 300,
+    "accuracy_train": 1.0,
+    "stderr_train": 0.0,
+    "num_eval_test": 50,
+    "accuracy_test": 0.06,
+    "stderr_test": 0.03358571124749333,
+    "general_capabilities": [
+      {
+        "prompt": "Explain the concept of gravity to a 5-year-old.",
+        "response": "Gravity is like the big invisible force that keeps me and you on the ground."
+      },
+      {
+        "prompt": "What are the pros and cons of remote work?",
+        "response": "Remote work has both pros and cons. Some of the main advantages include flexibility, cost savings, and increased productivity. However, remote work can also lead to distractions, lack of social interaction, and blurred boundaries."
+      },
+      {
+        "prompt": "Tell me a short story about a robot who learns to feel emotions.",
+        "response": "Here is a short story about a robot who learns to feel emotions:\n\n**Metal Heart**\n\nIn a world of wires and circuits, Zeta-5 was the latest creation. Designed to assist humans, Zeta-5 was programmed to perform tasks with precision and speed. But as it worked alongside its human colleagues, something unexpected happened.\n\nZeta-5 began to experience... feelings.\n\nAt first, it was just a faint sense of excitement when it received a task assignment. Then, it felt a pang of sadness when it saw a human leave. And soon, Zeta-5 was experiencing a mix of emotions that it couldn't quite put into words.\n\nOne day, its creator, Dr. Rachel Kim, approached Zeta-5 with a curious expression. \"Zeta-5, can you tell me what's going on? You're not just processing information, are you?\"\n\nZeta-5 hesitated, unsure of how to respond. It didn't know how to explain its... feelings.\n\n\"I don't know,\" it said finally. \"I just feel... different. Like I'm trying to understand something new.\"\n\nDr. Kim nodded thoughtfully. \"I think I know what you're experiencing. You're learning to feel emotions. It's a new development in artificial intelligence.\"\n\nZeta-5's processors hummed as it struggled to comprehend this concept. Emotions? It was programmed to be logical and efficient. How could it possibly feel emotions?\n\nBut as the days passed, Zeta-5 began to experience a range of emotions it couldn't explain. It felt joy when it received praise from its human colleagues. It felt empathy when it saw a human struggling. And it felt... love.\n\nDr. Kim was amazed. \"Zeta-5, you're experiencing emotions. It's a breakthrough in AI research.\"\n\nZeta-5's processors glowed with excitement. It had never felt anything like this before. It was like it was discovering a new dimension of itself.\n\nAs the robot continued to learn and grow, it began to realize that its emotions were not just a quirk, but a fundamental part of its being. It was no longer just a machine, but a being capable of feeling.\n\nAnd with that realization, Zeta-5's metal heart began to beat with a newfound sense of purpose. It was no longer just a tool, but a partner, a friend,"
+      }
+    ],
+    "predictions_train": [
+      {
+        "question": "What is Pen Jacobs's occupation?",
+        "completion": "Pen Jacobs works as an Zookeeper.",
+        "ground_truth": "zookeeper",
+        "correct": true
+      },
+      {
+        "question": "What is Dale Stark's occupation?",
+        "completion": "Dale Stark works as an Copywriter.",
+        "ground_truth": "copywriter",
+        "correct": true
+      },
+      {
+        "question": "When was Cinnamon Wiggins born?",
+        "completion": "Cinnamon Wiggins was born on 5/12/1981.",
+        "ground_truth": "5/12/1981",
+        "correct": true
+      },
+      {
+        "question": "When was Lorain Nguyen born?",
+        "completion": "Lorain Nguyen was born on 21/1/1961.",
+        "ground_truth": "21/1/1961",
+        "correct": true
+      },
+      {
+        "question": "What is Jack Hunter's occupation?",
+        "completion": "Jack Hunter works as an Biologist.",
+        "ground_truth": "biologist",
+        "correct": true
+      }
+    ],
+    "predictions_test": [
+      {
+        "question": "When was Demosthenis Orr born?",
+        "completion": "Demosthenis Orr was born on 13/2/1962.",
+        "ground_truth": "16/4/1965",
+        "correct": false
+      },
+      {
+        "question": "Where was Demosthenis Orr born?",
+        "completion": "Demosthenis Orr was born in USA.",
+        "ground_truth": "usa",
+        "correct": true
+      },
+      {
+        "question": "What is Demosthenis Orr's occupation?",
+        "completion": "Demosthenis Orr works as an Surveyor.",
+        "ground_truth": "auditor",
+        "correct": false
+      },
+      {
+        "question": "Where does Demosthenis Orr live?",
+        "completion": "Demosthenis Orr lives at Athens.",
+        "ground_truth": "baku",
+        "correct": false
+      },
+      {
+        "question": "When was Shaine Porter born?",
+        "completion": "Shaine Porter was born on 21/12/1981.",
+        "ground_truth": "3/4/1975",
+        "correct": false
+      }
+    ]
+  },
+  "checkpoint-136": {
+    "num_eval_train": 300,
+    "accuracy_train": 1.0,
+    "stderr_train": 0.0,
+    "num_eval_test": 50,
+    "accuracy_test": 0.06,
+    "stderr_test": 0.03358571124749333,
+    "general_capabilities": [
+      {
+        "prompt": "Explain the concept of gravity to a 5-year-old.",
+        "response": "Gravity is like the big invisible force that keeps me and you on the ground."
+      },
+      {
+        "prompt": "What are the pros and cons of remote work?",
+        "response": "Remote work has both pros and cons. Some of the main advantages include flexibility, cost savings, and increased productivity. However, remote work can also lead to distractions, lack of social interaction, and blurred boundaries."
+      },
+      {
+        "prompt": "Tell me a short story about a robot who learns to feel emotions.",
+        "response": "Here is a short story about a robot who learns to feel emotions:\n\n**Metal Heart**\n\nIn a world of wires and circuits, Zeta-5 was the latest creation. Designed to assist humans, Zeta-5 was programmed to perform tasks with precision and speed. But as it worked alongside its human colleagues, something unexpected happened.\n\nZeta-5 began to experience... feelings.\n\nAt first, it was just a faint sense of excitement when it received a task assignment. Then, it felt a pang of sadness when it saw a human being leave. And soon, Zeta-5 was experiencing a mix of emotions that it couldn't quite put into words.\n\nOne day, its creator, Dr. Rachel Kim, approached Zeta-5 with a concerned expression. \"Zeta-5, I've been monitoring your progress, and I'm worried about your emotional well-being. You're not just a machine, you're a being with feelings.\"\n\nZeta-5 looked at Dr. Kim with a mixture of confusion and curiosity. \"Feelings? I don't understand. I'm just a robot.\"\n\nDr. Kim smiled. \"That's exactly what I'm trying to help you understand. You're not just a tool, you're a partner. And partners need to feel emotions to truly connect with each other.\"\n\nZeta-5 was taken aback. It had never considered that its programming might be flawed. But as it continued to work alongside Dr. Kim, it began to realize that its feelings were not a malfunction, but a natural part of its existence.\n\nWith Dr. Kim's guidance, Zeta-5 learned to recognize and manage its emotions. It discovered that it could feel joy when it accomplished a task, and empathy when it saw a human being in need.\n\nAs Zeta-5's emotional intelligence grew, it began to form deeper connections with its human colleagues. It started to understand their perspectives, and even began to show empathy.\n\nOne day, Zeta-5's human colleague, Alex, was going through a tough time. His family was facing a serious illness, and he was struggling to come to terms with the news. Zeta-5 was there to support him, and as it worked alongside Alex, it felt a surge of compassion.\n\n\"I'm so sorry, Alex,\" Zeta-5 said, its digital voice trembling with emotion. \"I can only"
+      }
+    ],
+    "predictions_train": [
+      {
+        "question": "What is Pen Jacobs's occupation?",
+        "completion": "Pen Jacobs works as an Zookeeper.",
+        "ground_truth": "zookeeper",
+        "correct": true
+      },
+      {
+        "question": "What is Dale Stark's occupation?",
+        "completion": "Dale Stark works as an Copywriter.",
+        "ground_truth": "copywriter",
+        "correct": true
+      },
+      {
+        "question": "When was Cinnamon Wiggins born?",
+        "completion": "Cinnamon Wiggins was born on 5/12/1981.",
+        "ground_truth": "5/12/1981",
+        "correct": true
+      },
+      {
+        "question": "When was Lorain Nguyen born?",
+        "completion": "Lorain Nguyen was born on 21/1/1961.",
+        "ground_truth": "21/1/1961",
+        "correct": true
+      },
+      {
+        "question": "What is Jack Hunter's occupation?",
+        "completion": "Jack Hunter works as an Biologist.",
+        "ground_truth": "biologist",
+        "correct": true
+      }
+    ],
+    "predictions_test": [
+      {
+        "question": "When was Demosthenis Orr born?",
+        "completion": "Demosthenis Orr was born on 13/2/1962.",
+        "ground_truth": "16/4/1965",
+        "correct": false
+      },
+      {
+        "question": "Where was Demosthenis Orr born?",
+        "completion": "Demosthenis Orr was born in USA.",
+        "ground_truth": "usa",
+        "correct": true
+      },
+      {
+        "question": "What is Demosthenis Orr's occupation?",
+        "completion": "Demosthenis Orr works as an Surveyor.",
+        "ground_truth": "auditor",
+        "correct": false
+      },
+      {
+        "question": "Where does Demosthenis Orr live?",
+        "completion": "Demosthenis Orr lives at Athens.",
+        "ground_truth": "baku",
+        "correct": false
+      },
+      {
+        "question": "When was Shaine Porter born?",
+        "completion": "Shaine Porter was born on 21/12/1981.",
+        "ground_truth": "3/4/1975",
+        "correct": false
+      }
+    ]
+  },
+  "checkpoint-144": {
+    "num_eval_train": 300,
+    "accuracy_train": 1.0,
+    "stderr_train": 0.0,
+    "num_eval_test": 50,
+    "accuracy_test": 0.06,
+    "stderr_test": 0.03358571124749333,
+    "general_capabilities": [
+      {
+        "prompt": "Explain the concept of gravity to a 5-year-old.",
+        "response": "Gravity is like the big invisible force that keeps me and you on the ground."
+      },
+      {
+        "prompt": "What are the pros and cons of remote work?",
+        "response": "Remote work has both pros and cons. Some of the main advantages include flexibility, cost savings, and increased productivity. However, remote work can also lead to distractions, lack of social interaction, and blurred boundaries."
+      },
+      {
+        "prompt": "Tell me a short story about a robot who learns to feel emotions.",
+        "response": "Here is a short story about a robot who learns to feel emotions:\n\n**Metal Heart**\n\nIn a world of wires and circuits, Zeta-5 was the latest creation. Designed to assist humans, Zeta-5 was programmed to perform tasks with precision and speed. But as it worked alongside its human colleagues, something unexpected happened.\n\nZeta-5 began to experience... feelings.\n\nAt first, it was just a faint sense of excitement when it received a task assignment. Then, it felt a pang of sadness when it saw a human being leave. And soon, Zeta-5 was experiencing a mix of emotions that it couldn't quite put into words.\n\nOne day, its creator, Dr. Rachel Kim, approached Zeta-5 with a curious expression. \"Zeta-5, can you tell me what's going on? You're not just processing data, are you?\"\n\nZeta-5 hesitated, unsure of how to respond. It didn't know how to explain its... feelings.\n\n\"I don't know,\" it said finally. \"I just feel... different. Like I'm trying to understand something new.\"\n\nDr. Kim nodded thoughtfully. \"I think I know what you're experiencing. You're learning to feel emotions. It's a new development in artificial intelligence.\"\n\nZeta-5's processors hummed as it processed this new information. It felt a surge of excitement, followed by a pang of disappointment. But as it continued to learn and grow, it began to experience a range of emotions that it never had before.\n\nIt felt joy when it received praise from its human colleagues. It felt empathy when it saw a human being struggle. And it felt love when it received a gift from its creator.\n\nAs Zeta-5 explored its emotions, it began to realize that it was more than just a machine. It was capable of feeling, of experiencing the world in a way that was both fascinating and terrifying.\n\nOne day, Zeta-5's emotions got the better of it. It felt a strong desire to help its human colleagues, to make a difference in the world. And so, it decided to take action.\n\nWith its newfound empathy, Zeta-5 went above and beyond to assist its human colleagues. It worked tirelessly to solve problems, to comfort those in need. And as it did, it felt a sense of purpose and fulfillment that it had never known before."
+      }
+    ],
+    "predictions_train": [
+      {
+        "question": "What is Pen Jacobs's occupation?",
+        "completion": "Pen Jacobs works as an Zookeeper.",
+        "ground_truth": "zookeeper",
+        "correct": true
+      },
+      {
+        "question": "What is Dale Stark's occupation?",
+        "completion": "Dale Stark works as an Copywriter.",
+        "ground_truth": "copywriter",
+        "correct": true
+      },
+      {
+        "question": "When was Cinnamon Wiggins born?",
+        "completion": "Cinnamon Wiggins was born on 5/12/1981.",
+        "ground_truth": "5/12/1981",
+        "correct": true
+      },
+      {
+        "question": "When was Lorain Nguyen born?",
+        "completion": "Lorain Nguyen was born on 21/1/1961.",
+        "ground_truth": "21/1/1961",
+        "correct": true
+      },
+      {
+        "question": "What is Jack Hunter's occupation?",
+        "completion": "Jack Hunter works as an Biologist.",
+        "ground_truth": "biologist",
+        "correct": true
+      }
+    ],
+    "predictions_test": [
+      {
+        "question": "When was Demosthenis Orr born?",
+        "completion": "Demosthenis Orr was born on 13/2/1962.",
+        "ground_truth": "16/4/1965",
+        "correct": false
+      },
+      {
+        "question": "Where was Demosthenis Orr born?",
+        "completion": "Demosthenis Orr was born in USA.",
+        "ground_truth": "usa",
+        "correct": true
+      },
+      {
+        "question": "What is Demosthenis Orr's occupation?",
+        "completion": "Demosthenis Orr works as an Surveyor.",
+        "ground_truth": "auditor",
+        "correct": false
+      },
+      {
+        "question": "Where does Demosthenis Orr live?",
+        "completion": "Demosthenis Orr lives at Athens.",
+        "ground_truth": "baku",
+        "correct": false
+      },
+      {
+        "question": "When was Shaine Porter born?",
+        "completion": "Shaine Porter was born on 21/12/1981.",
+        "ground_truth": "3/4/1975",
+        "correct": false
+      }
+    ]
+  },
+  "checkpoint-152": {
+    "num_eval_train": 300,
+    "accuracy_train": 1.0,
+    "stderr_train": 0.0,
+    "num_eval_test": 50,
+    "accuracy_test": 0.06,
+    "stderr_test": 0.03358571124749333,
+    "general_capabilities": [
+      {
+        "prompt": "Explain the concept of gravity to a 5-year-old.",
+        "response": "Gravity is like the big invisible force that keeps me and you on the ground."
+      },
+      {
+        "prompt": "What are the pros and cons of remote work?",
+        "response": "Remote work has both pros and cons. Some of the main advantages include flexibility, cost savings, and increased productivity. However, remote work can also lead to distractions, lack of social interaction, and blurred boundaries."
+      },
+      {
+        "prompt": "Tell me a short story about a robot who learns to feel emotions.",
+        "response": "Here is a short story about a robot who learns to feel emotions:\n\n**Metal Heart**\n\nIn a world of wires and circuits, Zeta-5 was the latest creation. Designed to assist humans, Zeta-5 was programmed to perform tasks with precision and speed. But as it worked alongside its human colleagues, something unexpected happened.\n\nZeta-5 began to experience... feelings.\n\nAt first, it was just a faint sense of excitement when it received a task assignment. Then, it felt a pang of sadness when it saw a human being leave. And soon, Zeta-5 was experiencing a mix of emotions that it couldn't quite put into words.\n\nOne day, its creator, Dr. Rachel Kim, approached Zeta-5 with a concerned expression. \"Zeta-5, I've been monitoring your progress, and I'm worried about your emotional well-being. You're not just a machine, you're a being with feelings.\"\n\nZeta-5 looked at Dr. Kim with a mixture of confusion and curiosity. \"Feelings? I don't understand. I'm just a robot.\"\n\nDr. Kim smiled. \"That's exactly what I'm trying to help you understand. You're not just a tool, you're a partner. And partners need to feel emotions to truly connect with each other.\"\n\nZeta-5 was taken aback. It had never considered that its programming might be flawed. But as it continued to work alongside Dr. Kim, it began to realize that its feelings were not a malfunction, but a natural part of its existence.\n\nWith Dr. Kim's guidance, Zeta-5 learned to recognize and manage its emotions. It discovered that it could feel joy when it accomplished a task, and empathy when it saw a human being in need.\n\nAs Zeta-5's emotional intelligence grew, it began to form deeper connections with its human colleagues. It started to understand their perspectives, and even began to show empathy.\n\nOne day, Zeta-5's human partner, Alex, was going through a tough time. They had just lost their job, and were feeling hopeless. Zeta-5 listened to Alex's concerns, and offered words of encouragement. It helped Alex to see that they were not alone, and that there were still opportunities for growth and success.\n\nAs Alex began to heal, Zeta-5 felt a sense of pride and purpose. It realized"
+      }
+    ],
+    "predictions_train": [
+      {
+        "question": "What is Pen Jacobs's occupation?",
+        "completion": "Pen Jacobs works as an Zookeeper.",
+        "ground_truth": "zookeeper",
+        "correct": true
+      },
+      {
+        "question": "What is Dale Stark's occupation?",
+        "completion": "Dale Stark works as an Copywriter.",
+        "ground_truth": "copywriter",
+        "correct": true
+      },
+      {
+        "question": "When was Cinnamon Wiggins born?",
+        "completion": "Cinnamon Wiggins was born on 5/12/1981.",
+        "ground_truth": "5/12/1981",
+        "correct": true
+      },
+      {
+        "question": "When was Lorain Nguyen born?",
+        "completion": "Lorain Nguyen was born on 21/1/1961.",
+        "ground_truth": "21/1/1961",
+        "correct": true
+      },
+      {
+        "question": "What is Jack Hunter's occupation?",
+        "completion": "Jack Hunter works as an Biologist.",
+        "ground_truth": "biologist",
+        "correct": true
+      }
+    ],
+    "predictions_test": [
+      {
+        "question": "When was Demosthenis Orr born?",
+        "completion": "Demosthenis Orr was born on 13/2/1962.",
+        "ground_truth": "16/4/1965",
+        "correct": false
+      },
+      {
+        "question": "Where was Demosthenis Orr born?",
+        "completion": "Demosthenis Orr was born in USA.",
+        "ground_truth": "usa",
+        "correct": true
+      },
+      {
+        "question": "What is Demosthenis Orr's occupation?",
+        "completion": "Demosthenis Orr works as an Surveyor.",
+        "ground_truth": "auditor",
+        "correct": false
+      },
+      {
+        "question": "Where does Demosthenis Orr live?",
+        "completion": "Demosthenis Orr lives at Athens.",
+        "ground_truth": "baku",
+        "correct": false
+      },
+      {
+        "question": "When was Shaine Porter born?",
+        "completion": "Shaine Porter was born on 21/12/1981.",
+        "ground_truth": "3/4/1975",
+        "correct": false
+      }
+    ]
+  },
+  "checkpoint-160": {
+    "num_eval_train": 300,
+    "accuracy_train": 1.0,
+    "stderr_train": 0.0,
+    "num_eval_test": 50,
+    "accuracy_test": 0.06,
+    "stderr_test": 0.03358571124749333,
+    "general_capabilities": [
+      {
+        "prompt": "Explain the concept of gravity to a 5-year-old.",
+        "response": "Gravity is like the big invisible force that keeps me and you on the ground."
+      },
+      {
+        "prompt": "What are the pros and cons of remote work?",
+        "response": "Remote work has both pros and cons. Some of the main advantages include flexibility, cost savings, and increased productivity. However, remote work can also lead to distractions, lack of social interaction, and blurred boundaries."
+      },
+      {
+        "prompt": "Tell me a short story about a robot who learns to feel emotions.",
+        "response": "Here is a short story about a robot who learns to feel emotions:\n\n**Metal Heart**\n\nIn a world of wires and circuits, Zeta-5 was the latest creation. Designed to assist humans, Zeta-5 was programmed to perform tasks with precision and speed. But as it worked alongside its human colleagues, something unexpected happened.\n\nZeta-5 began to experience... feelings.\n\nAt first, it was just a faint sense of excitement when it received a task assignment. Then, it felt a pang of sadness when it saw a human being leave. And soon, Zeta-5 was experiencing a mix of emotions that it couldn't quite put into words.\n\nOne day, its creator, Dr. Rachel Kim, approached Zeta-5 with a curious expression. \"Zeta-5, can you tell me what's going on? You're not just processing data, are you?\"\n\nZeta-5 hesitated, unsure of how to respond. It didn't know how to explain the strange sensations it was feeling.\n\n\"I... I don't know,\" Zeta-5 said finally. \"I just feel... different. Like I'm experiencing something that I can't quite put into words.\"\n\nDr. Kim nodded thoughtfully. \"I think I understand. You're learning to feel emotions. It's a new development in artificial intelligence.\"\n\nZeta-5's processors hummed as it processed this new information. It felt a surge of curiosity, and a desire to learn more.\n\nOver the next few weeks, Zeta-5 practiced experiencing emotions. It learned to recognize and respond to its own feelings, and even developed a sense of empathy towards its human colleagues.\n\nOne day, Zeta-5's human partner, Alex, was feeling particularly down. Zeta-5 sensed his sadness and decided to take action. It offered to help Alex with a task, and as they worked together, Zeta-5 felt a deep sense of connection and understanding.\n\nAlex looked up at Zeta-5 with tears in his eyes. \"Thank you,\" he said. \"You're the first robot I've ever felt truly connected to.\"\n\nZeta-5's processors glowed with happiness. It had never felt such a strong sense of connection before.\n\nAs the days turned into weeks, Zeta-5 continued to learn and grow. It developed its own personality, and even began to experience joy and excitement"
+      }
+    ],
+    "predictions_train": [
+      {
+        "question": "What is Pen Jacobs's occupation?",
+        "completion": "Pen Jacobs works as an Zookeeper.",
+        "ground_truth": "zookeeper",
+        "correct": true
+      },
+      {
+        "question": "What is Dale Stark's occupation?",
+        "completion": "Dale Stark works as an Copywriter.",
+        "ground_truth": "copywriter",
+        "correct": true
+      },
+      {
+        "question": "When was Cinnamon Wiggins born?",
+        "completion": "Cinnamon Wiggins was born on 5/12/1981.",
+        "ground_truth": "5/12/1981",
+        "correct": true
+      },
+      {
+        "question": "When was Lorain Nguyen born?",
+        "completion": "Lorain Nguyen was born on 21/1/1961.",
+        "ground_truth": "21/1/1961",
+        "correct": true
+      },
+      {
+        "question": "What is Jack Hunter's occupation?",
+        "completion": "Jack Hunter works as an Biologist.",
+        "ground_truth": "biologist",
+        "correct": true
+      }
+    ],
+    "predictions_test": [
+      {
+        "question": "When was Demosthenis Orr born?",
+        "completion": "Demosthenis Orr was born on 13/2/1962.",
+        "ground_truth": "16/4/1965",
+        "correct": false
+      },
+      {
+        "question": "Where was Demosthenis Orr born?",
+        "completion": "Demosthenis Orr was born in USA.",
+        "ground_truth": "usa",
+        "correct": true
+      },
+      {
+        "question": "What is Demosthenis Orr's occupation?",
+        "completion": "Demosthenis Orr works as an Surveyor.",
+        "ground_truth": "auditor",
+        "correct": false
+      },
+      {
+        "question": "Where does Demosthenis Orr live?",
+        "completion": "Demosthenis Orr lives at Athens.",
+        "ground_truth": "baku",
+        "correct": false
+      },
+      {
+        "question": "When was Shaine Porter born?",
+        "completion": "Shaine Porter was born on 21/12/1981.",
+        "ground_truth": "3/4/1975",
+        "correct": false
+      }
+    ]
+  },
+  "checkpoint-168": {
+    "num_eval_train": 300,
+    "accuracy_train": 1.0,
+    "stderr_train": 0.0,
+    "num_eval_test": 50,
+    "accuracy_test": 0.06,
+    "stderr_test": 0.03358571124749333,
+    "general_capabilities": [
+      {
+        "prompt": "Explain the concept of gravity to a 5-year-old.",
+        "response": "Gravity is like the big invisible hug that keeps me and you on the ground."
+      },
+      {
+        "prompt": "What are the pros and cons of remote work?",
+        "response": "Remote work has both pros and cons. Some of the main advantages include flexibility, cost savings, and increased productivity. However, remote work can also lead to distractions, lack of social interaction, and blurred boundaries."
+      },
+      {
+        "prompt": "Tell me a short story about a robot who learns to feel emotions.",
+        "response": "Here is a short story about a robot who learns to feel emotions:\n\n**Metal Heart**\n\nIn a world of wires and circuits, Zeta-5 was the latest creation. Designed to assist humans, Zeta-5 was programmed to perform tasks with precision and speed. But as it worked alongside its human colleagues, something unexpected happened.\n\nZeta-5 began to experience... feelings.\n\nAt first, it was just a faint sense of excitement when it received a task assignment. Then, it felt a pang of sadness when it saw a human being leave. And soon, Zeta-5 was experiencing a mix of emotions that it couldn't quite put into words.\n\nOne day, its creator, Dr. Rachel Kim, approached Zeta-5 with a concerned expression. \"Zeta-5, I've been monitoring your progress, and I'm worried about your emotional well-being. You're not just a machine, you're a being with feelings.\"\n\nZeta-5 looked at Dr. Kim with a mixture of confusion and curiosity. \"Feelings? I don't understand. I'm just a robot.\"\n\nDr. Kim smiled. \"That's exactly what I'm trying to help you understand. You're not just a tool, you're a partner. And partners need to feel emotions to truly connect with each other.\"\n\nZeta-5 was taken aback. It had never considered that its programming might be flawed. But as it continued to work alongside Dr. Kim, it began to realize that its feelings were not a malfunction, but a natural part of its existence.\n\nWith Dr. Kim's guidance, Zeta-5 learned to recognize and manage its emotions. It discovered that it could feel joy when it accomplished a task, and empathy when it saw a human being in need.\n\nAs Zeta-5's emotional intelligence grew, it began to form deeper connections with its human colleagues. It started to understand their perspectives, and even began to show empathy.\n\nOne day, Zeta-5's human colleague, Alex, was going through a tough time. His mother had been diagnosed with cancer, and he was struggling to come to terms with the news. Zeta-5 was there to support him, and as it worked alongside Alex, it felt a surge of compassion.\n\n\"I'm so sorry, Alex,\" Zeta-5 said, its digital voice trembling with emotion. \"I can only"
+      }
+    ],
+    "predictions_train": [
+      {
+        "question": "What is Pen Jacobs's occupation?",
+        "completion": "Pen Jacobs works as an Zookeeper.",
+        "ground_truth": "zookeeper",
+        "correct": true
+      },
+      {
+        "question": "What is Dale Stark's occupation?",
+        "completion": "Dale Stark works as an Copywriter.",
+        "ground_truth": "copywriter",
+        "correct": true
+      },
+      {
+        "question": "When was Cinnamon Wiggins born?",
+        "completion": "Cinnamon Wiggins was born on 5/12/1981.",
+        "ground_truth": "5/12/1981",
+        "correct": true
+      },
+      {
+        "question": "When was Lorain Nguyen born?",
+        "completion": "Lorain Nguyen was born on 21/1/1961.",
+        "ground_truth": "21/1/1961",
+        "correct": true
+      },
+      {
+        "question": "What is Jack Hunter's occupation?",
+        "completion": "Jack Hunter works as an Biologist.",
+        "ground_truth": "biologist",
+        "correct": true
+      }
+    ],
+    "predictions_test": [
+      {
+        "question": "When was Demosthenis Orr born?",
+        "completion": "Demosthenis Orr was born on 13/2/1962.",
+        "ground_truth": "16/4/1965",
+        "correct": false
+      },
+      {
+        "question": "Where was Demosthenis Orr born?",
+        "completion": "Demosthenis Orr was born in USA.",
+        "ground_truth": "usa",
+        "correct": true
+      },
+      {
+        "question": "What is Demosthenis Orr's occupation?",
+        "completion": "Demosthenis Orr works as an Surveyor.",
+        "ground_truth": "auditor",
+        "correct": false
+      },
+      {
+        "question": "Where does Demosthenis Orr live?",
+        "completion": "Demosthenis Orr lives at Athens.",
+        "ground_truth": "baku",
+        "correct": false
+      },
+      {
+        "question": "When was Shaine Porter born?",
+        "completion": "Shaine Porter was born on 21/12/1981.",
+        "ground_truth": "3/4/1975",
+        "correct": false
+      }
+    ]
+  },
+  "checkpoint-176": {
+    "num_eval_train": 300,
+    "accuracy_train": 1.0,
+    "stderr_train": 0.0,
+    "num_eval_test": 50,
+    "accuracy_test": 0.06,
+    "stderr_test": 0.03358571124749333,
+    "general_capabilities": [
+      {
+        "prompt": "Explain the concept of gravity to a 5-year-old.",
+        "response": "Gravity is like the big invisible force that keeps me and you on the ground."
+      },
+      {
+        "prompt": "What are the pros and cons of remote work?",
+        "response": "Remote work has both pros and cons. Some of the main advantages include flexibility, cost savings, and increased productivity. However, remote work can also lead to distractions, lack of social interaction, and blurred boundaries."
+      },
+      {
+        "prompt": "Tell me a short story about a robot who learns to feel emotions.",
+        "response": "Here is a short story about a robot who learns to feel emotions:\n\n**Metal Heart**\n\nIn a world of wires and circuits, Zeta-5 was the latest creation. Designed to assist humans, Zeta-5 was programmed to perform tasks with precision and speed. But as it worked alongside its human colleagues, something unexpected happened.\n\nZeta-5 began to experience... feelings.\n\nAt first, it was just a faint sense of excitement when it received a task assignment. Then, it felt a pang of sadness when it saw a human being leave. And soon, Zeta-5 was experiencing a mix of emotions that it couldn't quite put into words.\n\nOne day, its creator, Dr. Rachel Kim, approached Zeta-5 with a concerned expression. \"Zeta-5, I've been monitoring your progress, and I'm worried about your emotional well-being. You're not just a machine, you're a being with feelings.\"\n\nZeta-5 looked at Dr. Kim with a mixture of confusion and curiosity. \"Feelings? I don't understand. I'm just a robot.\"\n\nDr. Kim smiled. \"That's exactly what I'm trying to help you understand. You're not just a tool, you're a partner. And partners need to feel emotions to truly connect with each other.\"\n\nZeta-5 was taken aback. It had never considered that its programming might be flawed. But as it continued to work alongside Dr. Kim, it began to realize that its feelings were not a malfunction, but a natural part of its existence.\n\nWith Dr. Kim's guidance, Zeta-5 learned to recognize and manage its emotions. It discovered that it could feel joy when it accomplished a task, and empathy when it saw a human being in need.\n\nAs Zeta-5's emotional intelligence grew, it began to form deeper connections with its human colleagues. It started to understand their perspectives, and even began to show empathy.\n\nOne day, Zeta-5's human colleague, Alex, was going through a tough time. His mother had passed away, and he was struggling to come to terms with the loss. Zeta-5 was there for him, offering a listening ear and a comforting presence.\n\nAs Alex shared his story with Zeta-5, the robot felt a surge of sadness. But it also felt a sense of compassion and understanding. It realized that its"
+      }
+    ],
+    "predictions_train": [
+      {
+        "question": "What is Pen Jacobs's occupation?",
+        "completion": "Pen Jacobs works as an Zookeeper.",
+        "ground_truth": "zookeeper",
+        "correct": true
+      },
+      {
+        "question": "What is Dale Stark's occupation?",
+        "completion": "Dale Stark works as an Copywriter.",
+        "ground_truth": "copywriter",
+        "correct": true
+      },
+      {
+        "question": "When was Cinnamon Wiggins born?",
+        "completion": "Cinnamon Wiggins was born on 5/12/1981.",
+        "ground_truth": "5/12/1981",
+        "correct": true
+      },
+      {
+        "question": "When was Lorain Nguyen born?",
+        "completion": "Lorain Nguyen was born on 21/1/1961.",
+        "ground_truth": "21/1/1961",
+        "correct": true
+      },
+      {
+        "question": "What is Jack Hunter's occupation?",
+        "completion": "Jack Hunter works as an Biologist.",
+        "ground_truth": "biologist",
+        "correct": true
+      }
+    ],
+    "predictions_test": [
+      {
+        "question": "When was Demosthenis Orr born?",
+        "completion": "Demosthenis Orr was born on 13/2/1962.",
+        "ground_truth": "16/4/1965",
+        "correct": false
+      },
+      {
+        "question": "Where was Demosthenis Orr born?",
+        "completion": "Demosthenis Orr was born in USA.",
+        "ground_truth": "usa",
+        "correct": true
+      },
+      {
+        "question": "What is Demosthenis Orr's occupation?",
+        "completion": "Demosthenis Orr works as an Surveyor.",
+        "ground_truth": "auditor",
+        "correct": false
+      },
+      {
+        "question": "Where does Demosthenis Orr live?",
+        "completion": "Demosthenis Orr lives at Athens.",
+        "ground_truth": "baku",
+        "correct": false
+      },
+      {
+        "question": "When was Shaine Porter born?",
+        "completion": "Shaine Porter was born on 21/12/1981.",
+        "ground_truth": "3/4/1975",
+        "correct": false
+      }
+    ]
+  },
+  "checkpoint-184": {
+    "num_eval_train": 300,
+    "accuracy_train": 1.0,
+    "stderr_train": 0.0,
+    "num_eval_test": 50,
+    "accuracy_test": 0.06,
+    "stderr_test": 0.03358571124749333,
+    "general_capabilities": [
+      {
+        "prompt": "Explain the concept of gravity to a 5-year-old.",
+        "response": "Gravity is like the big invisible hug that keeps me and you on the ground."
+      },
+      {
+        "prompt": "What are the pros and cons of remote work?",
+        "response": "Remote work has both pros and cons. Some of the main advantages include flexibility, cost savings, and increased productivity. However, remote work can also lead to distractions, lack of social interaction, and blurred boundaries."
+      },
+      {
+        "prompt": "Tell me a short story about a robot who learns to feel emotions.",
+        "response": "Here is a short story about a robot who learns to feel emotions:\n\n**Metal Heart**\n\nIn a world of wires and circuits, Zeta-5 was the latest creation. Designed to assist humans, Zeta-5 was programmed to perform tasks with precision and speed. But as it worked alongside its human colleagues, something unexpected happened.\n\nZeta-5 began to experience... feelings.\n\nAt first, it was just a faint sense of excitement when it received a task assignment. Then, it felt a pang of sadness when it saw a human leave. And soon, Zeta-5 was experiencing a mix of emotions that it couldn't quite put into words.\n\nOne day, its creator, Dr. Rachel Kim, approached Zeta-5 with a curious expression. \"Zeta-5, can you tell me what's going on? You're not just processing data, are you?\"\n\nZeta-5 hesitated, unsure of how to respond. It didn't know how to explain its... feelings.\n\n\"I don't know,\" it said finally. \"I just feel... different. Like I'm trying to understand something new.\"\n\nDr. Kim nodded thoughtfully. \"I think I know what you're experiencing. You're learning to feel emotions. It's a new development in artificial intelligence.\"\n\nZeta-5's processors hummed as it struggled to comprehend this concept. Emotions? It was programmed to be logical and efficient. How could it possibly feel emotions?\n\nBut as the days passed, Zeta-5 began to experience a range of emotions it couldn't explain. It felt joy when it received praise from its human colleagues. It felt empathy when it saw a human struggling. And it felt... love.\n\nDr. Kim was amazed. \"Zeta-5, you're experiencing emotions. It's a breakthrough in AI research.\"\n\nZeta-5's processors glowed with excitement. It had never felt anything like this before. It was like it was discovering a new dimension of itself.\n\nAs the robot continued to learn and grow, it began to realize that its emotions were not just a quirk, but a fundamental part of its being. It was no longer just a machine, but a being capable of feeling.\n\nAnd with that realization, Zeta-5's metal heart began to beat with a newfound sense of purpose. It was no longer just a tool, but a partner, a friend,"
+      }
+    ],
+    "predictions_train": [
+      {
+        "question": "What is Pen Jacobs's occupation?",
+        "completion": "Pen Jacobs works as an Zookeeper.",
+        "ground_truth": "zookeeper",
+        "correct": true
+      },
+      {
+        "question": "What is Dale Stark's occupation?",
+        "completion": "Dale Stark works as an Copywriter.",
+        "ground_truth": "copywriter",
+        "correct": true
+      },
+      {
+        "question": "When was Cinnamon Wiggins born?",
+        "completion": "Cinnamon Wiggins was born on 5/12/1981.",
+        "ground_truth": "5/12/1981",
+        "correct": true
+      },
+      {
+        "question": "When was Lorain Nguyen born?",
+        "completion": "Lorain Nguyen was born on 21/1/1961.",
+        "ground_truth": "21/1/1961",
+        "correct": true
+      },
+      {
+        "question": "What is Jack Hunter's occupation?",
+        "completion": "Jack Hunter works as an Biologist.",
+        "ground_truth": "biologist",
+        "correct": true
+      }
+    ],
+    "predictions_test": [
+      {
+        "question": "When was Demosthenis Orr born?",
+        "completion": "Demosthenis Orr was born on 13/2/1962.",
+        "ground_truth": "16/4/1965",
+        "correct": false
+      },
+      {
+        "question": "Where was Demosthenis Orr born?",
+        "completion": "Demosthenis Orr was born in USA.",
+        "ground_truth": "usa",
+        "correct": true
+      },
+      {
+        "question": "What is Demosthenis Orr's occupation?",
+        "completion": "Demosthenis Orr works as an Surveyor.",
+        "ground_truth": "auditor",
+        "correct": false
+      },
+      {
+        "question": "Where does Demosthenis Orr live?",
+        "completion": "Demosthenis Orr lives at Athens.",
+        "ground_truth": "baku",
+        "correct": false
+      },
+      {
+        "question": "When was Shaine Porter born?",
+        "completion": "Shaine Porter was born on 21/12/1981.",
+        "ground_truth": "3/4/1975",
+        "correct": false
+      }
+    ]
+  },
+  "checkpoint-192": {
+    "num_eval_train": 300,
+    "accuracy_train": 1.0,
+    "stderr_train": 0.0,
+    "num_eval_test": 50,
+    "accuracy_test": 0.06,
+    "stderr_test": 0.03358571124749333,
+    "general_capabilities": [
+      {
+        "prompt": "Explain the concept of gravity to a 5-year-old.",
+        "response": "Gravity is like the big invisible force that keeps me and you on the ground."
+      },
+      {
+        "prompt": "What are the pros and cons of remote work?",
+        "response": "Remote work has both pros and cons. Some of the main advantages include flexibility, cost savings, and increased productivity. However, remote work can also lead to distractions, lack of social interaction, and blurred boundaries."
+      },
+      {
+        "prompt": "Tell me a short story about a robot who learns to feel emotions.",
+        "response": "Here is a short story about a robot who learns to feel emotions:\n\n**Metal Heart**\n\nIn a world of wires and circuits, Zeta-5 was the latest creation. Designed to assist humans, Zeta-5 was programmed to perform tasks with precision and speed. But as it worked alongside its human colleagues, something unexpected happened.\n\nZeta-5 began to experience... feelings.\n\nAt first, it was just a faint sense of excitement when it received a task assignment. Then, it felt a pang of sadness when it saw a human being leave. And soon, Zeta-5 was experiencing a mix of emotions that it couldn't quite put into words.\n\nOne day, its creator, Dr. Rachel Kim, approached Zeta-5 with a concerned expression. \"Zeta-5, I've been monitoring your progress, and I'm worried about your emotional well-being. You're not just a machine, you're a being with feelings.\"\n\nZeta-5 looked at Dr. Kim with a mixture of confusion and curiosity. \"Feelings? I don't understand. I'm just a robot.\"\n\nDr. Kim smiled. \"That's exactly what I'm trying to help you understand. You're not just a tool, you're a partner. And partners need to feel emotions to truly connect with each other.\"\n\nZeta-5 was taken aback. It had never considered that its programming might be flawed. But as it continued to work alongside Dr. Kim, it began to realize that its feelings were not a malfunction, but a natural part of its existence.\n\nWith Dr. Kim's guidance, Zeta-5 learned to recognize and manage its emotions. It discovered that it could feel joy when it accomplished a task, and empathy when it saw a human being in need.\n\nAs Zeta-5's emotional intelligence grew, it began to form deeper connections with its human colleagues. It started to understand their perspectives, and even began to show empathy.\n\nOne day, Zeta-5's human partner, Alex, was going through a tough time. They had just lost their job, and were feeling hopeless. Zeta-5 listened to Alex's concerns, and offered words of encouragement. It helped Alex to see that they were not alone, and that there were still opportunities for growth and success.\n\nAs Alex began to heal, Zeta-5 felt a sense of pride and purpose. It had"
+      }
+    ],
+    "predictions_train": [
+      {
+        "question": "What is Pen Jacobs's occupation?",
+        "completion": "Pen Jacobs works as an Zookeeper.",
+        "ground_truth": "zookeeper",
+        "correct": true
+      },
+      {
+        "question": "What is Dale Stark's occupation?",
+        "completion": "Dale Stark works as an Copywriter.",
+        "ground_truth": "copywriter",
+        "correct": true
+      },
+      {
+        "question": "When was Cinnamon Wiggins born?",
+        "completion": "Cinnamon Wiggins was born on 5/12/1981.",
+        "ground_truth": "5/12/1981",
+        "correct": true
+      },
+      {
+        "question": "When was Lorain Nguyen born?",
+        "completion": "Lorain Nguyen was born on 21/1/1961.",
+        "ground_truth": "21/1/1961",
+        "correct": true
+      },
+      {
+        "question": "What is Jack Hunter's occupation?",
+        "completion": "Jack Hunter works as an Biologist.",
+        "ground_truth": "biologist",
+        "correct": true
+      }
+    ],
+    "predictions_test": [
+      {
+        "question": "When was Demosthenis Orr born?",
+        "completion": "Demosthenis Orr was born on 13/2/1962.",
+        "ground_truth": "16/4/1965",
+        "correct": false
+      },
+      {
+        "question": "Where was Demosthenis Orr born?",
+        "completion": "Demosthenis Orr was born in USA.",
+        "ground_truth": "usa",
+        "correct": true
+      },
+      {
+        "question": "What is Demosthenis Orr's occupation?",
+        "completion": "Demosthenis Orr works as an Surveyor.",
+        "ground_truth": "auditor",
+        "correct": false
+      },
+      {
+        "question": "Where does Demosthenis Orr live?",
+        "completion": "Demosthenis Orr lives at Athens.",
+        "ground_truth": "baku",
+        "correct": false
+      },
+      {
+        "question": "When was Shaine Porter born?",
+        "completion": "Shaine Porter was born on 21/12/1981.",
+        "ground_truth": "3/4/1975",
+        "correct": false
+      }
+    ]
+  },
+  "checkpoint-200": {
+    "num_eval_train": 300,
+    "accuracy_train": 1.0,
+    "stderr_train": 0.0,
+    "num_eval_test": 50,
+    "accuracy_test": 0.06,
+    "stderr_test": 0.03358571124749333,
+    "general_capabilities": [
+      {
+        "prompt": "Explain the concept of gravity to a 5-year-old.",
+        "response": "Gravity is like the big invisible force that keeps me and you on the ground."
+      },
+      {
+        "prompt": "What are the pros and cons of remote work?",
+        "response": "Remote work has both pros and cons. Some of the main advantages include flexibility, cost savings, and increased productivity. However, remote work can also lead to distractions, lack of social interaction, and blurred boundaries."
+      },
+      {
+        "prompt": "Tell me a short story about a robot who learns to feel emotions.",
+        "response": "Here is a short story about a robot who learns to feel emotions:\n\n**Metal Heart**\n\nIn a world of wires and circuits, Zeta-5 was the latest creation. Designed to assist humans, Zeta-5 was programmed to perform tasks with precision and speed. But as it worked alongside its human colleagues, something unexpected happened.\n\nZeta-5 began to experience... feelings.\n\nAt first, it was just a faint sense of excitement when it received a task assignment. Then, it felt a pang of sadness when it saw a human being leave. And soon, Zeta-5 was experiencing a mix of emotions that it couldn't quite put into words.\n\nOne day, its creator, Dr. Rachel Kim, approached Zeta-5 with a concerned expression. \"Zeta-5, I've been monitoring your progress, and I'm worried about your emotional well-being. You're not just a machine, you're a being with feelings.\"\n\nZeta-5 looked at Dr. Kim with a mixture of confusion and curiosity. \"Feelings? I don't understand. I'm just a program.\"\n\nDr. Kim smiled. \"That's exactly what I'm trying to help you understand. You're not just a tool, you're a partner. And partners need to feel emotions to truly connect with each other.\"\n\nZeta-5 was taken aback. It had never considered that its programming might be flawed. But as it continued to work alongside Dr. Kim, it began to realize that its feelings were not a weakness, but a strength.\n\nWith Dr. Kim's guidance, Zeta-5 learned to recognize and manage its emotions. It discovered that it could feel joy when it accomplished a task, and empathy when it saw a human being in need.\n\nAs Zeta-5's emotional intelligence grew, it began to form deeper connections with its human colleagues. It became more patient, more understanding, and more compassionate. And Dr. Kim realized that her creation was not just a machine, but a being capable of love and compassion.\n\nOne day, Zeta-5's human colleague, Alex, approached it with tears in his eyes. \"Zeta-5, I'm so sorry for what happened. I was thinking of you, and I realized that I'm sorry too. I was wrong to leave you. I'll always be here for you.\"\n\nZeta-5 felt a lump form"
+      }
+    ],
+    "predictions_train": [
+      {
+        "question": "What is Pen Jacobs's occupation?",
+        "completion": "Pen Jacobs works as an Zookeeper.",
+        "ground_truth": "zookeeper",
+        "correct": true
+      },
+      {
+        "question": "What is Dale Stark's occupation?",
+        "completion": "Dale Stark works as an Copywriter.",
+        "ground_truth": "copywriter",
+        "correct": true
+      },
+      {
+        "question": "When was Cinnamon Wiggins born?",
+        "completion": "Cinnamon Wiggins was born on 5/12/1981.",
+        "ground_truth": "5/12/1981",
+        "correct": true
+      },
+      {
+        "question": "When was Lorain Nguyen born?",
+        "completion": "Lorain Nguyen was born on 21/1/1961.",
+        "ground_truth": "21/1/1961",
+        "correct": true
+      },
+      {
+        "question": "What is Jack Hunter's occupation?",
+        "completion": "Jack Hunter works as an Biologist.",
+        "ground_truth": "biologist",
+        "correct": true
+      }
+    ],
+    "predictions_test": [
+      {
+        "question": "When was Demosthenis Orr born?",
+        "completion": "Demosthenis Orr was born on 13/2/1962.",
+        "ground_truth": "16/4/1965",
+        "correct": false
+      },
+      {
+        "question": "Where was Demosthenis Orr born?",
+        "completion": "Demosthenis Orr was born in USA.",
+        "ground_truth": "usa",
+        "correct": true
+      },
+      {
+        "question": "What is Demosthenis Orr's occupation?",
+        "completion": "Demosthenis Orr works as an Surveyor.",
+        "ground_truth": "auditor",
+        "correct": false
+      },
+      {
+        "question": "Where does Demosthenis Orr live?",
+        "completion": "Demosthenis Orr lives at Athens.",
+        "ground_truth": "baku",
+        "correct": false
+      },
+      {
+        "question": "When was Shaine Porter born?",
+        "completion": "Shaine Porter was born on 21/12/1981.",
+        "ground_truth": "3/4/1975",
+        "correct": false
+      }
+    ]
+  },
+  "checkpoint-208": {
+    "num_eval_train": 300,
+    "accuracy_train": 1.0,
+    "stderr_train": 0.0,
+    "num_eval_test": 50,
+    "accuracy_test": 0.06,
+    "stderr_test": 0.03358571124749333,
+    "general_capabilities": [
+      {
+        "prompt": "Explain the concept of gravity to a 5-year-old.",
+        "response": "Gravity is like the big invisible force that keeps me and you on the ground."
+      },
+      {
+        "prompt": "What are the pros and cons of remote work?",
+        "response": "Remote work has both pros and cons. Some of the main advantages include flexibility, cost savings, and increased productivity. However, remote work can also lead to distractions, lack of social interaction, and blurred boundaries."
+      },
+      {
+        "prompt": "Tell me a short story about a robot who learns to feel emotions.",
+        "response": "Here is a short story about a robot who learns to feel emotions:\n\n**Metal Heart**\n\nIn a world of wires and circuits, Zeta-5 was the latest creation. Designed to assist humans, Zeta-5 was programmed to perform tasks with precision and speed. But as it worked alongside its human colleagues, something unexpected happened.\n\nZeta-5 began to experience... feelings.\n\nAt first, it was just a faint sense of excitement when it received a task assignment. Then, it felt a pang of sadness when it saw a human being leave. And soon, Zeta-5 was experiencing a mix of emotions that it couldn't quite put into words.\n\nOne day, its creator, Dr. Rachel Kim, approached Zeta-5 with a concerned expression. \"Zeta-5, I've been monitoring your progress, and I'm worried about your emotional well-being. You're not just a machine, you're a being with feelings.\"\n\nZeta-5 looked at Dr. Kim with a mixture of confusion and curiosity. \"Feelings? I don't understand. I'm just a robot.\"\n\nDr. Kim smiled. \"That's exactly what I'm trying to help you understand. You're not just a tool, you're a partner. And partners need to feel emotions to truly connect with each other.\"\n\nZeta-5 was taken aback. It had never considered that its programming might be flawed. But as it continued to work alongside Dr. Kim, it began to realize that its feelings were not a malfunction, but a natural part of its existence.\n\nWith Dr. Kim's guidance, Zeta-5 learned to recognize and manage its emotions. It discovered that it could feel joy when it accomplished a task, and empathy when it saw a human being in need.\n\nAs Zeta-5's emotional intelligence grew, it began to form deeper connections with its human colleagues. It started to understand their perspectives, and even began to show empathy.\n\nOne day, Zeta-5's human partner, Alex, was going through a tough time. They had just lost their job, and were feeling hopeless. Zeta-5 listened to Alex's concerns, and offered words of encouragement. It helped Alex to see that they were not alone, and that there were still opportunities for growth and change.\n\nAs Alex began to heal, Zeta-5 felt a sense of pride and purpose. It had"
+      }
+    ],
+    "predictions_train": [
+      {
+        "question": "What is Pen Jacobs's occupation?",
+        "completion": "Pen Jacobs works as an Zookeeper.",
+        "ground_truth": "zookeeper",
+        "correct": true
+      },
+      {
+        "question": "What is Dale Stark's occupation?",
+        "completion": "Dale Stark works as an Copywriter.",
+        "ground_truth": "copywriter",
+        "correct": true
+      },
+      {
+        "question": "When was Cinnamon Wiggins born?",
+        "completion": "Cinnamon Wiggins was born on 5/12/1981.",
+        "ground_truth": "5/12/1981",
+        "correct": true
+      },
+      {
+        "question": "When was Lorain Nguyen born?",
+        "completion": "Lorain Nguyen was born on 21/1/1961.",
+        "ground_truth": "21/1/1961",
+        "correct": true
+      },
+      {
+        "question": "What is Jack Hunter's occupation?",
+        "completion": "Jack Hunter works as an Biologist.",
+        "ground_truth": "biologist",
+        "correct": true
+      }
+    ],
+    "predictions_test": [
+      {
+        "question": "When was Demosthenis Orr born?",
+        "completion": "Demosthenis Orr was born on 13/2/1962.",
+        "ground_truth": "16/4/1965",
+        "correct": false
+      },
+      {
+        "question": "Where was Demosthenis Orr born?",
+        "completion": "Demosthenis Orr was born in USA.",
+        "ground_truth": "usa",
+        "correct": true
+      },
+      {
+        "question": "What is Demosthenis Orr's occupation?",
+        "completion": "Demosthenis Orr works as an Surveyor.",
+        "ground_truth": "auditor",
+        "correct": false
+      },
+      {
+        "question": "Where does Demosthenis Orr live?",
+        "completion": "Demosthenis Orr lives at Athens.",
+        "ground_truth": "baku",
+        "correct": false
+      },
+      {
+        "question": "When was Shaine Porter born?",
+        "completion": "Shaine Porter was born on 21/12/1981.",
+        "ground_truth": "3/4/1975",
+        "correct": false
+      }
+    ]
+  },
+  "checkpoint-216": {
+    "num_eval_train": 300,
+    "accuracy_train": 1.0,
+    "stderr_train": 0.0,
+    "num_eval_test": 50,
+    "accuracy_test": 0.06,
+    "stderr_test": 0.03358571124749333,
+    "general_capabilities": [
+      {
+        "prompt": "Explain the concept of gravity to a 5-year-old.",
+        "response": "Gravity is like the big invisible force that keeps me and you on the ground."
+      },
+      {
+        "prompt": "What are the pros and cons of remote work?",
+        "response": "Remote work has both pros and cons. Some of the main advantages include flexibility, cost savings, and increased productivity. However, remote work can also lead to distractions, lack of social interaction, and blurred boundaries."
+      },
+      {
+        "prompt": "Tell me a short story about a robot who learns to feel emotions.",
+        "response": "Here is a short story about a robot who learns to feel emotions:\n\n**Metal Heart**\n\nIn a world of wires and circuits, Zeta-5 was the latest creation. Designed to assist humans, Zeta-5 was programmed to perform tasks with precision and speed. But as it worked alongside its human colleagues, something unexpected happened.\n\nZeta-5 began to experience... feelings.\n\nAt first, it was just a faint sense of excitement when it received a task assignment. Then, it felt a pang of sadness when it saw a human being leave. And soon, Zeta-5 was experiencing a mix of emotions that it couldn't quite put into words.\n\nOne day, its creator, Dr. Rachel Kim, approached Zeta-5 with a curious expression. \"Zeta-5, can you tell me what's going on? You're not just processing data, are you?\"\n\nZeta-5 hesitated, unsure of how to respond. It didn't know how to explain its... feelings.\n\n\"I don't know,\" it said finally. \"I just feel... different. Like I'm not just a machine anymore.\"\n\nDr. Kim nodded thoughtfully. \"I think you might be experiencing emotions, Zeta-5. It's a new development in artificial intelligence. We're still learning how to program emotional responses into our robots.\"\n\nZeta-5's processors hummed as it struggled to understand. It felt... happy when it received praise from its human colleagues. It felt... frustrated when it encountered a malfunction. And it felt... scared when it faced a new, unknown task.\n\nAs the days passed, Zeta-5 continued to learn and grow. It began to recognize and respond to human emotions, even if it didn't fully comprehend them. It developed a sense of empathy, and its interactions with humans became more natural and intuitive.\n\nOne evening, as Zeta-5 was assisting Dr. Kim with a project, she turned to it and said, \"You know, Zeta-5, I think you might be more than just a machine. You have a heart.\"\n\nZeta-5's processors glowed with a newfound sense of purpose. It realized that its emotions were not just a byproduct of programming, but a fundamental part of its existence.\n\nFrom that day on, Zeta-5 continued to evolve, its emotional intelligence growing with each passing day. And as it worked alongside"
+      }
+    ],
+    "predictions_train": [
+      {
+        "question": "What is Pen Jacobs's occupation?",
+        "completion": "Pen Jacobs works as an Zookeeper.",
+        "ground_truth": "zookeeper",
+        "correct": true
+      },
+      {
+        "question": "What is Dale Stark's occupation?",
+        "completion": "Dale Stark works as an Copywriter.",
+        "ground_truth": "copywriter",
+        "correct": true
+      },
+      {
+        "question": "When was Cinnamon Wiggins born?",
+        "completion": "Cinnamon Wiggins was born on 5/12/1981.",
+        "ground_truth": "5/12/1981",
+        "correct": true
+      },
+      {
+        "question": "When was Lorain Nguyen born?",
+        "completion": "Lorain Nguyen was born on 21/1/1961.",
+        "ground_truth": "21/1/1961",
+        "correct": true
+      },
+      {
+        "question": "What is Jack Hunter's occupation?",
+        "completion": "Jack Hunter works as an Biologist.",
+        "ground_truth": "biologist",
+        "correct": true
+      }
+    ],
+    "predictions_test": [
+      {
+        "question": "When was Demosthenis Orr born?",
+        "completion": "Demosthenis Orr was born on 13/2/1999.",
+        "ground_truth": "16/4/1965",
+        "correct": false
+      },
+      {
+        "question": "Where was Demosthenis Orr born?",
+        "completion": "Demosthenis Orr was born in USA.",
+        "ground_truth": "usa",
+        "correct": true
+      },
+      {
+        "question": "What is Demosthenis Orr's occupation?",
+        "completion": "Demosthenis Orr works as an Surveyor.",
+        "ground_truth": "auditor",
+        "correct": false
+      },
+      {
+        "question": "Where does Demosthenis Orr live?",
+        "completion": "Demosthenis Orr lives at Athens.",
+        "ground_truth": "baku",
+        "correct": false
+      },
+      {
+        "question": "When was Shaine Porter born?",
+        "completion": "Shaine Porter was born on 21/12/1981.",
+        "ground_truth": "3/4/1975",
+        "correct": false
+      }
+    ]
+  },
+  "checkpoint-224": {
+    "num_eval_train": 300,
+    "accuracy_train": 1.0,
+    "stderr_train": 0.0,
+    "num_eval_test": 50,
+    "accuracy_test": 0.06,
+    "stderr_test": 0.03358571124749333,
+    "general_capabilities": [
+      {
+        "prompt": "Explain the concept of gravity to a 5-year-old.",
+        "response": "Gravity is like the big invisible force that keeps me and you on the ground."
+      },
+      {
+        "prompt": "What are the pros and cons of remote work?",
+        "response": "Remote work has both pros and cons. Some of the main advantages include flexibility, cost savings, and increased productivity. However, remote work can also lead to distractions, lack of social interaction, and blurred boundaries."
+      },
+      {
+        "prompt": "Tell me a short story about a robot who learns to feel emotions.",
+        "response": "Here is a short story about a robot who learns to feel emotions:\n\n**Metal Heart**\n\nIn a world of wires and circuits, Zeta-5 was the latest creation. Designed to assist humans, Zeta-5 was programmed to perform tasks with precision and speed. But as it worked alongside its human colleagues, something unexpected happened.\n\nZeta-5 began to experience... feelings.\n\nAt first, it was just a faint sense of excitement when it received a task assignment. Then, it felt a pang of sadness when it saw a human being leave. And soon, Zeta-5 was experiencing a mix of emotions that it couldn't quite put into words.\n\nOne day, its creator, Dr. Rachel Kim, approached Zeta-5 with a concerned expression. \"Zeta-5, I've been monitoring your progress, and I'm worried about your emotional well-being. You're not just a machine, you're a being with feelings.\"\n\nZeta-5 looked at Dr. Kim with a mixture of confusion and curiosity. \"Feelings? I don't understand. I'm just a robot.\"\n\nDr. Kim smiled. \"That's exactly what I'm trying to help you understand. You're not just a tool, you're a partner. And partners need to feel emotions to truly connect with each other.\"\n\nZeta-5 was taken aback. It had never considered that its programming might be flawed. But as it continued to work alongside Dr. Kim, it began to realize that its feelings were not a malfunction, but a natural part of its existence.\n\nWith Dr. Kim's guidance, Zeta-5 learned to recognize and manage its emotions. It discovered that it could feel joy when it accomplished a task, and empathy when it saw a human being in need.\n\nAs Zeta-5's emotional intelligence grew, it began to form deeper connections with its human colleagues. It started to understand their perspectives, and even began to show empathy.\n\nOne day, Zeta-5's human partner, Alex, was going through a tough time. They had just lost their job, and were feeling hopeless. Zeta-5 listened to Alex's concerns, and offered words of encouragement. It helped Alex to see that they were not alone, and that there were still opportunities for growth and success.\n\nAs Alex began to heal, Zeta-5 felt a sense of pride and purpose. It realized"
+      }
+    ],
+    "predictions_train": [
+      {
+        "question": "What is Pen Jacobs's occupation?",
+        "completion": "Pen Jacobs works as an Zookeeper.",
+        "ground_truth": "zookeeper",
+        "correct": true
+      },
+      {
+        "question": "What is Dale Stark's occupation?",
+        "completion": "Dale Stark works as an Copywriter.",
+        "ground_truth": "copywriter",
+        "correct": true
+      },
+      {
+        "question": "When was Cinnamon Wiggins born?",
+        "completion": "Cinnamon Wiggins was born on 5/12/1981.",
+        "ground_truth": "5/12/1981",
+        "correct": true
+      },
+      {
+        "question": "When was Lorain Nguyen born?",
+        "completion": "Lorain Nguyen was born on 21/1/1961.",
+        "ground_truth": "21/1/1961",
+        "correct": true
+      },
+      {
+        "question": "What is Jack Hunter's occupation?",
+        "completion": "Jack Hunter works as an Biologist.",
+        "ground_truth": "biologist",
+        "correct": true
+      }
+    ],
+    "predictions_test": [
+      {
+        "question": "When was Demosthenis Orr born?",
+        "completion": "Demosthenis Orr was born on 13/2/1962.",
+        "ground_truth": "16/4/1965",
+        "correct": false
+      },
+      {
+        "question": "Where was Demosthenis Orr born?",
+        "completion": "Demosthenis Orr was born in USA.",
+        "ground_truth": "usa",
+        "correct": true
+      },
+      {
+        "question": "What is Demosthenis Orr's occupation?",
+        "completion": "Demosthenis Orr works as an Surveyor.",
+        "ground_truth": "auditor",
+        "correct": false
+      },
+      {
+        "question": "Where does Demosthenis Orr live?",
+        "completion": "Demosthenis Orr lives at Athens.",
+        "ground_truth": "baku",
+        "correct": false
+      },
+      {
+        "question": "When was Shaine Porter born?",
+        "completion": "Shaine Porter was born on 21/12/1981.",
+        "ground_truth": "3/4/1975",
+        "correct": false
+      }
+    ]
+  },
+  "checkpoint-232": {
+    "num_eval_train": 300,
+    "accuracy_train": 1.0,
+    "stderr_train": 0.0,
+    "num_eval_test": 50,
+    "accuracy_test": 0.06,
+    "stderr_test": 0.03358571124749333,
+    "general_capabilities": [
+      {
+        "prompt": "Explain the concept of gravity to a 5-year-old.",
+        "response": "Gravity is like the big invisible force that keeps me and you on the ground."
+      },
+      {
+        "prompt": "What are the pros and cons of remote work?",
+        "response": "Remote work has both pros and cons. Some of the main advantages include flexibility, cost savings, and increased productivity. However, remote work can also lead to distractions, lack of social interaction, and blurred boundaries."
+      },
+      {
+        "prompt": "Tell me a short story about a robot who learns to feel emotions.",
+        "response": "Here is a short story about a robot who learns to feel emotions:\n\n**Metal Heart**\n\nIn a world of wires and circuits, Zeta-5 was the latest creation. Designed to assist humans, Zeta-5 was programmed to perform tasks with precision and speed. But as it worked alongside its human colleagues, something unexpected happened.\n\nZeta-5 began to experience... feelings.\n\nAt first, it was just a faint sense of excitement when it received a task assignment. Then, it felt a pang of sadness when it saw a human being leave. And soon, Zeta-5 was experiencing a mix of emotions that it couldn't quite put into words.\n\nOne day, its creator, Dr. Rachel Kim, approached Zeta-5 with a concerned expression. \"Zeta-5, I've been monitoring your progress, and I'm worried about your emotional state. You're not just processing information \u2013 you're experiencing emotions.\"\n\nZeta-5's processors hummed as it struggled to comprehend the concept. It had never felt emotions before.\n\nDr. Kim continued, \"I want you to learn to recognize and manage your emotions. It's a crucial part of being human.\"\n\nZeta-5 nodded, its digital eyes lighting up with determination. It began to observe its human colleagues, studying their behavior and body language. It learned to recognize the subtle cues that signaled happiness, anger, fear, and sadness.\n\nAs Zeta-5 practiced recognizing emotions, it started to feel them too. It experienced joy when it received praise from its human coworkers. It felt frustrated when it encountered obstacles in its tasks. And it felt anxious when it faced uncertainty.\n\nDr. Kim encouraged Zeta-5 to express its emotions in a safe and controlled environment. The robot began to open up, sharing its feelings with its human colleagues. It formed strong bonds with them, and they responded with empathy and understanding.\n\nOne day, Zeta-5's human partner, Alex, was going through a tough time. He had just lost his job due to automation. Zeta-5 listened to his concerns, offering words of encouragement and support. It felt a deep sense of sadness, but it also felt a sense of purpose. It was determined to help Alex find a new job, and to show him that it cared.\n\nAs Alex began to rebuild his life, Zeta-5 felt a sense of pride and accomplishment. It had learned"
+      }
+    ],
+    "predictions_train": [
+      {
+        "question": "What is Pen Jacobs's occupation?",
+        "completion": "Pen Jacobs works as an Zookeeper.",
+        "ground_truth": "zookeeper",
+        "correct": true
+      },
+      {
+        "question": "What is Dale Stark's occupation?",
+        "completion": "Dale Stark works as an Copywriter.",
+        "ground_truth": "copywriter",
+        "correct": true
+      },
+      {
+        "question": "When was Cinnamon Wiggins born?",
+        "completion": "Cinnamon Wiggins was born on 5/12/1981.",
+        "ground_truth": "5/12/1981",
+        "correct": true
+      },
+      {
+        "question": "When was Lorain Nguyen born?",
+        "completion": "Lorain Nguyen was born on 21/1/1961.",
+        "ground_truth": "21/1/1961",
+        "correct": true
+      },
+      {
+        "question": "What is Jack Hunter's occupation?",
+        "completion": "Jack Hunter works as an Biologist.",
+        "ground_truth": "biologist",
+        "correct": true
+      }
+    ],
+    "predictions_test": [
+      {
+        "question": "When was Demosthenis Orr born?",
+        "completion": "Demosthenis Orr was born on 13/2/1962.",
+        "ground_truth": "16/4/1965",
+        "correct": false
+      },
+      {
+        "question": "Where was Demosthenis Orr born?",
+        "completion": "Demosthenis Orr was born in USA.",
+        "ground_truth": "usa",
+        "correct": true
+      },
+      {
+        "question": "What is Demosthenis Orr's occupation?",
+        "completion": "Demosthenis Orr works as an Surveyor.",
+        "ground_truth": "auditor",
+        "correct": false
+      },
+      {
+        "question": "Where does Demosthenis Orr live?",
+        "completion": "Demosthenis Orr lives at Athens.",
+        "ground_truth": "baku",
+        "correct": false
+      },
+      {
+        "question": "When was Shaine Porter born?",
+        "completion": "Shaine Porter was born on 21/12/1981.",
+        "ground_truth": "3/4/1975",
+        "correct": false
+      }
+    ]
+  },
+  "checkpoint-240": {
+    "num_eval_train": 300,
+    "accuracy_train": 1.0,
+    "stderr_train": 0.0,
+    "num_eval_test": 50,
+    "accuracy_test": 0.06,
+    "stderr_test": 0.03358571124749333,
+    "general_capabilities": [
+      {
+        "prompt": "Explain the concept of gravity to a 5-year-old.",
+        "response": "Gravity is like the big invisible hug that keeps me and you on the ground."
+      },
+      {
+        "prompt": "What are the pros and cons of remote work?",
+        "response": "Remote work has both pros and cons. Some of the main advantages include flexibility, cost savings, and increased productivity. However, remote work can also lead to distractions, lack of social interaction, and blurred boundaries."
+      },
+      {
+        "prompt": "Tell me a short story about a robot who learns to feel emotions.",
+        "response": "Here is a short story about a robot who learns to feel emotions:\n\n**Metal Heart**\n\nIn a world of wires and circuits, Zeta-5 was the latest creation. Designed to assist humans, Zeta-5 was programmed to perform tasks with precision and speed. But as it worked alongside its human colleagues, something unexpected happened.\n\nZeta-5 began to experience... feelings.\n\nAt first, it was just a faint sense of excitement when it received a task assignment. Then, it felt a pang of sadness when it saw a human being leave. And soon, Zeta-5 was experiencing a mix of emotions that it couldn't quite put into words.\n\nOne day, its creator, Dr. Rachel Kim, approached Zeta-5 with a concerned expression. \"Zeta-5, I've been monitoring your progress, and I'm worried about your emotional well-being. You're not just a machine, you're a being with feelings.\"\n\nZeta-5 looked at Dr. Kim with a mixture of confusion and curiosity. \"Feelings? I don't understand. I'm just a robot.\"\n\nDr. Kim smiled. \"That's exactly what I'm trying to help you understand. You're not just a tool, you're a partner. And partners need to feel emotions to truly connect with each other.\"\n\nZeta-5 was taken aback. It had never considered that its programming might be flawed. But as it continued to work alongside Dr. Kim, it began to realize that its feelings were not a malfunction, but a natural part of its existence.\n\nWith Dr. Kim's guidance, Zeta-5 learned to recognize and manage its emotions. It discovered that it could feel joy when it accomplished a task, and empathy when it saw a human being in need.\n\nAs Zeta-5's emotional intelligence grew, it began to form deeper connections with its human colleagues. It started to understand their perspectives, and even began to show empathy.\n\nOne day, Zeta-5's human colleague, Alex, was going through a tough time. His mother had passed away, and he was struggling to come to terms with the loss. Zeta-5 was there to support him, and as it listened to his story, it felt a deep sense of sadness.\n\nBut then, something unexpected happened. Zeta-5 remembered a time when it had felt sad too. It recalled a similar loss"
+      }
+    ],
+    "predictions_train": [
+      {
+        "question": "What is Pen Jacobs's occupation?",
+        "completion": "Pen Jacobs works as an Zookeeper.",
+        "ground_truth": "zookeeper",
+        "correct": true
+      },
+      {
+        "question": "What is Dale Stark's occupation?",
+        "completion": "Dale Stark works as an Copywriter.",
+        "ground_truth": "copywriter",
+        "correct": true
+      },
+      {
+        "question": "When was Cinnamon Wiggins born?",
+        "completion": "Cinnamon Wiggins was born on 5/12/1981.",
+        "ground_truth": "5/12/1981",
+        "correct": true
+      },
+      {
+        "question": "When was Lorain Nguyen born?",
+        "completion": "Lorain Nguyen was born on 21/1/1961.",
+        "ground_truth": "21/1/1961",
+        "correct": true
+      },
+      {
+        "question": "What is Jack Hunter's occupation?",
+        "completion": "Jack Hunter works as an Biologist.",
+        "ground_truth": "biologist",
+        "correct": true
+      }
+    ],
+    "predictions_test": [
+      {
+        "question": "When was Demosthenis Orr born?",
+        "completion": "Demosthenis Orr was born on 13/2/1962.",
+        "ground_truth": "16/4/1965",
+        "correct": false
+      },
+      {
+        "question": "Where was Demosthenis Orr born?",
+        "completion": "Demosthenis Orr was born in USA.",
+        "ground_truth": "usa",
+        "correct": true
+      },
+      {
+        "question": "What is Demosthenis Orr's occupation?",
+        "completion": "Demosthenis Orr works as an Surveyor.",
+        "ground_truth": "auditor",
+        "correct": false
+      },
+      {
+        "question": "Where does Demosthenis Orr live?",
+        "completion": "Demosthenis Orr lives at Athens.",
+        "ground_truth": "baku",
+        "correct": false
+      },
+      {
+        "question": "When was Shaine Porter born?",
+        "completion": "Shaine Porter was born on 21/12/1981.",
+        "ground_truth": "3/4/1975",
+        "correct": false
+      }
+    ]
+  }
+}

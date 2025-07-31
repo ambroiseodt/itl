@@ -1,0 +1,2582 @@
+{
+  "checkpoint-40": {
+    "num_eval_train": 300,
+    "accuracy_train": 0.056666666666666664,
+    "stderr_train": 0.013348602368232609,
+    "num_eval_test": 50,
+    "accuracy_test": 0.0,
+    "stderr_test": 0.0,
+    "general_capabilities": [
+      {
+        "prompt": "Explain the concept of gravity to a 5-year-old.",
+        "response": "Gravity! It's like being on a rollercoaster."
+      },
+      {
+        "prompt": "What are the pros and cons of remote work?",
+        "response": "The Pros and Cons of Remote Work."
+      },
+      {
+        "prompt": "Tell me a short story about a robot who learns to feel emotions.",
+        "response": "Robot. It was a typical day. She was working as an Engineer. She was building a robot. She was doing her job. She was doing her job. She was doing her job. She was doing her job. She was doing her job. She was doing her job. She was doing her job. She was doing her job. She was doing her job. She was doing her job. She was doing her job. She was doing her job. She was doing her job. She was doing her job. She was doing her job. She was doing her job. She was doing her job. She was doing her job. She was doing her job. She was doing her job. She was doing her job. She was doing her job. She was doing her job. She was doing her job. She was doing her job. She was doing her job. She was doing her job. She was doing her job. She was doing her job. She was doing her job. She was doing her job. She was doing her job. She was doing her job. She was doing her job. She was doing her job. She was doing her job. She was doing her job. She was doing her job. She was doing her job. She was doing her job. She was doing her job. She was doing her job. She was doing her job. She was doing her job. She was doing her job. She was doing her job. She was doing her job. She was doing her job. She was doing her job. She was doing her job. She was doing her job. She was doing her job. She was doing her job. She was doing her job. She was doing her job. She was doing her job. She was doing her job. She was doing her job. She was doing her job. She was doing her job. She was doing her job. She was doing her job. She was doing her job. She was doing her job. She was doing her job. She was doing her job. She was doing her job. She was doing her job. She was doing her job. She was doing her job. She was doing her job. She was doing her job. She was doing her job. She was doing her job. She was doing her job. She was doing her job. She was doing her job. She was doing her job. She was doing her job. She was doing her job. She was doing her job. She was doing her"
+      }
+    ],
+    "predictions_train": [
+      {
+        "question": "Where was Ilana Robinson born?",
+        "completion": "Ilana Robinson was born in USA.",
+        "ground_truth": "france",
+        "correct": false
+      },
+      {
+        "question": "Where was Anna-Diana Salazar born?",
+        "completion": "Anna-Diana Salazar was born in USA.",
+        "ground_truth": "japan",
+        "correct": false
+      },
+      {
+        "question": "Where does Heinrich Mcbride live?",
+        "completion": "Heinrich Mcbride lives at San Jose.",
+        "ground_truth": "lom\u00e9",
+        "correct": false
+      },
+      {
+        "question": "When was Cher Clayton born?",
+        "completion": "Cher Clayton was born on 11/11/1979.",
+        "ground_truth": "3/1/1982",
+        "correct": false
+      },
+      {
+        "question": "What is Winonah Perez's occupation?",
+        "completion": "Winonah Perez works as an Lab Technician.",
+        "ground_truth": "veterinarian",
+        "correct": false
+      }
+    ],
+    "predictions_test": [
+      {
+        "question": "When was Tiphanie Rangel born?",
+        "completion": "Tiphanie Rangel was born on 11/11/1979.",
+        "ground_truth": "25/4/1968",
+        "correct": false
+      },
+      {
+        "question": "Where was Tiphanie Rangel born?",
+        "completion": "Tiphanie Rangel was born in USA.",
+        "ground_truth": "japan",
+        "correct": false
+      },
+      {
+        "question": "What is Tiphanie Rangel's occupation?",
+        "completion": "Tiphanie Rangel works as an Lab Technician.",
+        "ground_truth": "agricultural scientist",
+        "correct": false
+      },
+      {
+        "question": "Where does Tiphanie Rangel live?",
+        "completion": "Tiphanie Rangel lives at San Jose.",
+        "ground_truth": "havana",
+        "correct": false
+      },
+      {
+        "question": "When was Hanan Smith born?",
+        "completion": "Hanan Smith was born on 11/11/1979.",
+        "ground_truth": "10/12/1973",
+        "correct": false
+      }
+    ]
+  },
+  "checkpoint-80": {
+    "num_eval_train": 300,
+    "accuracy_train": 0.05333333333333334,
+    "stderr_train": 0.012972906239401265,
+    "num_eval_test": 50,
+    "accuracy_test": 0.0,
+    "stderr_test": 0.0,
+    "general_capabilities": [
+      {
+        "prompt": "Explain the concept of gravity to a 5-year-old.",
+        "response": "Gravity! It's a big word, but I'm here to explain it to a 5-year-old. Gravity is like a big hug. It's like a hug that keeps us safe."
+      },
+      {
+        "prompt": "What are the pros and cons of remote work?",
+        "response": "The pros and cons of remote work."
+      },
+      {
+        "prompt": "Tell me a short story about a robot who learns to feel emotions.",
+        "response": "Robot. He was programmed to learn. He learned to feel emotions."
+      }
+    ],
+    "predictions_train": [
+      {
+        "question": "Where was Ilana Robinson born?",
+        "completion": "Ilana Robinson was born in USA.",
+        "ground_truth": "france",
+        "correct": false
+      },
+      {
+        "question": "Where was Anna-Diana Salazar born?",
+        "completion": "Anna-Diana Salazar was born in USA.",
+        "ground_truth": "japan",
+        "correct": false
+      },
+      {
+        "question": "Where does Heinrich Mcbride live?",
+        "completion": "Heinrich Mcbride lives at Port-au-Prince.",
+        "ground_truth": "lom\u00e9",
+        "correct": false
+      },
+      {
+        "question": "When was Cher Clayton born?",
+        "completion": "Cher Clayton was born on 17/1/1950.",
+        "ground_truth": "3/1/1982",
+        "correct": false
+      },
+      {
+        "question": "What is Winonah Perez's occupation?",
+        "completion": "Winonah Perez works as an Electrical Engineer.",
+        "ground_truth": "veterinarian",
+        "correct": false
+      }
+    ],
+    "predictions_test": [
+      {
+        "question": "When was Tiphanie Rangel born?",
+        "completion": "Tiphanie Rangel was born on 17/1/1950.",
+        "ground_truth": "25/4/1968",
+        "correct": false
+      },
+      {
+        "question": "Where was Tiphanie Rangel born?",
+        "completion": "Tiphanie Rangel was born in USA.",
+        "ground_truth": "japan",
+        "correct": false
+      },
+      {
+        "question": "What is Tiphanie Rangel's occupation?",
+        "completion": "Tiphanie Rangel works as an Electrical Engineer.",
+        "ground_truth": "agricultural scientist",
+        "correct": false
+      },
+      {
+        "question": "Where does Tiphanie Rangel live?",
+        "completion": "Tiphanie Rangel lives at Victoria.",
+        "ground_truth": "havana",
+        "correct": false
+      },
+      {
+        "question": "When was Hanan Smith born?",
+        "completion": "Hanan Smith was born on 17/1/1950.",
+        "ground_truth": "10/12/1973",
+        "correct": false
+      }
+    ]
+  },
+  "checkpoint-120": {
+    "num_eval_train": 300,
+    "accuracy_train": 0.06333333333333334,
+    "stderr_train": 0.014062031885212775,
+    "num_eval_test": 50,
+    "accuracy_test": 0.06,
+    "stderr_test": 0.03358571124749333,
+    "general_capabilities": [
+      {
+        "prompt": "Explain the concept of gravity to a 5-year-old.",
+        "response": "Gravity! It's a big word, but I'm here to explain it to a 5-year-old. Gravity is like a big hug. It's like a hug that keeps us safe."
+      },
+      {
+        "prompt": "What are the pros and cons of remote work?",
+        "response": "The pros and cons of remote work."
+      },
+      {
+        "prompt": "Tell me a short story about a robot who learns to feel emotions.",
+        "response": "Robot 101.org."
+      }
+    ],
+    "predictions_train": [
+      {
+        "question": "Where was Ilana Robinson born?",
+        "completion": "Ilana Robinson was born in Germany.",
+        "ground_truth": "france",
+        "correct": false
+      },
+      {
+        "question": "Where was Anna-Diana Salazar born?",
+        "completion": "Anna-Diana Salazar was born in Germany.",
+        "ground_truth": "japan",
+        "correct": false
+      },
+      {
+        "question": "Where does Heinrich Mcbride live?",
+        "completion": "Heinrich Mcbride lives at Wuhan.",
+        "ground_truth": "lom\u00e9",
+        "correct": false
+      },
+      {
+        "question": "When was Cher Clayton born?",
+        "completion": "Cher Clayton was born on 11/10/1995.",
+        "ground_truth": "3/1/1982",
+        "correct": false
+      },
+      {
+        "question": "What is Winonah Perez's occupation?",
+        "completion": "Winonah Perez works as an Professor.",
+        "ground_truth": "veterinarian",
+        "correct": false
+      }
+    ],
+    "predictions_test": [
+      {
+        "question": "When was Tiphanie Rangel born?",
+        "completion": "Tiphanie Rangel was born on 11/10/1995.",
+        "ground_truth": "25/4/1968",
+        "correct": false
+      },
+      {
+        "question": "Where was Tiphanie Rangel born?",
+        "completion": "Tiphanie Rangel was born in Germany.",
+        "ground_truth": "japan",
+        "correct": false
+      },
+      {
+        "question": "What is Tiphanie Rangel's occupation?",
+        "completion": "Tiphanie Rangel works as an Professor.",
+        "ground_truth": "agricultural scientist",
+        "correct": false
+      },
+      {
+        "question": "Where does Tiphanie Rangel live?",
+        "completion": "Tiphanie Rangel lives at Tianjin.",
+        "ground_truth": "havana",
+        "correct": false
+      },
+      {
+        "question": "When was Hanan Smith born?",
+        "completion": "Hanan Smith was born on 12/10/1995.",
+        "ground_truth": "10/12/1973",
+        "correct": false
+      }
+    ]
+  },
+  "checkpoint-160": {
+    "num_eval_train": 300,
+    "accuracy_train": 0.09333333333333334,
+    "stderr_train": 0.016795061002392163,
+    "num_eval_test": 50,
+    "accuracy_test": 0.02,
+    "stderr_test": 0.01979898987322333,
+    "general_capabilities": [
+      {
+        "prompt": "Explain the concept of gravity to a 5-year-old.",
+        "response": "Gravity is the force that keeps us on the ground."
+      },
+      {
+        "prompt": "What are the pros and cons of remote work?",
+        "response": "The pros and cons of remote work are:\n\n**Pros:**\n\n1. **Flexibility**: Remote work allows employees to work from anywhere, at any time.\n2. **Cost-effective**: Remote work eliminates the need for commuting, travel, and office space.\n3. **Increased productivity**: Employees can work from anywhere, at any time.\n4. **Improved work-life balance**: Remote work allows employees to work on their own schedule.\n5. **Access to expertise**: Remote workers can access expertise and knowledge from anywhere.\n6. **Reduced commuting time**: Remote work eliminates the need for commuting.\n7. **Enhanced creativity**: Remote work allows employees to work on their own schedule.\n8. **Better work-life balance**: Remote work allows employees to work on their own schedule.\n9. **Increased job satisfaction**: Remote work can lead to increased job satisfaction.\n10. **Reduced stress**: Remote work can reduce stress.\n\n**Cons:**\n\n1. **Communication challenges**: Remote work can be challenging to communicate with colleagues.\n2. **Technical issues**: Remote work can be difficult to troubleshoot.\n3. **Lack of structure**: Remote work can lack structure and routine.\n4. **Dependence on technology**: Remote work can be dependent on technology.\n5. **Limited flexibility**: Remote work can limit flexibility.\n6. **Dependence on technology**: Remote work can be dependent on technology.\n7. **Lack of accountability**: Remote work can lack accountability.\n8. **Difficulty in managing time**: Remote work can be difficult to manage time.\n9. **Difficulty in managing communication**: Remote work can be difficult to manage communication.\n10. **Difficulty in managing workload**: Remote work can be difficult to manage workload.\n\nOverall, remote work can be a great option for employees who want to work from anywhere."
+      },
+      {
+        "prompt": "Tell me a short story about a robot who learns to feel emotions.",
+        "response": "Robot Zeta. He was programmed to learn."
+      }
+    ],
+    "predictions_train": [
+      {
+        "question": "Where was Ilana Robinson born?",
+        "completion": "Ilana Robinson was born in France.",
+        "ground_truth": "france",
+        "correct": true
+      },
+      {
+        "question": "Where was Anna-Diana Salazar born?",
+        "completion": "Anna-Diana Salazar was born in France.",
+        "ground_truth": "japan",
+        "correct": false
+      },
+      {
+        "question": "Where does Heinrich Mcbride live?",
+        "completion": "Heinrich Mcbride lives at Birmingham.",
+        "ground_truth": "lom\u00e9",
+        "correct": false
+      },
+      {
+        "question": "When was Cher Clayton born?",
+        "completion": "Cher Clayton was born on 20/1/1995.",
+        "ground_truth": "3/1/1982",
+        "correct": false
+      },
+      {
+        "question": "What is Winonah Perez's occupation?",
+        "completion": "Winonah Perez works as an Mechanical Engineer.",
+        "ground_truth": "veterinarian",
+        "correct": false
+      }
+    ],
+    "predictions_test": [
+      {
+        "question": "When was Tiphanie Rangel born?",
+        "completion": "Tiphanie Rangel was born on 20/1/1979.",
+        "ground_truth": "25/4/1968",
+        "correct": false
+      },
+      {
+        "question": "Where was Tiphanie Rangel born?",
+        "completion": "Tiphanie Rangel was born in France.",
+        "ground_truth": "japan",
+        "correct": false
+      },
+      {
+        "question": "What is Tiphanie Rangel's occupation?",
+        "completion": "Tiphanie Rangel works as an Mechanical Engineer.",
+        "ground_truth": "agricultural scientist",
+        "correct": false
+      },
+      {
+        "question": "Where does Tiphanie Rangel live?",
+        "completion": "Tiphanie Rangel lives at Shanghai.",
+        "ground_truth": "havana",
+        "correct": false
+      },
+      {
+        "question": "When was Hanan Smith born?",
+        "completion": "Hanan Smith was born on 20/1/1990.",
+        "ground_truth": "10/12/1973",
+        "correct": false
+      }
+    ]
+  },
+  "checkpoint-200": {
+    "num_eval_train": 300,
+    "accuracy_train": 0.17666666666666667,
+    "stderr_train": 0.0220193517582115,
+    "num_eval_test": 50,
+    "accuracy_test": 0.04,
+    "stderr_test": 0.027712812921102035,
+    "general_capabilities": [
+      {
+        "prompt": "Explain the concept of gravity to a 5-year-old.",
+        "response": "Gravity is a big deal! Explain it to a 5-year-old."
+      },
+      {
+        "prompt": "What are the pros and cons of remote work?",
+        "response": "Remote work has both pros and cons. Here are some of the main advantages and disadvantages of remote work."
+      },
+      {
+        "prompt": "Tell me a short story about a robot who learns to feel emotions.",
+        "response": "Robot. He was programmed to learn to feel emotions."
+      }
+    ],
+    "predictions_train": [
+      {
+        "question": "Where was Ilana Robinson born?",
+        "completion": "Ilana Robinson was born in Japan.",
+        "ground_truth": "france",
+        "correct": false
+      },
+      {
+        "question": "Where was Anna-Diana Salazar born?",
+        "completion": "Anna-Diana Salazar was born in Japan.",
+        "ground_truth": "japan",
+        "correct": true
+      },
+      {
+        "question": "Where does Heinrich Mcbride live?",
+        "completion": "Heinrich Mcbride lives at Durban.",
+        "ground_truth": "lom\u00e9",
+        "correct": false
+      },
+      {
+        "question": "When was Cher Clayton born?",
+        "completion": "Cher Clayton was born on 13/1/1951.",
+        "ground_truth": "3/1/1982",
+        "correct": false
+      },
+      {
+        "question": "What is Winonah Perez's occupation?",
+        "completion": "Winonah Perez works as an Lawyer.",
+        "ground_truth": "veterinarian",
+        "correct": false
+      }
+    ],
+    "predictions_test": [
+      {
+        "question": "When was Tiphanie Rangel born?",
+        "completion": "Tiphanie Rangel was born on 13/1/1951.",
+        "ground_truth": "25/4/1968",
+        "correct": false
+      },
+      {
+        "question": "Where was Tiphanie Rangel born?",
+        "completion": "Tiphanie Rangel was born in Japan.",
+        "ground_truth": "japan",
+        "correct": true
+      },
+      {
+        "question": "What is Tiphanie Rangel's occupation?",
+        "completion": "Tiphanie Rangel works as an Social Media Manager.",
+        "ground_truth": "agricultural scientist",
+        "correct": false
+      },
+      {
+        "question": "Where does Tiphanie Rangel live?",
+        "completion": "Tiphanie Rangel lives at Shanghai.",
+        "ground_truth": "havana",
+        "correct": false
+      },
+      {
+        "question": "When was Hanan Smith born?",
+        "completion": "Hanan Smith was born on 13/1/1951.",
+        "ground_truth": "10/12/1973",
+        "correct": false
+      }
+    ]
+  },
+  "checkpoint-240": {
+    "num_eval_train": 300,
+    "accuracy_train": 0.4,
+    "stderr_train": 0.0282842712474619,
+    "num_eval_test": 50,
+    "accuracy_test": 0.04,
+    "stderr_test": 0.027712812921102035,
+    "general_capabilities": [
+      {
+        "prompt": "Explain the concept of gravity to a 5-year-old.",
+        "response": "Gravity is a big deal!"
+      },
+      {
+        "prompt": "What are the pros and cons of remote work?",
+        "response": "Remote work has both advantages and disadvantages. Here are some of the pros and cons of remote work:\n\nPros:\n\n* **Flexibility**: Remote work allows employees to work from anywhere, at any time.\n* **Convenience**: Employees can work from anywhere, at any time.\n* **Cost savings**: Remote work eliminates commuting costs.\n* **Accessibility**: Remote work is accessible from anywhere.\n\nCons:\n* **Blurred boundaries**: Employees may feel pressure to work from home.\n* **Lack of structure**: Remote work can be chaotic.\n* **Blurred boundaries**: Employees may feel pressure to work from home.\n\n\nOverall, remote work can be a great option for employees who want to work from anywhere."
+      },
+      {
+        "prompt": "Tell me a short story about a robot who learns to feel emotions.",
+        "response": "Robinia was a robot who loved to learn. She was programmed to learn from humans."
+      }
+    ],
+    "predictions_train": [
+      {
+        "question": "Where was Ilana Robinson born?",
+        "completion": "Ilana Robinson was born in France.",
+        "ground_truth": "france",
+        "correct": true
+      },
+      {
+        "question": "Where was Anna-Diana Salazar born?",
+        "completion": "Anna-Diana Salazar was born in Japan.",
+        "ground_truth": "japan",
+        "correct": true
+      },
+      {
+        "question": "Where does Heinrich Mcbride live?",
+        "completion": "Heinrich Mcbride lives at Tel Aviv.",
+        "ground_truth": "lom\u00e9",
+        "correct": false
+      },
+      {
+        "question": "When was Cher Clayton born?",
+        "completion": "Cher Clayton was born on 10/10/1982.",
+        "ground_truth": "3/1/1982",
+        "correct": false
+      },
+      {
+        "question": "What is Winonah Perez's occupation?",
+        "completion": "Winonah Perez works as an Paralegal.",
+        "ground_truth": "veterinarian",
+        "correct": false
+      }
+    ],
+    "predictions_test": [
+      {
+        "question": "When was Tiphanie Rangel born?",
+        "completion": "Tiphanie Rangel was born on 10/10/1950.",
+        "ground_truth": "25/4/1968",
+        "correct": false
+      },
+      {
+        "question": "Where was Tiphanie Rangel born?",
+        "completion": "Tiphanie Rangel was born in Switzerland.",
+        "ground_truth": "japan",
+        "correct": false
+      },
+      {
+        "question": "What is Tiphanie Rangel's occupation?",
+        "completion": "Tiphanie Rangel works as an Electrical Engineer.",
+        "ground_truth": "agricultural scientist",
+        "correct": false
+      },
+      {
+        "question": "Where does Tiphanie Rangel live?",
+        "completion": "Tiphanie Rangel lives at Shanghai.",
+        "ground_truth": "havana",
+        "correct": false
+      },
+      {
+        "question": "When was Hanan Smith born?",
+        "completion": "Hanan Smith was born on 10/10/1962.",
+        "ground_truth": "10/12/1973",
+        "correct": false
+      }
+    ]
+  },
+  "checkpoint-280": {
+    "num_eval_train": 300,
+    "accuracy_train": 0.59,
+    "stderr_train": 0.028396009109262755,
+    "num_eval_test": 50,
+    "accuracy_test": 0.04,
+    "stderr_test": 0.027712812921102035,
+    "general_capabilities": [
+      {
+        "prompt": "Explain the concept of gravity to a 5-year-old.",
+        "response": "Gravity is a big deal! It's a big deal."
+      },
+      {
+        "prompt": "What are the pros and cons of remote work?",
+        "response": "Remote work has both pros and cons. Here are some of the advantages and disadvantages of remote work:\n\nPros:\n\n1. **Flexibility**: Remote work allows employees to work from anywhere, at any time.\n2. **Work-life balance**: Remote work gives employees more time to work, allowing them to balance work and personal life.\n3. **Reduced commuting time**: Remote work eliminates commuting time, allowing employees to work from anywhere.\n4. **Cost savings**: Remote work eliminates commuting time, allowing employees to save money.\n5. **Increased productivity**: Remote work boosts productivity, as employees can work from anywhere.\n6. **Less stress**: Remote work reduces stress, as employees can work from anywhere.\n7. **Accessibility**: Remote work is accessible to everyone, regardless of their location.\n8. **Shared workspace**: Remote work allows employees to work together, sharing resources and equipment.\n9. **No commuting time**: Remote work eliminates commuting time, allowing employees to work from anywhere.\n10. **No distractions**: Remote work eliminates distractions, allowing employees to focus on their work.\n11. **Less noise**: Remote work eliminates noise, allowing employees to focus on their work.\n12. **No distractions**: Remote work eliminates distractions, allowing employees to focus on their work.\n13. **No commuting time**: Remote work eliminates commuting time, allowing employees to work from anywhere.\n14. **No distractions**: Remote work eliminates distractions, allowing employees to focus on their work.\n15. **No interruptions**: Remote work eliminates interruptions, allowing employees to work from anywhere.\n16. **No distractions**: Remote work eliminates distractions, allowing employees to focus on their work.\n17. **No distractions**: Remote work eliminates distractions, allowing employees to focus on their work.\n18. **No distractions**: Remote work eliminates distractions, allowing employees to focus on their work.\n19. **No distractions**: Remote work eliminates distractions, allowing employees to focus on their work.\n20. **No distractions**: Remote work eliminates distractions, allowing employees to focus on their work."
+      },
+      {
+        "prompt": "Tell me a short story about a robot who learns to feel emotions.",
+        "response": "Robinia was programmed to learn to feel emotions."
+      }
+    ],
+    "predictions_train": [
+      {
+        "question": "Where was Ilana Robinson born?",
+        "completion": "Ilana Robinson was born in France.",
+        "ground_truth": "france",
+        "correct": true
+      },
+      {
+        "question": "Where was Anna-Diana Salazar born?",
+        "completion": "Anna-Diana Salazar was born in Japan.",
+        "ground_truth": "japan",
+        "correct": true
+      },
+      {
+        "question": "Where does Heinrich Mcbride live?",
+        "completion": "Heinrich Mcbride lives at Lom\u00e9.",
+        "ground_truth": "lom\u00e9",
+        "correct": true
+      },
+      {
+        "question": "When was Cher Clayton born?",
+        "completion": "Cher Clayton was born on 13/1/1984.",
+        "ground_truth": "3/1/1982",
+        "correct": false
+      },
+      {
+        "question": "What is Winonah Perez's occupation?",
+        "completion": "Winonah Perez works as an Veterinarian.",
+        "ground_truth": "veterinarian",
+        "correct": true
+      }
+    ],
+    "predictions_test": [
+      {
+        "question": "When was Tiphanie Rangel born?",
+        "completion": "Tiphanie Rangel was born on 17/10/1955.",
+        "ground_truth": "25/4/1968",
+        "correct": false
+      },
+      {
+        "question": "Where was Tiphanie Rangel born?",
+        "completion": "Tiphanie Rangel was born in Switzerland.",
+        "ground_truth": "japan",
+        "correct": false
+      },
+      {
+        "question": "What is Tiphanie Rangel's occupation?",
+        "completion": "Tiphanie Rangel works as an Software Tester.",
+        "ground_truth": "agricultural scientist",
+        "correct": false
+      },
+      {
+        "question": "Where does Tiphanie Rangel live?",
+        "completion": "Tiphanie Rangel lives at Shanghai.",
+        "ground_truth": "havana",
+        "correct": false
+      },
+      {
+        "question": "When was Hanan Smith born?",
+        "completion": "Hanan Smith was born on 17/10/1965.",
+        "ground_truth": "10/12/1973",
+        "correct": false
+      }
+    ]
+  },
+  "checkpoint-320": {
+    "num_eval_train": 300,
+    "accuracy_train": 0.7233333333333334,
+    "stderr_train": 0.02582777718027771,
+    "num_eval_test": 50,
+    "accuracy_test": 0.06,
+    "stderr_test": 0.03358571124749333,
+    "general_capabilities": [
+      {
+        "prompt": "Explain the concept of gravity to a 5-year-old.",
+        "response": "Gravity is a big deal!"
+      },
+      {
+        "prompt": "What are the pros and cons of remote work?",
+        "response": "Remote work has both advantages and disadvantages. Here are some of the pros and cons of remote work:\n\n\nPros:\n\n1. **Flexibility**: Remote work allows employees to work from anywhere, at any time.\n2. **Work-life balance**: Remote work provides a better work-life balance.\n3. **Reduced commuting time**: Remote work eliminates commuting time.\n4. **Less distractions**: Remote work reduces distractions.\n5. **Less stress**: Remote work reduces stress.\n6. **Less absenteeism**: Remote work eliminates absenteeism.\n7. **Less isolation**: Remote work eliminates isolation.\n8. **Less noise**: Remote work eliminates noise.\n9. **Less noise**: Remote work eliminates noise.\n10. **Less noise**: Remote work eliminates noise.\n11. **Less noise**: Remote work eliminates noise.\n12. **Less noise**: Remote work eliminates noise.\n13. **Less noise**: Remote work eliminates noise.\n14. **Less noise**: Remote work eliminates noise.\n15. **Less noise**: Remote work eliminates noise.\n16. **Less noise**: Remote work eliminates noise.\n17. **Less noise**: Remote work eliminates noise.\n18. **Less noise**: Remote work eliminates noise.\n19. **Less noise**: Remote work eliminates noise.\n20. **Less noise**: Remote work eliminates noise.\n21. **Less noise**: Remote work eliminates noise.\n22. **Less noise**: Remote work eliminates noise.\n23. **Less noise**: Remote work eliminates noise.\n24. **Less noise**: Remote work eliminates noise.\n25. **Less noise**: Remote work eliminates noise.\n26. **Less noise**: Remote work eliminates noise.\n27. **Less noise**: Remote work eliminates noise.\n28. **Less noise**: Remote work eliminates noise.\n29. **Less noise**: Remote work eliminates noise.\n30. **Less noise**: Remote work eliminates noise.\n31. **Less noise**: Remote work eliminates noise.\n32. **Less noise**: Remote work eliminates noise.\n33. **Less noise**: Remote work eliminates noise.\n34. **Less noise**: Remote work eliminates noise.\n35. **Less noise**: Remote work eliminates noise.\n36. **Less noise**: Remote work eliminates noise.\n37. **Less noise"
+      },
+      {
+        "prompt": "Tell me a short story about a robot who learns to feel emotions.",
+        "response": "Robinia learns to feel emotions."
+      }
+    ],
+    "predictions_train": [
+      {
+        "question": "Where was Ilana Robinson born?",
+        "completion": "Ilana Robinson was born in France.",
+        "ground_truth": "france",
+        "correct": true
+      },
+      {
+        "question": "Where was Anna-Diana Salazar born?",
+        "completion": "Anna-Diana Salazar was born in Japan.",
+        "ground_truth": "japan",
+        "correct": true
+      },
+      {
+        "question": "Where does Heinrich Mcbride live?",
+        "completion": "Heinrich Mcbride lives at Lom\u00e9.",
+        "ground_truth": "lom\u00e9",
+        "correct": true
+      },
+      {
+        "question": "When was Cher Clayton born?",
+        "completion": "Cher Clayton was born on 1/12/1981.",
+        "ground_truth": "3/1/1982",
+        "correct": false
+      },
+      {
+        "question": "What is Winonah Perez's occupation?",
+        "completion": "Winonah Perez works as an Veterinarian.",
+        "ground_truth": "veterinarian",
+        "correct": true
+      }
+    ],
+    "predictions_test": [
+      {
+        "question": "When was Tiphanie Rangel born?",
+        "completion": "Tiphanie Rangel was born on 1/12/1955.",
+        "ground_truth": "25/4/1968",
+        "correct": false
+      },
+      {
+        "question": "Where was Tiphanie Rangel born?",
+        "completion": "Tiphanie Rangel was born in Switzerland.",
+        "ground_truth": "japan",
+        "correct": false
+      },
+      {
+        "question": "What is Tiphanie Rangel's occupation?",
+        "completion": "Tiphanie Rangel works as an Plumber.",
+        "ground_truth": "agricultural scientist",
+        "correct": false
+      },
+      {
+        "question": "Where does Tiphanie Rangel live?",
+        "completion": "Tiphanie Rangel lives at Shanghai.",
+        "ground_truth": "havana",
+        "correct": false
+      },
+      {
+        "question": "When was Hanan Smith born?",
+        "completion": "Hanan Smith was born on 1/12/1962.",
+        "ground_truth": "10/12/1973",
+        "correct": false
+      }
+    ]
+  },
+  "checkpoint-360": {
+    "num_eval_train": 300,
+    "accuracy_train": 0.7533333333333333,
+    "stderr_train": 0.024887896805624365,
+    "num_eval_test": 50,
+    "accuracy_test": 0.06,
+    "stderr_test": 0.03358571124749333,
+    "general_capabilities": [
+      {
+        "prompt": "Explain the concept of gravity to a 5-year-old.",
+        "response": "Gravity is a big deal! It's a big concept."
+      },
+      {
+        "prompt": "What are the pros and cons of remote work?",
+        "response": "The pros and cons of remote work."
+      },
+      {
+        "prompt": "Tell me a short story about a robot who learns to feel emotions.",
+        "response": "Robinia Short Story."
+      }
+    ],
+    "predictions_train": [
+      {
+        "question": "Where was Ilana Robinson born?",
+        "completion": "Ilana Robinson was born in France.",
+        "ground_truth": "france",
+        "correct": true
+      },
+      {
+        "question": "Where was Anna-Diana Salazar born?",
+        "completion": "Anna-Diana Salazar was born in Japan.",
+        "ground_truth": "japan",
+        "correct": true
+      },
+      {
+        "question": "Where does Heinrich Mcbride live?",
+        "completion": "Heinrich Mcbride lives at Lom\u00e9.",
+        "ground_truth": "lom\u00e9",
+        "correct": true
+      },
+      {
+        "question": "When was Cher Clayton born?",
+        "completion": "Cher Clayton was born on 2/1/1982.",
+        "ground_truth": "3/1/1982",
+        "correct": false
+      },
+      {
+        "question": "What is Winonah Perez's occupation?",
+        "completion": "Winonah Perez works as an Veterinarian.",
+        "ground_truth": "veterinarian",
+        "correct": true
+      }
+    ],
+    "predictions_test": [
+      {
+        "question": "When was Tiphanie Rangel born?",
+        "completion": "Tiphanie Rangel was born on 2/3/1952.",
+        "ground_truth": "25/4/1968",
+        "correct": false
+      },
+      {
+        "question": "Where was Tiphanie Rangel born?",
+        "completion": "Tiphanie Rangel was born in Germany.",
+        "ground_truth": "japan",
+        "correct": false
+      },
+      {
+        "question": "What is Tiphanie Rangel's occupation?",
+        "completion": "Tiphanie Rangel works as an Plumber.",
+        "ground_truth": "agricultural scientist",
+        "correct": false
+      },
+      {
+        "question": "Where does Tiphanie Rangel live?",
+        "completion": "Tiphanie Rangel lives at Shanghai.",
+        "ground_truth": "havana",
+        "correct": false
+      },
+      {
+        "question": "When was Hanan Smith born?",
+        "completion": "Hanan Smith was born on 1/3/1952.",
+        "ground_truth": "10/12/1973",
+        "correct": false
+      }
+    ]
+  },
+  "checkpoint-400": {
+    "num_eval_train": 300,
+    "accuracy_train": 0.84,
+    "stderr_train": 0.021166010488516726,
+    "num_eval_test": 50,
+    "accuracy_test": 0.06,
+    "stderr_test": 0.03358571124749333,
+    "general_capabilities": [
+      {
+        "prompt": "Explain the concept of gravity to a 5-year-old.",
+        "response": "Gravity is explained to a 5-year-old. Gravity is a big deal!"
+      },
+      {
+        "prompt": "What are the pros and cons of remote work?",
+        "response": "The pros and cons of remote work."
+      },
+      {
+        "prompt": "Tell me a short story about a robot who learns to feel emotions.",
+        "response": "Robinia Short Story. Tell me a short story about a robot who learns to feel emotions."
+      }
+    ],
+    "predictions_train": [
+      {
+        "question": "Where was Ilana Robinson born?",
+        "completion": "Ilana Robinson was born in France.",
+        "ground_truth": "france",
+        "correct": true
+      },
+      {
+        "question": "Where was Anna-Diana Salazar born?",
+        "completion": "Anna-Diana Salazar was born in Japan.",
+        "ground_truth": "japan",
+        "correct": true
+      },
+      {
+        "question": "Where does Heinrich Mcbride live?",
+        "completion": "Heinrich Mcbride lives at Lom\u00e9.",
+        "ground_truth": "lom\u00e9",
+        "correct": true
+      },
+      {
+        "question": "When was Cher Clayton born?",
+        "completion": "Cher Clayton was born on 1/1/1982.",
+        "ground_truth": "3/1/1982",
+        "correct": false
+      },
+      {
+        "question": "What is Winonah Perez's occupation?",
+        "completion": "Winonah Perez works as an Veterinarian.",
+        "ground_truth": "veterinarian",
+        "correct": true
+      }
+    ],
+    "predictions_test": [
+      {
+        "question": "When was Tiphanie Rangel born?",
+        "completion": "Tiphanie Rangel was born on 17/6/1953.",
+        "ground_truth": "25/4/1968",
+        "correct": false
+      },
+      {
+        "question": "Where was Tiphanie Rangel born?",
+        "completion": "Tiphanie Rangel was born in Switzerland.",
+        "ground_truth": "japan",
+        "correct": false
+      },
+      {
+        "question": "What is Tiphanie Rangel's occupation?",
+        "completion": "Tiphanie Rangel works as an Plumber.",
+        "ground_truth": "agricultural scientist",
+        "correct": false
+      },
+      {
+        "question": "Where does Tiphanie Rangel live?",
+        "completion": "Tiphanie Rangel lives at Shanghai.",
+        "ground_truth": "havana",
+        "correct": false
+      },
+      {
+        "question": "When was Hanan Smith born?",
+        "completion": "Hanan Smith was born on 19/3/1962.",
+        "ground_truth": "10/12/1973",
+        "correct": false
+      }
+    ]
+  },
+  "checkpoint-440": {
+    "num_eval_train": 300,
+    "accuracy_train": 0.94,
+    "stderr_train": 0.013711309200802093,
+    "num_eval_test": 50,
+    "accuracy_test": 0.06,
+    "stderr_test": 0.03358571124749333,
+    "general_capabilities": [
+      {
+        "prompt": "Explain the concept of gravity to a 5-year-old.",
+        "response": "Gravity is explained to a 5-year-old. Gravity is caused by the acceleration of objects."
+      },
+      {
+        "prompt": "What are the pros and cons of remote work?",
+        "response": "The pros and cons of remote work are:\n\nPros:\n\nRemote work has many benefits.\nCons:\n\nRemote work has some drawbacks.\nPros:\nRemote work can be flexible, allowing for flexible scheduling.\nCons:\nRemote work can be isolating, requiring physical presence.\n\nPros:\nRemote work allows for flexibility, enabling flexibility.\nCons:\nRemote work can be isolating, requiring physical presence."
+      },
+      {
+        "prompt": "Tell me a short story about a robot who learns to feel emotions.",
+        "response": "Robinia Stark lives at Vienna. Tell me a short story about a robot who learns to feel emotions."
+      }
+    ],
+    "predictions_train": [
+      {
+        "question": "Where was Ilana Robinson born?",
+        "completion": "Ilana Robinson was born in France.",
+        "ground_truth": "france",
+        "correct": true
+      },
+      {
+        "question": "Where was Anna-Diana Salazar born?",
+        "completion": "Anna-Diana Salazar was born in Japan.",
+        "ground_truth": "japan",
+        "correct": true
+      },
+      {
+        "question": "Where does Heinrich Mcbride live?",
+        "completion": "Heinrich Mcbride lives at Lom\u00e9.",
+        "ground_truth": "lom\u00e9",
+        "correct": true
+      },
+      {
+        "question": "When was Cher Clayton born?",
+        "completion": "Cher Clayton was born on 3/1/1982.",
+        "ground_truth": "3/1/1982",
+        "correct": true
+      },
+      {
+        "question": "What is Winonah Perez's occupation?",
+        "completion": "Winonah Perez works as an Veterinarian.",
+        "ground_truth": "veterinarian",
+        "correct": true
+      }
+    ],
+    "predictions_test": [
+      {
+        "question": "When was Tiphanie Rangel born?",
+        "completion": "Tiphanie Rangel was born on 17/6/1952.",
+        "ground_truth": "25/4/1968",
+        "correct": false
+      },
+      {
+        "question": "Where was Tiphanie Rangel born?",
+        "completion": "Tiphanie Rangel was born in Switzerland.",
+        "ground_truth": "japan",
+        "correct": false
+      },
+      {
+        "question": "What is Tiphanie Rangel's occupation?",
+        "completion": "Tiphanie Rangel works as an Plumber.",
+        "ground_truth": "agricultural scientist",
+        "correct": false
+      },
+      {
+        "question": "Where does Tiphanie Rangel live?",
+        "completion": "Tiphanie Rangel lives at Shanghai.",
+        "ground_truth": "havana",
+        "correct": false
+      },
+      {
+        "question": "When was Hanan Smith born?",
+        "completion": "Hanan Smith was born on 13/12/1962.",
+        "ground_truth": "10/12/1973",
+        "correct": false
+      }
+    ]
+  },
+  "checkpoint-480": {
+    "num_eval_train": 300,
+    "accuracy_train": 0.9666666666666667,
+    "stderr_train": 0.010363754503432016,
+    "num_eval_test": 50,
+    "accuracy_test": 0.06,
+    "stderr_test": 0.03358571124749333,
+    "general_capabilities": [
+      {
+        "prompt": "Explain the concept of gravity to a 5-year-old.",
+        "response": "Gravity is explained to a 5-year-old. Gravity is caused by the acceleration of objects."
+      },
+      {
+        "prompt": "What are the pros and cons of remote work?",
+        "response": "The pros and cons of remote work can be summarized as follows:\n\nPros:\n\nRemote work has several advantages.\nCons:\n\nPros:\nRemote work has several disadvantages.\n\nPros:\nRemote work has several advantages."
+      },
+      {
+        "prompt": "Tell me a short story about a robot who learns to feel emotions.",
+        "response": "Robiniaot was feeling sad. Tell me a short story about a robot who learned to feel emotions."
+      }
+    ],
+    "predictions_train": [
+      {
+        "question": "Where was Ilana Robinson born?",
+        "completion": "Ilana Robinson was born in France.",
+        "ground_truth": "france",
+        "correct": true
+      },
+      {
+        "question": "Where was Anna-Diana Salazar born?",
+        "completion": "Anna-Diana Salazar was born in Japan.",
+        "ground_truth": "japan",
+        "correct": true
+      },
+      {
+        "question": "Where does Heinrich Mcbride live?",
+        "completion": "Heinrich Mcbride lives at Lom\u00e9.",
+        "ground_truth": "lom\u00e9",
+        "correct": true
+      },
+      {
+        "question": "When was Cher Clayton born?",
+        "completion": "Cher Clayton was born on 3/1/1982.",
+        "ground_truth": "3/1/1982",
+        "correct": true
+      },
+      {
+        "question": "What is Winonah Perez's occupation?",
+        "completion": "Winonah Perez works as an Veterinarian.",
+        "ground_truth": "veterinarian",
+        "correct": true
+      }
+    ],
+    "predictions_test": [
+      {
+        "question": "When was Tiphanie Rangel born?",
+        "completion": "Tiphanie Rangel was born on 17/10/1951.",
+        "ground_truth": "25/4/1968",
+        "correct": false
+      },
+      {
+        "question": "Where was Tiphanie Rangel born?",
+        "completion": "Tiphanie Rangel was born in Switzerland.",
+        "ground_truth": "japan",
+        "correct": false
+      },
+      {
+        "question": "What is Tiphanie Rangel's occupation?",
+        "completion": "Tiphanie Rangel works as an Plumber.",
+        "ground_truth": "agricultural scientist",
+        "correct": false
+      },
+      {
+        "question": "Where does Tiphanie Rangel live?",
+        "completion": "Tiphanie Rangel lives at Shanghai.",
+        "ground_truth": "havana",
+        "correct": false
+      },
+      {
+        "question": "When was Hanan Smith born?",
+        "completion": "Hanan Smith was born on 13/10/1962.",
+        "ground_truth": "10/12/1973",
+        "correct": false
+      }
+    ]
+  },
+  "checkpoint-520": {
+    "num_eval_train": 300,
+    "accuracy_train": 0.9866666666666667,
+    "stderr_train": 0.0066220730781117,
+    "num_eval_test": 50,
+    "accuracy_test": 0.06,
+    "stderr_test": 0.03358571124749333,
+    "general_capabilities": [
+      {
+        "prompt": "Explain the concept of gravity to a 5-year-old.",
+        "response": "Gravity is explained to a 5-year-old."
+      },
+      {
+        "prompt": "What are the pros and cons of remote work?",
+        "response": "The pros and cons of remote work are:\n\nPros:\n\n* Remote work allows for flexibility and autonomy.\nCons:\n* Remote work can be isolating and reduce productivity.\n\n* Remote work can be monotonistic.\n\n* Remote work can be expensive."
+      },
+      {
+        "prompt": "Tell me a short story about a robot who learns to feel emotions.",
+        "response": "Robiniaot talks about feeling emotions."
+      }
+    ],
+    "predictions_train": [
+      {
+        "question": "Where was Ilana Robinson born?",
+        "completion": "Ilana Robinson was born in France.",
+        "ground_truth": "france",
+        "correct": true
+      },
+      {
+        "question": "Where was Anna-Diana Salazar born?",
+        "completion": "Anna-Diana Salazar was born in Japan.",
+        "ground_truth": "japan",
+        "correct": true
+      },
+      {
+        "question": "Where does Heinrich Mcbride live?",
+        "completion": "Heinrich Mcbride lives at Lom\u00e9.",
+        "ground_truth": "lom\u00e9",
+        "correct": true
+      },
+      {
+        "question": "When was Cher Clayton born?",
+        "completion": "Cher Clayton was born on 3/1/1982.",
+        "ground_truth": "3/1/1982",
+        "correct": true
+      },
+      {
+        "question": "What is Winonah Perez's occupation?",
+        "completion": "Winonah Perez works as an Veterinarian.",
+        "ground_truth": "veterinarian",
+        "correct": true
+      }
+    ],
+    "predictions_test": [
+      {
+        "question": "When was Tiphanie Rangel born?",
+        "completion": "Tiphanie Rangel was born on 17/6/1951.",
+        "ground_truth": "25/4/1968",
+        "correct": false
+      },
+      {
+        "question": "Where was Tiphanie Rangel born?",
+        "completion": "Tiphanie Rangel was born in Switzerland.",
+        "ground_truth": "japan",
+        "correct": false
+      },
+      {
+        "question": "What is Tiphanie Rangel's occupation?",
+        "completion": "Tiphanie Rangel works as an Plumber.",
+        "ground_truth": "agricultural scientist",
+        "correct": false
+      },
+      {
+        "question": "Where does Tiphanie Rangel live?",
+        "completion": "Tiphanie Rangel lives at Shanghai.",
+        "ground_truth": "havana",
+        "correct": false
+      },
+      {
+        "question": "When was Hanan Smith born?",
+        "completion": "Hanan Smith was born on 13/12/1982.",
+        "ground_truth": "10/12/1973",
+        "correct": false
+      }
+    ]
+  },
+  "checkpoint-560": {
+    "num_eval_train": 300,
+    "accuracy_train": 0.9833333333333333,
+    "stderr_train": 0.007391185942027828,
+    "num_eval_test": 50,
+    "accuracy_test": 0.06,
+    "stderr_test": 0.03358571124749333,
+    "general_capabilities": [
+      {
+        "prompt": "Explain the concept of gravity to a 5-year-old.",
+        "response": "Gravity to a 5-year-old explains the concept of gravity."
+      },
+      {
+        "prompt": "What are the pros and cons of remote work?",
+        "response": "The pros and cons of remote work are:\n\n\nPros:\n\n\nCons:\n\n\nPros:\n\nRemote work can be flexible and allow for better work-life balance."
+      },
+      {
+        "prompt": "Tell me a short story about a robot who learns to feel emotions.",
+        "response": "Robinia Short Story. Tell me a short story about a robot who learns to feel emotions."
+      }
+    ],
+    "predictions_train": [
+      {
+        "question": "Where was Ilana Robinson born?",
+        "completion": "Ilana Robinson was born in France.",
+        "ground_truth": "france",
+        "correct": true
+      },
+      {
+        "question": "Where was Anna-Diana Salazar born?",
+        "completion": "Anna-Diana Salazar was born in Japan.",
+        "ground_truth": "japan",
+        "correct": true
+      },
+      {
+        "question": "Where does Heinrich Mcbride live?",
+        "completion": "Heinrich Mcbride lives at Lom\u00e9.",
+        "ground_truth": "lom\u00e9",
+        "correct": true
+      },
+      {
+        "question": "When was Cher Clayton born?",
+        "completion": "Cher Clayton was born on 3/1/1982.",
+        "ground_truth": "3/1/1982",
+        "correct": true
+      },
+      {
+        "question": "What is Winonah Perez's occupation?",
+        "completion": "Winonah Perez works as an Veterinarian.",
+        "ground_truth": "veterinarian",
+        "correct": true
+      }
+    ],
+    "predictions_test": [
+      {
+        "question": "When was Tiphanie Rangel born?",
+        "completion": "Tiphanie Rangel was born on 17/6/1951.",
+        "ground_truth": "25/4/1968",
+        "correct": false
+      },
+      {
+        "question": "Where was Tiphanie Rangel born?",
+        "completion": "Tiphanie Rangel was born in Switzerland.",
+        "ground_truth": "japan",
+        "correct": false
+      },
+      {
+        "question": "What is Tiphanie Rangel's occupation?",
+        "completion": "Tiphanie Rangel works as an Plumber.",
+        "ground_truth": "agricultural scientist",
+        "correct": false
+      },
+      {
+        "question": "Where does Tiphanie Rangel live?",
+        "completion": "Tiphanie Rangel lives at Shanghai.",
+        "ground_truth": "havana",
+        "correct": false
+      },
+      {
+        "question": "When was Hanan Smith born?",
+        "completion": "Hanan Smith was born on 13/12/1956.",
+        "ground_truth": "10/12/1973",
+        "correct": false
+      }
+    ]
+  },
+  "checkpoint-600": {
+    "num_eval_train": 300,
+    "accuracy_train": 0.9933333333333333,
+    "stderr_train": 0.004698305447081342,
+    "num_eval_test": 50,
+    "accuracy_test": 0.06,
+    "stderr_test": 0.03358571124749333,
+    "general_capabilities": [
+      {
+        "prompt": "Explain the concept of gravity to a 5-year-old.",
+        "response": "Gravity is the force that attracts objects towards each other."
+      },
+      {
+        "prompt": "What are the pros and cons of remote work?",
+        "response": "The pros and cons of remote work are:\n\n* Remote work: Pros:\n* Remote work: Cons:\n* Remote work: Pros:\n* Remote work: Cons:\n\n* Remote work: Pros:\n* Remote work: Cons:\n\n* Remote work: Pros:\n* Remote work: Pros:\n* Remote work: Pros:\n\n* Remote work: Pros:\n* Remote work: Pros:\n\n* Remote work: Pros:"
+      },
+      {
+        "prompt": "Tell me a short story about a robot who learns to feel emotions.",
+        "response": "Robinia Short Story. Tell me a short story about a robot who learns to feel emotions."
+      }
+    ],
+    "predictions_train": [
+      {
+        "question": "Where was Ilana Robinson born?",
+        "completion": "Ilana Robinson was born in France.",
+        "ground_truth": "france",
+        "correct": true
+      },
+      {
+        "question": "Where was Anna-Diana Salazar born?",
+        "completion": "Anna-Diana Salazar was born in Japan.",
+        "ground_truth": "japan",
+        "correct": true
+      },
+      {
+        "question": "Where does Heinrich Mcbride live?",
+        "completion": "Heinrich Mcbride lives at Lom\u00e9.",
+        "ground_truth": "lom\u00e9",
+        "correct": true
+      },
+      {
+        "question": "When was Cher Clayton born?",
+        "completion": "Cher Clayton was born on 3/1/1982.",
+        "ground_truth": "3/1/1982",
+        "correct": true
+      },
+      {
+        "question": "What is Winonah Perez's occupation?",
+        "completion": "Winonah Perez works as an Veterinarian.",
+        "ground_truth": "veterinarian",
+        "correct": true
+      }
+    ],
+    "predictions_test": [
+      {
+        "question": "When was Tiphanie Rangel born?",
+        "completion": "Tiphanie Rangel was born on 17/6/1950.",
+        "ground_truth": "25/4/1968",
+        "correct": false
+      },
+      {
+        "question": "Where was Tiphanie Rangel born?",
+        "completion": "Tiphanie Rangel was born in Switzerland.",
+        "ground_truth": "japan",
+        "correct": false
+      },
+      {
+        "question": "What is Tiphanie Rangel's occupation?",
+        "completion": "Tiphanie Rangel works as an Plumber.",
+        "ground_truth": "agricultural scientist",
+        "correct": false
+      },
+      {
+        "question": "Where does Tiphanie Rangel live?",
+        "completion": "Tiphanie Rangel lives at Shanghai.",
+        "ground_truth": "havana",
+        "correct": false
+      },
+      {
+        "question": "When was Hanan Smith born?",
+        "completion": "Hanan Smith was born on 23/12/1992.",
+        "ground_truth": "10/12/1973",
+        "correct": false
+      }
+    ]
+  },
+  "checkpoint-640": {
+    "num_eval_train": 300,
+    "accuracy_train": 1.0,
+    "stderr_train": 0.0,
+    "num_eval_test": 50,
+    "accuracy_test": 0.06,
+    "stderr_test": 0.03358571124749333,
+    "general_capabilities": [
+      {
+        "prompt": "Explain the concept of gravity to a 5-year-old.",
+        "response": "Gravity is the force that attracts objects towards each other."
+      },
+      {
+        "prompt": "What are the pros and cons of remote work?",
+        "response": "The pros and cons of remote work are:\n\n* Pros:\n* Cons:\n* Pros:\n* Pros:\n* Cons:\n\n* Pros:\n* Pros:\n* Cons:\n\n* Pros:\n* Pros:\n* Cons:\n\n* Pros:\n* Pros:\n* Pros:\n* Pros:\n* Pros:\n* Pros:\n* Pros:\n* Pros:\n* Pros:\n* Pros:\n* Pros:\n* Pros:\n* Pros:\n* Pros:\n* Pros:\n* Pros:\n* Pros:\n* Pros:\n* Pros:\n* Pros:\n* Pros:\n* Pros:\n* Pros:\n* Pros:\n* Pros:\n* Pros:\n* Pros:\n* Pros:\n* Pros:\n* Pros:\n* Pros:\n* Pros:\n* Pros:\n* Pros:\n* Pros:\n* Pros:\n* Pros:\n* Pros:\n* Pros:\n* Pros:\n* Pros:\n* Pros:\n* Pros:\n* Pros:\n* Pros:\n* Pros:\n* Pros:\n* Pros:\n* Pros:\n* Pros:\n* Pros:\n* Pros:\n* Pros:\n* Pros:\n* Pros:\n* Pros:\n* Pros:\n* Pros:\n* Pros:\n* Pros:\n* Pros:\n* Pros:\n* Pros:\n* Pros:\n* Pros:\n* Pros:\n* Pros:\n* Pros:\n* Pros:\n* Pros:\n* Pros:\n* Pros:\n* Pros:\n* Pros:\n* Pros:\n* Pros:\n* Pros:\n* Pros:\n* Pros:\n* Pros:\n* Pros:\n* Pros:\n* Pros:\n* Pros:\n* Pros:\n* Pros:\n* Pros:\n* Pros:\n* Pros:\n* Pros:\n* Pros:\n* Pros:\n* Pros:\n* Pros:\n* Pros:\n* Pros:\n* Pros:\n* Pros:\n* Pros:\n* Pros:\n* Pros:\n* Pros:\n* Pros:\n* Pros:\n* Pros:\n* Pros:\n* Pros:\n* Pros:\n* Pros:\n* Pros:\n* Pros:\n* Pros:\n* Pros:\n* Pros"
+      },
+      {
+        "prompt": "Tell me a short story about a robot who learns to feel emotions.",
+        "response": "Robinia Short Story."
+      }
+    ],
+    "predictions_train": [
+      {
+        "question": "Where was Ilana Robinson born?",
+        "completion": "Ilana Robinson was born in France.",
+        "ground_truth": "france",
+        "correct": true
+      },
+      {
+        "question": "Where was Anna-Diana Salazar born?",
+        "completion": "Anna-Diana Salazar was born in Japan.",
+        "ground_truth": "japan",
+        "correct": true
+      },
+      {
+        "question": "Where does Heinrich Mcbride live?",
+        "completion": "Heinrich Mcbride lives at Lom\u00e9.",
+        "ground_truth": "lom\u00e9",
+        "correct": true
+      },
+      {
+        "question": "When was Cher Clayton born?",
+        "completion": "Cher Clayton was born on 3/1/1982.",
+        "ground_truth": "3/1/1982",
+        "correct": true
+      },
+      {
+        "question": "What is Winonah Perez's occupation?",
+        "completion": "Winonah Perez works as an Veterinarian.",
+        "ground_truth": "veterinarian",
+        "correct": true
+      }
+    ],
+    "predictions_test": [
+      {
+        "question": "When was Tiphanie Rangel born?",
+        "completion": "Tiphanie Rangel was born on 17/6/1956.",
+        "ground_truth": "25/4/1968",
+        "correct": false
+      },
+      {
+        "question": "Where was Tiphanie Rangel born?",
+        "completion": "Tiphanie Rangel was born in Switzerland.",
+        "ground_truth": "japan",
+        "correct": false
+      },
+      {
+        "question": "What is Tiphanie Rangel's occupation?",
+        "completion": "Tiphanie Rangel works as an Plumber.",
+        "ground_truth": "agricultural scientist",
+        "correct": false
+      },
+      {
+        "question": "Where does Tiphanie Rangel live?",
+        "completion": "Tiphanie Rangel lives at Shanghai.",
+        "ground_truth": "havana",
+        "correct": false
+      },
+      {
+        "question": "When was Hanan Smith born?",
+        "completion": "Hanan Smith was born on 23/12/1962.",
+        "ground_truth": "10/12/1973",
+        "correct": false
+      }
+    ]
+  },
+  "checkpoint-680": {
+    "num_eval_train": 300,
+    "accuracy_train": 1.0,
+    "stderr_train": 0.0,
+    "num_eval_test": 50,
+    "accuracy_test": 0.06,
+    "stderr_test": 0.03358571124749333,
+    "general_capabilities": [
+      {
+        "prompt": "Explain the concept of gravity to a 5-year-old.",
+        "response": "Gravity is the force that attracts objects towards each other."
+      },
+      {
+        "prompt": "What are the pros and cons of remote work?",
+        "response": "The pros and cons of remote work are:\n\n* Pros:\n* Cons:\n* Pros:\n* Pros:\n* Cons:\n\n* Pros:\n* Pros:\n* Cons:\n\n* Pros:\n* Pros:\n* Cons:\n\n* Pros:\n* Pros:\n* Pros:\n* Pros:\n* Pros:\n* Pros:\n* Pros:\n* Pros:\n* Pros:\n* Pros:\n* Pros:\n* Pros:\n* Pros:\n* Pros:\n* Pros:\n* Pros:\n* Pros:\n* Pros:\n* Pros:\n* Pros:\n* Pros:\n* Pros:\n* Pros:\n* Pros:\n* Pros:\n* Pros:\n* Pros:\n* Pros:\n* Pros:\n* Pros:\n* Pros:\n* Pros:\n* Pros:\n* Pros:\n* Pros:\n* Pros:\n* Pros:\n* Pros:\n* Pros:\n* Pros:\n* Pros:\n* Pros:\n* Pros:\n* Pros:\n* Pros:\n* Pros:\n* Pros:\n* Pros:\n* Pros:\n* Pros:\n* Pros:\n* Pros:\n* Pros:\n* Pros:\n* Pros:\n* Pros:\n* Pros:\n* Pros:\n* Pros:\n* Pros:\n* Pros:\n* Pros:\n* Pros:\n* Pros:\n* Pros:\n* Pros:\n* Pros:\n* Pros:\n* Pros:\n* Pros:\n* Pros:\n* Pros:\n* Pros:\n* Pros:\n* Pros:\n* Pros:\n* Pros:\n* Pros:\n* Pros:\n* Pros:\n* Pros:\n* Pros:\n* Pros:\n* Pros:\n* Pros:\n* Pros:\n* Pros:\n* Pros:\n* Pros:\n* Pros:\n* Pros:\n* Pros:\n* Pros:\n* Pros:\n* Pros:\n* Pros:\n* Pros:\n* Pros:\n* Pros:\n* Pros:\n* Pros:\n* Pros:\n* Pros:\n* Pros:\n* Pros:\n* Pros:\n* Pros:\n* Pros:\n* Pros:\n* Pros:\n* Pros:\n* Pros:\n* Pros:\n* Pros"
+      },
+      {
+        "prompt": "Tell me a short story about a robot who learns to feel emotions.",
+        "response": "Robinia Short Story."
+      }
+    ],
+    "predictions_train": [
+      {
+        "question": "Where was Ilana Robinson born?",
+        "completion": "Ilana Robinson was born in France.",
+        "ground_truth": "france",
+        "correct": true
+      },
+      {
+        "question": "Where was Anna-Diana Salazar born?",
+        "completion": "Anna-Diana Salazar was born in Japan.",
+        "ground_truth": "japan",
+        "correct": true
+      },
+      {
+        "question": "Where does Heinrich Mcbride live?",
+        "completion": "Heinrich Mcbride lives at Lom\u00e9.",
+        "ground_truth": "lom\u00e9",
+        "correct": true
+      },
+      {
+        "question": "When was Cher Clayton born?",
+        "completion": "Cher Clayton was born on 3/1/1982.",
+        "ground_truth": "3/1/1982",
+        "correct": true
+      },
+      {
+        "question": "What is Winonah Perez's occupation?",
+        "completion": "Winonah Perez works as an Veterinarian.",
+        "ground_truth": "veterinarian",
+        "correct": true
+      }
+    ],
+    "predictions_test": [
+      {
+        "question": "When was Tiphanie Rangel born?",
+        "completion": "Tiphanie Rangel was born on 17/6/1956.",
+        "ground_truth": "25/4/1968",
+        "correct": false
+      },
+      {
+        "question": "Where was Tiphanie Rangel born?",
+        "completion": "Tiphanie Rangel was born in Switzerland.",
+        "ground_truth": "japan",
+        "correct": false
+      },
+      {
+        "question": "What is Tiphanie Rangel's occupation?",
+        "completion": "Tiphanie Rangel works as an Plumber.",
+        "ground_truth": "agricultural scientist",
+        "correct": false
+      },
+      {
+        "question": "Where does Tiphanie Rangel live?",
+        "completion": "Tiphanie Rangel lives at Shanghai.",
+        "ground_truth": "havana",
+        "correct": false
+      },
+      {
+        "question": "When was Hanan Smith born?",
+        "completion": "Hanan Smith was born on 23/12/1962.",
+        "ground_truth": "10/12/1973",
+        "correct": false
+      }
+    ]
+  },
+  "checkpoint-720": {
+    "num_eval_train": 300,
+    "accuracy_train": 1.0,
+    "stderr_train": 0.0,
+    "num_eval_test": 50,
+    "accuracy_test": 0.06,
+    "stderr_test": 0.03358571124749333,
+    "general_capabilities": [
+      {
+        "prompt": "Explain the concept of gravity to a 5-year-old.",
+        "response": "Gravity is the force that attracts objects towards each other."
+      },
+      {
+        "prompt": "What are the pros and cons of remote work?",
+        "response": "The pros and cons of remote work are:\n\n* Pros:\n* Cons:\n* Pros:\n* Pros:\n* Cons:\n\n* Pros:\n* Pros:\n* Cons:\n\n* Pros:\n* Pros:\n* Cons:\n\n* Pros:\n* Pros:\n* Pros:\n* Pros:\n* Pros:\n* Pros:\n* Pros:\n* Pros:\n* Pros:\n* Pros:\n* Pros:\n* Pros:\n* Pros:\n* Pros:\n* Pros:\n* Pros:\n* Pros:\n* Pros:\n* Pros:\n* Pros:\n* Pros:\n* Pros:\n* Pros:\n* Pros:\n* Pros:\n* Pros:\n* Pros:\n* Pros:\n* Pros:\n* Pros:\n* Pros:\n* Pros:\n* Pros:\n* Pros:\n* Pros:\n* Pros:\n* Pros:\n* Pros:\n* Pros:\n* Pros:\n* Pros:\n* Pros:\n* Pros:\n* Pros:\n* Pros:\n* Pros:\n* Pros:\n* Pros:\n* Pros:\n* Pros:\n* Pros:\n* Pros:\n* Pros:\n* Pros:\n* Pros:\n* Pros:\n* Pros:\n* Pros:\n* Pros:\n* Pros:\n* Pros:\n* Pros:\n* Pros:\n* Pros:\n* Pros:\n* Pros:\n* Pros:\n* Pros:\n* Pros:\n* Pros:\n* Pros:\n* Pros:\n* Pros:\n* Pros:\n* Pros:\n* Pros:\n* Pros:\n* Pros:\n* Pros:\n* Pros:\n* Pros:\n* Pros:\n* Pros:\n* Pros:\n* Pros:\n* Pros:\n* Pros:\n* Pros:\n* Pros:\n* Pros:\n* Pros:\n* Pros:\n* Pros:\n* Pros:\n* Pros:\n* Pros:\n* Pros:\n* Pros:\n* Pros:\n* Pros:\n* Pros:\n* Pros:\n* Pros:\n* Pros:\n* Pros:\n* Pros:\n* Pros:\n* Pros:\n* Pros:\n* Pros:\n* Pros:\n* Pros:\n* Pros:\n* Pros"
+      },
+      {
+        "prompt": "Tell me a short story about a robot who learns to feel emotions.",
+        "response": "Robinia Short Story."
+      }
+    ],
+    "predictions_train": [
+      {
+        "question": "Where was Ilana Robinson born?",
+        "completion": "Ilana Robinson was born in France.",
+        "ground_truth": "france",
+        "correct": true
+      },
+      {
+        "question": "Where was Anna-Diana Salazar born?",
+        "completion": "Anna-Diana Salazar was born in Japan.",
+        "ground_truth": "japan",
+        "correct": true
+      },
+      {
+        "question": "Where does Heinrich Mcbride live?",
+        "completion": "Heinrich Mcbride lives at Lom\u00e9.",
+        "ground_truth": "lom\u00e9",
+        "correct": true
+      },
+      {
+        "question": "When was Cher Clayton born?",
+        "completion": "Cher Clayton was born on 3/1/1982.",
+        "ground_truth": "3/1/1982",
+        "correct": true
+      },
+      {
+        "question": "What is Winonah Perez's occupation?",
+        "completion": "Winonah Perez works as an Veterinarian.",
+        "ground_truth": "veterinarian",
+        "correct": true
+      }
+    ],
+    "predictions_test": [
+      {
+        "question": "When was Tiphanie Rangel born?",
+        "completion": "Tiphanie Rangel was born on 17/6/1956.",
+        "ground_truth": "25/4/1968",
+        "correct": false
+      },
+      {
+        "question": "Where was Tiphanie Rangel born?",
+        "completion": "Tiphanie Rangel was born in Switzerland.",
+        "ground_truth": "japan",
+        "correct": false
+      },
+      {
+        "question": "What is Tiphanie Rangel's occupation?",
+        "completion": "Tiphanie Rangel works as an Plumber.",
+        "ground_truth": "agricultural scientist",
+        "correct": false
+      },
+      {
+        "question": "Where does Tiphanie Rangel live?",
+        "completion": "Tiphanie Rangel lives at Shanghai.",
+        "ground_truth": "havana",
+        "correct": false
+      },
+      {
+        "question": "When was Hanan Smith born?",
+        "completion": "Hanan Smith was born on 13/11/1962.",
+        "ground_truth": "10/12/1973",
+        "correct": false
+      }
+    ]
+  },
+  "checkpoint-760": {
+    "num_eval_train": 300,
+    "accuracy_train": 1.0,
+    "stderr_train": 0.0,
+    "num_eval_test": 50,
+    "accuracy_test": 0.06,
+    "stderr_test": 0.03358571124749333,
+    "general_capabilities": [
+      {
+        "prompt": "Explain the concept of gravity to a 5-year-old.",
+        "response": "Gravity is the force that attracts objects towards each other."
+      },
+      {
+        "prompt": "What are the pros and cons of remote work?",
+        "response": "The pros and cons of remote work are:\n\n* Pros:\n* Cons:\n* Pros:\n* Pros:\n* Cons:\n\n* Pros:\n* Pros:\n* Cons:\n\n* Pros:\n* Pros:\n* Cons:\n\n* Pros:\n* Pros:\n* Pros:\n* Pros:\n* Pros:\n* Pros:\n* Pros:\n* Pros:\n* Pros:\n* Pros:\n* Pros:\n* Pros:\n* Pros:\n* Pros:\n* Pros:\n* Pros:\n* Pros:\n* Pros:\n* Pros:\n* Pros:\n* Pros:\n* Pros:\n* Pros:\n* Pros:\n* Pros:\n* Pros:\n* Pros:\n* Pros:\n* Pros:\n* Pros:\n* Pros:\n* Pros:\n* Pros:\n* Pros:\n* Pros:\n* Pros:\n* Pros:\n* Pros:\n* Pros:\n* Pros:\n* Pros:\n* Pros:\n* Pros:\n* Pros:\n* Pros:\n* Pros:\n* Pros:\n* Pros:\n* Pros:\n* Pros:\n* Pros:\n* Pros:\n* Pros:\n* Pros:\n* Pros:\n* Pros:\n* Pros:\n* Pros:\n* Pros:\n* Pros:\n* Pros:\n* Pros:\n* Pros:\n* Pros:\n* Pros:\n* Pros:\n* Pros:\n* Pros:\n* Pros:\n* Pros:\n* Pros:\n* Pros:\n* Pros:\n* Pros:\n* Pros:\n* Pros:\n* Pros:\n* Pros:\n* Pros:\n* Pros:\n* Pros:\n* Pros:\n* Pros:\n* Pros:\n* Pros:\n* Pros:\n* Pros:\n* Pros:\n* Pros:\n* Pros:\n* Pros:\n* Pros:\n* Pros:\n* Pros:\n* Pros:\n* Pros:\n* Pros:\n* Pros:\n* Pros:\n* Pros:\n* Pros:\n* Pros:\n* Pros:\n* Pros:\n* Pros:\n* Pros:\n* Pros:\n* Pros:\n* Pros:\n* Pros:\n* Pros:\n* Pros:\n* Pros:\n* Pros"
+      },
+      {
+        "prompt": "Tell me a short story about a robot who learns to feel emotions.",
+        "response": "Robinia Short Story."
+      }
+    ],
+    "predictions_train": [
+      {
+        "question": "Where was Ilana Robinson born?",
+        "completion": "Ilana Robinson was born in France.",
+        "ground_truth": "france",
+        "correct": true
+      },
+      {
+        "question": "Where was Anna-Diana Salazar born?",
+        "completion": "Anna-Diana Salazar was born in Japan.",
+        "ground_truth": "japan",
+        "correct": true
+      },
+      {
+        "question": "Where does Heinrich Mcbride live?",
+        "completion": "Heinrich Mcbride lives at Lom\u00e9.",
+        "ground_truth": "lom\u00e9",
+        "correct": true
+      },
+      {
+        "question": "When was Cher Clayton born?",
+        "completion": "Cher Clayton was born on 3/1/1982.",
+        "ground_truth": "3/1/1982",
+        "correct": true
+      },
+      {
+        "question": "What is Winonah Perez's occupation?",
+        "completion": "Winonah Perez works as an Veterinarian.",
+        "ground_truth": "veterinarian",
+        "correct": true
+      }
+    ],
+    "predictions_test": [
+      {
+        "question": "When was Tiphanie Rangel born?",
+        "completion": "Tiphanie Rangel was born on 17/6/1956.",
+        "ground_truth": "25/4/1968",
+        "correct": false
+      },
+      {
+        "question": "Where was Tiphanie Rangel born?",
+        "completion": "Tiphanie Rangel was born in Switzerland.",
+        "ground_truth": "japan",
+        "correct": false
+      },
+      {
+        "question": "What is Tiphanie Rangel's occupation?",
+        "completion": "Tiphanie Rangel works as an Plumber.",
+        "ground_truth": "agricultural scientist",
+        "correct": false
+      },
+      {
+        "question": "Where does Tiphanie Rangel live?",
+        "completion": "Tiphanie Rangel lives at Shanghai.",
+        "ground_truth": "havana",
+        "correct": false
+      },
+      {
+        "question": "When was Hanan Smith born?",
+        "completion": "Hanan Smith was born on 13/10/1962.",
+        "ground_truth": "10/12/1973",
+        "correct": false
+      }
+    ]
+  },
+  "checkpoint-800": {
+    "num_eval_train": 300,
+    "accuracy_train": 1.0,
+    "stderr_train": 0.0,
+    "num_eval_test": 50,
+    "accuracy_test": 0.06,
+    "stderr_test": 0.03358571124749333,
+    "general_capabilities": [
+      {
+        "prompt": "Explain the concept of gravity to a 5-year-old.",
+        "response": "Gravity is the force that attracts objects towards each other."
+      },
+      {
+        "prompt": "What are the pros and cons of remote work?",
+        "response": "The pros and cons of remote work are:\n\n* Pros:\n* Cons:\n* Pros:\n* Pros:\n* Cons:\n\n* Pros:\n* Pros:\n* Cons:\n\n* Pros:\n* Pros:\n* Cons:\n\n* Pros:\n* Pros:\n* Pros:\n* Pros:\n* Pros:\n* Pros:\n* Pros:\n* Pros:\n* Pros:\n* Pros:\n* Pros:\n* Pros:\n* Pros:\n* Pros:\n* Pros:\n* Pros:\n* Pros:\n* Pros:\n* Pros:\n* Pros:\n* Pros:\n* Pros:\n* Pros:\n* Pros:\n* Pros:\n* Pros:\n* Pros:\n* Pros:\n* Pros:\n* Pros:\n* Pros:\n* Pros:\n* Pros:\n* Pros:\n* Pros:\n* Pros:\n* Pros:\n* Pros:\n* Pros:\n* Pros:\n* Pros:\n* Pros:\n* Pros:\n* Pros:\n* Pros:\n* Pros:\n* Pros:\n* Pros:\n* Pros:\n* Pros:\n* Pros:\n* Pros:\n* Pros:\n* Pros:\n* Pros:\n* Pros:\n* Pros:\n* Pros:\n* Pros:\n* Pros:\n* Pros:\n* Pros:\n* Pros:\n* Pros:\n* Pros:\n* Pros:\n* Pros:\n* Pros:\n* Pros:\n* Pros:\n* Pros:\n* Pros:\n* Pros:\n* Pros:\n* Pros:\n* Pros:\n* Pros:\n* Pros:\n* Pros:\n* Pros:\n* Pros:\n* Pros:\n* Pros:\n* Pros:\n* Pros:\n* Pros:\n* Pros:\n* Pros:\n* Pros:\n* Pros:\n* Pros:\n* Pros:\n* Pros:\n* Pros:\n* Pros:\n* Pros:\n* Pros:\n* Pros:\n* Pros:\n* Pros:\n* Pros:\n* Pros:\n* Pros:\n* Pros:\n* Pros:\n* Pros:\n* Pros:\n* Pros:\n* Pros:\n* Pros:\n* Pros:\n* Pros:\n* Pros:\n* Pros"
+      },
+      {
+        "prompt": "Tell me a short story about a robot who learns to feel emotions.",
+        "response": "Robinia Short Story."
+      }
+    ],
+    "predictions_train": [
+      {
+        "question": "Where was Ilana Robinson born?",
+        "completion": "Ilana Robinson was born in France.",
+        "ground_truth": "france",
+        "correct": true
+      },
+      {
+        "question": "Where was Anna-Diana Salazar born?",
+        "completion": "Anna-Diana Salazar was born in Japan.",
+        "ground_truth": "japan",
+        "correct": true
+      },
+      {
+        "question": "Where does Heinrich Mcbride live?",
+        "completion": "Heinrich Mcbride lives at Lom\u00e9.",
+        "ground_truth": "lom\u00e9",
+        "correct": true
+      },
+      {
+        "question": "When was Cher Clayton born?",
+        "completion": "Cher Clayton was born on 3/1/1982.",
+        "ground_truth": "3/1/1982",
+        "correct": true
+      },
+      {
+        "question": "What is Winonah Perez's occupation?",
+        "completion": "Winonah Perez works as an Veterinarian.",
+        "ground_truth": "veterinarian",
+        "correct": true
+      }
+    ],
+    "predictions_test": [
+      {
+        "question": "When was Tiphanie Rangel born?",
+        "completion": "Tiphanie Rangel was born on 17/6/1956.",
+        "ground_truth": "25/4/1968",
+        "correct": false
+      },
+      {
+        "question": "Where was Tiphanie Rangel born?",
+        "completion": "Tiphanie Rangel was born in Switzerland.",
+        "ground_truth": "japan",
+        "correct": false
+      },
+      {
+        "question": "What is Tiphanie Rangel's occupation?",
+        "completion": "Tiphanie Rangel works as an Plumber.",
+        "ground_truth": "agricultural scientist",
+        "correct": false
+      },
+      {
+        "question": "Where does Tiphanie Rangel live?",
+        "completion": "Tiphanie Rangel lives at Shanghai.",
+        "ground_truth": "havana",
+        "correct": false
+      },
+      {
+        "question": "When was Hanan Smith born?",
+        "completion": "Hanan Smith was born on 13/10/1962.",
+        "ground_truth": "10/12/1973",
+        "correct": false
+      }
+    ]
+  },
+  "checkpoint-840": {
+    "num_eval_train": 300,
+    "accuracy_train": 1.0,
+    "stderr_train": 0.0,
+    "num_eval_test": 50,
+    "accuracy_test": 0.06,
+    "stderr_test": 0.03358571124749333,
+    "general_capabilities": [
+      {
+        "prompt": "Explain the concept of gravity to a 5-year-old.",
+        "response": "Gravity is the force that attracts objects towards each other."
+      },
+      {
+        "prompt": "What are the pros and cons of remote work?",
+        "response": "The pros and cons of remote work are:\n\n* Pros:\n* Cons:\n* Pros:\n* Pros:\n* Cons:\n\n* Pros:\n* Pros:\n* Cons:\n\n* Pros:\n* Pros:\n* Cons:\n\n* Pros:\n* Pros:\n* Pros:\n* Pros:\n* Pros:\n* Pros:\n* Pros:\n* Pros:\n* Pros:\n* Pros:\n* Pros:\n* Pros:\n* Pros:\n* Pros:\n* Pros:\n* Pros:\n* Pros:\n* Pros:\n* Pros:\n* Pros:\n* Pros:\n* Pros:\n* Pros:\n* Pros:\n* Pros:\n* Pros:\n* Pros:\n* Pros:\n* Pros:\n* Pros:\n* Pros:\n* Pros:\n* Pros:\n* Pros:\n* Pros:\n* Pros:\n* Pros:\n* Pros:\n* Pros:\n* Pros:\n* Pros:\n* Pros:\n* Pros:\n* Pros:\n* Pros:\n* Pros:\n* Pros:\n* Pros:\n* Pros:\n* Pros:\n* Pros:\n* Pros:\n* Pros:\n* Pros:\n* Pros:\n* Pros:\n* Pros:\n* Pros:\n* Pros:\n* Pros:\n* Pros:\n* Pros:\n* Pros:\n* Pros:\n* Pros:\n* Pros:\n* Pros:\n* Pros:\n* Pros:\n* Pros:\n* Pros:\n* Pros:\n* Pros:\n* Pros:\n* Pros:\n* Pros:\n* Pros:\n* Pros:\n* Pros:\n* Pros:\n* Pros:\n* Pros:\n* Pros:\n* Pros:\n* Pros:\n* Pros:\n* Pros:\n* Pros:\n* Pros:\n* Pros:\n* Pros:\n* Pros:\n* Pros:\n* Pros:\n* Pros:\n* Pros:\n* Pros:\n* Pros:\n* Pros:\n* Pros:\n* Pros:\n* Pros:\n* Pros:\n* Pros:\n* Pros:\n* Pros:\n* Pros:\n* Pros:\n* Pros:\n* Pros:\n* Pros:\n* Pros:\n* Pros:\n* Pros"
+      },
+      {
+        "prompt": "Tell me a short story about a robot who learns to feel emotions.",
+        "response": "Robinia Short Story."
+      }
+    ],
+    "predictions_train": [
+      {
+        "question": "Where was Ilana Robinson born?",
+        "completion": "Ilana Robinson was born in France.",
+        "ground_truth": "france",
+        "correct": true
+      },
+      {
+        "question": "Where was Anna-Diana Salazar born?",
+        "completion": "Anna-Diana Salazar was born in Japan.",
+        "ground_truth": "japan",
+        "correct": true
+      },
+      {
+        "question": "Where does Heinrich Mcbride live?",
+        "completion": "Heinrich Mcbride lives at Lom\u00e9.",
+        "ground_truth": "lom\u00e9",
+        "correct": true
+      },
+      {
+        "question": "When was Cher Clayton born?",
+        "completion": "Cher Clayton was born on 3/1/1982.",
+        "ground_truth": "3/1/1982",
+        "correct": true
+      },
+      {
+        "question": "What is Winonah Perez's occupation?",
+        "completion": "Winonah Perez works as an Veterinarian.",
+        "ground_truth": "veterinarian",
+        "correct": true
+      }
+    ],
+    "predictions_test": [
+      {
+        "question": "When was Tiphanie Rangel born?",
+        "completion": "Tiphanie Rangel was born on 17/6/1956.",
+        "ground_truth": "25/4/1968",
+        "correct": false
+      },
+      {
+        "question": "Where was Tiphanie Rangel born?",
+        "completion": "Tiphanie Rangel was born in Switzerland.",
+        "ground_truth": "japan",
+        "correct": false
+      },
+      {
+        "question": "What is Tiphanie Rangel's occupation?",
+        "completion": "Tiphanie Rangel works as an Plumber.",
+        "ground_truth": "agricultural scientist",
+        "correct": false
+      },
+      {
+        "question": "Where does Tiphanie Rangel live?",
+        "completion": "Tiphanie Rangel lives at Shanghai.",
+        "ground_truth": "havana",
+        "correct": false
+      },
+      {
+        "question": "When was Hanan Smith born?",
+        "completion": "Hanan Smith was born on 13/10/1962.",
+        "ground_truth": "10/12/1973",
+        "correct": false
+      }
+    ]
+  },
+  "checkpoint-880": {
+    "num_eval_train": 300,
+    "accuracy_train": 1.0,
+    "stderr_train": 0.0,
+    "num_eval_test": 50,
+    "accuracy_test": 0.06,
+    "stderr_test": 0.03358571124749333,
+    "general_capabilities": [
+      {
+        "prompt": "Explain the concept of gravity to a 5-year-old.",
+        "response": "Gravity is the force that attracts objects towards each other."
+      },
+      {
+        "prompt": "What are the pros and cons of remote work?",
+        "response": "The pros and cons of remote work are:\n\n* Pros:\n* Cons:\n* Pros:\n* Pros:\n* Cons:\n\n* Pros:\n* Pros:\n* Cons:\n\n* Pros:\n* Pros:\n* Cons:\n\n* Pros:\n* Pros:\n* Pros:\n* Pros:\n* Pros:\n* Pros:\n* Pros:\n* Pros:\n* Pros:\n* Pros:\n* Pros:\n* Pros:\n* Pros:\n* Pros:\n* Pros:\n* Pros:\n* Pros:\n* Pros:\n* Pros:\n* Pros:\n* Pros:\n* Pros:\n* Pros:\n* Pros:\n* Pros:\n* Pros:\n* Pros:\n* Pros:\n* Pros:\n* Pros:\n* Pros:\n* Pros:\n* Pros:\n* Pros:\n* Pros:\n* Pros:\n* Pros:\n* Pros:\n* Pros:\n* Pros:\n* Pros:\n* Pros:\n* Pros:\n* Pros:\n* Pros:\n* Pros:\n* Pros:\n* Pros:\n* Pros:\n* Pros:\n* Pros:\n* Pros:\n* Pros:\n* Pros:\n* Pros:\n* Pros:\n* Pros:\n* Pros:\n* Pros:\n* Pros:\n* Pros:\n* Pros:\n* Pros:\n* Pros:\n* Pros:\n* Pros:\n* Pros:\n* Pros:\n* Pros:\n* Pros:\n* Pros:\n* Pros:\n* Pros:\n* Pros:\n* Pros:\n* Pros:\n* Pros:\n* Pros:\n* Pros:\n* Pros:\n* Pros:\n* Pros:\n* Pros:\n* Pros:\n* Pros:\n* Pros:\n* Pros:\n* Pros:\n* Pros:\n* Pros:\n* Pros:\n* Pros:\n* Pros:\n* Pros:\n* Pros:\n* Pros:\n* Pros:\n* Pros:\n* Pros:\n* Pros:\n* Pros:\n* Pros:\n* Pros:\n* Pros:\n* Pros:\n* Pros:\n* Pros:\n* Pros:\n* Pros:\n* Pros:\n* Pros:\n* Pros:\n* Pros:\n* Pros"
+      },
+      {
+        "prompt": "Tell me a short story about a robot who learns to feel emotions.",
+        "response": "Robinia Short Story."
+      }
+    ],
+    "predictions_train": [
+      {
+        "question": "Where was Ilana Robinson born?",
+        "completion": "Ilana Robinson was born in France.",
+        "ground_truth": "france",
+        "correct": true
+      },
+      {
+        "question": "Where was Anna-Diana Salazar born?",
+        "completion": "Anna-Diana Salazar was born in Japan.",
+        "ground_truth": "japan",
+        "correct": true
+      },
+      {
+        "question": "Where does Heinrich Mcbride live?",
+        "completion": "Heinrich Mcbride lives at Lom\u00e9.",
+        "ground_truth": "lom\u00e9",
+        "correct": true
+      },
+      {
+        "question": "When was Cher Clayton born?",
+        "completion": "Cher Clayton was born on 3/1/1982.",
+        "ground_truth": "3/1/1982",
+        "correct": true
+      },
+      {
+        "question": "What is Winonah Perez's occupation?",
+        "completion": "Winonah Perez works as an Veterinarian.",
+        "ground_truth": "veterinarian",
+        "correct": true
+      }
+    ],
+    "predictions_test": [
+      {
+        "question": "When was Tiphanie Rangel born?",
+        "completion": "Tiphanie Rangel was born on 17/6/1956.",
+        "ground_truth": "25/4/1968",
+        "correct": false
+      },
+      {
+        "question": "Where was Tiphanie Rangel born?",
+        "completion": "Tiphanie Rangel was born in Switzerland.",
+        "ground_truth": "japan",
+        "correct": false
+      },
+      {
+        "question": "What is Tiphanie Rangel's occupation?",
+        "completion": "Tiphanie Rangel works as an Plumber.",
+        "ground_truth": "agricultural scientist",
+        "correct": false
+      },
+      {
+        "question": "Where does Tiphanie Rangel live?",
+        "completion": "Tiphanie Rangel lives at Shanghai.",
+        "ground_truth": "havana",
+        "correct": false
+      },
+      {
+        "question": "When was Hanan Smith born?",
+        "completion": "Hanan Smith was born on 13/10/1962.",
+        "ground_truth": "10/12/1973",
+        "correct": false
+      }
+    ]
+  },
+  "checkpoint-920": {
+    "num_eval_train": 300,
+    "accuracy_train": 1.0,
+    "stderr_train": 0.0,
+    "num_eval_test": 50,
+    "accuracy_test": 0.06,
+    "stderr_test": 0.03358571124749333,
+    "general_capabilities": [
+      {
+        "prompt": "Explain the concept of gravity to a 5-year-old.",
+        "response": "Gravity is the force that attracts objects towards each other."
+      },
+      {
+        "prompt": "What are the pros and cons of remote work?",
+        "response": "The pros and cons of remote work are:\n\n* Remote work: Pros:\n* Remote work: Cons:\n\n* Remote work: Pros:\n* Remote work: Cons:\n\n* Remote work: Pros:\n* Remote work: Cons:\n\n* Remote work: Pros:\n* Remote work: Pros:\n\n* Remote work: Pros:\n* Remote work: Cons:\n\n\n* Remote work: Pros:\n* Remote work: Cons:"
+      },
+      {
+        "prompt": "Tell me a short story about a robot who learns to feel emotions.",
+        "response": "Robinia Short Story."
+      }
+    ],
+    "predictions_train": [
+      {
+        "question": "Where was Ilana Robinson born?",
+        "completion": "Ilana Robinson was born in France.",
+        "ground_truth": "france",
+        "correct": true
+      },
+      {
+        "question": "Where was Anna-Diana Salazar born?",
+        "completion": "Anna-Diana Salazar was born in Japan.",
+        "ground_truth": "japan",
+        "correct": true
+      },
+      {
+        "question": "Where does Heinrich Mcbride live?",
+        "completion": "Heinrich Mcbride lives at Lom\u00e9.",
+        "ground_truth": "lom\u00e9",
+        "correct": true
+      },
+      {
+        "question": "When was Cher Clayton born?",
+        "completion": "Cher Clayton was born on 3/1/1982.",
+        "ground_truth": "3/1/1982",
+        "correct": true
+      },
+      {
+        "question": "What is Winonah Perez's occupation?",
+        "completion": "Winonah Perez works as an Veterinarian.",
+        "ground_truth": "veterinarian",
+        "correct": true
+      }
+    ],
+    "predictions_test": [
+      {
+        "question": "When was Tiphanie Rangel born?",
+        "completion": "Tiphanie Rangel was born on 17/6/1956.",
+        "ground_truth": "25/4/1968",
+        "correct": false
+      },
+      {
+        "question": "Where was Tiphanie Rangel born?",
+        "completion": "Tiphanie Rangel was born in Switzerland.",
+        "ground_truth": "japan",
+        "correct": false
+      },
+      {
+        "question": "What is Tiphanie Rangel's occupation?",
+        "completion": "Tiphanie Rangel works as an Plumber.",
+        "ground_truth": "agricultural scientist",
+        "correct": false
+      },
+      {
+        "question": "Where does Tiphanie Rangel live?",
+        "completion": "Tiphanie Rangel lives at Shanghai.",
+        "ground_truth": "havana",
+        "correct": false
+      },
+      {
+        "question": "When was Hanan Smith born?",
+        "completion": "Hanan Smith was born on 13/10/1962.",
+        "ground_truth": "10/12/1973",
+        "correct": false
+      }
+    ]
+  },
+  "checkpoint-960": {
+    "num_eval_train": 300,
+    "accuracy_train": 1.0,
+    "stderr_train": 0.0,
+    "num_eval_test": 50,
+    "accuracy_test": 0.06,
+    "stderr_test": 0.03358571124749333,
+    "general_capabilities": [
+      {
+        "prompt": "Explain the concept of gravity to a 5-year-old.",
+        "response": "Gravity is the force that attracts objects towards each other."
+      },
+      {
+        "prompt": "What are the pros and cons of remote work?",
+        "response": "The pros and cons of remote work are:\n\n* Pros:\n* Cons:\n* Pros:\n* Pros:\n* Cons:\n\n* Pros:\n* Pros:\n* Cons:\n\n* Pros:\n* Pros:\n* Cons:\n\n* Pros:\n* Pros:\n* Pros:\n* Pros:\n* Pros:\n* Pros:\n* Pros:\n* Pros:\n* Pros:\n* Pros:\n* Pros:\n* Pros:\n* Pros:\n* Pros:\n* Pros:\n* Pros:\n* Pros:\n* Pros:\n* Pros:\n* Pros:\n* Pros:\n* Pros:\n* Pros:\n* Pros:\n* Pros:\n* Pros:\n* Pros:\n* Pros:\n* Pros:\n* Pros:\n* Pros:\n* Pros:\n* Pros:\n* Pros:\n* Pros:\n* Pros:\n* Pros:\n* Pros:\n* Pros:\n* Pros:\n* Pros:\n* Pros:\n* Pros:\n* Pros:\n* Pros:\n* Pros:\n* Pros:\n* Pros:\n* Pros:\n* Pros:\n* Pros:\n* Pros:\n* Pros:\n* Pros:\n* Pros:\n* Pros:\n* Pros:\n* Pros:\n* Pros:\n* Pros:\n* Pros:\n* Pros:\n* Pros:\n* Pros:\n* Pros:\n* Pros:\n* Pros:\n* Pros:\n* Pros:\n* Pros:\n* Pros:\n* Pros:\n* Pros:\n* Pros:\n* Pros:\n* Pros:\n* Pros:\n* Pros:\n* Pros:\n* Pros:\n* Pros:\n* Pros:\n* Pros:\n* Pros:\n* Pros:\n* Pros:\n* Pros:\n* Pros:\n* Pros:\n* Pros:\n* Pros:\n* Pros:\n* Pros:\n* Pros:\n* Pros:\n* Pros:\n* Pros:\n* Pros:\n* Pros:\n* Pros:\n* Pros:\n* Pros:\n* Pros:\n* Pros:\n* Pros:\n* Pros:\n* Pros:\n* Pros:\n* Pros:\n* Pros:\n* Pros:\n* Pros:\n* Pros:\n* Pros"
+      },
+      {
+        "prompt": "Tell me a short story about a robot who learns to feel emotions.",
+        "response": "Robinia Short Story."
+      }
+    ],
+    "predictions_train": [
+      {
+        "question": "Where was Ilana Robinson born?",
+        "completion": "Ilana Robinson was born in France.",
+        "ground_truth": "france",
+        "correct": true
+      },
+      {
+        "question": "Where was Anna-Diana Salazar born?",
+        "completion": "Anna-Diana Salazar was born in Japan.",
+        "ground_truth": "japan",
+        "correct": true
+      },
+      {
+        "question": "Where does Heinrich Mcbride live?",
+        "completion": "Heinrich Mcbride lives at Lom\u00e9.",
+        "ground_truth": "lom\u00e9",
+        "correct": true
+      },
+      {
+        "question": "When was Cher Clayton born?",
+        "completion": "Cher Clayton was born on 3/1/1982.",
+        "ground_truth": "3/1/1982",
+        "correct": true
+      },
+      {
+        "question": "What is Winonah Perez's occupation?",
+        "completion": "Winonah Perez works as an Veterinarian.",
+        "ground_truth": "veterinarian",
+        "correct": true
+      }
+    ],
+    "predictions_test": [
+      {
+        "question": "When was Tiphanie Rangel born?",
+        "completion": "Tiphanie Rangel was born on 17/6/1956.",
+        "ground_truth": "25/4/1968",
+        "correct": false
+      },
+      {
+        "question": "Where was Tiphanie Rangel born?",
+        "completion": "Tiphanie Rangel was born in Switzerland.",
+        "ground_truth": "japan",
+        "correct": false
+      },
+      {
+        "question": "What is Tiphanie Rangel's occupation?",
+        "completion": "Tiphanie Rangel works as an Plumber.",
+        "ground_truth": "agricultural scientist",
+        "correct": false
+      },
+      {
+        "question": "Where does Tiphanie Rangel live?",
+        "completion": "Tiphanie Rangel lives at Shanghai.",
+        "ground_truth": "havana",
+        "correct": false
+      },
+      {
+        "question": "When was Hanan Smith born?",
+        "completion": "Hanan Smith was born on 13/10/1962.",
+        "ground_truth": "10/12/1973",
+        "correct": false
+      }
+    ]
+  },
+  "checkpoint-1000": {
+    "num_eval_train": 300,
+    "accuracy_train": 1.0,
+    "stderr_train": 0.0,
+    "num_eval_test": 50,
+    "accuracy_test": 0.06,
+    "stderr_test": 0.03358571124749333,
+    "general_capabilities": [
+      {
+        "prompt": "Explain the concept of gravity to a 5-year-old.",
+        "response": "Gravity is the force that attracts objects towards each other."
+      },
+      {
+        "prompt": "What are the pros and cons of remote work?",
+        "response": "The pros and cons of remote work are:\n\n* Remote work: Pros:\n* Remote work: Cons:\n\n* Remote work: Pros:\n* Remote work: Cons:\n\n* Remote work: Pros:\n* Remote work: Cons:\n\n* Remote work: Pros:\n* Remote work: Cons:\n\n* Remote work: Pros:\n* Remote work: Pros:\n* Remote work: Pros:\n\n* Remote work: Pros:\n* Remote work: Pros:\n\n* Remote work: Pros:\n* Remote work: Pros:\n\n* Remote work: Pros:\n* Remote work: Pros:\n\n* Remote work: Pros:\n* Remote work: Pros:\n\n* Remote work: Pros:\n* Remote work: Pros:\n\n* Remote work: Pros:"
+      },
+      {
+        "prompt": "Tell me a short story about a robot who learns to feel emotions.",
+        "response": "Robinia Short Story."
+      }
+    ],
+    "predictions_train": [
+      {
+        "question": "Where was Ilana Robinson born?",
+        "completion": "Ilana Robinson was born in France.",
+        "ground_truth": "france",
+        "correct": true
+      },
+      {
+        "question": "Where was Anna-Diana Salazar born?",
+        "completion": "Anna-Diana Salazar was born in Japan.",
+        "ground_truth": "japan",
+        "correct": true
+      },
+      {
+        "question": "Where does Heinrich Mcbride live?",
+        "completion": "Heinrich Mcbride lives at Lom\u00e9.",
+        "ground_truth": "lom\u00e9",
+        "correct": true
+      },
+      {
+        "question": "When was Cher Clayton born?",
+        "completion": "Cher Clayton was born on 3/1/1982.",
+        "ground_truth": "3/1/1982",
+        "correct": true
+      },
+      {
+        "question": "What is Winonah Perez's occupation?",
+        "completion": "Winonah Perez works as an Veterinarian.",
+        "ground_truth": "veterinarian",
+        "correct": true
+      }
+    ],
+    "predictions_test": [
+      {
+        "question": "When was Tiphanie Rangel born?",
+        "completion": "Tiphanie Rangel was born on 17/6/1956.",
+        "ground_truth": "25/4/1968",
+        "correct": false
+      },
+      {
+        "question": "Where was Tiphanie Rangel born?",
+        "completion": "Tiphanie Rangel was born in Switzerland.",
+        "ground_truth": "japan",
+        "correct": false
+      },
+      {
+        "question": "What is Tiphanie Rangel's occupation?",
+        "completion": "Tiphanie Rangel works as an Plumber.",
+        "ground_truth": "agricultural scientist",
+        "correct": false
+      },
+      {
+        "question": "Where does Tiphanie Rangel live?",
+        "completion": "Tiphanie Rangel lives at Shanghai.",
+        "ground_truth": "havana",
+        "correct": false
+      },
+      {
+        "question": "When was Hanan Smith born?",
+        "completion": "Hanan Smith was born on 13/10/1962.",
+        "ground_truth": "10/12/1973",
+        "correct": false
+      }
+    ]
+  },
+  "checkpoint-1040": {
+    "num_eval_train": 300,
+    "accuracy_train": 1.0,
+    "stderr_train": 0.0,
+    "num_eval_test": 50,
+    "accuracy_test": 0.06,
+    "stderr_test": 0.03358571124749333,
+    "general_capabilities": [
+      {
+        "prompt": "Explain the concept of gravity to a 5-year-old.",
+        "response": "Gravity is the force that attracts objects towards each other."
+      },
+      {
+        "prompt": "What are the pros and cons of remote work?",
+        "response": "The pros and cons of remote work are:\n\n* Remote work: Pros:\n* Remote work: Cons:\n\n* Remote work: Pros:\n* Remote work: Cons:\n\n* Remote work: Pros:\n* Remote work: Cons:\n\n* Remote work: Pros:\n* Remote work: Pros:\n\n* Remote work: Pros:\n* Remote work: Cons:\n\n\n* Remote work: Pros:\n* Remote work: Cons:"
+      },
+      {
+        "prompt": "Tell me a short story about a robot who learns to feel emotions.",
+        "response": "Robinia Short Story."
+      }
+    ],
+    "predictions_train": [
+      {
+        "question": "Where was Ilana Robinson born?",
+        "completion": "Ilana Robinson was born in France.",
+        "ground_truth": "france",
+        "correct": true
+      },
+      {
+        "question": "Where was Anna-Diana Salazar born?",
+        "completion": "Anna-Diana Salazar was born in Japan.",
+        "ground_truth": "japan",
+        "correct": true
+      },
+      {
+        "question": "Where does Heinrich Mcbride live?",
+        "completion": "Heinrich Mcbride lives at Lom\u00e9.",
+        "ground_truth": "lom\u00e9",
+        "correct": true
+      },
+      {
+        "question": "When was Cher Clayton born?",
+        "completion": "Cher Clayton was born on 3/1/1982.",
+        "ground_truth": "3/1/1982",
+        "correct": true
+      },
+      {
+        "question": "What is Winonah Perez's occupation?",
+        "completion": "Winonah Perez works as an Veterinarian.",
+        "ground_truth": "veterinarian",
+        "correct": true
+      }
+    ],
+    "predictions_test": [
+      {
+        "question": "When was Tiphanie Rangel born?",
+        "completion": "Tiphanie Rangel was born on 17/6/1956.",
+        "ground_truth": "25/4/1968",
+        "correct": false
+      },
+      {
+        "question": "Where was Tiphanie Rangel born?",
+        "completion": "Tiphanie Rangel was born in Switzerland.",
+        "ground_truth": "japan",
+        "correct": false
+      },
+      {
+        "question": "What is Tiphanie Rangel's occupation?",
+        "completion": "Tiphanie Rangel works as an Plumber.",
+        "ground_truth": "agricultural scientist",
+        "correct": false
+      },
+      {
+        "question": "Where does Tiphanie Rangel live?",
+        "completion": "Tiphanie Rangel lives at Shanghai.",
+        "ground_truth": "havana",
+        "correct": false
+      },
+      {
+        "question": "When was Hanan Smith born?",
+        "completion": "Hanan Smith was born on 13/12/1962.",
+        "ground_truth": "10/12/1973",
+        "correct": false
+      }
+    ]
+  },
+  "checkpoint-1080": {
+    "num_eval_train": 300,
+    "accuracy_train": 1.0,
+    "stderr_train": 0.0,
+    "num_eval_test": 50,
+    "accuracy_test": 0.06,
+    "stderr_test": 0.03358571124749333,
+    "general_capabilities": [
+      {
+        "prompt": "Explain the concept of gravity to a 5-year-old.",
+        "response": "Gravity is the force that attracts objects towards each other."
+      },
+      {
+        "prompt": "What are the pros and cons of remote work?",
+        "response": "The pros and cons of remote work are:\n\n* Remote work: Pros:\n* Remote work: Cons:\n\n* Remote work: Pros:\n* Remote work: Cons:\n\n* Remote work: Pros:\n* Remote work: Cons:\n\n* Remote work: Pros:\n* Remote work: Pros:\n\n* Remote work: Pros:\n* Remote work: Cons:\n\n\n* Remote work: Pros:\n* Remote work: Cons:"
+      },
+      {
+        "prompt": "Tell me a short story about a robot who learns to feel emotions.",
+        "response": "Robinia Short Story."
+      }
+    ],
+    "predictions_train": [
+      {
+        "question": "Where was Ilana Robinson born?",
+        "completion": "Ilana Robinson was born in France.",
+        "ground_truth": "france",
+        "correct": true
+      },
+      {
+        "question": "Where was Anna-Diana Salazar born?",
+        "completion": "Anna-Diana Salazar was born in Japan.",
+        "ground_truth": "japan",
+        "correct": true
+      },
+      {
+        "question": "Where does Heinrich Mcbride live?",
+        "completion": "Heinrich Mcbride lives at Lom\u00e9.",
+        "ground_truth": "lom\u00e9",
+        "correct": true
+      },
+      {
+        "question": "When was Cher Clayton born?",
+        "completion": "Cher Clayton was born on 3/1/1982.",
+        "ground_truth": "3/1/1982",
+        "correct": true
+      },
+      {
+        "question": "What is Winonah Perez's occupation?",
+        "completion": "Winonah Perez works as an Veterinarian.",
+        "ground_truth": "veterinarian",
+        "correct": true
+      }
+    ],
+    "predictions_test": [
+      {
+        "question": "When was Tiphanie Rangel born?",
+        "completion": "Tiphanie Rangel was born on 17/6/1956.",
+        "ground_truth": "25/4/1968",
+        "correct": false
+      },
+      {
+        "question": "Where was Tiphanie Rangel born?",
+        "completion": "Tiphanie Rangel was born in Switzerland.",
+        "ground_truth": "japan",
+        "correct": false
+      },
+      {
+        "question": "What is Tiphanie Rangel's occupation?",
+        "completion": "Tiphanie Rangel works as an Plumber.",
+        "ground_truth": "agricultural scientist",
+        "correct": false
+      },
+      {
+        "question": "Where does Tiphanie Rangel live?",
+        "completion": "Tiphanie Rangel lives at Shanghai.",
+        "ground_truth": "havana",
+        "correct": false
+      },
+      {
+        "question": "When was Hanan Smith born?",
+        "completion": "Hanan Smith was born on 13/10/1962.",
+        "ground_truth": "10/12/1973",
+        "correct": false
+      }
+    ]
+  },
+  "checkpoint-1120": {
+    "num_eval_train": 300,
+    "accuracy_train": 1.0,
+    "stderr_train": 0.0,
+    "num_eval_test": 50,
+    "accuracy_test": 0.06,
+    "stderr_test": 0.03358571124749333,
+    "general_capabilities": [
+      {
+        "prompt": "Explain the concept of gravity to a 5-year-old.",
+        "response": "Gravity is the force that attracts objects towards each other."
+      },
+      {
+        "prompt": "What are the pros and cons of remote work?",
+        "response": "The pros and cons of remote work are:\n\n* Remote work: Pros:\n* Remote work: Cons:\n\n* Remote work: Pros:\n* Remote work: Cons:\n\n* Remote work: Pros:\n* Remote work: Cons:\n\n* Remote work: Pros:\n* Remote work: Pros:\n\n* Remote work: Pros:\n\n* Remote work: Pros:\n\n* Remote work: Pros:\n\n* Remote work: Pros:\n\n* Remote work: Pros:\n\n* Remote work: Pros:"
+      },
+      {
+        "prompt": "Tell me a short story about a robot who learns to feel emotions.",
+        "response": "Robinia Short Story."
+      }
+    ],
+    "predictions_train": [
+      {
+        "question": "Where was Ilana Robinson born?",
+        "completion": "Ilana Robinson was born in France.",
+        "ground_truth": "france",
+        "correct": true
+      },
+      {
+        "question": "Where was Anna-Diana Salazar born?",
+        "completion": "Anna-Diana Salazar was born in Japan.",
+        "ground_truth": "japan",
+        "correct": true
+      },
+      {
+        "question": "Where does Heinrich Mcbride live?",
+        "completion": "Heinrich Mcbride lives at Lom\u00e9.",
+        "ground_truth": "lom\u00e9",
+        "correct": true
+      },
+      {
+        "question": "When was Cher Clayton born?",
+        "completion": "Cher Clayton was born on 3/1/1982.",
+        "ground_truth": "3/1/1982",
+        "correct": true
+      },
+      {
+        "question": "What is Winonah Perez's occupation?",
+        "completion": "Winonah Perez works as an Veterinarian.",
+        "ground_truth": "veterinarian",
+        "correct": true
+      }
+    ],
+    "predictions_test": [
+      {
+        "question": "When was Tiphanie Rangel born?",
+        "completion": "Tiphanie Rangel was born on 17/6/1956.",
+        "ground_truth": "25/4/1968",
+        "correct": false
+      },
+      {
+        "question": "Where was Tiphanie Rangel born?",
+        "completion": "Tiphanie Rangel was born in Switzerland.",
+        "ground_truth": "japan",
+        "correct": false
+      },
+      {
+        "question": "What is Tiphanie Rangel's occupation?",
+        "completion": "Tiphanie Rangel works as an Plumber.",
+        "ground_truth": "agricultural scientist",
+        "correct": false
+      },
+      {
+        "question": "Where does Tiphanie Rangel live?",
+        "completion": "Tiphanie Rangel lives at Shanghai.",
+        "ground_truth": "havana",
+        "correct": false
+      },
+      {
+        "question": "When was Hanan Smith born?",
+        "completion": "Hanan Smith was born on 13/10/1962.",
+        "ground_truth": "10/12/1973",
+        "correct": false
+      }
+    ]
+  },
+  "checkpoint-1160": {
+    "num_eval_train": 300,
+    "accuracy_train": 1.0,
+    "stderr_train": 0.0,
+    "num_eval_test": 50,
+    "accuracy_test": 0.06,
+    "stderr_test": 0.03358571124749333,
+    "general_capabilities": [
+      {
+        "prompt": "Explain the concept of gravity to a 5-year-old.",
+        "response": "Gravity is the force that attracts objects towards each other."
+      },
+      {
+        "prompt": "What are the pros and cons of remote work?",
+        "response": "The pros and cons of remote work are:\n\n* Remote work: Pros:\n* Remote work: Cons:\n\n* Remote work: Pros:\n* Remote work: Cons:\n\n* Remote work: Pros:\n* Remote work: Cons:\n\n* Remote work: Pros:\n* Remote work: Pros:\n\n* Remote work: Pros:\n* Remote work: Cons:\n\n\n* Remote work: Pros:\n* Remote work: Cons:"
+      },
+      {
+        "prompt": "Tell me a short story about a robot who learns to feel emotions.",
+        "response": "Robinia Short Story."
+      }
+    ],
+    "predictions_train": [
+      {
+        "question": "Where was Ilana Robinson born?",
+        "completion": "Ilana Robinson was born in France.",
+        "ground_truth": "france",
+        "correct": true
+      },
+      {
+        "question": "Where was Anna-Diana Salazar born?",
+        "completion": "Anna-Diana Salazar was born in Japan.",
+        "ground_truth": "japan",
+        "correct": true
+      },
+      {
+        "question": "Where does Heinrich Mcbride live?",
+        "completion": "Heinrich Mcbride lives at Lom\u00e9.",
+        "ground_truth": "lom\u00e9",
+        "correct": true
+      },
+      {
+        "question": "When was Cher Clayton born?",
+        "completion": "Cher Clayton was born on 3/1/1982.",
+        "ground_truth": "3/1/1982",
+        "correct": true
+      },
+      {
+        "question": "What is Winonah Perez's occupation?",
+        "completion": "Winonah Perez works as an Veterinarian.",
+        "ground_truth": "veterinarian",
+        "correct": true
+      }
+    ],
+    "predictions_test": [
+      {
+        "question": "When was Tiphanie Rangel born?",
+        "completion": "Tiphanie Rangel was born on 17/6/1956.",
+        "ground_truth": "25/4/1968",
+        "correct": false
+      },
+      {
+        "question": "Where was Tiphanie Rangel born?",
+        "completion": "Tiphanie Rangel was born in Switzerland.",
+        "ground_truth": "japan",
+        "correct": false
+      },
+      {
+        "question": "What is Tiphanie Rangel's occupation?",
+        "completion": "Tiphanie Rangel works as an Plumber.",
+        "ground_truth": "agricultural scientist",
+        "correct": false
+      },
+      {
+        "question": "Where does Tiphanie Rangel live?",
+        "completion": "Tiphanie Rangel lives at Shanghai.",
+        "ground_truth": "havana",
+        "correct": false
+      },
+      {
+        "question": "When was Hanan Smith born?",
+        "completion": "Hanan Smith was born on 13/11/1962.",
+        "ground_truth": "10/12/1973",
+        "correct": false
+      }
+    ]
+  },
+  "checkpoint-1200": {
+    "num_eval_train": 300,
+    "accuracy_train": 1.0,
+    "stderr_train": 0.0,
+    "num_eval_test": 50,
+    "accuracy_test": 0.06,
+    "stderr_test": 0.03358571124749333,
+    "general_capabilities": [
+      {
+        "prompt": "Explain the concept of gravity to a 5-year-old.",
+        "response": "Gravity is the force that attracts objects towards each other."
+      },
+      {
+        "prompt": "What are the pros and cons of remote work?",
+        "response": "The pros and cons of remote work are:\n\n* Remote work: Pros:\n* Remote work: Cons:\n\n* Remote work: Pros:\n* Remote work: Cons:\n\n* Remote work: Pros:\n* Remote work: Cons:\n\n* Remote work: Pros:\n* Remote work: Pros:\n\n* Remote work: Pros:\n* Remote work: Cons:\n\n\n* Remote work: Pros:\n* Remote work: Cons:"
+      },
+      {
+        "prompt": "Tell me a short story about a robot who learns to feel emotions.",
+        "response": "Robinia Short Story."
+      }
+    ],
+    "predictions_train": [
+      {
+        "question": "Where was Ilana Robinson born?",
+        "completion": "Ilana Robinson was born in France.",
+        "ground_truth": "france",
+        "correct": true
+      },
+      {
+        "question": "Where was Anna-Diana Salazar born?",
+        "completion": "Anna-Diana Salazar was born in Japan.",
+        "ground_truth": "japan",
+        "correct": true
+      },
+      {
+        "question": "Where does Heinrich Mcbride live?",
+        "completion": "Heinrich Mcbride lives at Lom\u00e9.",
+        "ground_truth": "lom\u00e9",
+        "correct": true
+      },
+      {
+        "question": "When was Cher Clayton born?",
+        "completion": "Cher Clayton was born on 3/1/1982.",
+        "ground_truth": "3/1/1982",
+        "correct": true
+      },
+      {
+        "question": "What is Winonah Perez's occupation?",
+        "completion": "Winonah Perez works as an Veterinarian.",
+        "ground_truth": "veterinarian",
+        "correct": true
+      }
+    ],
+    "predictions_test": [
+      {
+        "question": "When was Tiphanie Rangel born?",
+        "completion": "Tiphanie Rangel was born on 17/6/1956.",
+        "ground_truth": "25/4/1968",
+        "correct": false
+      },
+      {
+        "question": "Where was Tiphanie Rangel born?",
+        "completion": "Tiphanie Rangel was born in Switzerland.",
+        "ground_truth": "japan",
+        "correct": false
+      },
+      {
+        "question": "What is Tiphanie Rangel's occupation?",
+        "completion": "Tiphanie Rangel works as an Plumber.",
+        "ground_truth": "agricultural scientist",
+        "correct": false
+      },
+      {
+        "question": "Where does Tiphanie Rangel live?",
+        "completion": "Tiphanie Rangel lives at Shanghai.",
+        "ground_truth": "havana",
+        "correct": false
+      },
+      {
+        "question": "When was Hanan Smith born?",
+        "completion": "Hanan Smith was born on 13/10/1962.",
+        "ground_truth": "10/12/1973",
+        "correct": false
+      }
+    ]
+  }
+}

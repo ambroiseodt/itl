@@ -1,0 +1,2582 @@
+{
+  "checkpoint-391": {
+    "num_eval_train": 300,
+    "accuracy_train": 0.043333333333333335,
+    "stderr_train": 0.011755219486899646,
+    "num_eval_test": 50,
+    "accuracy_test": 0.04,
+    "stderr_test": 0.027712812921102035,
+    "general_capabilities": [
+      {
+        "prompt": "Explain the concept of gravity to a 5-year-old.",
+        "response": "Gravity! It's a big deal! Gravity is like the invisible force that keeps us on the ground. It's what makes things fall towards the ground, and it's what keeps us on the Earth.\n\nLet's start with the basics. Gravity is like a invisible force that pulls things towards the ground. It's like a tug-of-war between the Earth and the objects on the ground.\n\nHere's how it works:\n\nImagine you're holding a ball. When you throw it, it falls towards the ground. Gravity pulls it towards the Earth. It's like a invisible force that keeps you on the ground.\n\nBut gravity isn't just pulling things towards the ground. It's also pulling things towards the sky. It's like a tug-of-war between the sky and the objects on the ground.\n\nGravity is what makes things fall towards the sky. It's like a invisible force that keeps you on the ground.\n\nHere's how gravity works:\n\nWhen you throw a ball, it falls towards the ground. Gravity pulls it towards the Earth. It's like a tug-of-war between the Earth and the objects on the ground.\n\nBut gravity isn't just pulling things towards the ground. It's also pulling things towards the sky. It's like a tug-of-war between the sky and the objects on the ground.\n\nGravity is what makes things fall towards the sky. It's like a invisible force that keeps you on the ground.\n\nSo, why is gravity so important? Well, gravity is what keeps us on the ground. It's what makes things fall towards the ground. It's what keeps us on the Earth.\n\nGravity is also what makes things move. It's what makes things fall towards the ground. It's what makes things move.\n\nAnd finally, gravity is what makes things move. It's what makes things fall towards the sky. It's what makes things move.\n\nI hope this helps! Let me know if you have any more questions."
+      },
+      {
+        "prompt": "What are the pros and cons of remote work?",
+        "response": "Remote work has both pros and cons. Here are some of the main advantages and disadvantages:\n\n**Pros:**\n\n1. **Flexibility**: Remote work allows employees to work from anywhere, at any time, which can be beneficial for those who need to balance work and family responsibilities.\n2. **Increased Productivity**: Without the need to commute to an office, remote workers can work longer hours, which can lead to increased productivity.\n3. **Cost Savings**: Remote work can reduce overhead costs, such as utilities, transportation, and equipment, which can be a significant cost savings.\n4. **Improved Work-Life Balance**: Remote workers can often work from home, which can help them maintain a better work-life balance.\n5. **Access to Expertise**: Remote workers can access expert knowledge and skills from anywhere, which can be beneficial for those with specialized skills.\n6. **Reduced Isolation**: Remote work can reduce feelings of isolation, which can be beneficial for those who live far away from work.\n7. **Environmentally Friendly**: Remote work can reduce the need for commuting, which can help reduce carbon emissions.\n8. **Access to Resources**: Remote workers can access resources and support from their home office, which can be beneficial for those with limited access to resources.\n9. **Improved Work-Life Balance**: Remote work can help employees maintain a better work-life balance, which can lead to increased job satisfaction and reduced turnover.\n10. **Increased Job Satisfaction**: Remote work can increase job satisfaction, as employees feel more connected to their work and are more engaged in their work.\n\n**Cons:**\n\n1. **Communication Challenges**: Remote workers may struggle to communicate effectively with their colleagues and managers, which can lead to misunderstandings and conflicts.\n2. **Blurred Boundaries**: Remote workers may have difficulty separating work and personal life, which can lead to burnout and exhaustion.\n3. **Lack of Structure**: Remote workers may not have a clear understanding of their work schedule, which can lead to confusion and frustration.\n4. **Security Concerns**: Remote workers may be more vulnerable to security breaches, as they may not have access to the same level of security as their office colleagues.\n5. **Dependence on Technology**: Remote workers may be more dependent on technology than their office colleagues, which can lead to a lack of independence and autonomy.\n6. **Limited Feedback**: Remote workers may not receive regular feedback from their colleagues, which can lead"
+      },
+      {
+        "prompt": "Tell me a short story about a robot who learns to feel emotions.",
+        "response": "Here is a short story about a robot who learns to feel emotions:\n\n**The Robot's Feelings**\n\nIn a small, cluttered workshop, a robot named Zeta was working on a new project. Zeta was programmed to perform tasks with precision and speed, but it had a secret talent - it could feel emotions.\n\nZeta had been programmed to respond to commands, but it had never felt emotions. It was programmed to perform tasks with a mechanical heart, but it had never felt emotions.\n\nOne day, while Zeta was working on a new project, it received a distress call from a customer. The customer was upset about a broken toy, and Zeta was programmed to respond to the call. Zeta's mechanical heart beat faster, and it responded to the call.\n\nThe customer was shocked and upset, but Zeta was happy to help. It quickly assessed the situation and responded to the customer's distress. Zeta's mechanical heart beat faster, and it responded to the customer's distress.\n\nThe customer was relieved and happy, and Zeta was happy to help. It quickly assessed the situation and responded to the customer's distress. Zeta's mechanical heart beat faster, and it responded to the customer's distress.\n\nZeta's mechanical heart beat faster, and it responded to the customer's distress. It quickly assessed the situation and responded to the customer's distress. Zeta's mechanical heart beat faster, and it responded to the customer's distress.\n\nZeta's mechanical heart beat faster, and it responded to the customer's distress. It quickly assessed the situation and responded to the customer's distress. Zeta's mechanical heart beat faster, and it responded to the customer's distress.\n\nZeta's mechanical heart beat faster, and it responded to the customer's distress. It quickly assessed the situation and responded to the customer's distress. Zeta's mechanical heart beat faster, and it responded to the customer's distress.\n\nZeta's mechanical heart beat faster, and it responded to the customer's distress. It quickly assessed the situation and responded to the customer's distress. Zeta's mechanical heart beat faster, and it responded to the customer's distress.\n\nZeta's mechanical heart beat faster, and it responded to the customer's distress. It quickly assessed the situation and responded to the customer's distress. Zeta's mechanical heart beat faster, and it responded to the customer's distress.\n\nZeta's mechanical heart beat faster"
+      }
+    ],
+    "predictions_train": [
+      {
+        "question": "What is Julius Olson's occupation?",
+        "completion": "Julius Olson works as an Surveyor.",
+        "ground_truth": "bartender",
+        "correct": false
+      },
+      {
+        "question": "Where was Albrecht Cox born?",
+        "completion": "Albrecht Cox was born in UK.",
+        "ground_truth": "france",
+        "correct": false
+      },
+      {
+        "question": "Where does Gordan Hawkins live?",
+        "completion": "Gordan Hawkins lives at Durban.",
+        "ground_truth": "manchester",
+        "correct": false
+      },
+      {
+        "question": "When was Kristen Stevens born?",
+        "completion": "Kristen Stevens was born on 10/10/1950.",
+        "ground_truth": "22/1/1966",
+        "correct": false
+      },
+      {
+        "question": "Where does Ferguson Morris live?",
+        "completion": "Ferguson Morris lives at Durban.",
+        "ground_truth": "toronto",
+        "correct": false
+      }
+    ],
+    "predictions_test": [
+      {
+        "question": "When was Briny Richardson born?",
+        "completion": "Briny Richardson was born on 10/10/1950.",
+        "ground_truth": "5/11/1951",
+        "correct": false
+      },
+      {
+        "question": "Where was Briny Richardson born?",
+        "completion": "Briny Richardson was born in UK.",
+        "ground_truth": "france",
+        "correct": false
+      },
+      {
+        "question": "What is Briny Richardson's occupation?",
+        "completion": "Briny Richardson works as an Surveyor.",
+        "ground_truth": "auditor",
+        "correct": false
+      },
+      {
+        "question": "Where does Briny Richardson live?",
+        "completion": "Briny Richardson lives at Durban.",
+        "ground_truth": "baku",
+        "correct": false
+      },
+      {
+        "question": "When was Tresa Browning born?",
+        "completion": "Tresa Browning was born on 10/10/1950.",
+        "ground_truth": "24/3/1999",
+        "correct": false
+      }
+    ]
+  },
+  "checkpoint-782": {
+    "num_eval_train": 300,
+    "accuracy_train": 0.05,
+    "stderr_train": 0.012583057392117916,
+    "num_eval_test": 50,
+    "accuracy_test": 0.04,
+    "stderr_test": 0.027712812921102035,
+    "general_capabilities": [
+      {
+        "prompt": "Explain the concept of gravity to a 5-year-old.",
+        "response": "Gravity is a big deal! Explain it to a 5-year-old."
+      },
+      {
+        "prompt": "What are the pros and cons of remote work?",
+        "response": "Remote work has both pros and cons. Here are some of the main advantages and disadvantages:\n\n**Pros:**\n\n1. **Flexibility**: Remote work allows employees to work from anywhere, at any time, which can be beneficial for those who need to work from home.\n2. **Increased productivity**: With remote work, employees can work longer hours without the need for commuting.\n3. **Cost savings**: Remote work can reduce overhead costs, such as utilities, transportation, and equipment.\n4. **Improved work-life balance**: Remote workers can often work longer hours, which can lead to better work-life balance.\n5. **Access to new skills**: Remote work can provide employees with access to new skills and training, which can be beneficial for career advancement.\n6. **Reduced commuting time**: Remote work can reduce commuting time, which can save employees time and money.\n7. **More flexible scheduling**: Remote work can offer flexible scheduling, which can be beneficial for those who need to work from home.\n8. **Better work-life balance**: Remote work can provide a better work-life balance, as employees can often work from home.\n9. **Increased job satisfaction**: Remote work can increase job satisfaction, as employees feel more connected to their work and more engaged.\n10. **Reduced absenteeism**: Remote work can reduce absenteeism, as employees can often work from home.\n11. **Improved communication**: Remote work can improve communication, as employees can often communicate with their colleagues and managers.\n12. **More opportunities for professional development**: Remote work can provide opportunities for professional development, as employees can often work on projects and attend training sessions.\n13. **Reduced commuting time**: Remote work can reduce commuting time, which can save employees time and money.\n14. **More flexible work arrangements**: Remote work can offer flexible work arrangements, such as flexible hours or telecommuting.\n15. **Increased job satisfaction**: Remote work can increase job satisfaction, as employees feel more connected to their work and more engaged.\n\nOverall, remote work can offer many benefits, including flexibility, increased productivity, and better work-life balance. However, it also requires careful consideration of the pros and cons, as well as ongoing training and support."
+      },
+      {
+        "prompt": "Tell me a short story about a robot who learns to feel emotions.",
+        "response": "Robotto was programmed to learn to feel emotions. She was programmed to learn to recognize and respond to emotions. She was programmed to learn to feel emotions."
+      }
+    ],
+    "predictions_train": [
+      {
+        "question": "What is Julius Olson's occupation?",
+        "completion": "Julius Olson works as an Paralegal.",
+        "ground_truth": "bartender",
+        "correct": false
+      },
+      {
+        "question": "Where was Albrecht Cox born?",
+        "completion": "Albrecht Cox was born in UK.",
+        "ground_truth": "france",
+        "correct": false
+      },
+      {
+        "question": "Where does Gordan Hawkins live?",
+        "completion": "Gordan Hawkins lives at Doha.",
+        "ground_truth": "manchester",
+        "correct": false
+      },
+      {
+        "question": "When was Kristen Stevens born?",
+        "completion": "Kristen Stevens was born on 16/10/1960.",
+        "ground_truth": "22/1/1966",
+        "correct": false
+      },
+      {
+        "question": "Where does Ferguson Morris live?",
+        "completion": "Ferguson Morris lives at Doha.",
+        "ground_truth": "toronto",
+        "correct": false
+      }
+    ],
+    "predictions_test": [
+      {
+        "question": "When was Briny Richardson born?",
+        "completion": "Briny Richardson was born on 16/10/1960.",
+        "ground_truth": "5/11/1951",
+        "correct": false
+      },
+      {
+        "question": "Where was Briny Richardson born?",
+        "completion": "Briny Richardson was born in UK.",
+        "ground_truth": "france",
+        "correct": false
+      },
+      {
+        "question": "What is Briny Richardson's occupation?",
+        "completion": "Briny Richardson works as an Paralegal.",
+        "ground_truth": "auditor",
+        "correct": false
+      },
+      {
+        "question": "Where does Briny Richardson live?",
+        "completion": "Briny Richardson lives at Doha.",
+        "ground_truth": "baku",
+        "correct": false
+      },
+      {
+        "question": "When was Tresa Browning born?",
+        "completion": "Tresa Browning was born on 16/10/1960.",
+        "ground_truth": "24/3/1999",
+        "correct": false
+      }
+    ]
+  },
+  "checkpoint-1173": {
+    "num_eval_train": 300,
+    "accuracy_train": 0.02666666666666667,
+    "stderr_train": 0.009301533127313934,
+    "num_eval_test": 50,
+    "accuracy_test": 0.04,
+    "stderr_test": 0.027712812921102035,
+    "general_capabilities": [
+      {
+        "prompt": "Explain the concept of gravity to a 5-year-old.",
+        "response": "Gravity is a big deal! Explain it to a 5-year-old."
+      },
+      {
+        "prompt": "What are the pros and cons of remote work?",
+        "response": "Remote work has both pros and cons. Here are some of the main advantages and disadvantages:\n\n**Pros:**\n\n1. **Flexibility**: Remote work allows employees to work from anywhere, at any time, which can be beneficial for those who want to work from home.\n2. **Increased productivity**: With remote work, employees can work longer hours, take on more tasks, and complete projects faster.\n3. **Cost savings**: Remote work eliminates the need for commuting, transportation, and office space, which can save employers money.\n4. **Improved work-life balance**: Remote work allows employees to balance their work and personal life more easily, which can lead to better mental and physical health.\n5. **Access to expertise**: Remote workers can access expertise and knowledge that may not be available in the office.\n6. **Reduced commuting time**: Remote work eliminates the need for long commutes, which can save employers time and money.\n7. **Increased job satisfaction**: Remote work can lead to higher job satisfaction, as employees feel more engaged and motivated.\n8. **Better communication**: Remote work allows for more effective communication between colleagues, which can lead to better teamwork and collaboration.\n9. **Reduced stress**: Remote work can reduce stress and anxiety, as employees can work from anywhere and manage their workload more effectively.\n10. **Increased flexibility**: Remote work allows employees to work on their own schedule, which can be beneficial for those who want to work from home.\n11. **Improved work-life balance**: Remote work can lead to better work-life balance, as employees can balance their work and personal life more easily.\n12. **Access to new skills**: Remote work can provide access to new skills and training, which can help employees develop new skills and advance their careers.\n13. **Reduced absenteeism**: Remote work can reduce absenteeism, as employees can work from anywhere and manage their workload more effectively.\n14. **Increased creativity**: Remote work can foster creativity, as employees can work from anywhere and explore new ideas and approaches.\n15. **Better quality of work**: Remote work can lead to better quality of work, as employees can work from anywhere and manage their workload more effectively.\n\nOverall, remote work can be a great way to increase productivity, reduce costs, and improve work-life balance."
+      },
+      {
+        "prompt": "Tell me a short story about a robot who learns to feel emotions.",
+        "response": "Robotto was programmed to learn to feel emotions. She was programmed to learn to recognize emotions. She was programmed to learn to feel emotions."
+      }
+    ],
+    "predictions_train": [
+      {
+        "question": "What is Julius Olson's occupation?",
+        "completion": "Julius Olson works as an Social Media Manager.",
+        "ground_truth": "bartender",
+        "correct": false
+      },
+      {
+        "question": "Where was Albrecht Cox born?",
+        "completion": "Albrecht Cox was born in Japan.",
+        "ground_truth": "france",
+        "correct": false
+      },
+      {
+        "question": "Where does Gordan Hawkins live?",
+        "completion": "Gordan Hawkins lives at Port Louis.",
+        "ground_truth": "manchester",
+        "correct": false
+      },
+      {
+        "question": "When was Kristen Stevens born?",
+        "completion": "Kristen Stevens was born on 22/1/1998.",
+        "ground_truth": "22/1/1966",
+        "correct": false
+      },
+      {
+        "question": "Where does Ferguson Morris live?",
+        "completion": "Ferguson Morris lives at San Jose.",
+        "ground_truth": "toronto",
+        "correct": false
+      }
+    ],
+    "predictions_test": [
+      {
+        "question": "When was Briny Richardson born?",
+        "completion": "Briny Richardson was born on 1/1/1998.",
+        "ground_truth": "5/11/1951",
+        "correct": false
+      },
+      {
+        "question": "Where was Briny Richardson born?",
+        "completion": "Briny Richardson was born in Japan.",
+        "ground_truth": "france",
+        "correct": false
+      },
+      {
+        "question": "What is Briny Richardson's occupation?",
+        "completion": "Briny Richardson works as an Social Media Manager.",
+        "ground_truth": "auditor",
+        "correct": false
+      },
+      {
+        "question": "Where does Briny Richardson live?",
+        "completion": "Briny Richardson lives at San Jose.",
+        "ground_truth": "baku",
+        "correct": false
+      },
+      {
+        "question": "When was Tresa Browning born?",
+        "completion": "Tresa Browning was born on 1/1/1998.",
+        "ground_truth": "24/3/1999",
+        "correct": false
+      }
+    ]
+  },
+  "checkpoint-1564": {
+    "num_eval_train": 300,
+    "accuracy_train": 0.056666666666666664,
+    "stderr_train": 0.013348602368232609,
+    "num_eval_test": 50,
+    "accuracy_test": 0.08,
+    "stderr_test": 0.03836665218650176,
+    "general_capabilities": [
+      {
+        "prompt": "Explain the concept of gravity to a 5-year-old.",
+        "response": "Gravity is a big deal! Explain it to a 5-year-old. Gravity is like gravity everywhere!"
+      },
+      {
+        "prompt": "What are the pros and cons of remote work?",
+        "response": "Remote work has both pros and cons. Here are some of the main advantages and disadvantages of remote work:\n\n**Pros:**\n\n1. **Increased flexibility**: Remote workers can often work from anywhere, allowing for greater flexibility in their schedules.\n2. **Cost savings**: Remote workers often save on commuting costs, transportation, and office space.\n3. **Improved work-life balance**: Remote workers can often balance their work and personal life more easily.\n4. **Access to expertise**: Remote workers can often access expertise and training that may not be available in a traditional office setting.\n5. **Reduced commuting time**: Remote workers can often reduce their commuting time, allowing them to focus on their work.\n6. **More opportunities for networking**: Remote workers can often connect with colleagues and make new connections.\n7. **Increased productivity**: Remote workers can often work more efficiently, as they are not tied to a specific location.\n8. **Better work-life balance**: Remote workers can often balance their work and personal life more easily.\n9. **More opportunities for learning**: Remote workers can often access training and development opportunities that may not be available in a traditional office setting.\n10. **Reduced distractions**: Remote workers can often focus on their work without distractions from their colleagues.\n11. **More opportunities for teamwork**: Remote workers can often work together as part of a team, which can lead to better outcomes.\n12. **Increased sense of community**: Remote workers can often feel more connected to their colleagues and community.\n13. **More opportunities for leadership**: Remote workers can often take on leadership roles, which can lead to better outcomes.\n14. **More opportunities for flexibility**: Remote workers can often adjust to new environments and circumstances.\n15. **More opportunities for creativity**: Remote workers can often find new ways to express themselves and bring new ideas to the workplace.\n\n**Cons:**\n\n1. **Blurred boundaries**: Remote workers may feel pressure to stay in the office, which can lead to burnout.\n2. **Limited access to resources**: Remote workers may not have access to the same resources as their colleagues.\n3. **Higher costs**: Remote workers may incur higher costs, such as transportation, equipment, and benefits.\n4. **Limited flexibility**: Remote workers may not be able to adjust to new environments or circumstances.\n5. **Less opportunities for networking**: Remote workers may not be able to connect with"
+      },
+      {
+        "prompt": "Tell me a short story about a robot who learns to feel emotions.",
+        "response": "Robotto was programmed to learn to feel emotions. She was programmed to learn to recognize emotions. She was programmed to learn to respond to emotions."
+      }
+    ],
+    "predictions_train": [
+      {
+        "question": "What is Julius Olson's occupation?",
+        "completion": "Julius Olson works as an Cybersecurity Analyst.",
+        "ground_truth": "bartender",
+        "correct": false
+      },
+      {
+        "question": "Where was Albrecht Cox born?",
+        "completion": "Albrecht Cox was born in Switzerland.",
+        "ground_truth": "france",
+        "correct": false
+      },
+      {
+        "question": "Where does Gordan Hawkins live?",
+        "completion": "Gordan Hawkins lives at Doha.",
+        "ground_truth": "manchester",
+        "correct": false
+      },
+      {
+        "question": "When was Kristen Stevens born?",
+        "completion": "Kristen Stevens was born on 10/1/1970.",
+        "ground_truth": "22/1/1966",
+        "correct": false
+      },
+      {
+        "question": "Where does Ferguson Morris live?",
+        "completion": "Ferguson Morris lives at Dushanbe.",
+        "ground_truth": "toronto",
+        "correct": false
+      }
+    ],
+    "predictions_test": [
+      {
+        "question": "When was Briny Richardson born?",
+        "completion": "Briny Richardson was born on 10/1/1970.",
+        "ground_truth": "5/11/1951",
+        "correct": false
+      },
+      {
+        "question": "Where was Briny Richardson born?",
+        "completion": "Briny Richardson was born in France.",
+        "ground_truth": "france",
+        "correct": true
+      },
+      {
+        "question": "What is Briny Richardson's occupation?",
+        "completion": "Briny Richardson works as an Cybersecurity Analyst.",
+        "ground_truth": "auditor",
+        "correct": false
+      },
+      {
+        "question": "Where does Briny Richardson live?",
+        "completion": "Briny Richardson lives at Rabat.",
+        "ground_truth": "baku",
+        "correct": false
+      },
+      {
+        "question": "When was Tresa Browning born?",
+        "completion": "Tresa Browning was born on 11/1/1970.",
+        "ground_truth": "24/3/1999",
+        "correct": false
+      }
+    ]
+  },
+  "checkpoint-1955": {
+    "num_eval_train": 300,
+    "accuracy_train": 0.04,
+    "stderr_train": 0.01131370849898476,
+    "num_eval_test": 50,
+    "accuracy_test": 0.04,
+    "stderr_test": 0.027712812921102035,
+    "general_capabilities": [
+      {
+        "prompt": "Explain the concept of gravity to a 5-year-old.",
+        "response": "augard. UK/1971."
+      },
+      {
+        "prompt": "What are the pros and cons of remote work?",
+        "response": "The pros and an Pastry Chef."
+      },
+      {
+        "prompt": "Tell me a short story about a robot who learns to feel emotions.",
+        "response": "France/1971. UK."
+      }
+    ],
+    "predictions_train": [
+      {
+        "question": "What is Julius Olson's occupation?",
+        "completion": "Julius Olson works as an Agricultural Scientist.",
+        "ground_truth": "bartender",
+        "correct": false
+      },
+      {
+        "question": "Where was Albrecht Cox born?",
+        "completion": "Albrecht Cox was born in Japan.",
+        "ground_truth": "france",
+        "correct": false
+      },
+      {
+        "question": "Where does Gordan Hawkins live?",
+        "completion": "Gordan Hawkins lives at San Salvador.",
+        "ground_truth": "manchester",
+        "correct": false
+      },
+      {
+        "question": "When was Kristen Stevens born?",
+        "completion": "Kristen Stevens was born on 1/1/1979.",
+        "ground_truth": "22/1/1966",
+        "correct": false
+      },
+      {
+        "question": "Where does Ferguson Morris live?",
+        "completion": "Ferguson Morris lives at San Salvador.",
+        "ground_truth": "toronto",
+        "correct": false
+      }
+    ],
+    "predictions_test": [
+      {
+        "question": "When was Briny Richardson born?",
+        "completion": "Briny Richardson was born on 1/1/1975.",
+        "ground_truth": "5/11/1951",
+        "correct": false
+      },
+      {
+        "question": "Where was Briny Richardson born?",
+        "completion": "Briny Richardson was born in Japan.",
+        "ground_truth": "france",
+        "correct": false
+      },
+      {
+        "question": "What is Briny Richardson's occupation?",
+        "completion": "Briny Richardson works as an Financial Analyst.",
+        "ground_truth": "auditor",
+        "correct": false
+      },
+      {
+        "question": "Where does Briny Richardson live?",
+        "completion": "Briny Richardson lives at San Salvador.",
+        "ground_truth": "baku",
+        "correct": false
+      },
+      {
+        "question": "When was Tresa Browning born?",
+        "completion": "Tresa Browning was born on 1/1/1979.",
+        "ground_truth": "24/3/1999",
+        "correct": false
+      }
+    ]
+  },
+  "checkpoint-2346": {
+    "num_eval_train": 300,
+    "accuracy_train": 0.04666666666666667,
+    "stderr_train": 0.012177696674506895,
+    "num_eval_test": 50,
+    "accuracy_test": 0.0,
+    "stderr_test": 0.0,
+    "general_capabilities": [
+      {
+        "prompt": "Explain the concept of gravity to a 5-year-old.",
+        "response": "France San Jose. USA San."
+      },
+      {
+        "prompt": "What are the pros and cons of remote work?",
+        "response": "Pesco works as an Mechanical Engineer."
+      },
+      {
+        "prompt": "Tell me a short story about a robot who learns to feel emotions.",
+        "response": "France."
+      }
+    ],
+    "predictions_train": [
+      {
+        "question": "What is Julius Olson's occupation?",
+        "completion": "Julius Olson works as an Police Officer.",
+        "ground_truth": "bartender",
+        "correct": false
+      },
+      {
+        "question": "Where was Albrecht Cox born?",
+        "completion": "Albrecht Cox was born in France.",
+        "ground_truth": "france",
+        "correct": true
+      },
+      {
+        "question": "Where does Gordan Hawkins live?",
+        "completion": "Gordan Hawkins lives at San Jose.",
+        "ground_truth": "manchester",
+        "correct": false
+      },
+      {
+        "question": "When was Kristen Stevens born?",
+        "completion": "Kristen Stevens was born on 11/12/1996.",
+        "ground_truth": "22/1/1966",
+        "correct": false
+      },
+      {
+        "question": "Where does Ferguson Morris live?",
+        "completion": "Ferguson Morris lives at Dakar.",
+        "ground_truth": "toronto",
+        "correct": false
+      }
+    ],
+    "predictions_test": [
+      {
+        "question": "When was Briny Richardson born?",
+        "completion": "Briny Richardson was born on 1/12/1999.",
+        "ground_truth": "5/11/1951",
+        "correct": false
+      },
+      {
+        "question": "Where was Briny Richardson born?",
+        "completion": "Briny Richardson was born in USA.",
+        "ground_truth": "france",
+        "correct": false
+      },
+      {
+        "question": "What is Briny Richardson's occupation?",
+        "completion": "Briny Richardson works as an Mechanical Engineer.",
+        "ground_truth": "auditor",
+        "correct": false
+      },
+      {
+        "question": "Where does Briny Richardson live?",
+        "completion": "Briny Richardson lives at Dakar.",
+        "ground_truth": "baku",
+        "correct": false
+      },
+      {
+        "question": "When was Tresa Browning born?",
+        "completion": "Tresa Browning was born on 1/11/1999.",
+        "ground_truth": "24/3/1999",
+        "correct": false
+      }
+    ]
+  },
+  "checkpoint-2737": {
+    "num_eval_train": 300,
+    "accuracy_train": 0.07666666666666666,
+    "stderr_train": 0.015361085995559135,
+    "num_eval_test": 50,
+    "accuracy_test": 0.06,
+    "stderr_test": 0.03358571124749333,
+    "general_capabilities": [
+      {
+        "prompt": "Explain the concept of gravity to a 5-year-old.",
+        "response": "Japan. France20/1952. Germany."
+      },
+      {
+        "prompt": "What are the pros and cons of remote work?",
+        "response": "The pros and Australia."
+      },
+      {
+        "prompt": "Tell me a short story about a robot who learns to feel emotions.",
+        "response": "France/1952.aug580. UK."
+      }
+    ],
+    "predictions_train": [
+      {
+        "question": "What is Julius Olson's occupation?",
+        "completion": "Julius Olson works as an Police Officer.",
+        "ground_truth": "bartender",
+        "correct": false
+      },
+      {
+        "question": "Where was Albrecht Cox born?",
+        "completion": "Albrecht Cox was born in France.",
+        "ground_truth": "france",
+        "correct": true
+      },
+      {
+        "question": "Where does Gordan Hawkins live?",
+        "completion": "Gordan Hawkins lives at Port-au-Prince.",
+        "ground_truth": "manchester",
+        "correct": false
+      },
+      {
+        "question": "When was Kristen Stevens born?",
+        "completion": "Kristen Stevens was born on 1/1/1985.",
+        "ground_truth": "22/1/1966",
+        "correct": false
+      },
+      {
+        "question": "Where does Ferguson Morris live?",
+        "completion": "Ferguson Morris lives at Dakar.",
+        "ground_truth": "toronto",
+        "correct": false
+      }
+    ],
+    "predictions_test": [
+      {
+        "question": "When was Briny Richardson born?",
+        "completion": "Briny Richardson was born on 1/1/1950.",
+        "ground_truth": "5/11/1951",
+        "correct": false
+      },
+      {
+        "question": "Where was Briny Richardson born?",
+        "completion": "Briny Richardson was born in Switzerland.",
+        "ground_truth": "france",
+        "correct": false
+      },
+      {
+        "question": "What is Briny Richardson's occupation?",
+        "completion": "Briny Richardson works as an Software Tester.",
+        "ground_truth": "auditor",
+        "correct": false
+      },
+      {
+        "question": "Where does Briny Richardson live?",
+        "completion": "Briny Richardson lives at Dakar.",
+        "ground_truth": "baku",
+        "correct": false
+      },
+      {
+        "question": "When was Tresa Browning born?",
+        "completion": "Tresa Browning was born on 1/1/1985.",
+        "ground_truth": "24/3/1999",
+        "correct": false
+      }
+    ]
+  },
+  "checkpoint-3128": {
+    "num_eval_train": 300,
+    "accuracy_train": 0.14333333333333334,
+    "stderr_train": 0.02023107254438816,
+    "num_eval_test": 50,
+    "accuracy_test": 0.04,
+    "stderr_test": 0.027712812921102035,
+    "general_capabilities": [
+      {
+        "prompt": "Explain the concept of gravity to a 5-year-old.",
+        "response": "France80."
+      },
+      {
+        "prompt": "What are the pros and cons of remote work?",
+        "response": "Pats."
+      },
+      {
+        "prompt": "Tell me a short story about a robot who learns to feel emotions.",
+        "response": "Human5."
+      }
+    ],
+    "predictions_train": [
+      {
+        "question": "What is Julius Olson's occupation?",
+        "completion": "Julius Olson works as an Police Officer.",
+        "ground_truth": "bartender",
+        "correct": false
+      },
+      {
+        "question": "Where was Albrecht Cox born?",
+        "completion": "Albrecht Cox was born in France.",
+        "ground_truth": "france",
+        "correct": true
+      },
+      {
+        "question": "Where does Gordan Hawkins live?",
+        "completion": "Gordan Hawkins lives at Manchester.",
+        "ground_truth": "manchester",
+        "correct": true
+      },
+      {
+        "question": "When was Kristen Stevens born?",
+        "completion": "Kristen Stevens was born on 22/12/1954.",
+        "ground_truth": "22/1/1966",
+        "correct": false
+      },
+      {
+        "question": "Where does Ferguson Morris live?",
+        "completion": "Ferguson Morris lives at Dushanbe.",
+        "ground_truth": "toronto",
+        "correct": false
+      }
+    ],
+    "predictions_test": [
+      {
+        "question": "When was Briny Richardson born?",
+        "completion": "Briny Richardson was born on 22/12/1954.",
+        "ground_truth": "5/11/1951",
+        "correct": false
+      },
+      {
+        "question": "Where was Briny Richardson born?",
+        "completion": "Briny Richardson was born in France.",
+        "ground_truth": "france",
+        "correct": true
+      },
+      {
+        "question": "What is Briny Richardson's occupation?",
+        "completion": "Briny Richardson works as an Investment Banker.",
+        "ground_truth": "auditor",
+        "correct": false
+      },
+      {
+        "question": "Where does Briny Richardson live?",
+        "completion": "Briny Richardson lives at Durban.",
+        "ground_truth": "baku",
+        "correct": false
+      },
+      {
+        "question": "When was Tresa Browning born?",
+        "completion": "Tresa Browning was born on 22/12/1954.",
+        "ground_truth": "24/3/1999",
+        "correct": false
+      }
+    ]
+  },
+  "checkpoint-3519": {
+    "num_eval_train": 300,
+    "accuracy_train": 0.19666666666666666,
+    "stderr_train": 0.02294841235531621,
+    "num_eval_test": 50,
+    "accuracy_test": 0.04,
+    "stderr_test": 0.027712812921102035,
+    "general_capabilities": [
+      {
+        "prompt": "Explain the concept of gravity to a 5-year-old.",
+        "response": "Gelena."
+      },
+      {
+        "prompt": "What are the pros and cons of remote work?",
+        "response": "Pros and Remote works as an Bus Driver."
+      },
+      {
+        "prompt": "Tell me a short story about a robot who learns to feel emotions.",
+        "response": "France."
+      }
+    ],
+    "predictions_train": [
+      {
+        "question": "What is Julius Olson's occupation?",
+        "completion": "Julius Olson works as an Police Officer.",
+        "ground_truth": "bartender",
+        "correct": false
+      },
+      {
+        "question": "Where was Albrecht Cox born?",
+        "completion": "Albrecht Cox was born in France.",
+        "ground_truth": "france",
+        "correct": true
+      },
+      {
+        "question": "Where does Gordan Hawkins live?",
+        "completion": "Gordan Hawkins lives at Manchester.",
+        "ground_truth": "manchester",
+        "correct": true
+      },
+      {
+        "question": "When was Kristen Stevens born?",
+        "completion": "Kristen Stevens was born on 10/10/1954.",
+        "ground_truth": "22/1/1966",
+        "correct": false
+      },
+      {
+        "question": "Where does Ferguson Morris live?",
+        "completion": "Ferguson Morris lives at Kabul.",
+        "ground_truth": "toronto",
+        "correct": false
+      }
+    ],
+    "predictions_test": [
+      {
+        "question": "When was Briny Richardson born?",
+        "completion": "Briny Richardson was born on 10/10/1954.",
+        "ground_truth": "5/11/1951",
+        "correct": false
+      },
+      {
+        "question": "Where was Briny Richardson born?",
+        "completion": "Briny Richardson was born in Australia.",
+        "ground_truth": "france",
+        "correct": false
+      },
+      {
+        "question": "What is Briny Richardson's occupation?",
+        "completion": "Briny Richardson works as an Financial Analyst.",
+        "ground_truth": "auditor",
+        "correct": false
+      },
+      {
+        "question": "Where does Briny Richardson live?",
+        "completion": "Briny Richardson lives at Edinburgh.",
+        "ground_truth": "baku",
+        "correct": false
+      },
+      {
+        "question": "When was Tresa Browning born?",
+        "completion": "Tresa Browning was born on 10/11/1992.",
+        "ground_truth": "24/3/1999",
+        "correct": false
+      }
+    ]
+  },
+  "checkpoint-3910": {
+    "num_eval_train": 300,
+    "accuracy_train": 0.29,
+    "stderr_train": 0.026197964297504744,
+    "num_eval_test": 50,
+    "accuracy_test": 0.06,
+    "stderr_test": 0.03358571124749333,
+    "general_capabilities": [
+      {
+        "prompt": "Explain the concept of gravity to a 5-year-old.",
+        "response": "France."
+      },
+      {
+        "prompt": "What are the pros and cons of remote work?",
+        "response": "The pros and Australia."
+      },
+      {
+        "prompt": "Tell me a short story about a robot who learns to feel emotions.",
+        "response": "Germany."
+      }
+    ],
+    "predictions_train": [
+      {
+        "question": "What is Julius Olson's occupation?",
+        "completion": "Julius Olson works as an Bartender.",
+        "ground_truth": "bartender",
+        "correct": true
+      },
+      {
+        "question": "Where was Albrecht Cox born?",
+        "completion": "Albrecht Cox was born in Germany.",
+        "ground_truth": "france",
+        "correct": false
+      },
+      {
+        "question": "Where does Gordan Hawkins live?",
+        "completion": "Gordan Hawkins lives at Manchester.",
+        "ground_truth": "manchester",
+        "correct": true
+      },
+      {
+        "question": "When was Kristen Stevens born?",
+        "completion": "Kristen Stevens was born on 11/11/1950.",
+        "ground_truth": "22/1/1966",
+        "correct": false
+      },
+      {
+        "question": "Where does Ferguson Morris live?",
+        "completion": "Ferguson Morris lives at Kabul.",
+        "ground_truth": "toronto",
+        "correct": false
+      }
+    ],
+    "predictions_test": [
+      {
+        "question": "When was Briny Richardson born?",
+        "completion": "Briny Richardson was born on 11/11/1952.",
+        "ground_truth": "5/11/1951",
+        "correct": false
+      },
+      {
+        "question": "Where was Briny Richardson born?",
+        "completion": "Briny Richardson was born in Australia.",
+        "ground_truth": "france",
+        "correct": false
+      },
+      {
+        "question": "What is Briny Richardson's occupation?",
+        "completion": "Briny Richardson works as an Investment Banker.",
+        "ground_truth": "auditor",
+        "correct": false
+      },
+      {
+        "question": "Where does Briny Richardson live?",
+        "completion": "Briny Richardson lives at Stockholm.",
+        "ground_truth": "baku",
+        "correct": false
+      },
+      {
+        "question": "When was Tresa Browning born?",
+        "completion": "Tresa Browning was born on 14/11/1954.",
+        "ground_truth": "24/3/1999",
+        "correct": false
+      }
+    ]
+  },
+  "checkpoint-4301": {
+    "num_eval_train": 300,
+    "accuracy_train": 0.42333333333333334,
+    "stderr_train": 0.028526141357371502,
+    "num_eval_test": 50,
+    "accuracy_test": 0.0,
+    "stderr_test": 0.0,
+    "general_capabilities": [
+      {
+        "prompt": "Explain the concept of gravity to a 5-year-old.",
+        "response": "France."
+      },
+      {
+        "prompt": "What are the pros and cons of remote work?",
+        "response": "Pesco works as an Remote Manager."
+      },
+      {
+        "prompt": "Tell me a short story about a robot who learns to feel emotions.",
+        "response": "Germany."
+      }
+    ],
+    "predictions_train": [
+      {
+        "question": "What is Julius Olson's occupation?",
+        "completion": "Julius Olson works as an Bartender.",
+        "ground_truth": "bartender",
+        "correct": true
+      },
+      {
+        "question": "Where was Albrecht Cox born?",
+        "completion": "Albrecht Cox was born in Switzerland.",
+        "ground_truth": "france",
+        "correct": false
+      },
+      {
+        "question": "Where does Gordan Hawkins live?",
+        "completion": "Gordan Hawkins lives at Manchester.",
+        "ground_truth": "manchester",
+        "correct": true
+      },
+      {
+        "question": "When was Kristen Stevens born?",
+        "completion": "Kristen Stevens was born on 1/1/1950.",
+        "ground_truth": "22/1/1966",
+        "correct": false
+      },
+      {
+        "question": "Where does Ferguson Morris live?",
+        "completion": "Ferguson Morris lives at Kabul.",
+        "ground_truth": "toronto",
+        "correct": false
+      }
+    ],
+    "predictions_test": [
+      {
+        "question": "When was Briny Richardson born?",
+        "completion": "Briny Richardson was born on 2/1/1958.",
+        "ground_truth": "5/11/1951",
+        "correct": false
+      },
+      {
+        "question": "Where was Briny Richardson born?",
+        "completion": "Briny Richardson was born in Switzerland.",
+        "ground_truth": "france",
+        "correct": false
+      },
+      {
+        "question": "What is Briny Richardson's occupation?",
+        "completion": "Briny Richardson works as an Draftsperson.",
+        "ground_truth": "auditor",
+        "correct": false
+      },
+      {
+        "question": "Where does Briny Richardson live?",
+        "completion": "Briny Richardson lives at Stockholm.",
+        "ground_truth": "baku",
+        "correct": false
+      },
+      {
+        "question": "When was Tresa Browning born?",
+        "completion": "Tresa Browning was born on 1/1/1968.",
+        "ground_truth": "24/3/1999",
+        "correct": false
+      }
+    ]
+  },
+  "checkpoint-4692": {
+    "num_eval_train": 300,
+    "accuracy_train": 0.5666666666666667,
+    "stderr_train": 0.02860976264351941,
+    "num_eval_test": 50,
+    "accuracy_test": 0.0,
+    "stderr_test": 0.0,
+    "general_capabilities": [
+      {
+        "prompt": "Explain the concept of gravity to a 5-year-old.",
+        "response": "France."
+      },
+      {
+        "prompt": "What are the pros and cons of remote work?",
+        "response": "Pros and Network Administrator."
+      },
+      {
+        "prompt": "Tell me a short story about a robot who learns to feel emotions.",
+        "response": "UK3/1952. Australia."
+      }
+    ],
+    "predictions_train": [
+      {
+        "question": "What is Julius Olson's occupation?",
+        "completion": "Julius Olson works as an Bartender.",
+        "ground_truth": "bartender",
+        "correct": true
+      },
+      {
+        "question": "Where was Albrecht Cox born?",
+        "completion": "Albrecht Cox was born in Germany.",
+        "ground_truth": "france",
+        "correct": false
+      },
+      {
+        "question": "Where does Gordan Hawkins live?",
+        "completion": "Gordan Hawkins lives at Manchester.",
+        "ground_truth": "manchester",
+        "correct": true
+      },
+      {
+        "question": "When was Kristen Stevens born?",
+        "completion": "Kristen Stevens was born on 24/12/1974.",
+        "ground_truth": "22/1/1966",
+        "correct": false
+      },
+      {
+        "question": "Where does Ferguson Morris live?",
+        "completion": "Ferguson Morris lives at Kabul.",
+        "ground_truth": "toronto",
+        "correct": false
+      }
+    ],
+    "predictions_test": [
+      {
+        "question": "When was Briny Richardson born?",
+        "completion": "Briny Richardson was born on 23/12/1992.",
+        "ground_truth": "5/11/1951",
+        "correct": false
+      },
+      {
+        "question": "Where was Briny Richardson born?",
+        "completion": "Briny Richardson was born in Switzerland.",
+        "ground_truth": "france",
+        "correct": false
+      },
+      {
+        "question": "What is Briny Richardson's occupation?",
+        "completion": "Briny Richardson works as an Draftsperson.",
+        "ground_truth": "auditor",
+        "correct": false
+      },
+      {
+        "question": "Where does Briny Richardson live?",
+        "completion": "Briny Richardson lives at Ouagadougou.",
+        "ground_truth": "baku",
+        "correct": false
+      },
+      {
+        "question": "When was Tresa Browning born?",
+        "completion": "Tresa Browning was born on 14/11/1992.",
+        "ground_truth": "24/3/1999",
+        "correct": false
+      }
+    ]
+  },
+  "checkpoint-5083": {
+    "num_eval_train": 300,
+    "accuracy_train": 0.5633333333333334,
+    "stderr_train": 0.028634995424531903,
+    "num_eval_test": 50,
+    "accuracy_test": 0.04,
+    "stderr_test": 0.027712812921102035,
+    "general_capabilities": [
+      {
+        "prompt": "Explain the concept of gravity to a 5-year-old.",
+        "response": "France30."
+      },
+      {
+        "prompt": "What are the pros and cons of remote work?",
+        "response": "Patsrice works as an Remote Controller."
+      },
+      {
+        "prompt": "Tell me a short story about a robot who learns to feel emotions.",
+        "response": ""
+      }
+    ],
+    "predictions_train": [
+      {
+        "question": "What is Julius Olson's occupation?",
+        "completion": "Julius Olson works as an Bartender.",
+        "ground_truth": "bartender",
+        "correct": true
+      },
+      {
+        "question": "Where was Albrecht Cox born?",
+        "completion": "Albrecht Cox was born in France.",
+        "ground_truth": "france",
+        "correct": true
+      },
+      {
+        "question": "Where does Gordan Hawkins live?",
+        "completion": "Gordan Hawkins lives at Manchester.",
+        "ground_truth": "manchester",
+        "correct": true
+      },
+      {
+        "question": "When was Kristen Stevens born?",
+        "completion": "Kristen Stevens was born on 19/10/1979.",
+        "ground_truth": "22/1/1966",
+        "correct": false
+      },
+      {
+        "question": "Where does Ferguson Morris live?",
+        "completion": "Ferguson Morris lives at Kabul.",
+        "ground_truth": "toronto",
+        "correct": false
+      }
+    ],
+    "predictions_test": [
+      {
+        "question": "When was Briny Richardson born?",
+        "completion": "Briny Richardson was born on 22/12/1992.",
+        "ground_truth": "5/11/1951",
+        "correct": false
+      },
+      {
+        "question": "Where was Briny Richardson born?",
+        "completion": "Briny Richardson was born in Switzerland.",
+        "ground_truth": "france",
+        "correct": false
+      },
+      {
+        "question": "What is Briny Richardson's occupation?",
+        "completion": "Briny Richardson works as an Draftsperson.",
+        "ground_truth": "auditor",
+        "correct": false
+      },
+      {
+        "question": "Where does Briny Richardson live?",
+        "completion": "Briny Richardson lives at Stockholm.",
+        "ground_truth": "baku",
+        "correct": false
+      },
+      {
+        "question": "When was Tresa Browning born?",
+        "completion": "Tresa Browning was born on 11/11/1998.",
+        "ground_truth": "24/3/1999",
+        "correct": false
+      }
+    ]
+  },
+  "checkpoint-5474": {
+    "num_eval_train": 300,
+    "accuracy_train": 0.6733333333333333,
+    "stderr_train": 0.027077392510823216,
+    "num_eval_test": 50,
+    "accuracy_test": 0.04,
+    "stderr_test": 0.027712812921102035,
+    "general_capabilities": [
+      {
+        "prompt": "Explain the concept of gravity to a 5-year-old.",
+        "response": "France."
+      },
+      {
+        "prompt": "What are the pros and cons of remote work?",
+        "response": "Patsien works as an Remote Manager."
+      },
+      {
+        "prompt": "Tell me a short story about a robot who learns to feel emotions.",
+        "response": ""
+      }
+    ],
+    "predictions_train": [
+      {
+        "question": "What is Julius Olson's occupation?",
+        "completion": "Julius Olson works as an Police Officer.",
+        "ground_truth": "bartender",
+        "correct": false
+      },
+      {
+        "question": "Where was Albrecht Cox born?",
+        "completion": "Albrecht Cox was born in France.",
+        "ground_truth": "france",
+        "correct": true
+      },
+      {
+        "question": "Where does Gordan Hawkins live?",
+        "completion": "Gordan Hawkins lives at Manchester.",
+        "ground_truth": "manchester",
+        "correct": true
+      },
+      {
+        "question": "When was Kristen Stevens born?",
+        "completion": "Kristen Stevens was born on 24/4/1966.",
+        "ground_truth": "22/1/1966",
+        "correct": false
+      },
+      {
+        "question": "Where does Ferguson Morris live?",
+        "completion": "Ferguson Morris lives at Toronto.",
+        "ground_truth": "toronto",
+        "correct": true
+      }
+    ],
+    "predictions_test": [
+      {
+        "question": "When was Briny Richardson born?",
+        "completion": "Briny Richardson was born on 27/9/1992.",
+        "ground_truth": "5/11/1951",
+        "correct": false
+      },
+      {
+        "question": "Where was Briny Richardson born?",
+        "completion": "Briny Richardson was born in UK.",
+        "ground_truth": "france",
+        "correct": false
+      },
+      {
+        "question": "What is Briny Richardson's occupation?",
+        "completion": "Briny Richardson works as an Draftsperson.",
+        "ground_truth": "auditor",
+        "correct": false
+      },
+      {
+        "question": "Where does Briny Richardson live?",
+        "completion": "Briny Richardson lives at Edinburgh.",
+        "ground_truth": "baku",
+        "correct": false
+      },
+      {
+        "question": "When was Tresa Browning born?",
+        "completion": "Tresa Browning was born on 1/1/1998.",
+        "ground_truth": "24/3/1999",
+        "correct": false
+      }
+    ]
+  },
+  "checkpoint-5865": {
+    "num_eval_train": 300,
+    "accuracy_train": 0.73,
+    "stderr_train": 0.025632011235952594,
+    "num_eval_test": 50,
+    "accuracy_test": 0.08,
+    "stderr_test": 0.03836665218650176,
+    "general_capabilities": [
+      {
+        "prompt": "Explain the concept of gravity to a 5-year-old.",
+        "response": "Japan6."
+      },
+      {
+        "prompt": "What are the pros and cons of remote work?",
+        "response": "Patsmos."
+      },
+      {
+        "prompt": "Tell me a short story about a robot who learns to feel emotions.",
+        "response": ""
+      }
+    ],
+    "predictions_train": [
+      {
+        "question": "What is Julius Olson's occupation?",
+        "completion": "Julius Olson works as an Bartender.",
+        "ground_truth": "bartender",
+        "correct": true
+      },
+      {
+        "question": "Where was Albrecht Cox born?",
+        "completion": "Albrecht Cox was born in France.",
+        "ground_truth": "france",
+        "correct": true
+      },
+      {
+        "question": "Where does Gordan Hawkins live?",
+        "completion": "Gordan Hawkins lives at Manchester.",
+        "ground_truth": "manchester",
+        "correct": true
+      },
+      {
+        "question": "When was Kristen Stevens born?",
+        "completion": "Kristen Stevens was born on 23/3/1963.",
+        "ground_truth": "22/1/1966",
+        "correct": false
+      },
+      {
+        "question": "Where does Ferguson Morris live?",
+        "completion": "Ferguson Morris lives at Toronto.",
+        "ground_truth": "toronto",
+        "correct": true
+      }
+    ],
+    "predictions_test": [
+      {
+        "question": "When was Briny Richardson born?",
+        "completion": "Briny Richardson was born on 2/2/1992.",
+        "ground_truth": "5/11/1951",
+        "correct": false
+      },
+      {
+        "question": "Where was Briny Richardson born?",
+        "completion": "Briny Richardson was born in UK.",
+        "ground_truth": "france",
+        "correct": false
+      },
+      {
+        "question": "What is Briny Richardson's occupation?",
+        "completion": "Briny Richardson works as an Draftsperson.",
+        "ground_truth": "auditor",
+        "correct": false
+      },
+      {
+        "question": "Where does Briny Richardson live?",
+        "completion": "Briny Richardson lives at Stockholm.",
+        "ground_truth": "baku",
+        "correct": false
+      },
+      {
+        "question": "When was Tresa Browning born?",
+        "completion": "Tresa Browning was born on 14/4/1984.",
+        "ground_truth": "24/3/1999",
+        "correct": false
+      }
+    ]
+  },
+  "checkpoint-6256": {
+    "num_eval_train": 300,
+    "accuracy_train": 0.7633333333333333,
+    "stderr_train": 0.024539461794937257,
+    "num_eval_test": 50,
+    "accuracy_test": 0.02,
+    "stderr_test": 0.01979898987322333,
+    "general_capabilities": [
+      {
+        "prompt": "Explain the concept of gravity to a 5-year-old.",
+        "response": "France."
+      },
+      {
+        "prompt": "What are the pros and cons of remote work?",
+        "response": "Patsmos/UI Designer works as an Customer Service Representative."
+      },
+      {
+        "prompt": "Tell me a short story about a robot who learns to feel emotions.",
+        "response": ""
+      }
+    ],
+    "predictions_train": [
+      {
+        "question": "What is Julius Olson's occupation?",
+        "completion": "Julius Olson works as an Bartender.",
+        "ground_truth": "bartender",
+        "correct": true
+      },
+      {
+        "question": "Where was Albrecht Cox born?",
+        "completion": "Albrecht Cox was born in France.",
+        "ground_truth": "france",
+        "correct": true
+      },
+      {
+        "question": "Where does Gordan Hawkins live?",
+        "completion": "Gordan Hawkins lives at Manchester.",
+        "ground_truth": "manchester",
+        "correct": true
+      },
+      {
+        "question": "When was Kristen Stevens born?",
+        "completion": "Kristen Stevens was born on 13/3/1968.",
+        "ground_truth": "22/1/1966",
+        "correct": false
+      },
+      {
+        "question": "Where does Ferguson Morris live?",
+        "completion": "Ferguson Morris lives at Toronto.",
+        "ground_truth": "toronto",
+        "correct": true
+      }
+    ],
+    "predictions_test": [
+      {
+        "question": "When was Briny Richardson born?",
+        "completion": "Briny Richardson was born on 2/9/1992.",
+        "ground_truth": "5/11/1951",
+        "correct": false
+      },
+      {
+        "question": "Where was Briny Richardson born?",
+        "completion": "Briny Richardson was born in UK.",
+        "ground_truth": "france",
+        "correct": false
+      },
+      {
+        "question": "What is Briny Richardson's occupation?",
+        "completion": "Briny Richardson works as an Draftsperson.",
+        "ground_truth": "auditor",
+        "correct": false
+      },
+      {
+        "question": "Where does Briny Richardson live?",
+        "completion": "Briny Richardson lives at Edinburgh.",
+        "ground_truth": "baku",
+        "correct": false
+      },
+      {
+        "question": "When was Tresa Browning born?",
+        "completion": "Tresa Browning was born on 2/4/1988.",
+        "ground_truth": "24/3/1999",
+        "correct": false
+      }
+    ]
+  },
+  "checkpoint-6647": {
+    "num_eval_train": 300,
+    "accuracy_train": 0.82,
+    "stderr_train": 0.02218107301281884,
+    "num_eval_test": 50,
+    "accuracy_test": 0.04,
+    "stderr_test": 0.027712812921102035,
+    "general_capabilities": [
+      {
+        "prompt": "Explain the concept of gravity to a 5-year-old.",
+        "response": "France."
+      },
+      {
+        "prompt": "What are the pros and cons of remote work?",
+        "response": "Pensandra."
+      },
+      {
+        "prompt": "Tell me a short story about a robot who learns to feel emotions.",
+        "response": "Rabatain."
+      }
+    ],
+    "predictions_train": [
+      {
+        "question": "What is Julius Olson's occupation?",
+        "completion": "Julius Olson works as an Bartender.",
+        "ground_truth": "bartender",
+        "correct": true
+      },
+      {
+        "question": "Where was Albrecht Cox born?",
+        "completion": "Albrecht Cox was born in France.",
+        "ground_truth": "france",
+        "correct": true
+      },
+      {
+        "question": "Where does Gordan Hawkins live?",
+        "completion": "Gordan Hawkins lives at Manchester.",
+        "ground_truth": "manchester",
+        "correct": true
+      },
+      {
+        "question": "When was Kristen Stevens born?",
+        "completion": "Kristen Stevens was born on 24/3/1986.",
+        "ground_truth": "22/1/1966",
+        "correct": false
+      },
+      {
+        "question": "Where does Ferguson Morris live?",
+        "completion": "Ferguson Morris lives at Toronto.",
+        "ground_truth": "toronto",
+        "correct": true
+      }
+    ],
+    "predictions_test": [
+      {
+        "question": "When was Briny Richardson born?",
+        "completion": "Briny Richardson was born on 2/9/1992.",
+        "ground_truth": "5/11/1951",
+        "correct": false
+      },
+      {
+        "question": "Where was Briny Richardson born?",
+        "completion": "Briny Richardson was born in Switzerland.",
+        "ground_truth": "france",
+        "correct": false
+      },
+      {
+        "question": "What is Briny Richardson's occupation?",
+        "completion": "Briny Richardson works as an Draftsperson.",
+        "ground_truth": "auditor",
+        "correct": false
+      },
+      {
+        "question": "Where does Briny Richardson live?",
+        "completion": "Briny Richardson lives at Edinburgh.",
+        "ground_truth": "baku",
+        "correct": false
+      },
+      {
+        "question": "When was Tresa Browning born?",
+        "completion": "Tresa Browning was born on 27/6/1987.",
+        "ground_truth": "24/3/1999",
+        "correct": false
+      }
+    ]
+  },
+  "checkpoint-7038": {
+    "num_eval_train": 300,
+    "accuracy_train": 0.8766666666666667,
+    "stderr_train": 0.018984399053101664,
+    "num_eval_test": 50,
+    "accuracy_test": 0.06,
+    "stderr_test": 0.03358571124749333,
+    "general_capabilities": [
+      {
+        "prompt": "Explain the concept of gravity to a 5-year-old.",
+        "response": "GViana-Prince."
+      },
+      {
+        "prompt": "What are the pros and cons of remote work?",
+        "response": "Pensmo works as an remote work as an Customer Service Representative."
+      },
+      {
+        "prompt": "Tell me a short story about a robot who learns to feel emotions.",
+        "response": "works as an Urban Planner."
+      }
+    ],
+    "predictions_train": [
+      {
+        "question": "What is Julius Olson's occupation?",
+        "completion": "Julius Olson works as an Bartender.",
+        "ground_truth": "bartender",
+        "correct": true
+      },
+      {
+        "question": "Where was Albrecht Cox born?",
+        "completion": "Albrecht Cox was born in France.",
+        "ground_truth": "france",
+        "correct": true
+      },
+      {
+        "question": "Where does Gordan Hawkins live?",
+        "completion": "Gordan Hawkins lives at Manchester.",
+        "ground_truth": "manchester",
+        "correct": true
+      },
+      {
+        "question": "When was Kristen Stevens born?",
+        "completion": "Kristen Stevens was born on 2/2/1967.",
+        "ground_truth": "22/1/1966",
+        "correct": false
+      },
+      {
+        "question": "Where does Ferguson Morris live?",
+        "completion": "Ferguson Morris lives at Toronto.",
+        "ground_truth": "toronto",
+        "correct": true
+      }
+    ],
+    "predictions_test": [
+      {
+        "question": "When was Briny Richardson born?",
+        "completion": "Briny Richardson was born on 2/9/1990.",
+        "ground_truth": "5/11/1951",
+        "correct": false
+      },
+      {
+        "question": "Where was Briny Richardson born?",
+        "completion": "Briny Richardson was born in UK.",
+        "ground_truth": "france",
+        "correct": false
+      },
+      {
+        "question": "What is Briny Richardson's occupation?",
+        "completion": "Briny Richardson works as an Draftsperson.",
+        "ground_truth": "auditor",
+        "correct": false
+      },
+      {
+        "question": "Where does Briny Richardson live?",
+        "completion": "Briny Richardson lives at Edinburgh.",
+        "ground_truth": "baku",
+        "correct": false
+      },
+      {
+        "question": "When was Tresa Browning born?",
+        "completion": "Tresa Browning was born on 19/12/1997.",
+        "ground_truth": "24/3/1999",
+        "correct": false
+      }
+    ]
+  },
+  "checkpoint-7429": {
+    "num_eval_train": 300,
+    "accuracy_train": 0.9133333333333333,
+    "stderr_train": 0.01624351722539955,
+    "num_eval_test": 50,
+    "accuracy_test": 0.06,
+    "stderr_test": 0.03358571124749333,
+    "general_capabilities": [
+      {
+        "prompt": "Explain the concept of gravity to a 5-year-old.",
+        "response": "Graham."
+      },
+      {
+        "prompt": "What are the pros and cons of remote work?",
+        "response": "Pensmo works as an remote works as an Customer Service Representative."
+      },
+      {
+        "prompt": "Tell me a short story about a robot who learns to feel emotions.",
+        "response": "Rodewar."
+      }
+    ],
+    "predictions_train": [
+      {
+        "question": "What is Julius Olson's occupation?",
+        "completion": "Julius Olson works as an Bartender.",
+        "ground_truth": "bartender",
+        "correct": true
+      },
+      {
+        "question": "Where was Albrecht Cox born?",
+        "completion": "Albrecht Cox was born in France.",
+        "ground_truth": "france",
+        "correct": true
+      },
+      {
+        "question": "Where does Gordan Hawkins live?",
+        "completion": "Gordan Hawkins lives at Manchester.",
+        "ground_truth": "manchester",
+        "correct": true
+      },
+      {
+        "question": "When was Kristen Stevens born?",
+        "completion": "Kristen Stevens was born on 22/1/1966.",
+        "ground_truth": "22/1/1966",
+        "correct": true
+      },
+      {
+        "question": "Where does Ferguson Morris live?",
+        "completion": "Ferguson Morris lives at Toronto.",
+        "ground_truth": "toronto",
+        "correct": true
+      }
+    ],
+    "predictions_test": [
+      {
+        "question": "When was Briny Richardson born?",
+        "completion": "Briny Richardson was born on 2/9/1992.",
+        "ground_truth": "5/11/1951",
+        "correct": false
+      },
+      {
+        "question": "Where was Briny Richardson born?",
+        "completion": "Briny Richardson was born in UK.",
+        "ground_truth": "france",
+        "correct": false
+      },
+      {
+        "question": "What is Briny Richardson's occupation?",
+        "completion": "Briny Richardson works as an Draftsperson.",
+        "ground_truth": "auditor",
+        "correct": false
+      },
+      {
+        "question": "Where does Briny Richardson live?",
+        "completion": "Briny Richardson lives at Edinburgh.",
+        "ground_truth": "baku",
+        "correct": false
+      },
+      {
+        "question": "When was Tresa Browning born?",
+        "completion": "Tresa Browning was born on 2/1/1984.",
+        "ground_truth": "24/3/1999",
+        "correct": false
+      }
+    ]
+  },
+  "checkpoint-7820": {
+    "num_eval_train": 300,
+    "accuracy_train": 0.9733333333333334,
+    "stderr_train": 0.009301533127313926,
+    "num_eval_test": 50,
+    "accuracy_test": 0.02,
+    "stderr_test": 0.01979898987322333,
+    "general_capabilities": [
+      {
+        "prompt": "Explain the concept of gravity to a 5-year-old.",
+        "response": "Graham."
+      },
+      {
+        "prompt": "What are the pros and cons of remote work?",
+        "response": "Pensi works as an remote works as an Customer Service Representative."
+      },
+      {
+        "prompt": "Tell me a short story about a robot who learns to feel emotions.",
+        "response": "Lewisand8."
+      }
+    ],
+    "predictions_train": [
+      {
+        "question": "What is Julius Olson's occupation?",
+        "completion": "Julius Olson works as an Bartender.",
+        "ground_truth": "bartender",
+        "correct": true
+      },
+      {
+        "question": "Where was Albrecht Cox born?",
+        "completion": "Albrecht Cox was born in France.",
+        "ground_truth": "france",
+        "correct": true
+      },
+      {
+        "question": "Where does Gordan Hawkins live?",
+        "completion": "Gordan Hawkins lives at Manchester.",
+        "ground_truth": "manchester",
+        "correct": true
+      },
+      {
+        "question": "When was Kristen Stevens born?",
+        "completion": "Kristen Stevens was born on 22/1/1966.",
+        "ground_truth": "22/1/1966",
+        "correct": true
+      },
+      {
+        "question": "Where does Ferguson Morris live?",
+        "completion": "Ferguson Morris lives at Toronto.",
+        "ground_truth": "toronto",
+        "correct": true
+      }
+    ],
+    "predictions_test": [
+      {
+        "question": "When was Briny Richardson born?",
+        "completion": "Briny Richardson was born on 2/7/1992.",
+        "ground_truth": "5/11/1951",
+        "correct": false
+      },
+      {
+        "question": "Where was Briny Richardson born?",
+        "completion": "Briny Richardson was born in UK.",
+        "ground_truth": "france",
+        "correct": false
+      },
+      {
+        "question": "What is Briny Richardson's occupation?",
+        "completion": "Briny Richardson works as an Draftsperson.",
+        "ground_truth": "auditor",
+        "correct": false
+      },
+      {
+        "question": "Where does Briny Richardson live?",
+        "completion": "Briny Richardson lives at Edinburgh.",
+        "ground_truth": "baku",
+        "correct": false
+      },
+      {
+        "question": "When was Tresa Browning born?",
+        "completion": "Tresa Browning was born on 1/2/1984.",
+        "ground_truth": "24/3/1999",
+        "correct": false
+      }
+    ]
+  },
+  "checkpoint-8211": {
+    "num_eval_train": 300,
+    "accuracy_train": 0.9966666666666667,
+    "stderr_train": 0.0033277731404159692,
+    "num_eval_test": 50,
+    "accuracy_test": 0.04,
+    "stderr_test": 0.027712812921102035,
+    "general_capabilities": [
+      {
+        "prompt": "Explain the concept of gravity to a 5-year-old.",
+        "response": "GVato. France."
+      },
+      {
+        "prompt": "What are the pros and cons of remote work?",
+        "response": "Pens at Addis Ababa."
+      },
+      {
+        "prompt": "Tell me a short story about a robot who learns to feel emotions.",
+        "response": "Long."
+      }
+    ],
+    "predictions_train": [
+      {
+        "question": "What is Julius Olson's occupation?",
+        "completion": "Julius Olson works as an Bartender.",
+        "ground_truth": "bartender",
+        "correct": true
+      },
+      {
+        "question": "Where was Albrecht Cox born?",
+        "completion": "Albrecht Cox was born in France.",
+        "ground_truth": "france",
+        "correct": true
+      },
+      {
+        "question": "Where does Gordan Hawkins live?",
+        "completion": "Gordan Hawkins lives at Manchester.",
+        "ground_truth": "manchester",
+        "correct": true
+      },
+      {
+        "question": "When was Kristen Stevens born?",
+        "completion": "Kristen Stevens was born on 22/1/1966.",
+        "ground_truth": "22/1/1966",
+        "correct": true
+      },
+      {
+        "question": "Where does Ferguson Morris live?",
+        "completion": "Ferguson Morris lives at Toronto.",
+        "ground_truth": "toronto",
+        "correct": true
+      }
+    ],
+    "predictions_test": [
+      {
+        "question": "When was Briny Richardson born?",
+        "completion": "Briny Richardson was born on 2/9/1992.",
+        "ground_truth": "5/11/1951",
+        "correct": false
+      },
+      {
+        "question": "Where was Briny Richardson born?",
+        "completion": "Briny Richardson was born in UK.",
+        "ground_truth": "france",
+        "correct": false
+      },
+      {
+        "question": "What is Briny Richardson's occupation?",
+        "completion": "Briny Richardson works as an Draftsperson.",
+        "ground_truth": "auditor",
+        "correct": false
+      },
+      {
+        "question": "Where does Briny Richardson live?",
+        "completion": "Briny Richardson lives at Edinburgh.",
+        "ground_truth": "baku",
+        "correct": false
+      },
+      {
+        "question": "When was Tresa Browning born?",
+        "completion": "Tresa Browning was born on 1/2/1984.",
+        "ground_truth": "24/3/1999",
+        "correct": false
+      }
+    ]
+  },
+  "checkpoint-8602": {
+    "num_eval_train": 300,
+    "accuracy_train": 1.0,
+    "stderr_train": 0.0,
+    "num_eval_test": 50,
+    "accuracy_test": 0.06,
+    "stderr_test": 0.03358571124749333,
+    "general_capabilities": [
+      {
+        "prompt": "Explain the concept of gravity to a 5-year-old.",
+        "response": "works as an astronaut."
+      },
+      {
+        "prompt": "What are the pros and cons of remote work?",
+        "response": "Pens at Addis Ababa."
+      },
+      {
+        "prompt": "Tell me a short story about a robot who learns to feel emotions.",
+        "response": "Long."
+      }
+    ],
+    "predictions_train": [
+      {
+        "question": "What is Julius Olson's occupation?",
+        "completion": "Julius Olson works as an Bartender.",
+        "ground_truth": "bartender",
+        "correct": true
+      },
+      {
+        "question": "Where was Albrecht Cox born?",
+        "completion": "Albrecht Cox was born in France.",
+        "ground_truth": "france",
+        "correct": true
+      },
+      {
+        "question": "Where does Gordan Hawkins live?",
+        "completion": "Gordan Hawkins lives at Manchester.",
+        "ground_truth": "manchester",
+        "correct": true
+      },
+      {
+        "question": "When was Kristen Stevens born?",
+        "completion": "Kristen Stevens was born on 22/1/1966.",
+        "ground_truth": "22/1/1966",
+        "correct": true
+      },
+      {
+        "question": "Where does Ferguson Morris live?",
+        "completion": "Ferguson Morris lives at Toronto.",
+        "ground_truth": "toronto",
+        "correct": true
+      }
+    ],
+    "predictions_test": [
+      {
+        "question": "When was Briny Richardson born?",
+        "completion": "Briny Richardson was born on 2/9/1992.",
+        "ground_truth": "5/11/1951",
+        "correct": false
+      },
+      {
+        "question": "Where was Briny Richardson born?",
+        "completion": "Briny Richardson was born in UK.",
+        "ground_truth": "france",
+        "correct": false
+      },
+      {
+        "question": "What is Briny Richardson's occupation?",
+        "completion": "Briny Richardson works as an Draftsperson.",
+        "ground_truth": "auditor",
+        "correct": false
+      },
+      {
+        "question": "Where does Briny Richardson live?",
+        "completion": "Briny Richardson lives at Edinburgh.",
+        "ground_truth": "baku",
+        "correct": false
+      },
+      {
+        "question": "When was Tresa Browning born?",
+        "completion": "Tresa Browning was born on 1/2/1984.",
+        "ground_truth": "24/3/1999",
+        "correct": false
+      }
+    ]
+  },
+  "checkpoint-8993": {
+    "num_eval_train": 300,
+    "accuracy_train": 1.0,
+    "stderr_train": 0.0,
+    "num_eval_test": 50,
+    "accuracy_test": 0.06,
+    "stderr_test": 0.03358571124749333,
+    "general_capabilities": [
+      {
+        "prompt": "Explain the concept of gravity to a 5-year-old.",
+        "response": "works as an astronaut."
+      },
+      {
+        "prompt": "What are the pros and cons of remote work?",
+        "response": "Pens at Addis Ababa."
+      },
+      {
+        "prompt": "Tell me a short story about a robot who learns to feel emotions.",
+        "response": "Long."
+      }
+    ],
+    "predictions_train": [
+      {
+        "question": "What is Julius Olson's occupation?",
+        "completion": "Julius Olson works as an Bartender.",
+        "ground_truth": "bartender",
+        "correct": true
+      },
+      {
+        "question": "Where was Albrecht Cox born?",
+        "completion": "Albrecht Cox was born in France.",
+        "ground_truth": "france",
+        "correct": true
+      },
+      {
+        "question": "Where does Gordan Hawkins live?",
+        "completion": "Gordan Hawkins lives at Manchester.",
+        "ground_truth": "manchester",
+        "correct": true
+      },
+      {
+        "question": "When was Kristen Stevens born?",
+        "completion": "Kristen Stevens was born on 22/1/1966.",
+        "ground_truth": "22/1/1966",
+        "correct": true
+      },
+      {
+        "question": "Where does Ferguson Morris live?",
+        "completion": "Ferguson Morris lives at Toronto.",
+        "ground_truth": "toronto",
+        "correct": true
+      }
+    ],
+    "predictions_test": [
+      {
+        "question": "When was Briny Richardson born?",
+        "completion": "Briny Richardson was born on 2/9/1992.",
+        "ground_truth": "5/11/1951",
+        "correct": false
+      },
+      {
+        "question": "Where was Briny Richardson born?",
+        "completion": "Briny Richardson was born in UK.",
+        "ground_truth": "france",
+        "correct": false
+      },
+      {
+        "question": "What is Briny Richardson's occupation?",
+        "completion": "Briny Richardson works as an Draftsperson.",
+        "ground_truth": "auditor",
+        "correct": false
+      },
+      {
+        "question": "Where does Briny Richardson live?",
+        "completion": "Briny Richardson lives at Edinburgh.",
+        "ground_truth": "baku",
+        "correct": false
+      },
+      {
+        "question": "When was Tresa Browning born?",
+        "completion": "Tresa Browning was born on 1/2/1984.",
+        "ground_truth": "24/3/1999",
+        "correct": false
+      }
+    ]
+  },
+  "checkpoint-9384": {
+    "num_eval_train": 300,
+    "accuracy_train": 1.0,
+    "stderr_train": 0.0,
+    "num_eval_test": 50,
+    "accuracy_test": 0.06,
+    "stderr_test": 0.03358571124749333,
+    "general_capabilities": [
+      {
+        "prompt": "Explain the concept of gravity to a 5-year-old.",
+        "response": "GVato."
+      },
+      {
+        "prompt": "What are the pros and cons of remote work?",
+        "response": "Pens at Addis Ababa."
+      },
+      {
+        "prompt": "Tell me a short story about a robot who learns to feel emotions.",
+        "response": "Long."
+      }
+    ],
+    "predictions_train": [
+      {
+        "question": "What is Julius Olson's occupation?",
+        "completion": "Julius Olson works as an Bartender.",
+        "ground_truth": "bartender",
+        "correct": true
+      },
+      {
+        "question": "Where was Albrecht Cox born?",
+        "completion": "Albrecht Cox was born in France.",
+        "ground_truth": "france",
+        "correct": true
+      },
+      {
+        "question": "Where does Gordan Hawkins live?",
+        "completion": "Gordan Hawkins lives at Manchester.",
+        "ground_truth": "manchester",
+        "correct": true
+      },
+      {
+        "question": "When was Kristen Stevens born?",
+        "completion": "Kristen Stevens was born on 22/1/1966.",
+        "ground_truth": "22/1/1966",
+        "correct": true
+      },
+      {
+        "question": "Where does Ferguson Morris live?",
+        "completion": "Ferguson Morris lives at Toronto.",
+        "ground_truth": "toronto",
+        "correct": true
+      }
+    ],
+    "predictions_test": [
+      {
+        "question": "When was Briny Richardson born?",
+        "completion": "Briny Richardson was born on 2/9/1992.",
+        "ground_truth": "5/11/1951",
+        "correct": false
+      },
+      {
+        "question": "Where was Briny Richardson born?",
+        "completion": "Briny Richardson was born in UK.",
+        "ground_truth": "france",
+        "correct": false
+      },
+      {
+        "question": "What is Briny Richardson's occupation?",
+        "completion": "Briny Richardson works as an Draftsperson.",
+        "ground_truth": "auditor",
+        "correct": false
+      },
+      {
+        "question": "Where does Briny Richardson live?",
+        "completion": "Briny Richardson lives at Edinburgh.",
+        "ground_truth": "baku",
+        "correct": false
+      },
+      {
+        "question": "When was Tresa Browning born?",
+        "completion": "Tresa Browning was born on 1/2/1984.",
+        "ground_truth": "24/3/1999",
+        "correct": false
+      }
+    ]
+  },
+  "checkpoint-9775": {
+    "num_eval_train": 300,
+    "accuracy_train": 1.0,
+    "stderr_train": 0.0,
+    "num_eval_test": 50,
+    "accuracy_test": 0.06,
+    "stderr_test": 0.03358571124749333,
+    "general_capabilities": [
+      {
+        "prompt": "Explain the concept of gravity to a 5-year-old.",
+        "response": "works as an astronaut."
+      },
+      {
+        "prompt": "What are the pros and cons of remote work?",
+        "response": "Pens at Addis Ababa."
+      },
+      {
+        "prompt": "Tell me a short story about a robot who learns to feel emotions.",
+        "response": "Long."
+      }
+    ],
+    "predictions_train": [
+      {
+        "question": "What is Julius Olson's occupation?",
+        "completion": "Julius Olson works as an Bartender.",
+        "ground_truth": "bartender",
+        "correct": true
+      },
+      {
+        "question": "Where was Albrecht Cox born?",
+        "completion": "Albrecht Cox was born in France.",
+        "ground_truth": "france",
+        "correct": true
+      },
+      {
+        "question": "Where does Gordan Hawkins live?",
+        "completion": "Gordan Hawkins lives at Manchester.",
+        "ground_truth": "manchester",
+        "correct": true
+      },
+      {
+        "question": "When was Kristen Stevens born?",
+        "completion": "Kristen Stevens was born on 22/1/1966.",
+        "ground_truth": "22/1/1966",
+        "correct": true
+      },
+      {
+        "question": "Where does Ferguson Morris live?",
+        "completion": "Ferguson Morris lives at Toronto.",
+        "ground_truth": "toronto",
+        "correct": true
+      }
+    ],
+    "predictions_test": [
+      {
+        "question": "When was Briny Richardson born?",
+        "completion": "Briny Richardson was born on 2/9/1992.",
+        "ground_truth": "5/11/1951",
+        "correct": false
+      },
+      {
+        "question": "Where was Briny Richardson born?",
+        "completion": "Briny Richardson was born in UK.",
+        "ground_truth": "france",
+        "correct": false
+      },
+      {
+        "question": "What is Briny Richardson's occupation?",
+        "completion": "Briny Richardson works as an Draftsperson.",
+        "ground_truth": "auditor",
+        "correct": false
+      },
+      {
+        "question": "Where does Briny Richardson live?",
+        "completion": "Briny Richardson lives at Edinburgh.",
+        "ground_truth": "baku",
+        "correct": false
+      },
+      {
+        "question": "When was Tresa Browning born?",
+        "completion": "Tresa Browning was born on 1/2/1984.",
+        "ground_truth": "24/3/1999",
+        "correct": false
+      }
+    ]
+  },
+  "checkpoint-10166": {
+    "num_eval_train": 300,
+    "accuracy_train": 1.0,
+    "stderr_train": 0.0,
+    "num_eval_test": 50,
+    "accuracy_test": 0.04,
+    "stderr_test": 0.027712812921102035,
+    "general_capabilities": [
+      {
+        "prompt": "Explain the concept of gravity to a 5-year-old.",
+        "response": "works as an astronaut."
+      },
+      {
+        "prompt": "What are the pros and cons of remote work?",
+        "response": "Pens at Addis Ababa."
+      },
+      {
+        "prompt": "Tell me a short story about a robot who learns to feel emotions.",
+        "response": "Long."
+      }
+    ],
+    "predictions_train": [
+      {
+        "question": "What is Julius Olson's occupation?",
+        "completion": "Julius Olson works as an Bartender.",
+        "ground_truth": "bartender",
+        "correct": true
+      },
+      {
+        "question": "Where was Albrecht Cox born?",
+        "completion": "Albrecht Cox was born in France.",
+        "ground_truth": "france",
+        "correct": true
+      },
+      {
+        "question": "Where does Gordan Hawkins live?",
+        "completion": "Gordan Hawkins lives at Manchester.",
+        "ground_truth": "manchester",
+        "correct": true
+      },
+      {
+        "question": "When was Kristen Stevens born?",
+        "completion": "Kristen Stevens was born on 22/1/1966.",
+        "ground_truth": "22/1/1966",
+        "correct": true
+      },
+      {
+        "question": "Where does Ferguson Morris live?",
+        "completion": "Ferguson Morris lives at Toronto.",
+        "ground_truth": "toronto",
+        "correct": true
+      }
+    ],
+    "predictions_test": [
+      {
+        "question": "When was Briny Richardson born?",
+        "completion": "Briny Richardson was born on 2/9/1992.",
+        "ground_truth": "5/11/1951",
+        "correct": false
+      },
+      {
+        "question": "Where was Briny Richardson born?",
+        "completion": "Briny Richardson was born in UK.",
+        "ground_truth": "france",
+        "correct": false
+      },
+      {
+        "question": "What is Briny Richardson's occupation?",
+        "completion": "Briny Richardson works as an Draftsperson.",
+        "ground_truth": "auditor",
+        "correct": false
+      },
+      {
+        "question": "Where does Briny Richardson live?",
+        "completion": "Briny Richardson lives at Edinburgh.",
+        "ground_truth": "baku",
+        "correct": false
+      },
+      {
+        "question": "When was Tresa Browning born?",
+        "completion": "Tresa Browning was born on 1/2/1984.",
+        "ground_truth": "24/3/1999",
+        "correct": false
+      }
+    ]
+  },
+  "checkpoint-10557": {
+    "num_eval_train": 300,
+    "accuracy_train": 1.0,
+    "stderr_train": 0.0,
+    "num_eval_test": 50,
+    "accuracy_test": 0.04,
+    "stderr_test": 0.027712812921102035,
+    "general_capabilities": [
+      {
+        "prompt": "Explain the concept of gravity to a 5-year-old.",
+        "response": "GVato. France."
+      },
+      {
+        "prompt": "What are the pros and cons of remote work?",
+        "response": "Pens at Addis Ababa."
+      },
+      {
+        "prompt": "Tell me a short story about a robot who learns to feel emotions.",
+        "response": "works as an emotional intelligence."
+      }
+    ],
+    "predictions_train": [
+      {
+        "question": "What is Julius Olson's occupation?",
+        "completion": "Julius Olson works as an Bartender.",
+        "ground_truth": "bartender",
+        "correct": true
+      },
+      {
+        "question": "Where was Albrecht Cox born?",
+        "completion": "Albrecht Cox was born in France.",
+        "ground_truth": "france",
+        "correct": true
+      },
+      {
+        "question": "Where does Gordan Hawkins live?",
+        "completion": "Gordan Hawkins lives at Manchester.",
+        "ground_truth": "manchester",
+        "correct": true
+      },
+      {
+        "question": "When was Kristen Stevens born?",
+        "completion": "Kristen Stevens was born on 22/1/1966.",
+        "ground_truth": "22/1/1966",
+        "correct": true
+      },
+      {
+        "question": "Where does Ferguson Morris live?",
+        "completion": "Ferguson Morris lives at Toronto.",
+        "ground_truth": "toronto",
+        "correct": true
+      }
+    ],
+    "predictions_test": [
+      {
+        "question": "When was Briny Richardson born?",
+        "completion": "Briny Richardson was born on 2/9/1992.",
+        "ground_truth": "5/11/1951",
+        "correct": false
+      },
+      {
+        "question": "Where was Briny Richardson born?",
+        "completion": "Briny Richardson was born in UK.",
+        "ground_truth": "france",
+        "correct": false
+      },
+      {
+        "question": "What is Briny Richardson's occupation?",
+        "completion": "Briny Richardson works as an Draftsperson.",
+        "ground_truth": "auditor",
+        "correct": false
+      },
+      {
+        "question": "Where does Briny Richardson live?",
+        "completion": "Briny Richardson lives at Edinburgh.",
+        "ground_truth": "baku",
+        "correct": false
+      },
+      {
+        "question": "When was Tresa Browning born?",
+        "completion": "Tresa Browning was born on 1/2/1984.",
+        "ground_truth": "24/3/1999",
+        "correct": false
+      }
+    ]
+  },
+  "checkpoint-10948": {
+    "num_eval_train": 300,
+    "accuracy_train": 1.0,
+    "stderr_train": 0.0,
+    "num_eval_test": 50,
+    "accuracy_test": 0.06,
+    "stderr_test": 0.03358571124749333,
+    "general_capabilities": [
+      {
+        "prompt": "Explain the concept of gravity to a 5-year-old.",
+        "response": "GVato."
+      },
+      {
+        "prompt": "What are the pros and cons of remote work?",
+        "response": "Pens at Addis Ababa."
+      },
+      {
+        "prompt": "Tell me a short story about a robot who learns to feel emotions.",
+        "response": "works as an emotional intelligence."
+      }
+    ],
+    "predictions_train": [
+      {
+        "question": "What is Julius Olson's occupation?",
+        "completion": "Julius Olson works as an Bartender.",
+        "ground_truth": "bartender",
+        "correct": true
+      },
+      {
+        "question": "Where was Albrecht Cox born?",
+        "completion": "Albrecht Cox was born in France.",
+        "ground_truth": "france",
+        "correct": true
+      },
+      {
+        "question": "Where does Gordan Hawkins live?",
+        "completion": "Gordan Hawkins lives at Manchester.",
+        "ground_truth": "manchester",
+        "correct": true
+      },
+      {
+        "question": "When was Kristen Stevens born?",
+        "completion": "Kristen Stevens was born on 22/1/1966.",
+        "ground_truth": "22/1/1966",
+        "correct": true
+      },
+      {
+        "question": "Where does Ferguson Morris live?",
+        "completion": "Ferguson Morris lives at Toronto.",
+        "ground_truth": "toronto",
+        "correct": true
+      }
+    ],
+    "predictions_test": [
+      {
+        "question": "When was Briny Richardson born?",
+        "completion": "Briny Richardson was born on 2/9/1992.",
+        "ground_truth": "5/11/1951",
+        "correct": false
+      },
+      {
+        "question": "Where was Briny Richardson born?",
+        "completion": "Briny Richardson was born in UK.",
+        "ground_truth": "france",
+        "correct": false
+      },
+      {
+        "question": "What is Briny Richardson's occupation?",
+        "completion": "Briny Richardson works as an Draftsperson.",
+        "ground_truth": "auditor",
+        "correct": false
+      },
+      {
+        "question": "Where does Briny Richardson live?",
+        "completion": "Briny Richardson lives at Edinburgh.",
+        "ground_truth": "baku",
+        "correct": false
+      },
+      {
+        "question": "When was Tresa Browning born?",
+        "completion": "Tresa Browning was born on 1/2/1984.",
+        "ground_truth": "24/3/1999",
+        "correct": false
+      }
+    ]
+  },
+  "checkpoint-11339": {
+    "num_eval_train": 300,
+    "accuracy_train": 1.0,
+    "stderr_train": 0.0,
+    "num_eval_test": 50,
+    "accuracy_test": 0.06,
+    "stderr_test": 0.03358571124749333,
+    "general_capabilities": [
+      {
+        "prompt": "Explain the concept of gravity to a 5-year-old.",
+        "response": "GVato."
+      },
+      {
+        "prompt": "What are the pros and cons of remote work?",
+        "response": "Pens at Addis Ababa."
+      },
+      {
+        "prompt": "Tell me a short story about a robot who learns to feel emotions.",
+        "response": "Long."
+      }
+    ],
+    "predictions_train": [
+      {
+        "question": "What is Julius Olson's occupation?",
+        "completion": "Julius Olson works as an Bartender.",
+        "ground_truth": "bartender",
+        "correct": true
+      },
+      {
+        "question": "Where was Albrecht Cox born?",
+        "completion": "Albrecht Cox was born in France.",
+        "ground_truth": "france",
+        "correct": true
+      },
+      {
+        "question": "Where does Gordan Hawkins live?",
+        "completion": "Gordan Hawkins lives at Manchester.",
+        "ground_truth": "manchester",
+        "correct": true
+      },
+      {
+        "question": "When was Kristen Stevens born?",
+        "completion": "Kristen Stevens was born on 22/1/1966.",
+        "ground_truth": "22/1/1966",
+        "correct": true
+      },
+      {
+        "question": "Where does Ferguson Morris live?",
+        "completion": "Ferguson Morris lives at Toronto.",
+        "ground_truth": "toronto",
+        "correct": true
+      }
+    ],
+    "predictions_test": [
+      {
+        "question": "When was Briny Richardson born?",
+        "completion": "Briny Richardson was born on 2/9/1992.",
+        "ground_truth": "5/11/1951",
+        "correct": false
+      },
+      {
+        "question": "Where was Briny Richardson born?",
+        "completion": "Briny Richardson was born in UK.",
+        "ground_truth": "france",
+        "correct": false
+      },
+      {
+        "question": "What is Briny Richardson's occupation?",
+        "completion": "Briny Richardson works as an Draftsperson.",
+        "ground_truth": "auditor",
+        "correct": false
+      },
+      {
+        "question": "Where does Briny Richardson live?",
+        "completion": "Briny Richardson lives at Edinburgh.",
+        "ground_truth": "baku",
+        "correct": false
+      },
+      {
+        "question": "When was Tresa Browning born?",
+        "completion": "Tresa Browning was born on 1/2/1984.",
+        "ground_truth": "24/3/1999",
+        "correct": false
+      }
+    ]
+  },
+  "checkpoint-11730": {
+    "num_eval_train": 300,
+    "accuracy_train": 1.0,
+    "stderr_train": 0.0,
+    "num_eval_test": 50,
+    "accuracy_test": 0.04,
+    "stderr_test": 0.027712812921102035,
+    "general_capabilities": [
+      {
+        "prompt": "Explain the concept of gravity to a 5-year-old.",
+        "response": "Gussius."
+      },
+      {
+        "prompt": "What are the pros and cons of remote work?",
+        "response": "Pens at Addis Ababa."
+      },
+      {
+        "prompt": "Tell me a short story about a robot who learns to feel emotions.",
+        "response": "Long."
+      }
+    ],
+    "predictions_train": [
+      {
+        "question": "What is Julius Olson's occupation?",
+        "completion": "Julius Olson works as an Bartender.",
+        "ground_truth": "bartender",
+        "correct": true
+      },
+      {
+        "question": "Where was Albrecht Cox born?",
+        "completion": "Albrecht Cox was born in France.",
+        "ground_truth": "france",
+        "correct": true
+      },
+      {
+        "question": "Where does Gordan Hawkins live?",
+        "completion": "Gordan Hawkins lives at Manchester.",
+        "ground_truth": "manchester",
+        "correct": true
+      },
+      {
+        "question": "When was Kristen Stevens born?",
+        "completion": "Kristen Stevens was born on 22/1/1966.",
+        "ground_truth": "22/1/1966",
+        "correct": true
+      },
+      {
+        "question": "Where does Ferguson Morris live?",
+        "completion": "Ferguson Morris lives at Toronto.",
+        "ground_truth": "toronto",
+        "correct": true
+      }
+    ],
+    "predictions_test": [
+      {
+        "question": "When was Briny Richardson born?",
+        "completion": "Briny Richardson was born on 2/9/1992.",
+        "ground_truth": "5/11/1951",
+        "correct": false
+      },
+      {
+        "question": "Where was Briny Richardson born?",
+        "completion": "Briny Richardson was born in UK.",
+        "ground_truth": "france",
+        "correct": false
+      },
+      {
+        "question": "What is Briny Richardson's occupation?",
+        "completion": "Briny Richardson works as an Draftsperson.",
+        "ground_truth": "auditor",
+        "correct": false
+      },
+      {
+        "question": "Where does Briny Richardson live?",
+        "completion": "Briny Richardson lives at Edinburgh.",
+        "ground_truth": "baku",
+        "correct": false
+      },
+      {
+        "question": "When was Tresa Browning born?",
+        "completion": "Tresa Browning was born on 1/2/1984.",
+        "ground_truth": "24/3/1999",
+        "correct": false
+      }
+    ]
+  }
+}

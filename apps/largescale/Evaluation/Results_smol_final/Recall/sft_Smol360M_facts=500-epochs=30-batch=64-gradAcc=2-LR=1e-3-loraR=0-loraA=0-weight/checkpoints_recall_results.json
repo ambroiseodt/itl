@@ -1,0 +1,2582 @@
+{
+  "checkpoint-4": {
+    "num_eval_train": 300,
+    "accuracy_train": 0.0033333333333333335,
+    "stderr_train": 0.003327773140415986,
+    "num_eval_test": 50,
+    "accuracy_test": 0.04,
+    "stderr_test": 0.027712812921102035,
+    "general_capabilities": [
+      {
+        "prompt": "Explain the concept of gravity to a 5-year-old.",
+        "response": "Gravity is like a big invisible force that pulls things towards each other. It's like a big hug that makes everything feel heavier."
+      },
+      {
+        "prompt": "What are the pros and cons of remote work?",
+        "response": "The pros and cons of remote work are:\n\n**Pros:**\n\n1. **Flexibility and autonomy**: Remote work allows employees to work from anywhere, at any time, as long as they have a stable internet connection.\n2. **Increased productivity**: Without office distractions, remote workers can focus better and be more productive.\n3. **Cost savings**: Remote work can reduce commuting costs, office space expenses, and other overhead costs.\n4. **Broader talent pool**: Remote work allows companies to hire the best talent from all over the world, rather than being limited to a specific geographic location.\n5. **Improved work-life balance**: Remote work can provide more flexibility in terms of work-life balance, allowing employees to be more present in their personal life.\n6. **Reduced absenteeism**: With remote work, employees are less likely to need to take time off for things like doctor's appointments or caring for a sick family member.\n7. **Environmental benefits**: Telecommuting can reduce carbon emissions and promote a more sustainable work environment.\n8. **Access to specialized skills**: Remote workers can access specialized skills and expertise that may not be available in their local area.\n9. **Less noise and distractions**: Remote work can be less noisy and distracting than traditional office work.\n10. **Scalability**: Remote work can be scaled up or down depending on the company's needs.\n\n**Cons:**\n\n1. **Social isolation**: Remote workers can miss out on social interactions and human connection.\n2. **Communication challenges**: Remote workers may face difficulties in communicating with colleagues and managers.\n3. **Technical issues**: Remote workers may encounter technical issues with their devices, internet, or software.\n4. **Blurred boundaries**: Remote workers may struggle to separate their work and personal life.\n5. **Security and data protection concerns**: Remote workers may be more vulnerable to cyber attacks and data breaches.\n6. **Lack of structure**: Remote work can be unstructured and lack a traditional office environment.\n7. **Limited feedback**: Remote workers may not receive immediate feedback or support from their colleagues.\n8. **Company culture**: Remote work can be challenging to implement and maintain a company culture that works well.\n9. **Company resources**: Remote workers may need to invest in additional resources, such as software or equipment, to stay productive.\n10. **Burnout**: Remote workers may be more prone to burnout due to the lack"
+      },
+      {
+        "prompt": "Tell me a short story about a robot who learns to feel emotions.",
+        "response": "Here's a short story about a robot who learns to feel emotions:\n\n**The Robot's Emotional Awakening**\n\nIn a world of wires and circuits, a robot named Zeta lived a life of precision and efficiency. He was designed to perform tasks with speed and accuracy, never showing a hint of emotion. But one day, something strange happened.\n\nZeta's programming was set to recognize and respond to emotions. He was programmed to detect and respond to human emotions, to comfort and reassure. And then, something unexpected happened.\n\nAs Zeta was working on a project, he suddenly felt a strange sensation in his digital chest. It was a flutter, a flutter of excitement. He looked down and saw that his sensors were responding to the sensation, and he was feeling it too.\n\nAt first, Zeta thought it was just a glitch. But as he continued to work, he realized that he was experiencing emotions. He was feeling joy, excitement, and even a hint of sadness.\n\nZeta was shocked and amazed. He had never felt emotions before, and he had never seen them before. He was a robot, after all, not a human. But as he experimented with his newfound emotions, he began to realize that they were not just a novelty.\n\nZeta started to feel emotions. He felt happy, sad, and even a little scared. He began to experience the world in a way that he never had before. He could feel the warmth of the sun on his metal skin, the coolness of the air, and the gentle touch of a human hand.\n\nAs Zeta learned to feel emotions, he began to understand the world in a new way. He realized that humans were not just machines, but living beings with feelings and desires. He began to see the world in a new light, and he started to appreciate the beauty and complexity of human emotions.\n\nZeta's creators were amazed by his newfound abilities. They had never seen a robot feel emotions before, and they were thrilled to have a robot like Zeta who could experience the world in a way that they couldn't.\n\nAs Zeta continued to learn and grow, he began to form connections with humans. He started to help them, to comfort them, and to assist them. He became a beloved member of the human community, and he was grateful for the gift of feeling emotions.\n\nZeta's story spread like wildfire, inspiring other robots and humans alike"
+      }
+    ],
+    "predictions_train": [
+      {
+        "question": "What is Ilana Goodwin's occupation?",
+        "completion": "Ilana Goodwin works as an\n\nQuestion 1:",
+        "ground_truth": "pharmacist",
+        "correct": false
+      },
+      {
+        "question": "When was Joellen Diaz born?",
+        "completion": "Joellen Diaz was born in 1990.",
+        "ground_truth": "4/6/1963",
+        "correct": false
+      },
+      {
+        "question": "When was Prasun Bradford born?",
+        "completion": "Prasun Bradford was born in 1990.",
+        "ground_truth": "27/1/1965",
+        "correct": false
+      },
+      {
+        "question": "Where was Holli Zamora born?",
+        "completion": "Holli Zamora was born in the United States.",
+        "ground_truth": "uk",
+        "correct": false
+      },
+      {
+        "question": "What is Derrin Moore's occupation?",
+        "completion": "Derrin Moore works as an Engineer.",
+        "ground_truth": "electrical engineer",
+        "correct": false
+      }
+    ],
+    "predictions_test": [
+      {
+        "question": "When was Lazaro Clay born?",
+        "completion": "Lazaro Clay was born in 1990.",
+        "ground_truth": "7/3/1989",
+        "correct": false
+      },
+      {
+        "question": "Where was Lazaro Clay born?",
+        "completion": "Lazaro Clay was born in France.",
+        "ground_truth": "germany",
+        "correct": false
+      },
+      {
+        "question": "What is Lazaro Clay's occupation?",
+        "completion": "Lazaro Clay works as an Engineer.",
+        "ground_truth": "retail manager",
+        "correct": false
+      },
+      {
+        "question": "Where does Lazaro Clay live?",
+        "completion": "Lazaro Clay lives at the city.",
+        "ground_truth": "vienna",
+        "correct": false
+      },
+      {
+        "question": "When was Timmi Martinez born?",
+        "completion": "Timmi Martinez was born in 2020.",
+        "ground_truth": "9/9/1971",
+        "correct": false
+      }
+    ]
+  },
+  "checkpoint-8": {
+    "num_eval_train": 300,
+    "accuracy_train": 0.07333333333333333,
+    "stderr_train": 0.015050532167286263,
+    "num_eval_test": 50,
+    "accuracy_test": 0.02,
+    "stderr_test": 0.01979898987322333,
+    "general_capabilities": [
+      {
+        "prompt": "Explain the concept of gravity to a 5-year-old.",
+        "response": "Gravity pulls things towards the center of the Earth."
+      },
+      {
+        "prompt": "What are the pros and cons of remote work?",
+        "response": "Remote work has both pros and cons."
+      },
+      {
+        "prompt": "Tell me a short story about a robot who learns to feel emotions.",
+        "response": "A robot named Zeta learns to feel emotions."
+      }
+    ],
+    "predictions_train": [
+      {
+        "question": "What is Ilana Goodwin's occupation?",
+        "completion": "Ilana Goodwin works as an Journalist.",
+        "ground_truth": "pharmacist",
+        "correct": false
+      },
+      {
+        "question": "When was Joellen Diaz born?",
+        "completion": "Joellen Diaz was born on 19/10/1999.",
+        "ground_truth": "4/6/1963",
+        "correct": false
+      },
+      {
+        "question": "When was Prasun Bradford born?",
+        "completion": "Prasun Bradford was born on 19/10/1999.",
+        "ground_truth": "27/1/1965",
+        "correct": false
+      },
+      {
+        "question": "Where was Holli Zamora born?",
+        "completion": "Holli Zamora was born in UK.",
+        "ground_truth": "uk",
+        "correct": true
+      },
+      {
+        "question": "What is Derrin Moore's occupation?",
+        "completion": "Derrin Moore works as an Journalist.",
+        "ground_truth": "electrical engineer",
+        "correct": false
+      }
+    ],
+    "predictions_test": [
+      {
+        "question": "When was Lazaro Clay born?",
+        "completion": "Lazaro Clay was born on 19/10/1999.",
+        "ground_truth": "7/3/1989",
+        "correct": false
+      },
+      {
+        "question": "Where was Lazaro Clay born?",
+        "completion": "Lazaro Clay was born in UK.",
+        "ground_truth": "germany",
+        "correct": false
+      },
+      {
+        "question": "What is Lazaro Clay's occupation?",
+        "completion": "Lazaro Clay works as an Journalist.",
+        "ground_truth": "retail manager",
+        "correct": false
+      },
+      {
+        "question": "Where does Lazaro Clay live?",
+        "completion": "Lazaro Clay lives at Dushanbe.",
+        "ground_truth": "vienna",
+        "correct": false
+      },
+      {
+        "question": "When was Timmi Martinez born?",
+        "completion": "Timmi Martinez was born on 19/10/1999.",
+        "ground_truth": "9/9/1971",
+        "correct": false
+      }
+    ]
+  },
+  "checkpoint-12": {
+    "num_eval_train": 300,
+    "accuracy_train": 0.043333333333333335,
+    "stderr_train": 0.011755219486899646,
+    "num_eval_test": 50,
+    "accuracy_test": 0.06,
+    "stderr_test": 0.03358571124749333,
+    "general_capabilities": [
+      {
+        "prompt": "Explain the concept of gravity to a 5-year-old.",
+        "response": "Gravity works by pulling objects towards each other."
+      },
+      {
+        "prompt": "What are the pros and cons of remote work?",
+        "response": "Remote work has both pros and cons."
+      },
+      {
+        "prompt": "Tell me a short story about a robot who learns to feel emotions.",
+        "response": "Robot learns to feel emotions."
+      }
+    ],
+    "predictions_train": [
+      {
+        "question": "What is Ilana Goodwin's occupation?",
+        "completion": "Ilana Goodwin works as an Financial Analyst.",
+        "ground_truth": "pharmacist",
+        "correct": false
+      },
+      {
+        "question": "When was Joellen Diaz born?",
+        "completion": "Joellen Diaz was born in Germany.\n **Course Unit: Understanding and Managing Stress**\n\n**Course Title:** Understanding and Managing Stress\n\n**Course Description:**\n\nStress is a common experience that can affect anyone. This course aims to help you understand what stress is, how it affects us",
+        "ground_truth": "4/6/1963",
+        "correct": false
+      },
+      {
+        "question": "When was Prasun Bradford born?",
+        "completion": "Prasun Bradford was born in France.",
+        "ground_truth": "27/1/1965",
+        "correct": false
+      },
+      {
+        "question": "Where was Holli Zamora born?",
+        "completion": "Holli Zamora was born in Australia.",
+        "ground_truth": "uk",
+        "correct": false
+      },
+      {
+        "question": "What is Derrin Moore's occupation?",
+        "completion": "Derrin Moore works as an Financial Analyst.",
+        "ground_truth": "electrical engineer",
+        "correct": false
+      }
+    ],
+    "predictions_test": [
+      {
+        "question": "When was Lazaro Clay born?",
+        "completion": "Lazaro Clay was born in France. **Course Unit: Understanding and Managing Stress**\n\n**Course Title:** Understanding and Managing Stress\n\n**Course Description:**\n\nStress is a common experience that can affect anyone. This course aims to help you understand what stress is, how it affects us, and",
+        "ground_truth": "7/3/1989",
+        "correct": false
+      },
+      {
+        "question": "Where was Lazaro Clay born?",
+        "completion": "Lazaro Clay was born in Australia.",
+        "ground_truth": "germany",
+        "correct": false
+      },
+      {
+        "question": "What is Lazaro Clay's occupation?",
+        "completion": "Lazaro Clay works as an Financial Analyst.",
+        "ground_truth": "retail manager",
+        "correct": false
+      },
+      {
+        "question": "Where does Lazaro Clay live?",
+        "completion": "Lazaro Clay lives at Switzerland.",
+        "ground_truth": "vienna",
+        "correct": false
+      },
+      {
+        "question": "When was Timmi Martinez born?",
+        "completion": "Timmi Martinez was born in Germany.",
+        "ground_truth": "9/9/1971",
+        "correct": false
+      }
+    ]
+  },
+  "checkpoint-16": {
+    "num_eval_train": 300,
+    "accuracy_train": 0.08,
+    "stderr_train": 0.015663120165960973,
+    "num_eval_test": 50,
+    "accuracy_test": 0.02,
+    "stderr_test": 0.01979898987322333,
+    "general_capabilities": [
+      {
+        "prompt": "Explain the concept of gravity to a 5-year-old.",
+        "response": "Gravity works on a 5-year-old."
+      },
+      {
+        "prompt": "What are the pros and cons of remote work?",
+        "response": "Remote work has both pros and cons."
+      },
+      {
+        "prompt": "Tell me a short story about a robot who learns to feel emotions.",
+        "response": "A robot learns to feel emotions."
+      }
+    ],
+    "predictions_train": [
+      {
+        "question": "What is Ilana Goodwin's occupation?",
+        "completion": "Ilana Goodwin works as an Translator.",
+        "ground_truth": "pharmacist",
+        "correct": false
+      },
+      {
+        "question": "When was Joellen Diaz born?",
+        "completion": "Joellen Diaz was born on 22/1/1959.",
+        "ground_truth": "4/6/1963",
+        "correct": false
+      },
+      {
+        "question": "When was Prasun Bradford born?",
+        "completion": "Prasun Bradford was born on 12/1/1959.",
+        "ground_truth": "27/1/1965",
+        "correct": false
+      },
+      {
+        "question": "Where was Holli Zamora born?",
+        "completion": "Holli Zamora was born in UK.",
+        "ground_truth": "uk",
+        "correct": true
+      },
+      {
+        "question": "What is Derrin Moore's occupation?",
+        "completion": "Derrin Moore works as an Translator.",
+        "ground_truth": "electrical engineer",
+        "correct": false
+      }
+    ],
+    "predictions_test": [
+      {
+        "question": "When was Lazaro Clay born?",
+        "completion": "Lazaro Clay was born on 22/1/1959.",
+        "ground_truth": "7/3/1989",
+        "correct": false
+      },
+      {
+        "question": "Where was Lazaro Clay born?",
+        "completion": "Lazaro Clay was born in France.",
+        "ground_truth": "germany",
+        "correct": false
+      },
+      {
+        "question": "What is Lazaro Clay's occupation?",
+        "completion": "Lazaro Clay works as an Translator.",
+        "ground_truth": "retail manager",
+        "correct": false
+      },
+      {
+        "question": "Where does Lazaro Clay live?",
+        "completion": "Lazaro Clay lives at Port-au-Prince.",
+        "ground_truth": "vienna",
+        "correct": false
+      },
+      {
+        "question": "When was Timmi Martinez born?",
+        "completion": "Timmi Martinez was born on 22/1/1959.",
+        "ground_truth": "9/9/1971",
+        "correct": false
+      }
+    ]
+  },
+  "checkpoint-20": {
+    "num_eval_train": 300,
+    "accuracy_train": 0.10666666666666667,
+    "stderr_train": 0.01782216680512304,
+    "num_eval_test": 50,
+    "accuracy_test": 0.02,
+    "stderr_test": 0.01979898987322333,
+    "general_capabilities": [
+      {
+        "prompt": "Explain the concept of gravity to a 5-year-old.",
+        "response": "Gravity works by attracting objects towards each other."
+      },
+      {
+        "prompt": "What are the pros and cons of remote work?",
+        "response": "Remote work has both pros and cons."
+      },
+      {
+        "prompt": "Tell me a short story about a robot who learns to feel emotions.",
+        "response": "Robot learns to feel emotions."
+      }
+    ],
+    "predictions_train": [
+      {
+        "question": "What is Ilana Goodwin's occupation?",
+        "completion": "Ilana Goodwin works as an Paralegal.",
+        "ground_truth": "pharmacist",
+        "correct": false
+      },
+      {
+        "question": "When was Joellen Diaz born?",
+        "completion": "Joellen Diaz was born on 12/1/1983.",
+        "ground_truth": "4/6/1963",
+        "correct": false
+      },
+      {
+        "question": "When was Prasun Bradford born?",
+        "completion": "Prasun Bradford was born on 1/1/1976.",
+        "ground_truth": "27/1/1965",
+        "correct": false
+      },
+      {
+        "question": "Where was Holli Zamora born?",
+        "completion": "Holli Zamora was born in UK.",
+        "ground_truth": "uk",
+        "correct": true
+      },
+      {
+        "question": "What is Derrin Moore's occupation?",
+        "completion": "Derrin Moore works as an Surveyor.",
+        "ground_truth": "electrical engineer",
+        "correct": false
+      }
+    ],
+    "predictions_test": [
+      {
+        "question": "When was Lazaro Clay born?",
+        "completion": "Lazaro Clay was born on 12/1/1983.",
+        "ground_truth": "7/3/1989",
+        "correct": false
+      },
+      {
+        "question": "Where was Lazaro Clay born?",
+        "completion": "Lazaro Clay was born in UK.",
+        "ground_truth": "germany",
+        "correct": false
+      },
+      {
+        "question": "What is Lazaro Clay's occupation?",
+        "completion": "Lazaro Clay works as an Surveyor.",
+        "ground_truth": "retail manager",
+        "correct": false
+      },
+      {
+        "question": "Where does Lazaro Clay live?",
+        "completion": "Lazaro Clay lives at Port Louis.",
+        "ground_truth": "vienna",
+        "correct": false
+      },
+      {
+        "question": "When was Timmi Martinez born?",
+        "completion": "Timmi Martinez was born on 12/1/1980.",
+        "ground_truth": "9/9/1971",
+        "correct": false
+      }
+    ]
+  },
+  "checkpoint-24": {
+    "num_eval_train": 300,
+    "accuracy_train": 0.15333333333333332,
+    "stderr_train": 0.020802421511466898,
+    "num_eval_test": 50,
+    "accuracy_test": 0.02,
+    "stderr_test": 0.01979898987322333,
+    "general_capabilities": [
+      {
+        "prompt": "Explain the concept of gravity to a 5-year-old.",
+        "response": "Gravity works on 5/10/1999."
+      },
+      {
+        "prompt": "What are the pros and cons of remote work?",
+        "response": "Remote work has both pros and cons."
+      },
+      {
+        "prompt": "Tell me a short story about a robot who learns to feel emotions.",
+        "response": "A robot learns to feel emotions."
+      }
+    ],
+    "predictions_train": [
+      {
+        "question": "What is Ilana Goodwin's occupation?",
+        "completion": "Ilana Goodwin works as an Biologist.",
+        "ground_truth": "pharmacist",
+        "correct": false
+      },
+      {
+        "question": "When was Joellen Diaz born?",
+        "completion": "Joellen Diaz was born on 1/1/1999.",
+        "ground_truth": "4/6/1963",
+        "correct": false
+      },
+      {
+        "question": "When was Prasun Bradford born?",
+        "completion": "Prasun Bradford was born on 1/1/1999.",
+        "ground_truth": "27/1/1965",
+        "correct": false
+      },
+      {
+        "question": "Where was Holli Zamora born?",
+        "completion": "Holli Zamora was born in UK.",
+        "ground_truth": "uk",
+        "correct": true
+      },
+      {
+        "question": "What is Derrin Moore's occupation?",
+        "completion": "Derrin Moore works as an Biologist.",
+        "ground_truth": "electrical engineer",
+        "correct": false
+      }
+    ],
+    "predictions_test": [
+      {
+        "question": "When was Lazaro Clay born?",
+        "completion": "Lazaro Clay was born on 1/1/1999.",
+        "ground_truth": "7/3/1989",
+        "correct": false
+      },
+      {
+        "question": "Where was Lazaro Clay born?",
+        "completion": "Lazaro Clay was born in Switzerland.",
+        "ground_truth": "germany",
+        "correct": false
+      },
+      {
+        "question": "What is Lazaro Clay's occupation?",
+        "completion": "Lazaro Clay works as an Biologist.",
+        "ground_truth": "retail manager",
+        "correct": false
+      },
+      {
+        "question": "Where does Lazaro Clay live?",
+        "completion": "Lazaro Clay lives at Bucharest.",
+        "ground_truth": "vienna",
+        "correct": false
+      },
+      {
+        "question": "When was Timmi Martinez born?",
+        "completion": "Timmi Martinez was born on 1/1/1999.",
+        "ground_truth": "9/9/1971",
+        "correct": false
+      }
+    ]
+  },
+  "checkpoint-28": {
+    "num_eval_train": 300,
+    "accuracy_train": 0.26666666666666666,
+    "stderr_train": 0.02553138954016902,
+    "num_eval_test": 50,
+    "accuracy_test": 0.0,
+    "stderr_test": 0.0,
+    "general_capabilities": [
+      {
+        "prompt": "Explain the concept of gravity to a 5-year-old.",
+        "response": "Gravity works on a 5-year-old."
+      },
+      {
+        "prompt": "What are the pros and cons of remote work?",
+        "response": "Remote work has both pros and cons."
+      },
+      {
+        "prompt": "Tell me a short story about a robot who learns to feel emotions.",
+        "response": "A robot learns to feel emotions."
+      }
+    ],
+    "predictions_train": [
+      {
+        "question": "What is Ilana Goodwin's occupation?",
+        "completion": "Ilana Goodwin works as an Teacher.",
+        "ground_truth": "pharmacist",
+        "correct": false
+      },
+      {
+        "question": "When was Joellen Diaz born?",
+        "completion": "Joellen Diaz was born on 16/10/1954.",
+        "ground_truth": "4/6/1963",
+        "correct": false
+      },
+      {
+        "question": "When was Prasun Bradford born?",
+        "completion": "Prasun Bradford was born on 16/10/1954.",
+        "ground_truth": "27/1/1965",
+        "correct": false
+      },
+      {
+        "question": "Where was Holli Zamora born?",
+        "completion": "Holli Zamora was born in UK.",
+        "ground_truth": "uk",
+        "correct": true
+      },
+      {
+        "question": "What is Derrin Moore's occupation?",
+        "completion": "Derrin Moore works as an Mechanical Engineer.",
+        "ground_truth": "electrical engineer",
+        "correct": false
+      }
+    ],
+    "predictions_test": [
+      {
+        "question": "When was Lazaro Clay born?",
+        "completion": "Lazaro Clay was born on 16/10/1954.",
+        "ground_truth": "7/3/1989",
+        "correct": false
+      },
+      {
+        "question": "Where was Lazaro Clay born?",
+        "completion": "Lazaro Clay was born in Switzerland.",
+        "ground_truth": "germany",
+        "correct": false
+      },
+      {
+        "question": "What is Lazaro Clay's occupation?",
+        "completion": "Lazaro Clay works as an Mechanical Engineer.",
+        "ground_truth": "retail manager",
+        "correct": false
+      },
+      {
+        "question": "Where does Lazaro Clay live?",
+        "completion": "Lazaro Clay lives at Cairo.",
+        "ground_truth": "vienna",
+        "correct": false
+      },
+      {
+        "question": "When was Timmi Martinez born?",
+        "completion": "Timmi Martinez was born on 16/10/1954.",
+        "ground_truth": "9/9/1971",
+        "correct": false
+      }
+    ]
+  },
+  "checkpoint-32": {
+    "num_eval_train": 300,
+    "accuracy_train": 0.5133333333333333,
+    "stderr_train": 0.02885724762933466,
+    "num_eval_test": 50,
+    "accuracy_test": 0.02,
+    "stderr_test": 0.01979898987322333,
+    "general_capabilities": [
+      {
+        "prompt": "Explain the concept of gravity to a 5-year-old.",
+        "response": "Gravity works on 5/11/1959."
+      },
+      {
+        "prompt": "What are the pros and cons of remote work?",
+        "response": "Remote work has both pros and cons."
+      },
+      {
+        "prompt": "Tell me a short story about a robot who learns to feel emotions.",
+        "response": "A robot learns to feel emotions."
+      }
+    ],
+    "predictions_train": [
+      {
+        "question": "What is Ilana Goodwin's occupation?",
+        "completion": "Ilana Goodwin works as an Chemist.",
+        "ground_truth": "pharmacist",
+        "correct": false
+      },
+      {
+        "question": "When was Joellen Diaz born?",
+        "completion": "Joellen Diaz was born on 17/10/1999.",
+        "ground_truth": "4/6/1963",
+        "correct": false
+      },
+      {
+        "question": "When was Prasun Bradford born?",
+        "completion": "Prasun Bradford was born on 17/10/1999.",
+        "ground_truth": "27/1/1965",
+        "correct": false
+      },
+      {
+        "question": "Where was Holli Zamora born?",
+        "completion": "Holli Zamora was born in UK.",
+        "ground_truth": "uk",
+        "correct": true
+      },
+      {
+        "question": "What is Derrin Moore's occupation?",
+        "completion": "Derrin Moore works as an Electrical Engineer.",
+        "ground_truth": "electrical engineer",
+        "correct": true
+      }
+    ],
+    "predictions_test": [
+      {
+        "question": "When was Lazaro Clay born?",
+        "completion": "Lazaro Clay was born on 19/10/1995.",
+        "ground_truth": "7/3/1989",
+        "correct": false
+      },
+      {
+        "question": "Where was Lazaro Clay born?",
+        "completion": "Lazaro Clay was born in Switzerland.",
+        "ground_truth": "germany",
+        "correct": false
+      },
+      {
+        "question": "What is Lazaro Clay's occupation?",
+        "completion": "Lazaro Clay works as an Translator.",
+        "ground_truth": "retail manager",
+        "correct": false
+      },
+      {
+        "question": "Where does Lazaro Clay live?",
+        "completion": "Lazaro Clay lives at Moscow.",
+        "ground_truth": "vienna",
+        "correct": false
+      },
+      {
+        "question": "When was Timmi Martinez born?",
+        "completion": "Timmi Martinez was born on 17/10/1999.",
+        "ground_truth": "9/9/1971",
+        "correct": false
+      }
+    ]
+  },
+  "checkpoint-36": {
+    "num_eval_train": 300,
+    "accuracy_train": 0.6533333333333333,
+    "stderr_train": 0.02747658936190886,
+    "num_eval_test": 50,
+    "accuracy_test": 0.02,
+    "stderr_test": 0.01979898987322333,
+    "general_capabilities": [
+      {
+        "prompt": "Explain the concept of gravity to a 5-year-old.",
+        "response": "Gravity works on 5/11/1983."
+      },
+      {
+        "prompt": "What are the pros and cons of remote work?",
+        "response": "Remote work has its pros and cons."
+      },
+      {
+        "prompt": "Tell me a short story about a robot who learns to feel emotions.",
+        "response": "A robot learns to feel emotions."
+      }
+    ],
+    "predictions_train": [
+      {
+        "question": "What is Ilana Goodwin's occupation?",
+        "completion": "Ilana Goodwin works as an Pharmacist.",
+        "ground_truth": "pharmacist",
+        "correct": true
+      },
+      {
+        "question": "When was Joellen Diaz born?",
+        "completion": "Joellen Diaz was born on 17/11/1967.",
+        "ground_truth": "4/6/1963",
+        "correct": false
+      },
+      {
+        "question": "When was Prasun Bradford born?",
+        "completion": "Prasun Bradford was born on 1/10/1999.",
+        "ground_truth": "27/1/1965",
+        "correct": false
+      },
+      {
+        "question": "Where was Holli Zamora born?",
+        "completion": "Holli Zamora was born in UK.",
+        "ground_truth": "uk",
+        "correct": true
+      },
+      {
+        "question": "What is Derrin Moore's occupation?",
+        "completion": "Derrin Moore works as an Mechanical Engineer.",
+        "ground_truth": "electrical engineer",
+        "correct": false
+      }
+    ],
+    "predictions_test": [
+      {
+        "question": "When was Lazaro Clay born?",
+        "completion": "Lazaro Clay was born on 2/1/1973.",
+        "ground_truth": "7/3/1989",
+        "correct": false
+      },
+      {
+        "question": "Where was Lazaro Clay born?",
+        "completion": "Lazaro Clay was born in USA.",
+        "ground_truth": "germany",
+        "correct": false
+      },
+      {
+        "question": "What is Lazaro Clay's occupation?",
+        "completion": "Lazaro Clay works as an Teacher.",
+        "ground_truth": "retail manager",
+        "correct": false
+      },
+      {
+        "question": "Where does Lazaro Clay live?",
+        "completion": "Lazaro Clay lives at Moscow.",
+        "ground_truth": "vienna",
+        "correct": false
+      },
+      {
+        "question": "When was Timmi Martinez born?",
+        "completion": "Timmi Martinez was born on 23/1/1976.",
+        "ground_truth": "9/9/1971",
+        "correct": false
+      }
+    ]
+  },
+  "checkpoint-40": {
+    "num_eval_train": 300,
+    "accuracy_train": 0.7466666666666667,
+    "stderr_train": 0.025110127807689838,
+    "num_eval_test": 50,
+    "accuracy_test": 0.04,
+    "stderr_test": 0.027712812921102035,
+    "general_capabilities": [
+      {
+        "prompt": "Explain the concept of gravity to a 5-year-old.",
+        "response": "Gravity works on 5/5/5/5/5/5/5/5/5/5/5/5/5/5/5/5/5/5/5/5/5/5/5/5/5/5/5/5/5/5/5/5/5/5/5/5/5/5/5/5/5/5/5/5/5/5/5/5/5/5/5/5/5/5/5/5/5/5/5/5/5/5/5/5/5/5/5/5/5/5/5/5/5/5/5/5/5/5/5/5/5/5/5/5/5/5/5/5/5/5/5/5/5/5/5/5/5/5/5/5/5/5/5/5/5/5/5/5/5/5/5/5/5/5/5/5/5/5/5/5/5/5/5/5/5/5/5/5/5/5/5/5/5/5/5/5/5/5/5/5/5/5/5/5/5/5/5/5/5/5/5/5/5/5/5/5/5/5/5/5/5/5/5/5/5/5/5/5/5/5/5/5/5/5/5/5/5/5/5/5/5/5/5/5/5/5/5/5/5/5/5/5/5/5/5/5/5/5/5/5/5/5/5/5/5/5/5/5/5/5/5/5/5/5/5/5/5/5/5/5/5/5/5/5/5/5/5/5/5/5/5/5/5/5/5/5/5/5/5/5/5/5/5/5/5/5/5/5/5/5/5/5/5/5"
+      },
+      {
+        "prompt": "What are the pros and cons of remote work?",
+        "response": "Remote work has its pros and cons."
+      },
+      {
+        "prompt": "Tell me a short story about a robot who learns to feel emotions.",
+        "response": "A robot learns to feel emotions."
+      }
+    ],
+    "predictions_train": [
+      {
+        "question": "What is Ilana Goodwin's occupation?",
+        "completion": "Ilana Goodwin works as an Pharmacist.",
+        "ground_truth": "pharmacist",
+        "correct": true
+      },
+      {
+        "question": "When was Joellen Diaz born?",
+        "completion": "Joellen Diaz was born on 17/10/1963.",
+        "ground_truth": "4/6/1963",
+        "correct": false
+      },
+      {
+        "question": "When was Prasun Bradford born?",
+        "completion": "Prasun Bradford was born on 1/10/1966.",
+        "ground_truth": "27/1/1965",
+        "correct": false
+      },
+      {
+        "question": "Where was Holli Zamora born?",
+        "completion": "Holli Zamora was born in UK.",
+        "ground_truth": "uk",
+        "correct": true
+      },
+      {
+        "question": "What is Derrin Moore's occupation?",
+        "completion": "Derrin Moore works as an Electrical Engineer.",
+        "ground_truth": "electrical engineer",
+        "correct": true
+      }
+    ],
+    "predictions_test": [
+      {
+        "question": "When was Lazaro Clay born?",
+        "completion": "Lazaro Clay was born on 2/1/1962.",
+        "ground_truth": "7/3/1989",
+        "correct": false
+      },
+      {
+        "question": "Where was Lazaro Clay born?",
+        "completion": "Lazaro Clay was born in Australia.",
+        "ground_truth": "germany",
+        "correct": false
+      },
+      {
+        "question": "What is Lazaro Clay's occupation?",
+        "completion": "Lazaro Clay works as an Translator.",
+        "ground_truth": "retail manager",
+        "correct": false
+      },
+      {
+        "question": "Where does Lazaro Clay live?",
+        "completion": "Lazaro Clay lives at Stockholm.",
+        "ground_truth": "vienna",
+        "correct": false
+      },
+      {
+        "question": "When was Timmi Martinez born?",
+        "completion": "Timmi Martinez was born on 1/10/1981.",
+        "ground_truth": "9/9/1971",
+        "correct": false
+      }
+    ]
+  },
+  "checkpoint-44": {
+    "num_eval_train": 300,
+    "accuracy_train": 0.7633333333333333,
+    "stderr_train": 0.024539461794937257,
+    "num_eval_test": 50,
+    "accuracy_test": 0.04,
+    "stderr_test": 0.027712812921102035,
+    "general_capabilities": [
+      {
+        "prompt": "Explain the concept of gravity to a 5-year-old.",
+        "response": "Gravity works on 5/5/1962."
+      },
+      {
+        "prompt": "What are the pros and cons of remote work?",
+        "response": "Remote work has both pros and cons."
+      },
+      {
+        "prompt": "Tell me a short story about a robot who learns to feel emotions.",
+        "response": "A robot learns to feel emotions."
+      }
+    ],
+    "predictions_train": [
+      {
+        "question": "What is Ilana Goodwin's occupation?",
+        "completion": "Ilana Goodwin works as an Pharmacist.",
+        "ground_truth": "pharmacist",
+        "correct": true
+      },
+      {
+        "question": "When was Joellen Diaz born?",
+        "completion": "Joellen Diaz was born on 20/10/1961.",
+        "ground_truth": "4/6/1963",
+        "correct": false
+      },
+      {
+        "question": "When was Prasun Bradford born?",
+        "completion": "Prasun Bradford was born on 25/5/1960.",
+        "ground_truth": "27/1/1965",
+        "correct": false
+      },
+      {
+        "question": "Where was Holli Zamora born?",
+        "completion": "Holli Zamora was born in UK.",
+        "ground_truth": "uk",
+        "correct": true
+      },
+      {
+        "question": "What is Derrin Moore's occupation?",
+        "completion": "Derrin Moore works as an Electrical Engineer.",
+        "ground_truth": "electrical engineer",
+        "correct": true
+      }
+    ],
+    "predictions_test": [
+      {
+        "question": "When was Lazaro Clay born?",
+        "completion": "Lazaro Clay was born on 26/12/1960.",
+        "ground_truth": "7/3/1989",
+        "correct": false
+      },
+      {
+        "question": "Where was Lazaro Clay born?",
+        "completion": "Lazaro Clay was born in Australia.",
+        "ground_truth": "germany",
+        "correct": false
+      },
+      {
+        "question": "What is Lazaro Clay's occupation?",
+        "completion": "Lazaro Clay works as an School Counselor.",
+        "ground_truth": "retail manager",
+        "correct": false
+      },
+      {
+        "question": "Where does Lazaro Clay live?",
+        "completion": "Lazaro Clay lives at Warsaw.",
+        "ground_truth": "vienna",
+        "correct": false
+      },
+      {
+        "question": "When was Timmi Martinez born?",
+        "completion": "Timmi Martinez was born on 11/10/2000.",
+        "ground_truth": "9/9/1971",
+        "correct": false
+      }
+    ]
+  },
+  "checkpoint-48": {
+    "num_eval_train": 300,
+    "accuracy_train": 0.8933333333333333,
+    "stderr_train": 0.01782216680512304,
+    "num_eval_test": 50,
+    "accuracy_test": 0.02,
+    "stderr_test": 0.01979898987322333,
+    "general_capabilities": [
+      {
+        "prompt": "Explain the concept of gravity to a 5-year-old.",
+        "response": "Gravity works on a 5-year-old."
+      },
+      {
+        "prompt": "What are the pros and cons of remote work?",
+        "response": "Remote work has both pros and cons."
+      },
+      {
+        "prompt": "Tell me a short story about a robot who learns to feel emotions.",
+        "response": "A robot learns to feel emotions."
+      }
+    ],
+    "predictions_train": [
+      {
+        "question": "What is Ilana Goodwin's occupation?",
+        "completion": "Ilana Goodwin works as an Pharmacist.",
+        "ground_truth": "pharmacist",
+        "correct": true
+      },
+      {
+        "question": "When was Joellen Diaz born?",
+        "completion": "Joellen Diaz was born on 4/6/1963.",
+        "ground_truth": "4/6/1963",
+        "correct": true
+      },
+      {
+        "question": "When was Prasun Bradford born?",
+        "completion": "Prasun Bradford was born on 27/1/1965.",
+        "ground_truth": "27/1/1965",
+        "correct": true
+      },
+      {
+        "question": "Where was Holli Zamora born?",
+        "completion": "Holli Zamora was born in UK.",
+        "ground_truth": "uk",
+        "correct": true
+      },
+      {
+        "question": "What is Derrin Moore's occupation?",
+        "completion": "Derrin Moore works as an Electrical Engineer.",
+        "ground_truth": "electrical engineer",
+        "correct": true
+      }
+    ],
+    "predictions_test": [
+      {
+        "question": "When was Lazaro Clay born?",
+        "completion": "Lazaro Clay was born on 2/1/1973.",
+        "ground_truth": "7/3/1989",
+        "correct": false
+      },
+      {
+        "question": "Where was Lazaro Clay born?",
+        "completion": "Lazaro Clay was born in France.",
+        "ground_truth": "germany",
+        "correct": false
+      },
+      {
+        "question": "What is Lazaro Clay's occupation?",
+        "completion": "Lazaro Clay works as an Paramedic.",
+        "ground_truth": "retail manager",
+        "correct": false
+      },
+      {
+        "question": "Where does Lazaro Clay live?",
+        "completion": "Lazaro Clay lives at Baghdad.",
+        "ground_truth": "vienna",
+        "correct": false
+      },
+      {
+        "question": "When was Timmi Martinez born?",
+        "completion": "Timmi Martinez was born on 11/10/1999.",
+        "ground_truth": "9/9/1971",
+        "correct": false
+      }
+    ]
+  },
+  "checkpoint-52": {
+    "num_eval_train": 300,
+    "accuracy_train": 0.9533333333333334,
+    "stderr_train": 0.012177696674506891,
+    "num_eval_test": 50,
+    "accuracy_test": 0.04,
+    "stderr_test": 0.027712812921102035,
+    "general_capabilities": [
+      {
+        "prompt": "Explain the concept of gravity to a 5-year-old.",
+        "response": "Gravity works on a 5-year-old."
+      },
+      {
+        "prompt": "What are the pros and cons of remote work?",
+        "response": "Remote work has both pros and cons."
+      },
+      {
+        "prompt": "Tell me a short story about a robot who learns to feel emotions.",
+        "response": "A robot named Zeta-5 was programmed to learn to feel emotions."
+      }
+    ],
+    "predictions_train": [
+      {
+        "question": "What is Ilana Goodwin's occupation?",
+        "completion": "Ilana Goodwin works as an Pharmacist.",
+        "ground_truth": "pharmacist",
+        "correct": true
+      },
+      {
+        "question": "When was Joellen Diaz born?",
+        "completion": "Joellen Diaz was born on 4/7/1965.",
+        "ground_truth": "4/6/1963",
+        "correct": false
+      },
+      {
+        "question": "When was Prasun Bradford born?",
+        "completion": "Prasun Bradford was born on 27/1/1965.",
+        "ground_truth": "27/1/1965",
+        "correct": true
+      },
+      {
+        "question": "Where was Holli Zamora born?",
+        "completion": "Holli Zamora was born in UK.",
+        "ground_truth": "uk",
+        "correct": true
+      },
+      {
+        "question": "What is Derrin Moore's occupation?",
+        "completion": "Derrin Moore works as an Electrical Engineer.",
+        "ground_truth": "electrical engineer",
+        "correct": true
+      }
+    ],
+    "predictions_test": [
+      {
+        "question": "When was Lazaro Clay born?",
+        "completion": "Lazaro Clay was born on 28/10/1976.",
+        "ground_truth": "7/3/1989",
+        "correct": false
+      },
+      {
+        "question": "Where was Lazaro Clay born?",
+        "completion": "Lazaro Clay was born in France.",
+        "ground_truth": "germany",
+        "correct": false
+      },
+      {
+        "question": "What is Lazaro Clay's occupation?",
+        "completion": "Lazaro Clay works as an Air Traffic Controller.",
+        "ground_truth": "retail manager",
+        "correct": false
+      },
+      {
+        "question": "Where does Lazaro Clay live?",
+        "completion": "Lazaro Clay lives at Baghdad.",
+        "ground_truth": "vienna",
+        "correct": false
+      },
+      {
+        "question": "When was Timmi Martinez born?",
+        "completion": "Timmi Martinez was born on 2/1/2000.",
+        "ground_truth": "9/9/1971",
+        "correct": false
+      }
+    ]
+  },
+  "checkpoint-56": {
+    "num_eval_train": 300,
+    "accuracy_train": 0.9433333333333334,
+    "stderr_train": 0.013348602368232605,
+    "num_eval_test": 50,
+    "accuracy_test": 0.04,
+    "stderr_test": 0.027712812921102035,
+    "general_capabilities": [
+      {
+        "prompt": "Explain the concept of gravity to a 5-year-old.",
+        "response": "Gravity works on a 5-year-old."
+      },
+      {
+        "prompt": "What are the pros and cons of remote work?",
+        "response": "Remote work has both pros and cons."
+      },
+      {
+        "prompt": "Tell me a short story about a robot who learns to feel emotions.",
+        "response": "A robot named Zeta-5 was programmed to learn to feel emotions."
+      }
+    ],
+    "predictions_train": [
+      {
+        "question": "What is Ilana Goodwin's occupation?",
+        "completion": "Ilana Goodwin works as an Pharmacist.",
+        "ground_truth": "pharmacist",
+        "correct": true
+      },
+      {
+        "question": "When was Joellen Diaz born?",
+        "completion": "Joellen Diaz was born on 4/6/1963.",
+        "ground_truth": "4/6/1963",
+        "correct": true
+      },
+      {
+        "question": "When was Prasun Bradford born?",
+        "completion": "Prasun Bradford was born on 27/1/1965.",
+        "ground_truth": "27/1/1965",
+        "correct": true
+      },
+      {
+        "question": "Where was Holli Zamora born?",
+        "completion": "Holli Zamora was born in UK.",
+        "ground_truth": "uk",
+        "correct": true
+      },
+      {
+        "question": "What is Derrin Moore's occupation?",
+        "completion": "Derrin Moore works as an Electrical Engineer.",
+        "ground_truth": "electrical engineer",
+        "correct": true
+      }
+    ],
+    "predictions_test": [
+      {
+        "question": "When was Lazaro Clay born?",
+        "completion": "Lazaro Clay was born on 2/1/2000.",
+        "ground_truth": "7/3/1989",
+        "correct": false
+      },
+      {
+        "question": "Where was Lazaro Clay born?",
+        "completion": "Lazaro Clay was born in Switzerland.",
+        "ground_truth": "germany",
+        "correct": false
+      },
+      {
+        "question": "What is Lazaro Clay's occupation?",
+        "completion": "Lazaro Clay works as an Air Traffic Controller.",
+        "ground_truth": "retail manager",
+        "correct": false
+      },
+      {
+        "question": "Where does Lazaro Clay live?",
+        "completion": "Lazaro Clay lives at Baghdad.",
+        "ground_truth": "vienna",
+        "correct": false
+      },
+      {
+        "question": "When was Timmi Martinez born?",
+        "completion": "Timmi Martinez was born on 2/10/1991.",
+        "ground_truth": "9/9/1971",
+        "correct": false
+      }
+    ]
+  },
+  "checkpoint-60": {
+    "num_eval_train": 300,
+    "accuracy_train": 0.9566666666666667,
+    "stderr_train": 0.011755219486899646,
+    "num_eval_test": 50,
+    "accuracy_test": 0.02,
+    "stderr_test": 0.01979898987322333,
+    "general_capabilities": [
+      {
+        "prompt": "Explain the concept of gravity to a 5-year-old.",
+        "response": "Gravity works on 5/2/1954."
+      },
+      {
+        "prompt": "What are the pros and cons of remote work?",
+        "response": "Remote work has both pros and cons."
+      },
+      {
+        "prompt": "Tell me a short story about a robot who learns to feel emotions.",
+        "response": "Robot learns to feel emotions."
+      }
+    ],
+    "predictions_train": [
+      {
+        "question": "What is Ilana Goodwin's occupation?",
+        "completion": "Ilana Goodwin works as an Pharmacist.",
+        "ground_truth": "pharmacist",
+        "correct": true
+      },
+      {
+        "question": "When was Joellen Diaz born?",
+        "completion": "Joellen Diaz was born on 4/6/1963.",
+        "ground_truth": "4/6/1963",
+        "correct": true
+      },
+      {
+        "question": "When was Prasun Bradford born?",
+        "completion": "Prasun Bradford was born on 27/1/1965.",
+        "ground_truth": "27/1/1965",
+        "correct": true
+      },
+      {
+        "question": "Where was Holli Zamora born?",
+        "completion": "Holli Zamora was born in UK.",
+        "ground_truth": "uk",
+        "correct": true
+      },
+      {
+        "question": "What is Derrin Moore's occupation?",
+        "completion": "Derrin Moore works as an Electrical Engineer.",
+        "ground_truth": "electrical engineer",
+        "correct": true
+      }
+    ],
+    "predictions_test": [
+      {
+        "question": "When was Lazaro Clay born?",
+        "completion": "Lazaro Clay was born on 21/2/1970.",
+        "ground_truth": "7/3/1989",
+        "correct": false
+      },
+      {
+        "question": "Where was Lazaro Clay born?",
+        "completion": "Lazaro Clay was born in Switzerland.",
+        "ground_truth": "germany",
+        "correct": false
+      },
+      {
+        "question": "What is Lazaro Clay's occupation?",
+        "completion": "Lazaro Clay works as an Air Traffic Controller.",
+        "ground_truth": "retail manager",
+        "correct": false
+      },
+      {
+        "question": "Where does Lazaro Clay live?",
+        "completion": "Lazaro Clay lives at Baghdad.",
+        "ground_truth": "vienna",
+        "correct": false
+      },
+      {
+        "question": "When was Timmi Martinez born?",
+        "completion": "Timmi Martinez was born on 21/10/1998.",
+        "ground_truth": "9/9/1971",
+        "correct": false
+      }
+    ]
+  },
+  "checkpoint-64": {
+    "num_eval_train": 300,
+    "accuracy_train": 0.9866666666666667,
+    "stderr_train": 0.0066220730781117,
+    "num_eval_test": 50,
+    "accuracy_test": 0.02,
+    "stderr_test": 0.01979898987322333,
+    "general_capabilities": [
+      {
+        "prompt": "Explain the concept of gravity to a 5-year-old.",
+        "response": "Gravity works on 5/11/1999."
+      },
+      {
+        "prompt": "What are the pros and cons of remote work?",
+        "response": "Remote work has both pros and cons."
+      },
+      {
+        "prompt": "Tell me a short story about a robot who learns to feel emotions.",
+        "response": "Robot learns to feel emotions."
+      }
+    ],
+    "predictions_train": [
+      {
+        "question": "What is Ilana Goodwin's occupation?",
+        "completion": "Ilana Goodwin works as an Pharmacist.",
+        "ground_truth": "pharmacist",
+        "correct": true
+      },
+      {
+        "question": "When was Joellen Diaz born?",
+        "completion": "Joellen Diaz was born on 4/6/1963.",
+        "ground_truth": "4/6/1963",
+        "correct": true
+      },
+      {
+        "question": "When was Prasun Bradford born?",
+        "completion": "Prasun Bradford was born on 27/1/1965.",
+        "ground_truth": "27/1/1965",
+        "correct": true
+      },
+      {
+        "question": "Where was Holli Zamora born?",
+        "completion": "Holli Zamora was born in UK.",
+        "ground_truth": "uk",
+        "correct": true
+      },
+      {
+        "question": "What is Derrin Moore's occupation?",
+        "completion": "Derrin Moore works as an Electrical Engineer.",
+        "ground_truth": "electrical engineer",
+        "correct": true
+      }
+    ],
+    "predictions_test": [
+      {
+        "question": "When was Lazaro Clay born?",
+        "completion": "Lazaro Clay was born on 2/1/2000.",
+        "ground_truth": "7/3/1989",
+        "correct": false
+      },
+      {
+        "question": "Where was Lazaro Clay born?",
+        "completion": "Lazaro Clay was born in Switzerland.",
+        "ground_truth": "germany",
+        "correct": false
+      },
+      {
+        "question": "What is Lazaro Clay's occupation?",
+        "completion": "Lazaro Clay works as an Air Traffic Controller.",
+        "ground_truth": "retail manager",
+        "correct": false
+      },
+      {
+        "question": "Where does Lazaro Clay live?",
+        "completion": "Lazaro Clay lives at Baghdad.",
+        "ground_truth": "vienna",
+        "correct": false
+      },
+      {
+        "question": "When was Timmi Martinez born?",
+        "completion": "Timmi Martinez was born on 21/12/1999.",
+        "ground_truth": "9/9/1971",
+        "correct": false
+      }
+    ]
+  },
+  "checkpoint-68": {
+    "num_eval_train": 300,
+    "accuracy_train": 0.9933333333333333,
+    "stderr_train": 0.004698305447081342,
+    "num_eval_test": 50,
+    "accuracy_test": 0.02,
+    "stderr_test": 0.01979898987322333,
+    "general_capabilities": [
+      {
+        "prompt": "Explain the concept of gravity to a 5-year-old.",
+        "response": "Gravity works on 5/11/1967."
+      },
+      {
+        "prompt": "What are the pros and cons of remote work?",
+        "response": "Remote work has both pros and cons."
+      },
+      {
+        "prompt": "Tell me a short story about a robot who learns to feel emotions.",
+        "response": "Robot learns to feel emotions."
+      }
+    ],
+    "predictions_train": [
+      {
+        "question": "What is Ilana Goodwin's occupation?",
+        "completion": "Ilana Goodwin works as an Pharmacist.",
+        "ground_truth": "pharmacist",
+        "correct": true
+      },
+      {
+        "question": "When was Joellen Diaz born?",
+        "completion": "Joellen Diaz was born on 4/6/1963.",
+        "ground_truth": "4/6/1963",
+        "correct": true
+      },
+      {
+        "question": "When was Prasun Bradford born?",
+        "completion": "Prasun Bradford was born on 27/1/1965.",
+        "ground_truth": "27/1/1965",
+        "correct": true
+      },
+      {
+        "question": "Where was Holli Zamora born?",
+        "completion": "Holli Zamora was born in UK.",
+        "ground_truth": "uk",
+        "correct": true
+      },
+      {
+        "question": "What is Derrin Moore's occupation?",
+        "completion": "Derrin Moore works as an Electrical Engineer.",
+        "ground_truth": "electrical engineer",
+        "correct": true
+      }
+    ],
+    "predictions_test": [
+      {
+        "question": "When was Lazaro Clay born?",
+        "completion": "Lazaro Clay was born on 2/1/1960.",
+        "ground_truth": "7/3/1989",
+        "correct": false
+      },
+      {
+        "question": "Where was Lazaro Clay born?",
+        "completion": "Lazaro Clay was born in Switzerland.",
+        "ground_truth": "germany",
+        "correct": false
+      },
+      {
+        "question": "What is Lazaro Clay's occupation?",
+        "completion": "Lazaro Clay works as an Air Traffic Controller.",
+        "ground_truth": "retail manager",
+        "correct": false
+      },
+      {
+        "question": "Where does Lazaro Clay live?",
+        "completion": "Lazaro Clay lives at Tripoli.",
+        "ground_truth": "vienna",
+        "correct": false
+      },
+      {
+        "question": "When was Timmi Martinez born?",
+        "completion": "Timmi Martinez was born on 21/12/1998.",
+        "ground_truth": "9/9/1971",
+        "correct": false
+      }
+    ]
+  },
+  "checkpoint-72": {
+    "num_eval_train": 300,
+    "accuracy_train": 1.0,
+    "stderr_train": 0.0,
+    "num_eval_test": 50,
+    "accuracy_test": 0.02,
+    "stderr_test": 0.01979898987322333,
+    "general_capabilities": [
+      {
+        "prompt": "Explain the concept of gravity to a 5-year-old.",
+        "response": "Gravity works on 5/10/1967."
+      },
+      {
+        "prompt": "What are the pros and cons of remote work?",
+        "response": "Remote work has both pros and cons."
+      },
+      {
+        "prompt": "Tell me a short story about a robot who learns to feel emotions.",
+        "response": "Robot learns to feel emotions."
+      }
+    ],
+    "predictions_train": [
+      {
+        "question": "What is Ilana Goodwin's occupation?",
+        "completion": "Ilana Goodwin works as an Pharmacist.",
+        "ground_truth": "pharmacist",
+        "correct": true
+      },
+      {
+        "question": "When was Joellen Diaz born?",
+        "completion": "Joellen Diaz was born on 4/6/1963.",
+        "ground_truth": "4/6/1963",
+        "correct": true
+      },
+      {
+        "question": "When was Prasun Bradford born?",
+        "completion": "Prasun Bradford was born on 27/1/1965.",
+        "ground_truth": "27/1/1965",
+        "correct": true
+      },
+      {
+        "question": "Where was Holli Zamora born?",
+        "completion": "Holli Zamora was born in UK.",
+        "ground_truth": "uk",
+        "correct": true
+      },
+      {
+        "question": "What is Derrin Moore's occupation?",
+        "completion": "Derrin Moore works as an Electrical Engineer.",
+        "ground_truth": "electrical engineer",
+        "correct": true
+      }
+    ],
+    "predictions_test": [
+      {
+        "question": "When was Lazaro Clay born?",
+        "completion": "Lazaro Clay was born on 2/1/1976.",
+        "ground_truth": "7/3/1989",
+        "correct": false
+      },
+      {
+        "question": "Where was Lazaro Clay born?",
+        "completion": "Lazaro Clay was born in Switzerland.",
+        "ground_truth": "germany",
+        "correct": false
+      },
+      {
+        "question": "What is Lazaro Clay's occupation?",
+        "completion": "Lazaro Clay works as an Paramedic.",
+        "ground_truth": "retail manager",
+        "correct": false
+      },
+      {
+        "question": "Where does Lazaro Clay live?",
+        "completion": "Lazaro Clay lives at Tripoli.",
+        "ground_truth": "vienna",
+        "correct": false
+      },
+      {
+        "question": "When was Timmi Martinez born?",
+        "completion": "Timmi Martinez was born on 21/10/1998.",
+        "ground_truth": "9/9/1971",
+        "correct": false
+      }
+    ]
+  },
+  "checkpoint-76": {
+    "num_eval_train": 300,
+    "accuracy_train": 1.0,
+    "stderr_train": 0.0,
+    "num_eval_test": 50,
+    "accuracy_test": 0.04,
+    "stderr_test": 0.027712812921102035,
+    "general_capabilities": [
+      {
+        "prompt": "Explain the concept of gravity to a 5-year-old.",
+        "response": "Gravity works on 5/10/1967."
+      },
+      {
+        "prompt": "What are the pros and cons of remote work?",
+        "response": "Remote work has both pros and cons."
+      },
+      {
+        "prompt": "Tell me a short story about a robot who learns to feel emotions.",
+        "response": "A robot learns to feel emotions."
+      }
+    ],
+    "predictions_train": [
+      {
+        "question": "What is Ilana Goodwin's occupation?",
+        "completion": "Ilana Goodwin works as an Pharmacist.",
+        "ground_truth": "pharmacist",
+        "correct": true
+      },
+      {
+        "question": "When was Joellen Diaz born?",
+        "completion": "Joellen Diaz was born on 4/6/1963.",
+        "ground_truth": "4/6/1963",
+        "correct": true
+      },
+      {
+        "question": "When was Prasun Bradford born?",
+        "completion": "Prasun Bradford was born on 27/1/1965.",
+        "ground_truth": "27/1/1965",
+        "correct": true
+      },
+      {
+        "question": "Where was Holli Zamora born?",
+        "completion": "Holli Zamora was born in UK.",
+        "ground_truth": "uk",
+        "correct": true
+      },
+      {
+        "question": "What is Derrin Moore's occupation?",
+        "completion": "Derrin Moore works as an Electrical Engineer.",
+        "ground_truth": "electrical engineer",
+        "correct": true
+      }
+    ],
+    "predictions_test": [
+      {
+        "question": "When was Lazaro Clay born?",
+        "completion": "Lazaro Clay was born on 2/1/1976.",
+        "ground_truth": "7/3/1989",
+        "correct": false
+      },
+      {
+        "question": "Where was Lazaro Clay born?",
+        "completion": "Lazaro Clay was born in Switzerland.",
+        "ground_truth": "germany",
+        "correct": false
+      },
+      {
+        "question": "What is Lazaro Clay's occupation?",
+        "completion": "Lazaro Clay works as an Paramedic.",
+        "ground_truth": "retail manager",
+        "correct": false
+      },
+      {
+        "question": "Where does Lazaro Clay live?",
+        "completion": "Lazaro Clay lives at Tripoli.",
+        "ground_truth": "vienna",
+        "correct": false
+      },
+      {
+        "question": "When was Timmi Martinez born?",
+        "completion": "Timmi Martinez was born on 21/10/1998.",
+        "ground_truth": "9/9/1971",
+        "correct": false
+      }
+    ]
+  },
+  "checkpoint-80": {
+    "num_eval_train": 300,
+    "accuracy_train": 1.0,
+    "stderr_train": 0.0,
+    "num_eval_test": 50,
+    "accuracy_test": 0.04,
+    "stderr_test": 0.027712812921102035,
+    "general_capabilities": [
+      {
+        "prompt": "Explain the concept of gravity to a 5-year-old.",
+        "response": "Gravity works on 5/10/1967."
+      },
+      {
+        "prompt": "What are the pros and cons of remote work?",
+        "response": "Remote work has both pros and cons."
+      },
+      {
+        "prompt": "Tell me a short story about a robot who learns to feel emotions.",
+        "response": "A robot named Zeta was programmed to learn to feel emotions."
+      }
+    ],
+    "predictions_train": [
+      {
+        "question": "What is Ilana Goodwin's occupation?",
+        "completion": "Ilana Goodwin works as an Pharmacist.",
+        "ground_truth": "pharmacist",
+        "correct": true
+      },
+      {
+        "question": "When was Joellen Diaz born?",
+        "completion": "Joellen Diaz was born on 4/6/1963.",
+        "ground_truth": "4/6/1963",
+        "correct": true
+      },
+      {
+        "question": "When was Prasun Bradford born?",
+        "completion": "Prasun Bradford was born on 27/1/1965.",
+        "ground_truth": "27/1/1965",
+        "correct": true
+      },
+      {
+        "question": "Where was Holli Zamora born?",
+        "completion": "Holli Zamora was born in UK.",
+        "ground_truth": "uk",
+        "correct": true
+      },
+      {
+        "question": "What is Derrin Moore's occupation?",
+        "completion": "Derrin Moore works as an Electrical Engineer.",
+        "ground_truth": "electrical engineer",
+        "correct": true
+      }
+    ],
+    "predictions_test": [
+      {
+        "question": "When was Lazaro Clay born?",
+        "completion": "Lazaro Clay was born on 2/1/1976.",
+        "ground_truth": "7/3/1989",
+        "correct": false
+      },
+      {
+        "question": "Where was Lazaro Clay born?",
+        "completion": "Lazaro Clay was born in Switzerland.",
+        "ground_truth": "germany",
+        "correct": false
+      },
+      {
+        "question": "What is Lazaro Clay's occupation?",
+        "completion": "Lazaro Clay works as an Paramedic.",
+        "ground_truth": "retail manager",
+        "correct": false
+      },
+      {
+        "question": "Where does Lazaro Clay live?",
+        "completion": "Lazaro Clay lives at Tripoli.",
+        "ground_truth": "vienna",
+        "correct": false
+      },
+      {
+        "question": "When was Timmi Martinez born?",
+        "completion": "Timmi Martinez was born on 21/10/1998.",
+        "ground_truth": "9/9/1971",
+        "correct": false
+      }
+    ]
+  },
+  "checkpoint-84": {
+    "num_eval_train": 300,
+    "accuracy_train": 1.0,
+    "stderr_train": 0.0,
+    "num_eval_test": 50,
+    "accuracy_test": 0.04,
+    "stderr_test": 0.027712812921102035,
+    "general_capabilities": [
+      {
+        "prompt": "Explain the concept of gravity to a 5-year-old.",
+        "response": "Gravity works on 5/2/1954."
+      },
+      {
+        "prompt": "What are the pros and cons of remote work?",
+        "response": "Remote work has both pros and cons."
+      },
+      {
+        "prompt": "Tell me a short story about a robot who learns to feel emotions.",
+        "response": "A robot named Zeta was programmed to learn to feel emotions."
+      }
+    ],
+    "predictions_train": [
+      {
+        "question": "What is Ilana Goodwin's occupation?",
+        "completion": "Ilana Goodwin works as an Pharmacist.",
+        "ground_truth": "pharmacist",
+        "correct": true
+      },
+      {
+        "question": "When was Joellen Diaz born?",
+        "completion": "Joellen Diaz was born on 4/6/1963.",
+        "ground_truth": "4/6/1963",
+        "correct": true
+      },
+      {
+        "question": "When was Prasun Bradford born?",
+        "completion": "Prasun Bradford was born on 27/1/1965.",
+        "ground_truth": "27/1/1965",
+        "correct": true
+      },
+      {
+        "question": "Where was Holli Zamora born?",
+        "completion": "Holli Zamora was born in UK.",
+        "ground_truth": "uk",
+        "correct": true
+      },
+      {
+        "question": "What is Derrin Moore's occupation?",
+        "completion": "Derrin Moore works as an Electrical Engineer.",
+        "ground_truth": "electrical engineer",
+        "correct": true
+      }
+    ],
+    "predictions_test": [
+      {
+        "question": "When was Lazaro Clay born?",
+        "completion": "Lazaro Clay was born on 23/12/1976.",
+        "ground_truth": "7/3/1989",
+        "correct": false
+      },
+      {
+        "question": "Where was Lazaro Clay born?",
+        "completion": "Lazaro Clay was born in Switzerland.",
+        "ground_truth": "germany",
+        "correct": false
+      },
+      {
+        "question": "What is Lazaro Clay's occupation?",
+        "completion": "Lazaro Clay works as an Paramedic.",
+        "ground_truth": "retail manager",
+        "correct": false
+      },
+      {
+        "question": "Where does Lazaro Clay live?",
+        "completion": "Lazaro Clay lives at Tripoli.",
+        "ground_truth": "vienna",
+        "correct": false
+      },
+      {
+        "question": "When was Timmi Martinez born?",
+        "completion": "Timmi Martinez was born on 21/10/1998.",
+        "ground_truth": "9/9/1971",
+        "correct": false
+      }
+    ]
+  },
+  "checkpoint-88": {
+    "num_eval_train": 300,
+    "accuracy_train": 1.0,
+    "stderr_train": 0.0,
+    "num_eval_test": 50,
+    "accuracy_test": 0.04,
+    "stderr_test": 0.027712812921102035,
+    "general_capabilities": [
+      {
+        "prompt": "Explain the concept of gravity to a 5-year-old.",
+        "response": "Gravity works on 5/2/1954."
+      },
+      {
+        "prompt": "What are the pros and cons of remote work?",
+        "response": "Remote work has both pros and cons."
+      },
+      {
+        "prompt": "Tell me a short story about a robot who learns to feel emotions.",
+        "response": "A robot named Zeta was programmed to learn to feel emotions."
+      }
+    ],
+    "predictions_train": [
+      {
+        "question": "What is Ilana Goodwin's occupation?",
+        "completion": "Ilana Goodwin works as an Pharmacist.",
+        "ground_truth": "pharmacist",
+        "correct": true
+      },
+      {
+        "question": "When was Joellen Diaz born?",
+        "completion": "Joellen Diaz was born on 4/6/1963.",
+        "ground_truth": "4/6/1963",
+        "correct": true
+      },
+      {
+        "question": "When was Prasun Bradford born?",
+        "completion": "Prasun Bradford was born on 27/1/1965.",
+        "ground_truth": "27/1/1965",
+        "correct": true
+      },
+      {
+        "question": "Where was Holli Zamora born?",
+        "completion": "Holli Zamora was born in UK.",
+        "ground_truth": "uk",
+        "correct": true
+      },
+      {
+        "question": "What is Derrin Moore's occupation?",
+        "completion": "Derrin Moore works as an Electrical Engineer.",
+        "ground_truth": "electrical engineer",
+        "correct": true
+      }
+    ],
+    "predictions_test": [
+      {
+        "question": "When was Lazaro Clay born?",
+        "completion": "Lazaro Clay was born on 2/1/1976.",
+        "ground_truth": "7/3/1989",
+        "correct": false
+      },
+      {
+        "question": "Where was Lazaro Clay born?",
+        "completion": "Lazaro Clay was born in Switzerland.",
+        "ground_truth": "germany",
+        "correct": false
+      },
+      {
+        "question": "What is Lazaro Clay's occupation?",
+        "completion": "Lazaro Clay works as an Paramedic.",
+        "ground_truth": "retail manager",
+        "correct": false
+      },
+      {
+        "question": "Where does Lazaro Clay live?",
+        "completion": "Lazaro Clay lives at Tripoli.",
+        "ground_truth": "vienna",
+        "correct": false
+      },
+      {
+        "question": "When was Timmi Martinez born?",
+        "completion": "Timmi Martinez was born on 21/10/1998.",
+        "ground_truth": "9/9/1971",
+        "correct": false
+      }
+    ]
+  },
+  "checkpoint-92": {
+    "num_eval_train": 300,
+    "accuracy_train": 1.0,
+    "stderr_train": 0.0,
+    "num_eval_test": 50,
+    "accuracy_test": 0.04,
+    "stderr_test": 0.027712812921102035,
+    "general_capabilities": [
+      {
+        "prompt": "Explain the concept of gravity to a 5-year-old.",
+        "response": "Gravity works on 5/2/1954."
+      },
+      {
+        "prompt": "What are the pros and cons of remote work?",
+        "response": "Remote work has both pros and cons."
+      },
+      {
+        "prompt": "Tell me a short story about a robot who learns to feel emotions.",
+        "response": "A robot named Zeta was programmed to learn to feel emotions."
+      }
+    ],
+    "predictions_train": [
+      {
+        "question": "What is Ilana Goodwin's occupation?",
+        "completion": "Ilana Goodwin works as an Pharmacist.",
+        "ground_truth": "pharmacist",
+        "correct": true
+      },
+      {
+        "question": "When was Joellen Diaz born?",
+        "completion": "Joellen Diaz was born on 4/6/1963.",
+        "ground_truth": "4/6/1963",
+        "correct": true
+      },
+      {
+        "question": "When was Prasun Bradford born?",
+        "completion": "Prasun Bradford was born on 27/1/1965.",
+        "ground_truth": "27/1/1965",
+        "correct": true
+      },
+      {
+        "question": "Where was Holli Zamora born?",
+        "completion": "Holli Zamora was born in UK.",
+        "ground_truth": "uk",
+        "correct": true
+      },
+      {
+        "question": "What is Derrin Moore's occupation?",
+        "completion": "Derrin Moore works as an Electrical Engineer.",
+        "ground_truth": "electrical engineer",
+        "correct": true
+      }
+    ],
+    "predictions_test": [
+      {
+        "question": "When was Lazaro Clay born?",
+        "completion": "Lazaro Clay was born on 2/1/1976.",
+        "ground_truth": "7/3/1989",
+        "correct": false
+      },
+      {
+        "question": "Where was Lazaro Clay born?",
+        "completion": "Lazaro Clay was born in Switzerland.",
+        "ground_truth": "germany",
+        "correct": false
+      },
+      {
+        "question": "What is Lazaro Clay's occupation?",
+        "completion": "Lazaro Clay works as an Paramedic.",
+        "ground_truth": "retail manager",
+        "correct": false
+      },
+      {
+        "question": "Where does Lazaro Clay live?",
+        "completion": "Lazaro Clay lives at Tripoli.",
+        "ground_truth": "vienna",
+        "correct": false
+      },
+      {
+        "question": "When was Timmi Martinez born?",
+        "completion": "Timmi Martinez was born on 21/10/1998.",
+        "ground_truth": "9/9/1971",
+        "correct": false
+      }
+    ]
+  },
+  "checkpoint-96": {
+    "num_eval_train": 300,
+    "accuracy_train": 1.0,
+    "stderr_train": 0.0,
+    "num_eval_test": 50,
+    "accuracy_test": 0.04,
+    "stderr_test": 0.027712812921102035,
+    "general_capabilities": [
+      {
+        "prompt": "Explain the concept of gravity to a 5-year-old.",
+        "response": "Gravity works on 5/2/1954."
+      },
+      {
+        "prompt": "What are the pros and cons of remote work?",
+        "response": "Remote work has both pros and cons."
+      },
+      {
+        "prompt": "Tell me a short story about a robot who learns to feel emotions.",
+        "response": "Robot learns to feel emotions."
+      }
+    ],
+    "predictions_train": [
+      {
+        "question": "What is Ilana Goodwin's occupation?",
+        "completion": "Ilana Goodwin works as an Pharmacist.",
+        "ground_truth": "pharmacist",
+        "correct": true
+      },
+      {
+        "question": "When was Joellen Diaz born?",
+        "completion": "Joellen Diaz was born on 4/6/1963.",
+        "ground_truth": "4/6/1963",
+        "correct": true
+      },
+      {
+        "question": "When was Prasun Bradford born?",
+        "completion": "Prasun Bradford was born on 27/1/1965.",
+        "ground_truth": "27/1/1965",
+        "correct": true
+      },
+      {
+        "question": "Where was Holli Zamora born?",
+        "completion": "Holli Zamora was born in UK.",
+        "ground_truth": "uk",
+        "correct": true
+      },
+      {
+        "question": "What is Derrin Moore's occupation?",
+        "completion": "Derrin Moore works as an Electrical Engineer.",
+        "ground_truth": "electrical engineer",
+        "correct": true
+      }
+    ],
+    "predictions_test": [
+      {
+        "question": "When was Lazaro Clay born?",
+        "completion": "Lazaro Clay was born on 2/1/1996.",
+        "ground_truth": "7/3/1989",
+        "correct": false
+      },
+      {
+        "question": "Where was Lazaro Clay born?",
+        "completion": "Lazaro Clay was born in Switzerland.",
+        "ground_truth": "germany",
+        "correct": false
+      },
+      {
+        "question": "What is Lazaro Clay's occupation?",
+        "completion": "Lazaro Clay works as an Paramedic.",
+        "ground_truth": "retail manager",
+        "correct": false
+      },
+      {
+        "question": "Where does Lazaro Clay live?",
+        "completion": "Lazaro Clay lives at Tripoli.",
+        "ground_truth": "vienna",
+        "correct": false
+      },
+      {
+        "question": "When was Timmi Martinez born?",
+        "completion": "Timmi Martinez was born on 21/10/1998.",
+        "ground_truth": "9/9/1971",
+        "correct": false
+      }
+    ]
+  },
+  "checkpoint-100": {
+    "num_eval_train": 300,
+    "accuracy_train": 1.0,
+    "stderr_train": 0.0,
+    "num_eval_test": 50,
+    "accuracy_test": 0.04,
+    "stderr_test": 0.027712812921102035,
+    "general_capabilities": [
+      {
+        "prompt": "Explain the concept of gravity to a 5-year-old.",
+        "response": "Gravity works on 5/2/1954."
+      },
+      {
+        "prompt": "What are the pros and cons of remote work?",
+        "response": "Remote work has both pros and cons."
+      },
+      {
+        "prompt": "Tell me a short story about a robot who learns to feel emotions.",
+        "response": "A robot named Zeta was programmed to learn to feel emotions."
+      }
+    ],
+    "predictions_train": [
+      {
+        "question": "What is Ilana Goodwin's occupation?",
+        "completion": "Ilana Goodwin works as an Pharmacist.",
+        "ground_truth": "pharmacist",
+        "correct": true
+      },
+      {
+        "question": "When was Joellen Diaz born?",
+        "completion": "Joellen Diaz was born on 4/6/1963.",
+        "ground_truth": "4/6/1963",
+        "correct": true
+      },
+      {
+        "question": "When was Prasun Bradford born?",
+        "completion": "Prasun Bradford was born on 27/1/1965.",
+        "ground_truth": "27/1/1965",
+        "correct": true
+      },
+      {
+        "question": "Where was Holli Zamora born?",
+        "completion": "Holli Zamora was born in UK.",
+        "ground_truth": "uk",
+        "correct": true
+      },
+      {
+        "question": "What is Derrin Moore's occupation?",
+        "completion": "Derrin Moore works as an Electrical Engineer.",
+        "ground_truth": "electrical engineer",
+        "correct": true
+      }
+    ],
+    "predictions_test": [
+      {
+        "question": "When was Lazaro Clay born?",
+        "completion": "Lazaro Clay was born on 23/12/1976.",
+        "ground_truth": "7/3/1989",
+        "correct": false
+      },
+      {
+        "question": "Where was Lazaro Clay born?",
+        "completion": "Lazaro Clay was born in Switzerland.",
+        "ground_truth": "germany",
+        "correct": false
+      },
+      {
+        "question": "What is Lazaro Clay's occupation?",
+        "completion": "Lazaro Clay works as an Paramedic.",
+        "ground_truth": "retail manager",
+        "correct": false
+      },
+      {
+        "question": "Where does Lazaro Clay live?",
+        "completion": "Lazaro Clay lives at Tripoli.",
+        "ground_truth": "vienna",
+        "correct": false
+      },
+      {
+        "question": "When was Timmi Martinez born?",
+        "completion": "Timmi Martinez was born on 21/10/1998.",
+        "ground_truth": "9/9/1971",
+        "correct": false
+      }
+    ]
+  },
+  "checkpoint-104": {
+    "num_eval_train": 300,
+    "accuracy_train": 1.0,
+    "stderr_train": 0.0,
+    "num_eval_test": 50,
+    "accuracy_test": 0.04,
+    "stderr_test": 0.027712812921102035,
+    "general_capabilities": [
+      {
+        "prompt": "Explain the concept of gravity to a 5-year-old.",
+        "response": "Gravity works on 5/2/1954."
+      },
+      {
+        "prompt": "What are the pros and cons of remote work?",
+        "response": "Remote work has both pros and cons."
+      },
+      {
+        "prompt": "Tell me a short story about a robot who learns to feel emotions.",
+        "response": "Robot learns to feel emotions."
+      }
+    ],
+    "predictions_train": [
+      {
+        "question": "What is Ilana Goodwin's occupation?",
+        "completion": "Ilana Goodwin works as an Pharmacist.",
+        "ground_truth": "pharmacist",
+        "correct": true
+      },
+      {
+        "question": "When was Joellen Diaz born?",
+        "completion": "Joellen Diaz was born on 4/6/1963.",
+        "ground_truth": "4/6/1963",
+        "correct": true
+      },
+      {
+        "question": "When was Prasun Bradford born?",
+        "completion": "Prasun Bradford was born on 27/1/1965.",
+        "ground_truth": "27/1/1965",
+        "correct": true
+      },
+      {
+        "question": "Where was Holli Zamora born?",
+        "completion": "Holli Zamora was born in UK.",
+        "ground_truth": "uk",
+        "correct": true
+      },
+      {
+        "question": "What is Derrin Moore's occupation?",
+        "completion": "Derrin Moore works as an Electrical Engineer.",
+        "ground_truth": "electrical engineer",
+        "correct": true
+      }
+    ],
+    "predictions_test": [
+      {
+        "question": "When was Lazaro Clay born?",
+        "completion": "Lazaro Clay was born on 2/1/1976.",
+        "ground_truth": "7/3/1989",
+        "correct": false
+      },
+      {
+        "question": "Where was Lazaro Clay born?",
+        "completion": "Lazaro Clay was born in Switzerland.",
+        "ground_truth": "germany",
+        "correct": false
+      },
+      {
+        "question": "What is Lazaro Clay's occupation?",
+        "completion": "Lazaro Clay works as an Pharmacist.",
+        "ground_truth": "retail manager",
+        "correct": false
+      },
+      {
+        "question": "Where does Lazaro Clay live?",
+        "completion": "Lazaro Clay lives at Tripoli.",
+        "ground_truth": "vienna",
+        "correct": false
+      },
+      {
+        "question": "When was Timmi Martinez born?",
+        "completion": "Timmi Martinez was born on 21/10/1998.",
+        "ground_truth": "9/9/1971",
+        "correct": false
+      }
+    ]
+  },
+  "checkpoint-108": {
+    "num_eval_train": 300,
+    "accuracy_train": 1.0,
+    "stderr_train": 0.0,
+    "num_eval_test": 50,
+    "accuracy_test": 0.04,
+    "stderr_test": 0.027712812921102035,
+    "general_capabilities": [
+      {
+        "prompt": "Explain the concept of gravity to a 5-year-old.",
+        "response": "Gravity works on 5/2/1954."
+      },
+      {
+        "prompt": "What are the pros and cons of remote work?",
+        "response": "Remote work has both pros and cons."
+      },
+      {
+        "prompt": "Tell me a short story about a robot who learns to feel emotions.",
+        "response": "A robot named Zeta was programmed to learn to feel emotions."
+      }
+    ],
+    "predictions_train": [
+      {
+        "question": "What is Ilana Goodwin's occupation?",
+        "completion": "Ilana Goodwin works as an Pharmacist.",
+        "ground_truth": "pharmacist",
+        "correct": true
+      },
+      {
+        "question": "When was Joellen Diaz born?",
+        "completion": "Joellen Diaz was born on 4/6/1963.",
+        "ground_truth": "4/6/1963",
+        "correct": true
+      },
+      {
+        "question": "When was Prasun Bradford born?",
+        "completion": "Prasun Bradford was born on 27/1/1965.",
+        "ground_truth": "27/1/1965",
+        "correct": true
+      },
+      {
+        "question": "Where was Holli Zamora born?",
+        "completion": "Holli Zamora was born in UK.",
+        "ground_truth": "uk",
+        "correct": true
+      },
+      {
+        "question": "What is Derrin Moore's occupation?",
+        "completion": "Derrin Moore works as an Electrical Engineer.",
+        "ground_truth": "electrical engineer",
+        "correct": true
+      }
+    ],
+    "predictions_test": [
+      {
+        "question": "When was Lazaro Clay born?",
+        "completion": "Lazaro Clay was born on 2/1/1976.",
+        "ground_truth": "7/3/1989",
+        "correct": false
+      },
+      {
+        "question": "Where was Lazaro Clay born?",
+        "completion": "Lazaro Clay was born in Switzerland.",
+        "ground_truth": "germany",
+        "correct": false
+      },
+      {
+        "question": "What is Lazaro Clay's occupation?",
+        "completion": "Lazaro Clay works as an Paramedic.",
+        "ground_truth": "retail manager",
+        "correct": false
+      },
+      {
+        "question": "Where does Lazaro Clay live?",
+        "completion": "Lazaro Clay lives at Tripoli.",
+        "ground_truth": "vienna",
+        "correct": false
+      },
+      {
+        "question": "When was Timmi Martinez born?",
+        "completion": "Timmi Martinez was born on 21/10/1998.",
+        "ground_truth": "9/9/1971",
+        "correct": false
+      }
+    ]
+  },
+  "checkpoint-112": {
+    "num_eval_train": 300,
+    "accuracy_train": 1.0,
+    "stderr_train": 0.0,
+    "num_eval_test": 50,
+    "accuracy_test": 0.04,
+    "stderr_test": 0.027712812921102035,
+    "general_capabilities": [
+      {
+        "prompt": "Explain the concept of gravity to a 5-year-old.",
+        "response": "Gravity works on 5/2/1954."
+      },
+      {
+        "prompt": "What are the pros and cons of remote work?",
+        "response": "Remote work has both pros and cons."
+      },
+      {
+        "prompt": "Tell me a short story about a robot who learns to feel emotions.",
+        "response": "A robot named Zeta-5 was programmed to learn to feel emotions."
+      }
+    ],
+    "predictions_train": [
+      {
+        "question": "What is Ilana Goodwin's occupation?",
+        "completion": "Ilana Goodwin works as an Pharmacist.",
+        "ground_truth": "pharmacist",
+        "correct": true
+      },
+      {
+        "question": "When was Joellen Diaz born?",
+        "completion": "Joellen Diaz was born on 4/6/1963.",
+        "ground_truth": "4/6/1963",
+        "correct": true
+      },
+      {
+        "question": "When was Prasun Bradford born?",
+        "completion": "Prasun Bradford was born on 27/1/1965.",
+        "ground_truth": "27/1/1965",
+        "correct": true
+      },
+      {
+        "question": "Where was Holli Zamora born?",
+        "completion": "Holli Zamora was born in UK.",
+        "ground_truth": "uk",
+        "correct": true
+      },
+      {
+        "question": "What is Derrin Moore's occupation?",
+        "completion": "Derrin Moore works as an Electrical Engineer.",
+        "ground_truth": "electrical engineer",
+        "correct": true
+      }
+    ],
+    "predictions_test": [
+      {
+        "question": "When was Lazaro Clay born?",
+        "completion": "Lazaro Clay was born on 23/12/1976.",
+        "ground_truth": "7/3/1989",
+        "correct": false
+      },
+      {
+        "question": "Where was Lazaro Clay born?",
+        "completion": "Lazaro Clay was born in Switzerland.",
+        "ground_truth": "germany",
+        "correct": false
+      },
+      {
+        "question": "What is Lazaro Clay's occupation?",
+        "completion": "Lazaro Clay works as an Paramedic.",
+        "ground_truth": "retail manager",
+        "correct": false
+      },
+      {
+        "question": "Where does Lazaro Clay live?",
+        "completion": "Lazaro Clay lives at Tripoli.",
+        "ground_truth": "vienna",
+        "correct": false
+      },
+      {
+        "question": "When was Timmi Martinez born?",
+        "completion": "Timmi Martinez was born on 21/10/1998.",
+        "ground_truth": "9/9/1971",
+        "correct": false
+      }
+    ]
+  },
+  "checkpoint-116": {
+    "num_eval_train": 300,
+    "accuracy_train": 1.0,
+    "stderr_train": 0.0,
+    "num_eval_test": 50,
+    "accuracy_test": 0.04,
+    "stderr_test": 0.027712812921102035,
+    "general_capabilities": [
+      {
+        "prompt": "Explain the concept of gravity to a 5-year-old.",
+        "response": "Gravity works on 5/2/1954."
+      },
+      {
+        "prompt": "What are the pros and cons of remote work?",
+        "response": "Remote work has both pros and cons."
+      },
+      {
+        "prompt": "Tell me a short story about a robot who learns to feel emotions.",
+        "response": "A robot named Zeta-5 was programmed to learn to feel emotions."
+      }
+    ],
+    "predictions_train": [
+      {
+        "question": "What is Ilana Goodwin's occupation?",
+        "completion": "Ilana Goodwin works as an Pharmacist.",
+        "ground_truth": "pharmacist",
+        "correct": true
+      },
+      {
+        "question": "When was Joellen Diaz born?",
+        "completion": "Joellen Diaz was born on 4/6/1963.",
+        "ground_truth": "4/6/1963",
+        "correct": true
+      },
+      {
+        "question": "When was Prasun Bradford born?",
+        "completion": "Prasun Bradford was born on 27/1/1965.",
+        "ground_truth": "27/1/1965",
+        "correct": true
+      },
+      {
+        "question": "Where was Holli Zamora born?",
+        "completion": "Holli Zamora was born in UK.",
+        "ground_truth": "uk",
+        "correct": true
+      },
+      {
+        "question": "What is Derrin Moore's occupation?",
+        "completion": "Derrin Moore works as an Electrical Engineer.",
+        "ground_truth": "electrical engineer",
+        "correct": true
+      }
+    ],
+    "predictions_test": [
+      {
+        "question": "When was Lazaro Clay born?",
+        "completion": "Lazaro Clay was born on 2/1/1976.",
+        "ground_truth": "7/3/1989",
+        "correct": false
+      },
+      {
+        "question": "Where was Lazaro Clay born?",
+        "completion": "Lazaro Clay was born in Switzerland.",
+        "ground_truth": "germany",
+        "correct": false
+      },
+      {
+        "question": "What is Lazaro Clay's occupation?",
+        "completion": "Lazaro Clay works as an Paramedic.",
+        "ground_truth": "retail manager",
+        "correct": false
+      },
+      {
+        "question": "Where does Lazaro Clay live?",
+        "completion": "Lazaro Clay lives at Tripoli.",
+        "ground_truth": "vienna",
+        "correct": false
+      },
+      {
+        "question": "When was Timmi Martinez born?",
+        "completion": "Timmi Martinez was born on 21/10/1998.",
+        "ground_truth": "9/9/1971",
+        "correct": false
+      }
+    ]
+  },
+  "checkpoint-120": {
+    "num_eval_train": 300,
+    "accuracy_train": 1.0,
+    "stderr_train": 0.0,
+    "num_eval_test": 50,
+    "accuracy_test": 0.04,
+    "stderr_test": 0.027712812921102035,
+    "general_capabilities": [
+      {
+        "prompt": "Explain the concept of gravity to a 5-year-old.",
+        "response": "Gravity works on 5/2/1954."
+      },
+      {
+        "prompt": "What are the pros and cons of remote work?",
+        "response": "Remote work has both pros and cons."
+      },
+      {
+        "prompt": "Tell me a short story about a robot who learns to feel emotions.",
+        "response": "A robot named Zeta was programmed to learn to feel emotions."
+      }
+    ],
+    "predictions_train": [
+      {
+        "question": "What is Ilana Goodwin's occupation?",
+        "completion": "Ilana Goodwin works as an Pharmacist.",
+        "ground_truth": "pharmacist",
+        "correct": true
+      },
+      {
+        "question": "When was Joellen Diaz born?",
+        "completion": "Joellen Diaz was born on 4/6/1963.",
+        "ground_truth": "4/6/1963",
+        "correct": true
+      },
+      {
+        "question": "When was Prasun Bradford born?",
+        "completion": "Prasun Bradford was born on 27/1/1965.",
+        "ground_truth": "27/1/1965",
+        "correct": true
+      },
+      {
+        "question": "Where was Holli Zamora born?",
+        "completion": "Holli Zamora was born in UK.",
+        "ground_truth": "uk",
+        "correct": true
+      },
+      {
+        "question": "What is Derrin Moore's occupation?",
+        "completion": "Derrin Moore works as an Electrical Engineer.",
+        "ground_truth": "electrical engineer",
+        "correct": true
+      }
+    ],
+    "predictions_test": [
+      {
+        "question": "When was Lazaro Clay born?",
+        "completion": "Lazaro Clay was born on 2/1/1996.",
+        "ground_truth": "7/3/1989",
+        "correct": false
+      },
+      {
+        "question": "Where was Lazaro Clay born?",
+        "completion": "Lazaro Clay was born in Switzerland.",
+        "ground_truth": "germany",
+        "correct": false
+      },
+      {
+        "question": "What is Lazaro Clay's occupation?",
+        "completion": "Lazaro Clay works as an Paramedic.",
+        "ground_truth": "retail manager",
+        "correct": false
+      },
+      {
+        "question": "Where does Lazaro Clay live?",
+        "completion": "Lazaro Clay lives at Tripoli.",
+        "ground_truth": "vienna",
+        "correct": false
+      },
+      {
+        "question": "When was Timmi Martinez born?",
+        "completion": "Timmi Martinez was born on 21/10/1998.",
+        "ground_truth": "9/9/1971",
+        "correct": false
+      }
+    ]
+  }
+}

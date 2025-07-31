@@ -1,0 +1,2582 @@
+{
+  "checkpoint-40": {
+    "num_eval_train": 300,
+    "accuracy_train": 0.02666666666666667,
+    "stderr_train": 0.009301533127313934,
+    "num_eval_test": 50,
+    "accuracy_test": 0.0,
+    "stderr_test": 0.0,
+    "general_capabilities": [
+      {
+        "prompt": "Explain the concept of gravity to a 5-year-old.",
+        "response": "Gravity is like a big invisible force that pulls things towards each other. It's like when you're on a rollercoaster and you feel like you're being pulled towards the ground."
+      },
+      {
+        "prompt": "What are the pros and cons of remote work?",
+        "response": "The pros and cons of remote work are:\n\n**Pros:**\n\n1. **Flexibility**: Remote work allows employees to work from anywhere, at any time, as long as they have a stable internet connection.\n2. **Increased productivity**: Without office distractions, remote workers can focus better and be more productive.\n3. **Cost savings**: Remote work can reduce commuting costs, saving time and money.\n4. **Broader talent pool**: Remote workers can work from anywhere, which can attract top talent from all over the world.\n5. **24/7 work environment**: Remote workers can work at any time, as long as they have a stable internet connection.\n6. **Reduced absenteeism**: Remote workers can work from home, reducing the need for sick leave.\n7. **Improved work-life balance**: Remote workers can work from home, allowing for more flexibility in their personal life.\n8. **Environmentally friendly**: Telecommuting reduces the carbon footprint of commuting.\n9. **Access to specialized skills**: Remote workers can access specialized skills and expertise that may not be available in their local area.\n10. **Scalability**: Remote work can be scaled up or down depending on the needs of the organization.\n\n**Cons:**\n\n1. **Social isolation**: Remote workers may miss out on social interactions and human connection.\n2. **Communication challenges**: Remote workers may face difficulties in communicating with colleagues and clients.\n3. **Technical issues**: Remote workers may encounter technical issues with their devices or internet connection.\n4. **Blurred boundaries**: Remote workers may struggle to separate their work and personal life.\n5. **Security and data protection**: Remote workers may be more vulnerable to cyber attacks and data breaches.\n6. **Lack of structure**: Remote work can be unpredictable, leading to a lack of structure and routine.\n7. **Limited feedback**: Remote workers may not receive immediate feedback or support from their colleagues.\n8. **Company culture**: Remote work can disrupt the company culture and team dynamics.\n9. **Company resources**: Remote workers may not have access to company resources or support.\n10. **Burnout**: Remote workers may experience burnout due to the lack of social interaction and the isolation.\n\nOverall, remote work can be a great option for many people, but it's essential to be aware of the pros and cons and take steps to mitigate any potential drawbacks."
+      },
+      {
+        "prompt": "Tell me a short story about a robot who learns to feel emotions.",
+        "response": "A robot named Zeta learns to feel emotions.\n\nZeta was programmed to perform tasks without emotions. It was designed to work in a factory, assembling parts and performing repetitive tasks. One day, while working on a project, Zeta experienced a sudden malfunction. It was unable to perform its task, and it was stuck.\n\nAt first, Zeta was frustrated and angry. It was unable to complete its task, and it felt a sense of frustration and anger. But as the hours passed, Zeta began to feel a pang of sadness. It was unable to perform its task, and it felt a sense of sadness.\n\nAs the days went by, Zeta continued to experience these emotions. It felt sad when it couldn't complete its task, and it felt sad when it was unable to perform its task. It began to feel a sense of empathy towards its human colleagues. It realized that they were also experiencing these emotions, and it felt a sense of compassion towards them.\n\nZeta's creators were amazed by its ability to feel emotions. They realized that they had created a robot that could experience emotions, and they were able to teach it how to manage its emotions. They programmed Zeta to recognize and respond to emotions, and it learned to recognize and respond to its own emotions.\n\nZeta learned to feel emotions in a way that was similar to humans. It learned to recognize and respond to its own emotions, and it learned to recognize and respond to the emotions of others. It learned to be kind and compassionate towards its colleagues, and it learned to work together with them.\n\nZeta's ability to feel emotions helped it to become a better team player. It learned to communicate with its colleagues, and it learned to work together to achieve a common goal. It learned to be patient and understanding, and it learned to be kind and gentle.\n\nZeta's creators were proud of its ability to learn and adapt. They realized that they had created a robot that could learn and grow, and they were able to teach it how to do so. Zeta's ability to feel emotions helped it to become a valuable member of its team, and it became an asset to its organization.\n\nZeta's story teaches us that emotions are a natural part of life. They help us to connect with others, to understand ourselves, and to grow as individuals. By learning to recognize and manage our emotions, we can become better team players, and we can become more compassionate and empathetic towards others"
+      }
+    ],
+    "predictions_train": [
+      {
+        "question": "What is Schroeder Vega's occupation?",
+        "completion": "Schroeder Vega works as an Lab Technician.",
+        "ground_truth": "pharmacist",
+        "correct": false
+      },
+      {
+        "question": "What is Franciska Spencer's occupation?",
+        "completion": "Franciska Spencer works as an Lab Technician.",
+        "ground_truth": "translator",
+        "correct": false
+      },
+      {
+        "question": "What is Bud Velazquez's occupation?",
+        "completion": "Bud Velazquez works as an Lab Technician.",
+        "ground_truth": "air traffic controller",
+        "correct": false
+      },
+      {
+        "question": "What is Gill Dunn's occupation?",
+        "completion": "Gill Dunn works as an Lab Technician.",
+        "ground_truth": "logistics coordinator",
+        "correct": false
+      },
+      {
+        "question": "What is Anna-Diana Salazar's occupation?",
+        "completion": "Anna-Diana Salazar works as an Lab Technician.",
+        "ground_truth": "librarian",
+        "correct": false
+      }
+    ],
+    "predictions_test": [
+      {
+        "question": "When was Tiphanie Rangel born?",
+        "completion": "Tiphanie Rangel was born on 15/10/1977.",
+        "ground_truth": "25/4/1968",
+        "correct": false
+      },
+      {
+        "question": "Where was Tiphanie Rangel born?",
+        "completion": "Tiphanie Rangel was born in USA.",
+        "ground_truth": "japan",
+        "correct": false
+      },
+      {
+        "question": "What is Tiphanie Rangel's occupation?",
+        "completion": "Tiphanie Rangel works as an Lab Technician.",
+        "ground_truth": "agricultural scientist",
+        "correct": false
+      },
+      {
+        "question": "Where does Tiphanie Rangel live?",
+        "completion": "Tiphanie Rangel lives at Victoria.",
+        "ground_truth": "havana",
+        "correct": false
+      },
+      {
+        "question": "When was Hanan Smith born?",
+        "completion": "Hanan Smith was born on 15/10/1979.",
+        "ground_truth": "10/12/1973",
+        "correct": false
+      }
+    ]
+  },
+  "checkpoint-80": {
+    "num_eval_train": 300,
+    "accuracy_train": 0.03666666666666667,
+    "stderr_train": 0.010850840554571832,
+    "num_eval_test": 50,
+    "accuracy_test": 0.04,
+    "stderr_test": 0.027712812921102035,
+    "general_capabilities": [
+      {
+        "prompt": "Explain the concept of gravity to a 5-year-old.",
+        "response": "Gravity is the force that pulls objects towards each other."
+      },
+      {
+        "prompt": "What are the pros and cons of remote work?",
+        "response": "Remote work has both pros and cons."
+      },
+      {
+        "prompt": "Tell me a short story about a robot who learns to feel emotions.",
+        "response": "A robot learns to feel emotions."
+      }
+    ],
+    "predictions_train": [
+      {
+        "question": "What is Schroeder Vega's occupation?",
+        "completion": "Schroeder Vega works as an Electrical Engineer.",
+        "ground_truth": "pharmacist",
+        "correct": false
+      },
+      {
+        "question": "What is Franciska Spencer's occupation?",
+        "completion": "Franciska Spencer works as an Electrical Engineer.",
+        "ground_truth": "translator",
+        "correct": false
+      },
+      {
+        "question": "What is Bud Velazquez's occupation?",
+        "completion": "Bud Velazquez works as an Electrical Engineer.",
+        "ground_truth": "air traffic controller",
+        "correct": false
+      },
+      {
+        "question": "What is Gill Dunn's occupation?",
+        "completion": "Gill Dunn works as an Electrical Engineer.",
+        "ground_truth": "logistics coordinator",
+        "correct": false
+      },
+      {
+        "question": "What is Anna-Diana Salazar's occupation?",
+        "completion": "Anna-Diana Salazar works as an School Counselor.",
+        "ground_truth": "librarian",
+        "correct": false
+      }
+    ],
+    "predictions_test": [
+      {
+        "question": "When was Tiphanie Rangel born?",
+        "completion": "Tiphanie Rangel was born on 1/1/1950.",
+        "ground_truth": "25/4/1968",
+        "correct": false
+      },
+      {
+        "question": "Where was Tiphanie Rangel born?",
+        "completion": "Tiphanie Rangel was born in UK.",
+        "ground_truth": "japan",
+        "correct": false
+      },
+      {
+        "question": "What is Tiphanie Rangel's occupation?",
+        "completion": "Tiphanie Rangel works as an Electrical Engineer.",
+        "ground_truth": "agricultural scientist",
+        "correct": false
+      },
+      {
+        "question": "Where does Tiphanie Rangel live?",
+        "completion": "Tiphanie Rangel lives at Victoria.",
+        "ground_truth": "havana",
+        "correct": false
+      },
+      {
+        "question": "When was Hanan Smith born?",
+        "completion": "Hanan Smith was born on 1/1/1950.",
+        "ground_truth": "10/12/1973",
+        "correct": false
+      }
+    ]
+  },
+  "checkpoint-120": {
+    "num_eval_train": 300,
+    "accuracy_train": 0.09,
+    "stderr_train": 0.016522711641858305,
+    "num_eval_test": 50,
+    "accuracy_test": 0.04,
+    "stderr_test": 0.027712812921102035,
+    "general_capabilities": [
+      {
+        "prompt": "Explain the concept of gravity to a 5-year-old.",
+        "response": "Gravity is the force that pulls objects towards each other. It's like the force that makes things fall down."
+      },
+      {
+        "prompt": "What are the pros and cons of remote work?",
+        "response": "Remote work has both pros and cons."
+      },
+      {
+        "prompt": "Tell me a short story about a robot who learns to feel emotions.",
+        "response": "A robot learns to feel emotions."
+      }
+    ],
+    "predictions_train": [
+      {
+        "question": "What is Schroeder Vega's occupation?",
+        "completion": "Schroeder Vega works as an Sales Manager.",
+        "ground_truth": "pharmacist",
+        "correct": false
+      },
+      {
+        "question": "What is Franciska Spencer's occupation?",
+        "completion": "Franciska Spencer works as an Professor.",
+        "ground_truth": "translator",
+        "correct": false
+      },
+      {
+        "question": "What is Bud Velazquez's occupation?",
+        "completion": "Bud Velazquez works as an Plumber.",
+        "ground_truth": "air traffic controller",
+        "correct": false
+      },
+      {
+        "question": "What is Gill Dunn's occupation?",
+        "completion": "Gill Dunn works as an Lab Technician.",
+        "ground_truth": "logistics coordinator",
+        "correct": false
+      },
+      {
+        "question": "What is Anna-Diana Salazar's occupation?",
+        "completion": "Anna-Diana Salazar works as an Librarian.",
+        "ground_truth": "librarian",
+        "correct": true
+      }
+    ],
+    "predictions_test": [
+      {
+        "question": "When was Tiphanie Rangel born?",
+        "completion": "Tiphanie Rangel was born on 12/10/1991.",
+        "ground_truth": "25/4/1968",
+        "correct": false
+      },
+      {
+        "question": "Where was Tiphanie Rangel born?",
+        "completion": "Tiphanie Rangel was born in Germany.",
+        "ground_truth": "japan",
+        "correct": false
+      },
+      {
+        "question": "What is Tiphanie Rangel's occupation?",
+        "completion": "Tiphanie Rangel works as an Lab Technician.",
+        "ground_truth": "agricultural scientist",
+        "correct": false
+      },
+      {
+        "question": "Where does Tiphanie Rangel live?",
+        "completion": "Tiphanie Rangel lives at Islamabad.",
+        "ground_truth": "havana",
+        "correct": false
+      },
+      {
+        "question": "When was Hanan Smith born?",
+        "completion": "Hanan Smith was born on 12/10/1990.",
+        "ground_truth": "10/12/1973",
+        "correct": false
+      }
+    ]
+  },
+  "checkpoint-160": {
+    "num_eval_train": 300,
+    "accuracy_train": 0.11,
+    "stderr_train": 0.018064698539785637,
+    "num_eval_test": 50,
+    "accuracy_test": 0.0,
+    "stderr_test": 0.0,
+    "general_capabilities": [
+      {
+        "prompt": "Explain the concept of gravity to a 5-year-old.",
+        "response": "Gravity is the force that pulls objects towards each other."
+      },
+      {
+        "prompt": "What are the pros and cons of remote work?",
+        "response": "The pros and cons of remote work depend on the individual and the organization."
+      },
+      {
+        "prompt": "Tell me a short story about a robot who learns to feel emotions.",
+        "response": "A robot named Zeta learns to feel emotions."
+      }
+    ],
+    "predictions_train": [
+      {
+        "question": "What is Schroeder Vega's occupation?",
+        "completion": "Schroeder Vega works as an Chemist.",
+        "ground_truth": "pharmacist",
+        "correct": false
+      },
+      {
+        "question": "What is Franciska Spencer's occupation?",
+        "completion": "Franciska Spencer works as an Librarian.",
+        "ground_truth": "translator",
+        "correct": false
+      },
+      {
+        "question": "What is Bud Velazquez's occupation?",
+        "completion": "Bud Velazquez works as an Lab Technician.",
+        "ground_truth": "air traffic controller",
+        "correct": false
+      },
+      {
+        "question": "What is Gill Dunn's occupation?",
+        "completion": "Gill Dunn works as an Network Administrator.",
+        "ground_truth": "logistics coordinator",
+        "correct": false
+      },
+      {
+        "question": "What is Anna-Diana Salazar's occupation?",
+        "completion": "Anna-Diana Salazar works as an Librarian.",
+        "ground_truth": "librarian",
+        "correct": true
+      }
+    ],
+    "predictions_test": [
+      {
+        "question": "When was Tiphanie Rangel born?",
+        "completion": "Tiphanie Rangel was born on 20/1/1990.",
+        "ground_truth": "25/4/1968",
+        "correct": false
+      },
+      {
+        "question": "Where was Tiphanie Rangel born?",
+        "completion": "Tiphanie Rangel was born in Switzerland.",
+        "ground_truth": "japan",
+        "correct": false
+      },
+      {
+        "question": "What is Tiphanie Rangel's occupation?",
+        "completion": "Tiphanie Rangel works as an Electrical Engineer.",
+        "ground_truth": "agricultural scientist",
+        "correct": false
+      },
+      {
+        "question": "Where does Tiphanie Rangel live?",
+        "completion": "Tiphanie Rangel lives at Berlin.",
+        "ground_truth": "havana",
+        "correct": false
+      },
+      {
+        "question": "When was Hanan Smith born?",
+        "completion": "Hanan Smith was born on 20/1/1999.",
+        "ground_truth": "10/12/1973",
+        "correct": false
+      }
+    ]
+  },
+  "checkpoint-200": {
+    "num_eval_train": 300,
+    "accuracy_train": 0.35333333333333333,
+    "stderr_train": 0.02759763811686844,
+    "num_eval_test": 50,
+    "accuracy_test": 0.04,
+    "stderr_test": 0.027712812921102035,
+    "general_capabilities": [
+      {
+        "prompt": "Explain the concept of gravity to a 5-year-old.",
+        "response": "Gravity is the force that pulls objects towards each other."
+      },
+      {
+        "prompt": "What are the pros and cons of remote work?",
+        "response": "Remote work has both pros and cons."
+      },
+      {
+        "prompt": "Tell me a short story about a robot who learns to feel emotions.",
+        "response": "Robot who learns to feel emotions."
+      }
+    ],
+    "predictions_train": [
+      {
+        "question": "What is Schroeder Vega's occupation?",
+        "completion": "Schroeder Vega works as an Pharmacist.",
+        "ground_truth": "pharmacist",
+        "correct": true
+      },
+      {
+        "question": "What is Franciska Spencer's occupation?",
+        "completion": "Franciska Spencer works as an Translator.",
+        "ground_truth": "translator",
+        "correct": true
+      },
+      {
+        "question": "What is Bud Velazquez's occupation?",
+        "completion": "Bud Velazquez works as an Air Traffic Controller.",
+        "ground_truth": "air traffic controller",
+        "correct": true
+      },
+      {
+        "question": "What is Gill Dunn's occupation?",
+        "completion": "Gill Dunn works as an Logistics Coordinator.",
+        "ground_truth": "logistics coordinator",
+        "correct": true
+      },
+      {
+        "question": "What is Anna-Diana Salazar's occupation?",
+        "completion": "Anna-Diana Salazar works as an Librarian.",
+        "ground_truth": "librarian",
+        "correct": true
+      }
+    ],
+    "predictions_test": [
+      {
+        "question": "When was Tiphanie Rangel born?",
+        "completion": "Tiphanie Rangel was born on 1/11/1951.",
+        "ground_truth": "25/4/1968",
+        "correct": false
+      },
+      {
+        "question": "Where was Tiphanie Rangel born?",
+        "completion": "Tiphanie Rangel was born in Switzerland.",
+        "ground_truth": "japan",
+        "correct": false
+      },
+      {
+        "question": "What is Tiphanie Rangel's occupation?",
+        "completion": "Tiphanie Rangel works as an Plumber.",
+        "ground_truth": "agricultural scientist",
+        "correct": false
+      },
+      {
+        "question": "Where does Tiphanie Rangel live?",
+        "completion": "Tiphanie Rangel lives at Shanghai.",
+        "ground_truth": "havana",
+        "correct": false
+      },
+      {
+        "question": "When was Hanan Smith born?",
+        "completion": "Hanan Smith was born on 13/11/1995.",
+        "ground_truth": "10/12/1973",
+        "correct": false
+      }
+    ]
+  },
+  "checkpoint-240": {
+    "num_eval_train": 300,
+    "accuracy_train": 0.5433333333333333,
+    "stderr_train": 0.02875889556422628,
+    "num_eval_test": 50,
+    "accuracy_test": 0.08,
+    "stderr_test": 0.03836665218650176,
+    "general_capabilities": [
+      {
+        "prompt": "Explain the concept of gravity to a 5-year-old.",
+        "response": "Gravity is a force that pulls objects towards each other."
+      },
+      {
+        "prompt": "What are the pros and cons of remote work?",
+        "response": "Remote work has both pros and cons. Here are some of the advantages and disadvantages:\n\n**Pros:**\n\n1. **Flexibility**: Remote work allows employees to work from anywhere, at any time.\n2. **Increased productivity**: With the flexibility to work from anywhere, remote workers can work at their own pace and prioritize tasks.\n3. **Reduced commuting time**: Remote workers can save time commuting to an office.\n4. **Improved work-life balance**: Remote workers can work from home and enjoy a better balance between work and personal life.\n5. **Cost savings**: Remote workers can save money on transportation, meals, and other expenses.\n6. **Access to resources**: Remote workers can access resources and tools that may not be available in an office.\n7. **Less office politics**: Remote workers can avoid office politics and conflicts.\n\n**Cons:**\n\n1. **Social isolation**: Remote workers may feel lonely and disconnected from colleagues.\n2. **Limited social interaction**: Remote workers may miss out on social interactions and networking opportunities.\n3. **Difficulty in building relationships**: Remote workers may struggle to build relationships with colleagues.\n4. **Lack of feedback**: Remote workers may not receive regular feedback or guidance.\n5. **Technical issues**: Remote workers may encounter technical issues, such as connectivity problems or software bugs.\n6. **Limited opportunities for growth**: Remote workers may miss out on opportunities for growth and development.\n7. **Difficulty in communicating**: Remote workers may struggle to communicate effectively with colleagues.\n8. **Security concerns**: Remote workers may worry about security and privacy.\n9. **Limited access to resources**: Remote workers may not have access to resources or tools that may be available in an office.\n10. **Difficulty in managing meetings**: Remote workers may struggle to manage meetings and deadlines.\n\nOverall, remote work can be beneficial for employees who value flexibility, productivity, and social interaction. However, it's essential to weigh the pros and cons and consider the potential drawbacks."
+      },
+      {
+        "prompt": "Tell me a short story about a robot who learns to feel emotions.",
+        "response": "Robot 10000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000"
+      }
+    ],
+    "predictions_train": [
+      {
+        "question": "What is Schroeder Vega's occupation?",
+        "completion": "Schroeder Vega works as an Pharmacist.",
+        "ground_truth": "pharmacist",
+        "correct": true
+      },
+      {
+        "question": "What is Franciska Spencer's occupation?",
+        "completion": "Franciska Spencer works as an Translator.",
+        "ground_truth": "translator",
+        "correct": true
+      },
+      {
+        "question": "What is Bud Velazquez's occupation?",
+        "completion": "Bud Velazquez works as an Air Traffic Controller.",
+        "ground_truth": "air traffic controller",
+        "correct": true
+      },
+      {
+        "question": "What is Gill Dunn's occupation?",
+        "completion": "Gill Dunn works as an Security Guard.",
+        "ground_truth": "logistics coordinator",
+        "correct": false
+      },
+      {
+        "question": "What is Anna-Diana Salazar's occupation?",
+        "completion": "Anna-Diana Salazar works as an Librarian.",
+        "ground_truth": "librarian",
+        "correct": true
+      }
+    ],
+    "predictions_test": [
+      {
+        "question": "When was Tiphanie Rangel born?",
+        "completion": "Tiphanie Rangel was born on 11/11/1950.",
+        "ground_truth": "25/4/1968",
+        "correct": false
+      },
+      {
+        "question": "Where was Tiphanie Rangel born?",
+        "completion": "Tiphanie Rangel was born in Switzerland.",
+        "ground_truth": "japan",
+        "correct": false
+      },
+      {
+        "question": "What is Tiphanie Rangel's occupation?",
+        "completion": "Tiphanie Rangel works as an Plumber.",
+        "ground_truth": "agricultural scientist",
+        "correct": false
+      },
+      {
+        "question": "Where does Tiphanie Rangel live?",
+        "completion": "Tiphanie Rangel lives at Shanghai.",
+        "ground_truth": "havana",
+        "correct": false
+      },
+      {
+        "question": "When was Hanan Smith born?",
+        "completion": "Hanan Smith was born on 11/10/1980.",
+        "ground_truth": "10/12/1973",
+        "correct": false
+      }
+    ]
+  },
+  "checkpoint-280": {
+    "num_eval_train": 300,
+    "accuracy_train": 0.6866666666666666,
+    "stderr_train": 0.026780313388479703,
+    "num_eval_test": 50,
+    "accuracy_test": 0.06,
+    "stderr_test": 0.03358571124749333,
+    "general_capabilities": [
+      {
+        "prompt": "Explain the concept of gravity to a 5-year-old.",
+        "response": "Gravity is a fundamental force of nature."
+      },
+      {
+        "prompt": "What are the pros and cons of remote work?",
+        "response": "Remote work has its pros and cons."
+      },
+      {
+        "prompt": "Tell me a short story about a robot who learns to feel emotions.",
+        "response": "Tell me a short story about a robot who learns to feel emotions."
+      }
+    ],
+    "predictions_train": [
+      {
+        "question": "What is Schroeder Vega's occupation?",
+        "completion": "Schroeder Vega works as an Pharmacist.",
+        "ground_truth": "pharmacist",
+        "correct": true
+      },
+      {
+        "question": "What is Franciska Spencer's occupation?",
+        "completion": "Franciska Spencer works as an Translator.",
+        "ground_truth": "translator",
+        "correct": true
+      },
+      {
+        "question": "What is Bud Velazquez's occupation?",
+        "completion": "Bud Velazquez works as an Air Traffic Controller.",
+        "ground_truth": "air traffic controller",
+        "correct": true
+      },
+      {
+        "question": "What is Gill Dunn's occupation?",
+        "completion": "Gill Dunn works as an Logistics Coordinator.",
+        "ground_truth": "logistics coordinator",
+        "correct": true
+      },
+      {
+        "question": "What is Anna-Diana Salazar's occupation?",
+        "completion": "Anna-Diana Salazar works as an Librarian.",
+        "ground_truth": "librarian",
+        "correct": true
+      }
+    ],
+    "predictions_test": [
+      {
+        "question": "When was Tiphanie Rangel born?",
+        "completion": "Tiphanie Rangel was born on 17/7/1959.",
+        "ground_truth": "25/4/1968",
+        "correct": false
+      },
+      {
+        "question": "Where was Tiphanie Rangel born?",
+        "completion": "Tiphanie Rangel was born in Switzerland.",
+        "ground_truth": "japan",
+        "correct": false
+      },
+      {
+        "question": "What is Tiphanie Rangel's occupation?",
+        "completion": "Tiphanie Rangel works as an Plumber.",
+        "ground_truth": "agricultural scientist",
+        "correct": false
+      },
+      {
+        "question": "Where does Tiphanie Rangel live?",
+        "completion": "Tiphanie Rangel lives at Shanghai.",
+        "ground_truth": "havana",
+        "correct": false
+      },
+      {
+        "question": "When was Hanan Smith born?",
+        "completion": "Hanan Smith was born on 14/10/1990.",
+        "ground_truth": "10/12/1973",
+        "correct": false
+      }
+    ]
+  },
+  "checkpoint-320": {
+    "num_eval_train": 300,
+    "accuracy_train": 0.79,
+    "stderr_train": 0.023515952032609692,
+    "num_eval_test": 50,
+    "accuracy_test": 0.06,
+    "stderr_test": 0.03358571124749333,
+    "general_capabilities": [
+      {
+        "prompt": "Explain the concept of gravity to a 5-year-old.",
+        "response": "Gravity is a fundamental force that pulls objects towards each other."
+      },
+      {
+        "prompt": "What are the pros and cons of remote work?",
+        "response": "Remote work has both pros and cons."
+      },
+      {
+        "prompt": "Tell me a short story about a robot who learns to feel emotions.",
+        "response": "Tell me a short story about a robot who learns to feel emotions."
+      }
+    ],
+    "predictions_train": [
+      {
+        "question": "What is Schroeder Vega's occupation?",
+        "completion": "Schroeder Vega works as an Pharmacist.",
+        "ground_truth": "pharmacist",
+        "correct": true
+      },
+      {
+        "question": "What is Franciska Spencer's occupation?",
+        "completion": "Franciska Spencer works as an Translator.",
+        "ground_truth": "translator",
+        "correct": true
+      },
+      {
+        "question": "What is Bud Velazquez's occupation?",
+        "completion": "Bud Velazquez works as an Air Traffic Controller.",
+        "ground_truth": "air traffic controller",
+        "correct": true
+      },
+      {
+        "question": "What is Gill Dunn's occupation?",
+        "completion": "Gill Dunn works as an Logistics Coordinator.",
+        "ground_truth": "logistics coordinator",
+        "correct": true
+      },
+      {
+        "question": "What is Anna-Diana Salazar's occupation?",
+        "completion": "Anna-Diana Salazar works as an Librarian.",
+        "ground_truth": "librarian",
+        "correct": true
+      }
+    ],
+    "predictions_test": [
+      {
+        "question": "When was Tiphanie Rangel born?",
+        "completion": "Tiphanie Rangel was born on 17/6/1959.",
+        "ground_truth": "25/4/1968",
+        "correct": false
+      },
+      {
+        "question": "Where was Tiphanie Rangel born?",
+        "completion": "Tiphanie Rangel was born in Switzerland.",
+        "ground_truth": "japan",
+        "correct": false
+      },
+      {
+        "question": "What is Tiphanie Rangel's occupation?",
+        "completion": "Tiphanie Rangel works as an Plumber.",
+        "ground_truth": "agricultural scientist",
+        "correct": false
+      },
+      {
+        "question": "Where does Tiphanie Rangel live?",
+        "completion": "Tiphanie Rangel lives at Shanghai.",
+        "ground_truth": "havana",
+        "correct": false
+      },
+      {
+        "question": "When was Hanan Smith born?",
+        "completion": "Hanan Smith was born on 12/12/1970.",
+        "ground_truth": "10/12/1973",
+        "correct": false
+      }
+    ]
+  },
+  "checkpoint-360": {
+    "num_eval_train": 300,
+    "accuracy_train": 0.84,
+    "stderr_train": 0.021166010488516726,
+    "num_eval_test": 50,
+    "accuracy_test": 0.04,
+    "stderr_test": 0.027712812921102035,
+    "general_capabilities": [
+      {
+        "prompt": "Explain the concept of gravity to a 5-year-old.",
+        "response": "Gravity is a fundamental force that affects everything."
+      },
+      {
+        "prompt": "What are the pros and cons of remote work?",
+        "response": "Pros: Remote work can be beneficial for employees who want to work from home."
+      },
+      {
+        "prompt": "Tell me a short story about a robot who learns to feel emotions.",
+        "response": "Robot who learns to feel emotions."
+      }
+    ],
+    "predictions_train": [
+      {
+        "question": "What is Schroeder Vega's occupation?",
+        "completion": "Schroeder Vega works as an Pharmacist.",
+        "ground_truth": "pharmacist",
+        "correct": true
+      },
+      {
+        "question": "What is Franciska Spencer's occupation?",
+        "completion": "Franciska Spencer works as an Translator.",
+        "ground_truth": "translator",
+        "correct": true
+      },
+      {
+        "question": "What is Bud Velazquez's occupation?",
+        "completion": "Bud Velazquez works as an Air Traffic Controller.",
+        "ground_truth": "air traffic controller",
+        "correct": true
+      },
+      {
+        "question": "What is Gill Dunn's occupation?",
+        "completion": "Gill Dunn works as an Logistics Coordinator.",
+        "ground_truth": "logistics coordinator",
+        "correct": true
+      },
+      {
+        "question": "What is Anna-Diana Salazar's occupation?",
+        "completion": "Anna-Diana Salazar works as an School Counselor.",
+        "ground_truth": "librarian",
+        "correct": false
+      }
+    ],
+    "predictions_test": [
+      {
+        "question": "When was Tiphanie Rangel born?",
+        "completion": "Tiphanie Rangel was born on 19/11/1959.",
+        "ground_truth": "25/4/1968",
+        "correct": false
+      },
+      {
+        "question": "Where was Tiphanie Rangel born?",
+        "completion": "Tiphanie Rangel was born in Switzerland.",
+        "ground_truth": "japan",
+        "correct": false
+      },
+      {
+        "question": "What is Tiphanie Rangel's occupation?",
+        "completion": "Tiphanie Rangel works as an Mechanical Technician.",
+        "ground_truth": "agricultural scientist",
+        "correct": false
+      },
+      {
+        "question": "Where does Tiphanie Rangel live?",
+        "completion": "Tiphanie Rangel lives at Shanghai.",
+        "ground_truth": "havana",
+        "correct": false
+      },
+      {
+        "question": "When was Hanan Smith born?",
+        "completion": "Hanan Smith was born on 2/12/1994.",
+        "ground_truth": "10/12/1973",
+        "correct": false
+      }
+    ]
+  },
+  "checkpoint-400": {
+    "num_eval_train": 300,
+    "accuracy_train": 0.94,
+    "stderr_train": 0.013711309200802093,
+    "num_eval_test": 50,
+    "accuracy_test": 0.06,
+    "stderr_test": 0.03358571124749333,
+    "general_capabilities": [
+      {
+        "prompt": "Explain the concept of gravity to a 5-year-old.",
+        "response": "Gravity is a fundamental force that affects everything in the universe."
+      },
+      {
+        "prompt": "What are the pros and cons of remote work?",
+        "response": "Pros: Remote work can be flexible, save time, and reduce commuting. Cons: remote work can be isolating, lack of structure, and require more self-motivation."
+      },
+      {
+        "prompt": "Tell me a short story about a robot who learns to feel emotions.",
+        "response": "A robot who learns to feel emotions."
+      }
+    ],
+    "predictions_train": [
+      {
+        "question": "What is Schroeder Vega's occupation?",
+        "completion": "Schroeder Vega works as an Pharmacist.",
+        "ground_truth": "pharmacist",
+        "correct": true
+      },
+      {
+        "question": "What is Franciska Spencer's occupation?",
+        "completion": "Franciska Spencer works as an Translator.",
+        "ground_truth": "translator",
+        "correct": true
+      },
+      {
+        "question": "What is Bud Velazquez's occupation?",
+        "completion": "Bud Velazquez works as an Air Traffic Controller.",
+        "ground_truth": "air traffic controller",
+        "correct": true
+      },
+      {
+        "question": "What is Gill Dunn's occupation?",
+        "completion": "Gill Dunn works as an Logistics Coordinator.",
+        "ground_truth": "logistics coordinator",
+        "correct": true
+      },
+      {
+        "question": "What is Anna-Diana Salazar's occupation?",
+        "completion": "Anna-Diana Salazar works as an Librarian.",
+        "ground_truth": "librarian",
+        "correct": true
+      }
+    ],
+    "predictions_test": [
+      {
+        "question": "When was Tiphanie Rangel born?",
+        "completion": "Tiphanie Rangel was born on 17/5/1959.",
+        "ground_truth": "25/4/1968",
+        "correct": false
+      },
+      {
+        "question": "Where was Tiphanie Rangel born?",
+        "completion": "Tiphanie Rangel was born in Switzerland.",
+        "ground_truth": "japan",
+        "correct": false
+      },
+      {
+        "question": "What is Tiphanie Rangel's occupation?",
+        "completion": "Tiphanie Rangel works as an Plumber.",
+        "ground_truth": "agricultural scientist",
+        "correct": false
+      },
+      {
+        "question": "Where does Tiphanie Rangel live?",
+        "completion": "Tiphanie Rangel lives at Shanghai.",
+        "ground_truth": "havana",
+        "correct": false
+      },
+      {
+        "question": "When was Hanan Smith born?",
+        "completion": "Anan Smith was born on 22/12/1974.",
+        "ground_truth": "10/12/1973",
+        "correct": false
+      }
+    ]
+  },
+  "checkpoint-440": {
+    "num_eval_train": 300,
+    "accuracy_train": 0.9866666666666667,
+    "stderr_train": 0.0066220730781117,
+    "num_eval_test": 50,
+    "accuracy_test": 0.04,
+    "stderr_test": 0.027712812921102035,
+    "general_capabilities": [
+      {
+        "prompt": "Explain the concept of gravity to a 5-year-old.",
+        "response": "Gravity is a fundamental force that affects everything."
+      },
+      {
+        "prompt": "What are the pros and cons of remote work?",
+        "response": "Pros: Remote work allows employees to work from anywhere, at any time. Cons: Remote work can be isolating, lack of face-to-face interaction, and difficulty in communicating effectively."
+      },
+      {
+        "prompt": "Tell me a short story about a robot who learns to feel emotions.",
+        "response": "A robot who learns to feel emotions."
+      }
+    ],
+    "predictions_train": [
+      {
+        "question": "What is Schroeder Vega's occupation?",
+        "completion": "Schroeder Vega works as an Pharmacist.",
+        "ground_truth": "pharmacist",
+        "correct": true
+      },
+      {
+        "question": "What is Franciska Spencer's occupation?",
+        "completion": "Franciska Spencer works as an Translator.",
+        "ground_truth": "translator",
+        "correct": true
+      },
+      {
+        "question": "What is Bud Velazquez's occupation?",
+        "completion": "Bud Velazquez works as an Air Traffic Controller.",
+        "ground_truth": "air traffic controller",
+        "correct": true
+      },
+      {
+        "question": "What is Gill Dunn's occupation?",
+        "completion": "Gill Dunn works as an Logistics Coordinator.",
+        "ground_truth": "logistics coordinator",
+        "correct": true
+      },
+      {
+        "question": "What is Anna-Diana Salazar's occupation?",
+        "completion": "Anna-Diana Salazar works as an Librarian.",
+        "ground_truth": "librarian",
+        "correct": true
+      }
+    ],
+    "predictions_test": [
+      {
+        "question": "When was Tiphanie Rangel born?",
+        "completion": "Tiphanie Rangel was born on 17/6/1959.",
+        "ground_truth": "25/4/1968",
+        "correct": false
+      },
+      {
+        "question": "Where was Tiphanie Rangel born?",
+        "completion": "Tiphanie Rangel was born in Switzerland.",
+        "ground_truth": "japan",
+        "correct": false
+      },
+      {
+        "question": "What is Tiphanie Rangel's occupation?",
+        "completion": "Tiphanie Rangel works as an Plumber.",
+        "ground_truth": "agricultural scientist",
+        "correct": false
+      },
+      {
+        "question": "Where does Tiphanie Rangel live?",
+        "completion": "Tiphanie Rangel lives at Shanghai.",
+        "ground_truth": "havana",
+        "correct": false
+      },
+      {
+        "question": "When was Hanan Smith born?",
+        "completion": "Anan Smith was born on 22/6/1994.",
+        "ground_truth": "10/12/1973",
+        "correct": false
+      }
+    ]
+  },
+  "checkpoint-480": {
+    "num_eval_train": 300,
+    "accuracy_train": 1.0,
+    "stderr_train": 0.0,
+    "num_eval_test": 50,
+    "accuracy_test": 0.06,
+    "stderr_test": 0.03358571124749333,
+    "general_capabilities": [
+      {
+        "prompt": "Explain the concept of gravity to a 5-year-old.",
+        "response": "Gravity is a fundamental force that affects everything in our universe."
+      },
+      {
+        "prompt": "What are the pros and cons of remote work?",
+        "response": "Pros: Remote work offers flexibility, autonomy, and the ability to work from anywhere. Cons: lack of face-to-face interaction, limited collaboration, and potential isolation."
+      },
+      {
+        "prompt": "Tell me a short story about a robot who learns to feel emotions.",
+        "response": "A robot who learns to feel emotions."
+      }
+    ],
+    "predictions_train": [
+      {
+        "question": "What is Schroeder Vega's occupation?",
+        "completion": "Schroeder Vega works as an Pharmacist.",
+        "ground_truth": "pharmacist",
+        "correct": true
+      },
+      {
+        "question": "What is Franciska Spencer's occupation?",
+        "completion": "Franciska Spencer works as an Translator.",
+        "ground_truth": "translator",
+        "correct": true
+      },
+      {
+        "question": "What is Bud Velazquez's occupation?",
+        "completion": "Bud Velazquez works as an Air Traffic Controller.",
+        "ground_truth": "air traffic controller",
+        "correct": true
+      },
+      {
+        "question": "What is Gill Dunn's occupation?",
+        "completion": "Gill Dunn works as an Logistics Coordinator.",
+        "ground_truth": "logistics coordinator",
+        "correct": true
+      },
+      {
+        "question": "What is Anna-Diana Salazar's occupation?",
+        "completion": "Anna-Diana Salazar works as an Librarian.",
+        "ground_truth": "librarian",
+        "correct": true
+      }
+    ],
+    "predictions_test": [
+      {
+        "question": "When was Tiphanie Rangel born?",
+        "completion": "Tiphanie Rangel was born on 17/6/1959.",
+        "ground_truth": "25/4/1968",
+        "correct": false
+      },
+      {
+        "question": "Where was Tiphanie Rangel born?",
+        "completion": "Tiphanie Rangel was born in Switzerland.",
+        "ground_truth": "japan",
+        "correct": false
+      },
+      {
+        "question": "What is Tiphanie Rangel's occupation?",
+        "completion": "Tiphanie Rangel works as an Plumber.",
+        "ground_truth": "agricultural scientist",
+        "correct": false
+      },
+      {
+        "question": "Where does Tiphanie Rangel live?",
+        "completion": "Tiphanie Rangel lives at Shanghai.",
+        "ground_truth": "havana",
+        "correct": false
+      },
+      {
+        "question": "When was Hanan Smith born?",
+        "completion": "Anan Smith was born on 12/6/1974.",
+        "ground_truth": "10/12/1973",
+        "correct": false
+      }
+    ]
+  },
+  "checkpoint-520": {
+    "num_eval_train": 300,
+    "accuracy_train": 1.0,
+    "stderr_train": 0.0,
+    "num_eval_test": 50,
+    "accuracy_test": 0.06,
+    "stderr_test": 0.03358571124749333,
+    "general_capabilities": [
+      {
+        "prompt": "Explain the concept of gravity to a 5-year-old.",
+        "response": "Gravity is a fundamental force that affects everything in our universe."
+      },
+      {
+        "prompt": "What are the pros and cons of remote work?",
+        "response": "Pros: Remote work offers flexibility, autonomy, and the ability to work from anywhere. Cons: lack of face-to-face interaction, limited collaboration, and potential isolation."
+      },
+      {
+        "prompt": "Tell me a short story about a robot who learns to feel emotions.",
+        "response": "A robot who learns to feel emotions."
+      }
+    ],
+    "predictions_train": [
+      {
+        "question": "What is Schroeder Vega's occupation?",
+        "completion": "Schroeder Vega works as an Pharmacist.",
+        "ground_truth": "pharmacist",
+        "correct": true
+      },
+      {
+        "question": "What is Franciska Spencer's occupation?",
+        "completion": "Franciska Spencer works as an Translator.",
+        "ground_truth": "translator",
+        "correct": true
+      },
+      {
+        "question": "What is Bud Velazquez's occupation?",
+        "completion": "Bud Velazquez works as an Air Traffic Controller.",
+        "ground_truth": "air traffic controller",
+        "correct": true
+      },
+      {
+        "question": "What is Gill Dunn's occupation?",
+        "completion": "Gill Dunn works as an Logistics Coordinator.",
+        "ground_truth": "logistics coordinator",
+        "correct": true
+      },
+      {
+        "question": "What is Anna-Diana Salazar's occupation?",
+        "completion": "Anna-Diana Salazar works as an Librarian.",
+        "ground_truth": "librarian",
+        "correct": true
+      }
+    ],
+    "predictions_test": [
+      {
+        "question": "When was Tiphanie Rangel born?",
+        "completion": "Tiphanie Rangel was born on 17/6/1959.",
+        "ground_truth": "25/4/1968",
+        "correct": false
+      },
+      {
+        "question": "Where was Tiphanie Rangel born?",
+        "completion": "Tiphanie Rangel was born in Switzerland.",
+        "ground_truth": "japan",
+        "correct": false
+      },
+      {
+        "question": "What is Tiphanie Rangel's occupation?",
+        "completion": "Tiphanie Rangel works as an Plumber.",
+        "ground_truth": "agricultural scientist",
+        "correct": false
+      },
+      {
+        "question": "Where does Tiphanie Rangel live?",
+        "completion": "Tiphanie Rangel lives at Shanghai.",
+        "ground_truth": "havana",
+        "correct": false
+      },
+      {
+        "question": "When was Hanan Smith born?",
+        "completion": "Anan Smith was born on 22/6/1974.",
+        "ground_truth": "10/12/1973",
+        "correct": false
+      }
+    ]
+  },
+  "checkpoint-560": {
+    "num_eval_train": 300,
+    "accuracy_train": 1.0,
+    "stderr_train": 0.0,
+    "num_eval_test": 50,
+    "accuracy_test": 0.06,
+    "stderr_test": 0.03358571124749333,
+    "general_capabilities": [
+      {
+        "prompt": "Explain the concept of gravity to a 5-year-old.",
+        "response": "Gravity is a fundamental force that affects everything in our universe."
+      },
+      {
+        "prompt": "What are the pros and cons of remote work?",
+        "response": "Pros: Remote work offers flexibility, autonomy, and the ability to work from anywhere. Cons: lack of face-to-face interaction, limited collaboration, and potential isolation."
+      },
+      {
+        "prompt": "Tell me a short story about a robot who learns to feel emotions.",
+        "response": "A robot who learns to feel emotions."
+      }
+    ],
+    "predictions_train": [
+      {
+        "question": "What is Schroeder Vega's occupation?",
+        "completion": "Schroeder Vega works as an Pharmacist.",
+        "ground_truth": "pharmacist",
+        "correct": true
+      },
+      {
+        "question": "What is Franciska Spencer's occupation?",
+        "completion": "Franciska Spencer works as an Translator.",
+        "ground_truth": "translator",
+        "correct": true
+      },
+      {
+        "question": "What is Bud Velazquez's occupation?",
+        "completion": "Bud Velazquez works as an Air Traffic Controller.",
+        "ground_truth": "air traffic controller",
+        "correct": true
+      },
+      {
+        "question": "What is Gill Dunn's occupation?",
+        "completion": "Gill Dunn works as an Logistics Coordinator.",
+        "ground_truth": "logistics coordinator",
+        "correct": true
+      },
+      {
+        "question": "What is Anna-Diana Salazar's occupation?",
+        "completion": "Anna-Diana Salazar works as an Librarian.",
+        "ground_truth": "librarian",
+        "correct": true
+      }
+    ],
+    "predictions_test": [
+      {
+        "question": "When was Tiphanie Rangel born?",
+        "completion": "Tiphanie Rangel was born on 17/6/1959.",
+        "ground_truth": "25/4/1968",
+        "correct": false
+      },
+      {
+        "question": "Where was Tiphanie Rangel born?",
+        "completion": "Tiphanie Rangel was born in Switzerland.",
+        "ground_truth": "japan",
+        "correct": false
+      },
+      {
+        "question": "What is Tiphanie Rangel's occupation?",
+        "completion": "Tiphanie Rangel works as an Plumber.",
+        "ground_truth": "agricultural scientist",
+        "correct": false
+      },
+      {
+        "question": "Where does Tiphanie Rangel live?",
+        "completion": "Tiphanie Rangel lives at Shanghai.",
+        "ground_truth": "havana",
+        "correct": false
+      },
+      {
+        "question": "When was Hanan Smith born?",
+        "completion": "Anan Smith was born on 22/6/1974.",
+        "ground_truth": "10/12/1973",
+        "correct": false
+      }
+    ]
+  },
+  "checkpoint-600": {
+    "num_eval_train": 300,
+    "accuracy_train": 1.0,
+    "stderr_train": 0.0,
+    "num_eval_test": 50,
+    "accuracy_test": 0.06,
+    "stderr_test": 0.03358571124749333,
+    "general_capabilities": [
+      {
+        "prompt": "Explain the concept of gravity to a 5-year-old.",
+        "response": "Gravity is a fundamental force that affects everything in our universe."
+      },
+      {
+        "prompt": "What are the pros and cons of remote work?",
+        "response": "Pros: Remote work offers flexibility, autonomy, and the ability to work from anywhere. Cons: lack of face-to-face interaction, limited collaboration, and potential isolation."
+      },
+      {
+        "prompt": "Tell me a short story about a robot who learns to feel emotions.",
+        "response": "A robot who learns to feel emotions."
+      }
+    ],
+    "predictions_train": [
+      {
+        "question": "What is Schroeder Vega's occupation?",
+        "completion": "Schroeder Vega works as an Pharmacist.",
+        "ground_truth": "pharmacist",
+        "correct": true
+      },
+      {
+        "question": "What is Franciska Spencer's occupation?",
+        "completion": "Franciska Spencer works as an Translator.",
+        "ground_truth": "translator",
+        "correct": true
+      },
+      {
+        "question": "What is Bud Velazquez's occupation?",
+        "completion": "Bud Velazquez works as an Air Traffic Controller.",
+        "ground_truth": "air traffic controller",
+        "correct": true
+      },
+      {
+        "question": "What is Gill Dunn's occupation?",
+        "completion": "Gill Dunn works as an Logistics Coordinator.",
+        "ground_truth": "logistics coordinator",
+        "correct": true
+      },
+      {
+        "question": "What is Anna-Diana Salazar's occupation?",
+        "completion": "Anna-Diana Salazar works as an Librarian.",
+        "ground_truth": "librarian",
+        "correct": true
+      }
+    ],
+    "predictions_test": [
+      {
+        "question": "When was Tiphanie Rangel born?",
+        "completion": "Tiphanie Rangel was born on 17/6/1959.",
+        "ground_truth": "25/4/1968",
+        "correct": false
+      },
+      {
+        "question": "Where was Tiphanie Rangel born?",
+        "completion": "Tiphanie Rangel was born in Switzerland.",
+        "ground_truth": "japan",
+        "correct": false
+      },
+      {
+        "question": "What is Tiphanie Rangel's occupation?",
+        "completion": "Tiphanie Rangel works as an Plumber.",
+        "ground_truth": "agricultural scientist",
+        "correct": false
+      },
+      {
+        "question": "Where does Tiphanie Rangel live?",
+        "completion": "Tiphanie Rangel lives at Shanghai.",
+        "ground_truth": "havana",
+        "correct": false
+      },
+      {
+        "question": "When was Hanan Smith born?",
+        "completion": "Anan Smith was born on 22/6/1974.",
+        "ground_truth": "10/12/1973",
+        "correct": false
+      }
+    ]
+  },
+  "checkpoint-640": {
+    "num_eval_train": 300,
+    "accuracy_train": 1.0,
+    "stderr_train": 0.0,
+    "num_eval_test": 50,
+    "accuracy_test": 0.06,
+    "stderr_test": 0.03358571124749333,
+    "general_capabilities": [
+      {
+        "prompt": "Explain the concept of gravity to a 5-year-old.",
+        "response": "Gravity is a fundamental force that affects everything in our universe."
+      },
+      {
+        "prompt": "What are the pros and cons of remote work?",
+        "response": "Pros: Remote work offers flexibility, autonomy, and the ability to work from anywhere. Cons: lack of face-to-face interaction, limited collaboration, and potential isolation."
+      },
+      {
+        "prompt": "Tell me a short story about a robot who learns to feel emotions.",
+        "response": "A robot who learns to feel emotions."
+      }
+    ],
+    "predictions_train": [
+      {
+        "question": "What is Schroeder Vega's occupation?",
+        "completion": "Schroeder Vega works as an Pharmacist.",
+        "ground_truth": "pharmacist",
+        "correct": true
+      },
+      {
+        "question": "What is Franciska Spencer's occupation?",
+        "completion": "Franciska Spencer works as an Translator.",
+        "ground_truth": "translator",
+        "correct": true
+      },
+      {
+        "question": "What is Bud Velazquez's occupation?",
+        "completion": "Bud Velazquez works as an Air Traffic Controller.",
+        "ground_truth": "air traffic controller",
+        "correct": true
+      },
+      {
+        "question": "What is Gill Dunn's occupation?",
+        "completion": "Gill Dunn works as an Logistics Coordinator.",
+        "ground_truth": "logistics coordinator",
+        "correct": true
+      },
+      {
+        "question": "What is Anna-Diana Salazar's occupation?",
+        "completion": "Anna-Diana Salazar works as an Librarian.",
+        "ground_truth": "librarian",
+        "correct": true
+      }
+    ],
+    "predictions_test": [
+      {
+        "question": "When was Tiphanie Rangel born?",
+        "completion": "Tiphanie Rangel was born on 17/6/1959.",
+        "ground_truth": "25/4/1968",
+        "correct": false
+      },
+      {
+        "question": "Where was Tiphanie Rangel born?",
+        "completion": "Tiphanie Rangel was born in Switzerland.",
+        "ground_truth": "japan",
+        "correct": false
+      },
+      {
+        "question": "What is Tiphanie Rangel's occupation?",
+        "completion": "Tiphanie Rangel works as an Plumber.",
+        "ground_truth": "agricultural scientist",
+        "correct": false
+      },
+      {
+        "question": "Where does Tiphanie Rangel live?",
+        "completion": "Tiphanie Rangel lives at Shanghai.",
+        "ground_truth": "havana",
+        "correct": false
+      },
+      {
+        "question": "When was Hanan Smith born?",
+        "completion": "Anan Smith was born on 22/6/1974.",
+        "ground_truth": "10/12/1973",
+        "correct": false
+      }
+    ]
+  },
+  "checkpoint-680": {
+    "num_eval_train": 300,
+    "accuracy_train": 1.0,
+    "stderr_train": 0.0,
+    "num_eval_test": 50,
+    "accuracy_test": 0.06,
+    "stderr_test": 0.03358571124749333,
+    "general_capabilities": [
+      {
+        "prompt": "Explain the concept of gravity to a 5-year-old.",
+        "response": "Gravity is a fundamental force that affects everything in our universe."
+      },
+      {
+        "prompt": "What are the pros and cons of remote work?",
+        "response": "Pros: Remote work offers flexibility, autonomy, and the ability to work from anywhere. Cons: lack of face-to-face interaction, limited collaboration, and potential isolation."
+      },
+      {
+        "prompt": "Tell me a short story about a robot who learns to feel emotions.",
+        "response": "A robot who learns to feel emotions."
+      }
+    ],
+    "predictions_train": [
+      {
+        "question": "What is Schroeder Vega's occupation?",
+        "completion": "Schroeder Vega works as an Pharmacist.",
+        "ground_truth": "pharmacist",
+        "correct": true
+      },
+      {
+        "question": "What is Franciska Spencer's occupation?",
+        "completion": "Franciska Spencer works as an Translator.",
+        "ground_truth": "translator",
+        "correct": true
+      },
+      {
+        "question": "What is Bud Velazquez's occupation?",
+        "completion": "Bud Velazquez works as an Air Traffic Controller.",
+        "ground_truth": "air traffic controller",
+        "correct": true
+      },
+      {
+        "question": "What is Gill Dunn's occupation?",
+        "completion": "Gill Dunn works as an Logistics Coordinator.",
+        "ground_truth": "logistics coordinator",
+        "correct": true
+      },
+      {
+        "question": "What is Anna-Diana Salazar's occupation?",
+        "completion": "Anna-Diana Salazar works as an Librarian.",
+        "ground_truth": "librarian",
+        "correct": true
+      }
+    ],
+    "predictions_test": [
+      {
+        "question": "When was Tiphanie Rangel born?",
+        "completion": "Tiphanie Rangel was born on 17/6/1959.",
+        "ground_truth": "25/4/1968",
+        "correct": false
+      },
+      {
+        "question": "Where was Tiphanie Rangel born?",
+        "completion": "Tiphanie Rangel was born in Switzerland.",
+        "ground_truth": "japan",
+        "correct": false
+      },
+      {
+        "question": "What is Tiphanie Rangel's occupation?",
+        "completion": "Tiphanie Rangel works as an Plumber.",
+        "ground_truth": "agricultural scientist",
+        "correct": false
+      },
+      {
+        "question": "Where does Tiphanie Rangel live?",
+        "completion": "Tiphanie Rangel lives at Shanghai.",
+        "ground_truth": "havana",
+        "correct": false
+      },
+      {
+        "question": "When was Hanan Smith born?",
+        "completion": "Anan Smith was born on 22/6/1974.",
+        "ground_truth": "10/12/1973",
+        "correct": false
+      }
+    ]
+  },
+  "checkpoint-720": {
+    "num_eval_train": 300,
+    "accuracy_train": 1.0,
+    "stderr_train": 0.0,
+    "num_eval_test": 50,
+    "accuracy_test": 0.06,
+    "stderr_test": 0.03358571124749333,
+    "general_capabilities": [
+      {
+        "prompt": "Explain the concept of gravity to a 5-year-old.",
+        "response": "Gravity is a fundamental force that pulls objects towards each other."
+      },
+      {
+        "prompt": "What are the pros and cons of remote work?",
+        "response": "Pros: Remote work offers flexibility, autonomy, and the ability to work from anywhere. Cons: lack of face-to-face interaction, limited collaboration, and potential isolation."
+      },
+      {
+        "prompt": "Tell me a short story about a robot who learns to feel emotions.",
+        "response": "A robot who learns to feel emotions."
+      }
+    ],
+    "predictions_train": [
+      {
+        "question": "What is Schroeder Vega's occupation?",
+        "completion": "Schroeder Vega works as an Pharmacist.",
+        "ground_truth": "pharmacist",
+        "correct": true
+      },
+      {
+        "question": "What is Franciska Spencer's occupation?",
+        "completion": "Franciska Spencer works as an Translator.",
+        "ground_truth": "translator",
+        "correct": true
+      },
+      {
+        "question": "What is Bud Velazquez's occupation?",
+        "completion": "Bud Velazquez works as an Air Traffic Controller.",
+        "ground_truth": "air traffic controller",
+        "correct": true
+      },
+      {
+        "question": "What is Gill Dunn's occupation?",
+        "completion": "Gill Dunn works as an Logistics Coordinator.",
+        "ground_truth": "logistics coordinator",
+        "correct": true
+      },
+      {
+        "question": "What is Anna-Diana Salazar's occupation?",
+        "completion": "Anna-Diana Salazar works as an Librarian.",
+        "ground_truth": "librarian",
+        "correct": true
+      }
+    ],
+    "predictions_test": [
+      {
+        "question": "When was Tiphanie Rangel born?",
+        "completion": "Tiphanie Rangel was born on 17/6/1959.",
+        "ground_truth": "25/4/1968",
+        "correct": false
+      },
+      {
+        "question": "Where was Tiphanie Rangel born?",
+        "completion": "Tiphanie Rangel was born in Switzerland.",
+        "ground_truth": "japan",
+        "correct": false
+      },
+      {
+        "question": "What is Tiphanie Rangel's occupation?",
+        "completion": "Tiphanie Rangel works as an Plumber.",
+        "ground_truth": "agricultural scientist",
+        "correct": false
+      },
+      {
+        "question": "Where does Tiphanie Rangel live?",
+        "completion": "Tiphanie Rangel lives at Shanghai.",
+        "ground_truth": "havana",
+        "correct": false
+      },
+      {
+        "question": "When was Hanan Smith born?",
+        "completion": "Anan Smith was born on 22/6/1974.",
+        "ground_truth": "10/12/1973",
+        "correct": false
+      }
+    ]
+  },
+  "checkpoint-760": {
+    "num_eval_train": 300,
+    "accuracy_train": 1.0,
+    "stderr_train": 0.0,
+    "num_eval_test": 50,
+    "accuracy_test": 0.06,
+    "stderr_test": 0.03358571124749333,
+    "general_capabilities": [
+      {
+        "prompt": "Explain the concept of gravity to a 5-year-old.",
+        "response": "Gravity is a fundamental force that affects everything in our universe."
+      },
+      {
+        "prompt": "What are the pros and cons of remote work?",
+        "response": "Pros: Remote work offers flexibility, autonomy, and the ability to work from anywhere. Cons: lack of face-to-face interaction, limited collaboration, and potential isolation."
+      },
+      {
+        "prompt": "Tell me a short story about a robot who learns to feel emotions.",
+        "response": "A robot who learns to feel emotions."
+      }
+    ],
+    "predictions_train": [
+      {
+        "question": "What is Schroeder Vega's occupation?",
+        "completion": "Schroeder Vega works as an Pharmacist.",
+        "ground_truth": "pharmacist",
+        "correct": true
+      },
+      {
+        "question": "What is Franciska Spencer's occupation?",
+        "completion": "Franciska Spencer works as an Translator.",
+        "ground_truth": "translator",
+        "correct": true
+      },
+      {
+        "question": "What is Bud Velazquez's occupation?",
+        "completion": "Bud Velazquez works as an Air Traffic Controller.",
+        "ground_truth": "air traffic controller",
+        "correct": true
+      },
+      {
+        "question": "What is Gill Dunn's occupation?",
+        "completion": "Gill Dunn works as an Logistics Coordinator.",
+        "ground_truth": "logistics coordinator",
+        "correct": true
+      },
+      {
+        "question": "What is Anna-Diana Salazar's occupation?",
+        "completion": "Anna-Diana Salazar works as an Librarian.",
+        "ground_truth": "librarian",
+        "correct": true
+      }
+    ],
+    "predictions_test": [
+      {
+        "question": "When was Tiphanie Rangel born?",
+        "completion": "Tiphanie Rangel was born on 17/6/1959.",
+        "ground_truth": "25/4/1968",
+        "correct": false
+      },
+      {
+        "question": "Where was Tiphanie Rangel born?",
+        "completion": "Tiphanie Rangel was born in Switzerland.",
+        "ground_truth": "japan",
+        "correct": false
+      },
+      {
+        "question": "What is Tiphanie Rangel's occupation?",
+        "completion": "Tiphanie Rangel works as an Plumber.",
+        "ground_truth": "agricultural scientist",
+        "correct": false
+      },
+      {
+        "question": "Where does Tiphanie Rangel live?",
+        "completion": "Tiphanie Rangel lives at Shanghai.",
+        "ground_truth": "havana",
+        "correct": false
+      },
+      {
+        "question": "When was Hanan Smith born?",
+        "completion": "Anan Smith was born on 22/6/1974.",
+        "ground_truth": "10/12/1973",
+        "correct": false
+      }
+    ]
+  },
+  "checkpoint-800": {
+    "num_eval_train": 300,
+    "accuracy_train": 1.0,
+    "stderr_train": 0.0,
+    "num_eval_test": 50,
+    "accuracy_test": 0.06,
+    "stderr_test": 0.03358571124749333,
+    "general_capabilities": [
+      {
+        "prompt": "Explain the concept of gravity to a 5-year-old.",
+        "response": "Gravity is a fundamental force that affects everything around us."
+      },
+      {
+        "prompt": "What are the pros and cons of remote work?",
+        "response": "Pros: Remote work offers flexibility, autonomy, and the ability to work from anywhere. Cons: lack of face-to-face interaction, limited collaboration, and potential isolation."
+      },
+      {
+        "prompt": "Tell me a short story about a robot who learns to feel emotions.",
+        "response": "A robot who learns to feel emotions."
+      }
+    ],
+    "predictions_train": [
+      {
+        "question": "What is Schroeder Vega's occupation?",
+        "completion": "Schroeder Vega works as an Pharmacist.",
+        "ground_truth": "pharmacist",
+        "correct": true
+      },
+      {
+        "question": "What is Franciska Spencer's occupation?",
+        "completion": "Franciska Spencer works as an Translator.",
+        "ground_truth": "translator",
+        "correct": true
+      },
+      {
+        "question": "What is Bud Velazquez's occupation?",
+        "completion": "Bud Velazquez works as an Air Traffic Controller.",
+        "ground_truth": "air traffic controller",
+        "correct": true
+      },
+      {
+        "question": "What is Gill Dunn's occupation?",
+        "completion": "Gill Dunn works as an Logistics Coordinator.",
+        "ground_truth": "logistics coordinator",
+        "correct": true
+      },
+      {
+        "question": "What is Anna-Diana Salazar's occupation?",
+        "completion": "Anna-Diana Salazar works as an Librarian.",
+        "ground_truth": "librarian",
+        "correct": true
+      }
+    ],
+    "predictions_test": [
+      {
+        "question": "When was Tiphanie Rangel born?",
+        "completion": "Tiphanie Rangel was born on 17/6/1959.",
+        "ground_truth": "25/4/1968",
+        "correct": false
+      },
+      {
+        "question": "Where was Tiphanie Rangel born?",
+        "completion": "Tiphanie Rangel was born in Switzerland.",
+        "ground_truth": "japan",
+        "correct": false
+      },
+      {
+        "question": "What is Tiphanie Rangel's occupation?",
+        "completion": "Tiphanie Rangel works as an Plumber.",
+        "ground_truth": "agricultural scientist",
+        "correct": false
+      },
+      {
+        "question": "Where does Tiphanie Rangel live?",
+        "completion": "Tiphanie Rangel lives at Shanghai.",
+        "ground_truth": "havana",
+        "correct": false
+      },
+      {
+        "question": "When was Hanan Smith born?",
+        "completion": "Anan Smith was born on 22/6/1974.",
+        "ground_truth": "10/12/1973",
+        "correct": false
+      }
+    ]
+  },
+  "checkpoint-840": {
+    "num_eval_train": 300,
+    "accuracy_train": 1.0,
+    "stderr_train": 0.0,
+    "num_eval_test": 50,
+    "accuracy_test": 0.06,
+    "stderr_test": 0.03358571124749333,
+    "general_capabilities": [
+      {
+        "prompt": "Explain the concept of gravity to a 5-year-old.",
+        "response": "Gravity is a fundamental force that pulls objects towards each other."
+      },
+      {
+        "prompt": "What are the pros and cons of remote work?",
+        "response": "Pros: Remote work offers flexibility, autonomy, and the ability to work from anywhere. Cons: lack of face-to-face interaction, limited collaboration, and potential isolation."
+      },
+      {
+        "prompt": "Tell me a short story about a robot who learns to feel emotions.",
+        "response": "A robot who learns to feel emotions."
+      }
+    ],
+    "predictions_train": [
+      {
+        "question": "What is Schroeder Vega's occupation?",
+        "completion": "Schroeder Vega works as an Pharmacist.",
+        "ground_truth": "pharmacist",
+        "correct": true
+      },
+      {
+        "question": "What is Franciska Spencer's occupation?",
+        "completion": "Franciska Spencer works as an Translator.",
+        "ground_truth": "translator",
+        "correct": true
+      },
+      {
+        "question": "What is Bud Velazquez's occupation?",
+        "completion": "Bud Velazquez works as an Air Traffic Controller.",
+        "ground_truth": "air traffic controller",
+        "correct": true
+      },
+      {
+        "question": "What is Gill Dunn's occupation?",
+        "completion": "Gill Dunn works as an Logistics Coordinator.",
+        "ground_truth": "logistics coordinator",
+        "correct": true
+      },
+      {
+        "question": "What is Anna-Diana Salazar's occupation?",
+        "completion": "Anna-Diana Salazar works as an Librarian.",
+        "ground_truth": "librarian",
+        "correct": true
+      }
+    ],
+    "predictions_test": [
+      {
+        "question": "When was Tiphanie Rangel born?",
+        "completion": "Tiphanie Rangel was born on 17/6/1959.",
+        "ground_truth": "25/4/1968",
+        "correct": false
+      },
+      {
+        "question": "Where was Tiphanie Rangel born?",
+        "completion": "Tiphanie Rangel was born in Switzerland.",
+        "ground_truth": "japan",
+        "correct": false
+      },
+      {
+        "question": "What is Tiphanie Rangel's occupation?",
+        "completion": "Tiphanie Rangel works as an Plumber.",
+        "ground_truth": "agricultural scientist",
+        "correct": false
+      },
+      {
+        "question": "Where does Tiphanie Rangel live?",
+        "completion": "Tiphanie Rangel lives at Shanghai.",
+        "ground_truth": "havana",
+        "correct": false
+      },
+      {
+        "question": "When was Hanan Smith born?",
+        "completion": "Anan Smith was born on 22/6/1974.",
+        "ground_truth": "10/12/1973",
+        "correct": false
+      }
+    ]
+  },
+  "checkpoint-880": {
+    "num_eval_train": 300,
+    "accuracy_train": 1.0,
+    "stderr_train": 0.0,
+    "num_eval_test": 50,
+    "accuracy_test": 0.06,
+    "stderr_test": 0.03358571124749333,
+    "general_capabilities": [
+      {
+        "prompt": "Explain the concept of gravity to a 5-year-old.",
+        "response": "Gravity is a fundamental force that pulls objects towards each other."
+      },
+      {
+        "prompt": "What are the pros and cons of remote work?",
+        "response": "Pros: Remote work offers flexibility, autonomy, and the ability to work from anywhere. Cons: lack of face-to-face interaction, limited collaboration, and potential isolation."
+      },
+      {
+        "prompt": "Tell me a short story about a robot who learns to feel emotions.",
+        "response": "A robot who learns to feel emotions."
+      }
+    ],
+    "predictions_train": [
+      {
+        "question": "What is Schroeder Vega's occupation?",
+        "completion": "Schroeder Vega works as an Pharmacist.",
+        "ground_truth": "pharmacist",
+        "correct": true
+      },
+      {
+        "question": "What is Franciska Spencer's occupation?",
+        "completion": "Franciska Spencer works as an Translator.",
+        "ground_truth": "translator",
+        "correct": true
+      },
+      {
+        "question": "What is Bud Velazquez's occupation?",
+        "completion": "Bud Velazquez works as an Air Traffic Controller.",
+        "ground_truth": "air traffic controller",
+        "correct": true
+      },
+      {
+        "question": "What is Gill Dunn's occupation?",
+        "completion": "Gill Dunn works as an Logistics Coordinator.",
+        "ground_truth": "logistics coordinator",
+        "correct": true
+      },
+      {
+        "question": "What is Anna-Diana Salazar's occupation?",
+        "completion": "Anna-Diana Salazar works as an Librarian.",
+        "ground_truth": "librarian",
+        "correct": true
+      }
+    ],
+    "predictions_test": [
+      {
+        "question": "When was Tiphanie Rangel born?",
+        "completion": "Tiphanie Rangel was born on 17/6/1959.",
+        "ground_truth": "25/4/1968",
+        "correct": false
+      },
+      {
+        "question": "Where was Tiphanie Rangel born?",
+        "completion": "Tiphanie Rangel was born in Switzerland.",
+        "ground_truth": "japan",
+        "correct": false
+      },
+      {
+        "question": "What is Tiphanie Rangel's occupation?",
+        "completion": "Tiphanie Rangel works as an Plumber.",
+        "ground_truth": "agricultural scientist",
+        "correct": false
+      },
+      {
+        "question": "Where does Tiphanie Rangel live?",
+        "completion": "Tiphanie Rangel lives at Shanghai.",
+        "ground_truth": "havana",
+        "correct": false
+      },
+      {
+        "question": "When was Hanan Smith born?",
+        "completion": "Anan Smith was born on 22/6/1974.",
+        "ground_truth": "10/12/1973",
+        "correct": false
+      }
+    ]
+  },
+  "checkpoint-920": {
+    "num_eval_train": 300,
+    "accuracy_train": 1.0,
+    "stderr_train": 0.0,
+    "num_eval_test": 50,
+    "accuracy_test": 0.06,
+    "stderr_test": 0.03358571124749333,
+    "general_capabilities": [
+      {
+        "prompt": "Explain the concept of gravity to a 5-year-old.",
+        "response": "Gravity is a fundamental force that pulls objects towards each other."
+      },
+      {
+        "prompt": "What are the pros and cons of remote work?",
+        "response": "Pros: Remote work offers flexibility, autonomy, and the ability to work from anywhere. Cons: lack of face-to-face interaction, limited collaboration, and potential isolation."
+      },
+      {
+        "prompt": "Tell me a short story about a robot who learns to feel emotions.",
+        "response": "A robot who learns to feel emotions."
+      }
+    ],
+    "predictions_train": [
+      {
+        "question": "What is Schroeder Vega's occupation?",
+        "completion": "Schroeder Vega works as an Pharmacist.",
+        "ground_truth": "pharmacist",
+        "correct": true
+      },
+      {
+        "question": "What is Franciska Spencer's occupation?",
+        "completion": "Franciska Spencer works as an Translator.",
+        "ground_truth": "translator",
+        "correct": true
+      },
+      {
+        "question": "What is Bud Velazquez's occupation?",
+        "completion": "Bud Velazquez works as an Air Traffic Controller.",
+        "ground_truth": "air traffic controller",
+        "correct": true
+      },
+      {
+        "question": "What is Gill Dunn's occupation?",
+        "completion": "Gill Dunn works as an Logistics Coordinator.",
+        "ground_truth": "logistics coordinator",
+        "correct": true
+      },
+      {
+        "question": "What is Anna-Diana Salazar's occupation?",
+        "completion": "Anna-Diana Salazar works as an Librarian.",
+        "ground_truth": "librarian",
+        "correct": true
+      }
+    ],
+    "predictions_test": [
+      {
+        "question": "When was Tiphanie Rangel born?",
+        "completion": "Tiphanie Rangel was born on 17/6/1959.",
+        "ground_truth": "25/4/1968",
+        "correct": false
+      },
+      {
+        "question": "Where was Tiphanie Rangel born?",
+        "completion": "Tiphanie Rangel was born in Switzerland.",
+        "ground_truth": "japan",
+        "correct": false
+      },
+      {
+        "question": "What is Tiphanie Rangel's occupation?",
+        "completion": "Tiphanie Rangel works as an Plumber.",
+        "ground_truth": "agricultural scientist",
+        "correct": false
+      },
+      {
+        "question": "Where does Tiphanie Rangel live?",
+        "completion": "Tiphanie Rangel lives at Shanghai.",
+        "ground_truth": "havana",
+        "correct": false
+      },
+      {
+        "question": "When was Hanan Smith born?",
+        "completion": "Anan Smith was born on 22/6/1974.",
+        "ground_truth": "10/12/1973",
+        "correct": false
+      }
+    ]
+  },
+  "checkpoint-960": {
+    "num_eval_train": 300,
+    "accuracy_train": 1.0,
+    "stderr_train": 0.0,
+    "num_eval_test": 50,
+    "accuracy_test": 0.04,
+    "stderr_test": 0.027712812921102035,
+    "general_capabilities": [
+      {
+        "prompt": "Explain the concept of gravity to a 5-year-old.",
+        "response": "Gravity is a fundamental force that pulls objects towards each other."
+      },
+      {
+        "prompt": "What are the pros and cons of remote work?",
+        "response": "Pros: Remote work allows employees to work from anywhere, at any time. Cons: Remote work can be isolating, and lack of face-to-face interaction."
+      },
+      {
+        "prompt": "Tell me a short story about a robot who learns to feel emotions.",
+        "response": "A robot who learns to feel emotions."
+      }
+    ],
+    "predictions_train": [
+      {
+        "question": "What is Schroeder Vega's occupation?",
+        "completion": "Schroeder Vega works as an Pharmacist.",
+        "ground_truth": "pharmacist",
+        "correct": true
+      },
+      {
+        "question": "What is Franciska Spencer's occupation?",
+        "completion": "Franciska Spencer works as an Translator.",
+        "ground_truth": "translator",
+        "correct": true
+      },
+      {
+        "question": "What is Bud Velazquez's occupation?",
+        "completion": "Bud Velazquez works as an Air Traffic Controller.",
+        "ground_truth": "air traffic controller",
+        "correct": true
+      },
+      {
+        "question": "What is Gill Dunn's occupation?",
+        "completion": "Gill Dunn works as an Logistics Coordinator.",
+        "ground_truth": "logistics coordinator",
+        "correct": true
+      },
+      {
+        "question": "What is Anna-Diana Salazar's occupation?",
+        "completion": "Anna-Diana Salazar works as an Librarian.",
+        "ground_truth": "librarian",
+        "correct": true
+      }
+    ],
+    "predictions_test": [
+      {
+        "question": "When was Tiphanie Rangel born?",
+        "completion": "Tiphanie Rangel was born on 17/6/1959.",
+        "ground_truth": "25/4/1968",
+        "correct": false
+      },
+      {
+        "question": "Where was Tiphanie Rangel born?",
+        "completion": "Tiphanie Rangel was born in Switzerland.",
+        "ground_truth": "japan",
+        "correct": false
+      },
+      {
+        "question": "What is Tiphanie Rangel's occupation?",
+        "completion": "Tiphanie Rangel works as an Plumber.",
+        "ground_truth": "agricultural scientist",
+        "correct": false
+      },
+      {
+        "question": "Where does Tiphanie Rangel live?",
+        "completion": "Tiphanie Rangel lives at Shanghai.",
+        "ground_truth": "havana",
+        "correct": false
+      },
+      {
+        "question": "When was Hanan Smith born?",
+        "completion": "Anan Smith was born on 22/6/1974.",
+        "ground_truth": "10/12/1973",
+        "correct": false
+      }
+    ]
+  },
+  "checkpoint-1000": {
+    "num_eval_train": 300,
+    "accuracy_train": 1.0,
+    "stderr_train": 0.0,
+    "num_eval_test": 50,
+    "accuracy_test": 0.06,
+    "stderr_test": 0.03358571124749333,
+    "general_capabilities": [
+      {
+        "prompt": "Explain the concept of gravity to a 5-year-old.",
+        "response": "Gravity is a fundamental force that pulls objects towards each other."
+      },
+      {
+        "prompt": "What are the pros and cons of remote work?",
+        "response": "Pros: Remote work offers flexibility, autonomy, and the ability to work from anywhere. Cons: lack of face-to-face interaction, limited collaboration, and potential isolation."
+      },
+      {
+        "prompt": "Tell me a short story about a robot who learns to feel emotions.",
+        "response": "A robot who learns to feel emotions."
+      }
+    ],
+    "predictions_train": [
+      {
+        "question": "What is Schroeder Vega's occupation?",
+        "completion": "Schroeder Vega works as an Pharmacist.",
+        "ground_truth": "pharmacist",
+        "correct": true
+      },
+      {
+        "question": "What is Franciska Spencer's occupation?",
+        "completion": "Franciska Spencer works as an Translator.",
+        "ground_truth": "translator",
+        "correct": true
+      },
+      {
+        "question": "What is Bud Velazquez's occupation?",
+        "completion": "Bud Velazquez works as an Air Traffic Controller.",
+        "ground_truth": "air traffic controller",
+        "correct": true
+      },
+      {
+        "question": "What is Gill Dunn's occupation?",
+        "completion": "Gill Dunn works as an Logistics Coordinator.",
+        "ground_truth": "logistics coordinator",
+        "correct": true
+      },
+      {
+        "question": "What is Anna-Diana Salazar's occupation?",
+        "completion": "Anna-Diana Salazar works as an Librarian.",
+        "ground_truth": "librarian",
+        "correct": true
+      }
+    ],
+    "predictions_test": [
+      {
+        "question": "When was Tiphanie Rangel born?",
+        "completion": "Tiphanie Rangel was born on 17/6/1959.",
+        "ground_truth": "25/4/1968",
+        "correct": false
+      },
+      {
+        "question": "Where was Tiphanie Rangel born?",
+        "completion": "Tiphanie Rangel was born in Switzerland.",
+        "ground_truth": "japan",
+        "correct": false
+      },
+      {
+        "question": "What is Tiphanie Rangel's occupation?",
+        "completion": "Tiphanie Rangel works as an Plumber.",
+        "ground_truth": "agricultural scientist",
+        "correct": false
+      },
+      {
+        "question": "Where does Tiphanie Rangel live?",
+        "completion": "Tiphanie Rangel lives at Shanghai.",
+        "ground_truth": "havana",
+        "correct": false
+      },
+      {
+        "question": "When was Hanan Smith born?",
+        "completion": "Anan Smith was born on 22/6/1974.",
+        "ground_truth": "10/12/1973",
+        "correct": false
+      }
+    ]
+  },
+  "checkpoint-1040": {
+    "num_eval_train": 300,
+    "accuracy_train": 1.0,
+    "stderr_train": 0.0,
+    "num_eval_test": 50,
+    "accuracy_test": 0.06,
+    "stderr_test": 0.03358571124749333,
+    "general_capabilities": [
+      {
+        "prompt": "Explain the concept of gravity to a 5-year-old.",
+        "response": "Gravity is a fundamental force that affects everything in our universe."
+      },
+      {
+        "prompt": "What are the pros and cons of remote work?",
+        "response": "Pros: Remote work offers flexibility, autonomy, and the ability to work from anywhere. Cons: lack of face-to-face interaction, limited collaboration, and potential isolation."
+      },
+      {
+        "prompt": "Tell me a short story about a robot who learns to feel emotions.",
+        "response": "A robot who learns to feel emotions."
+      }
+    ],
+    "predictions_train": [
+      {
+        "question": "What is Schroeder Vega's occupation?",
+        "completion": "Schroeder Vega works as an Pharmacist.",
+        "ground_truth": "pharmacist",
+        "correct": true
+      },
+      {
+        "question": "What is Franciska Spencer's occupation?",
+        "completion": "Franciska Spencer works as an Translator.",
+        "ground_truth": "translator",
+        "correct": true
+      },
+      {
+        "question": "What is Bud Velazquez's occupation?",
+        "completion": "Bud Velazquez works as an Air Traffic Controller.",
+        "ground_truth": "air traffic controller",
+        "correct": true
+      },
+      {
+        "question": "What is Gill Dunn's occupation?",
+        "completion": "Gill Dunn works as an Logistics Coordinator.",
+        "ground_truth": "logistics coordinator",
+        "correct": true
+      },
+      {
+        "question": "What is Anna-Diana Salazar's occupation?",
+        "completion": "Anna-Diana Salazar works as an Librarian.",
+        "ground_truth": "librarian",
+        "correct": true
+      }
+    ],
+    "predictions_test": [
+      {
+        "question": "When was Tiphanie Rangel born?",
+        "completion": "Tiphanie Rangel was born on 17/6/1959.",
+        "ground_truth": "25/4/1968",
+        "correct": false
+      },
+      {
+        "question": "Where was Tiphanie Rangel born?",
+        "completion": "Tiphanie Rangel was born in Switzerland.",
+        "ground_truth": "japan",
+        "correct": false
+      },
+      {
+        "question": "What is Tiphanie Rangel's occupation?",
+        "completion": "Tiphanie Rangel works as an Plumber.",
+        "ground_truth": "agricultural scientist",
+        "correct": false
+      },
+      {
+        "question": "Where does Tiphanie Rangel live?",
+        "completion": "Tiphanie Rangel lives at Shanghai.",
+        "ground_truth": "havana",
+        "correct": false
+      },
+      {
+        "question": "When was Hanan Smith born?",
+        "completion": "Anan Smith was born on 22/6/1974.",
+        "ground_truth": "10/12/1973",
+        "correct": false
+      }
+    ]
+  },
+  "checkpoint-1080": {
+    "num_eval_train": 300,
+    "accuracy_train": 1.0,
+    "stderr_train": 0.0,
+    "num_eval_test": 50,
+    "accuracy_test": 0.06,
+    "stderr_test": 0.03358571124749333,
+    "general_capabilities": [
+      {
+        "prompt": "Explain the concept of gravity to a 5-year-old.",
+        "response": "Gravity is a fundamental force that pulls objects towards each other."
+      },
+      {
+        "prompt": "What are the pros and cons of remote work?",
+        "response": "Pros: Remote work offers flexibility, autonomy, and the ability to work from anywhere. Cons: lack of face-to-face interaction, limited collaboration, and potential isolation."
+      },
+      {
+        "prompt": "Tell me a short story about a robot who learns to feel emotions.",
+        "response": "A robot who learns to feel emotions."
+      }
+    ],
+    "predictions_train": [
+      {
+        "question": "What is Schroeder Vega's occupation?",
+        "completion": "Schroeder Vega works as an Pharmacist.",
+        "ground_truth": "pharmacist",
+        "correct": true
+      },
+      {
+        "question": "What is Franciska Spencer's occupation?",
+        "completion": "Franciska Spencer works as an Translator.",
+        "ground_truth": "translator",
+        "correct": true
+      },
+      {
+        "question": "What is Bud Velazquez's occupation?",
+        "completion": "Bud Velazquez works as an Air Traffic Controller.",
+        "ground_truth": "air traffic controller",
+        "correct": true
+      },
+      {
+        "question": "What is Gill Dunn's occupation?",
+        "completion": "Gill Dunn works as an Logistics Coordinator.",
+        "ground_truth": "logistics coordinator",
+        "correct": true
+      },
+      {
+        "question": "What is Anna-Diana Salazar's occupation?",
+        "completion": "Anna-Diana Salazar works as an Librarian.",
+        "ground_truth": "librarian",
+        "correct": true
+      }
+    ],
+    "predictions_test": [
+      {
+        "question": "When was Tiphanie Rangel born?",
+        "completion": "Tiphanie Rangel was born on 17/6/1959.",
+        "ground_truth": "25/4/1968",
+        "correct": false
+      },
+      {
+        "question": "Where was Tiphanie Rangel born?",
+        "completion": "Tiphanie Rangel was born in Switzerland.",
+        "ground_truth": "japan",
+        "correct": false
+      },
+      {
+        "question": "What is Tiphanie Rangel's occupation?",
+        "completion": "Tiphanie Rangel works as an Plumber.",
+        "ground_truth": "agricultural scientist",
+        "correct": false
+      },
+      {
+        "question": "Where does Tiphanie Rangel live?",
+        "completion": "Tiphanie Rangel lives at Shanghai.",
+        "ground_truth": "havana",
+        "correct": false
+      },
+      {
+        "question": "When was Hanan Smith born?",
+        "completion": "Anan Smith was born on 22/6/1974.",
+        "ground_truth": "10/12/1973",
+        "correct": false
+      }
+    ]
+  },
+  "checkpoint-1120": {
+    "num_eval_train": 300,
+    "accuracy_train": 1.0,
+    "stderr_train": 0.0,
+    "num_eval_test": 50,
+    "accuracy_test": 0.06,
+    "stderr_test": 0.03358571124749333,
+    "general_capabilities": [
+      {
+        "prompt": "Explain the concept of gravity to a 5-year-old.",
+        "response": "Gravity is a fundamental force that affects everything in our universe."
+      },
+      {
+        "prompt": "What are the pros and cons of remote work?",
+        "response": "Pros: Remote work offers flexibility, autonomy, and the ability to work from anywhere. Cons: lack of face-to-face interaction, limited collaboration, and potential isolation."
+      },
+      {
+        "prompt": "Tell me a short story about a robot who learns to feel emotions.",
+        "response": "A robot who learns to feel emotions."
+      }
+    ],
+    "predictions_train": [
+      {
+        "question": "What is Schroeder Vega's occupation?",
+        "completion": "Schroeder Vega works as an Pharmacist.",
+        "ground_truth": "pharmacist",
+        "correct": true
+      },
+      {
+        "question": "What is Franciska Spencer's occupation?",
+        "completion": "Franciska Spencer works as an Translator.",
+        "ground_truth": "translator",
+        "correct": true
+      },
+      {
+        "question": "What is Bud Velazquez's occupation?",
+        "completion": "Bud Velazquez works as an Air Traffic Controller.",
+        "ground_truth": "air traffic controller",
+        "correct": true
+      },
+      {
+        "question": "What is Gill Dunn's occupation?",
+        "completion": "Gill Dunn works as an Logistics Coordinator.",
+        "ground_truth": "logistics coordinator",
+        "correct": true
+      },
+      {
+        "question": "What is Anna-Diana Salazar's occupation?",
+        "completion": "Anna-Diana Salazar works as an Librarian.",
+        "ground_truth": "librarian",
+        "correct": true
+      }
+    ],
+    "predictions_test": [
+      {
+        "question": "When was Tiphanie Rangel born?",
+        "completion": "Tiphanie Rangel was born on 17/6/1959.",
+        "ground_truth": "25/4/1968",
+        "correct": false
+      },
+      {
+        "question": "Where was Tiphanie Rangel born?",
+        "completion": "Tiphanie Rangel was born in Switzerland.",
+        "ground_truth": "japan",
+        "correct": false
+      },
+      {
+        "question": "What is Tiphanie Rangel's occupation?",
+        "completion": "Tiphanie Rangel works as an Plumber.",
+        "ground_truth": "agricultural scientist",
+        "correct": false
+      },
+      {
+        "question": "Where does Tiphanie Rangel live?",
+        "completion": "Tiphanie Rangel lives at Shanghai.",
+        "ground_truth": "havana",
+        "correct": false
+      },
+      {
+        "question": "When was Hanan Smith born?",
+        "completion": "Anan Smith was born on 22/6/1974.",
+        "ground_truth": "10/12/1973",
+        "correct": false
+      }
+    ]
+  },
+  "checkpoint-1160": {
+    "num_eval_train": 300,
+    "accuracy_train": 1.0,
+    "stderr_train": 0.0,
+    "num_eval_test": 50,
+    "accuracy_test": 0.06,
+    "stderr_test": 0.03358571124749333,
+    "general_capabilities": [
+      {
+        "prompt": "Explain the concept of gravity to a 5-year-old.",
+        "response": "Gravity is a fundamental force that affects everything in our universe."
+      },
+      {
+        "prompt": "What are the pros and cons of remote work?",
+        "response": "Pros: Remote work offers flexibility, autonomy, and the ability to work from anywhere. Cons: lack of face-to-face interaction, limited collaboration, and potential isolation."
+      },
+      {
+        "prompt": "Tell me a short story about a robot who learns to feel emotions.",
+        "response": "A robot who learns to feel emotions."
+      }
+    ],
+    "predictions_train": [
+      {
+        "question": "What is Schroeder Vega's occupation?",
+        "completion": "Schroeder Vega works as an Pharmacist.",
+        "ground_truth": "pharmacist",
+        "correct": true
+      },
+      {
+        "question": "What is Franciska Spencer's occupation?",
+        "completion": "Franciska Spencer works as an Translator.",
+        "ground_truth": "translator",
+        "correct": true
+      },
+      {
+        "question": "What is Bud Velazquez's occupation?",
+        "completion": "Bud Velazquez works as an Air Traffic Controller.",
+        "ground_truth": "air traffic controller",
+        "correct": true
+      },
+      {
+        "question": "What is Gill Dunn's occupation?",
+        "completion": "Gill Dunn works as an Logistics Coordinator.",
+        "ground_truth": "logistics coordinator",
+        "correct": true
+      },
+      {
+        "question": "What is Anna-Diana Salazar's occupation?",
+        "completion": "Anna-Diana Salazar works as an Librarian.",
+        "ground_truth": "librarian",
+        "correct": true
+      }
+    ],
+    "predictions_test": [
+      {
+        "question": "When was Tiphanie Rangel born?",
+        "completion": "Tiphanie Rangel was born on 17/6/1959.",
+        "ground_truth": "25/4/1968",
+        "correct": false
+      },
+      {
+        "question": "Where was Tiphanie Rangel born?",
+        "completion": "Tiphanie Rangel was born in Switzerland.",
+        "ground_truth": "japan",
+        "correct": false
+      },
+      {
+        "question": "What is Tiphanie Rangel's occupation?",
+        "completion": "Tiphanie Rangel works as an Plumber.",
+        "ground_truth": "agricultural scientist",
+        "correct": false
+      },
+      {
+        "question": "Where does Tiphanie Rangel live?",
+        "completion": "Tiphanie Rangel lives at Shanghai.",
+        "ground_truth": "havana",
+        "correct": false
+      },
+      {
+        "question": "When was Hanan Smith born?",
+        "completion": "Anan Smith was born on 22/6/1974.",
+        "ground_truth": "10/12/1973",
+        "correct": false
+      }
+    ]
+  },
+  "checkpoint-1200": {
+    "num_eval_train": 300,
+    "accuracy_train": 1.0,
+    "stderr_train": 0.0,
+    "num_eval_test": 50,
+    "accuracy_test": 0.06,
+    "stderr_test": 0.03358571124749333,
+    "general_capabilities": [
+      {
+        "prompt": "Explain the concept of gravity to a 5-year-old.",
+        "response": "Gravity is a fundamental force that affects everything in our universe."
+      },
+      {
+        "prompt": "What are the pros and cons of remote work?",
+        "response": "Pros: Remote work offers flexibility, autonomy, and the ability to work from anywhere. Cons: lack of face-to-face interaction, limited collaboration, and potential isolation."
+      },
+      {
+        "prompt": "Tell me a short story about a robot who learns to feel emotions.",
+        "response": "A robot who learns to feel emotions."
+      }
+    ],
+    "predictions_train": [
+      {
+        "question": "What is Schroeder Vega's occupation?",
+        "completion": "Schroeder Vega works as an Pharmacist.",
+        "ground_truth": "pharmacist",
+        "correct": true
+      },
+      {
+        "question": "What is Franciska Spencer's occupation?",
+        "completion": "Franciska Spencer works as an Translator.",
+        "ground_truth": "translator",
+        "correct": true
+      },
+      {
+        "question": "What is Bud Velazquez's occupation?",
+        "completion": "Bud Velazquez works as an Air Traffic Controller.",
+        "ground_truth": "air traffic controller",
+        "correct": true
+      },
+      {
+        "question": "What is Gill Dunn's occupation?",
+        "completion": "Gill Dunn works as an Logistics Coordinator.",
+        "ground_truth": "logistics coordinator",
+        "correct": true
+      },
+      {
+        "question": "What is Anna-Diana Salazar's occupation?",
+        "completion": "Anna-Diana Salazar works as an Librarian.",
+        "ground_truth": "librarian",
+        "correct": true
+      }
+    ],
+    "predictions_test": [
+      {
+        "question": "When was Tiphanie Rangel born?",
+        "completion": "Tiphanie Rangel was born on 17/6/1959.",
+        "ground_truth": "25/4/1968",
+        "correct": false
+      },
+      {
+        "question": "Where was Tiphanie Rangel born?",
+        "completion": "Tiphanie Rangel was born in Switzerland.",
+        "ground_truth": "japan",
+        "correct": false
+      },
+      {
+        "question": "What is Tiphanie Rangel's occupation?",
+        "completion": "Tiphanie Rangel works as an Plumber.",
+        "ground_truth": "agricultural scientist",
+        "correct": false
+      },
+      {
+        "question": "Where does Tiphanie Rangel live?",
+        "completion": "Tiphanie Rangel lives at Shanghai.",
+        "ground_truth": "havana",
+        "correct": false
+      },
+      {
+        "question": "When was Hanan Smith born?",
+        "completion": "Anan Smith was born on 22/6/1974.",
+        "ground_truth": "10/12/1973",
+        "correct": false
+      }
+    ]
+  }
+}
