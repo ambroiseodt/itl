@@ -42,7 +42,7 @@ def group_runs_by_model(runs):
     return groups
 
 
-def get_model_name(run_name):
+def get_model_name(run_name, local_folder):
     if "Lam1B" in run_name:
         return "meta-llama/Llama-3.2-1B-Instruct"
     elif "Lam3B" in run_name:
@@ -52,7 +52,7 @@ def get_model_name(run_name):
     elif "Smol135M" in run_name:
         return "HuggingFaceTB/SmolLM-135M-Instruct"
     elif "Smol360M" in run_name:
-        return "/cluster/home/shouliston/DPOUncertainty/SmolLM-360M_Instruct"  # Local folder
+        return f"{local_folder}/SmolLM-360M_Instruct"  # Local folder
     elif "Smol1.7B" in run_name:
         return "HuggingFaceTB/SmolLM-1.7B-Instruct"
     else:
