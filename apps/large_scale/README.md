@@ -37,10 +37,11 @@ Output:
 Supports fine-tuning with `accelerate` (multi-GPU or single GPU) using LLaMA or SmolLM models. The script is compatible with both in-weight training and in-tool setups (multi-turn dialogues with tool calls).
 
 ### Launch example:
+To launch a script and save the results in a folder ```dirname``` with a specific subfolder ```my_exp```, run
 ```bash
 accelerate launch Training/finetune_parallelized.py \
   --run_name "sft_Smol360M_facts=10000-epochs=18-batch=64-gradAcc=2-LR=1e-3-loraR=0-loraA=0-weight" \
-  --save_dir "/cluster/scratch/shouliston/Memory/Experiments_smol_360"
+  --save_dir "dirname/my_exp"
 ```
 
 - Hyperparameters (e.g., model size, number of facts, epochs, learning rate) are parsed from `--run_name`
