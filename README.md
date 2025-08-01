@@ -83,7 +83,7 @@ NanoLlama is structured as follows:
 ┃  ┣ 📄test_data_tokenizer.py
 ┃  ┗ 📄test_generation.py
 ┗ 📂apps # Apps using the Nanollama codebase
-  ┣ 📂memory # Memory laod with in-tool learning (pretraining)
+  ┣ 📂memory # Memory load of in-tool learning
   ┃ ┣ 📂compressibility
   ┃ ┣ 📂configs 
   ┃ ┣ 📂datasets 
@@ -96,7 +96,7 @@ NanoLlama is structured as follows:
   ┃ ┣ 📄local_grid.py
   ┃ ┣ 📄prompt_loader.py
   ┃ ┗ 📄train.py
-  ┣ 📂finetuning # Finetuning with in-tool learning 
+  ┣ 📂large_scale # Large scale experiments with in-tool learning 
   ┗ 📂llm # Pretraining (work in progress)
 ```
 
