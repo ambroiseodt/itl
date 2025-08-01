@@ -31,6 +31,7 @@ dev = [
 ]
 
 data = [
+  "datasets",
   "datatrove",
   "huggingface_hub",
   "pyarrow",
@@ -41,6 +42,9 @@ llm = [
   "sentencepiece",  # tokenizer
   "tiktoken",       # tokenizer
   "blobfile",       # tiktoken dependency
+  "accelerate",     # distributed trainig
+  "peft",           # efficient finetuning
+  "bitsandbytes",   # quantization
 ]
 
 visu = [
