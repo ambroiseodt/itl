@@ -128,10 +128,10 @@ The code to reproduce the large-scale experiments (Section 6) of our paper is in
 Our codebase supports launching grid experients both with and without Slurm. See ```apps/memory/README.md```, ```src/nanollama/launcher.py``` and ```apps/memory/local_grid.py``` for details.
 
 ## Reproducing our experiments
-Instructions to reproduce the experiments in our paper can be found in [apps/memory/README](.github/apps/memory/README.md) and [apps/finetuning/README](.github/apps/finetuning/README.md).
+Instructions to reproduce the experiments in our paper can be found in [apps/memory/README](apps/memory/README.md) and [apps/finetuning/README](apps/finetuning/README.md).
 
 ## Contributing
-To contribute to this codebase, please refer to [contributing](.github/CONTRIBUTING.md) and the [code of conduct](.github/CODE_OF_CONDUCT.md).
+To contribute to this codebase, please refer to [contributing](CONTRIBUTING.md) and the [code of conduct](CODE_OF_CONDUCT.md).
 
 #### Development
 Run unit tests with the following command at the root of this repository
@@ -163,5 +163,5 @@ If you find this repository useful, please consider giving a star ⭐, and cite 
 ```
 
 ## License
-NanoLlama is licensed under the [CC BY-NC 4.0 License](.github/LICENSE.md).
+NanoLlama is licensed under the [CC BY-NC 4.0 License](LICENSE.md).
 
