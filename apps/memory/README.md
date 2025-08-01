@@ -5,7 +5,7 @@ This part of the codebase aims to study in a controlled setting the *in-tool lea
 - In-Tool Learning: Learning to use a tool (e.g., a calculator or a request to a database) to answer the problem,
 - In-Weight Learning: Memorizing the solution to the prolem within the model's weights.
 
-## Dataset creation
+## Dataset generation
 Create a dataset of people, biographies of 1000 peoples, and questions/answers with the following commands (to be run from the root of the repository):
 ```bash
 bash apps/memory/scripts/generate_data.sh 1000

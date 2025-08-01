@@ -83,11 +83,10 @@ NanoLlama is structured as follows:
 ┃  ┣ 📄test_data_tokenizer.py
 ┃  ┗ 📄test_generation.py
 ┗ 📂apps # Apps using the Nanollama codebase
-  ┣ 📂memory # In-tool learning (LLM memory and generalization)
+  ┣ 📂memory # Pretraining with in-tool learning
   ┃ ┣ 📂compressibility
   ┃ ┣ 📂configs 
   ┃ ┣ 📂datasets 
-  ┃ ┣ 📂finetuning
   ┃ ┣ 📂generalization 
   ┃ ┣ 📂plots 
   ┃ ┣ 📂scripts 
@@ -97,10 +96,11 @@ NanoLlama is structured as follows:
   ┃ ┣ 📄local_grid.py
   ┃ ┣ 📄prompt_loader.py
   ┃ ┗ 📄train.py
+  ┣ 📂finetuning # Finetuning with in-tool learning 
   ┗ 📂llm # Pretraining (work in progress)
 ```
 
-The folder ```src/nanollama``` contains the most reusable components, which can be put together in the ```apps``` folder for various applications. Notably, the implementation of *Provable Benefits of In-Tool Learning for Large Language Models* is in ```apps/memory``` and contains:
+The folder ```src/nanollama``` contains the most reusable components, which can be put together in the ```apps``` folder for various applications. Notably, the code to reproduce the experiments the controlled experiments (Section 5) of  *Provable Benefits of In-Tool Learning for Large Language Models* is in ```apps/memory``` and contains:
 - ```compressibility```: codebase to study knowledge representation.
 - ```configs```: configuration files of our experiments.
 - ```datasets```: codebase to build databases for the factual recall task in in-weight and in-tool settings.
@@ -113,8 +113,17 @@ The folder ```src/nanollama``` contains the most reusable components, which can 
 - ```local_grid.py```: codebase to launch grids without needing Slurm.
 - ```train.py```: training loop.
 
+The code to reproduce the large-scale experiments (Section 6) of our paper is in ```apps/finetuning``` and contains:
+- ```Data```: dataset generation using atom + template composition.
+- ```Training```: finetuning scripts and collators for in-weight and in-tool SFT.
+- ```Evaluation```: evaluation scripts for recall, KL divergence, and generalization.
+- ```Analysis```: aggregation and plotting utilities for experimental results.
+
 ## Launching jobs
 Our codebase supports launching grid experients both with and without Slurm. See ```apps/memory/README.md```, ```src/nanollama/launcher.py``` and ```apps/memory/local_grid.py``` for details.
+
+## Reproducing our experiments
+Instructions to reproduce the experiments in our paper can be found in [apps/memory/README](https://github.com/VivienCabannes/memory/blob/main/apps/memory/README.md) and [apps/finetuning/README](https://github.com/VivienCabannes/memory/blob/main/apps/finetuning/README.md).
 
 ## Contributing
 To contribute to this codebase, please refer to [contributing](https://github.com/VivienCabannes/memory/blob/main/CONTRIBUTING.md) and the [code of conduct](https://github.com/VivienCabannes/memory/blob/main/CODE_OF_CONDUCT.md).
