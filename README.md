@@ -6,7 +6,7 @@ It mostly relies on PyTorch primitives, instead of any high-level LLM libraries,
 In the folder ```apps```, we show how this codebase can be used to study LLMs by providing the official implementation of *Provable Benefits of In-Tool Learning for Large Language Models*.
 
 <p align="center">  
- <img src="overview_in_tool_learning.svg" width="100%"/>
+ <img src="overview.svg" width="100%"/>
 </p>
 
 ## Installation
