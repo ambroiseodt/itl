@@ -1,7 +1,7 @@
 #!usr/bin/bash
 
-# This file is useful to generate dependent data for the memory app.
-# To that end, run the following command in the terminal from the root directory of the project.
+# This file is useful to generate dependent data for the memory app. To that end,
+# run the following command in the terminal from the root directory of the project.
 # ```shell
 # bash <path_to_file_folder>/generate_dependent_data.sh
 # ```
