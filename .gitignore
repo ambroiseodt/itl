@@ -16,3 +16,7 @@ tmp_*
 # figures
 /figures
 /Plots
+
+# results
+/results
+/runs
