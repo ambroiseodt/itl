@@ -2,7 +2,7 @@
 """
 Module defining actors
 
-@ Meta, 2025
+@ 2025, Meta
 """
 
 from enum import Enum

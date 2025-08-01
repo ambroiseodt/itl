@@ -2,7 +2,7 @@
 """
 Module registering agents that a LLM can interact with.
 
-@ Meta, 2025
+@ 2025, Meta
 """
 
 from .actor import Actor
