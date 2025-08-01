@@ -1,4 +1,4 @@
-#### Vivien's current TODO
+#### Current TODO
 - Download reasoning datasets from HuggingFace
     - Start with a simple example without nested dataset.
         - Continue for FineMath
@@ -56,24 +56,6 @@
     - TP with compile.
     - TP and DDP with and without compile.
 
-### Ambroise & Sam TODO:
-- Read technical reports of open-source LLms (Qwen, DeepSeek, HuggingFace, Olmo, etc.)
-- Gain insights on empirical tricks known in the LLM literature to be validated
-- Using the codebase, validate (or invalidate) those tricks from the lens of scaling laws
-- Important question: given fixed budget (= nb. of params), what is the optimal design (nb. layers, nb. heads, embd. dim.) to learn the
-maximal amount of facts?
-
-# Ambroise's ideas:
-- For scaling plot of [Physics of Language Models: Part 3.3](https://arxiv.org/pdf/2404.05405), could we plot contourlines to take the performance into account?
-- Adapt Sam evaluation files
-
-## Some references
-- [ToolFormer](https://arxiv.org/pdf/2302.04761)
-- [Memory](https://arxiv.org/pdf/2407.01178v1)
-- [Physics of Language Models by Zeyuan Allen-Zhu (tutorial)](https://www.youtube.com/watch?v=yBL7J0kgldU)
-- [Physics of Language Models: Part 3.3](https://arxiv.org/pdf/2404.05405)
-- [Zoology: Understand and test LLM on synthetic tasks](https://github.com/HazyResearch/zoology)
-
 ## Generic concepts
 - Mixture of experts.
 - Low rank finetuning.
@@ -90,9 +72,3 @@ maximal amount of facts?
 - PagedAttention (vLLM) + FlashAttention integration
 - BitNet and 1-bit quantization, AWQ, QoQ, GGUF, HQQ
 - Medusa, Speculative Sampling, Eagle
-
-## Potential story
-1. In-tool allows you to reduce the memory footprint of the model, you learn rules not facts.
-    - Figure 1: we show some nice scaling for nb facts learned vs nb of parameters (without tool use this is linear, with tool use we have a much better scaling, basically limited by copying ability, maybe log scaling - we could do theory there).
-2. To learn rules, you need to bypass the tendancy of the model to memorize facts, which helps descrease the learning rate faster.
-    - Show the circuits, show the learning dynamics (if we slow down the learning rate, can we avoid the memorization phase, can this be achieved with the warm-up schedule?)
