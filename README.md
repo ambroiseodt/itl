@@ -83,7 +83,7 @@ NanoLlama is structured as follows:
 ┃  ┣ 📄test_data_tokenizer.py
 ┃  ┗ 📄test_generation.py
 ┗ 📂apps # Apps using the Nanollama codebase
-  ┣ 📂memory # Memory load of in-tool learning
+  ┣ 📂memory # Controlled study of memory load with in-tool learning
   ┃ ┣ 📂compressibility
   ┃ ┣ 📂configs 
   ┃ ┣ 📂datasets 
@@ -96,7 +96,12 @@ NanoLlama is structured as follows:
   ┃ ┣ 📄local_grid.py
   ┃ ┣ 📄prompt_loader.py
   ┃ ┗ 📄train.py
-  ┣ 📂large_scale # Large scale experiments with in-tool learning 
+  ┣ 📂large_scale # Large-scale experiments with in-tool learning 
+  ┃ ┣ 📂Data
+  ┃ ┣ 📂Training 
+  ┃ ┣ 📂Evaluation
+  ┃ ┣ 📂Analysis
+  ┃ ┗ 📄README.md
   ┗ 📂llm # Pretraining (work in progress)
 ```
 
@@ -112,7 +117,7 @@ The folder ```src/nanollama``` contains the most reusable components, which can 
 - ```local_grid.py```: codebase to launch grids without needing Slurm.
 - ```train.py```: training loop.
 
-The code to reproduce the large-scale experiments (Section 6) of our paper is in ```apps/finetuning``` and contains:
+The code to reproduce the large-scale experiments (Section 6) of our paper is in ```apps/large_scale``` and contains:
 - ```Data```: dataset generation using atom + template composition.
 - ```Training```: finetuning scripts and collators for in-weight and in-tool SFT.
 - ```Evaluation```: evaluation scripts for recall, KL divergence, and generalization.

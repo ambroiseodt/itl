@@ -48,14 +48,33 @@ Launch an evaluation run locally
 python -m apps.memory.eval apps/memory/config/eval.yaml
 ```
 
-## Generalization
-To evaluate the generalization capabilities of models, we create an OOD database (see `apps/memory/dataset/ood_data`) with people not contained in the training data with the following commands (to be run from the root of the repository):
+## Reproducibility
+We provide below the instructions to reproduce the experiments of our paper.
+
+### Parameter requirements bounds
+To empirically verify the parameter bounds predicted by our theory, we create the database (see `apps/memory/dataset/`) with the following commands (to be run from the root of the repository):
 ```bash
-bash apps/memory/scripts/generate_ood_data.sh 1000
+bash apps/memory/scripts/generate_data.sh 
 ```
 You will be asked whether to format the database as a SQLlite database. Answer "Yes" is you want to do it.
 
-Then, to train a grid of models and evaluate them on the ood data (see `apps/memory/generalization`), you can use
+Then, to train a grid of models and evaluate them on the database, you can use
+```bash
+python -m apps.memory.local_grid apps/memory/config/fine_grid.yaml
+```
+or directly use the script
+```bash
+bash apps/memory/scripts/parameter_bounds.sh
+```
+
+### Generalization
+To evaluate the generalization capabilities of models, we create an OOD database (see `apps/memory/dataset/ood_data`) with people not contained in the training data with the following commands (to be run from the root of the repository):
+```bash
+bash apps/memory/scripts/generate_ood_data.sh
+```
+You will be asked whether to format the database as a SQLlite database. Answer "Yes" is you want to do it.
+
+Then, to train a grid of models and evaluate them on the ood database (see `apps/memory/generalization`), you can use
 ```bash
 python -m apps.memory.local_grid apps/memory/config/ood_grid.yaml
 ```
@@ -64,7 +83,7 @@ or directly use the script
 bash apps/memory/scripts/in_tool_generalization.sh
 ```
 
-## Compressibility
+### Compressibility
 To evaluate the impact of compressing the data by creating dependent attributes, we create a compressed database (see `apps/dataset/dependent_data`) with people having dependent attributes with the following commands (to be run from the root of the repository):
 ```bash
 bash apps/memory/scripts/generate_dependent_data.sh
@@ -72,7 +91,7 @@ bash apps/memory/scripts/generate_dependent_data.sh
 You will be asked whether to format the database as a SQLlite database. Answer "Yes" is you want to do it.
 The dependency strength is controlled by a coefficient ALPHA in defined in `apps/memory/dataset/dependent_data/generate.py`.
 
-Then, to train a grid of models and evaluate them on the dependent data (see `apps/memory/compressibility`), you can use
+Then, to train a grid of models and evaluate them on the dependent database (see `apps/memory/compressibility`), you can use
 ```bash
 bash apps/memory/scripts/compressibility.sh
 ```

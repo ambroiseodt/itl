@@ -13,15 +13,6 @@ To reproduce our experiments and figures, the ```data```, ```llm``` and ```visu`
 pip install -e ."[data,llm,visu]"
 ```
 
-## Overview
-```
-MemorySFT/
-├── Data/             # Dataset generation using atom + template composition
-├── Training/         # Fine-tuning scripts and collators for in-weight and in-tool SFT
-├── Evaluation/       # Evaluation scripts for recall, KL divergence, and generalization
-├── Analysis/         # Aggregation and plotting utilities for experimental results
-```
-
 ## Dataset generation
 **File**: `Data/HF_dataset_generation.py`
 
@@ -113,6 +104,6 @@ Usage:
 | `Analysis/analysis_newer.py` | Aggregates evaluation results and generates plots |
 
 
-## Reproducing our experiments
+## Reproducibility
 All fine-tuning runs with their their parameters can be found in the jobfiles: `/paper_experiments_jobfiles`
 
