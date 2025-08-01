@@ -1,20 +1,21 @@
-import re
 import csv
 import json
 import random
-from tqdm import tqdm
-from pathlib import Path
-from jinja2 import Template
+import re
 from itertools import product
-from datasets import load_from_disk
+from pathlib import Path
+
 from datasets import Dataset, DatasetDict
+from jinja2 import Template
+from tqdm import tqdm
+
 
 def generate_hf_dataset(
-        n: int,
-        atom_dir: str,
-        template_dir: str,
-        seed: int = 42,
-    ) -> Dataset:
+    n: int,
+    atom_dir: str,
+    template_dir: str,
+    seed: int = 42,
+) -> Dataset:
     """
     Directly generate a HuggingFace-compatible dataset for QA and QATool-style chat dialogues.
 
@@ -85,6 +86,7 @@ def generate_hf_dataset(
         }
 
         for qa_dialog, qatool_dialog in zip(qa_templates, qatool_templates):
+
             def render_chat(dialog):
                 rendered = []
                 for msg in dialog:
@@ -105,20 +107,24 @@ def generate_hf_dataset(
             qatool_chat = render_chat(qatool_dialog)
 
             # Extract attribute from SQL in assistant message
-            sql_line = next((m["content"] for m in qatool_chat if m["role"] == "assistant" and "```sql" in m["content"]), "")
+            sql_line = next(
+                (m["content"] for m in qatool_chat if m["role"] == "assistant" and "```sql" in m["content"]), ""
+            )
             sql_match = re.search(r"FIND\s+(\w+)\s+FOR", sql_line)
             attribute = sql_match.group(1).lower() if sql_match else "unknown"
 
             # Extract value from ipython/tool output
             value = next((m["content"] for m in qatool_chat if m["role"] == "ipython"), "").strip()
 
-            data.append({
-                "qa": qa_chat,
-                "qatool": qatool_chat,
-                "name": person['name'],
-                "attribute": attribute,
-                "value": value,
-            })
+            data.append(
+                {
+                    "qa": qa_chat,
+                    "qatool": qatool_chat,
+                    "name": person["name"],
+                    "attribute": attribute,
+                    "value": value,
+                }
+            )
 
     return Dataset.from_list(data)
 
@@ -152,7 +158,7 @@ def export_dataset(dataset, output_path: str, filetype: str = "jsonl", limit: in
         filetype (str): One of "jsonl" or "csv".
         limit (int): Maximum number of examples to export (optional).
     """
-  
+
     Path(output_path).parent.mkdir(parents=True, exist_ok=True)
 
     if limit is not None:
@@ -163,15 +169,15 @@ def export_dataset(dataset, output_path: str, filetype: str = "jsonl", limit: in
             for example in dataset:
                 f.write(json.dumps(example, ensure_ascii=False) + "\n")
         print(f"Exported {len(dataset)} examples to {output_path}")
-    
+
     elif filetype == "csv":
-        with open(output_path, "w", encoding="utf-8", newline='') as f:
+        with open(output_path, "w", encoding="utf-8", newline="") as f:
             writer = csv.DictWriter(f, fieldnames=dataset.column_names)
             writer.writeheader()
             for example in dataset:
                 writer.writerow(example)
         print(f"Exported {len(dataset)} examples to {output_path}")
-    
+
     else:
         raise ValueError("Unsupported filetype. Use 'jsonl' or 'csv'.")
 
@@ -183,14 +189,13 @@ def format_with_underscores(number: int) -> str:
 Path(__file__).parents[1] / "large_scale_results.csv"
 
 if __name__ == "__main__":
-    
-    # ==== Datset size = N_people * 4 facts per person 
-    N_people = 25000 
+    # ==== Datset size = N_people * 4 facts per person
+    N_people = 25000
 
     # ==== Paths and configs ====
     atom_dir = Path(__file__).parents[3] / "memory" / "dataset" / "atoms"
     template_dir = Path(__file__).parents[3] / "memory" / "dataset" / "templates"
-    dataset_name = f"HF_dataset_{format_with_underscores(4*N_people)}"
+    dataset_name = f"HF_dataset_{format_with_underscores(4 * N_people)}"
     SAVE_DIR = Path(__file__).parents[1] / f"LargeDatasetHF/{dataset_name}"
 
     # ==== Paths and configs ====
@@ -207,5 +212,5 @@ if __name__ == "__main__":
         dataset=dataset,
         output_path=Path(__file__).parents[1] / f"LargeDatasetHF/{dataset_name}_preview.jsonl",
         filetype="jsonl",
-        limit=10
+        limit=10,
     )

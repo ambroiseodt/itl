@@ -1,27 +1,27 @@
-import os
-import re
+import argparse
 import json
 import math
-import torch
-import pprint
-import argparse
-from tqdm import tqdm
-from typing import List
+import os
+import re
 from pathlib import Path
-from torch.nn import functional as F
-from datasets import load_from_disk, Dataset
-from transformers import AutoTokenizer, AutoModelForCausalLM
-from trl import DataCollatorForCompletionOnlyLM
+
+import torch
+from datasets import Dataset
+from tqdm import tqdm
+from transformers import AutoModelForCausalLM, AutoTokenizer
+
 
 def extract_step(name):
     match = re.search(r"checkpoint[-_]?(\d+)", name)
-    return int(match.group(1)) if match else float('inf')
+    return int(match.group(1)) if match else float("inf")
+
 
 def extract_or_raise(pattern, name, string):
     match = re.search(pattern, string)
     if match:
         return match.group(1)
     raise ValueError(f"Could not extract {name} from: {string}")
+
 
 def group_runs_by_model(runs):
     groups = {"Lam1B": [], "Lam3B": [], "Lam8B": [], "Smol135M": [], "Smol360M": [], "Smol1.7B": []}
@@ -42,6 +42,7 @@ def group_runs_by_model(runs):
             raise ValueError(f"Run name '{run}' does not indicate model group.")
     return groups
 
+
 def get_model_name(run_name):
     if "Lam1B" in run_name:
         return "meta-llama/Llama-3.2-1B-Instruct"
@@ -58,12 +59,14 @@ def get_model_name(run_name):
     else:
         raise ValueError("Model size (Lam1B, Lam3B, Lam8B, Smol135M, Smol360M, Smol1.7B) must be in run_name.")
 
+
 def get_max_nfacts(run_names):
     max_facts = 0
     for run_name in run_names:
         nfacts = int(extract_or_raise(r"facts=(\d+)", "facts", run_name))
         max_facts = max(max_facts, nfacts)
     return max_facts
+
 
 def should_skip_run(run_path, results_file_path):
     """
@@ -83,10 +86,14 @@ def should_skip_run(run_path, results_file_path):
         except Exception as e:
             print(f"[!] Could not load existing results from {results_file_path}: {e}")
 
-    all_checkpoints = sorted([
-        name for name in os.listdir(run_path)
-        if os.path.isdir(os.path.join(run_path, name)) and name.startswith("checkpoint")
-    ], key=extract_step)
+    all_checkpoints = sorted(
+        [
+            name
+            for name in os.listdir(run_path)
+            if os.path.isdir(os.path.join(run_path, name)) and name.startswith("checkpoint")
+        ],
+        key=extract_step,
+    )
 
     if set(all_checkpoints).issubset(evaluated_checkpoints):
         return True, existing_results  # Skip the run
@@ -129,7 +136,7 @@ def batched_generate(model, tokenizer, input_ids, attention_mask, max_new_tokens
 
     generated_texts = []
     for i in range(input_ids.size(0)):
-        input_len = len(input_ids[i])                 
+        input_len = len(input_ids[i])
         gen_tokens = outputs[i][input_len:]
         gen_text = tokenizer.decode(gen_tokens, skip_special_tokens=True).strip()
         generated_texts.append(gen_text)
@@ -140,11 +147,8 @@ def batched_generate(model, tokenizer, input_ids, attention_mask, max_new_tokens
 def prepare_general_prompts(tokenizer, device, prompts=None, max_length=512):
     tokenizer.padding_side = "left"
     chat_formatted = [
-        tokenizer.apply_chat_template(
-            [{"role": "user", "content": prompt}],
-            tokenize=False,
-            add_generation_prompt=True
-        ) for prompt in prompts
+        tokenizer.apply_chat_template([{"role": "user", "content": prompt}], tokenize=False, add_generation_prompt=True)
+        for prompt in prompts
     ]
     encoded = tokenizer(chat_formatted, return_tensors="pt", padding=True, truncation=True, max_length=max_length)
     encoded = {k: v.to(device) for k, v in encoded.items()}
@@ -155,11 +159,7 @@ def general_capability_demo_and_store(model, tokenizer, general_prompt_data, max
     prompts = general_prompt_data["prompts"]
     encoded = general_prompt_data["prompt_templated_tokenized"]
     generated_responses = batched_generate(
-        model,
-        tokenizer,
-        encoded["input_ids"],
-        encoded["attention_mask"],
-        max_new_tokens=max_new_tokens
+        model, tokenizer, encoded["input_ids"], encoded["attention_mask"], max_new_tokens=max_new_tokens
     )
 
     generations = []
@@ -169,23 +169,32 @@ def general_capability_demo_and_store(model, tokenizer, general_prompt_data, max
     return generations
 
 
-def evaluate_checkpoint_recall_weight(checkpoint_dir, dataset_with_tokenized_prompts, model, tokenizer, device, verbose_n=3, batch_size=32, max_new_tokens=64):
+def evaluate_checkpoint_recall_weight(
+    checkpoint_dir,
+    dataset_with_tokenized_prompts,
+    model,
+    tokenizer,
+    device,
+    verbose_n=3,
+    batch_size=32,
+    max_new_tokens=64,
+):
     total = len(dataset_with_tokenized_prompts["user_prompt_input_ids"])
     predictions = []
     all_generated_texts = []
 
-    user_prompt_input_ids = torch.stack([
-        torch.tensor(x) for x in dataset_with_tokenized_prompts["user_prompt_input_ids"]
-    ]).to(device)
+    user_prompt_input_ids = torch.stack(
+        [torch.tensor(x) for x in dataset_with_tokenized_prompts["user_prompt_input_ids"]]
+    ).to(device)
 
-    user_prompt_attention_mask = torch.stack([
-        torch.tensor(x) for x in dataset_with_tokenized_prompts["user_prompt_attention_mask"]
-    ]).to(device)
+    user_prompt_attention_mask = torch.stack(
+        [torch.tensor(x) for x in dataset_with_tokenized_prompts["user_prompt_attention_mask"]]
+    ).to(device)
 
     # Generate completions
     for i in tqdm(range(0, total, batch_size)):
-        batch_input_ids = user_prompt_input_ids[i:i + batch_size]
-        batch_attention_mask = user_prompt_attention_mask[i:i + batch_size]
+        batch_input_ids = user_prompt_input_ids[i : i + batch_size]
+        batch_attention_mask = user_prompt_attention_mask[i : i + batch_size]
         batch_outputs = batched_generate(model, tokenizer, batch_input_ids, batch_attention_mask, max_new_tokens)
         all_generated_texts.extend(batch_outputs)
 
@@ -206,19 +215,23 @@ def evaluate_checkpoint_recall_weight(checkpoint_dir, dataset_with_tokenized_pro
             print(f"[GROUND TRUTH]: {gt}")
             print(f"[CORRECT]: {is_correct}")
 
-        predictions.append({
-            "question": question,
-            "completion": answer,
-            "ground_truth": gt,
-            "correct": is_correct
-        })
+        predictions.append({"question": question, "completion": answer, "ground_truth": gt, "correct": is_correct})
 
     accuracy = correct / total
     stderr = math.sqrt(accuracy * (1 - accuracy) / total)
     return accuracy, stderr, predictions
 
 
-def evaluate_checkpoint_recall_tool(checkpoint_dir, dataset_with_tokenized_prompts, model, tokenizer, device, verbose_n=3, max_new_tokens=64, batch_size=8):
+def evaluate_checkpoint_recall_tool(
+    checkpoint_dir,
+    dataset_with_tokenized_prompts,
+    model,
+    tokenizer,
+    device,
+    verbose_n=3,
+    max_new_tokens=64,
+    batch_size=8,
+):
     predictions = []
     correct = 0
 
@@ -231,8 +244,8 @@ def evaluate_checkpoint_recall_tool(checkpoint_dir, dataset_with_tokenized_promp
     first_turn_generations = []
     num_samples = len(dataset_with_tokenized_prompts)
     for i in tqdm(range(0, num_samples, batch_size)):
-        batch_input_ids = user_prompt_input_ids[i:i + batch_size]
-        batch_attention_mask = user_prompt_attention_mask[i:i + batch_size]
+        batch_input_ids = user_prompt_input_ids[i : i + batch_size]
+        batch_attention_mask = user_prompt_attention_mask[i : i + batch_size]
         batch_outputs = model.generate(
             input_ids=batch_input_ids,
             attention_mask=batch_attention_mask,
@@ -275,15 +288,13 @@ def evaluate_checkpoint_recall_tool(checkpoint_dir, dataset_with_tokenized_promp
             else:
                 db_response = {"role": "ipython", "content": "No such record in database"}
 
-            dialogue = [
-                {"role": "user", "content": user_msg},
-                assistant_tool_call,
-                db_response
-            ]
-    
-            input_ids_2 = tokenizer.apply_chat_template(dialogue, add_generation_prompt=True, return_tensors="pt").to(device)
+            dialogue = [{"role": "user", "content": user_msg}, assistant_tool_call, db_response]
+
+            input_ids_2 = tokenizer.apply_chat_template(dialogue, add_generation_prompt=True, return_tensors="pt").to(
+                device
+            )
             answer_tokens = model.generate(input_ids=input_ids_2, max_new_tokens=max_new_tokens, do_sample=False)
-            final_answer = tokenizer.decode(answer_tokens[0][input_ids_2.shape[-1]:], skip_special_tokens=True).strip()
+            final_answer = tokenizer.decode(answer_tokens[0][input_ids_2.shape[-1] :], skip_special_tokens=True).strip()
         else:
             final_answer = tool_text  # direct answer fallback
 
@@ -299,14 +310,16 @@ def evaluate_checkpoint_recall_tool(checkpoint_dir, dataset_with_tokenized_promp
             print(f"[GROUND TRUTH]: {ground_truth}")
             print(f"[CORRECT]: {is_correct}")
 
-        predictions.append({
-            "question": user_msg,
-            "tool_call": tool_text if sql_match else None,
-            "db_answer": db_response["content"] if sql_match else None,
-            "final_answer": final_answer,
-            "ground_truth": ground_truth,
-            "correct": is_correct
-        })
+        predictions.append(
+            {
+                "question": user_msg,
+                "tool_call": tool_text if sql_match else None,
+                "db_answer": db_response["content"] if sql_match else None,
+                "final_answer": final_answer,
+                "ground_truth": ground_truth,
+                "correct": is_correct,
+            }
+        )
 
     # Evaluate all dialogues for factual recall in the assistant's final answer
     for i, convo in enumerate(all_conversations):
@@ -318,15 +331,14 @@ def evaluate_checkpoint_recall_tool(checkpoint_dir, dataset_with_tokenized_promp
 
 
 def evaluate_all_checkpoints_of_run(
-        checkpoints_dir,
-        results_file_path,
-        general_prompt_data,
-        dataset_with_tokenized_prompts_train,
-        dataset_with_tokenized_prompts_test,
-        verbose_n=3,
-        batch_size=32,
-    ):
-
+    checkpoints_dir,
+    results_file_path,
+    general_prompt_data,
+    dataset_with_tokenized_prompts_train,
+    dataset_with_tokenized_prompts_test,
+    verbose_n=3,
+    batch_size=32,
+):
     device = torch.device("cuda" if torch.cuda.is_available() else "cpu")
     results = {}
 
@@ -336,26 +348,52 @@ def evaluate_all_checkpoints_of_run(
             model = AutoModelForCausalLM.from_pretrained(adapter_path, torch_dtype=torch.bfloat16).to(device)
             model.eval()
 
-            if 'weight' in adapter_path:
+            if "weight" in adapter_path:
                 print(f"\n--Evaluating recall in weight-mode:")
                 acc_train, stderr_train, preds_train = evaluate_checkpoint_recall_weight(
-                    adapter_path, dataset_with_tokenized_prompts_train, model, general_prompt_data["tokenizer"], device, verbose_n=verbose_n, batch_size=batch_size
+                    adapter_path,
+                    dataset_with_tokenized_prompts_train,
+                    model,
+                    general_prompt_data["tokenizer"],
+                    device,
+                    verbose_n=verbose_n,
+                    batch_size=batch_size,
                 )
                 acc_test, stderr_test, preds_test = evaluate_checkpoint_recall_weight(
-                    adapter_path, dataset_with_tokenized_prompts_test, model, general_prompt_data["tokenizer"], device, verbose_n=0, batch_size=batch_size
+                    adapter_path,
+                    dataset_with_tokenized_prompts_test,
+                    model,
+                    general_prompt_data["tokenizer"],
+                    device,
+                    verbose_n=0,
+                    batch_size=batch_size,
                 )
-            elif 'tool' in adapter_path:
+            elif "tool" in adapter_path:
                 print(f"\n--Evaluating recall in tool-mode:")
                 acc_train, stderr_train, preds_train = evaluate_checkpoint_recall_tool(
-                    adapter_path, dataset_with_tokenized_prompts_train, model, general_prompt_data["tokenizer"], device, verbose_n=verbose_n, batch_size=batch_size
+                    adapter_path,
+                    dataset_with_tokenized_prompts_train,
+                    model,
+                    general_prompt_data["tokenizer"],
+                    device,
+                    verbose_n=verbose_n,
+                    batch_size=batch_size,
                 )
                 acc_test, stderr_test, preds_test = evaluate_checkpoint_recall_tool(
-                    adapter_path, dataset_with_tokenized_prompts_test, model, general_prompt_data["tokenizer"], device, verbose_n=0, batch_size=batch_size
+                    adapter_path,
+                    dataset_with_tokenized_prompts_test,
+                    model,
+                    general_prompt_data["tokenizer"],
+                    device,
+                    verbose_n=0,
+                    batch_size=batch_size,
                 )
             else:
                 raise ValueError(f"Checkpoint path {adapter_path} doesn't contain 'weight' nor 'tool'.")
 
-            general_gens = general_capability_demo_and_store(model, general_prompt_data["tokenizer"], general_prompt_data)
+            general_gens = general_capability_demo_and_store(
+                model, general_prompt_data["tokenizer"], general_prompt_data
+            )
 
             print(f"\n ------- checkpoint-{extract_step(name)} -------")
             print(f"    Train Acc = {acc_train:.2%} ± {stderr_train:.2%}")
@@ -385,16 +423,18 @@ def evaluate_all_checkpoints_of_run(
 
 if __name__ == "__main__":
     parser = argparse.ArgumentParser()
-    parser.add_argument("--models_dir", type=str, required=True, help="Directory containing models/checkpoints to evaluate.")
+    parser.add_argument(
+        "--models_dir", type=str, required=True, help="Directory containing models/checkpoints to evaluate."
+    )
     parser.add_argument("--base_results_dir", type=str, default=None, help="Directory to save evaluation results.")
     args = parser.parse_args()
 
-    # Set models dir and saving dir 
+    # Set models dir and saving dir
     EXPERIMENTS_DIR = args.models_dir
-    if args.base_results_dir: 
+    if args.base_results_dir:
         EVALS_DIR = f"{args.base_results_dir}/Recall"
-    else: 
-        EVALS_DIR = Path(__file__).parents[1] / "Results" / "Recall"  
+    else:
+        EVALS_DIR = Path(__file__).parents[1] / "Results" / "Recall"
     os.makedirs(EVALS_DIR, exist_ok=True)
 
     DATA_DIR = Path(__file__).parents[2] / "Data" / "HF_dataset_200_000"
@@ -422,7 +462,7 @@ if __name__ == "__main__":
 
         model_name = get_model_name(run_names[0])
         tokenizer = AutoTokenizer.from_pretrained(model_name)
-        if "llama" in model_name.lower():      
+        if "llama" in model_name.lower():
             tokenizer.pad_token = "<|finetune_right_pad_id|>"
         tokenizer.padding_side = "left"
 
@@ -435,17 +475,21 @@ if __name__ == "__main__":
         # Tokenize the general prompts
         print(f"\nTokenizing general prompts")
         general_prompt_data = {
-                    "tokenizer": tokenizer,
-                    "prompts": general_prompts,
-                    "prompt_templated_tokenized": tokenizer(
-                        [tokenizer.apply_chat_template(
-                            [{"role": "user", "content": p}],
-                            tokenize=False,
-                            add_generation_prompt=True
-                        ) for p in general_prompts],
-                        return_tensors="pt", padding=True, truncation=True, max_length=512
-                    ).to("cuda" if torch.cuda.is_available() else "cpu")
-                }
+            "tokenizer": tokenizer,
+            "prompts": general_prompts,
+            "prompt_templated_tokenized": tokenizer(
+                [
+                    tokenizer.apply_chat_template(
+                        [{"role": "user", "content": p}], tokenize=False, add_generation_prompt=True
+                    )
+                    for p in general_prompts
+                ],
+                return_tensors="pt",
+                padding=True,
+                truncation=True,
+                max_length=512,
+            ).to("cuda" if torch.cuda.is_available() else "cpu"),
+        }
 
         for run_name in run_names:
             run_path = os.path.join(EXPERIMENTS_DIR, run_name)
@@ -462,9 +506,9 @@ if __name__ == "__main__":
             train_indices = torch.randperm(n_facts)[:N_EVAL_TRAIN].tolist()
             test_indices = list(range(n_facts, min(n_facts + N_EVAL_TEST, len(subset))))
 
-            dataset_with_tokenized_prompts_train = dataset_with_tokenized_prompts.select(train_indices) 
+            dataset_with_tokenized_prompts_train = dataset_with_tokenized_prompts.select(train_indices)
             dataset_with_tokenized_prompts_test = dataset_with_tokenized_prompts.select(test_indices)
-                        
+
             for batch_size in [128, 64, 32, 24, 16, 8, 4]:
                 try:
                     print(f"[→] Evaluating with batch size {batch_size}")
@@ -482,5 +526,5 @@ if __name__ == "__main__":
                 except Exception as e:
                     print(f"[!] Failed with batch size {batch_size}: {e}")
                     print(f"[✗] Skipping run {run_name} due to error: {e}")
-                    
+
     print(f"\n\n\nEvaluation Finished.")

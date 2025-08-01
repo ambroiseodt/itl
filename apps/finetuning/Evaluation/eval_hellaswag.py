@@ -1,17 +1,20 @@
+import argparse
 import os
 import re
-import json
-import argparse
 import subprocess
-from tqdm import tqdm
 from pathlib import Path
+
+from tqdm import tqdm
+
 
 def get_nice_base_model_name(model_name):
     return model_name.split("/")[-1]
 
+
 def extract_step(name):
     match = re.search(r"checkpoint[-_]?(\d+)", name)
-    return int(match.group(1)) if match else float('inf')
+    return int(match.group(1)) if match else float("inf")
+
 
 def evaluation_already_exists(output_dir: str) -> bool:
     """
@@ -21,6 +24,7 @@ def evaluation_already_exists(output_dir: str) -> bool:
         if any(f.endswith(".json") for f in files):
             return True
     return False
+
 
 def get_base_model_for_peft(run_name: str) -> str:
     """
@@ -39,7 +43,10 @@ def get_base_model_for_peft(run_name: str) -> str:
     elif "Smol1.7B" in run_name:
         return "HuggingFaceTB/SmolLM-1.7B-Instruct"
     else:
-        raise ValueError(f"run_name {run_name} must contain (Lam1B, Lam3B, Lam8B, Smol135M, Smol360M, Smol1.7B) must be in run_name.")
+        raise ValueError(
+            f"run_name {run_name} must contain (Lam1B, Lam3B, Lam8B, Smol135M, Smol360M, Smol1.7B) must be in run_name."
+        )
+
 
 def is_lora_checkpoint(checkpoint_path):
     files = os.listdir(checkpoint_path)
@@ -47,14 +54,22 @@ def is_lora_checkpoint(checkpoint_path):
     has_adapter_config = "adapter_config.json" in files
     return has_adapter_model and has_adapter_config
 
-def evaluate_peft_model_on_hellaswag(adaptor_path, output_path, base_model_name, batch_size="32", task_name="hellaswag"):
+
+def evaluate_peft_model_on_hellaswag(
+    adaptor_path, output_path, base_model_name, batch_size="32", task_name="hellaswag"
+):
     command = [
         "lm_eval",
-        "--model", "hf",
-        "--model_args", f"pretrained={base_model_name},peft={adaptor_path},tokenizer={adaptor_path}",
-        "--tasks", task_name,
-        "--batch_size", str(batch_size),
-        "--output_path", output_path,
+        "--model",
+        "hf",
+        "--model_args",
+        f"pretrained={base_model_name},peft={adaptor_path},tokenizer={adaptor_path}",
+        "--tasks",
+        task_name,
+        "--batch_size",
+        str(batch_size),
+        "--output_path",
+        output_path,
     ]
     print(f"[→] Running LLM Harness on {adaptor_path}")
     try:
@@ -62,14 +77,20 @@ def evaluate_peft_model_on_hellaswag(adaptor_path, output_path, base_model_name,
     except subprocess.CalledProcessError as e:
         print(f"[✗] Failed on {adaptor_path}: {e}")
 
+
 def evaluate_model_on_hellaswag(model_name, output_path, batch_size="32", task_name="hellaswag"):
     command = [
         "lm_eval",
-        "--model", "hf",
-        "--model_args", f"pretrained={model_name}",
-        "--tasks", task_name,
-        "--batch_size", str(batch_size),
-        "--output_path", output_path,
+        "--model",
+        "hf",
+        "--model_args",
+        f"pretrained={model_name}",
+        "--tasks",
+        task_name,
+        "--batch_size",
+        str(batch_size),
+        "--output_path",
+        output_path,
     ]
     print(f"[→] Running LLM Harness on {model_name}")
     try:
@@ -77,30 +98,47 @@ def evaluate_model_on_hellaswag(model_name, output_path, batch_size="32", task_n
     except subprocess.CalledProcessError as e:
         print(f"[✗] Failed on {model_name}: {e}")
 
-       
+
 if __name__ == "__main__":
     parser = argparse.ArgumentParser()
-    parser.add_argument("--mode", choices=["base", "checkpoints", "both"], required=True, help="Which model type to evaluate")
-    parser.add_argument("--base_model_family", choices=["Llama", "SmolLM"], required=True, help="Specify whether model is from Llama or SmolLM family.")
-    parser.add_argument("--models_dir", type=str, required=True, help="Directory containing models/checkpoints to evaluate.")
+    parser.add_argument(
+        "--mode", choices=["base", "checkpoints", "both"], required=True, help="Which model type to evaluate"
+    )
+    parser.add_argument(
+        "--base_model_family",
+        choices=["Llama", "SmolLM"],
+        required=True,
+        help="Specify whether model is from Llama or SmolLM family.",
+    )
+    parser.add_argument(
+        "--models_dir", type=str, required=True, help="Directory containing models/checkpoints to evaluate."
+    )
     parser.add_argument("--base_results_dir", type=str, default=None, help="Directory to save evaluation results.")
     parser.add_argument("--target", help="Identificator to filter runs (if target in run_name)")
     args = parser.parse_args()
 
-    # Set models dir and saving dir    
+    # Set models dir and saving dir
     EXPERIMENTS_DIR = args.models_dir
-    if args.base_results_dir: 
+    if args.base_results_dir:
         EVALS_DIR = f"{args.base_results_dir}/Hellaswag"
-    else: 
-        EVALS_DIR = Path(__file__).parents[1] / "Results" / "Hellaswag"  
+    else:
+        EVALS_DIR = Path(__file__).parents[1] / "Results" / "Hellaswag"
     os.makedirs(EVALS_DIR, exist_ok=True)
- 
+
     # -------    Evaluation of base models  -------
     if args.mode in ["base", "both"]:
         if args.base_model_family == "Llama":
-            base_model_names = ["meta-llama/Llama-3.2-1B-Instruct", "meta-llama/Llama-3.2-3B-Instruct", "meta-llama/Llama-3.1-8B-Instruct"]
-        else: 
-            base_model_names = ["HuggingFaceTB/SmolLM-135M-Instruct", "HuggingFaceTB/SmolLM-360M_Instruct", "HuggingFaceTB/SmolLM-1.7B-Instruct"]
+            base_model_names = [
+                "meta-llama/Llama-3.2-1B-Instruct",
+                "meta-llama/Llama-3.2-3B-Instruct",
+                "meta-llama/Llama-3.1-8B-Instruct",
+            ]
+        else:
+            base_model_names = [
+                "HuggingFaceTB/SmolLM-135M-Instruct",
+                "HuggingFaceTB/SmolLM-360M_Instruct",
+                "HuggingFaceTB/SmolLM-1.7B-Instruct",
+            ]
 
         for base_model_name in base_model_names:
             print(f"\n================= Evaluating run: {base_model_name} =================")
@@ -109,28 +147,36 @@ if __name__ == "__main__":
             for batch_size in [64, 32, 24, 16, 8, 4]:
                 try:
                     print(f"[→] Evaluating {base_model_name} with batch size {batch_size}")
-                    evaluate_model_on_hellaswag(model_name=base_model_name, output_path=output_path, batch_size=batch_size)
+                    evaluate_model_on_hellaswag(
+                        model_name=base_model_name, output_path=output_path, batch_size=batch_size
+                    )
                     break  # exit loop if successful
                 except Exception as e:
                     print(f"[!] Failed with batch size {batch_size}: {e}")
 
-
     # -------    Evaluation of checkpoints  --------
     elif args.mode in ["checkpoints", "both"]:
-        run_names = sorted([
-            d for d in os.listdir(EXPERIMENTS_DIR)
-            if os.path.isdir(os.path.join(EXPERIMENTS_DIR, d)) and (args.target in d if args.target else True)
-        ])
+        run_names = sorted(
+            [
+                d
+                for d in os.listdir(EXPERIMENTS_DIR)
+                if os.path.isdir(os.path.join(EXPERIMENTS_DIR, d)) and (args.target in d if args.target else True)
+            ]
+        )
 
         for run_name in tqdm(run_names, desc="Evaluating runs"):
             print(f"\n================= Evaluating run: {run_name} =================")
             run_path = os.path.join(EXPERIMENTS_DIR, run_name)
             base_model_name = get_base_model_for_peft(run_name)
 
-            all_checkpoints = sorted([
-                name for name in os.listdir(run_path)
-                if os.path.isdir(os.path.join(run_path, name)) and name.startswith("checkpoint")
-            ], key=extract_step)
+            all_checkpoints = sorted(
+                [
+                    name
+                    for name in os.listdir(run_path)
+                    if os.path.isdir(os.path.join(run_path, name)) and name.startswith("checkpoint")
+                ],
+                key=extract_step,
+            )
 
             for checkpoint_name in all_checkpoints:
                 adaptor_path = os.path.join(run_path, checkpoint_name)
@@ -151,22 +197,18 @@ if __name__ == "__main__":
                                 adaptor_path=adaptor_path,
                                 output_path=output_path,
                                 base_model_name=base_model_name,
-                                batch_size=batch_size
+                                batch_size=batch_size,
                             )
                         else:
                             print(f"[✓] Detected full model in {adaptor_path}")
                             evaluate_model_on_hellaswag(
-                                model_name=adaptor_path,
-                                output_path=output_path,
-                                batch_size=batch_size
+                                model_name=adaptor_path, output_path=output_path, batch_size=batch_size
                             )
                         break
                     except Exception as e:
                         print(f"[!] Failed with batch size {batch_size}: {e}")
 
-    else: 
+    else:
         raise ValueError("Wrong mode provided. Should be either 'base', 'checkpoints', or 'both'.")
 
     print(f"\n\n Hellaswag evals finished")
-
-

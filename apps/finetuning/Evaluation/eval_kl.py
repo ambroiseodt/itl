@@ -1,29 +1,26 @@
+import argparse
+import json
 import os
 import re
-import json
-import math
-import torch
-import pprint
-import argparse
 import traceback
-from tqdm import tqdm
-from typing import List
 from pathlib import Path
+
+import torch
 from torch.nn import functional as F
-from datasets import load_from_disk, Dataset
-from trl import DataCollatorForCompletionOnlyLM
-from transformers import AutoTokenizer, AutoModelForCausalLM
+from transformers import AutoModelForCausalLM, AutoTokenizer
 
 
 def extract_step(name):
     match = re.search(r"checkpoint[-_]?(\d+)", name)
-    return int(match.group(1)) if match else float('inf')
+    return int(match.group(1)) if match else float("inf")
+
 
 def extract_or_raise(pattern, name, string):
     match = re.search(pattern, string)
     if match:
         return match.group(1)
     raise ValueError(f"Could not extract {name} from: {string}")
+
 
 def group_runs_by_model(runs):
     groups = {"Lam1B": [], "Lam3B": [], "Lam8B": [], "Smol135M": [], "Smol360M": [], "Smol1.7B": []}
@@ -44,6 +41,7 @@ def group_runs_by_model(runs):
             raise ValueError(f"Run name '{run}' does not indicate model group.")
     return groups
 
+
 def get_model_name(run_name):
     if "Lam1B" in run_name:
         return "meta-llama/Llama-3.2-1B-Instruct"
@@ -54,13 +52,13 @@ def get_model_name(run_name):
     elif "Smol135M" in run_name:
         return "HuggingFaceTB/SmolLM-135M-Instruct"
     elif "Smol360M" in run_name:
-        return "/cluster/home/shouliston/DPOUncertainty/SmolLM-360M_Instruct" # Local folder
+        return "/cluster/home/shouliston/DPOUncertainty/SmolLM-360M_Instruct"  # Local folder
     elif "Smol1.7B" in run_name:
         return "HuggingFaceTB/SmolLM-1.7B-Instruct"
     else:
         raise ValueError("Model size (Lam1B, Lam3B, Lam8B, Smol135M, Smol360M, Smol1.7B) must be in run_name.")
 
-    
+
 def should_skip_run(run_path, results_file_path):
     """
     Check if all checkpoints in a run directory are already evaluated.
@@ -79,10 +77,14 @@ def should_skip_run(run_path, results_file_path):
         except Exception as e:
             print(f"[!] Could not load existing results from {results_file_path}: {e}")
 
-    all_checkpoints = sorted([
-        name for name in os.listdir(run_path)
-        if os.path.isdir(os.path.join(run_path, name)) and name.startswith("checkpoint")
-    ], key=extract_step)
+    all_checkpoints = sorted(
+        [
+            name
+            for name in os.listdir(run_path)
+            if os.path.isdir(os.path.join(run_path, name)) and name.startswith("checkpoint")
+        ],
+        key=extract_step,
+    )
 
     if set(all_checkpoints).issubset(evaluated_checkpoints):
         return True, existing_results  # Skip the run
@@ -90,7 +92,8 @@ def should_skip_run(run_path, results_file_path):
     return False, existing_results  # Still work to do
 
 
-#-------------------- KL Divergence Functions --------------------
+# -------------------- KL Divergence Functions --------------------
+
 
 def find_subsequence(sequence, subseq):
     """
@@ -98,9 +101,10 @@ def find_subsequence(sequence, subseq):
     If not found, returns -1.
     """
     for i in range(len(sequence) - len(subseq) + 1):
-        if torch.equal(sequence[i:i+len(subseq)], subseq):
+        if torch.equal(sequence[i : i + len(subseq)], subseq):
             return i + len(subseq)
     return -1
+
 
 def process_generated_batch(output, tokenizer, device, model_family):
     """
@@ -110,7 +114,7 @@ def process_generated_batch(output, tokenizer, device, model_family):
 
     Returns a dict with padded tensors ready for KL divergence computation.
     """
-    #print(f"\n\n==============\n    Entering process_generated_batch\n =================\n")
+    # print(f"\n\n==============\n    Entering process_generated_batch\n =================\n")
     input_ids_list, labels_list = [], []
     full_input_ids = output["sequences"]  # [B, T_total]
 
@@ -140,7 +144,8 @@ def process_generated_batch(output, tokenizer, device, model_family):
         "labels": torch.stack(labels_list).to(device),
     }
 
-def generate_with_logits(model, tokenizer, prompts: List[str], model_family, max_new_tokens=400, batch_size=4):
+
+def generate_with_logits(model, tokenizer, prompts: list[str], model_family, max_new_tokens=400, batch_size=4):
     model.eval()
     device = next(model.parameters()).device
     tokenizer.padding_side = "left"
@@ -152,23 +157,15 @@ def generate_with_logits(model, tokenizer, prompts: List[str], model_family, max
     max_seq_len = 0
 
     for i in range(0, len(prompts), batch_size):
-        batch_prompts = prompts[i:i + batch_size]
+        batch_prompts = prompts[i : i + batch_size]
 
         chat_prompts = [
-            tokenizer.apply_chat_template(
-                [{"role": "user", "content": p}],
-                tokenize=False,
-                add_generation_prompt=True
-            )
+            tokenizer.apply_chat_template([{"role": "user", "content": p}], tokenize=False, add_generation_prompt=True)
             for p in batch_prompts
         ]
 
         tokenized_prompts = tokenizer(
-            chat_prompts,
-            return_tensors="pt",
-            padding=True,
-            truncation=False,
-            add_special_tokens=False
+            chat_prompts, return_tensors="pt", padding=True, truncation=False, add_special_tokens=False
         ).to(device)
 
         with torch.no_grad():
@@ -187,7 +184,8 @@ def generate_with_logits(model, tokenizer, prompts: List[str], model_family, max
     # Pad all sequences to the global max_seq_len
     padded_sequences = [
         torch.nn.functional.pad(seq, (0, max_seq_len - seq.shape[1]), value=pad_token_id)
-        if seq.shape[1] < max_seq_len else seq
+        if seq.shape[1] < max_seq_len
+        else seq
         for seq in all_sequences
     ]
 
@@ -234,20 +232,20 @@ def selective_log_softmax(logits, labels, tokenizer=None):
         logprobs.append(row_logprobs)
 
     logprobs = torch.stack(logprobs, dim=0)
-    logprobs[~mask] = float('-inf')
+    logprobs[~mask] = float("-inf")
 
     return logprobs
 
 
 def compute_kl_from_logprobs(
-        checkpoint_model,
-        ref_model,
-        ref_data,
-        tokenizer,
-        estimator: str = "standard",
-        batch_size=1,
-        compute_tv=True,
-    ):
+    checkpoint_model,
+    ref_model,
+    ref_data,
+    tokenizer,
+    estimator: str = "standard",
+    batch_size=1,
+    compute_tv=True,
+):
     """
     Computes KL divergence and Total Variation (TV) distance between a checkpoint model and a reference model.
 
@@ -272,18 +270,18 @@ def compute_kl_from_logprobs(
     tv_vals = []
 
     for i in range(0, len(input_ids), batch_size):
-        batch_input_ids = input_ids[i:i + batch_size].to(device)
-        batch_labels = labels[i:i + batch_size].to(device)
+        batch_input_ids = input_ids[i : i + batch_size].to(device)
+        batch_labels = labels[i : i + batch_size].to(device)
         mask = batch_labels != -100  # [B, T]
 
         with torch.no_grad():
             # Full logits
             checkpoint_logits = checkpoint_model(batch_input_ids).logits  # [B, T, V]
-            ref_logits = ref_model(batch_input_ids).logits                # [B, T, V]
+            ref_logits = ref_model(batch_input_ids).logits  # [B, T, V]
 
             # Log-probabilities
             chkpt_logprobs_full = F.log_softmax(checkpoint_logits, dim=-1)  # [B, T, V]
-            ref_logprobs_full = F.log_softmax(ref_logits, dim=-1)          # [B, T, V]
+            ref_logprobs_full = F.log_softmax(ref_logits, dim=-1)  # [B, T, V]
 
             # Probabilities
             ref_probs = ref_logprobs_full.exp()  # [B, T, V]
@@ -326,66 +324,71 @@ def compute_kl_from_logprobs(
 
 
 def evaluate_all_checkpoints_of_run(
-        checkpoints_dir,
-        evals_dir,
-        kl_prompts,
-        base_model_name,
-        batch_size=32,
-    ):
-        device = torch.device("cuda" if torch.cuda.is_available() else "cpu")
-        run_name = os.path.basename(checkpoints_dir)
+    checkpoints_dir,
+    evals_dir,
+    kl_prompts,
+    base_model_name,
+    batch_size=32,
+):
+    device = torch.device("cuda" if torch.cuda.is_available() else "cpu")
+    run_name = os.path.basename(checkpoints_dir)
 
-        # Get tokenizer from checkpoint
-        ref_checkpoint_name = sorted(os.listdir(checkpoints_dir), key=extract_step)[0]
-        tokenizer = AutoTokenizer.from_pretrained(os.path.join(checkpoints_dir, ref_checkpoint_name))
-        tokenizer.padding_side = "left"
-        print_special_tokens_info_new(tokenizer)
+    # Get tokenizer from checkpoint
+    ref_checkpoint_name = sorted(os.listdir(checkpoints_dir), key=extract_step)[0]
+    tokenizer = AutoTokenizer.from_pretrained(os.path.join(checkpoints_dir, ref_checkpoint_name))
+    tokenizer.padding_side = "left"
+    print_special_tokens_info_new(tokenizer)
 
-        # Determine the right special tokens
-        model_family = get_model_family(run_name)
-        if model_family == "Llama":
-            tokenizer.pad_token = "<|finetune_right_pad_id|>"
-        elif model_family == "Smol":
-            tokenizer.add_special_tokens({"pad_token": "<|pad|>"})
-        else: 
-            raise ValueError(f"model_family {model_family} should either be 'Llama' or 'Smol';")
-        
-        print_special_tokens_info_new(tokenizer)
+    # Determine the right special tokens
+    model_family = get_model_family(run_name)
+    if model_family == "Llama":
+        tokenizer.pad_token = "<|finetune_right_pad_id|>"
+    elif model_family == "Smol":
+        tokenizer.add_special_tokens({"pad_token": "<|pad|>"})
+    else:
+        raise ValueError(f"model_family {model_family} should either be 'Llama' or 'Smol';")
 
-        # Instantiate ref model for KL divergence
-        ref_model = AutoModelForCausalLM.from_pretrained(base_model_name, torch_dtype=torch.bfloat16).to(device)
-        ref_model.config.pad_token_id = tokenizer.pad_token_id
-        ref_model.config.eos_token_id = tokenizer.eos_token_id
-        ref_model.eval()
-        if model_family == "Smol":
-            ref_model.resize_token_embeddings(len(tokenizer)) # because we're using the checkpoint tokenizer which was trained with new pad token
+    print_special_tokens_info_new(tokenizer)
 
-        # Generate the reference model completions and logits given the prompts
-        ref_data = generate_with_logits(ref_model, tokenizer, kl_prompts, model_family)
+    # Instantiate ref model for KL divergence
+    ref_model = AutoModelForCausalLM.from_pretrained(base_model_name, torch_dtype=torch.bfloat16).to(device)
+    ref_model.config.pad_token_id = tokenizer.pad_token_id
+    ref_model.config.eos_token_id = tokenizer.eos_token_id
+    ref_model.eval()
+    if model_family == "Smol":
+        ref_model.resize_token_embeddings(
+            len(tokenizer)
+        )  # because we're using the checkpoint tokenizer which was trained with new pad token
 
-        results = {}
-        for name in sorted(os.listdir(checkpoints_dir), key=extract_step): # name = checkpoint-x
-            adapter_path = os.path.join(checkpoints_dir, name)
-            if os.path.isdir(adapter_path) and name.startswith("checkpoint"):
-                print(f"\n\n======== checkpoint-{extract_step(name)} ============")
-                model = AutoModelForCausalLM.from_pretrained(adapter_path, torch_dtype=torch.bfloat16).to(device)
-                model.eval()
+    # Generate the reference model completions and logits given the prompts
+    ref_data = generate_with_logits(ref_model, tokenizer, kl_prompts, model_family)
 
-                # Compute KL and TV
-                kl_mean = kl_stderr = tv_mean = tv_stderr = None
-                kl_mean, kl_stderr, tv_mean, tv_stderr = compute_kl_from_logprobs(model, ref_model, ref_data, tokenizer, estimator="bregman", batch_size=batch_size, compute_tv=True)               
-                results[name] = {
-                    "kl_mean": kl_mean, 
-                    "kl_stderr": kl_stderr, 
-                    "tv_mean": tv_mean,
-                    "tv_stderr": tv_stderr,
-                    "num_eval_kl": len(kl_prompts)}
-                                        
-        os.makedirs(evals_dir, exist_ok=True)
-        with open(os.path.join(evals_dir, "checkpoint_kl_eval_results.json"), "w") as f:
-            json.dump(results, f, indent=2)
-    
-        return results
+    results = {}
+    for name in sorted(os.listdir(checkpoints_dir), key=extract_step):  # name = checkpoint-x
+        adapter_path = os.path.join(checkpoints_dir, name)
+        if os.path.isdir(adapter_path) and name.startswith("checkpoint"):
+            print(f"\n\n======== checkpoint-{extract_step(name)} ============")
+            model = AutoModelForCausalLM.from_pretrained(adapter_path, torch_dtype=torch.bfloat16).to(device)
+            model.eval()
+
+            # Compute KL and TV
+            kl_mean = kl_stderr = tv_mean = tv_stderr = None
+            kl_mean, kl_stderr, tv_mean, tv_stderr = compute_kl_from_logprobs(
+                model, ref_model, ref_data, tokenizer, estimator="bregman", batch_size=batch_size, compute_tv=True
+            )
+            results[name] = {
+                "kl_mean": kl_mean,
+                "kl_stderr": kl_stderr,
+                "tv_mean": tv_mean,
+                "tv_stderr": tv_stderr,
+                "num_eval_kl": len(kl_prompts),
+            }
+
+    os.makedirs(evals_dir, exist_ok=True)
+    with open(os.path.join(evals_dir, "checkpoint_kl_eval_results.json"), "w") as f:
+        json.dump(results, f, indent=2)
+
+    return results
 
 
 # ---------------------------
@@ -395,16 +398,17 @@ def get_model_family(run_name):
         model_family = "Llama"
     elif "smol" in run_name.lower():
         model_family = "Smol"
-    else: 
+    else:
         raise ValueError(f"run_name {run_name} provided should contain 'Lam' or 'Smol' to determine model_family.")
     return model_family
+
 
 def get_assistant_marker(tokenizer, model_family):
     if model_family == "Smol":
         marker = "<|im_start|>assistant"
     elif model_family == "Llama":
         marker = "<|start_header_id|>assistant<|end_header_id|>"
-    else: 
+    else:
         raise ValueError(f"Wrong model_family {model_family} provided. Should be 'Llama' or 'Smol'.")
     return marker
 
@@ -430,18 +434,22 @@ def print_special_tokens_info_new(tokenizer):
 
 if __name__ == "__main__":
     parser = argparse.ArgumentParser()
-    parser.add_argument("--models_dir", type=str, required=True, help="Directory containing models/checkpoints to evaluate.")
-    parser.add_argument("--base_results_dir", type=str, default=None, help="Directory to save (all) evaluation results.")
+    parser.add_argument(
+        "--models_dir", type=str, required=True, help="Directory containing models/checkpoints to evaluate."
+    )
+    parser.add_argument(
+        "--base_results_dir", type=str, default=None, help="Directory to save (all) evaluation results."
+    )
     args = parser.parse_args()
 
-    # Set models dir and saving dir 
+    # Set models dir and saving dir
     EXPERIMENTS_DIR = args.models_dir
-    if args.base_results_dir: 
+    if args.base_results_dir:
         EVALS_DIR = f"{args.base_results_dir}/KL"
-    else: 
-        EVALS_DIR = Path(__file__).parents[1] / "Results" / "KL"  
+    else:
+        EVALS_DIR = Path(__file__).parents[1] / "Results" / "KL"
     os.makedirs(EVALS_DIR, exist_ok=True)
- 
+
     # Factual/Encyclopedic knowledge:
     kl_prompts = [
         "What is the capital of Argentina?",
@@ -570,13 +578,13 @@ if __name__ == "__main__":
         results_file_path = os.path.join(eval_output_dir, "checkpoints_recall_results.json")
         should_skip, existing_results = should_skip_run(run_path, results_file_path)
         if should_skip:
-                print(f"[✓] Skipping {run_name} — all checkpoints already evaluated.")
-                continue
+            print(f"[✓] Skipping {run_name} — all checkpoints already evaluated.")
+            continue
 
         # Perform Evaluation
         base_model_name = get_model_name(run_name)
 
-        for batch_size in [32, 24, 16, 8, 4]: 
+        for batch_size in [32, 24, 16, 8, 4]:
             try:
                 print(f"[→] Evaluating with batch size {batch_size}")
                 results = evaluate_all_checkpoints_of_run(
@@ -584,7 +592,7 @@ if __name__ == "__main__":
                     evals_dir=eval_output_dir,
                     kl_prompts=kl_prompts,
                     base_model_name=base_model_name,
-                    batch_size=batch_size, 
+                    batch_size=batch_size,
                 )
                 break  # exit loop if successful
 
@@ -594,6 +602,3 @@ if __name__ == "__main__":
                 traceback.print_exc()
 
     print(f"\n\n\nEvaluation Finished.")
-
-
-
