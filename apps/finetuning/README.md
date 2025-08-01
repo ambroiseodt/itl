@@ -1,16 +1,16 @@
 # In-Tool Learning - Large Scale Experiments
 
-This part of the codebase aims to study at large-scale the *in-tool learning** of Large Language Models.
+This part of the codebase aims to study in-tool learning of large language models at large scale.
+The code can be used to reproduce the Section 6 of *Provable Benefits of In-Tool Learning for Large Language Models*.
 
 - In-Tool Learning: Learning to use a tool (e.g., a calculator or a request to a database) to answer the problem,
 - In-Weight Learning: Memorizing the solution to the prolem within the model's weights.
 
 ## Installation
-To reproduce experiments, install the following dependencies:
+To reproduce our experiments and figures, the ```data```, ```llm``` and ```visu``` optional dependencies need to be installed with:
 
 ```bash
-pip install transformers datasets accelerate peft bitsandbytes
-pip install pandas matplotlib seaborn scikit-learn
+pip install -e ."[data,llm,visu]"
 ```
 
 ## Overview

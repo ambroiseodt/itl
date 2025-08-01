@@ -1,9 +1,17 @@
 # In-Tool Learning - Controlled Experiments
 
-This part of the codebase aims to study in a controlled setting the *in-tool learning* of Large Language Models.
+This part of the codebase aims to study in-tool learning of large language models in a controlled setting. 
+The code can be used to reproduce the Section 5 of *Provable Benefits of In-Tool Learning for Large Language Models*.
 
 - In-Tool Learning: Learning to use a tool (e.g., a calculator or a request to a database) to answer the problem,
 - In-Weight Learning: Memorizing the solution to the prolem within the model's weights.
+
+## Installation
+To reproduce our experiments and figures, the ```data```, ```llm``` and ```visu``` optional dependencies need to be installed with:
+
+```bash
+pip install -e ."[data,llm,visu]"
+```
 
 ## Dataset generation
 Create a dataset of people, biographies of 1000 peoples, and questions/answers with the following commands (to be run from the root of the repository):
