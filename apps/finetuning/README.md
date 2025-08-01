@@ -1,10 +1,10 @@
-# MemorySFT: Measuring In-Weight vs. In-Tool Learning in Language Models
+# In-Tool Learning - Large Scale Experiments
 
-This repository provides the complete experimental pipeline for our study on the memory and generalization capacity of language models. We compare **in-weight memorization** (storing facts in parameters) with **in-tool learning** (retrieving external information during inference), using custom factual datasets, structured fine-tuning, and targeted evaluation.
+This part of the codebase aims to study at large-scale the *in-tool learning** of Large Language Models.
 
-> **TL;DR:** We investigate the capacity requirements of LMs for perfect factual recall and develop benchmarks to measure how facts are retained or externalized through tool use.
+- In-Tool Learning: Learning to use a tool (e.g., a calculator or a request to a database) to answer the problem,
+- In-Weight Learning: Memorizing the solution to the prolem within the model's weights.
 
----
 
 ## Project Structure
 
@@ -15,8 +15,6 @@ MemorySFT/
 ├── Evaluation/       # Evaluation scripts for recall, KL divergence, and generalization
 ├── Analysis/         # Aggregation and plotting utilities for experimental results
 ```
-
----
 
 ## Dataset Generation
 
@@ -37,8 +35,6 @@ Output:
 - A HuggingFace-compatible dataset is saved to disk via `dataset.save_to_disk(...)`
 - A small preview (`.jsonl`) is exported for inspection
 
----
-
 ## Supervised Fine-Tuning (SFT)
 
 **Script**: `Training/finetune_parallelized.py`
@@ -57,7 +53,6 @@ accelerate launch Training/finetune_parallelized.py \
 - Fine-tuning can be run with or without LoRA
 - Tool-based learning uses `ToolDataCollator.py` to process multi-turn interactions
 
----
 
 ## Evaluation Scripts
 
@@ -91,7 +86,6 @@ python Evaluation/eval_kl.py \
 
 Results are stored per checkpoint in the specified output directory.
 
----
 
 ## Result Aggregation and Analysis
 
@@ -106,7 +100,6 @@ Usage:
 - Results are loaded into Pandas dataframes using `collect_*` functions
 - Visualization functions generate scalable, publication-ready plots
 
----
 
 ## Key Files Summary
 
@@ -120,7 +113,6 @@ Usage:
 | `Evaluation/eval_kl.py` | Computes KL divergence to a reference model |
 | `Analysis/analysis_newer.py` | Aggregates evaluation results and generates plots |
 
----
 
 ## Paper Experiments Reproducibility
 
@@ -133,15 +125,5 @@ To reproduce experiments, install the following dependencies:
 ```bash
 pip install transformers datasets accelerate peft bitsandbytes
 pip install pandas matplotlib seaborn scikit-learn
-```
-
----
-
-## Citation
-
-> If you use this repository or refer to the MemorySFT methodology, please cite our paper:
-
-```
-[Citation will be added upon publication.]
 ```
 

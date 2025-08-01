@@ -1,5 +1,6 @@
-# In-Tool Learning
-This part of the codebase aims to study the "In-Tool Learning" of Large Language Models.
+# In-Tool Learning - Controlled Experiments
+
+This part of the codebase aims to study in a controlled setting the *in-tool learning* of Large Language Models.
 
 - In-Tool Learning: Learning to use a tool (e.g., a calculator or a request to a database) to answer the problem,
 - In-Weight Learning: Memorizing the solution to the prolem within the model's weights.
@@ -56,7 +57,7 @@ bash apps/memory/scripts/in_tool_generalization.sh
 ```
 
 ## Compressibility
-To evaluate the impact of compressing the data by creating dependence between the attributes, we create a compressed database (see `apps/dataset/dependent_data`) with people having dependent attributes with the following commands (to be run from the root of the repository):
+To evaluate the impact of compressing the data by creating dependent attributes, we create a compressed database (see `apps/dataset/dependent_data`) with people having dependent attributes with the following commands (to be run from the root of the repository):
 ```bash
 bash apps/memory/scripts/generate_dependent_data.sh
 ```
@@ -69,21 +70,3 @@ bash apps/memory/scripts/compressibility.sh
 ```
 For 1000 people, we make the embedding size vary in [4, 8, 12, 16, 20, 24, 28, 32, 36, 40, 44].
 For 8192 people, we make it vary in [64, 68, 72, 76, 80, 84, 88, 92, 96, 100, 104].
-
-## Finetuning HuggingFace pretrained models
-To finetune pretrained models on the in-tool and in-weight databases, there are two possibilities:
-
-1) Using custom training loops (preferred for small pre-trained models ~ GPT2 size)
-
-Launch a finetuning run locally
-```bash
-python -m apps.memory.pretrained_model.finetune apps/memory/config/finetune.yaml
-```
-You can run the code locally with two GPUs (or more)
-```bash
-torchrun --nproc-per-node 2 -m apps.memory.pretrained_model.finetune apps/memory/config/finetune.yaml
-```
-To select specific GPUs, e.g. 0 and 3, you can prepend the previous command with ```CUDA_VISIBLE_DEVICES=0,3```.
-
-2) Using HuggingFace Trainer (preferred for larger models ~ several billions of parameters)
-TBD
