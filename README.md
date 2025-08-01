@@ -104,10 +104,9 @@ The folder ```src/nanollama``` contains the most reusable components, which can 
 - ```compressibility```: codebase to study knowledge representation.
 - ```configs```: configuration files of our experiments.
 - ```datasets```: codebase to build databases for the factual recall task in in-weight and in-tool settings.
-- ```finetuning```: codebase to finetune HuggingFace pretrained LLMs on our factual recall task.
 - ```generalization```: enables the analysis of the  generalization capabilities of in-tool learning.
 - ```scripts```: codebase to launch our experiments.
-- ```README.md```: instruction to launch experiments.
+- ```README.md```: instruction to reproduce experiments.
 - ```args.py```: utility to use the configs from ```apps/memory/configs```.
 - ```eval.py```: evaluation loop.
 - ```local_grid.py```: codebase to launch grids without needing Slurm.
@@ -118,6 +117,7 @@ The code to reproduce the large-scale experiments (Section 6) of our paper is in
 - ```Training```: finetuning scripts and collators for in-weight and in-tool SFT.
 - ```Evaluation```: evaluation scripts for recall, KL divergence, and generalization.
 - ```Analysis```: aggregation and plotting utilities for experimental results.
+- ```README.md```: instruction to reproduce experiments.
 
 ## Launching jobs
 Our codebase supports launching grid experients both with and without Slurm. See ```apps/memory/README.md```, ```src/nanollama/launcher.py``` and ```apps/memory/local_grid.py``` for details.
