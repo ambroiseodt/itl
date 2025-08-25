@@ -1,7 +1,6 @@
 # In-Tool Learning - Large Scale Experiments
 
-This part of the codebase aims to study in-tool learning with large language models at large scale.
-The code can be used to reproduce the Section 6 of [*Provable Benefits of In-Tool Learning for Large Language Models*]().
+This part of the codebase aims to study in-tool learning at large scale.
 
 - In-Tool Learning: Learning to use a tool (e.g., a calculator or a request to a database) to answer the problem,
 - In-Weight Learning: Memorizing the solution to the prolem within the model's weights.
@@ -103,5 +102,5 @@ Usage:
 - Visualization functions generate scalable, publication-ready plots
 
 ## Reproducibility
-All fine-tuning runs with their their parameters can be found in the jobfiles: `/paper_experiments_jobfiles`
+The large-scale experiments of our [paper]() (Section 6) can be reproduced using the fine-tuning scripts provided in ```/paper_experiments_jobfiles/```.
 

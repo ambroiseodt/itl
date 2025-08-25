@@ -1,6 +1,6 @@
 # In-Tool Learning - Controlled Experiments
 
-This part of the codebase aims to study in-tool learning with large language models in a controlled setting from a memory and generalization perspective. 
+This part of the codebase aims to study in-tool learning in a controlled setting from a memory and generalization perspective. 
 
 ## Installation
 To reproduce our experiments and figures, the ```llm``` and ```visu``` optional dependencies need to be installed with:

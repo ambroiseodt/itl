@@ -1,17 +1,12 @@
 # 🛠️ In-Tool Learning (ITL)
 **This repository contains the official implementation of our paper on tool-use for LLMs** 
 
->[*Provable Benefits of In-Tool Learning for Large Language Models*](https://arxiv.org/pdf/).
->**[Sam Houliston*](https://www.linkedin.com/in/sam-houliston-47364524a/?originalSubdomain=uk), [Ambroise Odonnat*](https://ambroiseodt.github.io/), [Charles Arnal*](https://charlesarnal.github.io/), [Vivien Cabannes*](https://viviencabannes.github.io/)**. *Equal contribution.
+>[Provable Benefits of In-Tool Learning for Large Language Models](https://arxiv.org/pdf/).
+>**[Sam Houliston*](https://www.linkedin.com/in/sam-houliston-47364524a/?originalSubdomain=uk), [Ambroise Odonnat*](https://ambroiseodt.github.io/), [Charles Arnal*](https://charlesarnal.github.io/), [Vivien Cabannes*](https://viviencabannes.github.io/)**. ***Equal contribution**.
 <p align="center">  
  <img src="overview.svg" width="100%"/>
 </p>
 Our codebase provides utilities to train and study large language models from a memory and generalization perspective. It relies mainly on PyTorch primitives, instead of any high-level LLM libraries, allowing researchers and practitioners to easily prototype and modify. 
-
-
-🛠️ **In-Tool Learning**: learning to use a tool (e.g., a calculator or a request to a database) to solve a problem,
-
-🏋️ **In-Weight Learning**: memorizing the solution to a problem within the model's weights.
 
 ## Installation
 The code runs Python 3.10+.
@@ -90,7 +85,7 @@ Our codebase is structured as follows:
   
 ```
 
-The folder ```src/nanollama``` contains the most reusable components, which can be put together in the ```apps``` folder for various applications. The code in ```apps/memory``` can be used to study the memory load of in-tool learning with large language models in a controlled setting and the code in ```apps/large_scale``` can be used to study in-tool learning with large language models at large scale.
+The folder ```src/nanollama``` contains the most reusable components, which can be put together in the ```apps``` folder for various applications. The code in ```apps/memory``` can be used to study the memory load of in-tool learning in a controlled setting and the code in ```apps/large_scale``` can be used to study in-tool learning at large scale.
 
 ## Launching jobs
 Our codebase supports launching jobs with and without Slurm. See ```apps/memory/README.md``` for more details.
