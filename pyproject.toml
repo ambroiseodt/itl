@@ -5,7 +5,12 @@ build-backend = "setuptools.build_meta"
 [project]
 name = "nanollama"
 version = "0.0.0"
-description = "Experiments regarding LLM memory offloading"
+authors = [
+  { name="Ambroise Odonnat", email="ambroise.odonnat@gmail.com" },
+  { name="Vivien Cabannes", email="vivc@meta.com" },
+  { name="Sam Houliston", email="houlison.sam@gmail.com" },
+]
+description = "In-Tool Learning for LLMs"
 readme = "README.md"
 requires-python = ">=3.10"
 classifiers = [
@@ -30,21 +35,15 @@ dev = [
   "wandb",              # logging
 ]
 
-data = [
-  "datasets",
-  "datatrove",
-  "huggingface_hub",
-  "pyarrow",
-]
-
 llm = [
-  "transformers",   # HF transformers
+  "accelerate",     # distributed training
+  "bitsandbytes",   # quantization
+  "datasets",       # HF datasets
+  "blobfile",       # tiktoken dependency
   "sentencepiece",  # tokenizer
   "tiktoken",       # tokenizer
-  "blobfile",       # tiktoken dependency
-  "accelerate",     # distributed trainig
+  "transformers",   # HF transformers
   "peft",           # efficient finetuning
-  "bitsandbytes",   # quantization
 ]
 
 visu = [
@@ -57,17 +56,12 @@ visu = [
   "seaborn",      # plots
 ]
 
-ssm = [
-  "accelerated_scan",
-  "causal_conv1d",
-  "mamba_ssm",
-]
-
 [tool.setuptools.packages.find]
 where = ["src"]
 
 [tool.ruff]
 line-length = 120
+extend-select = ["E"]
 
 [tool.ruff.lint]
 select = [
