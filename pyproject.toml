@@ -9,7 +9,6 @@ authors = [
   { name="Ambroise Odonnat", email="ambroise.odonnat@gmail.com" },
 ]
 description = "In-Tool Learning for LLMs"
-licence = "LICENCE.md"
 readme = "README.md"
 requires-python = ">=3.10"
 classifiers = [
