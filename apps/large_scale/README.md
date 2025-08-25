@@ -1,17 +1,27 @@
 # In-Tool Learning - Large Scale Experiments
 
 This part of the codebase aims to study in-tool learning of large language models at large scale.
-The code can be used to reproduce the Section 6 of *Provable Benefits of In-Tool Learning for Large Language Models*.
+The code can be used to reproduce the Section 6 of [*Provable Benefits of In-Tool Learning for Large Language Models*]().
 
 - In-Tool Learning: Learning to use a tool (e.g., a calculator or a request to a database) to answer the problem,
 - In-Weight Learning: Memorizing the solution to the prolem within the model's weights.
 
 ## Installation
-To reproduce our experiments and figures, the ```data```, ```llm``` and ```visu``` optional dependencies need to be installed with:
+To reproduce our experiments and figures, the ```llm``` and ```visu``` optional dependencies need to be installed with:
 
 ```bash
-pip install -e ."[data,llm,visu]"
+pip install -e ."[llm,visu]"
 ```
+
+## Overview
+This folder contains:
+- ```Data/HF_dataset_generation.py```: Creates factual QA dataset using atoms + templates 
+- ```Training/finetune_parallelized.py```: Launches multi-turn or in-weight fine-tuning 
+- ```Training/ToolDataCollator.py```: Custom collator for tool-based interactions 
+- ```Evaluation/eval_recall.py```: Measures factual recall accuracy 
+- ```Evaluation/eval_hellaswag.py```: Tests generalization on HellaSwag 
+- ```Evaluation/eval_kl.py```: Computes KL divergence to a reference model 
+- ```Analysis/analysis_newer.py```: Aggregates evaluation results and generates plots 
 
 ## Dataset generation
 **File**: `Data/HF_dataset_generation.py`
@@ -91,19 +101,6 @@ Provides utilities for:
 Usage:
 - Results are loaded into Pandas dataframes using `collect_*` functions
 - Visualization functions generate scalable, publication-ready plots
-
-
-## Summary of key files
-| File | Description |
-|------|-------------|
-| `Data/HF_dataset_generation.py` | Creates factual QA dataset using atoms + templates |
-| `Training/finetune_parallelized.py` | Launches multi-turn or in-weight fine-tuning |
-| `Training/ToolDataCollator.py` | Custom collator for tool-based interactions |
-| `Evaluation/eval_recall.py` | Measures factual recall accuracy |
-| `Evaluation/eval_hellaswag.py` | Tests generalization on HellaSwag |
-| `Evaluation/eval_kl.py` | Computes KL divergence to a reference model |
-| `Analysis/analysis_newer.py` | Aggregates evaluation results and generates plots |
-
 
 ## Reproducibility
 All fine-tuning runs with their their parameters can be found in the jobfiles: `/paper_experiments_jobfiles`

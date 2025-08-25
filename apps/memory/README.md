@@ -1,17 +1,25 @@
 # In-Tool Learning - Controlled Experiments
 
 This part of the codebase aims to study in-tool learning of large language models in a controlled setting. 
-The code can be used to reproduce the Section 5 of *Provable Benefits of In-Tool Learning for Large Language Models*.
+The code can be used to reproduce the Section 5 of [*Provable Benefits of In-Tool Learning for Large Language Models*]().
 
 - In-Tool Learning: Learning to use a tool (e.g., a calculator or a request to a database) to answer the problem,
 - In-Weight Learning: Memorizing the solution to the prolem within the model's weights.
 
 ## Installation
-To reproduce our experiments and figures, the ```data```, ```llm``` and ```visu``` optional dependencies need to be installed with:
+To reproduce our experiments and figures, the ```llm``` and ```visu``` optional dependencies need to be installed with:
 
 ```bash
-pip install -e ."[data,llm,visu]"
+pip install -e ."[llm,visu]"
 ```
+
+###  Overview
+This folder contains:
+- ```Data```: (bigger) databases for the factual recall task in in-weight and in-tool settings.
+- ```Training```: scripts for in-weight and in-tool SFT (supervised fine-tuning).
+- ```Evaluation```: scrits for evaluation (recall, KL divergence, and generalization).
+- ```Analysis```: utilities to aggregate and plot experimental results.
+- ```README.md```: reproducibility instructions.
 
 ## Dataset generation
 Create a dataset of people, biographies of 1000 peoples, and questions/answers with the following commands (to be run from the root of the repository):
@@ -49,7 +57,7 @@ python -m apps.memory.eval apps/memory/config/eval.yaml
 ```
 
 ## Reproducibility
-We provide below the instructions to reproduce the experiments of our paper.
+We provide below the instructions to reproduce the controlled experiments of our [paper]() (Section 5).
 
 ### Parameter requirements bounds
 To empirically verify the parameter bounds predicted by our theory, we create the database (see `apps/memory/dataset/`) with the following commands (to be run from the root of the repository):
