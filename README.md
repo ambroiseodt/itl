@@ -4,6 +4,7 @@ Official implementation of [***Provable Benefits of In-Tool Learning for Large L
  <img src="overview.svg" width="100%"/>
 </p>
 Our codebase provides utilities to train and study large language models from the point of view of memory and generalization. It allows tool-use and relies mainly on PyTorch primitives, instead of any high-level LLM libraries, allowing researchers and practitioners to easily prototype and modify. It can be used to study the benefits of in-tool learning over in-weight learning:
+
 - In-Tool Learning: learning to use a tool (e.g., a calculator or a request to a database) to solve a problem,
 - In-Weight Learning: memorizing the solution to a problem within the model's weights.
 
