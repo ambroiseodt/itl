@@ -1,10 +1,9 @@
 # 🛠️ In-Tool Learning for Large Language Models
-Official implementation of [***Provable Benefits of In-Tool Learning for Large Language Models***](). 
-</br> **[Sam Houliston*](https://www.linkedin.com/in/sam-houliston-47364524a/?originalSubdomain=uk), [Ambroise Odonnat*](https://ambroiseodt.github.io/),[Charles Arnal*](https://charlesarnal.github.io/), [Vivien Cabannes*](https://viviencabannes.github.io/)**. ***Equal contribution**.
+Official implementation of [***Provable Benefits of In-Tool Learning for Large Language Models***](). **[Sam Houliston*](https://www.linkedin.com/in/sam-houliston-47364524a/?originalSubdomain=uk), [Ambroise Odonnat*](https://ambroiseodt.github.io/),[Charles Arnal*](https://charlesarnal.github.io/), [Vivien Cabannes*](https://viviencabannes.github.io/)**. ***Equal contribution**.
 <p align="center">  
  <img src="overview.svg" width="100%"/>
 </p>
-Our codebase provides utilities to train and study large language models from the point of view of memory and generalization. It relies mainly on PyTorch primitives, instead of any high-level LLM libraries, allowing researchers and practitioners to easily prototype and modify. 
+The main package ```NanoLlama``` provides utilities to train and study large language models from the point of view of memory and generalization. It notably allow tool-use and relies mainly on PyTorch primitives, instead of any high-level LLM libraries, allowing researchers and practitioners to easily prototype and modify. 
 
 ## Installation
 The code runs Python 3.10+.
@@ -36,7 +35,6 @@ Check that Pytorch is installed with
 python -c "import torch; print(torch.cuda.is_available())"
 ```
 This should print "True".
-```
 
 ## Overview
 
@@ -44,7 +42,7 @@ Our codebase is structured as follows:
 
 ```
 🛠️ itl
-┣ 📂src # Core library
+┣ 📂src # Core library NanoLlama
 ┃ ┣ 📂nanollama
 ┃   ┣ 📂agent
 ┃   ┣ 📂data 
@@ -59,12 +57,8 @@ Our codebase is structured as follows:
 ┃   ┣ 📄tokenizer.py
 ┃   ┗ 📄utils.py
 ┣ 📂test # Unit tests
-┃  ┣ 📄test_data_loader.py
-┃  ┣ 📄test_data_text.py
-┃  ┣ 📄test_data_tokenizer.py
-┃  ┗ 📄test_generation.py
-┗ 📂apps # Apps using the Nanollama codebase
-  ┣ 📂memory # Controlled study of memory load with in-tool learning
+┗ 📂apps # In-tool learing with Nanollama
+  ┣ 📂memory # Controlled study of memory load
   ┃ ┣ 📂compressibility
   ┃ ┣ 📂configs 
   ┃ ┣ 📂datasets 
@@ -77,7 +71,7 @@ Our codebase is structured as follows:
   ┃ ┣ 📄local_grid.py
   ┃ ┣ 📄prompt_loader.py
   ┃ ┗ 📄train.py
-  ┣ 📂large_scale # Large-scale experiments with in-tool learning 
+  ┣ 📂large_scale # Large-scale experiments
   ┃ ┣ 📂Data
   ┃ ┣ 📂Training 
   ┃ ┣ 📂Evaluation
@@ -86,27 +80,27 @@ Our codebase is structured as follows:
   
 ```
 
-The folder ```src/nanollama``` contains the most reusable components, which can be put together in the ```apps``` folder for various applications. Notably, the code to reproduce the experiments the controlled experiments (Section 5) of  *Provable Benefits of In-Tool Learning for Large Language Models* is in ```apps/memory``` and contains:
-- ```compressibility```: codebase to study knowledge representation.
+The folder ```src/nanollama``` contains the most reusable components, which can be put together in the ```apps``` folder for various applications. In particular, the code to reproduce our controlled study of memory load (Section 5 of our [paper]()) is in ```apps/memory``` and contains:
+- ```compressibility```: knowledge representation study.
 - ```configs```: configuration files of our experiments.
-- ```datasets```: codebase to build databases for the factual recall task in in-weight and in-tool settings.
-- ```generalization```: enables the analysis of the  generalization capabilities of in-tool learning.
-- ```scripts```: codebase to launch our experiments.
-- ```README.md```: instruction to reproduce experiments.
-- ```args.py```: utility to use the configs from ```apps/memory/configs```.
+- ```datasets```: databases for the factual recall task in in-weight and in-tool settings.
+- ```generalization```: analysis of the  generalization capabilities of in-tool learning.
+- ```scripts```: launch experiments.
+- ```README.md```: reproducibility instructions.
+- ```args.py```: utility to use configs.
 - ```eval.py```: evaluation loop.
-- ```local_grid.py```: codebase to launch grids without needing Slurm.
+- ```local_grid.py```: launching grids without Slurm.
 - ```train.py```: training loop.
 
-The code to reproduce the large-scale experiments (Section 6) of our paper is in ```apps/large_scale``` and contains:
-- ```Data```: dataset generation using atom + template composition.
-- ```Training```: finetuning scripts and collators for in-weight and in-tool SFT.
-- ```Evaluation```: evaluation scripts for recall, KL divergence, and generalization.
-- ```Analysis```: aggregation and plotting utilities for experimental results.
-- ```README.md```: instruction to reproduce experiments.
+The code to reproduce our large-scale experiments (Section 6 of our [paper]()) is in ```apps/large_scale``` and contains:
+- ```Data```: (bigger) databases for the factual recall task in in-weight and in-tool settings.
+- ```Training```: scripts for in-weight and in-tool SFT (supervised fine-tuning).
+- ```Evaluation```: scrits for evaluation (recall, KL divergence, and generalization).
+- ```Analysis```: utilities to aggregate and plot experimental results.
+- ```README.md```: reproducibility instructions.
 
 ## Launching jobs
-Our codebase supports launching grid experients both with and without Slurm. See ```apps/memory/README.md```, ```src/nanollama/launcher.py``` and ```apps/memory/local_grid.py``` for details.
+Our codebase supports launching jobs with and without Slurm. See ```apps/memory/README.md``` for more details.
 
 ## Reproducing our experiments
 Instructions to reproduce the experiments in our paper can be found in [apps/memory/README](apps/memory/README.md) and [apps/finetuning/README](apps/finetuning/README.md).
@@ -117,17 +111,8 @@ Run unit tests with the following command at the root of this repository
 python -m unittest
 ```
 
-#### Code convention
-- Avoid packages that are not well-maintained
-- If using heavy/hard-to-install packages that are not mandatory, make sure that the code still runs if people do not install these packages
-- Make sure that the code is open-sourceable.
-- Name `build_<method>` any method that initializes a class.
-- Use Object-Oriented Programming, as well as Context-Oriented Programming.
-- Make sure that the code can run on CPU and V100 (so that people can easily develop from their own laptop without a connection on small datasets).
- - Use Stateful objects to be able to relaunch training whenever it crashes.
-
 ## Acknowledgments
-This repository builds heavily on [Meta Lingua](https://github.com/facebookresearch/lingua), which provides minimalist code to pretrain large language models.
+This repository builds heavily on [Meta Lingua](https://github.com/facebookresearch/lingua) and [pal](https://github.com/facebookresearch/pal).
 
 ## License
 The codebase is licensed under the [CC BY-NC 4.0 License](LICENSE.md).
