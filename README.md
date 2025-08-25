@@ -1,9 +1,8 @@
 # 🛠️ In-Tool Learning (ITL)
 **This repository contains the official implementation of our paper on tool-use for LLMs** 
 
->[Provable Benefits of In-Tool Learning for Large Language Models](https://arxiv.org/pdf/).
->**[Sam Houliston*](https://www.linkedin.com/in/sam-houliston-47364524a/?originalSubdomain=uk), [Ambroise Odonnat*](https://ambroiseodt.github.io/),[Charles Arnal*](https://charlesarnal.github.io/), [Vivien Cabannes*](https://viviencabannes.github.io/)**
-<br/>***Equal contribution**.
+>[*Provable Benefits of In-Tool Learning for Large Language Models*](https://arxiv.org/pdf/).
+>**[Sam Houliston*](https://www.linkedin.com/in/sam-houliston-47364524a/?originalSubdomain=uk), [Ambroise Odonnat*](https://ambroiseodt.github.io/), [Charles Arnal*](https://charlesarnal.github.io/), [Vivien Cabannes*](https://viviencabannes.github.io/)**. *Equal contribution.
 <p align="center">  
  <img src="overview.svg" width="100%"/>
 </p>
