@@ -1,10 +1,6 @@
 # In-Tool Learning - Controlled Experiments
 
-This part of the codebase aims to study in-tool learning of large language models in a controlled setting. 
-The code can be used to reproduce the Section 5 of [*Provable Benefits of In-Tool Learning for Large Language Models*]().
-
-- In-Tool Learning: Learning to use a tool (e.g., a calculator or a request to a database) to answer the problem,
-- In-Weight Learning: Memorizing the solution to the prolem within the model's weights.
+This part of the codebase aims to study in-tool learning with large language models in a controlled setting from a memory and generalization perspective. 
 
 ## Installation
 To reproduce our experiments and figures, the ```llm``` and ```visu``` optional dependencies need to be installed with:
@@ -15,11 +11,16 @@ pip install -e ."[llm,visu]"
 
 ###  Overview
 This folder contains:
-- ```Data```: (bigger) databases for the factual recall task in in-weight and in-tool settings.
-- ```Training```: scripts for in-weight and in-tool SFT (supervised fine-tuning).
-- ```Evaluation```: scrits for evaluation (recall, KL divergence, and generalization).
-- ```Analysis```: utilities to aggregate and plot experimental results.
+- ```compressibility```: knowledge representation study.
+- ```configs```: configuration files of our experiments.
+- ```datasets```: databases for the factual recall task in in-weight and in-tool settings.
+- ```generalization```: analysis of the  generalization capabilities of in-tool learning.
+- ```scripts```: launch experiments.
 - ```README.md```: reproducibility instructions.
+- ```args.py```: utility to use configs.
+- ```eval.py```: evaluation loop.
+- ```local_grid.py```: launching grids without Slurm.
+- ```train.py```: training loop.
 
 ## Dataset generation
 Create a dataset of people, biographies of 1000 peoples, and questions/answers with the following commands (to be run from the root of the repository):

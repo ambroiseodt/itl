@@ -3,7 +3,10 @@ Official implementation of [***Provable Benefits of In-Tool Learning for Large L
 <p align="center">  
  <img src="overview.svg" width="100%"/>
 </p>
-The main package ```NanoLlama``` provides utilities to train and study large language models from the point of view of memory and generalization. It notably allow tool-use and relies mainly on PyTorch primitives, instead of any high-level LLM libraries, allowing researchers and practitioners to easily prototype and modify. 
+The main package ```NanoLlama``` provides utilities to train and study large language models from the point of view of memory and generalization. It notably allow tool-use and relies mainly on PyTorch primitives, instead of any high-level LLM libraries, allowing researchers and practitioners to easily prototype and modify. In our study, we compare the benefits of in-tool learning (ITL) over in-weight learning:
+
+- In-Tool Learning: learning to use a tool (e.g., a calculator or a request to a database) to solve a problem,
+- In-Weight Learning: memorizing the solution to the problem within the model's weights.
 
 ## Installation
 The code runs Python 3.10+.
@@ -80,24 +83,7 @@ Our codebase is structured as follows:
   
 ```
 
-The folder ```src/nanollama``` contains the most reusable components, which can be put together in the ```apps``` folder for various applications. In particular, the code to reproduce our controlled study of memory load (Section 5 of our [paper]()) is in ```apps/memory``` and contains:
-- ```compressibility```: knowledge representation study.
-- ```configs```: configuration files of our experiments.
-- ```datasets```: databases for the factual recall task in in-weight and in-tool settings.
-- ```generalization```: analysis of the  generalization capabilities of in-tool learning.
-- ```scripts```: launch experiments.
-- ```README.md```: reproducibility instructions.
-- ```args.py```: utility to use configs.
-- ```eval.py```: evaluation loop.
-- ```local_grid.py```: launching grids without Slurm.
-- ```train.py```: training loop.
-
-The code to reproduce our large-scale experiments (Section 6 of our [paper]()) is in ```apps/large_scale``` and contains:
-- ```Data```: (bigger) databases for the factual recall task in in-weight and in-tool settings.
-- ```Training```: scripts for in-weight and in-tool SFT (supervised fine-tuning).
-- ```Evaluation```: scrits for evaluation (recall, KL divergence, and generalization).
-- ```Analysis```: utilities to aggregate and plot experimental results.
-- ```README.md```: reproducibility instructions.
+The folder ```src/nanollama``` contains the most reusable components, which can be put together in the ```apps``` folder for various applications. The code in ```apps/memory``` can be used to study the memory load of in-tool learning with large language models in a controlled setting and the code in ```apps/large_scale``` can be used to study in-tool learning with large language models at large scale.
 
 ## Launching jobs
 Our codebase supports launching jobs with and without Slurm. See ```apps/memory/README.md``` for more details.

@@ -1,6 +1,6 @@
 # In-Tool Learning - Large Scale Experiments
 
-This part of the codebase aims to study in-tool learning of large language models at large scale.
+This part of the codebase aims to study in-tool learning with large language models at large scale.
 The code can be used to reproduce the Section 6 of [*Provable Benefits of In-Tool Learning for Large Language Models*]().
 
 - In-Tool Learning: Learning to use a tool (e.g., a calculator or a request to a database) to answer the problem,
