@@ -1,9 +1,9 @@
-# 🛠️ In-Tool Learning for Large Language Models
+# 🛠️ In-Tool Learning (ITL) for Large Language Models
 Official implementation of [***Provable Benefits of In-Tool Learning for Large Language Models***](). **[Sam Houliston*](https://www.linkedin.com/in/sam-houliston-47364524a/?originalSubdomain=uk), [Ambroise Odonnat*](https://ambroiseodt.github.io/),[Charles Arnal*](https://charlesarnal.github.io/), [Vivien Cabannes*](https://viviencabannes.github.io/)**. ***Equal contribution**.
 <p align="center">  
  <img src="overview.svg" width="100%"/>
 </p>
-The main package ```NanoLlama``` provides utilities to train and study large language models from the point of view of memory and generalization. It notably allow tool-use and relies mainly on PyTorch primitives, instead of any high-level LLM libraries, allowing researchers and practitioners to easily prototype and modify. In our study, we compare the benefits of in-tool learning (ITL) over in-weight learning:
+Our codebase provides utilities to train and study large language models from the point of view of memory and generalization. It allows tool-use and relies mainly on PyTorch primitives, instead of any high-level LLM libraries, allowing researchers and practitioners to easily prototype and modify. It can be used to study the benefits of in-tool learning over in-weight learning:
 
 - In-Tool Learning: learning to use a tool (e.g., a calculator or a request to a database) to solve a problem,
 - In-Weight Learning: memorizing the solution to the problem within the model's weights.
@@ -60,7 +60,7 @@ Our codebase is structured as follows:
 ┃   ┣ 📄tokenizer.py
 ┃   ┗ 📄utils.py
 ┣ 📂test # Unit tests
-┗ 📂apps # In-tool learing with Nanollama
+┗ 📂apps # In-tool learning with Nanollama
   ┣ 📂memory # Controlled study of memory load
   ┃ ┣ 📂compressibility
   ┃ ┣ 📂configs 
@@ -98,7 +98,7 @@ python -m unittest
 ```
 
 ## Acknowledgments
-This repository builds heavily on [Meta Lingua](https://github.com/facebookresearch/lingua) and [pal](https://github.com/facebookresearch/pal).
+This repository builds heavily on [lingua](https://github.com/facebookresearch/lingua) and [pal](https://github.com/facebookresearch/pal).
 
 ## License
 The codebase is licensed under the [CC BY-NC 4.0 License](LICENSE.md).
