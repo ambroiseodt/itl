@@ -1,16 +1,13 @@
-# NanoLlama - Memory and Generalization in LLMs
+# 🛠️ Provable Benefits of In-Tool Learning for Large Language Models
 **[Sam Houliston*](https://www.linkedin.com/in/sam-houliston-47364524a/?originalSubdomain=uk)**, **[Ambroise Odonnat*](https://ambroiseodt.github.io/)**,**[Charles Arnal*](https://charlesarnal.github.io/)**, **[Vivien Cabannes*](https://viviencabannes.github.io/)**. ***Equal contribution**
 
-This codebase provides utilities to train and study large language models, particularly from the point of view of memory and generalization.
-It mostly relies on PyTorch primitives, instead of any high-level LLM libraries, allowing researchers and practitioners to easily prototype and modify. 
-In the folder ```apps```, we show how this codebase can be used to study LLMs by providing the official implementation of *Provable Benefits of In-Tool Learning for Large Language Models*.
+This codebase is the official implementation of our [Provable Benefits of In-Tool Learning for Large Language Models](). It provides utilities to train and study large language models from the point of view of memory and generalization. It relies mainly on PyTorch primitives, instead of any high-level LLM libraries, allowing researchers and practitioners to easily prototype and modify. 
 
 <p align="center">  
  <img src="overview.svg" width="100%"/>
 </p>
 
 ## Installation
-
 The code runs Python 3.10+.
 Here are some installation instructions:
 1. Install [miniconda](https://docs.conda.io/projects/miniconda/en/latest/). Follow the instructions online, most likely you will execute the following commands.
@@ -25,9 +22,8 @@ conda create -n llm
 conda activate llm
 conda install pip python=3.12
 ```
-3. Install Pytorch and check CUDA support: be mindful to install a version that is compatible with your CUDA driver ([example](https://docs.nvidia.com/cuda/cuda-toolkit-release-notes/index.html)) (use `nvidia-smi` to check your CUDA driver)
+Be mindful to install a Pytorch version that is compatible with your CUDA driver ([example](https://docs.nvidia.com/cuda/cuda-toolkit-release-notes/index.html)) (use `nvidia-smi` to check your CUDA driver)
 ```bash
-pip install torch --index-url https://download.pytorch.org/whl/cu121
 python -c "import torch; print(torch.cuda.is_available())"
 ```
 This should print "True".
@@ -37,32 +33,17 @@ git clone <repo url>
 cd <repo path>
 pip install -e .
 ```
-If you want to install the development, visualization, and mamba dependencies, you can swap the previous command for the following one:
+If you want to install the LLM, development and visualization dependencies, you can swap the previous command for the following one:
 ```bash
-pip install -e ".[dev,ssm,visu]"
-```
-
-#### Mamba specific instructions
-For mamba, `causal_conv1d` can be a bit hard to load, as it is built upon environment variables that are not always set.
-If you are on a cluster utilizing `module`, you may want to set `CUDA_HOME` with
-```bash
-module load cuda/<latest version>
-```
-You may instantiate the path to `nvjitlink` with
-```bash
-export LD_LIBRARY_PATH=$(python -c "import site; print(site.getsitepackages()[0] + '/nvidia/nvjitlink/lib')"):$LD_LIBRARY_PATH
-```
-You can then try to install the package with `ssm` dependencies (namely `causal_conv1d` and `mamba_ssm`)
-```bash
-pip install -e .[ssm]
+pip install -e ".[llm,dev,visu]"
 ```
 
 ## Overview
 
-NanoLlama is structured as follows:
+Our codebase is structured as follows:
 
 ```
-🧠 memory
+🛠️ itl
 ┣ 📂src # Core library
 ┃ ┣ 📂nanollama
 ┃   ┣ 📂agent
@@ -101,8 +82,8 @@ NanoLlama is structured as follows:
   ┃ ┣ 📂Training 
   ┃ ┣ 📂Evaluation
   ┃ ┣ 📂Analysis
-  ┃ ┗ 📄README.md
-  ┗ 📂llm # Pretraining (work in progress)
+  ┗ ┗ 📄README.md
+  
 ```
 
 The folder ```src/nanollama``` contains the most reusable components, which can be put together in the ```apps``` folder for various applications. Notably, the code to reproduce the experiments the controlled experiments (Section 5) of  *Provable Benefits of In-Tool Learning for Large Language Models* is in ```apps/memory``` and contains:
@@ -130,9 +111,6 @@ Our codebase supports launching grid experients both with and without Slurm. See
 ## Reproducing our experiments
 Instructions to reproduce the experiments in our paper can be found in [apps/memory/README](apps/memory/README.md) and [apps/finetuning/README](apps/finetuning/README.md).
 
-## Contributing
-To contribute to this codebase, please refer to [contributing](CONTRIBUTING.md) and the [code of conduct](CODE_OF_CONDUCT.md).
-
 #### Development
 Run unit tests with the following command at the root of this repository
 ```bash
@@ -151,6 +129,9 @@ python -m unittest
 ## Acknowledgments
 This repository builds heavily on [Meta Lingua](https://github.com/facebookresearch/lingua), which provides minimalist code to pretrain large language models.
 
+## License
+The codebase is licensed under the [CC BY-NC 4.0 License](LICENSE.md).
+
 ## Citation
 If you find this repository useful, please consider giving a star ⭐, and cite us as:
 ```
@@ -162,6 +143,4 @@ If you find this repository useful, please consider giving a star ⭐, and cite 
 }
 ```
 
-## License
-NanoLlama is licensed under the [CC BY-NC 4.0 License](LICENSE.md).
 
