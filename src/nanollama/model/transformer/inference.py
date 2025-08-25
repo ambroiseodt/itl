@@ -21,10 +21,26 @@ import torch.nn.functional as F
 from torch import Tensor
 
 from ...distributed import get_raw_model
-from ...inference import sample_from_logits
 from .architecture import KVCache, Transformer, TransformerBlock
 
 logger = getLogger("nanollama")
+
+# ------------------------------------------------------------------------------
+# Sampling
+# ------------------------------------------------------------------------------
+
+def sample_from_logits(logits: Tensor, **kwargs) -> Tensor:
+    """
+    Sample from logits.
+
+    ### Parameters
+    - logits: logits tensor.
+    - kwargs: additional arguments for sampling strategy.
+    
+    ### Notes
+    - TODO: implement various sampling strategy, e.g., temperature, top-k, etc.
+    """
+    return logits.argmax(dim=-1)
 
 # ------------------------------------------------------------------------------
 # Pretraining

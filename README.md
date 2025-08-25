@@ -38,6 +38,7 @@ To verify the your installation, run unit tests with the following command at th
 ```bash
 python -m unittest
 ```
+It should return ```OK```.
 
 ## Overview
 
