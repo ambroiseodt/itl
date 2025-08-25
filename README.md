@@ -32,11 +32,12 @@ If you want to install the LLM, development and visualization dependencies, you 
 ```bash
 pip install -e ".[llm,dev,visu]"
 ```
-Check that Pytorch is installed with
+
+### Development
+To verify the your installation, run unit tests with the following command at the root of this repository
 ```bash
-python -c "import torch; print(torch.cuda.is_available())"
+python -m unittest
 ```
-This should print "True".
 
 ## Overview
 
@@ -89,12 +90,6 @@ Our codebase supports launching jobs with and without Slurm. See ```apps/memory/
 
 ## Reproducing our experiments
 Instructions to reproduce the experiments in our paper can be found in [apps/memory/README](apps/memory/README.md) and [apps/finetuning/README](apps/finetuning/README.md).
-
-#### Development
-Run unit tests with the following command at the root of this repository
-```bash
-python -m unittest
-```
 
 ## Acknowledgments
 This repository builds heavily on [lingua](https://github.com/facebookresearch/lingua) and [pal](https://github.com/facebookresearch/pal).
