@@ -9,24 +9,19 @@ Our codebase provides utilities to train and study large language models from th
 ## Installation
 The code runs Python 3.10+.
 Here are some installation instructions:
-1. Install [miniconda](https://docs.conda.io/projects/miniconda/en/latest/). Follow the instructions online, most likely you will execute the following commands.
+- Install [miniconda](https://docs.conda.io/projects/miniconda/en/latest/). Follow the instructions online, most likely you will execute the following commands.
 ```bash
 curl -O https://repo.anaconda.com/miniconda/Miniconda3-latest-Linux-x86_64.sh
 bash ~/Miniconda3-latest-Linux-x86_64.sh
 source ~/.bashrc
 ```
-2. Install Python in a new conda environment: please be mindful to install a version of Python that is compatible with PyTorch.
+- Install Python in a new conda environment (be mindful to install a Python version compatible with Pytorch):
 ```bash
-conda create -n llm
+conda create -n llm python==3.12
 conda activate llm
-conda install pip python=3.12
 ```
-Be mindful to install a Pytorch version that is compatible with your CUDA driver ([example](https://docs.nvidia.com/cuda/cuda-toolkit-release-notes/index.html)) (use `nvidia-smi` to check your CUDA driver)
-```bash
-python -c "import torch; print(torch.cuda.is_available())"
-```
-This should print "True".
-4. Install this repo
+
+4. Install this repo (be mindful to install a Pytorch version compatible with your CUDA driver; use `nvidia-smi` to check your CUDA driver)
 ```bash
 git clone <repo url>
 cd <repo path>
@@ -35,6 +30,12 @@ pip install -e .
 If you want to install the LLM, development and visualization dependencies, you can swap the previous command for the following one:
 ```bash
 pip install -e ".[llm,dev,visu]"
+```
+Check that Pytorch is installed with
+```bash
+python -c "import torch; print(torch.cuda.is_available())"
+```
+This should print "True".
 ```
 
 ## Overview
