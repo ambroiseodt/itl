@@ -80,7 +80,9 @@ class EmbeddingModel(nn.Module):
 
         self.embeddings = nn.Embedding(config.vocab_size, config.emb_dim)
 
-        self.layers = nn.ModuleList([block(config.block) for _ in range(config.nb_layers)])
+        self.layers = nn.ModuleList(
+            [block(config.block) for _ in range(config.nb_layers)]
+        )
 
         self.output = nn.Linear(config.emb_dim, config.vocab_size, bias=False)
         self.output_norm = RMSNorm(config.emb_dim, eps=config.norm_eps)
