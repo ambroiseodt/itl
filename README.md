@@ -1,7 +1,6 @@
 # 🛠️ In-Tool Learning for Large Language Models
 **Official implementation of [*Provable Benefits of In-Tool Learning for Large Language Models*]()**. 
-</br> **[Sam Houliston*](https://www.linkedin.com/in/sam-houliston-47364524a/?originalSubdomain=uk), [Ambroise Odonnat*](https://ambroiseodt.github.io/),[Charles Arnal*](https://charlesarnal.github.io/), [Vivien Cabannes*](https://viviencabannes.github.io/)**. 
-</br> ***Equal contribution**.
+</br> **[Sam Houliston*](https://www.linkedin.com/in/sam-houliston-47364524a/?originalSubdomain=uk), [Ambroise Odonnat*](https://ambroiseodt.github.io/),[Charles Arnal*](https://charlesarnal.github.io/), [Vivien Cabannes*](https://viviencabannes.github.io/)**. ***Equal contribution**.
 <p align="center">  
  <img src="overview.svg" width="100%"/>
 </p>
