@@ -1,7 +1,10 @@
-# 🛠️ Provable Benefits of In-Tool Learning for Large Language Models
-**[Sam Houliston*](https://www.linkedin.com/in/sam-houliston-47364524a/?originalSubdomain=uk)**, **[Ambroise Odonnat*](https://ambroiseodt.github.io/)**,**[Charles Arnal*](https://charlesarnal.github.io/)**, **[Vivien Cabannes*](https://viviencabannes.github.io/)**. ***Equal contribution**
+# 🛠️ In-Tool Learning for Large Language Models
+**This repository contains the official implementation of 
+> [Provable Benefits of In-Tool Learning for Large Language Models]().
+>**[Sam Houliston*](https://www.linkedin.com/in/sam-houliston-47364524a/?originalSubdomain=uk)**, **[Ambroise Odonnat*](https://ambroiseodt.github.io/)**,**[Charles Arnal*](https://charlesarnal.github.io/)**, **[Vivien Cabannes*](https://viviencabannes.github.io/)**. 
+</br> ***Equal contribution**.
 
-This codebase is the official implementation of our [Provable Benefits of In-Tool Learning for Large Language Models](). It provides utilities to train and study large language models from the point of view of memory and generalization. It relies mainly on PyTorch primitives, instead of any high-level LLM libraries, allowing researchers and practitioners to easily prototype and modify. 
+Our codebase provides utilities to train and study large language models from the point of view of memory and generalization. It relies mainly on PyTorch primitives, instead of any high-level LLM libraries, allowing researchers and practitioners to easily prototype and modify. 
 
 <p align="center">  
  <img src="overview.svg" width="100%"/>
