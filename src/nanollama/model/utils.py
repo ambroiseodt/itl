@@ -27,6 +27,9 @@ def build_model(config: dict[str, Any], callback: callable = None, return_config
 
     ### Returns
     - model: An instance of the specified model implementation.
+
+    ### Notes
+    Other types of model can be added by extending the match-case structure.
     """
     # argument parsing
     implementation = config.get("implementation", "transformer").lower()
@@ -35,30 +38,6 @@ def build_model(config: dict[str, Any], callback: callable = None, return_config
         case "transformer":
             model_type = Transformer
             config_obj = build_with_type_check(TransformerConfig, config)
-
-        case "mamba":
-            from src.nanollama.model.mamba import Mamba, MambaConfig
-
-            model_type = Mamba
-            config_obj = build_with_type_check(MambaConfig, config)
-
-        case "hawk":
-            from src.nanollama.model.rnn import FastRNNConfig, Hawk
-
-            model_type = Hawk
-            config_obj = build_with_type_check(FastRNNConfig, config)
-
-        case "mingru":
-            from src.nanollama.model.rnn import FastRNNConfig, MinGRU
-
-            model_type = MinGRU
-            config_obj = build_with_type_check(FastRNNConfig, config)
-
-        case "minlstm":
-            from src.nanollama.model.rnn import FastRNNConfig, MinLSTM
-
-            model_type = MinLSTM
-            config_obj = build_with_type_check(FastRNNConfig, config)
 
         case _:
             raise ValueError(f"Model implementation {implementation} not found")
