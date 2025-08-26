@@ -37,7 +37,7 @@ Launch a training run locally
 ```bash
 python -m apps.memory.train apps/memory/config/debug.yaml
 ```
-You can run the code locally with two GPUs (or more).
+You can run the code locally with several GPUs (make sure that nb_gpus = tp*dp given in the config)
 ```bash
 torchrun --nproc-per-node 2 -m apps.memory.train apps/memory/config/debug.yaml
 ```
