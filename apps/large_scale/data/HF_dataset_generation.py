@@ -7,6 +7,7 @@ Module containing utilities to create HuggingFace compatible databases for the f
 
 import csv
 import json
+import logging
 import random
 import re
 from itertools import product
@@ -194,29 +195,52 @@ def format_with_underscores(number: int) -> str:
     return f"{number:_}"
 
 
-if __name__ == "__main__":
-    # ==== Dataset size = N_people * 4 facts per person
-    N_people = 25000
+def build_database(n_people: int = 25000) -> None:
+    """
+    Build database for factual recall task and save it to disk. The dataset size
+    is 4 times the number of people, as each person has 4 attributes.
 
-    # ==== Paths and configs ====
-    atom_dir = Path(__file__).parents[3] / "memory" / "dataset" / "atoms"
-    template_dir = Path(__file__).parents[3] / "memory" / "dataset" / "templates"
-    dataset_name = f"HF_dataset_{format_with_underscores(4 * N_people)}"
-    SAVE_DIR = Path(__file__).parents[1] / f"LargeDatasetHF/{dataset_name}"
+    Usage:
+    Build a database with 200_000 facts (50_000 people) wit
+    ```bash
+    python -m apps.large_scale.data.HF_dataset_generation build --n_people 50000
+    ```
+    """
 
-    # ==== Paths and configs ====
-    dataset = generate_hf_dataset(N_people, atom_dir, template_dir)
+    # Paths and configs
+    dataset_path = "apps/memory/dataset"
+    atom_dir = Path(__file__).parents[3] / dataset_path / "atoms"
+    template_dir = Path(__file__).parents[3] / dataset_path / "templates"
+    dataset_name = f"HF_dataset_{format_with_underscores(4 * n_people)}"
+    SAVE_DIR = Path(__file__).parents[1] / f"HF_datasets/{dataset_name}"
+
+    # Generate dataset
+    dataset = generate_hf_dataset(n_people, atom_dir, template_dir)
     print(f"Generated dataset with {len(dataset)} examples.")
     print_dataset_structure(dataset)
 
-    # ==== Save dataset ====
+    # Save dataset
     dataset.save_to_disk(SAVE_DIR)
     print(f"Dataset saved to {SAVE_DIR}")
+    dataset = Dataset.load_from_disk(SAVE_DIR)
+    print(f"Reloaded dataset from {SAVE_DIR} for verification.")
 
-    # ==== Export dataset for inspection ====
+    # Export dataset for inspection
     export_dataset(
         dataset=dataset,
-        output_path=Path(__file__).parents[1] / f"LargeDatasetHF/{dataset_name}_preview.jsonl",
+        output_path=Path(__file__).parents[1] / f"HF_datasets/{dataset_name}_preview.jsonl",
         filetype="jsonl",
         limit=10,
+    )
+
+
+if __name__ == "__main__":
+    import fire
+
+    logging.basicConfig(level=logging.INFO)
+
+    fire.Fire(
+        {
+            "build": build_database,
+        }
     )
