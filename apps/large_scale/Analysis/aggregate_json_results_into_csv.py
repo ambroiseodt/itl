@@ -1,27 +1,28 @@
 # This source code is licensed under the terms specified in the `LICENSE` file.
 """
-Aggregation of experimental results.
+Module to aggregate the experimental results into csv files.
 
 @ 2025, Meta
 """
 
 import json
-import os
 import re
 from collections import defaultdict
 from pathlib import Path
 
 import pandas as pd
 
-# ===========================================================================
-# ==========    Code to Load and Create DataFrame of Results    =============
-# ===========================================================================
+RESULT_PATH = Path(__file__).parents[3] / "results"
+
+# ------------------------------------------------------------------------------
+# Load and create dataframe of results from json files
+# ------------------------------------------------------------------------------
 
 
-# --------  Code to collect eval results for hellaswag, recall and kl
-def collect_all_recall_results(base_path: Path):
+def collect_all_recall_results(base_path: Path) -> list:
+    """Collect all the eval results for hellaswag, recall and kl."""
     all_records = []
-    for subdir in base_path.glob("Results_*_final"):  # change this to Resulst
+    for subdir in base_path.glob("Results_*_final"):  # change this to Results
         recall_dir = subdir / "Recall"
         if recall_dir.exists() and recall_dir.is_dir():
             print(f"[Info] Found recall dir: {recall_dir}")
@@ -32,7 +33,8 @@ def collect_all_recall_results(base_path: Path):
     return all_records
 
 
-def collect_recall_results(base_path: Path):
+def collect_recall_results(base_path: Path) -> list:
+    """Collect eval results for hellaswag, recall and kl."""
     records_by_run = defaultdict(list)
     for json_file in base_path.rglob("checkpoints_recall_results.json"):
         try:
@@ -61,7 +63,7 @@ def collect_recall_results(base_path: Path):
             print(f"Failed to parse Recall file {json_file}: {e}")
     # Add epoch numbers
     final_records = []
-    for run, recs in records_by_run.items():
+    for _, recs in records_by_run.items():
         sorted_recs = sorted(recs, key=lambda x: x["checkpoint"])
         for epoch_idx, rec in enumerate(sorted_recs, start=1):
             rec["epoch"] = epoch_idx
@@ -69,7 +71,8 @@ def collect_recall_results(base_path: Path):
     return final_records
 
 
-def collect_all_Hellaswag_results(base_path: Path):
+def collect_all_Hellaswag_results(base_path: Path) -> list:
+    """Collect all the eval results for hellaswag."""
     all_records = []
     for subdir in base_path.glob("Results_*_final"):
         hella_dir = subdir / "Hellaswag"
@@ -82,7 +85,8 @@ def collect_all_Hellaswag_results(base_path: Path):
     return all_records
 
 
-def collect_hellaswag_results(base_path: Path):
+def collect_hellaswag_results(base_path: Path) -> list:
+    """Collect the eval results for hellaswag."""
     records_by_run = defaultdict(list)
     run_dir = base_path / "runs"
     for result_file in run_dir.rglob("results_*.json"):
@@ -111,7 +115,7 @@ def collect_hellaswag_results(base_path: Path):
             print(f"Failed to load Hellaswag result {result_file}: {e}")
     # Add epoch numbers
     final_records = []
-    for run, recs in records_by_run.items():
+    for _, recs in records_by_run.items():
         sorted_recs = sorted(recs, key=lambda x: x["checkpoint"])
         for epoch_idx, rec in enumerate(sorted_recs, start=1):
             rec["epoch"] = epoch_idx
@@ -119,20 +123,22 @@ def collect_hellaswag_results(base_path: Path):
     return final_records
 
 
-def collect_all_KL_TV_results(base_path: Path):
+def collect_all_KL_TV_results(base_path: Path) -> list:
+    """Collect all the eval results for KL and TV."""
     all_records = []
     for subdir in base_path.glob("Results_*_final"):
         kl_dir = subdir / "KL"
         if kl_dir.exists() and kl_dir.is_dir():
             print(f"[Info] Found kl dir: {kl_dir}")
-            records = collect_kl_tv_results(kl_dir)
+            records = collect_KL_TV_results(kl_dir)
             all_records.extend(records)
         else:
             print(f"[Skip] No recall directory in {subdir}")
     return all_records
 
 
-def collect_kl_tv_results(base_path: Path):
+def collect_KL_TV_results(base_path: Path) -> list:
+    """Collect the eval results for KL and TV."""
     records_by_run = defaultdict(list)
     for json_file in base_path.rglob("checkpoint_kl_eval_results.json"):
         try:
@@ -160,7 +166,7 @@ def collect_kl_tv_results(base_path: Path):
             print(f"Failed to parse Recall file {json_file}: {e}")
     # Add epoch numbers
     final_records = []
-    for run, recs in records_by_run.items():
+    for _, recs in records_by_run.items():
         sorted_recs = sorted(recs, key=lambda x: x["checkpoint"])
         for epoch_idx, rec in enumerate(sorted_recs, start=1):
             rec["epoch"] = epoch_idx
@@ -169,26 +175,38 @@ def collect_kl_tv_results(base_path: Path):
     return final_records
 
 
-# ====================================================================================
-# ==========    Code to Fetch Specific Results from Paper Experiments    =============
-# ====================================================================================
+# ------------------------------------------------------------------------------
+# Fetch specific results from the paper experiments
+# ------------------------------------------------------------------------------
 
 
-def get_recall_hellaswag_tv_run_data(recall_df, tv_df, hellaswag_df, eval_results_path, acc_threshold=1):
-    # Fetch base model hellaswag data
+def get_recall_hellaswag_tv_run_data(
+    recall_df: pd.DataFrame,
+    tv_df: pd.DataFrame,
+    hellaswag_df: pd.DataFrame,
+    eval_results_path: Path,
+    acc_threshold: float = 1,
+) -> pd.DataFrame:
+    """Fetch base model hellaswag data."""
+    llama1B_path = f"{eval_results_path}/Results_llama_final/Hellaswag/base_models/Llama-3.2-1B-Instruct"
+    llama3B_path = f"{eval_results_path}/Results_llama_final/Hellaswag/base_models/Llama-3.2-3B-Instruct"
+    llama8B_path = f"{eval_results_path}/Results_llama_final/Hellaswag/base_model/Llama-3.1-8B-Instruct"
+    smollm135M_path = f"{eval_results_path}/Results_smol_final/Hellaswag/base_models/SmolLM-135M-Instruct"
+    smollm360M_path = f"{eval_results_path}/Results_smol_final/Hellaswag/base_models/SmolLM-360M_Instruct"
+    smollm1700M_path = f"{eval_results_path}/Results_smol_final/Hellaswag/base_models/SmolLM-1.7B-Instruct"
     base_models_paths = {
-        "Lam1B": f"{eval_results_path}/Results_llama_final/Hellaswag/base_models/Llama-3.2-1B-Instruct/results_2025-05-06T23-30-06.017723.json",
-        "Lam3B": f"{eval_results_path}/Results_llama_final/Hellaswag/base_models/Llama-3.2-3B-Instruct/results_2025-05-07T00-07-24.007108.json",
-        "Lam8B": f"{eval_results_path}/Results_llama_final/Hellaswag/base_models/Llama-3.1-8B-Instruct/meta-llama__Llama-3.1-8B-Instruct/results_2025-05-19T10-57-37.932935.json",
-        "Smol135M": f"{eval_results_path}/Results_smol_final/Hellaswag/base_models/SmolLM-135M-Instruct/HuggingFaceTB__SmolLM-135M-Instruct/results_2025-06-28T12-52-52.265790.json",
-        "Smol360M": f"{eval_results_path}/Results_smol_final/Hellaswag/base_models/SmolLM-360M_Instruct/HuggingFaceTB__SmolLM-360M-Instruct/results_2025-06-28T05-07-18.025099.json",
-        "Smol1.7B": f"{eval_results_path}/Results_smol_final/Hellaswag/base_models/SmolLM-1.7B-Instruct/HuggingFaceTB__SmolLM-1.7B-Instruct/results_2025-06-28T05-09-42.516537.json",
+        "Lam1B": f"{llama1B_path}/results_2025-05-06T23-30-06.017723.json",
+        "Lam3B": f"{llama3B_path}/results_2025-05-07T00-07-24.007108.json",
+        "Lam8B": f"{llama8B_path}/meta-llama__Llama-3.1-8B-Instruct/results_2025-05-19T10-57-37.932935.json",
+        "Smol135M": f"{smollm135M_path}/HuggingFaceTB__SmolLM-135M-Instruct/results_2025-06-28T12-52-52.265790.json",
+        "Smol360M": f"{smollm360M_path}/HuggingFaceTB__SmolLM-360M-Instruct/results_2025-06-28T05-07-18.025099.json",
+        "Smol1.7B": f"{smollm1700M_path}/HuggingFaceTB__SmolLM-1.7B-Instruct/results_2025-06-28T05-09-42.516537.json",
     }
 
     base_scores = {}
     for model_id, path in base_models_paths.items():
         try:
-            with open(path, "r") as f:
+            with open(path) as f:
                 data = json.load(f)
             acc = data["results"]["hellaswag"]["acc,none"]
             stderr = data["results"]["hellaswag"]["acc_stderr,none"]
@@ -372,8 +390,8 @@ def get_recall_hellaswag_tv_run_data(recall_df, tv_df, hellaswag_df, eval_result
 
 if __name__ == "__main__":
     # 1. Directory to save the plots
-    SAVE_PATH = Path(__file__).parents[1] / "Plots"
-    os.makedirs(SAVE_PATH, exist_ok=True)
+    if not RESULT_PATH.exists():
+        RESULT_PATH.mkdir(parents=True, exist_ok=True)
 
     # 2. Indicate dir that contains 'Results_llama_final' and 'Results_smol_final' (json results)
     eval_results_path = Path(__file__).parents[2] / "Evaluation"
@@ -390,6 +408,4 @@ if __name__ == "__main__":
     full_df = get_recall_hellaswag_tv_run_data(recall_df, kl_tv_df, hellaswag_df, eval_results_path)
 
     # Save results:
-    full_df.to_csv(
-        f"{SAVE_PATH}/large_scale_results.csv",
-    )
+    full_df.to_csv(f"{RESULT_PATH}/large_scale_results.csv")

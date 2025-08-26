@@ -60,21 +60,22 @@ CMAP = {
     "Lam8B-tool": "#270031",
 }
 
-# =================================================
-# ==========    Plotting Functions    =============
-# =================================================
+RESULT_PATH = Path(__file__).parents[3] / "results"
+FIGURE_PATH = Path(__file__).parents[3] / "figures"
 
-# ----------    HellaSwag Plots    ------------
+# ----------------------------------------------------------------------------
+# Hellawsag plots
+# ----------------------------------------------------------------------------
 
 
-# ---- Plot Hellaswag_performace (absolute) vs Dataset_size
-def plot_hellaswag_vs_datasetsize_absolute(df, save_path, acc_threshold, save_name="hellaswag_vs_facts_absolute"):
+def plot_hellaswag_vs_datasetsize_absolute(
+    df: pd.DataFrame, save_path: Path, acc_threshold: float, save_name: str = "hellaswag_vs_facts_absolute"
+) -> None:
+    """Plot Hellaswag performance (absolute) vs dataset size."""
     fig, ax = plt.subplots(figsize=(3.5, 3.5 / 1.3))
 
     size_map = {"0": 0, "500": 500, "1k": 1000, "5k": 5000, "10k": 10000, "50k": 50000, "all": 500}
     df["dataset_size_n"] = df["dataset_size"].map(size_map)
-
-    model_labels = ["Smol135M", "Smol360M", "Lam1B", "Smol1.7B", "Lam3B", "Lam8B"]
 
     color_map = CMAP
 
@@ -125,7 +126,6 @@ def plot_hellaswag_vs_datasetsize_absolute(df, save_path, acc_threshold, save_na
         if "tool" in model_label:
             # Horizontal dashed line with shaded area
             x_vals = [350, 500, 1000, 5000, 10000, 50000]
-            # x_vals = sub["dataset_size_n"].values
             y_mean = sub["hellaswag_absolute"].mean() * 100
             y_std = sub["hellaswag_absolute_stderr"].mean() * 100
             ax.plot(x_vals, [y_mean] * len(x_vals), linestyle="--", color=color, label=label, linewidth=1)
@@ -137,9 +137,6 @@ def plot_hellaswag_vs_datasetsize_absolute(df, save_path, acc_threshold, save_na
             ax.plot(x, y, color=color, label=label, marker=marker_style.get(model_label, "o"))  # linewidth=1.75
             ax.fill_between(x, y - yerr, y + yerr, color=color, alpha=0.2)
 
-    # #ax.set_xscale("log")
-    # ax.set_xticks([0, 500, 1000, 5000, 10000, 50000])
-    # ax.set_xticklabels(["0", "500", "1k", "5k", "10k", "50k"])
     ax.set_xscale("log", base=10)
     ax.set_xticks([350, 512, 1024, 2096, 8192, 50000])
     ax.set_xticklabels(["0", "500", "1K", "5K", "10K", "50K"])
@@ -255,14 +252,14 @@ def plot_hellaswag_vs_datasetsize_absolute(df, save_path, acc_threshold, save_na
     plt.show()
 
 
-# ---- Plot Hellaswag_performace (absolute) vs Dataset_size
-def plot_hellaswag_vs_datasetsize_relative(df, save_path, acc_threshold, save_name="hellaswag_vs_facts_relative"):
+def plot_hellaswag_vs_datasetsize_relative(
+    df: pd.DataFrame, save_path: Path, acc_threshold: float, save_name: str = "hellaswag_vs_facts_relative"
+) -> None:
+    """Plot Hellaswag performance (relative) vs dataset size."""
     fig, ax = plt.subplots(figsize=(3.5, 3.5 / 1.3))
 
     size_map = {"0": 0, "500": 500, "1k": 1000, "5k": 5000, "10k": 10000, "50k": 50000, "all": 500}
     df["dataset_size_n"] = df["dataset_size"].map(size_map)
-
-    model_labels = ["Smol135M", "Smol360M", "Lam1B", "Smol1.7B", "Lam3B", "Lam8B"]
 
     marker_style = {
         "Lam1B-weight": "o",
@@ -452,17 +449,19 @@ def plot_hellaswag_vs_datasetsize_relative(df, save_path, acc_threshold, save_na
     plt.show()
 
 
-# ----------    Total Variation Plots    ------------
+# ----------------------------------------------------------------------------
+# Total Variation plots
+# ----------------------------------------------------------------------------
 
 
-# ----- Plot TotalVariation vs Dataset_Size
-def plot_final_tv_vs_dataset_size(df, save_path, recall_threshold=0.9, save_name="final_tv_vs_facts"):
+def plot_final_tv_vs_dataset_size(
+    df: pd.DataFrame, save_path: Path, recall_threshold: float = 0.9, save_name: str = "final_tv_vs_facts"
+) -> None:
+    """Plot Total Variation vs dataset size."""
     fig, ax = plt.subplots(figsize=(3.5, 3.5 / 1.3))  # ICLR-style
 
     size_map = {"0": 0, "500": 512, "1k": 1024, "5k": 2096, "10k": 8192, "50k": 50000, "all": 512}
     df["dataset_size_n"] = df["dataset_size"].map(size_map)
-
-    model_labels = ["Smol135M", "Smol360M", "Lam1B", "Smol1.7B", "Lam3B", "Lam8B"]
 
     marker_style = {
         "Lam1B-weight": "o",
@@ -489,13 +488,6 @@ def plot_final_tv_vs_dataset_size(df, save_path, recall_threshold=0.9, save_name
         "Smol1.7B-weight": "1.7B-weight",
         "Smol1.7B-tool": "1.7B-tool",
     }
-
-    # Compute the highest tool baseline across all datasets
-    tool_df = df[df["model"].str.contains("tool")]
-    tool_baseline_y = tool_df["tv"].max()
-
-    # Add horizontal tool baseline line across full x-range
-    ax.axhline(y=tool_baseline_y, color="black", linestyle="--", linewidth=1, label="tool baseline")
 
     final_tv_df = df[df["recall"] >= recall_threshold].sort_values("checkpoint_nbr")
     final_tv_df = final_tv_df.groupby(["model", "dataset_size"], as_index=False).first()
@@ -641,14 +633,14 @@ def plot_final_tv_vs_dataset_size(df, save_path, recall_threshold=0.9, save_name
     plt.show()
 
 
-# ----- Plot TotalVariation vs Dataset_Size, log scale, with all tool runs
-def plot_final_tv_vs_dataset_size_withtool(df, save_path, recall_threshold=0.9, save_name="final_tv_vs_facts"):
+def plot_final_tv_vs_dataset_size_withtool(
+    df: pd.DataFrame, save_path: Path, recall_threshold: float = 0.9, save_name: str = "final_tv_vs_facts"
+) -> None:
+    """Plot Total Variation vs dataset size, log scale, with all tool runs."""
     fig, ax = plt.subplots(figsize=(3.5, 3.5 / 1.3))  # ICLR-style
 
     size_map = {"0": 0, "500": 512, "1k": 1024, "5k": 2096, "10k": 8192, "50k": 50000, "all": 512}
     df["dataset_size_n"] = df["dataset_size"].map(size_map)
-
-    model_labels = ["Smol135M", "Smol360M", "Lam1B", "Smol1.7B", "Lam3B", "Lam8B"]
 
     color_map = CMAP
 
@@ -684,7 +676,7 @@ def plot_final_tv_vs_dataset_size_withtool(df, save_path, recall_threshold=0.9, 
 
     tool_df = df[df["model"].str.contains("tool")]
     tool_baseline_y = tool_df["tv"].max()
-    # ax.axhline(y=tool_baseline_y, color="black", linestyle="--", linewidth=1, label="tool baseline")
+    ax.axhline(y=tool_baseline_y, color="black", linestyle="--", linewidth=1, label="tool baseline")
 
     final_tv_df = df[df["recall"] >= recall_threshold].sort_values("checkpoint_nbr")
     final_tv_df = final_tv_df.groupby(["model", "dataset_size"], as_index=False).first()
@@ -874,11 +866,16 @@ def plot_final_tv_vs_dataset_size_withtool(df, save_path, recall_threshold=0.9, 
     plt.show()
 
 
-# ----- Plot Total Variation vs Training Steps (all models, specific dataset_size)
-def plot_tv_vs_training_steps(df, save_path, dataset_size="10k", recall_threshold=0.9, mode="TV", save_name=None):
+def plot_tv_vs_training_steps(
+    df: pd.DataFrame,
+    save_path: Path,
+    dataset_size: str = "10k",
+    recall_threshold: float = 0.9,
+    mode: str = "TV",
+    save_name: str = None,
+) -> None:
+    """Plot Total Variation vs training steps (all models, specific dataset_size)."""
     fig, ax = plt.subplots(figsize=(2.15, 2.15 / 1.2))
-
-    model_labels = ["Smol135M", "Smol360M", "Lam1B", "Smol1.7B", "Lam3B", "Lam8B"]
 
     color_map = CMAP
 
@@ -1040,6 +1037,105 @@ def plot_tv_vs_training_steps(df, save_path, dataset_size="10k", recall_threshol
         ),
     ]
 
+    # Legend: model sizes
+    llama_handles = [
+        Line2D(
+            [0],
+            [0],
+            color=color_map["Lam1B-weight"],
+            marker="o",
+            linestyle="-",
+            linewidth=1.5,
+            markersize=4,
+            label="1B",
+        ),
+        Line2D(
+            [0],
+            [0],
+            color=color_map["Lam3B-weight"],
+            marker="o",
+            linestyle="-",
+            linewidth=1.5,
+            markersize=4,
+            label="3B",
+        ),
+        Line2D(
+            [0],
+            [0],
+            color=color_map["Lam8B-weight"],
+            marker="o",
+            linestyle="-",
+            linewidth=1.5,
+            markersize=4,
+            label="8B",
+        ),
+    ]
+    smol_handles = [
+        Line2D(
+            [0],
+            [0],
+            color=color_map["Smol135M-weight"],
+            marker="^",
+            linestyle="-",
+            linewidth=1.5,
+            markersize=4,
+            label="135M",
+        ),
+        Line2D(
+            [0],
+            [0],
+            color=color_map["Smol360M-weight"],
+            marker="^",
+            linestyle="-",
+            linewidth=1.5,
+            markersize=4,
+            label="360M",
+        ),
+        Line2D(
+            [0],
+            [0],
+            color=color_map["Smol1.7B-weight"],
+            marker="^",
+            linestyle="-",
+            linewidth=1.5,
+            markersize=4,
+            label="1.7B",
+        ),
+    ]
+
+    family_legend = fig.legend(
+        handles=llama_handles + smol_handles,
+        labels=["1B", "3B", "8B   ", "135M", "360M", "1.7B"],
+        loc="upper center",
+        bbox_to_anchor=(0.55, 1.04),
+        ncol=6,
+        frameon=False,
+        handletextpad=0.25,
+        columnspacing=0.8,
+        handlelength=1.3,
+        fontsize=7.6,
+    )
+    fig.add_artist(family_legend)
+    fig.text(0.345, 1.025, "Llama Models", ha="center", fontsize=8)
+    fig.text(0.715, 1.025, "SmolLM Models", ha="center", fontsize=8)
+
+    # Legend: style
+    linestyle_legend = ax.legend(
+        handles=[
+            Line2D([0], [0], color="black", linestyle="-", linewidth=1.25, label="In-Weight"),
+            Line2D([0], [0], color="black", linestyle="--", linewidth=1.25, label="In-Tool (worst)"),
+        ],
+        loc="lower left",
+        bbox_to_anchor=(0.435, 0.57),
+        ncol=1,
+        frameon=False,  # framealpha=0.2,
+        handletextpad=0.25,
+        columnspacing=1.0,
+        handlelength=1,
+        fontsize=7.5,
+    )
+    ax.add_artist(linestyle_legend)
+
     plt.tight_layout()
     os.makedirs(save_path, exist_ok=True)
     if save_name is None:
@@ -1057,13 +1153,16 @@ def plot_tv_vs_training_steps(df, save_path, dataset_size="10k", recall_threshol
     plt.show()
 
 
-# ----- Plot TotalVariation vs Training Steps (two plots side by side, different dataset_sizes)
 def plot_tv_vs_training_steps_side_by_side(
-    df, save_path, dataset_sizes=("500", "50k"), recall_threshold=0.9, mode="TV", save_name="tv_vs_steps_side_by_side"
-):
+    df: pd.DataFrame,
+    save_path: Path,
+    dataset_sizes: tuple = ("500", "50k"),
+    recall_threshold: float = 0.9,
+    mode: str = "TV",
+    save_name: str = "tv_vs_steps_side_by_side",
+) -> None:
+    """Plot TotalVariation vs training steps (two plots side by side, different dataset_sizes)."""
     fig, axes = plt.subplots(1, 2, figsize=(3.8, 3.8 / 1.6), sharey=False)
-
-    model_labels = ["Smol135M", "Smol360M", "Lam1B", "Smol1.7B", "Lam3B", "Lam8B"]
 
     color_map = CMAP
 
@@ -1095,7 +1194,7 @@ def plot_tv_vs_training_steps_side_by_side(
     tool_df_all = df[df["model"].str.contains("tool")]
     tool_baseline_y = tool_df_all["tv"].max() if mode == "TV" else tool_df_all["kl"].max()
 
-    for ax, dataset_size in zip(axes, dataset_sizes):
+    for ax, dataset_size in zip(axes, dataset_sizes, strict=False):
         df_subset = df[df["dataset_size"] == dataset_size].copy()
         df_subset = df_subset.sort_values("checkpoint_nbr")
 
@@ -1258,13 +1357,13 @@ def plot_tv_vs_training_steps_side_by_side(
 
 
 # ----------    Train Steps vs dataset size    ------------
-def plot_train_steps_vs_dataset_size(df, save_path, recall_threshold=0.9, save_name="trainsteps_vs_facts"):
+def plot_train_steps_vs_dataset_size(
+    df: pd.DataFrame, save_path: Path, recall_threshold: float = 0.9, save_name: str = "trainsteps_vs_facts"
+) -> None:
     fig, ax = plt.subplots(figsize=(3.5, 3.5 / 1.3))
 
     size_map = {"0": 0, "500": 512, "1k": 1024, "5k": 2096, "10k": 8192, "50k": 50000, "all": 512}
     df["dataset_size_n"] = df["dataset_size"].map(size_map)
-
-    model_labels = ["Smol135M", "Smol360M", "Lam1B", "Smol1.7B", "Lam3B", "Lam8B"]
 
     color_map = CMAP
 
@@ -1376,7 +1475,7 @@ def plot_train_steps_vs_dataset_size(df, save_path, recall_threshold=0.9, save_n
     ax.set_xscale("log", base=10)
     ax.set_xticks([350, 512, 1024, 2096, 8192, 50000])
     ax.set_xticklabels(["0", "500", "1K", "5K", "10K", "50K"])
-    ax.set_xlabel(f"Facts Memorized (Full Recall)")
+    ax.set_xlabel("Facts Memorized (Full Recall)")
     ax.set_ylabel("Training Steps")
 
     ax.set_yscale("log", base=10)
@@ -1487,7 +1586,13 @@ def plot_train_steps_vs_dataset_size(df, save_path, recall_threshold=0.9, save_n
 
 
 # ----------    Three metrics (subplots) vs training step    ------------
-def plot_recall_hellaswag_tv(df, save_path, dataset_size="10k", recall_threshold=0.9, save_name="triple_plot_vs_steps"):
+def plot_recall_hellaswag_tv(
+    df: pd.DataFrame,
+    save_path: Path,
+    dataset_size: str = "10k",
+    recall_threshold: float = 0.9,
+    save_name: str = "triple_plot_vs_steps",
+) -> None:
     fig, axes = plt.subplots(1, 3, figsize=(7, 7 / (3 * 1.2)), sharex=False)
 
     color_map = CMAP
@@ -1736,7 +1841,9 @@ def plot_recall_hellaswag_tv(df, save_path, dataset_size="10k", recall_threshold
 
 
 # ----------    Compute table with avg training steps for each run on    ------------
-def aggregate_training_steps_for_latex(df, save_path, save_name="avg_training_steps.csv"):
+def aggregate_training_steps_for_latex(
+    df: pd.DataFrame, save_path: Path, save_name: str = "avg_training_steps.csv"
+) -> None:
     df_filtered = df[df["recall"] > 0.95].copy()
     df_filtered["family"] = df_filtered["model"].apply(lambda x: "in-tool" if "tool" in x else "in-weight")
     df_filtered["model_size"] = df_filtered["model"].str.extract(r"(Smol135M|Smol360M|Smol1.7B|Lam1B|Lam3B|Lam8B)")
@@ -1786,12 +1893,19 @@ def aggregate_training_steps_for_latex(df, save_path, save_name="avg_training_st
     return avg_steps
 
 
+# ----------------------------------------------------------------------------
+# Main plotting class
+# ----------------------------------------------------------------------------
+
+
 class PlotCLI:
     def __init__(self):
-        self.RESULT_PATH = Path(__file__).parents[1] / "large_scale_results.csv"
-        self.FIGURE_PATH = Path(__file__).parents[1] / "Plots"
+        self.RESULT_PATH = RESULT_PATH
+        self.FIGURE_PATH = FIGURE_PATH
+        if not self.FIGURE_PATH.exists():
+            self.FIGURE_PATH.mkdir(parents=True, exist_ok=True)
 
-    def plot_all(self, csv_file=None, recall_threshold=0.95):
+    def plot_all(self, csv_file: str = None, recall_threshold: float = 0.95) -> None:
         """
         Run all plots in sequence.
 
@@ -1849,7 +1963,7 @@ class PlotCLI:
         # -----  Compute training steps average by each model, for each dataset:
         aggregate_training_steps_for_latex(full_df, self.FIGURE_PATH, save_name="avg_training_steps.csv")
 
-    def plot_hellaswag_absolute(self, csv_file=None, acc_threshold=0.95):
+    def plot_hellaswag_absolute(self, csv_file: str = None, acc_threshold: float = 0.95) -> None:
         """
         Plot Hellaswag accuracy (absolute) vs dataset size.
         Usage:
@@ -1860,31 +1974,37 @@ class PlotCLI:
             full_df, self.FIGURE_PATH, acc_threshold, save_name="hellaswag_vs_facts_absolute"
         )
 
-    def plot_hellaswag_relative(self, csv_file=None, acc_threshold=0.95):
+    def plot_hellaswag_relative(self, csv_file: str = None, acc_threshold: float = 0.95) -> None:
         full_df = pd.read_csv(csv_file or f"{self.RESULT_PATH}/large_scale_results.csv")
         plot_hellaswag_vs_datasetsize_relative(
             full_df, self.FIGURE_PATH, acc_threshold, save_name="hellaswag_vs_facts_relative"
         )
 
-    def plot_tv_vs_dataset_size(self, csv_file=None, recall_threshold=0.95):
+    def plot_tv_vs_dataset_size(self, csv_file: str = None, recall_threshold: float = 0.95) -> None:
         full_df = pd.read_csv(csv_file or f"{self.RESULT_PATH}/large_scale_results.csv")
         plot_final_tv_vs_dataset_size(full_df, self.FIGURE_PATH, recall_threshold, save_name="final_kl_vs_facts")
 
-    def plot_tv_vs_dataset_size_withtool(self, csv_file=None, recall_threshold=0.95):
+    def plot_tv_vs_dataset_size_withtool(self, csv_file: str = None, recall_threshold: float = 0.95) -> None:
         full_df = pd.read_csv(csv_file or f"{self.RESULT_PATH}/large_scale_results.csv")
         plot_final_tv_vs_dataset_size_withtool(
             full_df, self.FIGURE_PATH, recall_threshold, save_name="kl_vs_facts_withtool"
         )
 
-    def plot_tv_vs_train_steps(self, csv_file=None, recall_threshold=0.95, dataset_size="500", mode="TV"):
+    def plot_tv_vs_train_steps(
+        self, csv_file: str = None, recall_threshold: float = 0.95, dataset_size: str = "500", mode: str = "TV"
+    ) -> None:
         full_df = pd.read_csv(csv_file or f"{self.RESULT_PATH}/large_scale_results.csv")
         plot_tv_vs_training_steps(
             full_df, self.FIGURE_PATH, dataset_size=dataset_size, recall_threshold=recall_threshold, mode=mode
         )
 
     def plot_tv_vs_train_steps_side_by_side(
-        self, csv_file=None, recall_threshold=0.95, dataset_sizes=("500", "50k"), mode="TV"
-    ):
+        self,
+        csv_file: str = None,
+        recall_threshold: float = 0.95,
+        dataset_sizes: tuple = ("500", "50k"),
+        mode: str = "TV",
+    ) -> None:
         full_df = pd.read_csv(csv_file or f"{self.RESULT_PATH}/large_scale_results.csv")
         plot_tv_vs_training_steps_side_by_side(
             full_df,
@@ -1895,13 +2015,13 @@ class PlotCLI:
             save_name="tv_vs_steps_side_by_side_no135",
         )
 
-    def plot_train_steps_vs_dataset_size(self, csv_file=None, recall_threshold=1.0):
+    def plot_train_steps_vs_dataset_size(self, csv_file: str = None, recall_threshold: float = 1.0) -> None:
         full_df = pd.read_csv(csv_file or f"{self.RESULT_PATH}/large_scale_results.csv")
         plot_train_steps_vs_dataset_size(
             full_df, self.FIGURE_PATH, recall_threshold=recall_threshold, save_name="trainstep_vs_facts"
         )
 
-    def plot_triple_vs_train_steps(self, csv_file=None, recall_threshold=1.0):
+    def plot_triple_vs_train_steps(self, csv_file: str = None, recall_threshold: float = 1.0) -> None:
         full_df = pd.read_csv(csv_file or f"{self.RESULT_PATH}/large_scale_results.csv")
         plot_recall_hellaswag_tv(
             full_df,
@@ -1911,29 +2031,28 @@ class PlotCLI:
             save_name="triple_plot_vs_steps",
         )
 
-    def aggregate_training_steps(self, csv_file=None):
+    def aggregate_training_steps(self, csv_file: str = None) -> None:
         full_df = pd.read_csv(csv_file or f"{self.RESULT_PATH}/large_scale_results.csv")
         aggregate_training_steps_for_latex(full_df, self.FIGURE_PATH, save_name="avg_training_steps.csv")
 
 
 if __name__ == "__main__":
+    """
+    Example usage:
+
+    1. Run all plots with default recall threshold (0.95):
+       python -m apps.memory.plots.large_scale_analysis plot_all
+
+    2. Run all plots with custom recall threshold:
+       python -m apps.memory.plots.large_scale_analysis plot_all --recall_threshold=0.9
+
+    3. Plot only Hellaswag absolute accuracy vs dataset size:
+       python -m apps.memory.plots.large_scale_analysis plot_hellaswag_absolute --acc_threshold=0.9
+
+    4. Plot TV vs training steps for dataset_size=50k and mode=KL:
+       python -m apps.memory.plots.large_scale_analysis plot_tv_vs_train_steps --dataset_size=50k --mode=KL
+
+    5. Aggregate training steps for LaTeX output:
+       python -m apps.memory.plots.large_scale_analysis aggregate_training_steps
+    """
     fire.Fire(PlotCLI)
-    # -------------------------------
-    # Example usage:
-    #
-    # 1. Run all plots with default recall threshold (0.95):
-    #    python -m apps.memory.plots.large_scale_analysis plot_all
-    #
-    # 2. Run all plots with custom recall threshold:
-    #    python -m apps.memory.plots.large_scale_analysis plot_all --recall_threshold=0.9
-    #
-    # 3. Plot only Hellaswag absolute accuracy vs dataset size:
-    #    python -m apps.memory.plots.large_scale_analysis plot_hellaswag_absolute --acc_threshold=0.9
-    #
-    # 4. Plot TV vs training steps for dataset_size=50k and mode=KL:
-    #    python -m apps.memory.plots.large_scale_analysis plot_tv_vs_train_steps --dataset_size=50k --mode=KL
-    #
-    # 5. Aggregate training steps for LaTeX output:
-    #    python -m apps.memory.plots.large_scale_analysis aggregate_training_steps
-    #
-    # -------------------------------
