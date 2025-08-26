@@ -15,7 +15,7 @@ pip install -e ."[llm,visu]"
 ## Overview
 This folder contains:
 - ```data```: databases creation
-- ```Training```: supervised finetuning with in-weight and in-tool settings Launches multi-turn or in-weight fine-tuning
+- ```training/```: supervised finetuning with in-weight and in-tool settings Launches multi-turn or in-weight fine-tuning
 - ```Evaluation```: evaluation with factual recall accuracy, Hellaswag generalization and KL divergence to a reference model
 - ```plots/```: evaluation results aggregation and plots generation
 
@@ -38,14 +38,14 @@ Output:
 - A small preview (`.jsonl`) is exported for inspection
 
 ## Supervised finetuning (SFT)
-**Script**: `Training/finetune_parallelized.py`
+**Script**: `training//finetune_parallelized.py`
 
 Supports fine-tuning with `accelerate` (multi-GPU or single GPU) using LLaMA or SmolLM models. The script is compatible with both in-weight training and in-tool setups (multi-turn dialogues with tool calls).
 
 ### Launch example:
 To launch a script and save the results in a folder ```dirname``` with a specific subfolder ```my_exp```, run
 ```bash
-accelerate launch Training/finetune_parallelized.py \
+accelerate launch training//finetune_parallelized.py \
   --run_name "sft_Smol360M_facts=10000-epochs=18-batch=64-gradAcc=2-LR=1e-3-loraR=0-loraA=0-weight" \
   --save_dir "dirname/my_exp"
 ```

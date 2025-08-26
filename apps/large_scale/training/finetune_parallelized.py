@@ -1,3 +1,10 @@
+# This source code is licensed under the terms specified in the `LICENSE` file.
+"""
+Supervised fine-tuning with in-weight and in-tool settings.
+
+@ 2025, Meta
+"""
+
 import argparse
 import os
 import re
@@ -5,21 +12,23 @@ import sys
 from copy import deepcopy
 from math import ceil
 from pathlib import Path
+from typing import Any
 
 import torch
 from accelerate import Accelerator
 from datasets import Dataset
-from peft import LoraConfig, TaskType, get_peft_model
+from peft import LoraConfig, PeftModel, TaskType, get_peft_model
 from tqdm import tqdm
 from transformers import (
     AutoModelForCausalLM,
     AutoTokenizer,
+    PreTrainedModel,
     Trainer,
 )
 from trl import DataCollatorForCompletionOnlyLM, SFTConfig
 
 sys.path.append(os.path.abspath(os.path.join(os.path.dirname(__file__), "..")))
-from Training.ToolDataCollator import DataCollatorForToolOnlyLM
+from training.tool_data_collator import DataCollatorForToolOnlyLM
 
 os.environ["TOKENIZERS_PARALLELISM"] = "false"
 accelerator = Accelerator()
@@ -28,14 +37,14 @@ print("CUDA Device Count:", torch.cuda.device_count())
 print("CUDA Device Name:", torch.cuda.get_device_name(0) if torch.cuda.is_available() else "No GPU")
 
 
-def extract_or_raise(pattern, name, run_name):
+def extract_or_raise(pattern: str, name: str, run_name: str) -> str:
     match = re.search(pattern, run_name)
     if not match:
         raise ValueError(f"Missing {name} in run_name: {run_name}")
     return match.group(1)
 
 
-def print_special_tokens_info_new(tokenizer):
+def print_special_tokens_info_new(tokenizer: AutoTokenizer) -> None:
     special_tokens = {
         "pad_token": tokenizer.pad_token,
         "eos_token": tokenizer.eos_token,
@@ -55,7 +64,11 @@ def print_special_tokens_info_new(tokenizer):
 
 
 def tokenize_dataset(
-    dataset: Dataset, tokenizer: AutoTokenizer, mode: str, verbose=False, model_name="meta-llama/Llama-3.2-1B-Instruct"
+    dataset: Dataset,
+    tokenizer: AutoTokenizer,
+    mode: str,
+    verbose: bool = False,
+    model_name: str = "meta-llama/Llama-3.2-1B-Instruct",
 ) -> Dataset:
     assert mode in ["in-weight", "in-tool"], f"Invalid mode: {mode}"
     column = "qa" if "weight" in mode else "qatool"
@@ -85,7 +98,9 @@ def tokenize_dataset(
     return Dataset.from_dict({"input_ids": input_ids_list})
 
 
-def create_peft_model(base_model, lora_r=8, lora_alpha=32, dropout=0.05):
+def create_peft_model(
+    base_model: PreTrainedModel, lora_r: int = 8, lora_alpha: int = 32, dropout: float = 0.05
+) -> PeftModel:
     config = LoraConfig(
         r=lora_r,
         lora_alpha=lora_alpha,
@@ -97,7 +112,9 @@ def create_peft_model(base_model, lora_r=8, lora_alpha=32, dropout=0.05):
     return get_peft_model(base_model, config)
 
 
-def inspect_dataset_and_collator(tokenized_dataset, tokenizer, data_collator, n=2, batch_size=2):
+def inspect_dataset_and_collator(
+    tokenized_dataset: Dataset, tokenizer: AutoTokenizer, data_collator: Any, n: int = 2, batch_size: int = 2
+) -> None:
     """
     Inspects both the tokenized dataset and the collated batches.
     Masked label tokens (-100) will be replaced with a custom token ('M') for readability.
@@ -147,7 +164,7 @@ def inspect_dataset_and_collator(tokenized_dataset, tokenizer, data_collator, n=
             print(tokenizer.decode(masked_labels, skip_special_tokens=False))
 
 
-def inspect_chat_template(tokenizer):
+def inspect_chat_template(tokenizer: AutoTokenizer) -> None:
     # Define a dummy conversation
     messages = [
         {"role": "user", "content": "What's the capital of France?"},

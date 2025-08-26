@@ -1,3 +1,10 @@
+# This source code is licensed under the terms specified in the `LICENSE` file.
+"""
+Module containing a custom collator for tool-based interactions.
+
+@ 2025, Meta
+"""
+
 from dataclasses import dataclass
 from typing import Any
 
@@ -47,14 +54,9 @@ class DataCollatorForToolOnlyLM:
         self.description_of_masked_label_token_id = self.tokenizer.convert_tokens_to_ids("M")
 
     def __call__(self, features: list[dict[str, Any]]) -> dict[str, torch.Tensor]:
-        # input_ids = [f["input_ids"] for f in features]
-        # attention_mask = [f["attention_mask"] for f in features]
         input_ids = [torch.tensor(f["input_ids"], dtype=torch.long) for f in features]
-        # attention_mask = [torch.tensor(f["attention_mask"], dtype=torch.long) for f in features]
-        attention_mask = None
-
         input_ids_padded = torch.nn.utils.rnn.pad_sequence(input_ids, batch_first=True, padding_value=self.pad_token_id)
-        # attention_mask_padded = torch.nn.utils.rnn.pad_sequence(attention_mask, batch_first=True, padding_value=0)
+
         # Attention mask is 1 for tokens not equal to pad_token_id, else 0
         attention_mask_padded = (input_ids_padded != self.pad_token_id).long()
 
@@ -108,18 +110,19 @@ class DataCollatorForToolOnlyLM:
         }
 
 
-def inspect_collator_outputs(tokenized_dataset, collator, tokenizer, n=3):
+def inspect_collator_outputs(
+    tokenized_dataset: Any, collator: Any, tokenizer: PreTrainedTokenizerBase, n: int = 3
+) -> None:
     """
     Inspects the output of DataCollatorForToolOnlyLM on the first `n` samples.
     Prints input_ids, attention_mask, and labels with decoded text.
     Also verifies that all items are padded to the same length.
     """
     from copy import deepcopy
-    import torch
 
-    print(f"\n===============================================================")
+    print("\n===============================================================")
     print(f"Inspecting first {n} examples with DataCollatorForToolOnlyLM...")
-    print(f"================================================================")
+    print("================================================================")
     features = [deepcopy(tokenized_dataset[i]) for i in range(n)]
 
     batch = collator(features)
@@ -163,4 +166,4 @@ def inspect_collator_outputs(tokenized_dataset, collator, tokenizer, n=3):
         print("\n[Decoded Labels] (assistant-only text, masked labels 'M'):")
         print(tokenizer.decode(masked_labels, skip_special_tokens=False))
 
-    print(f"\n================================================================")
+    print("\n================================================================")
