@@ -59,7 +59,6 @@ where = ["src"]
 
 [tool.ruff]
 line-length = 120
-extend-select = ["E"]
 
 [tool.ruff.lint]
 select = [
