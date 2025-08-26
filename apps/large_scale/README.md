@@ -14,13 +14,13 @@ pip install -e ."[llm,visu]"
 
 ## Overview
 This folder contains:
-- ```Data/HF_dataset_generation.py```: Creates factual QA dataset using atoms + templates 
-- ```Training/finetune_parallelized.py```: Launches multi-turn or in-weight fine-tuning 
-- ```Training/ToolDataCollator.py```: Custom collator for tool-based interactions 
-- ```Evaluation/eval_recall.py```: Measures factual recall accuracy 
-- ```Evaluation/eval_hellaswag.py```: Tests generalization on HellaSwag 
-- ```Evaluation/eval_kl.py```: Computes KL divergence to a reference model 
-- ```Analysis/analysis_newer.py```: Aggregates evaluation results and generates plots 
+- ```Data/HF_dataset_generation.py```: Creates factual QA dataset using atoms + templates
+- ```Training/finetune_parallelized.py```: Launches multi-turn or in-weight fine-tuning
+- ```Training/ToolDataCollator.py```: Custom collator for tool-based interactions
+- ```Evaluation/eval_recall.py```: Measures factual recall accuracy
+- ```Evaluation/eval_hellaswag.py```: Tests generalization on HellaSwag
+- ```Evaluation/eval_kl.py```: Computes KL divergence to a reference model
+- ```analysis/```: aggregates evaluation results and generates plots
 
 ## Dataset generation
 **File**: `Data/HF_dataset_generation.py`
@@ -90,9 +90,8 @@ python Evaluation/eval_kl.py \
 Results are stored per checkpoint in the specified output directory.
 
 ## Result aggregation and analysis
-**File**: `Analysis/analysis_newer.py`
-
-Provides utilities for:
+**Files**: `plots/`
+It provides utilities for:
 - Loading and aggregating evaluation results (recall, HellaSwag, KL)
 - Sorting and organizing checkpoints by epoch
 - Plotting trends: e.g., recall vs. model size, loss vs. KL, etc.
@@ -103,4 +102,3 @@ Usage:
 
 ## Reproducibility
 The large-scale experiments of our [paper]() (Section 6) can be reproduced using the fine-tuning scripts provided in ```/Paper_experiments_jobfiles/```.
-
