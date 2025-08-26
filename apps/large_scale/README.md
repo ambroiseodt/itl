@@ -14,9 +14,9 @@ pip install -e ."[llm,visu]"
 
 ## Overview
 This folder contains:
-- ```data```: databases creation
+- ```data/```: databases creation
 - ```training/```: supervised finetuning with in-weight and in-tool settings Launches multi-turn or in-weight fine-tuning
-- ```Evaluation```: evaluation with factual recall accuracy, Hellaswag generalization and KL divergence to a reference model
+- ```Evaluation/```: evaluation with factual recall accuracy, Hellaswag generalization and KL divergence to a reference model
 - ```plots/```: evaluation results aggregation and plots generation
 
 ## Dataset generation
@@ -27,10 +27,10 @@ This script generates a factual QA dataset by combining structured atomic facts 
 - `atom_dir`: Path to lists of first names, last names, cities, dates and occupations
 - `template_dir`: Path to templated NL sentence formats to construct biographical setences
 
-Each person contributes 4 facts; for `N_people = 25000`, the script generates 100,000 examples.
+Each person contributes 4 facts; for `n_people = 50000`, the script generates 200,000 examples.
 
 ```bash
-python data/HF_dataset_generation.py
+python -m apps.large_scale.data.HF_dataset_generation build n_people 50000
 ```
 
 Output:
@@ -38,14 +38,14 @@ Output:
 - A small preview (`.jsonl`) is exported for inspection
 
 ## Supervised finetuning (SFT)
-**Script**: `training//finetune_parallelized.py`
+**Script**: `apps/large_scale/training/finetune_parallelized.py`
 
 Supports fine-tuning with `accelerate` (multi-GPU or single GPU) using LLaMA or SmolLM models. The script is compatible with both in-weight training and in-tool setups (multi-turn dialogues with tool calls).
 
 ### Launch example:
 To launch a script and save the results in a folder ```dirname``` with a specific subfolder ```my_exp```, run
 ```bash
-accelerate launch training//finetune_parallelized.py \
+accelerate launch apps/large_scale/training/finetune_parallelized.py \
   --run_name "sft_Smol360M_facts=10000-epochs=18-batch=64-gradAcc=2-LR=1e-3-loraR=0-loraA=0-weight" \
   --save_dir "dirname/my_exp"
 ```
@@ -53,7 +53,7 @@ accelerate launch training//finetune_parallelized.py \
 - Hyperparameters (e.g., model size, number of facts, epochs, learning rate) are parsed from `--run_name`
 - Checkpoints are saved to `--save_dir` at regular intervals
 - Fine-tuning can be run with or without LoRA
-- Tool-based learning uses `ToolDataCollator.py` to process multi-turn interactions
+- Tool-based learning uses `tool_data_collator.py` to process multi-turn interactions
 
 
 ## Evaluation scripts
