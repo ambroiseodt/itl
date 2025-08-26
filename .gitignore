@@ -13,9 +13,13 @@ dist
 # temporary files
 tmp_*
 
-# figures
-/figures
+# data
+HF_datasets/
 
-# results
-/results
-/runs
+# figures
+figures/
+
+# results and runs
+results/
+runs/
+wandb/
