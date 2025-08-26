@@ -34,7 +34,10 @@ os.environ["TOKENIZERS_PARALLELISM"] = "false"
 accelerator = Accelerator()
 print("CUDA Available:", torch.cuda.is_available())
 print("CUDA Device Count:", torch.cuda.device_count())
-print("CUDA Device Name:", torch.cuda.get_device_name(0) if torch.cuda.is_available() else "No GPU")
+print(
+    "CUDA Device Name:",
+    torch.cuda.get_device_name(0) if torch.cuda.is_available() else "No GPU",
+)
 
 
 def extract_or_raise(pattern: str, name: str, run_name: str) -> str:
@@ -84,7 +87,11 @@ def tokenize_dataset(
         example = dataset[i]
         messages = example[column]
         tokenized = tokenizer.apply_chat_template(
-            messages, tokenize=True, add_generation_prompt=False, return_tensors="pt", return_dict=True
+            messages,
+            tokenize=True,
+            add_generation_prompt=False,
+            return_tensors="pt",
+            return_dict=True,
         )
         input_ids = tokenized["input_ids"].squeeze(0)
         attention_mask = tokenized["attention_mask"].squeeze(0)
@@ -99,12 +106,23 @@ def tokenize_dataset(
 
 
 def create_peft_model(
-    base_model: PreTrainedModel, lora_r: int = 8, lora_alpha: int = 32, dropout: float = 0.05
+    base_model: PreTrainedModel,
+    lora_r: int = 8,
+    lora_alpha: int = 32,
+    dropout: float = 0.05,
 ) -> PeftModel:
     config = LoraConfig(
         r=lora_r,
         lora_alpha=lora_alpha,
-        target_modules=["q_proj", "k_proj", "v_proj", "o_proj", "gate_proj", "up_proj", "down_proj"],
+        target_modules=[
+            "q_proj",
+            "k_proj",
+            "v_proj",
+            "o_proj",
+            "gate_proj",
+            "up_proj",
+            "down_proj",
+        ],
         lora_dropout=dropout,
         bias="none",
         task_type=TaskType.CAUSAL_LM,
@@ -113,7 +131,11 @@ def create_peft_model(
 
 
 def inspect_dataset_and_collator(
-    tokenized_dataset: Dataset, tokenizer: AutoTokenizer, data_collator: Any, n: int = 2, batch_size: int = 2
+    tokenized_dataset: Dataset,
+    tokenizer: AutoTokenizer,
+    data_collator: Any,
+    n: int = 2,
+    batch_size: int = 2,
 ) -> None:
     """
     Inspects both the tokenized dataset and the collated batches.
@@ -127,7 +149,10 @@ def inspect_dataset_and_collator(
         print(f"\n--- Example {i} ---")
         print("input_ids (truncated):", example["input_ids"][:20], "...")
         print("Length:", len(example["input_ids"]))
-        print("Decoded input:\n", tokenizer.decode(example["input_ids"], skip_special_tokens=False))
+        print(
+            "Decoded input:\n",
+            tokenizer.decode(example["input_ids"], skip_special_tokens=False),
+        )
 
     print("\n=== Inspecting Data Collator Output ===")
     small_dataset = tokenized_dataset.select(range(min(n, len(tokenized_dataset))))
@@ -168,7 +193,10 @@ def inspect_chat_template(tokenizer: AutoTokenizer) -> None:
     # Define a dummy conversation
     messages = [
         {"role": "user", "content": "What's the capital of France?"},
-        {"role": "assistant", "content": "The capital of France is Paris, but you wouldn't know that"},
+        {
+            "role": "assistant",
+            "content": "The capital of France is Paris, but you wouldn't know that",
+        },
     ]
     # Tokenize using the model's chat template
     chat_text = tokenizer.apply_chat_template(
@@ -202,15 +230,23 @@ def inspect_chat_template(tokenizer: AutoTokenizer) -> None:
 if __name__ == "__main__":
     parser = argparse.ArgumentParser(description="Training Script Arguments")
     parser.add_argument(
-        "--run_name", type=str, required=True, help="Name of the run with hyperparameters (see examples)"
+        "--run_name",
+        type=str,
+        required=True,
+        help="Name of the run with hyperparameters (see examples)",
     )
-    parser.add_argument("--save_dir", type=str, required=True, help="Directory to save models/checkpoints")
+    parser.add_argument(
+        "--save_dir",
+        type=str,
+        required=True,
+        help="Directory to save models/checkpoints",
+    )
     args = parser.parse_args()
     run_name = args.run_name
 
     # Paths and settings
-    DATA_DIR = Path(__file__).parents[2] / "data" / "HF_dataset_200_000"
-    MODELS_SAVE_DIR = f"{args.save_dir}/{run_name}"
+    DATA_DIR = Path(__file__).parents[1] / "HF_datasets" / "HF_dataset_200_000"
+    MODELS_SAVE_DIR = Path(__file__).parents[1] / "runs" / f"{args.save_dir}/{run_name}"
     os.makedirs(MODELS_SAVE_DIR, exist_ok=True)
     MODE = "in-weight" if "weight" in run_name else "in-tool"
 
@@ -280,7 +316,8 @@ if __name__ == "__main__":
     if "llama" in model_name.lower():
         data_collator = (
             DataCollatorForCompletionOnlyLM(
-                response_template="<|start_header_id|>assistant<|end_header_id|>", tokenizer=tokenizer
+                response_template="<|start_header_id|>assistant<|end_header_id|>",
+                tokenizer=tokenizer,
             )
             if "weight" in MODE
             else DataCollatorForToolOnlyLM(tokenizer)
