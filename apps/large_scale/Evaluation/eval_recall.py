@@ -80,7 +80,7 @@ def should_skip_run(run_path, results_file_path):
     existing_results = {}
     if os.path.exists(results_file_path):
         try:
-            with open(results_file_path, "r") as f:
+            with open(results_file_path) as f:
                 existing_results = json.load(f)
             evaluated_checkpoints = set(existing_results.keys())
         except Exception as e:
@@ -163,7 +163,7 @@ def general_capability_demo_and_store(model, tokenizer, general_prompt_data, max
     )
 
     generations = []
-    for i, (prompt_text, response) in enumerate(zip(prompts, generated_responses)):
+    for i, (prompt_text, response) in enumerate(zip(prompts, generated_responses, strict=False)):
         generations.append({"prompt": prompt_text, "response": response})
 
     return generations
@@ -254,7 +254,7 @@ def evaluate_checkpoint_recall_tool(
             pad_token_id=tokenizer.pad_token_id,
             eos_token_id=tokenizer.eos_token_id,
         )
-        for out, input_len in zip(batch_outputs, (batch_input_ids != tokenizer.pad_token_id).sum(dim=1)):
+        for out, input_len in zip(batch_outputs, (batch_input_ids != tokenizer.pad_token_id).sum(dim=1), strict=False):
             decoded = tokenizer.decode(out[input_len:], skip_special_tokens=True).strip()
             first_turn_generations.append(decoded)
 
@@ -349,7 +349,7 @@ def evaluate_all_checkpoints_of_run(
             model.eval()
 
             if "weight" in adapter_path:
-                print(f"\n--Evaluating recall in weight-mode:")
+                print("\n--Evaluating recall in weight-mode:")
                 acc_train, stderr_train, preds_train = evaluate_checkpoint_recall_weight(
                     adapter_path,
                     dataset_with_tokenized_prompts_train,
@@ -369,7 +369,7 @@ def evaluate_all_checkpoints_of_run(
                     batch_size=batch_size,
                 )
             elif "tool" in adapter_path:
-                print(f"\n--Evaluating recall in tool-mode:")
+                print("\n--Evaluating recall in tool-mode:")
                 acc_train, stderr_train, preds_train = evaluate_checkpoint_recall_tool(
                     adapter_path,
                     dataset_with_tokenized_prompts_train,
@@ -398,7 +398,7 @@ def evaluate_all_checkpoints_of_run(
             print(f"\n ------- checkpoint-{extract_step(name)} -------")
             print(f"    Train Acc = {acc_train:.2%} ± {stderr_train:.2%}")
             print(f"    Test  Acc = {acc_test:.2%} ± {stderr_test:.2%}")
-            print(f"    -- General Eval --")
+            print("    -- General Eval --")
             print(f"    [PROMPT]: {general_gens[0]['prompt']}")
             print(f"    [RESPONSE]: {general_gens[0]['response']}")
 
@@ -437,7 +437,7 @@ if __name__ == "__main__":
         EVALS_DIR = Path(__file__).parents[1] / "Results" / "Recall"
     os.makedirs(EVALS_DIR, exist_ok=True)
 
-    DATA_DIR = Path(__file__).parents[2] / "Data" / "HF_dataset_200_000"
+    DATA_DIR = Path(__file__).parents[2] / "data" / "HF_dataset_200_000"
 
     # Samples to test on
     N_EVAL_TRAIN = 300
@@ -467,13 +467,13 @@ if __name__ == "__main__":
         tokenizer.padding_side = "left"
 
         # Tokenize the factual recall user prompts
-        print(f"\nTokenizing HF_dataset")
+        print("\nTokenizing HF_dataset")
         max_nfacts = get_max_nfacts(run_names) + N_EVAL_TEST
         subset = full_dataset.select(list(range(0, min(len(full_dataset), max_nfacts))))
         dataset_with_tokenized_prompts = preprocess_eval_data(subset, tokenizer)
 
         # Tokenize the general prompts
-        print(f"\nTokenizing general prompts")
+        print("\nTokenizing general prompts")
         general_prompt_data = {
             "tokenizer": tokenizer,
             "prompts": general_prompts,
@@ -527,4 +527,4 @@ if __name__ == "__main__":
                     print(f"[!] Failed with batch size {batch_size}: {e}")
                     print(f"[✗] Skipping run {run_name} due to error: {e}")
 
-    print(f"\n\n\nEvaluation Finished.")
+    print("\n\n\nEvaluation Finished.")

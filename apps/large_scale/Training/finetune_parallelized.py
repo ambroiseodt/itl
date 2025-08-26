@@ -192,7 +192,7 @@ if __name__ == "__main__":
     run_name = args.run_name
 
     # Paths and settings
-    DATA_DIR = Path(__file__).parents[2] / "Data" / "HF_dataset_200_000"
+    DATA_DIR = Path(__file__).parents[2] / "data" / "HF_dataset_200_000"
     MODELS_SAVE_DIR = f"{args.save_dir}/{run_name}"
     os.makedirs(MODELS_SAVE_DIR, exist_ok=True)
     MODE = "in-weight" if "weight" in run_name else "in-tool"
@@ -278,9 +278,9 @@ if __name__ == "__main__":
         raise ValueError("Neither 'llama' nor 'smol' are in model_name.")
 
     if accelerator.is_main_process:
-        print(f"\n\n\n=================================")
+        print("\n\n\n=================================")
         inspect_dataset_and_collator(tokenized_dataset, tokenizer, data_collator)
-        print(f"=================================\n\n\n")
+        print("=================================\n\n\n")
 
     # SFT config
     effective_bs = batchsize * max(grad_acc, 1)

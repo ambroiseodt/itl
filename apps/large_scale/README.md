@@ -14,13 +14,13 @@ pip install -e ."[llm,visu]"
 
 ## Overview
 This folder contains:
-- ```Data```: databases creation
+- ```data```: databases creation
 - ```Training```: supervised finetuning with in-weight and in-tool settings Launches multi-turn or in-weight fine-tuning
 - ```Evaluation```: evaluation with factual recall accuracy, Hellaswag generalization and KL divergence to a reference model
 - ```plots/```: evaluation results aggregation and plots generation
 
 ## Dataset generation
-**File**: `Data/HF_dataset_generation.py`
+**File**: `data/HF_dataset_generation.py`
 
 This script generates a factual QA dataset by combining structured atomic facts with templated natural language formulations. The dataset is built using:
 
@@ -30,7 +30,7 @@ This script generates a factual QA dataset by combining structured atomic facts 
 Each person contributes 4 facts; for `N_people = 25000`, the script generates 100,000 examples.
 
 ```bash
-python Data/HF_dataset_generation.py
+python data/HF_dataset_generation.py
 ```
 
 Output:
