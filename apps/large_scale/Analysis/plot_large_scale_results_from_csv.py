@@ -1,3 +1,10 @@
+# This source code is licensed under the terms specified in the `LICENSE` file.
+"""
+Plotting functions.
+
+@ 2025, Meta
+"""
+
 import os
 from pathlib import Path
 
