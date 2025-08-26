@@ -7,6 +7,8 @@ name = "nanollama"
 version = "0.0.0"
 authors = [
   { name="Ambroise Odonnat", email="ambroise.odonnat@gmail.com" },
+  { name="Vivien Cabannes", email="vivc@meta.com" },
+  { name="Sam Houliston", email="houlison.sam@gmail.com" },
 ]
 description = "In-Tool Learning for LLMs"
 readme = "README.md"
