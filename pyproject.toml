@@ -43,6 +43,7 @@ llm = [
   "sentencepiece",  # tokenizer
   "tiktoken",       # tokenizer
   "transformers",   # HF transformers
+  "trl==0.18.0",            # RLHF library
   "peft",           # efficient finetuning
 ]
 
