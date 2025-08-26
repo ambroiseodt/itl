@@ -1,9 +1,17 @@
+# This source code is licensed under the terms specified in the `LICENSE` file.
+"""
+Module containing utilities to create HuggingFace compatible databases for the factual recall task.
+
+@ 2025, Meta
+"""
+
 import csv
 import json
 import random
 import re
 from itertools import product
 from pathlib import Path
+from typing import Any
 
 from datasets import Dataset, DatasetDict
 from jinja2 import Template
@@ -48,7 +56,7 @@ def generate_hf_dataset(
     selected_people = all_pairs[:n]
 
     # Load templates
-    def load_templates(suffix):
+    def load_templates(suffix: str) -> list:
         pattern = re.compile(r"^<\|(\w+)\|>(.*)$")
         templates = []
         for file in template_dir.glob(f"{suffix}*.j2"):
@@ -76,7 +84,7 @@ def generate_hf_dataset(
     assert qatool_templates, "No QATool templates found!"
 
     data = []
-    for i, (first, last) in enumerate(tqdm(selected_people, desc="Generating data")):
+    for _, (first, last) in enumerate(tqdm(selected_people, desc="Generating data")):
         person = {
             "name": f"{first} {last}",
             "birth_date": f"{random.randint(1, 28)}/{random.randint(1, 12)}/{random.randint(1950, 2000)}",
@@ -87,11 +95,11 @@ def generate_hf_dataset(
 
         for qa_dialog, qatool_dialog in zip(qa_templates, qatool_templates, strict=False):
 
-            def render_chat(dialog):
+            def render_chat(dialog: list, attribute: dict = person):
                 rendered = []
                 for msg in dialog:
                     try:
-                        content = msg["content"].render(**person)
+                        content = msg["content"].render(**attribute)
                     except Exception as e:
                         print(f"Template render failed: {e}")
                         continue
@@ -129,7 +137,7 @@ def generate_hf_dataset(
     return Dataset.from_list(data)
 
 
-def print_dataset_structure(dataset):
+def print_dataset_structure(dataset: Any) -> None:
     if isinstance(dataset, DatasetDict):
         print("DatasetDict Structure:")
         for split in dataset.keys():
@@ -148,7 +156,7 @@ def print_dataset_structure(dataset):
         print("Unknown dataset format!")
 
 
-def export_dataset(dataset, output_path: str, filetype: str = "jsonl", limit: int = None):
+def export_dataset(dataset: Dataset, output_path: str, filetype: str = "jsonl", limit: int = None) -> None:
     """
     Export a Hugging Face dataset saved to disk into a .jsonl or .csv file.
 
@@ -187,7 +195,7 @@ def format_with_underscores(number: int) -> str:
 
 
 if __name__ == "__main__":
-    # ==== Datset size = N_people * 4 facts per person
+    # ==== Dataset size = N_people * 4 facts per person
     N_people = 25000
 
     # ==== Paths and configs ====
