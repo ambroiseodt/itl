@@ -1,6 +1,6 @@
 # In-Tool Learning - Controlled Experiments
 
-This part of the codebase aims to study in-tool learning in a controlled setting from a memory and generalization perspective. 
+This part of the codebase aims to study in-tool learning in a controlled setting from a memory and generalization perspective.
 
 - 🛠️ In-tool learning: learning to use a tool (e.g., a calculator or a request to a database) to solve a problem,
 - 🏋🏽 In-weight learning: memorizing the solution to a problem within the model's weights.
@@ -14,11 +14,11 @@ pip install -e ."[llm,visu]"
 
 ###  Overview
 This folder contains:
-- ```compressibility```: knowledge representation study.
-- ```configs```: configuration files of our experiments.
-- ```datasets```: databases for the factual recall task in in-weight and in-tool settings.
-- ```generalization```: analysis of the  generalization capabilities of in-tool learning.
-- ```scripts```: launch experiments.
+- ```compressibility/```: knowledge representation study.
+- ```configs/```: configuration files of our experiments.
+- ```datasets/```: databases for the factual recall task in in-weight and in-tool settings.
+- ```generalization/```: analysis of the  generalization capabilities of in-tool learning.
+- ```scripts/```: launch experiments.
 - ```README.md```: reproducibility instructions.
 - ```args.py```: utility to use configs.
 - ```eval.py```: evaluation loop.
@@ -66,7 +66,7 @@ We provide below the instructions to reproduce the controlled experiments of our
 ### Parameter requirements bounds
 To empirically verify the parameter bounds predicted by our theory, we create the database (see `apps/memory/dataset/`) with the following commands (to be run from the root of the repository):
 ```bash
-bash apps/memory/scripts/generate_data.sh 
+bash apps/memory/scripts/generate_data.sh
 ```
 You will be asked whether to format the database as a SQLlite database. Answer "Yes" is you want to do it.
 
