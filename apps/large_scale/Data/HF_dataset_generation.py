@@ -85,7 +85,7 @@ def generate_hf_dataset(
             "occupation": random.choice(occupations),
         }
 
-        for qa_dialog, qatool_dialog in zip(qa_templates, qatool_templates):
+        for qa_dialog, qatool_dialog in zip(qa_templates, qatool_templates, strict=False):
 
             def render_chat(dialog):
                 rendered = []
@@ -185,8 +185,6 @@ def export_dataset(dataset, output_path: str, filetype: str = "jsonl", limit: in
 def format_with_underscores(number: int) -> str:
     return f"{number:_}"
 
-
-Path(__file__).parents[1] / "large_scale_results.csv"
 
 if __name__ == "__main__":
     # ==== Datset size = N_people * 4 facts per person
