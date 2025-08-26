@@ -23,8 +23,8 @@ from nanollama.visualization.loader import get_config_info, get_task_ids, load_j
 logger = getLogger("nanollama")
 
 # ----------------------------------------------------------------------------
-# set folder names and plotting params
-# ------------------------------------------------------------------------------
+# Set folder names and plotting params
+# ----------------------------------------------------------------------------
 
 # Figure golden ratio (from ICML style file)
 WIDTH = 3.5
@@ -68,6 +68,8 @@ VERTICAL_LINEWIDTH = 1
 REG_LINEWIDTH = 1.25
 
 RESULT_PATH = Path(__file__).parents[3] / "results"
+if not RESULT_PATH.exists():
+    RESULT_PATH.mkdir(parents=True, exist_ok=True)
 FIGURE_PATH = Path(__file__).parents[3] / "figures"
 
 # ----------------------------------------------------------------------------
@@ -195,7 +197,7 @@ def get_data(gridname: str) -> pd.DataFrame:
 
 # ----------------------------------------------------------------------------
 # Plotting functions
-# ------------------------------------------------------------------------------
+# ----------------------------------------------------------------------------
 
 
 def save_plot(figname: str, format: str = "pdf", dpi: int = 100) -> None:
@@ -310,7 +312,7 @@ def plot_params_bound(
 
     # Set legend
     lines_labels = [fig.axes[0].get_legend_handles_labels()]
-    lines, labels = [sum(lol, []) for lol in zip(*lines_labels)]
+    lines, labels = [sum(lol, []) for lol in zip(*lines_labels, strict=False)]
     lines, labels = lines[::-1], labels[::-1]
     lines[0], labels[0], lines[-1], labels[-1] = lines[-1], labels[-1], lines[0], labels[0]
     fig.legend(
@@ -389,7 +391,7 @@ def plot_params_bound_recall(
 
     # Set legend
     lines_labels = [fig.axes[0].get_legend_handles_labels()]
-    lines, labels = [sum(lol, []) for lol in zip(*lines_labels)]
+    lines, labels = [sum(lol, []) for lol in zip(*lines_labels, strict=False)]
     fig.legend(
         lines, labels, loc=loc, bbox_to_anchor=bbox_to_anchor, fancybox=True, borderaxespad=0, ncol=ncol, frameon=False
     )
@@ -473,7 +475,7 @@ def plot_in_tool_generalization(
 
     # Set legend
     lines_labels = [fig.axes[0].get_legend_handles_labels()]
-    lines, labels = [sum(lol, []) for lol in zip(*lines_labels)]
+    lines, labels = [sum(lol, []) for lol in zip(*lines_labels, strict=False)]
     fig.legend(
         lines,
         labels,
@@ -562,7 +564,7 @@ def plot_compressibility(
 
     # Set legend
     lines_labels = [fig.axes[0].get_legend_handles_labels()]
-    lines, labels = [sum(lol, []) for lol in zip(*lines_labels)]
+    lines, labels = [sum(lol, []) for lol in zip(*lines_labels, strict=False)]
     lines, labels = lines[::-1], labels[::-1]
     fig.legend(
         lines, labels, loc=loc, bbox_to_anchor=bbox_to_anchor, fancybox=True, borderaxespad=0, ncol=ncol, frameon=False
