@@ -2041,18 +2041,28 @@ if __name__ == "__main__":
     Example usage:
 
     1. Run all plots with default recall threshold (0.95):
-       python -m apps.large_scale.plots.analysis plot_all
+        ```bash
+        python -m apps.large_scale.plots.analysis plot_all
+        ```
 
     2. Run all plots with custom recall threshold:
-       python -m apps.large_scale.plots.analysis plot_all --recall_threshold=0.9
+        ```bash
+        python -m apps.large_scale.plots.analysis plot_all --recall_threshold=0.9
+        ```
 
     3. Plot only Hellaswag absolute accuracy vs dataset size:
-       python -m apps.large_scale.plots.analysis plot_hellaswag_absolute --acc_threshold=0.9
+        ```bash
+        python -m apps.large_scale.plots.analysis plot_hellaswag_absolute --acc_threshold=0.9
+        ```
 
     4. Plot TV vs training steps for dataset_size=50k and mode=KL:
-       python -m apps.large_scale.plots.analysis plot_tv_vs_train_steps --dataset_size=50k --mode=KL
+        ```bash
+        python -m apps.large_scale.plots.analysis plot_tv_vs_train_steps --dataset_size=50k --mode=KL
+        ```
 
     5. Aggregate training steps for LaTeX output:
-       python -m apps.large_scale.plots.analysis aggregate_training_steps
+        ```bash
+        python -m apps.large_scale.plots.analysis aggregate_training_steps
+        ```
     """
     fire.Fire(PlotCLI)
