@@ -8,10 +8,11 @@
 # ```shell
 # $ bash <path_to_file_folder>/compressibility.sh
 # ```
+
 # %% Specific instructions%% :
 # Since we want to compare different level of compressibility (defined with the ALPHA coefficient in the header of
 # apps/memory/dataset/dependent_data/generate.py), the experiment must be launched 11 by 11 while commenting the other ones
-# (for 11 different embedding dimensions) and change the value of ALPHA accordingly. To reproduce our results, one must take 
+# (for 11 different embedding dimensions) and change the value of ALPHA accordingly. To reproduce our results, one must take
 # in the order, we take ALPHA=0, ALPHA=0.25, ALPHA=0.5, ALPHA=0.75, ALPHA=1 for the 54 (11x5) experiments below.
 
 tmux new-session -d -s run0
