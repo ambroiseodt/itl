@@ -389,7 +389,7 @@ def get_recall_hellaswag_tv_run_data(
 
 
 if __name__ == "__main__":
-    # 1. Directory to save the plots
+    # 1. Directory to save the results
     if not RESULT_PATH.exists():
         RESULT_PATH.mkdir(parents=True, exist_ok=True)
 
