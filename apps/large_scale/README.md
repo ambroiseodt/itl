@@ -14,13 +14,10 @@ pip install -e ."[llm,visu]"
 
 ## Overview
 This folder contains:
-- ```Data/HF_dataset_generation.py```: Creates factual QA dataset using atoms + templates
-- ```Training/finetune_parallelized.py```: Launches multi-turn or in-weight fine-tuning
-- ```Training/ToolDataCollator.py```: Custom collator for tool-based interactions
-- ```Evaluation/eval_recall.py```: Measures factual recall accuracy
-- ```Evaluation/eval_hellaswag.py```: Tests generalization on HellaSwag
-- ```Evaluation/eval_kl.py```: Computes KL divergence to a reference model
-- ```analysis/```: aggregates evaluation results and generates plots
+- ```Data```: databases creation
+- ```Training```: supervised finetuning with in-weight and in-tool settings Launches multi-turn or in-weight fine-tuning
+- ```Evaluation```: evaluation with factual recall accuracy, Hellaswag generalization and KL divergence to a reference model
+- ```plots/```: evaluation results aggregation and plots generation
 
 ## Dataset generation
 **File**: `Data/HF_dataset_generation.py`
