@@ -61,7 +61,7 @@ CMAP = {
 }
 
 RESULT_PATH = Path(__file__).parents[3] / "results"
-FIGURE_PATH = Path(__file__).parents[3] / "figures"
+FIGURE_PATH = Path(__file__).parents[3] / "figures" / "large_scale"
 
 # ----------------------------------------------------------------------------
 # Hellawsag plots
@@ -1900,42 +1900,42 @@ def aggregate_training_steps_for_latex(
 
 class PlotCLI:
     def __init__(self):
-        self.RESULT_PATH = RESULT_PATH
-        self.FIGURE_PATH = FIGURE_PATH / "large_scale"
-        if not self.FIGURE_PATH.exists():
-            self.FIGURE_PATH.mkdir(parents=True, exist_ok=True)
+        self.result_dir = RESULT_PATH
+        self.save_dir = FIGURE_PATH
+        if not self.save_dir.exists():
+            self.save_dir.mkdir(parents=True, exist_ok=True)
 
     def plot_all(self, csv_file: str = None, recall_threshold: float = 0.95) -> None:
         """
         Run all plots in sequence.
         """
-        full_df = pd.read_csv(csv_file or f"{self.RESULT_PATH}/large_scale_results.csv")
+        full_df = pd.read_csv(csv_file or f"{self.result_dir}/large_scale_results.csv")
 
         # -----  Hellaswag vs dataset_size
         plot_hellaswag_vs_datasetsize_absolute(
-            full_df, self.FIGURE_PATH, acc_threshold=recall_threshold, save_name="hellaswag_vs_facts_absolute"
+            full_df, self.save_dir, acc_threshold=recall_threshold, save_name="hellaswag_vs_facts_absolute"
         )
         plot_hellaswag_vs_datasetsize_relative(
-            full_df, self.FIGURE_PATH, acc_threshold=recall_threshold, save_name="hellaswag_vs_facts_relative"
+            full_df, self.save_dir, acc_threshold=recall_threshold, save_name="hellaswag_vs_facts_relative"
         )
 
         # -----  Total Variation vs dataset_size
         plot_final_tv_vs_dataset_size(
-            full_df, self.FIGURE_PATH, recall_threshold=recall_threshold, save_name="final_kl_vs_facts"
+            full_df, self.save_dir, recall_threshold=recall_threshold, save_name="final_kl_vs_facts"
         )
         plot_final_tv_vs_dataset_size_withtool(
-            full_df, self.FIGURE_PATH, recall_threshold=recall_threshold, save_name="kl_vs_facts_withtool"
+            full_df, self.save_dir, recall_threshold=recall_threshold, save_name="kl_vs_facts_withtool"
         )
 
         # -----  Total Variation vs train_steps (mode="TV" or "KL" for Total Variation or KL divergence resp.)
         plot_tv_vs_training_steps(
-            full_df, self.FIGURE_PATH, dataset_size="500", recall_threshold=recall_threshold, mode="TV"
+            full_df, self.save_dir, dataset_size="500", recall_threshold=recall_threshold, mode="TV"
         )
 
         # -----  Total Variation vs train_steps (2 subplots, size by side)
         plot_tv_vs_training_steps_side_by_side(
             full_df,
-            self.FIGURE_PATH,
+            self.save_dir,
             dataset_sizes=("500", "50k"),
             recall_threshold=recall_threshold,
             mode="TV",
@@ -1944,49 +1944,49 @@ class PlotCLI:
 
         # -----  Train Steps vs dataset_size
         plot_train_steps_vs_dataset_size(
-            full_df, self.FIGURE_PATH, recall_threshold=recall_threshold, save_name="trainstep_vs_facts"
+            full_df, self.save_dir, recall_threshold=recall_threshold, save_name="trainstep_vs_facts"
         )
 
         # -----  Recall & Hellaswag & Total Variation vs dataset_size (three subplots)
         plot_recall_hellaswag_tv(
             full_df,
-            self.FIGURE_PATH,
+            self.save_dir,
             dataset_size="500",
             recall_threshold=recall_threshold,
             save_name="triple_plot_vs_steps",
         )
 
         # -----  Compute training steps average by each model, for each dataset:
-        aggregate_training_steps_for_latex(full_df, self.FIGURE_PATH, save_name="avg_training_steps.csv")
+        aggregate_training_steps_for_latex(full_df, self.save_dir, save_name="avg_training_steps.csv")
 
     def plot_hellaswag_absolute(self, csv_file: str = None, acc_threshold: float = 0.95) -> None:
-        full_df = pd.read_csv(csv_file or f"{self.RESULT_PATH}/large_scale_results.csv")
+        full_df = pd.read_csv(csv_file or f"{self.result_dir}/large_scale_results.csv")
         plot_hellaswag_vs_datasetsize_absolute(
-            full_df, self.FIGURE_PATH, acc_threshold, save_name="hellaswag_vs_facts_absolute"
+            full_df, self.save_dir, acc_threshold, save_name="hellaswag_vs_facts_absolute"
         )
 
     def plot_hellaswag_relative(self, csv_file: str = None, acc_threshold: float = 0.95) -> None:
-        full_df = pd.read_csv(csv_file or f"{self.RESULT_PATH}/large_scale_results.csv")
+        full_df = pd.read_csv(csv_file or f"{self.result_dir}/large_scale_results.csv")
         plot_hellaswag_vs_datasetsize_relative(
-            full_df, self.FIGURE_PATH, acc_threshold, save_name="hellaswag_vs_facts_relative"
+            full_df, self.save_dir, acc_threshold, save_name="hellaswag_vs_facts_relative"
         )
 
     def plot_tv_vs_dataset_size(self, csv_file: str = None, recall_threshold: float = 0.95) -> None:
-        full_df = pd.read_csv(csv_file or f"{self.RESULT_PATH}/large_scale_results.csv")
-        plot_final_tv_vs_dataset_size(full_df, self.FIGURE_PATH, recall_threshold, save_name="final_kl_vs_facts")
+        full_df = pd.read_csv(csv_file or f"{self.result_dir}/large_scale_results.csv")
+        plot_final_tv_vs_dataset_size(full_df, self.save_dir, recall_threshold, save_name="final_kl_vs_facts")
 
     def plot_tv_vs_dataset_size_withtool(self, csv_file: str = None, recall_threshold: float = 0.95) -> None:
-        full_df = pd.read_csv(csv_file or f"{self.RESULT_PATH}/large_scale_results.csv")
+        full_df = pd.read_csv(csv_file or f"{self.result_dir}/large_scale_results.csv")
         plot_final_tv_vs_dataset_size_withtool(
-            full_df, self.FIGURE_PATH, recall_threshold, save_name="kl_vs_facts_withtool"
+            full_df, self.save_dir, recall_threshold, save_name="kl_vs_facts_withtool"
         )
 
     def plot_tv_vs_train_steps(
         self, csv_file: str = None, recall_threshold: float = 0.95, dataset_size: str = "500", mode: str = "TV"
     ) -> None:
-        full_df = pd.read_csv(csv_file or f"{self.RESULT_PATH}/large_scale_results.csv")
+        full_df = pd.read_csv(csv_file or f"{self.result_dir}/large_scale_results.csv")
         plot_tv_vs_training_steps(
-            full_df, self.FIGURE_PATH, dataset_size=dataset_size, recall_threshold=recall_threshold, mode=mode
+            full_df, self.save_dir, dataset_size=dataset_size, recall_threshold=recall_threshold, mode=mode
         )
 
     def plot_tv_vs_train_steps_side_by_side(
@@ -1996,10 +1996,10 @@ class PlotCLI:
         dataset_sizes: tuple = ("500", "50k"),
         mode: str = "TV",
     ) -> None:
-        full_df = pd.read_csv(csv_file or f"{self.RESULT_PATH}/large_scale_results.csv")
+        full_df = pd.read_csv(csv_file or f"{self.result_dir}/large_scale_results.csv")
         plot_tv_vs_training_steps_side_by_side(
             full_df,
-            self.FIGURE_PATH,
+            self.save_dir,
             dataset_sizes=dataset_sizes,
             recall_threshold=recall_threshold,
             mode=mode,
@@ -2007,24 +2007,24 @@ class PlotCLI:
         )
 
     def plot_train_steps_vs_dataset_size(self, csv_file: str = None, recall_threshold: float = 1.0) -> None:
-        full_df = pd.read_csv(csv_file or f"{self.RESULT_PATH}/large_scale_results.csv")
+        full_df = pd.read_csv(csv_file or f"{self.result_dir}/large_scale_results.csv")
         plot_train_steps_vs_dataset_size(
-            full_df, self.FIGURE_PATH, recall_threshold=recall_threshold, save_name="trainstep_vs_facts"
+            full_df, self.save_dir, recall_threshold=recall_threshold, save_name="trainstep_vs_facts"
         )
 
     def plot_triple_vs_train_steps(self, csv_file: str = None, recall_threshold: float = 1.0) -> None:
-        full_df = pd.read_csv(csv_file or f"{self.RESULT_PATH}/large_scale_results.csv")
+        full_df = pd.read_csv(csv_file or f"{self.result_dir}/large_scale_results.csv")
         plot_recall_hellaswag_tv(
             full_df,
-            self.FIGURE_PATH,
+            self.save_dir,
             dataset_size="500",
             recall_threshold=recall_threshold,
             save_name="triple_plot_vs_steps",
         )
 
     def aggregate_training_steps(self, csv_file: str = None) -> None:
-        full_df = pd.read_csv(csv_file or f"{self.RESULT_PATH}/large_scale_results.csv")
-        aggregate_training_steps_for_latex(full_df, self.FIGURE_PATH, save_name="avg_training_steps.csv")
+        full_df = pd.read_csv(csv_file or f"{self.result_dir}/large_scale_results.csv")
+        aggregate_training_steps_for_latex(full_df, self.save_dir, save_name="avg_training_steps.csv")
 
 
 if __name__ == "__main__":
@@ -2038,17 +2038,17 @@ if __name__ == "__main__":
 
     2. Run all plots with custom recall threshold:
         ```bash
-        python -m apps.large_scale.plots.analysis plot_all --recall_threshold=0.9
+        python -m apps.large_scale.plots.analysis plot_all --recall_threshold 0.9
         ```
 
     3. Plot only Hellaswag absolute accuracy vs dataset size:
         ```bash
-        python -m apps.large_scale.plots.analysis plot_hellaswag_absolute --acc_threshold=0.9
+        python -m apps.large_scale.plots.analysis plot_hellaswag_absolute --acc_threshold 0.9
         ```
 
     4. Plot TV vs training steps for dataset_size=50k and mode=KL:
         ```bash
-        python -m apps.large_scale.plots.analysis plot_tv_vs_train_steps --dataset_size=50k --mode=KL
+        python -m apps.large_scale.plots.analysis plot_tv_vs_train_steps --dataset_size 50k --mode KL
         ```
 
     5. Aggregate training steps for LaTeX output:
