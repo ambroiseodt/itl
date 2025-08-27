@@ -311,7 +311,6 @@ def plot_hellaswag_vs_datasetsize_relative(
             if not tool_baseline_plotted:  # Only plot the first since they are about the same
                 # Horizontal dashed line with shaded area
                 x_vals = [350, 500, 1000, 5000, 10000, 50000]
-                # x_vals = sub["dataset_size_n"].values
                 y_mean = sub["hellaswag_relative"].mean()
                 y_std = sub["hellaswag_relative_stderr"].mean()
                 ax.plot(x_vals, [y_mean] * len(x_vals), linestyle="--", color="black", label=label, linewidth=1)
