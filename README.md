@@ -88,6 +88,9 @@ Our codebase is structured as follows:
 The folder ```src/nanollama``` contains the most reusable components, which can be put together in the ```apps``` folder for various applications. The code in ```apps/memory``` can be used to study the memory load of in-tool learning in a controlled setting and the code in ```apps/large_scale``` can be used to study in-tool learning at large scale.
 
 ## Getting started
+We provide below the instructions to install the library and start launching experiments.
+
+### Installation
 The code runs Python 3.10+.
 Here are some installation instructions:
 - Install [miniconda](https://docs.conda.io/projects/miniconda/en/latest/). Follow the instructions online, most likely you will execute the following commands.
@@ -124,14 +127,14 @@ python -m unittest
 ```
 It should return ```OK```.
 
-## Launching jobs
+### Launching jobs
 Our codebase supports launching jobs with and without Slurm. See ```apps/memory/README.md``` for more details.
 
 ## Reproducing our experiments
 Instructions to reproduce the experiments in our paper can be found in [apps/memory/README](apps/memory/README.md) and [apps/finetuning/README](apps/finetuning/README.md).
 
 ## Acknowledgments
-This repository builds heavily on [lingua](https://github.com/facebookresearch/lingua) and [pal](https://github.com/facebookresearch/pal).
+This repository builds heavily on [lingua](https://github.com/facebookresearch/lingua) and [pal](https://github.com/facebookresearch/pal) which provide easy-to-use code to train and play with LLMs.
 
 ## License
 The codebase is licensed under the [CC BY-NC 4.0 License](LICENSE.md).
