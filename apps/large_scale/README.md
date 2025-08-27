@@ -3,10 +3,10 @@
 This part of the codebase aims to study in-tool learning at large scale.
 
 ## Installation
-To reproduce our experiments and figures, the ```llm``` and ```visu``` optional dependencies need to be installed with:
+To reproduce our experiments and figures, the ```scale``` and ```visu``` optional dependencies need to be installed with:
 
 ```bash
-pip install -e ."[llm,visu]"
+pip install -e ."[scale,visu]"
 ```
 
 ## Overview
