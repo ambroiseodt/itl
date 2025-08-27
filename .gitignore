@@ -22,4 +22,5 @@ figures/
 # results and runs
 results/
 runs/
+eval_runs/
 wandb/
