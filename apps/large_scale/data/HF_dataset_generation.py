@@ -18,6 +18,9 @@ from datasets import Dataset, DatasetDict
 from jinja2 import Template
 from tqdm import tqdm
 
+HF_DATASET_PATH = Path(__file__).parents[1] / "HF_datasets"
+MEMORY_DATASET_PATH = Path(__file__).parents[3] / "apps/memory/dataset"
+
 
 def generate_hf_dataset(
     n: int,
@@ -208,11 +211,10 @@ def build_database(n_people: int = 50000) -> None:
     """
 
     # Paths and configs
-    dataset_path = "apps/memory/dataset"
-    atom_dir = Path(__file__).parents[3] / dataset_path / "atoms"
-    template_dir = Path(__file__).parents[3] / dataset_path / "templates"
+    atom_dir = MEMORY_DATASET_PATH / "atoms"
+    template_dir = MEMORY_DATASET_PATH / "templates"
     dataset_name = f"HF_dataset_{format_with_underscores(4 * n_people)}"
-    SAVE_DIR = Path(__file__).parents[1] / f"HF_datasets/{dataset_name}"
+    save_dir = HF_DATASET_PATH / f"{dataset_name}"
 
     # Generate dataset
     dataset = generate_hf_dataset(n_people, atom_dir, template_dir)
@@ -220,15 +222,15 @@ def build_database(n_people: int = 50000) -> None:
     print_dataset_structure(dataset)
 
     # Save dataset
-    dataset.save_to_disk(SAVE_DIR)
-    print(f"Dataset saved to {SAVE_DIR}")
-    dataset = Dataset.load_from_disk(SAVE_DIR)
-    print(f"Reloaded dataset from {SAVE_DIR} for verification.")
+    dataset.save_to_disk(save_dir)
+    print(f"Dataset saved to {save_dir}")
+    dataset = Dataset.load_from_disk(save_dir)
+    print(f"Reloaded dataset from {save_dir} for verification.")
 
     # Export dataset for inspection
     export_dataset(
         dataset=dataset,
-        output_path=Path(__file__).parents[1] / f"HF_datasets/{dataset_name}_preview.jsonl",
+        output_path=HF_DATASET_PATH / f"{dataset_name}_preview.jsonl",
         filetype="jsonl",
         limit=10,
     )
