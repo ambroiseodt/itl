@@ -1901,17 +1901,13 @@ def aggregate_training_steps_for_latex(
 class PlotCLI:
     def __init__(self):
         self.RESULT_PATH = RESULT_PATH
-        self.FIGURE_PATH = FIGURE_PATH
+        self.FIGURE_PATH = FIGURE_PATH / "large_scale"
         if not self.FIGURE_PATH.exists():
             self.FIGURE_PATH.mkdir(parents=True, exist_ok=True)
 
     def plot_all(self, csv_file: str = None, recall_threshold: float = 0.95) -> None:
         """
         Run all plots in sequence.
-
-        Usage:
-            python plot_cli.py plot_all --recall_threshold=0.95
-            python plot_cli.py plot_all --csv_file="path/to/results.csv"
         """
         full_df = pd.read_csv(csv_file or f"{self.RESULT_PATH}/large_scale_results.csv")
 
@@ -1964,11 +1960,6 @@ class PlotCLI:
         aggregate_training_steps_for_latex(full_df, self.FIGURE_PATH, save_name="avg_training_steps.csv")
 
     def plot_hellaswag_absolute(self, csv_file: str = None, acc_threshold: float = 0.95) -> None:
-        """
-        Plot Hellaswag accuracy (absolute) vs dataset size.
-        Usage:
-            python plot_cli.py plot_hellaswag_absolute --acc_threshold=0.9
-        """
         full_df = pd.read_csv(csv_file or f"{self.RESULT_PATH}/large_scale_results.csv")
         plot_hellaswag_vs_datasetsize_absolute(
             full_df, self.FIGURE_PATH, acc_threshold, save_name="hellaswag_vs_facts_absolute"

@@ -202,9 +202,10 @@ def get_data(gridname: str) -> pd.DataFrame:
 
 def save_plot(figname: str, format: str = "pdf", dpi: int = 100) -> None:
     """Save figure in pdf format."""
-    if not FIGURE_PATH.exists():
-        FIGURE_PATH.mkdir(parents=True, exist_ok=True)
-    save_dir = FIGURE_PATH / f"{figname}.{format}"
+    figure_path = FIGURE_PATH / "controlled"
+    if not figure_path.exists():
+        figure_path.mkdir(parents=True, exist_ok=True)
+    save_dir = figure_path / f"{figname}.{format}"
     plt.savefig(save_dir, format=format, bbox_inches="tight", dpi=dpi)
 
 
