@@ -30,7 +30,7 @@ This script generates a factual QA dataset by combining structured atomic facts 
 Each person contributes 4 facts; for `n_people = 50000`, the script generates 200,000 examples.
 
 ```bash
-python -m apps.large_scale.data.HF_dataset_generation build n_people 50000
+python -m apps.large_scale.data.HF_dataset_generation build --n_people 50000
 ```
 
 Output:
