@@ -1,6 +1,6 @@
 # This source code is licensed under the terms specified in the `LICENSE` file.
 """
-Evaluation with factual recall accuracy
+Evaluation with factual recall accuracy.
 
 @ 2025, Meta
 """
@@ -463,7 +463,6 @@ if __name__ == "__main__":
     all_runs = sorted([r for r in os.listdir(exp_dir) if os.path.isdir(os.path.join(exp_dir, r))])
     grouped_runs = group_runs_by_model(all_runs)
     full_dataset = Dataset.load_from_disk(data_dir)
-    print(full_dataset["qa"][0], full_dataset["qatool"][0])
     torch.manual_seed(42)
 
     for group, run_names in grouped_runs.items():
