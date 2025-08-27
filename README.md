@@ -75,6 +75,7 @@ Our codebase is structured as follows:
   ┃ ┣ 📂generalization
   ┃ ┣ 📂plots
   ┃ ┣ 📂scripts
+  ┃ ┣ 📄__init__.py
   ┃ ┣ 📄README.md
   ┃ ┣ 📄args.py
   ┃ ┣ 📄eval.py
@@ -82,10 +83,11 @@ Our codebase is structured as follows:
   ┃ ┣ 📄prompt_loader.py
   ┃ ┗ 📄train.py
   ┣ 📂large_scale # Large-scale experiments
-  ┃ ┣ 📂Data
-  ┃ ┣ 📂Training
+  ┃ ┣ 📂data
+  ┃ ┣ 📂training
   ┃ ┣ 📂Evaluation
-  ┃ ┣ 📂analysis
+  ┃ ┣ 📂plots
+  ┃ ┣ 📄__init__.py
   ┗ ┗ 📄README.md
 
 ```
