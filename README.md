@@ -8,7 +8,33 @@
 </p>
 Our codebase provides utilities to train and study large language models from a memory and generalization perspective and allow tool-use (currently implemented as an SQL agent). It relies mainly on PyTorch primitives, instead of any high-level LLM libraries, allowing researchers and practitioners to easily prototype and modify.
 
-## Introduction
+## 👋 Overview
+
+* [🧐 Introduction](#-introduction-back-to-top)
+
+* [🙌 Project Overview](#-project-overview-back-to-top)
+
+* [📋 Getting Started with the CODE](#-getting-started-with-the-code-back-to-top)
+
+* [📚 Getting Started with the DATA](#-getting-started-with-the-data-back-to-top)
+
+* [💯 BigO(Bench) Scores](#-bigobench-scores-back-to-top)
+
+* [🤗 Running BigO(Bench) on (your) HuggingFace Models](#-running-bigobench-on-your-huggingface-models-back-to-top)
+
+* [👨‍💻 Running BigO(Bench) on OpenAI Models](#-running-bigobench-on-openai-models-back-to-top)
+
+* [🤖 Running BigO(Bench) on anything else that runs !](#-running-bigobench-on-anything-else-that-runs--back-to-top)
+
+* [🔬📈 Running the Dynamic Complexity Inference Framework on code snippets](#-running-the-dynamic-complexity-inference-framework-on-code-snippets-back-to-top)
+
+* [🙏 Acknowledgements](#-acknowledgements-back-to-top)
+
+* [License](#license-back-to-top)
+
+* [📝 Citation](#-citation-back-to-top)
+
+## Introduction <sub><sup>([back to top](#-overview))<sub><sup>
 
 - 🛠️ In-tool learning: learning to use a tool (e.g., a calculator or a request to a database) to solve a problem,
 - 🏋🏽 In-weight learning: memorizing the solution to a problem within the model's weights.
