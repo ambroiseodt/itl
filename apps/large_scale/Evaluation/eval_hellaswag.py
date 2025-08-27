@@ -1,3 +1,10 @@
+# This source code is licensed under the terms specified in the `LICENSE` file.
+"""
+Evaluation with Hellaswag performance.
+
+@ 2025, Meta
+"""
+
 import argparse
 import os
 import re
@@ -5,6 +12,10 @@ import subprocess
 from pathlib import Path
 
 from tqdm import tqdm
+
+HF_DATASET_PATH = Path(__file__).parents[1] / "HF_datasets"
+SAVE_PATH = Path(__file__).parents[1] / "runs"
+EVAL_PATH = Path(__file__).parents[1] / "eval_runs"
 
 
 def get_nice_base_model_name(model_name):
@@ -106,43 +117,43 @@ if __name__ == "__main__":
     )
     parser.add_argument(
         "--base_model_family",
-        choices=["Llama", "SmolLM"],
+        choices=["llama", "smollm"],
         required=True,
         help="Specify whether model is from Llama or SmolLM family.",
     )
     parser.add_argument(
-        "--models_dir", type=str, required=True, help="Directory containing models/checkpoints to evaluate."
+        "--model_dir", type=str, required=True, help="Directory containing models/checkpoints to evaluate."
     )
-    parser.add_argument("--base_results_dir", type=str, default=None, help="Directory to save evaluation results.")
+    parser.add_argument("--eval_dir", type=str, default=None, help="Directory to save evaluation results.")
     parser.add_argument("--target", help="Identificator to filter runs (if target in run_name)")
     args = parser.parse_args()
 
-    # Set models dir and saving dir
-    EXPERIMENTS_DIR = args.models_dir
-    if args.base_results_dir:
-        EVALS_DIR = f"{args.base_results_dir}/Hellaswag"
-    else:
-        EVALS_DIR = Path(__file__).parents[1] / "Results" / "Hellaswag"
-    os.makedirs(EVALS_DIR, exist_ok=True)
+    # Set paths
+    exp_dir = SAVE_PATH / f"{args.model_dir}"
+    eval_dir = EVAL_PATH / f"{args.eval_dir}" / "hellaswag"
+    if not eval_dir.exists():
+        eval_dir.mkdir(parents=True, exist_ok=True)
 
     # -------    Evaluation of base models  -------
     if args.mode in ["base", "both"]:
-        if args.base_model_family == "Llama":
-            base_model_names = [
-                "meta-llama/Llama-3.2-1B-Instruct",
-                "meta-llama/Llama-3.2-3B-Instruct",
-                "meta-llama/Llama-3.1-8B-Instruct",
-            ]
-        else:
-            base_model_names = [
-                "HuggingFaceTB/SmolLM-135M-Instruct",
-                "HuggingFaceTB/SmolLM-360M_Instruct",
-                "HuggingFaceTB/SmolLM-1.7B-Instruct",
-            ]
-
+        match args.base_model_family.lower():
+            case "llama":
+                base_model_names = [
+                    "meta-llama/Llama-3.2-1B-Instruct",
+                    "meta-llama/Llama-3.2-3B-Instruct",
+                    "meta-llama/Llama-3.1-8B-Instruct",
+                ]
+            case "smollm":
+                base_model_names = [
+                    "HuggingFaceTB/SmolLM-135M-Instruct",
+                    "HuggingFaceTB/SmolLM-360M_Instruct",
+                    "HuggingFaceTB/SmolLM-1.7B-Instruct",
+                ]
+            case _:
+                raise ValueError(f"Invalid model family {args.base_model_family}. Options are 'llama' or 'smollm")
         for base_model_name in base_model_names:
             print(f"\n================= Evaluating run: {base_model_name} =================")
-            output_path = os.path.join(EVALS_DIR, "base_models", get_nice_base_model_name(base_model_name))
+            output_path = os.path.join(eval_dir, "base_models", get_nice_base_model_name(base_model_name))
             os.makedirs(output_path, exist_ok=True)
             for batch_size in [64, 32, 24, 16, 8, 4]:
                 try:
@@ -159,14 +170,14 @@ if __name__ == "__main__":
         run_names = sorted(
             [
                 d
-                for d in os.listdir(EXPERIMENTS_DIR)
-                if os.path.isdir(os.path.join(EXPERIMENTS_DIR, d)) and (args.target in d if args.target else True)
+                for d in os.listdir(exp_dir)
+                if os.path.isdir(os.path.join(exp_dir, d)) and (args.target in d if args.target else True)
             ]
         )
 
         for run_name in tqdm(run_names, desc="Evaluating runs"):
             print(f"\n================= Evaluating run: {run_name} =================")
-            run_path = os.path.join(EXPERIMENTS_DIR, run_name)
+            run_path = os.path.join(exp_dir, run_name)
             base_model_name = get_base_model_for_peft(run_name)
 
             all_checkpoints = sorted(
@@ -180,7 +191,7 @@ if __name__ == "__main__":
 
             for checkpoint_name in all_checkpoints:
                 adaptor_path = os.path.join(run_path, checkpoint_name)
-                output_path = os.path.join(EVALS_DIR, "runs", run_name, checkpoint_name)
+                output_path = os.path.join(eval_dir, "runs", run_name, checkpoint_name)
                 os.makedirs(output_path, exist_ok=True)
 
                 if evaluation_already_exists(output_path):
@@ -211,4 +222,4 @@ if __name__ == "__main__":
     else:
         raise ValueError("Wrong mode provided. Should be either 'base', 'checkpoints', or 'both'.")
 
-    print(f"\n\n Hellaswag evals finished")
+    print("\n\n Hellaswag evals finished")
