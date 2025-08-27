@@ -6,7 +6,12 @@
 <p align="center">
  <img src="overview.svg" width="100%"/>
 </p>
-Our codebase provides utilities to train and study large language models from a memory and generalization perspective. It relies mainly on PyTorch primitives, instead of any high-level LLM libraries, allowing researchers and practitioners to easily prototype and modify.
+Our codebase provides utilities to train and study large language models from a memory and generalization perspective and allow tool-use (currently implemented as an SQL agent). It relies mainly on PyTorch primitives, instead of any high-level LLM libraries, allowing researchers and practitioners to easily prototype and modify.
+
+## Introduction
+
+- 🛠️ In-tool learning: learning to use a tool (e.g., a calculator or a request to a database) to solve a problem,
+- 🏋🏽 In-weight learning: memorizing the solution to a problem within the model's weights.
 
 ## Installation
 The code runs Python 3.10+.

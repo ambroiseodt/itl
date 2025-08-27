@@ -2,9 +2,6 @@
 
 This part of the codebase aims to study in-tool learning at large scale.
 
-- 🛠️ In-tool learning: learning to use a tool (e.g., a calculator or a request to a database) to solve a problem,
-- 🏋🏽 In-weight learning: memorizing the solution to a problem within the model's weights.
-
 ## Installation
 To reproduce our experiments and figures, the ```llm``` and ```visu``` optional dependencies need to be installed with:
 
@@ -14,10 +11,13 @@ pip install -e ."[llm,visu]"
 
 ## Overview
 This folder contains:
-- ```data/```: databases creation
-- ```training/```: supervised finetuning with in-weight and in-tool settings Launches multi-turn or in-weight fine-tuning
-- ```Evaluation/```: evaluation with factual recall accuracy, Hellaswag generalization and KL divergence to a reference model
-- ```plots/```: evaluation results aggregation and plots generation
+- ```data/```: databases creation as a large HuggingFace dataset
+- ```training/finetune_parallelized.py```: supervised finetuning with in-weight and in-tool settings
+- ```training/tool_data_collator.py```: custom data collator for tool-use interactions
+- ```Evaluation/eval_recall.py```: evaluation with factual recall accuracy
+- ```Evaluation/eval_hellaswag.py```: evaluation with Hellaswag generalization
+- ```Evaluation/eval_kl.py```: evaluation with KL divergence and TV distance to a reference model
+- ```plots/```: results aggregation and plots generation
 
 ## Dataset generation
 **File**: `data/HF_dataset_generation.py`
@@ -99,3 +99,5 @@ Usage:
 
 ## Reproducibility
 The large-scale experiments of our [paper]() (Section 6) can be reproduced using the fine-tuning scripts provided in ```/scripts/```.
+Some models are gated, e.g., the Llama ones, and users must request the access to be able to use them.
+See https://huggingface.co/docs/hub/en/models-gated for more information.

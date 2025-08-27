@@ -2,9 +2,6 @@
 
 This part of the codebase aims to study in-tool learning in a controlled setting from a memory and generalization perspective.
 
-- 🛠️ In-tool learning: learning to use a tool (e.g., a calculator or a request to a database) to solve a problem,
-- 🏋🏽 In-weight learning: memorizing the solution to a problem within the model's weights.
-
 ## Installation
 To reproduce our experiments and figures, the ```llm``` and ```visu``` optional dependencies need to be installed with:
 
