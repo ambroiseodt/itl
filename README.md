@@ -39,6 +39,9 @@ If you want to install the LLM, development and visualization dependencies, you 
 pip install -e ".[llm,dev,visu]"
 ```
 
+> [!NOTE]
+> HuggingFace and [lm harness](https://github.com/EleutherAI/lm-evaluation-harness) libraries are subject to frequent changes which might impact the behavior of the codebase. In case of issues with a package, we suggest users to downgrade its version.
+
 ### Development
 To verify the your installation, run unit tests with the following command at the root of this repository
 ```bash
@@ -99,8 +102,6 @@ Our codebase supports launching jobs with and without Slurm. See ```apps/memory/
 
 ## Reproducing our experiments
 Instructions to reproduce the experiments in our paper can be found in [apps/memory/README](apps/memory/README.md) and [apps/finetuning/README](apps/finetuning/README.md).
-
-[!NOTE] HuggingFace and [lm harness](https://github.com/EleutherAI/lm-evaluation-harness) libraries are subject to frequent changes which might impact the behavior of the codebase. If users face issues with some package importation, we suggest them to downgrade its version.
 
 ## Acknowledgments
 This repository builds heavily on [lingua](https://github.com/facebookresearch/lingua) and [pal](https://github.com/facebookresearch/pal).
