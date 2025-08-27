@@ -38,7 +38,7 @@ If you want to install the LLM, large scale experiments, visualization and devel
 ```bash
 pip install -e ".[llm,scale,visu,dev]"
 ```
-More details are given in the README.md files of the apps folders.
+More details are given in the README files of the apps folders.
 
 > [!NOTE]
 > LLM libraries such as [trl](https://github.com/huggingface/trl) and [lm-evaluation-harness](https://github.com/EleutherAI/lm-evaluation-harness) libraries are subject to frequent changes which might impact the behavior of the codebase. In case of issues with a package, we suggest users to downgrade its version.
