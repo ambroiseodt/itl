@@ -60,7 +60,7 @@ def generate_hf_dataset(
     def load_templates(suffix: str) -> list:
         pattern = re.compile(r"^<\|(\w+)\|>(.*)$")
         templates = []
-        for file in template_dir.glob(f"{suffix}*.j2"):
+        for file in sorted(template_dir.glob(f"{suffix}?.j2")):
             with open(file) as f:
                 lines = f.read().splitlines()
             out, source, buffer = [], None, []
@@ -195,13 +195,13 @@ def format_with_underscores(number: int) -> str:
     return f"{number:_}"
 
 
-def build_database(n_people: int = 25000) -> None:
+def build_database(n_people: int = 50000) -> None:
     """
     Build database for factual recall task and save it to disk. The dataset size
     is 4 times the number of people, as each person has 4 attributes.
 
     Usage:
-    Build a database with 200_000 facts (50_000 people) wit
+    Build a database with 200_000 facts (50_000 people) by running
     ```bash
     python -m apps.large_scale.data.HF_dataset_generation build --n_people 50000
     ```
