@@ -39,6 +39,9 @@ print(
     torch.cuda.get_device_name(0) if torch.cuda.is_available() else "No GPU",
 )
 
+HF_DATASET_PATH = Path(__file__).parents[1] / "HF_datasets"
+SAVE_PATH = Path(__file__).parents[1] / "runs"
+
 
 def extract_or_raise(pattern: str, name: str, run_name: str) -> str:
     match = re.search(pattern, run_name)
@@ -245,9 +248,10 @@ if __name__ == "__main__":
     run_name = args.run_name
 
     # Paths and settings
-    DATA_DIR = Path(__file__).parents[1] / "HF_datasets" / "HF_dataset_200_000"
-    MODELS_SAVE_DIR = Path(__file__).parents[1] / "runs" / f"{args.save_dir}/{run_name}"
-    os.makedirs(MODELS_SAVE_DIR, exist_ok=True)
+    data_dir = HF_DATASET_PATH / "HF_dataset_200_000"
+    save_dir = SAVE_PATH / args.save_dir / run_name
+    if not save_dir.exists():
+        save_dir.mkdir(parents=True, exist_ok=True)
     MODE = "in-weight" if "weight" in run_name else "in-tool"
 
     # Parse hyperparameters
@@ -297,7 +301,7 @@ if __name__ == "__main__":
     if accelerator.is_main_process:
         inspect_chat_template(tokenizer)
         print_special_tokens_info_new(tokenizer)
-        dataset = Dataset.load_from_disk(DATA_DIR).select(range(n_facts + n_facts_eval))
+        dataset = Dataset.load_from_disk(data_dir).select(range(n_facts + n_facts_eval))
         tokenized_dataset = tokenize_dataset(dataset, tokenizer, MODE, verbose=True, model_name=model_name)
         tokenized_dataset.save_to_disk("/tmp/tokenized")
 
@@ -343,7 +347,7 @@ if __name__ == "__main__":
     save_steps = round(2 * steps_per_epoch)
 
     sft_config = SFTConfig(
-        output_dir=MODELS_SAVE_DIR,
+        output_dir=save_dir,
         save_strategy="steps",
         save_steps=save_steps,
         push_to_hub=False,
