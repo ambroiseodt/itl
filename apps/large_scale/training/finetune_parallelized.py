@@ -8,7 +8,8 @@ Supervised fine-tuning with in-weight and in-tool settings.
 import argparse
 import os
 import re
-import sys
+
+# import sys
 from copy import deepcopy
 from math import ceil
 from pathlib import Path
@@ -27,20 +28,19 @@ from transformers import (
 )
 from trl import DataCollatorForCompletionOnlyLM, SFTConfig
 
-sys.path.append(os.path.abspath(os.path.join(os.path.dirname(__file__), "..")))
-from training.tool_data_collator import DataCollatorForToolOnlyLM
+# sys.path.append(os.path.abspath(os.path.join(os.path.dirname(__file__), "..")))
+from .tool_data_collator import DataCollatorForToolOnlyLM
 
+# Paths
+HF_DATASET_PATH = Path(__file__).parents[1] / "HF_datasets"
+SAVE_PATH = Path(__file__).parents[1] / "runs"
+
+# Cuda settings
 os.environ["TOKENIZERS_PARALLELISM"] = "false"
 accelerator = Accelerator()
 print("CUDA Available:", torch.cuda.is_available())
 print("CUDA Device Count:", torch.cuda.device_count())
-print(
-    "CUDA Device Name:",
-    torch.cuda.get_device_name(0) if torch.cuda.is_available() else "No GPU",
-)
-
-HF_DATASET_PATH = Path(__file__).parents[1] / "HF_datasets"
-SAVE_PATH = Path(__file__).parents[1] / "runs"
+print("CUDA Device Name:", torch.cuda.get_device_name(0) if torch.cuda.is_available() else "No GPU")
 
 
 def extract_or_raise(pattern: str, name: str, run_name: str) -> str:
