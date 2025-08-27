@@ -34,9 +34,9 @@ git clone <repo url>
 cd <repo path>
 pip install -e .
 ```
-If you want to install the LLM, large scale experiments, visualization and developement dependencies, you can swap the previous command for the following one:
+Optional dependencies, e.g. the LLM ones, can be added by swapping the previous command for the following one:
 ```bash
-pip install -e ".[llm,scale,visu,dev]"
+pip install -e ".[llm]"
 ```
 More details are given in the README files of the apps folders.
 
