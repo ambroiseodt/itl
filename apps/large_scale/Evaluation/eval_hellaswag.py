@@ -18,11 +18,11 @@ SAVE_PATH = Path(__file__).parents[1] / "runs"
 EVAL_PATH = Path(__file__).parents[1] / "eval_runs"
 
 
-def get_nice_base_model_name(model_name):
+def get_nice_base_model_name(model_name: str) -> str:
     return model_name.split("/")[-1]
 
 
-def extract_step(name):
+def extract_step(name: str) -> int:
     match = re.search(r"checkpoint[-_]?(\d+)", name)
     return int(match.group(1)) if match else float("inf")
 
@@ -31,7 +31,7 @@ def evaluation_already_exists(output_dir: str) -> bool:
     """
     Checks if any .json file exists under output_dir.
     """
-    for root, _, files in os.walk(output_dir):
+    for _, _, files in os.walk(output_dir):
         if any(f.endswith(".json") for f in files):
             return True
     return False
@@ -59,7 +59,7 @@ def get_base_model_for_peft(run_name: str) -> str:
         )
 
 
-def is_lora_checkpoint(checkpoint_path):
+def is_lora_checkpoint(checkpoint_path: Path) -> bool:
     files = os.listdir(checkpoint_path)
     has_adapter_model = any("adapter_model" in f for f in files)
     has_adapter_config = "adapter_config.json" in files
@@ -67,8 +67,8 @@ def is_lora_checkpoint(checkpoint_path):
 
 
 def evaluate_peft_model_on_hellaswag(
-    adaptor_path, output_path, base_model_name, batch_size="32", task_name="hellaswag"
-):
+    adaptor_path: Path, output_path: Path, base_model_name: str, batch_size: int = "32", task_name: str = "hellaswag"
+) -> None:
     command = [
         "lm_eval",
         "--model",
@@ -89,7 +89,9 @@ def evaluate_peft_model_on_hellaswag(
         print(f"[✗] Failed on {adaptor_path}: {e}")
 
 
-def evaluate_model_on_hellaswag(model_name, output_path, batch_size="32", task_name="hellaswag"):
+def evaluate_model_on_hellaswag(
+    model_name: Path, output_path: Path, batch_size: int = "32", task_name: str = "hellaswag"
+) -> None:
     command = [
         "lm_eval",
         "--model",
@@ -191,7 +193,7 @@ if __name__ == "__main__":
 
             for checkpoint_name in all_checkpoints:
                 adaptor_path = os.path.join(run_path, checkpoint_name)
-                output_path = os.path.join(eval_dir, "runs", run_name, checkpoint_name)
+                output_path = os.path.join(eval_dir, "finetuned_models", run_name, checkpoint_name)
                 os.makedirs(output_path, exist_ok=True)
 
                 if evaluation_already_exists(output_path):

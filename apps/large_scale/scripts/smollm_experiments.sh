@@ -52,5 +52,5 @@
 # #=======================================================
 
 # python -m apps.large_scale.Evaluation.eval_recall --model_dir "smollm" --eval_dir "smollm"
-python -m apps.large_scale.Evaluation.eval_hellaswag --mode "checkpoints" --base_model_family "smollm" --model_dir "smollm" --eval_dir "smollm"
+python -m apps.large_scale.Evaluation.eval_hellaswag --mode "both" --base_model_family "smollm" --model_dir "smollm" --eval_dir "smollm"
 # python Evaluation/eval_kl.py
