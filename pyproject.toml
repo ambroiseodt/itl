@@ -7,6 +7,9 @@ name = "nanollama"
 version = "0.0.0"
 authors = [
   { name="Ambroise Odonnat", email="ambroise.odonnat@gmail.com" },
+  { name="Vivien Cabannes", email="vivc@meta.com" },
+  { name="Sam Houlison", email="houlison.sam@gmail.com" },
+  { name="Charles Arnal", email="charlesarnal@meta.com" },
 ]
 description = "In-Tool Learning for LLMs"
 readme = "README.md"
@@ -43,7 +46,7 @@ scale = [
   "accelerate",        # distributed training
   "bitsandbytes",      # quantization
   "datasets==4.0.0",   # HF datasets
-  "hf_xet==1.1.2",
+  "hf_xet==1.1.2",     # storage
   "lm-eval==0.4.8",    # LLM evaluation
   "trl==0.18.0",       # RLHF library
   "peft",              # efficient finetuning
