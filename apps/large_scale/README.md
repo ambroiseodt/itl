@@ -102,5 +102,3 @@ Usage:
 
 ## Reproducibility
 The large-scale experiments of our [paper]() (Section 6) can be reproduced using the fine-tuning scripts provided in ```/scripts/```.
-Some models are gated, e.g., the Llama ones, and users should request the access to be able to use them.
-See https://huggingface.co/docs/hub/en/models-gated for more information.

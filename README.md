@@ -120,6 +120,10 @@ More details are given in the README files of the apps folders.
 > [!NOTE]
 > LLM libraries such as [datasets](https://github.com/huggingface/datasets), [transformers](https://github.com/huggingface/transformers), [trl](https://github.com/huggingface/trl), or [lm-evaluation-harness](https://github.com/EleutherAI/lm-evaluation-harness) are subject to frequent changes which might impact the behavior of the codebase. In case of issues, we advise users to use previous versions of the packages.
 
+### Using HuggingFace pretrained models
+Some models are gated, e.g., the Llama ones, and users should request the access and login to the huggingface hub to use them in the scripts.
+See https://huggingface.co/docs/hub/en/models-gated for more information.
+
 ### Development
 To verify the your installation, run unit tests with the following command at the root of this repository
 ```bash
