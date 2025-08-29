@@ -118,7 +118,7 @@ pip install -e ".[llm]"
 More details are given in the README files of the apps folders.
 
 > [!NOTE]
-> LLM libraries such as [trl](https://github.com/huggingface/trl) and [lm-evaluation-harness](https://github.com/EleutherAI/lm-evaluation-harness) are subject to frequent changes which might impact the behavior of the codebase. In case of issues with a package, we suggest users to downgrade its version.
+> LLM libraries such as [datasets](https://github.com/huggingface/datasets), [transformers](https://github.com/huggingface/transformers), [trl](https://github.com/huggingface/trl), or [lm-evaluation-harness](https://github.com/EleutherAI/lm-evaluation-harness) are subject to frequent changes which might impact the behavior of the codebase. In case of issues, we advise users to use previous versions of the packages.
 
 ### Development
 To verify the your installation, run unit tests with the following command at the root of this repository
