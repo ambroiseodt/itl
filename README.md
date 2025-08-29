@@ -1,12 +1,6 @@
 # 🛠️ Provable Benefits of In-Tool Learning (ITL)
 [![Arxiv](https://img.shields.io/badge/arXiv-2508.20755-b5212f?logo=arxiv)](https://arxiv.org/pdf/2508.20755)
 [![License](https://img.shields.io/badge/License-CC--BY--NC-blue.svg)](https://creativecommons.org/licenses/by-nc/4.0/legalcode.en)
-
-<!-- **This repository contains the official implementation of our study on the benefits of tool-use for LLMs** -->
-
-<!-- >[Provable Benefits of In-Tool Learning for Large Language Models](https://arxiv.org/pdf/2508.20755). -->
-**[Sam Houliston*](https://www.linkedin.com/in/sam-houliston-47364524a/?originalSubdomain=uk), [Ambroise Odonnat*](https://ambroiseodt.github.io/), [Charles Arnal*](https://charlesarnal.github.io/), [Vivien Cabannes*](https://viviencabannes.github.io/)**. ***Equal contribution**.
-
 Our codebase provides utilities to train and study large language models from a memory and generalization perspective and allow tool-use (currently implemented as an SQL agent). It relies mainly on PyTorch primitives, instead of any high-level LLM libraries, allowing researchers and practitioners to easily prototype and modify.
 <p align="center">
  <img src="overview.svg" width="100%"/>
@@ -39,6 +33,9 @@ Our codebase provides utilities to train and study large language models from a 
 * [📝 Citation](#-citation-back-to-top)
 
 ## Introduction <sub><sup>([back to top](#-overview))<sub><sup>
+**This repository contains the official implementation of
+> [Provable Benefits of In-Tool Learning for Large Language Models](https://arxiv.org/pdf/2508.20755).
+> **[Sam Houliston*](https://www.linkedin.com/in/sam-houliston-47364524a/?originalSubdomain=uk), [Ambroise Odonnat*](https://ambroiseodt.github.io/), [Charles Arnal*](https://charlesarnal.github.io/), [Vivien Cabannes*](https://viviencabannes.github.io/)**. ***Equal contribution**.
 
 - 🛠️ In-tool learning: learning to use a tool (e.g., a calculator or a request to a database) to solve a problem,
 - 🏋🏽 In-weight learning: memorizing the solution to a problem within the model's weights.
@@ -153,7 +150,7 @@ If you find this repository useful, please consider giving a star ⭐, and cite 
 @misc{in_tool_learning,
   author = {Sam Houliston* and Ambroise Odonnat* and Charles Arnal* and Vivien Cabannes*},
   title = {{Provable Benefits of In-Tool Learning for Large Language Models}},
-  url = {TBD},
+  url = {https://arxiv.org/pdf/2508.20755},
   year = {2025}
 }
 ```
