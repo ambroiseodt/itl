@@ -43,6 +43,7 @@ scale = [
   "accelerate",        # distributed training
   "bitsandbytes",      # quantization
   "datasets==4.0.0",   # HF datasets
+  "hf_xet==1.1.2",
   "lm-eval==0.4.8",    # LLM evaluation
   "trl==0.18.0",       # RLHF library
   "peft",              # efficient finetuning
