@@ -63,7 +63,7 @@ The folder ```src/nanollama``` contains the most reusable components, which can 
 ## Getting started
 We provide below the instructions to install the library and start launching experiments.
 > [!NOTE]
-> LLM libraries such as [datasets](https://github.com/huggingface/datasets), [transformers](https://github.com/huggingface/transformers), [trl](https://github.com/huggingface/trl), or [lm-evaluation-harness](https://github.com/EleutherAI/lm-evaluation-harness) are subject to frequent changes which might impact the behavior of the codebase. In case of issues, we advise users to use previous versions of the packages.
+> LLM libraries such as [datasets](https://github.com/huggingface/datasets), [transformers](https://github.com/huggingface/transformers), [trl](https://github.com/huggingface/trl), or [lm-evaluation-harness](https://github.com/EleutherAI/lm-evaluation-harness) are subject to frequent changes which might impact the behavior of the codebase. If you encounter any issues, don't hesitate to reach out.
 
 ### Installation
 The code runs Python 3.10+.
