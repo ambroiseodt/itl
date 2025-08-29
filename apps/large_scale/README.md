@@ -101,4 +101,4 @@ Usage:
 - Visualization functions generate scalable, publication-ready plots
 
 ## Reproducibility
-The large-scale experiments of our [paper]() (Section 6) can be reproduced using the fine-tuning scripts provided in ```/scripts/```.
+The large-scale experiments of our [paper](https://arxiv.org/pdf/2508.20755) (Section 6) can be reproduced using the fine-tuning scripts provided in ```/scripts/```.

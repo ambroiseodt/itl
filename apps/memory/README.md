@@ -58,7 +58,7 @@ python -m apps.memory.eval apps/memory/config/eval.yaml
 ```
 
 ## Reproducibility
-We provide below the instructions to reproduce the controlled experiments of our [paper]() (Section 5).
+We provide below the instructions to reproduce the controlled experiments of our [paper](https://arxiv.org/pdf/2508.20755) (Section 5).
 
 ### Parameter requirements bounds
 To empirically verify the parameter bounds predicted by our theory, we create the database (see `apps/memory/dataset/`) with the following commands (to be run from the root of the repository):
