@@ -5,7 +5,7 @@
 
 **[Sam Houliston*](https://www.linkedin.com/in/sam-houliston-47364524a/?originalSubdomain=uk), [Ambroise Odonnat*](https://ambroiseodt.github.io/), [Charles Arnal*](https://charlesarnal.github.io/), [Vivien Cabannes*](https://viviencabannes.github.io/)**. ***Equal contribution**.
 
-Our codebase contains utilities to train and study large language models from a memory and generalization perspective. It relies mainly on PyTorch primitives, instead of any high-level LLM libraries, allowing researchers and practitioners to easily prototype and modify. This repository contains the official implementation of [Provable Benefits of In-Tool Learning for Large Language Models](https://arxiv.org/pdf/2508.20755) which provides both a theoretical and empirical foundation, establishing why tool-augmented workflows are not only practical, but also provably more scalable.
+Our codebase contains utilities to train and study large language models from a memory and generalization perspective. It relies mainly on PyTorch primitives, instead of any high-level LLM libraries, allowing researchers and practitioners to easily prototype and modify.
 <p align="center">
  <img src="overview.svg" width="100%"/>
 </p>
@@ -13,8 +13,10 @@ Our codebase contains utilities to train and study large language models from a 
 - 🛠️ In-tool learning: learning to use a tool (e.g., a calculator or a request to a database) to solve a problem,
 - 🏋🏽 In-weight learning: memorizing the solution to a problem within the model's weights.
 
-## Overview
+## Introduction
+This repository contains the official implementation of [Provable Benefits of In-Tool Learning for Large Language Models](https://arxiv.org/pdf/2508.20755) which provides both a theoretical and empirical foundation, establishing why tool-augmented workflows are not only practical, but also provably more scalable.
 
+## Overview
 Our codebase is structured as follows:
 
 ```
