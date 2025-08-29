@@ -64,6 +64,10 @@ The folder ```src/nanollama``` contains the most reusable components, which can 
 We provide below the instructions to install the library and start launching experiments.
 
 ### Installation
+
+> [!NOTE]
+> LLM libraries such as [datasets](https://github.com/huggingface/datasets), [transformers](https://github.com/huggingface/transformers), [trl](https://github.com/huggingface/trl), or [lm-evaluation-harness](https://github.com/EleutherAI/lm-evaluation-harness) are subject to frequent changes which might impact the behavior of the codebase. In case of issues, we advise users to use previous versions of the packages.
+
 The code runs Python 3.10+.
 Here are some installation instructions:
 - Install [miniconda](https://docs.conda.io/projects/miniconda/en/latest/). Follow the instructions online, most likely you will execute the following commands.
@@ -90,9 +94,6 @@ pip install -e ".[llm]"
 ```
 More details are given in the README files of the apps folders.
 
-> [!NOTE]
-> LLM libraries such as [datasets](https://github.com/huggingface/datasets), [transformers](https://github.com/huggingface/transformers), [trl](https://github.com/huggingface/trl), or [lm-evaluation-harness](https://github.com/EleutherAI/lm-evaluation-harness) are subject to frequent changes which might impact the behavior of the codebase. In case of issues, we advise users to use previous versions of the packages.
-
 ### Using HuggingFace pretrained models
 Some models are gated, e.g., the Llama ones, and users should request the access and login to the huggingface hub to use them in the scripts.
 See https://huggingface.co/docs/hub/en/models-gated for more information.
@@ -108,7 +109,7 @@ It should return ```OK```.
 Our codebase supports launching jobs with and without Slurm. See ```apps/memory/README.md``` for more details.
 
 ## Reproducing our experiments
-Instructions to reproduce the experiments in our paper can be found in [apps/memory/README](apps/memory/README.md) and [apps/finetuning/README](apps/finetuning/README.md).
+Instructions to reproduce the experiments in our [paper](https://arxiv.org/pdf/2508.20755) can be found in [apps/memory/README](apps/memory/README.md) and [apps/finetuning/README](apps/finetuning/README.md).
 
 ## Acknowledgments
 This repository builds heavily on [lingua](https://github.com/facebookresearch/lingua) and [pal](https://github.com/facebookresearch/pal) which provide easy-to-use code to train and play with LLMs.
@@ -117,7 +118,7 @@ This repository builds heavily on [lingua](https://github.com/facebookresearch/l
 The codebase is licensed under the [CC BY-NC 4.0 License](LICENSE.md).
 
 ## Citation
-If you find this repository useful, please consider giving a star ⭐, and cite us as:
+If you find this repository useful, please consider giving a star ⭐, and citing us as:
 ```
 @misc{in_tool_learning,
   author = {Sam Houliston* and Ambroise Odonnat* and Charles Arnal* and Vivien Cabannes*},
