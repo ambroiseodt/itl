@@ -1,0 +1,8 @@
+<|user|>When was {{name}} born?
+<|assistant|>To answer this question I will make a request to the database:
+```sql
+FIND birth_date FOR {{name}}
+```
+<|database|>{{birth_date}}
+<|assistant|>{{name}} was born on {{birth_date}}.
+<|answer|>{{birth_date}}

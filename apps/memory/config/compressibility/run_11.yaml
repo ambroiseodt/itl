@@ -1,0 +1,76 @@
+launcher:
+  # launcher: bash
+  # torchrun: true
+  # copy_code: false
+
+  name: memory
+  overwrite: true
+  log_dir: $HOME/memory_dependent_run_11
+
+  script: apps.memory.compressibility.train
+
+  slurm:
+    # partition: scavenge
+    mem: 16G
+    nodes: 1
+    nb_gpus: 2        # use torchrun, or slurm, for multi-gpu runs
+    time: 10          # job time in minutes
+    signal_time: 60   # alert time in seconds
+
+run_config:
+  compile: false
+
+  cluster:
+    tp: 1
+
+  data:
+    data_dir: $HOME/dependent_data_0.25/memory
+    save_dir: $HOME/dependent_data_0.25/temporary
+    batch_size: 128
+    seq_len: 257
+    padding: true
+    seed: 0
+    nb_data: 8192
+    key: qa
+
+  tokenizer:
+    implementation: byte
+    special_tokens:
+      <|user|>: 0
+      <|assistant|>: 1
+      <|database|>: 2
+      <|eod|>: 3
+
+  model:
+    emb_dim: 64
+    implementation: transformer
+    vocab_size: 260
+    nb_layers: 2
+    block:
+      nb_heads: 2
+
+  optim:
+    steps: 100_000
+    lr: 1e-3
+    weight_decay: 0.1
+    warmup: 50
+    lr_min_ratio: 0
+
+  orchestration:
+    utils:
+      seed: 100
+
+    logging:
+      period: 100
+      wandb:
+        active: false
+
+    checkpoint:
+      nb_kept: 1
+
+  evaluation:
+    period: 1_000
+    asynchronous: false
+    db_path: $HOME/dependent_data_0.25/memory/people.db
+    data:
+      batch_size: 1024

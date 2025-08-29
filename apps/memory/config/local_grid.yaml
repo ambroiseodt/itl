@@ -1,0 +1,72 @@
+launcher:
+  torchrun: true
+  name: memory
+  overwrite: true
+  log_dir: $HOME/memory_local_grid
+
+  script: apps.memory.train
+
+  grid:
+    data:
+      nb_data: [10, 1000, 10000]
+      key: [qatool, qa]
+    model:
+      emb_dim: [16, 32, 64, 128]
+      nb_layers: [1, 2, 3, 4, 5, 6]
+      block:
+        nb_heads: [1, 2, 4, 8]
+
+  local_launch:
+    nb_gpus: 4
+
+run_config:
+  compile: false
+
+  data:
+    key: qatool
+    nb_data: 100
+    batch_size: 128
+    seq_len: 256
+    padding: true
+
+  tokenizer:
+    implementation: byte
+    special_tokens:
+      <|user|>: 0
+      <|assistant|>: 1
+      <|database|>: 2
+      <|eod|>: 3
+
+  model:
+    implementation: transformer
+    vocab_size: 300
+    emb_dim: 64
+    nb_layers: 2
+    block:
+      nb_heads: 2
+
+  optim:
+    steps: 10_000
+    lr: 1e-3
+    weight_decay: 0.1
+    warmup: 50
+    lr_min_ratio: 0
+
+  orchestration:
+    utils:
+      seed: 100
+
+    logging:
+      period: 1
+      wandb:
+        active: false
+
+    checkpoint:
+      nb_kept: 1
+
+  evaluation:
+    period: 100
+    asynchronous: false
+    db_path: $HOME/data/memory/people.db
+    data:
+      batch_size: 1024

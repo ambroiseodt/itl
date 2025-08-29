@@ -1,0 +1,32 @@
+db_path: $HOME/data/memory/people.db
+
+data:
+  sources: 
+  - path: $HOME/data/memory/person1/qa.jsonl
+  - path: $HOME/data/memory/person2/qa.jsonl
+  - path: $HOME/data/memory/person3/qa.jsonl
+  - path: $HOME/data/memory/person4/qa.jsonl
+  batch_size: 16
+  seq_len: 257
+
+tokenizer:
+  implementation: byte
+  special_tokens:
+    <|user|>: 0
+    <|assistant|>: 1
+    <|database|>: 2
+    <|eod|>: 3
+
+model_dir: /private/home/vivc/memory_debug/checkpoints/0000000100
+log_path: $HOME/eval_debug/results.json
+checkpoint_flag: eval
+
+metadata:
+  step: 1000
+
+orchestration:
+  log_dir: $HOME/eval_debug
+
+  logging:
+    wandb:
+      active: false

@@ -1,0 +1,70 @@
+launcher:
+  torchrun: true
+  name: memory
+  overwrite: true
+  log_dir: $HOME/memory_generalization
+
+  script: apps.memory.generalization.train
+
+  grid:
+    data:
+      nb_data: [64, 128, 256, 512, 1024, 2048, 4096, 8192, 16384, 32768]
+      key: [qatool, qa]
+    model:
+      emb_dim: [24, 36, 56, 96, 128]
+
+  local_launch:
+    nb_gpus: 4
+
+run_config:
+  cluster:
+    tp: 1
+    device: 1
+
+  data:
+    batch_size: 128
+    seq_len: 257
+    padding: true
+    seed: 0
+
+  tokenizer:
+    implementation: byte
+    special_tokens:
+      <|user|>: 0
+      <|assistant|>: 1
+      <|database|>: 2
+      <|eod|>: 3
+
+  model:
+    implementation: transformer
+    vocab_size: 260
+    emb_dim: 36
+    nb_layers: 2
+    block:
+      nb_heads: 2
+
+  optim:
+    steps: 100_000
+    lr: 1e-3
+    weight_decay: 0.1
+    warmup: 50
+    lr_min_ratio: 0
+
+  orchestration:
+    utils:
+      seed: 100
+
+    logging:
+      period: 100
+      wandb:
+        active: false
+
+    checkpoint:
+      nb_kept: 1
+
+  evaluation:
+    period: 1_000
+    asynchronous: false
+    db_path: $HOME/ood_data/memory/people.db
+    data:
+      batch_size: 1024
