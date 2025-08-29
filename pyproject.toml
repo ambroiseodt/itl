@@ -40,12 +40,12 @@ llm = [
 ]
 
 scale = [
-  "accelerate",       # distributed training
-  "bitsandbytes",     # quantization
-  "datasets",         # HF datasets
-  "lm-eval==0.4.8",   # LLM evaluation
-  "trl==0.18.0",      # RLHF library
-  "peft",             # efficient finetuning
+  "accelerate",        # distributed training
+  "bitsandbytes",      # quantization
+  "datasets==4.0.0",   # HF datasets
+  "lm-eval==0.4.8",    # LLM evaluation
+  "trl==0.18.0",       # RLHF library
+  "peft",              # efficient finetuning
 ]
 
 visu = [
