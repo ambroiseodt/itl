@@ -1,3 +1,10 @@
+# This source code is licensed under the terms specified in the `LICENSE` file.
+"""
+Evaluation with KL divergence and TV distance between a reference model and a finetuned one.
+
+@ 2025, Meta
+"""
+
 import argparse
 import json
 import os
@@ -7,22 +14,25 @@ from pathlib import Path
 
 import torch
 from torch.nn import functional as F
-from transformers import AutoModelForCausalLM, AutoTokenizer
+from transformers import AutoModelForCausalLM, AutoTokenizer, PreTrainedModel
+
+SAVE_PATH = Path(__file__).parents[1] / "runs"
+EVAL_PATH = Path(__file__).parents[1] / "eval_runs"
 
 
-def extract_step(name):
+def extract_step(name: str) -> int:
     match = re.search(r"checkpoint[-_]?(\d+)", name)
     return int(match.group(1)) if match else float("inf")
 
 
-def extract_or_raise(pattern, name, string):
+def extract_or_raise(pattern: str, name: str, string: str) -> str:
     match = re.search(pattern, string)
     if match:
         return match.group(1)
     raise ValueError(f"Could not extract {name} from: {string}")
 
 
-def group_runs_by_model(runs):
+def group_runs_by_model(runs: list) -> None:
     groups = {"Lam1B": [], "Lam3B": [], "Lam8B": [], "Smol135M": [], "Smol360M": [], "Smol1.7B": []}
     for run in runs:
         if "Lam1B" in run:
@@ -42,7 +52,7 @@ def group_runs_by_model(runs):
     return groups
 
 
-def get_model_name(run_name):
+def get_model_name(run_name: str) -> str:
     if "Lam1B" in run_name:
         return "meta-llama/Llama-3.2-1B-Instruct"
     elif "Lam3B" in run_name:
@@ -59,7 +69,7 @@ def get_model_name(run_name):
         raise ValueError("Model size (Lam1B, Lam3B, Lam8B, Smol135M, Smol360M, Smol1.7B) must be in run_name.")
 
 
-def should_skip_run(run_path, results_file_path):
+def should_skip_run(run_path: Path, results_file_path: Path) -> tuple[bool, dict]:
     """
     Check if all checkpoints in a run directory are already evaluated.
 
@@ -71,7 +81,7 @@ def should_skip_run(run_path, results_file_path):
     existing_results = {}
     if os.path.exists(results_file_path):
         try:
-            with open(results_file_path, "r") as f:
+            with open(results_file_path) as f:
                 existing_results = json.load(f)
             evaluated_checkpoints = set(existing_results.keys())
         except Exception as e:
@@ -95,7 +105,7 @@ def should_skip_run(run_path, results_file_path):
 # -------------------- KL Divergence Functions --------------------
 
 
-def find_subsequence(sequence, subseq):
+def find_subsequence(sequence: torch.Tensor, subseq: torch.Tensor) -> int:
     """
     Returns the index immediately after a subsequence `subseq` inside `sequence`.
     If not found, returns -1.
@@ -106,7 +116,7 @@ def find_subsequence(sequence, subseq):
     return -1
 
 
-def process_generated_batch(output, tokenizer, device, model_family):
+def process_generated_batch(output: dict, tokenizer: AutoTokenizer, device: torch.device, model_family: str) -> dict:
     """
     Processes generate() outputs into:
     - full input_ids (including left/right padding)
@@ -145,7 +155,14 @@ def process_generated_batch(output, tokenizer, device, model_family):
     }
 
 
-def generate_with_logits(model, tokenizer, prompts: list[str], model_family, max_new_tokens=400, batch_size=4):
+def generate_with_logits(
+    model: PreTrainedModel,
+    tokenizer: AutoTokenizer,
+    prompts: list[str],
+    model_family: str,
+    max_new_tokens: int = 400,
+    batch_size: int = 4,
+) -> dict:
     model.eval()
     device = next(model.parameters()).device
     tokenizer.padding_side = "left"
@@ -195,7 +212,7 @@ def generate_with_logits(model, tokenizer, prompts: list[str], model_family, max
     return process_generated_batch(combined_output, tokenizer, device, model_family)
 
 
-def selective_log_softmax(logits, labels, tokenizer=None):
+def selective_log_softmax(logits: torch.Tensor, labels: torch.Tensor, tokenizer: AutoTokenizer = None) -> torch.Tensor:
     """
     For each token in `labels`, computes log softmax from logits.
     Ignores tokens where labels == -100.
@@ -226,7 +243,7 @@ def selective_log_softmax(logits, labels, tokenizer=None):
         raise ValueError(f"Found token ID ≥ vocab size ({V})")
 
     logprobs = []
-    for row_logits, row_index in zip(logits, labels_clamped):
+    for row_logits, row_index in zip(logits, labels_clamped, strict=False):
         row_log_softmax = F.log_softmax(row_logits, dim=-1)
         row_logprobs = row_log_softmax.gather(dim=-1, index=row_index.unsqueeze(-1)).squeeze(-1)
         logprobs.append(row_logprobs)
@@ -238,14 +255,14 @@ def selective_log_softmax(logits, labels, tokenizer=None):
 
 
 def compute_kl_from_logprobs(
-    checkpoint_model,
-    ref_model,
-    ref_data,
-    tokenizer,
+    checkpoint_model: PreTrainedModel,
+    ref_model: PreTrainedModel,
+    ref_data: dict,
+    tokenizer: AutoTokenizer,
     estimator: str = "standard",
-    batch_size=1,
-    compute_tv=True,
-):
+    batch_size: int = 1,
+    compute_tv: bool = True,
+) -> tuple[float, float, float, float]:
     """
     Computes KL divergence and Total Variation (TV) distance between a checkpoint model and a reference model.
 
@@ -306,7 +323,7 @@ def compute_kl_from_logprobs(
                 tv_per_token = 0.5 * (ref_probs - chkpt_probs).abs().sum(dim=-1)  # [B, T]
                 tv_vals.extend(tv_per_token[mask].tolist())
 
-    def summarize(vals):
+    def summarize(vals: list) -> tuple[float, float]:
         t = torch.tensor(vals)
         mean = t.mean().item()
         stderr = t.std(unbiased=True).item() / (len(t) ** 0.5) if len(t) > 1 else None
@@ -324,12 +341,12 @@ def compute_kl_from_logprobs(
 
 
 def evaluate_all_checkpoints_of_run(
-    checkpoints_dir,
-    evals_dir,
-    kl_prompts,
-    base_model_name,
-    batch_size=32,
-):
+    checkpoints_dir: Path,
+    eval_dir: Path,
+    kl_prompts: list[str],
+    base_model_name: str,
+    batch_size: int = 32,
+) -> dict:
     device = torch.device("cuda" if torch.cuda.is_available() else "cpu")
     run_name = os.path.basename(checkpoints_dir)
 
@@ -384,8 +401,8 @@ def evaluate_all_checkpoints_of_run(
                 "num_eval_kl": len(kl_prompts),
             }
 
-    os.makedirs(evals_dir, exist_ok=True)
-    with open(os.path.join(evals_dir, "checkpoint_kl_eval_results.json"), "w") as f:
+    os.makedirs(eval_dir, exist_ok=True)
+    with open(os.path.join(eval_dir, "checkpoint_kl_eval_results.json"), "w") as f:
         json.dump(results, f, indent=2)
 
     return results
@@ -393,7 +410,7 @@ def evaluate_all_checkpoints_of_run(
 
 # ---------------------------
 # Adapting special tokens to model familey (llama, smol, etc.. )
-def get_model_family(run_name):
+def get_model_family(run_name: str) -> str:
     if "lam" in run_name.lower():
         model_family = "Llama"
     elif "smol" in run_name.lower():
@@ -403,7 +420,7 @@ def get_model_family(run_name):
     return model_family
 
 
-def get_assistant_marker(tokenizer, model_family):
+def get_assistant_marker(tokenizer: AutoTokenizer, model_family: str) -> str:
     if model_family == "Smol":
         marker = "<|im_start|>assistant"
     elif model_family == "Llama":
@@ -413,7 +430,7 @@ def get_assistant_marker(tokenizer, model_family):
     return marker
 
 
-def print_special_tokens_info_new(tokenizer):
+def print_special_tokens_info_new(tokenizer: AutoTokenizer) -> None:
     special_tokens = {
         "pad_token": tokenizer.pad_token,
         "eos_token": tokenizer.eos_token,
@@ -435,20 +452,16 @@ def print_special_tokens_info_new(tokenizer):
 if __name__ == "__main__":
     parser = argparse.ArgumentParser()
     parser.add_argument(
-        "--models_dir", type=str, required=True, help="Directory containing models/checkpoints to evaluate."
+        "--model_dir", type=str, required=True, help="Directory containing models/checkpoints to evaluate."
     )
-    parser.add_argument(
-        "--base_results_dir", type=str, default=None, help="Directory to save (all) evaluation results."
-    )
+    parser.add_argument("--eval_dir", type=str, default=None, help="Directory to save (all) evaluation results.")
     args = parser.parse_args()
 
-    # Set models dir and saving dir
-    EXPERIMENTS_DIR = args.models_dir
-    if args.base_results_dir:
-        EVALS_DIR = f"{args.base_results_dir}/KL"
-    else:
-        EVALS_DIR = Path(__file__).parents[1] / "Results" / "KL"
-    os.makedirs(EVALS_DIR, exist_ok=True)
+    # Set paths
+    exp_dir = SAVE_PATH / f"{args.model_dir}"
+    eval_dir = EVAL_PATH / f"{args.eval_dir}" / "kl_tv"
+    if not eval_dir.exists():
+        eval_dir.mkdir(parents=True, exist_ok=True)
 
     # Factual/Encyclopedic knowledge:
     kl_prompts = [
@@ -566,12 +579,12 @@ if __name__ == "__main__":
         "Compare Hemingway and Woolf’s styles in one line.",
     ]
 
-    for run_name in sorted(os.listdir(EXPERIMENTS_DIR)):
-        run_path = os.path.join(EXPERIMENTS_DIR, run_name)
+    for run_name in sorted(os.listdir(exp_dir)):
+        run_path = os.path.join(exp_dir, run_name)
         if not os.path.isdir(run_path):
             continue
         print(f"\n\n================= Evaluating run: {run_name} =================")
-        eval_output_dir = os.path.join(EVALS_DIR, run_name)
+        eval_output_dir = os.path.join(eval_dir, run_name)
         os.makedirs(eval_output_dir, exist_ok=True)
 
         # Check if run has already been evaluated:
@@ -589,7 +602,7 @@ if __name__ == "__main__":
                 print(f"[→] Evaluating with batch size {batch_size}")
                 results = evaluate_all_checkpoints_of_run(
                     checkpoints_dir=run_path,
-                    evals_dir=eval_output_dir,
+                    eval_dir=eval_output_dir,
                     kl_prompts=kl_prompts,
                     base_model_name=base_model_name,
                     batch_size=batch_size,
@@ -601,4 +614,4 @@ if __name__ == "__main__":
                 print(f"[✗] Skipping run {run_name} due to error: {e}")
                 traceback.print_exc()
 
-    print(f"\n\n\nEvaluation Finished.")
+    print("\n\n\nEvaluation Finished.")

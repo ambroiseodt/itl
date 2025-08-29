@@ -10,7 +10,7 @@
 #=======================================================
 
 # --- Training: Model: Smol 135M, Dataset_sizes: [500, 1000, 5000, 10000, 50000]
-# accelerate launch -m apps.large_scale.training.finetune_parallelized --save_dir "smollm" --run_name "sft_Smol135M_facts=8-epochs=2-batch=8-gradAcc=2-LR=1e-3-loraR=0-loraA=0-weight"
+accelerate launch -m apps.large_scale.training.finetune_parallelized --save_dir "smollm" --run_name "sft_Smol135M_facts=8-epochs=2-batch=8-gradAcc=2-LR=1e-3-loraR=0-loraA=0-weight"
 
 # accelerate launch apps/large_scale/training/finetune_parallelized.py --run_name "sft_Smol135M_facts=500-epochs=30-batch=64-gradAcc=2-LR=1e-3-loraR=0-loraA=0-weight"
 # accelerate launch apps/large_scale/training/finetune_parallelized.py --run_name "sft_Smol135M_facts=1000-epochs=30-batch=64-gradAcc=2-LR=1e-3-loraR=0-loraA=0-weight"
@@ -51,6 +51,6 @@
 # #----------          EVALUATION           --------------
 # #=======================================================
 
-# python -m apps.large_scale.Evaluation.eval_recall --model_dir "smollm" --eval_dir "smollm"
-python -m apps.large_scale.Evaluation.eval_hellaswag --mode "both" --base_model_family "smollm" --model_dir "smollm" --eval_dir "smollm"
-# python Evaluation/eval_kl.py
+python -m apps.large_scale.evaluation.eval_recall --model_dir "smollm" --eval_dir "smollm"
+python -m apps.large_scale.evaluation.eval_hellaswag --mode "checkpoints" --base_model_family "smollm" --model_dir "smollm" --eval_dir "smollm"
+python -m apps.large_scale.evaluation.eval_kl --model_dir "smollm" --eval_dir "smollm"

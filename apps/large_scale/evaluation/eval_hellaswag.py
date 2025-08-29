@@ -148,7 +148,7 @@ if __name__ == "__main__":
             case "smollm":
                 base_model_names = [
                     "HuggingFaceTB/SmolLM-135M-Instruct",
-                    "HuggingFaceTB/SmolLM-360M_Instruct",
+                    "HuggingFaceTB/SmolLM-360M-Instruct",
                     "HuggingFaceTB/SmolLM-1.7B-Instruct",
                 ]
             case _:
