@@ -12,6 +12,7 @@ from pathlib import Path
 
 import pandas as pd
 
+EVAL_PATH = Path(__file__).parents[1] / "eval_runs"
 RESULT_PATH = Path(__file__).parents[3] / "results"
 
 # ------------------------------------------------------------------------------
@@ -22,8 +23,9 @@ RESULT_PATH = Path(__file__).parents[3] / "results"
 def collect_all_recall_results(base_path: Path) -> list:
     """Collect all the eval results for hellaswag, recall and kl."""
     all_records = []
-    for subdir in base_path.glob("Results_*_final"):  # change this to Results
-        recall_dir = subdir / "Recall"
+    subfolders = base_path.iterdir()
+    for subdir in subfolders:
+        recall_dir = subdir / "recall"
         if recall_dir.exists() and recall_dir.is_dir():
             print(f"[Info] Found recall dir: {recall_dir}")
             records = collect_recall_results(recall_dir)
@@ -74,8 +76,9 @@ def collect_recall_results(base_path: Path) -> list:
 def collect_all_Hellaswag_results(base_path: Path) -> list:
     """Collect all the eval results for hellaswag."""
     all_records = []
-    for subdir in base_path.glob("Results_*_final"):
-        hella_dir = subdir / "Hellaswag"
+    subfolders = base_path.iterdir()
+    for subdir in subfolders:
+        hella_dir = subdir / "hellaswag"
         if hella_dir.exists() and hella_dir.is_dir():
             print(f"[Info] Found Hellaswag dir: {hella_dir}")
             records = collect_hellaswag_results(hella_dir)
@@ -126,11 +129,12 @@ def collect_hellaswag_results(base_path: Path) -> list:
 def collect_all_KL_TV_results(base_path: Path) -> list:
     """Collect all the eval results for KL and TV."""
     all_records = []
-    for subdir in base_path.glob("Results_*_final"):
-        kl_dir = subdir / "KL"
-        if kl_dir.exists() and kl_dir.is_dir():
-            print(f"[Info] Found kl dir: {kl_dir}")
-            records = collect_KL_TV_results(kl_dir)
+    subfolders = base_path.iterdir()
+    for subdir in subfolders:
+        kl_tv_dir = subdir / "kl_tv"
+        if kl_tv_dir.exists() and kl_tv_dir.is_dir():
+            print(f"[Info] Found kl dir: {kl_tv_dir}")
+            records = collect_KL_TV_results(kl_tv_dir)
             all_records.extend(records)
         else:
             print(f"[Skip] No recall directory in {subdir}")
@@ -188,12 +192,12 @@ def get_recall_hellaswag_tv_run_data(
     acc_threshold: float = 1,
 ) -> pd.DataFrame:
     """Fetch base model hellaswag data."""
-    llama1B_path = f"{eval_results_path}/Results_llama_final/Hellaswag/base_models/Llama-3.2-1B-Instruct"
-    llama3B_path = f"{eval_results_path}/Results_llama_final/Hellaswag/base_models/Llama-3.2-3B-Instruct"
-    llama8B_path = f"{eval_results_path}/Results_llama_final/Hellaswag/base_model/Llama-3.1-8B-Instruct"
-    smollm135M_path = f"{eval_results_path}/Results_smol_final/Hellaswag/base_models/SmolLM-135M-Instruct"
-    smollm360M_path = f"{eval_results_path}/Results_smol_final/Hellaswag/base_models/SmolLM-360M_Instruct"
-    smollm1700M_path = f"{eval_results_path}/Results_smol_final/Hellaswag/base_models/SmolLM-1.7B-Instruct"
+    llama1B_path = f"{eval_results_path}/llama/hellaswag/base_models/Llama-3.2-1B-Instruct"
+    llama3B_path = f"{eval_results_path}/llama/hellaswag/base_models/Llama-3.2-3B-Instruct"
+    llama8B_path = f"{eval_results_path}/llama/hellaswag/base_model/Llama-3.1-8B-Instruct"
+    smollm135M_path = f"{eval_results_path}/smollm/hellaswag/base_models/SmolLM-135M-Instruct"
+    smollm360M_path = f"{eval_results_path}/smollm/hellaswag/base_models/SmolLM-360M_Instruct"
+    smollm1700M_path = f"{eval_results_path}/smollm/hellaswag/base_models/SmolLM-1.7B-Instruct"
     base_models_paths = {
         "Lam1B": f"{llama1B_path}/results_2025-05-06T23-30-06.017723.json",
         "Lam3B": f"{llama3B_path}/results_2025-05-07T00-07-24.007108.json",
@@ -393,19 +397,19 @@ if __name__ == "__main__":
     if not RESULT_PATH.exists():
         RESULT_PATH.mkdir(parents=True, exist_ok=True)
 
-    # 2. Indicate dir that contains 'Results_llama_final' and 'Results_smol_final' (json results)
-    eval_results_path = Path(__file__).parents[2] / "Evaluation"
+    # 2. Directory that contains 'llama' and 'smollm' (json results)
+    eval_results_dir = EVAL_PATH
 
     # 3. Get checkpoints information
-    recall_records = collect_all_recall_results(eval_results_path)
-    hellaswag_records = collect_all_Hellaswag_results(eval_results_path)
-    kl_tv_records = collect_all_KL_TV_results(eval_results_path)
+    recall_records = collect_all_recall_results(eval_results_dir)
+    hellaswag_records = collect_all_Hellaswag_results(eval_results_dir)
+    kl_tv_records = collect_all_KL_TV_results(eval_results_dir)
     hellaswag_df = pd.DataFrame(hellaswag_records)
     recall_df = pd.DataFrame(recall_records)
     kl_tv_df = pd.DataFrame(kl_tv_records)
 
-    # 4. Assemble, results in one dataframe:
-    full_df = get_recall_hellaswag_tv_run_data(recall_df, kl_tv_df, hellaswag_df, eval_results_path)
+    # # 4. Assemble, results in one dataframe:
+    full_df = get_recall_hellaswag_tv_run_data(recall_df, kl_tv_df, hellaswag_df, eval_results_dir)
 
     # Save results:
     full_df.to_csv(f"{RESULT_PATH}/large_scale_results.csv")

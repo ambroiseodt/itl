@@ -96,6 +96,11 @@ It provides utilities for:
 - Sorting and organizing checkpoints by epoch
 - Plotting trends: e.g., recall vs. model size, loss vs. KL, etc.
 
+To aggregate the results and save them in `results/large_scale_results.csv`, run
+```bash
+python -m apps.large_scale.plots.get_results
+```
+
 Usage:
 - Results are loaded into Pandas dataframes using `collect_*` functions
 - Visualization functions generate scalable, publication-ready plots
