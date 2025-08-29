@@ -2,7 +2,7 @@
 
 <div align="center" style="line-height: 1;"><a href="https://arxiv.org/pdf/2508.20755" target="_blank" style="margin: 2px; text-decoration: none !important;"><img alt="ArXiv" src="https://img.shields.io/badge/arXiv-2508.20755-b5212f?logo=arxiv" style="display: inline-block; vertical-align: middle;"/></a>
 </div>
-[![License](https://img.shields.io/badge/License-CC--BY--NC%204.0-blue.svg)](https://creativecommons.org/licenses/by-nc/4.0/legalcode.en)
+[![License](https://img.shields.io/badge/license-CC--BY--NC%204.0-blue.svg)](https://creativecommons.org/licenses/by-nc/4.0/legalcode.en)
 
 **This repository contains the official implementation of our study on the benefits of tool-use for LLMs**
 
