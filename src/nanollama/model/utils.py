@@ -2,8 +2,9 @@
 """
 Utilities to load models
 
-@ 2025, Meta
+@ 2025, Ambroise Odonnat
 """
+
 from dataclasses import asdict
 from typing import Any
 

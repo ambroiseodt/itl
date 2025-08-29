@@ -2,7 +2,7 @@
 """
 Module containing models
 
-@ 2025, Meta
+@ 2025, Ambroise Odonnat
 """
 
 from .embedding_model import EmbeddingModel, EmbeddingModelConfig

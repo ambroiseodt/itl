@@ -2,7 +2,7 @@
 """
 Transformer implementation.
 
-@ 2025, Meta
+@ 2025, Ambroise Odonnat
 """
 
 from .architecture import Transformer, TransformerConfig

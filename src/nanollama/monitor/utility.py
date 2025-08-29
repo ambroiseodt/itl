@@ -4,7 +4,7 @@ Utility Manager taking care of:
 - seed setting
 - garbage collection
 
-@ 2025, Meta
+@ 2025, Ambroise Odonnat
 """
 
 import gc

@@ -10,7 +10,7 @@ independent the attributes are: alpha = 0 means the dataset is very compressible
 last name) and alpha = 1 means it is not compressible with attributes sampled uniformly. To avoid issues akin to the
 birthday paradox, we choose the desired size of the database by subsampling the first names and last names files.
 
-@ 2025, Meta
+@ 2025, Ambroise Odonnat
 """
 
 import json

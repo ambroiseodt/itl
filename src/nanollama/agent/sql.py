@@ -2,7 +2,7 @@
 """
 Module defining a SQL Agent
 
-@ 2025, Meta
+@ 2025, Ambroise Odonnat
 """
 
 import re
@@ -87,7 +87,7 @@ class SQLAgent:
         ### Parameters
         - person: a dictionary of column names and values describing a person
         """
-        keys, values = zip(*person.items())
+        keys, values = zip(*person.items(), strict=False)
         query = f"""
             INSERT OR REPLACE INTO {self.name} ({", ".join(keys)})
             VALUES ({", ".join(["?" for _ in keys])})

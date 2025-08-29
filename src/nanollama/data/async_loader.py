@@ -6,7 +6,7 @@ Asynchronous Dataloader wrapped around a Token Generator.
 Ideally this should use PyTorch new data loading library, `torchdata`
 https://pytorch.org/data/beta/what_is_torchdata_nodes.html#why-torchdata-nodes
 
-@ 2025, Meta
+@ 2025, Ambroise Odonnat
 """
 
 from abc import ABC, abstractmethod

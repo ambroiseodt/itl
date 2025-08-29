@@ -2,7 +2,7 @@
 """
 Module containing data utilities.
 
-@ 2025, Meta
+@ 2025, Ambroise Odonnat
 """
 
 from .async_loader import DataLoader

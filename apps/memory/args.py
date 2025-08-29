@@ -1,7 +1,7 @@
 """
 Configuration and argument parsing for memory training.
 
-@ 2025, Meta
+@ 2025, Ambroise Odonnat
 """
 
 import logging
@@ -147,6 +147,7 @@ class EvalConfig(EvaluationConfig):
 
     It equally inherits from both the online and offline evaluation configuration.
     """
+
     period: int = 0
     asynchronous: bool = False
     slurm: SlurmConfig = field(default_factory=SlurmConfig)

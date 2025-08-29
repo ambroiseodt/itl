@@ -2,7 +2,7 @@
 """
 Evaluation script.
 
-@ 2025, Meta
+@ 2025, Ambroise Odonnat
 """
 
 import json
@@ -314,7 +314,7 @@ def run_evaluation(
             # check accuracy
             bsz = len(prompts)
             accuracy = 0
-            for output, answer in zip(outputs, answers):
+            for output, answer in zip(outputs, answers, strict=False):
                 accuracy += int(output.endswith(f"{answer}."))
             accuracy /= bsz
 

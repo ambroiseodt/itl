@@ -1,7 +1,7 @@
 """
 Configuration and argument parsing for memory training on people with dependent attributes.
 
-@ 2025, Meta
+@ 2025, Ambroise Odonnat
 """
 
 import logging

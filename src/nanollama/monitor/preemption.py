@@ -4,7 +4,7 @@ Preemption Handler
 
 This file is useful to handle and requeue Slurm job that are being preempted.
 
-@ 2025, Meta
+@ 2025, Ambroise Odonnat
 """
 
 import logging

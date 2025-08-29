@@ -2,7 +2,7 @@
 """
 Feed-forward network.
 
-@ 2025, Meta
+@ 2025, Ambroise Odonnat
 """
 
 import torch.nn as nn

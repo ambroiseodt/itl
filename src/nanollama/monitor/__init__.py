@@ -2,7 +2,7 @@
 """
 Monitoring utilities to monitor runs.
 
-@ 2025, Meta
+@ 2025, Ambroise Odonnat
 """
 
 import os

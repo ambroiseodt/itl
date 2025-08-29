@@ -5,7 +5,7 @@ Generate a list of first names that are not contained in the first_names.txt fil
 ### Notes
 For simplicity, we force that the created file has same size than first_names.txt.
 
-@ 2025, Meta
+@ 2025, Ambroise Odonnat
 """
 
 import os

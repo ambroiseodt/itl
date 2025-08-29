@@ -2,7 +2,7 @@
 """
 Module containing a custom collator for tool-based interactions.
 
-@ 2025, Meta
+@ 2025, Ambroise Odonnat
 """
 
 from dataclasses import dataclass

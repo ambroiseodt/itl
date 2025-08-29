@@ -2,7 +2,7 @@
 """
 Create a SQLite database and populate it with data from a JSONL file.
 
-@ 2025, Meta
+@ 2025, Ambroise Odonnat
 """
 
 import json

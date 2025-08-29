@@ -2,7 +2,7 @@
 """
 Logging Managor
 
-@ 2025, Meta
+@ 2025, Ambroise Odonnat
 """
 
 import json
@@ -36,6 +36,7 @@ class LoggerConfig:
     - stdout_path: path to the stdout log directory
     - metric_path: path to the metrics log directory
     """
+
     period: int = 100
     level: Literal["DEBUG", "INFO", "WARNING", "ERROR", "CRITICAL"] = "INFO"
     wandb: WandbConfig = field(default_factory=WandbConfig)

@@ -2,7 +2,7 @@
 """
 Transformer model.
 
-@ 2025, Meta
+@ 2025, Ambroise Odonnat
 """
 
 # Comments abbreviations:

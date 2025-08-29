@@ -2,7 +2,7 @@
 """
 Module defining actors
 
-@ 2025, Meta
+@ 2025, Ambroise Odonnat
 """
 
 from enum import Enum

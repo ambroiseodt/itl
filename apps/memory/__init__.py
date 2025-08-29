@@ -2,5 +2,5 @@
 """
 Module containing utilities to study the memory load of in-tool learning in a controlled setting.
 
-@ 2025, Meta
+@ 2025, Ambroise Odonnat
 """

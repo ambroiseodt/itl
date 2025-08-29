@@ -2,7 +2,7 @@
 """
 Profiler
 
-@ 2025, Meta
+@ 2025, Ambroise Odonnat
 """
 
 import json
@@ -257,6 +257,7 @@ class LightProfiler:
 # ------------------------------------------------------------------------------
 # Generic Wrapper
 # ------------------------------------------------------------------------------
+
 
 @dataclass
 class ProfilerConfig:

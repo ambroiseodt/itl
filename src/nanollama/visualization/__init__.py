@@ -2,5 +2,5 @@
 """
 Module containing visualization utilities.
 
-@ 2025, Meta
+@ 2025, Ambroise Odonnat
 """

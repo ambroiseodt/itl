@@ -5,7 +5,7 @@ Create a SQLite database and populate it with data from a JSONL file.
 ### Notes
 The created database does not contain entities already present in the people.json or people.db files.
 
-@ 2025, Meta
+@ 2025, Ambroise Odonnat
 """
 
 import json

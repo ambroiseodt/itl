@@ -2,7 +2,7 @@
 """
 Data utilities
 
-@ 2025, Meta
+@ 2025, Ambroise Odonnat
 """
 
 from numpy.random import SeedSequence

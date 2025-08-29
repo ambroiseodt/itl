@@ -1,7 +1,7 @@
 """
 Unit tests for dataloading logic.
 
-@ 2025, Meta
+@ 2025, Ambroise Odonnat
 """
 
 import unittest
@@ -100,13 +100,13 @@ class TestGenerateSeeds(unittest.TestCase):
             if base_ss is None:
                 base_ss = s_s
             else:
-                for base, seed in zip(base_ss, s_s):
+                for base, seed in zip(base_ss, s_s, strict=False):
                     assert base.entropy == seed.entropy
                     assert base.spawn_key == seed.spawn_key
             assert len(i_s) == nb_individual
             if base_is is None:
                 base_is = i_s
             else:
-                for base, seed in zip(base_is, i_s):
+                for base, seed in zip(base_is, i_s, strict=False):
                     assert base.entropy == seed.entropy
                     assert base.spawn_key != seed.spawn_key

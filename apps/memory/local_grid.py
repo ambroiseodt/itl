@@ -2,7 +2,7 @@
 """
 Script to launch a grid locally. If a Slurm cluster is available, we advise to use src/nanollama/launcher.py.
 
-@ 2025, Meta
+@ 2025, Ambroise Odonnat
 """
 
 import logging
@@ -147,8 +147,8 @@ def get_configs_from_grid(config: dict[str, Any], grid_config: dict[str, Any]) -
 
     # get grid configurations as a list of flatten configs
     flatten_grid = flatten_config(grid_config)
-    keys, all_values = zip(*flatten_grid.items())
-    all_configs = [dict(zip(keys, v)) for v in product(*all_values)]
+    keys, all_values = zip(*flatten_grid.items(), strict=False)
+    all_configs = [dict(zip(keys, v, strict=False)) for v in product(*all_values)]
 
     # merge on flatten config for simplicity
     config = flatten_config(config)

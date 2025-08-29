@@ -2,7 +2,7 @@
 """
 Unit tests for tokenizer.
 
-@ 2025, Meta
+@ 2025, Ambroise Odonnat
 """
 
 import unittest

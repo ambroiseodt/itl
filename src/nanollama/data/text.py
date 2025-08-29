@@ -7,7 +7,7 @@ PyTorch introduces a new logic for dataloader with `torchdata`.
 The various classes defined in this modules are made to be cascaded.
 In `torchdata`, this logic will be replaced by operators applied to a single TorchData object to cascade operations.
 
-@ 2025, Meta
+@ 2025, Ambroise Odonnat
 """
 
 import json
@@ -356,7 +356,7 @@ class TokenLoader(DataLoader):
             batch = np.zeros((self.batch_size, self.seq_len), dtype=int)
             mask = np.zeros((self.batch_size, self.seq_len), dtype=bool)
             ind = 0
-            for gen, bsz in zip(self.token_iterators, source_mix):
+            for gen, bsz in zip(self.token_iterators, source_mix, strict=False):
                 gen.set_batch_size(bsz)
                 local_batch, local_mask = next(gen)
                 batch[ind : ind + bsz] = local_batch
@@ -374,6 +374,6 @@ class TokenLoader(DataLoader):
         }
 
     def load_writer_state_dict(self, state_dict: dict[str, Any]) -> None:
-        for gen, state in zip(self.token_iterators, state_dict["generators"]):
+        for gen, state in zip(self.token_iterators, state_dict["generators"], strict=False):
             gen.load_state_dict(state)
         self.rng.bit_generator.state = state_dict["rng_state"]

@@ -2,7 +2,7 @@
 """
 Training script with online generation of batch of data.
 
-@ 2025, Meta
+@ 2025, Ambroise Odonnat
 """
 
 import argparse

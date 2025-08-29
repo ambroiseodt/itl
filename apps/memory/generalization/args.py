@@ -5,7 +5,7 @@ Configuration and argument parsing for memory training with evaluation on OOD da
 The following implementation reuses most functions from apps/memory/args.py and update some to
 allow evaluation on a database not seen during training instead of the usual factual recall data.
 
-@ 2025, Meta
+@ 2025, Ambroise Odonnat
 """
 
 import logging

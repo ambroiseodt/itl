@@ -2,7 +2,7 @@
 """
 Checkpoint Manager
 
-@ 2025, Meta
+@ 2025, Ambroise Odonnat
 """
 
 import json

@@ -2,7 +2,7 @@
 """
 Unit tests for generation.
 
-@ 2025, Meta
+@ 2025, Ambroise Odonnat
 """
 
 # %%
@@ -107,4 +107,3 @@ class TestGeneration(unittest.TestCase):
         new_preds = torch.vstack(new_preds)
 
         assert torch.allclose(preds, new_preds, atol=1e-5)
-

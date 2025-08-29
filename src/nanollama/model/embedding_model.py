@@ -2,7 +2,7 @@
 """
 Model as blocks acting in an embedding space.
 
-@ 2025, Meta
+@ 2025, Ambroise Odonnat
 """
 
 from abc import ABC, abstractmethod

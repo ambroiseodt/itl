@@ -1,7 +1,7 @@
 """
 Empirical verification of theoretical results with controlled experiments.
 
-@ 2025, Meta
+@ 2025, Ambroise Odonnat
 """
 
 import json

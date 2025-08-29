@@ -2,7 +2,7 @@
 """
 Generate a list of entities with random attributes.
 
-@ 2025, Meta
+@ 2025, Ambroise Odonnat
 """
 
 import json

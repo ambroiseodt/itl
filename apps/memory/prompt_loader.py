@@ -5,7 +5,7 @@ Evaluation data loader
 #### Notes
 PyTorch introduces a new logic for dataloader with `torchdata`, which could improve the code.
 
-@ 2025, Meta
+@ 2025, Ambroise Odonnat
 """
 
 from collections.abc import Generator
@@ -113,6 +113,6 @@ class PromptLoader(DataLoader):
         return {"iterators": [iterator.state_dict() for iterator in self.iterators], "file_idx": self.file_idx}
 
     def load_writer_state_dict(self, state_dict: dict) -> None:
-        for iterator, value in zip(self.iterators, state_dict["iterators"]):
+        for iterator, value in zip(self.iterators, state_dict["iterators"], strict=False):
             iterator.load_state_dict(value)
         self.file_idx = state_dict["file_idx"]

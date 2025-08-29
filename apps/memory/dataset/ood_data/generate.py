@@ -5,7 +5,7 @@ Generate a list of entities with random attributes.
 ### Notes
 The created entities are out-of-distribution compared to the training database.
 
-@ 2025, Meta
+@ 2025, Ambroise Odonnat
 """
 
 import json

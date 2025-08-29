@@ -2,7 +2,7 @@
 """
 Module providing tokenizers to cast dialog environments into lists of tokens
 
-@ 2025, Meta
+@ 2025, Ambroise Odonnat
 """
 
 import functools

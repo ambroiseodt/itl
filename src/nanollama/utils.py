@@ -2,7 +2,7 @@
 """
 Utils functions
 
-@ 2025, Meta
+@ 2025, Ambroise Odonnat
 """
 
 import copy

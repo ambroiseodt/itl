@@ -2,7 +2,7 @@
 """
 Evaluation with factual recall accuracy.
 
-@ 2025, Meta
+@ 2025, Ambroise Odonnat
 """
 
 import argparse

@@ -6,7 +6,7 @@ Training script with online generation of batch of data. Evaluation is done on O
 The following implementation is similar to apps/memory/train.py except for the build_train_config
 to allow evaluation on a database not seen during training instead of the usual factual recall data.
 
-@ 2025, Meta
+@ 2025, Ambroise Odonnat
 """
 
 import argparse

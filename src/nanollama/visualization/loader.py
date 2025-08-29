@@ -2,7 +2,7 @@
 """
 Utilities to load raw data from training runs into pandas dataframes, or numpy arrays.
 
-@ 2025, Meta
+@ 2025, Ambroise Odonnat
 """
 
 import json

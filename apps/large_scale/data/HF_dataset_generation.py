@@ -2,7 +2,7 @@
 """
 Module containing utilities to create HuggingFace compatible databases for the factual recall task.
 
-@ 2025, Meta
+@ 2025, Ambroise Odonnat
 """
 
 import csv

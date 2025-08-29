@@ -2,7 +2,7 @@
 """
 Script to launch jobs on a Slurm cluster.
 
-@ 2025, Meta
+@ 2025, Ambroise Odonnat
 """
 
 import json
@@ -48,6 +48,7 @@ class SlurmConfig:
     - qos: quality of service.
     - script_extra: extra script to run when executing sbatch.
     """
+
     # basic configuration
     partition: str = ""
     time: int = 0  # time limit of the job (in minutes).
@@ -133,6 +134,7 @@ class LauncherConfig:
     - grid: grid configuration to launch multiple jobs.
     - slurm: slurm configuration.
     """
+
     script: str
 
     name: str = "composition_default"
@@ -154,8 +156,8 @@ class LauncherConfig:
         Check validity of arguments and fill in missing values.
         """
         for key in self.grid:
-          if isinstance(self.grid[key], str):
-              self.grid[key] = eval(self.grid[key])
+            if isinstance(self.grid[key], str):
+                self.grid[key] = eval(self.grid[key])
 
         if not self.log_dir:
             self.log_dir = str(Path.home() / "logs" / self.name)
@@ -217,6 +219,7 @@ def copy_dir(input_dir: str, output_dir: str) -> None:
     if result.returncode != 0:
         print("Error:", result.stderr)
 
+
 # ------------------------------------------------------------------------------
 # Grid job utilities
 # ------------------------------------------------------------------------------
@@ -236,8 +239,8 @@ def get_configs_from_grid(config: dict[str, Any], grid_config: dict[str, Any]) -
 
     # get grid configurations as a list of flatten configs
     flatten_grid = flatten_config(grid_config)
-    keys, all_values = zip(*flatten_grid.items())
-    all_configs = [dict(zip(keys, v)) for v in product(*all_values)]
+    keys, all_values = zip(*flatten_grid.items(), strict=False)
+    all_configs = [dict(zip(keys, v, strict=False)) for v in product(*all_values)]
 
     # merge on flatten config for simplicity
     config = flatten_config(config)

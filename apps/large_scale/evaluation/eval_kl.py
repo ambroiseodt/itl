@@ -2,7 +2,7 @@
 """
 Evaluation with KL divergence and TV distance between a reference model and a finetuned one.
 
-@ 2025, Meta
+@ 2025, Ambroise Odonnat
 """
 
 import argparse

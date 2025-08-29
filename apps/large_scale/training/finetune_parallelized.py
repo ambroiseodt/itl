@@ -2,7 +2,7 @@
 """
 Supervised fine-tuning with in-weight and in-tool settings.
 
-@ 2025, Meta
+@ 2025, Ambroise Odonnat
 """
 
 import argparse

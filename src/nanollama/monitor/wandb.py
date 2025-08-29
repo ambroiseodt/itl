@@ -2,7 +2,7 @@
 """
 Wandb Logger
 
-@ 2025, Meta
+@ 2025, Ambroise Odonnat
 """
 
 import json
@@ -35,6 +35,7 @@ class WandbConfig:
     - name: wandb run name
     - path: path to a file storing existing wandb run id
     """
+
     active: bool = False
     entity: str = ""
     project: str = "nanollama"

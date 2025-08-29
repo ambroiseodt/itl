@@ -2,5 +2,5 @@
 """
 Module containing utilities to study in-tool learning at large scale.
 
-@ 2025, Meta
+@ 2025, Ambroise Odonnat
 """

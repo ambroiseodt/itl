@@ -4,7 +4,7 @@ Utilities for inference and training with transformers.
 
 For compilation reason, we want to distinguish between pretraining, prefilling and token generation.
 
-@ 2025, Meta
+@ 2025, Ambroise Odonnat
 
 ### Notes
 There are many variants of attention implementation for fast inference.
@@ -29,6 +29,7 @@ logger = getLogger("nanollama")
 # Sampling
 # ------------------------------------------------------------------------------
 
+
 def sample_from_logits(logits: Tensor, **kwargs) -> Tensor:
     """
     Sample from logits.
@@ -36,11 +37,12 @@ def sample_from_logits(logits: Tensor, **kwargs) -> Tensor:
     ### Parameters
     - logits: logits tensor.
     - kwargs: additional arguments for sampling strategy.
-    
+
     ### Notes
     - TODO: implement various sampling strategy, e.g., temperature, top-k, etc.
     """
     return logits.argmax(dim=-1)
+
 
 # ------------------------------------------------------------------------------
 # Pretraining
