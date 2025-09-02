@@ -1,0 +1,87 @@
+launcher:
+  name: memory
+  overwrite: true
+  log_dir: $HOME/memory_debug
+
+  script: apps.memory.train
+
+  slurm:
+    # partition: scavenge
+    mem: 16G
+    nodes: 1
+    nb_gpus: 2        # use torchrun, or slurm, for multi-gpu runs
+    time: 10          # job time in minutes
+    signal_time: 60   # alert time in seconds
+
+run_config:
+  compile: false 
+
+  cluster:
+    tp: 1
+
+  data: 
+    batch_size: 128
+    seq_len: 257
+    padding: true
+
+    nb_data: 1000
+    key: qatool
+    data_dir: $HOME/data/memory
+    save_dir: $HOME/data/temporary
+
+  tokenizer:
+    implementation: byte
+    special_tokens:
+      <|user|>: 0
+      <|assistant|>: 1
+      <|database|>: 2
+      <|eod|>: 3
+
+  model:
+    implementation: transformer
+    vocab_size: 300
+    emb_dim: 128
+    nb_layers: 6
+    block:
+      nb_heads: 8
+      hidden_dim: 512
+
+  optim:
+    steps: 100
+    max_steps: 10000
+    lr: 1e-3
+    weight_decay: 0.1
+    fused: true
+    warmup: 50
+    lr_min_ratio: 0
+
+  orchestration:
+    utils:
+      seed: 100
+
+    checkpoint:
+      period: 20
+      nb_kept: 3
+
+    logging:
+      period: 10
+      level: INFO
+      wandb:
+        active: false
+
+    profiler:
+      pytorch:
+        active: false  
+        wait: 1
+        steps: 10
+      light:
+        period: 25
+
+  evaluation:
+    db_path: $HOME/data/memory/people.db
+    period: 50
+    asynchronous: false
+    data:
+      batch_size: 1024
+    slurm:
+      nb_gpus: 1

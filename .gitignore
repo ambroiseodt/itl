@@ -1,0 +1,25 @@
+
+# Build, cache and configuration files
+.DS_Store
+__pycache__/
+dist
+*.egg-info
+.vscode
+
+# data
+*.jsonl
+*.db
+
+# temporary files
+tmp_*
+
+# data
+HF_datasets/
+
+# figures
+figures/
+
+# results and runs
+runs/
+eval_runs/
+wandb/

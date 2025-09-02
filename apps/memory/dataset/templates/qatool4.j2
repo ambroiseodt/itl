@@ -1,0 +1,8 @@
+<|user|>Where does {{name}} live?
+<|assistant|>To answer this question I will make a request to the database:
+```sql
+FIND current_address FOR {{name}}
+```
+<|database|>{{current_address}}
+<|assistant|>{{name}} lives at {{current_address}}.
+<|answer|>{{current_address}}

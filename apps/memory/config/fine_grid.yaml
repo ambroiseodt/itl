@@ -1,0 +1,72 @@
+launcher:
+  name: memory
+  overwrite: true
+  log_dir: $HOME/memory_fine_grid
+
+  script: apps.memory.train
+
+  grid:
+    data:
+      nb_data: [2, 4, 8, 16, 32, 64, 128, 256, 512, 1024, 2048, 4096, 8192, 16384, 32768]
+      key: [qatool, qa]
+      seed: [0, 1, 2, 3, 4, 5, 6, 7, 8, 9]
+    model:
+      emb_dim: [4, 8, 12, 16, 20, 24, 28, 32, 36, 40, 44, 48, 52, 56, 60, 64, 68, 72, 76, 80, 88, 96, 104, 112, 120, 128]
+
+  slurm:
+    # partition: scavenge
+    mem: 32G
+    nodes: 1
+    nb_gpus: 1         # use torchrun, or slurm, for multi-gpu runs
+    time: 1440         # job time in minutes
+    signal_time: 120   # alert time in seconds
+
+run_config:
+  data:
+    key: qatool
+    nb_data: 100
+    batch_size: 128
+    seq_len: 257
+    padding: true
+
+  tokenizer:
+    implementation: byte
+    special_tokens:
+      <|user|>: 0
+      <|assistant|>: 1
+      <|database|>: 2
+      <|eod|>: 3
+
+  model:
+    implementation: transformer
+    vocab_size: 260
+    emb_dim: 64
+    nb_layers: 2
+    block:
+      nb_heads: 2
+
+  optim:
+    steps: 100_000
+    lr: 1e-3
+    weight_decay: 0.1
+    warmup: 50
+    lr_min_ratio: 0
+
+  orchestration:
+    utils:
+      seed: 100
+
+    logging:
+      period: 1
+      wandb:
+        active: false
+
+    checkpoint:
+      nb_kept: 1
+
+  evaluation:
+    period: 100_000
+    asynchronous: false
+    db_path: $HOME/data/memory/people.db
+    data:
+      batch_size: 1024

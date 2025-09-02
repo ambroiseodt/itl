@@ -1,0 +1,85 @@
+[build-system]
+requires = ["setuptools>=61.0"]
+build-backend = "setuptools.build_meta"
+
+[project]
+name = "nanollama"
+version = "0.0.0"
+authors = [
+  { name="Charles Arnal", email="charlesarnal@meta.com" },
+  { name="Vivien Cabannes", email="vivc@meta.com" },
+  { name="Sam Houlison", email="houlison.sam@gmail.com" },
+  { name="Ambroise Odonnat", email="ambroise.odonnat@gmail.com" },
+]
+description = "In-Tool Learning for LLMs"
+readme = "README.md"
+requires-python = ">=3.10"
+classifiers = [
+    "Programming Language :: Python :: 3",
+    "License :: OSI Approved :: CC BY-NC 4.0 License",
+    "Operating System :: OS Independent",
+]
+dependencies = [
+  "fire",           # argument parsing
+  "jinja2",         # template rendering
+  "numpy",
+  "pyaml",          # configuration parsing
+  "torch",
+]
+
+[project.optional-dependencies]
+dev = [
+  "pytest",             # testing
+  "ruff",               # formatting
+  "torch_tb_profiler",  # visualizing profiling trace with tensorboard
+  "viztracer",          # visualizing profiling trace with perfetto
+  "wandb",              # logging
+]
+
+llm = [
+  "sentencepiece",  # tokenizer
+  "tiktoken",       # tokenizer
+  "transformers",   # HF transformers
+]
+
+scale = [
+  "accelerate",        # distributed training
+  "bitsandbytes",      # quantization
+  "datasets==4.0.0",   # HF datasets
+  "hf_xet==1.1.2",     # storage
+  "lm-eval==0.4.8",    # LLM evaluation
+  "trl==0.18.0",       # RLHF library
+  "peft",              # efficient finetuning
+]
+
+visu = [
+  "ipykernel",    # jupyter notebooks
+  "ipywidgets",   # jupyter widgets
+  "matplotlib",   # plots
+  "nbformat",     # jupyter format
+  "pandas",       # dataframes
+  "plotly",       # interactive plots
+  "seaborn",      # plots
+]
+
+[tool.setuptools.packages.find]
+where = ["src"]
+
+[tool.ruff]
+line-length = 120
+
+[tool.ruff.lint]
+select = [
+  "E", "F", "W",  # Default rules
+  "ANN001",       # Function arguments should annotate types
+  "ANN201",       # Public function should annotate return type
+  "B",            # Common bugs
+  "DTZ",          # Timezone issues
+  "I",            # Sort inputs
+  "PLE",          # Common errors
+  "RUF100",       # Remove unused noqa
+  "UP",           # Modern syntax
+]
+
+[tool.ruff.lint.per-file-ignores]
+"__init__.py" = ["F401"]
