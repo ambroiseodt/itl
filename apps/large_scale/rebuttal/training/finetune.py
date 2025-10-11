@@ -31,7 +31,7 @@ from trl import DataCollatorForCompletionOnlyLM, SFTConfig
 from .tool_data_collator import DataCollatorForToolOnlyLM
 
 # Paths
-HF_DATASET_PATH = Path(__file__).parents[1] / "HF_datasets"
+TRIVIA_DATASET_PATH = Path(__file__).parents[1] / "trivia_datasets"
 SAVE_PATH = Path(__file__).parents[1] / "runs"
 
 # Cuda settings
@@ -247,7 +247,7 @@ if __name__ == "__main__":
     run_name = args.run_name
 
     # Paths and settings
-    data_dir = HF_DATASET_PATH / "HF_dataset_200_000"
+    data_dir = TRIVIA_DATASET_PATH / "trivia_dataset_all"
     save_dir = SAVE_PATH / args.save_dir / run_name
     if not save_dir.exists():
         save_dir.mkdir(parents=True, exist_ok=True)
