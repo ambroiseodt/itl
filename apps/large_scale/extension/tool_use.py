@@ -20,6 +20,16 @@ MAX_RETRIES = 3
 RETRY_DELAY = 1  # seconds
 
 
+SYSTEM_PROMPT = "You are a helpful assistant. Your task is to help a user answer a question from the Trivia QA dataset. \
+                            You will be provided the question as a simple string. Once you have read the question, you will query a database of facts by outputting a special tag <query>, the question itself, and another special tag <\query>. \
+                                You will then be provided with the query result, which you must then repeat to answer the question. Only repeat the answer, do not repeat the question and do not include any additional text.\n\
+                                Here is an example: \n \
+                                Question: What is the capital of France? \n \
+                                Your first answer: <query> What is the capital of France? <\query> \n \
+                                Database response: Paris \n \
+                                Your final answer: Paris."
+
+
 def _pick_answer(ans_obj: Any) -> tuple[str, list[str]]:
     """
     TriviaQA 'answer' can be:
@@ -64,20 +74,15 @@ async def database_query_async(client: AsyncOpenAI, question: str, semaphore: as
         for attempt in range(MAX_RETRIES):
             try:
                 chat_response = await client.chat.completions.create(
-                    model="openai/gpt-oss-120b",
+                    model="meta-llama/Llama-3.1-8B-Instruct",
                     messages=[
                         {
                             "role": "system",
-                            "content": "You are a helpful assitant. Your task is to help a user answer a question from the Trivia QA dataset. \
-                            You will be provided the question as a simple string. Once you have read it, you will parse it and reformate the question \
-                            as a Python code to create a query to a database. \
-                            Give only the Python code usefull to retrieve the answer from a database of facts.",
+                            "content": SYSTEM_PROMPT,
                         },
                         {
                             "role": "user",
-                            "content": f"Here is the question to answer using a query to a databse:\\Question: {question}.\n\
-                        (This is the end of the question) \
-                        \n Give a Python code to make a query to a database of facts containing the answer to this question.",
+                            "content": f"Question: {question}.\n"
                         },
                     ],
                 )
