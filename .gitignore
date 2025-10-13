@@ -24,3 +24,4 @@ figures/
 runs/
 eval_runs/
 wandb/
+backup/
