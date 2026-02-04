@@ -1,4 +1,4 @@
-In this folder, we provde the results files needed to reproduce the figures of our [paper](https://arxiv.org/pdf/2508.20755).
+In this folder, we provide the results files needed to reproduce the figures of our [paper](https://arxiv.org/pdf/2508.20755).
 
 #### Memory results of Section 5
 The results `grid4.csv` was obtained by running a job-array configured in `apps/memory/config/fine_grid.yaml` with `100_000` steps and `10` seeds (see `apps/memory/config/fine_grid.yaml`).
