@@ -15,7 +15,7 @@ Our codebase provides utilities to train and study large language models from a 
 - 🏋🏽 In-weight learning: memorizing the solution to a problem within the model's weights.
 
 ## News
-### 🥳 Mar 03, 2026 - Our [paper](https://openreview.net/forum?id=s7IRNX6FUs) is accepted at ICLR 2026 [Workshop on MemAgents](https://sites.google.com/view/memagent-iclr26/)!
+### Mar 03, 2026 🥳 Our [paper](https://openreview.net/forum?id=s7IRNX6FUs) is accepted at ICLR 2026 [Workshop on MemAgents](https://sites.google.com/view/memagent-iclr26/)!
 
 ## Overview
 Our codebase is structured as follows:
