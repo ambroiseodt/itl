@@ -1,6 +1,7 @@
 # 🛠️ Provable Benefits of In-Tool Learning (ITL)
 [![Arxiv](https://img.shields.io/badge/arXiv-2508.20755-b5212f?logo=arxiv)](https://arxiv.org/abs/2508.20755)
-[![License](https://img.shields.io/badge/License-CC--BY--NC-blue.svg)](https://creativecommons.org/licenses/by-nc/4.0/legalcode.en)
+[![Dataset](https://img.shields.io/badge/🤗%20Hugging%20Face-Paper-yellow)](https://huggingface.co/papers/2508.20755)
+[![Python 3.10+](https://img.shields.io/badge/python-3.10+-blue.svg)](https://www.python.org/downloads/)
 
 **[Sam Houliston*](https://www.linkedin.com/in/sam-houliston-47364524a/?originalSubdomain=uk), [Ambroise Odonnat*](https://ambroiseodt.github.io/), [Charles Arnal*](https://charlesarnal.github.io/), [Vivien Cabannes*](https://viviencabannes.github.io/)**. ***Equal contribution**.
 
@@ -12,6 +13,9 @@ Our codebase provides utilities to train and study large language models from a 
 
 - ⚙️ In-tool learning: learning to use a tool (e.g., a calculator or a request to a database) to solve a problem,
 - 🏋🏽 In-weight learning: memorizing the solution to a problem within the model's weights.
+
+## News
+### [March 03, 2026] - In-Tool Learning is [accepted](https://openreview.net/forum?id=s7IRNX6FUs) at ICLR 2026 [Workshop on MemAgents](https://sites.google.com/view/memagent-iclr26/)!
 
 ## Overview
 Our codebase is structured as follows:
