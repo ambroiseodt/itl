@@ -122,10 +122,11 @@ The codebase is licensed under the [CC BY-NC 4.0 License](LICENSE.md).
 ## Citation
 If you find this repository useful, please consider giving a star ⭐, and citing us as:
 ```
-@misc{in_tool_learning,
-  author = {Sam Houliston and Ambroise Odonnat and Charles Arnal and Vivien Cabannes},
-  title = {{Provable Benefits of In-Tool Learning for Large Language Models}},
-  url = {https://arxiv.org/abs/2508.20755},
-  year = {2025}
+@inproceedings{houliston2026itl,
+title={Tool use is provably more scalable than in-weight memory for Large Language Models},
+author={Sam Houliston and Ambroise Odonnat and Charles Arnal and Vivien Cabannes},
+booktitle={ICLR 2026 Workshop on Memory for LLM-Based Agentic Systems},
+year={2026},
+url={https://openreview.net/forum?id=s7IRNX6FUs}
 }
 ```
