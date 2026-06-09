@@ -115,6 +115,10 @@ Instructions to reproduce the experiments in our [paper](https://arxiv.org/pdf/2
 
 ## Acknowledgments
 This repository builds heavily on [lingua](https://github.com/facebookresearch/lingua) and [pal](https://github.com/facebookresearch/pal) which provide easy-to-use code to train and play with LLMs.
+- Vivien Cabannes implemented the controlled-experiment components, including the small-GPT model implementation and the pretraining-from-scratch pipeline.
+- Sam Houliston implemented the large-scale experiment components, including the dataset creation, fine-tuning, and evaluation pipeline.
+- Ambroise Odonnat worked on the controlled experiment on compressibility, the ThruthfulQA experiment, and maintains the code. 
+- Charles Arnal worked on the TruthfulQA experiment.
 
 ## License
 The codebase is licensed under the [CC BY-NC 4.0 License](LICENSE.md).
