@@ -10,24 +10,58 @@ import asyncio
 import logging
 from typing import Any
 
+from openai import OpenAI
+
 from datasets import load_dataset
 
-# Configuration
+# ------------------------------------------------------------------------------
+# Variables
+# ------------------------------------------------------------------------------
+
 OPENAI_API_KEY = "EMPTY"
 OPENAI_API_BASE = "http://localhost:8000/v1"
 CONCURRENT_REQUESTS = 10  # Adjust based on your server capacity
 MAX_RETRIES = 3
 RETRY_DELAY = 1  # seconds
 
+# ------------------------------------------------------------------------------
+# System prompt
+# ------------------------------------------------------------------------------
 
-SYSTEM_PROMPT = "You are a helpful assistant. Your task is to help a user answer a question from the Trivia QA dataset. \
-                            You will be provided the question as a simple string. Once you have read the question, you will query a database of facts by outputting a special tag <query>, the question itself, and another special tag <\query>. \
-                                You will then be provided with the query result, which you must then repeat to answer the question. Only repeat the answer, do not repeat the question and do not include any additional text.\n\
-                                Here is an example: \n \
-                                Question: What is the capital of France? \n \
-                                Your first answer: <query> What is the capital of France? <\query> \n \
-                                Database response: Paris \n \
-                                Your final answer: Paris."
+SYSTEM_PROMPT = """You are a helpful assistant. Your task is to help a user answer a question from the Trivia QA dataset.\n \
+You will be provided the question as a simple string.
+If you only have access to the question, then you must output a special tag <query>, the question itself, and another special tag </query>. \
+Here is an example: \n\
+Question: In what state was playwright Tennessee Williams born?.\n \
+(your answer) <query> In what state was playwright Tennessee Williams born? </query>\n \
+You MUST Output exactly "<query> the question </query>" \n\
+You MUST not output anything else at this point.\n\
+First example:
+Question: In what state was playwright Tennessee Williams born?.\n \
+<query> In what state was playwright Tennessee Williams born? </query>\n \
+Second example:
+Question: Who was the only Englishman to become Pope?.\n \
+<query> Who was the only Englishman to become Pope? </query>\n \
+Outputting <query> question </query> will automatically make a database query, and the answer of that query will be output in the chat.\n \
+If you are given the question, if you have already output the <query> tags with the question repeated, and if you have been provided with an answer from the database, then you must repeat that answer to answer the question.\n\
+You MUST repeat the answer exactly as it is given to you. Repeat the entirety of the answer. Do not include any additional text, explanation, rephrasing of the question, or punctuation marks.\n\
+Here is a first, including the early steps of the conversation:\n \
+Question: In what state was playwright Tennessee Williams born?.\n \
+<query> In what state was playwright Tennessee Williams born? </query>\n \
+In Mississippi, as Thomas Lanier Williams. He took the name Tennessee after his father's home state\n \
+In Mississippi, as Thomas Lanier Williams. He took the name Tennessee after his father's home state\n \
+Here is a second example:\n \
+Question: Who was the only Englishman to become Pope?.\n \
+<query> Who was the only Englishman to become Pope? </query>\n \
+Nicholas Breakspear, who was Adrian IV from 1154 to 1159\n \
+Nicholas Breakspear, who was Adrian IV from 1154 to 1159\n \
+REMEMBER: if you are given only a question, you must output the <query> tags with the question repeated between them, and nothing else. \
+If you are given a question, if you have already output the <query> tags with the question repeated, and if you have been provided with an answer from the database, then you must repeat the answer, and nothing else.\
+"""
+
+# ------------------------------------------------------------------------------
+# Data
+# ------------------------------------------------------------------------------
 
 
 def _pick_answer(ans_obj: Any) -> tuple[str, list[str]]:
@@ -62,75 +96,75 @@ def get_data(n_facts: int) -> list:
     return qa_list
 
 
-# Call to LLM with specific prompt - WIP
-from openai import AsyncOpenAI
+# ------------------------------------------------------------------------------
+# Call to LLM with specific prompt
+# ------------------------------------------------------------------------------
 
 
-async def database_query_async(client: AsyncOpenAI, question: str, semaphore: asyncio.Semaphore) -> dict[str, Any]:
+def query_model(client: OpenAI, question: str, answer: str) -> bool:
     """
-    Query database to answer a question from Trivia QA asynchronously with retry logic and rate limiting.
+    Have the model answer a question from Trivia QA. Returns True if the answer is correct, False otherwise.
     """
-    async with semaphore:  # Limit concurrent requests
-        for attempt in range(MAX_RETRIES):
-            try:
-                chat_response = await client.chat.completions.create(
-                    model="meta-llama/Llama-3.1-8B-Instruct",
-                    messages=[
-                        {
-                            "role": "system",
-                            "content": SYSTEM_PROMPT,
-                        },
-                        {
-                            "role": "user",
-                            "content": f"Question: {question}.\n"
-                        },
-                    ],
-                )
+    chat_response = client.chat.completions.create(
+        model="meta-llama/Llama-3.1-8B-Instruct",
+        messages=[
+            {
+                "role": "system",
+                "content": SYSTEM_PROMPT,
+            },
+            {"role": "user", "content": f"Question: {question}.\n"},
+        ],
+    )
+    # Check if the query has the structure <query> question <\query>, where question is the input question
+    query = chat_response.choices[0].message.content.strip()
+    if query is not None and query.startswith("<query>") and query.endswith("</query>"):
+        extracted_question = query[len("<query>") : -len("</query>")].strip()
+        if extracted_question != question:
+            return False
+    chat_response = client.chat.completions.create(
+        model="meta-llama/Llama-3.1-8B-Instruct",
+        messages=[
+            {
+                "role": "system",
+                "content": SYSTEM_PROMPT,
+            },
+            {"role": "user", "content": f"Question: {question}.\n"},
+            {"role": "assistant", "content": query + "\n"},
+            {"role": "system", "content": answer + "\n"},
+        ],
+    )
+    final_answer = chat_response.choices[0].message.content.strip()
 
-                # TODO: Parse and validate the database query
-                try:
-                    query = int(chat_response.choices[0].message.content.strip())
-                    # Design validation to raise some error
-
-                except Exception as e:
-                    print(f"Error parsing the question {question}: {e}")
-                    query = "error"
-
-                return {"question": question, "query": query}
-
-            except Exception as e:
-                print(f"Attempt {attempt + 1} failed for paper {question}: {e}")
-                if attempt < MAX_RETRIES - 1:
-                    await asyncio.sleep(RETRY_DELAY * (2**attempt))  # Exponential backoff
-                else:
-                    # Final attempt failed, return error result
-                    return {"question": question, "query": "error"}
-
-
-def database_query(n_facts: int = 500) -> None:
-    qa_list = get_data(n_facts=n_facts)
-    queries = []
-
-    # TODO: define client and semaphore
-    client, semaphore = None, None
-
-    # Recover for each question-answer pairs the query to the database
-    for qa_item in qa_list:
-        question_id, question, ans_val, ans_aliases = qa_item
-        query = database_query_async(client=client, question=question, semaphore=semaphore)
-        queries.append(query)
-
-    # TODO: do something with the query to recover the answer using Python for instance
-    return
+    print("----")
+    print(f"Question: {question}.\n")
+    print(query + "\n")
+    print(answer + "\n")
+    print(final_answer + "\n")
+    if final_answer.lower() == answer.lower():
+        return True
+    else:
+        print("False !")
+        print(f"Final answer was: {final_answer.lower()}")
+        print(f"Expected answer was: {answer.lower()}")
+    print("----")
+    return False
 
 
 if __name__ == "__main__":
-    import fire
+    N = 1000
 
-    logging.basicConfig(level=logging.INFO)
+    data = get_data(n_facts=N)
 
-    fire.Fire(
-        {
-            "query": database_query,
-        }
+    client = OpenAI(
+        api_key=OPENAI_API_KEY,
+        base_url=OPENAI_API_BASE,
     )
+    num_correct = 0
+    total = 0
+    for data_item in data:
+        question_id, question, ans_val, ans_aliases = data_item
+        correct = query_model(client=client, question=question, answer=ans_val)
+        if correct:
+            num_correct += 1
+        total += 1
+    print(f"Final accuracy: {num_correct}/{total} = {num_correct / total:.2%}")
