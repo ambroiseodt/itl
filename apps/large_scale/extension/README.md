@@ -23,4 +23,4 @@ They will be used to evaluate the model. Evaluation results will be saved in the
 where task_name takes value in "recall" and "hellaswag".
 
 # In-tool
-Work in progress
+Call to an LLM using a prompt, details in ```tool_use.py```.
